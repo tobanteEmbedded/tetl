@@ -3,8 +3,8 @@
 #ifndef TETL_CHRONO_LOCAL_T_HPP
 #define TETL_CHRONO_LOCAL_T_HPP
 
-#include "etl/_chrono/duration.hpp"
-#include "etl/_chrono/time_point.hpp"
+#include <etl/_chrono/duration.hpp>
+#include <etl/_chrono/time_point.hpp>
 
 namespace etl::chrono {
 

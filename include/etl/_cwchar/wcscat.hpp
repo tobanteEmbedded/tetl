@@ -3,9 +3,8 @@
 #ifndef TETL_CWCHAR_WCSCAT_HPP
 #define TETL_CWCHAR_WCSCAT_HPP
 
-#include "etl/_cassert/macro.hpp"
-#include "etl/_cstddef/size_t.hpp"
-#include "etl/_strings/cstr_algorithm.hpp"
+#include <etl/_cstddef/size_t.hpp>
+#include <etl/_strings/cstr_algorithm.hpp>
 
 namespace etl {
 /// \brief Appends a copy of the wide string pointed to by src to the end of the

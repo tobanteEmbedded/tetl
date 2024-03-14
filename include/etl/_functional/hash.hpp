@@ -3,9 +3,9 @@
 #ifndef TETL_FUNCTIONAL_HASH_HPP
 #define TETL_FUNCTIONAL_HASH_HPP
 
-#include "etl/_bit/bit_cast.hpp"
-#include "etl/_cstddef/nullptr_t.hpp"
-#include "etl/_cstddef/size_t.hpp"
+#include <etl/_bit/bit_cast.hpp>
+#include <etl/_cstddef/nullptr_t.hpp>
+#include <etl/_cstddef/size_t.hpp>
 
 namespace etl {
 

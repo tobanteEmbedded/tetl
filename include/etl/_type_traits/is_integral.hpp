@@ -3,7 +3,7 @@
 #ifndef TETL_TYPE_TRAITS_IS_INTEGRAL_HPP
 #define TETL_TYPE_TRAITS_IS_INTEGRAL_HPP
 
-#include "etl/_type_traits/bool_constant.hpp"
+#include <etl/_type_traits/bool_constant.hpp>
 
 #if __has_builtin(__is_integral)
 namespace etl {
@@ -19,8 +19,8 @@ inline constexpr bool is_integral_v = __is_integral(T);
 
 #else
 
-    #include "etl/_type_traits/is_any_of.hpp"
-    #include "etl/_type_traits/remove_cv.hpp"
+    #include <etl/_type_traits/is_any_of.hpp>
+    #include <etl/_type_traits/remove_cv.hpp>
 
 namespace etl {
 // clang-format off

@@ -3,8 +3,8 @@
 #ifndef TETL_CHRONO_TIME_POINT_CAST_HPP
 #define TETL_CHRONO_TIME_POINT_CAST_HPP
 
-#include "etl/_chrono/duration_cast.hpp"
-#include "etl/_chrono/time_point.hpp"
+#include <etl/_chrono/duration_cast.hpp>
+#include <etl/_chrono/time_point.hpp>
 
 namespace etl::chrono {
 

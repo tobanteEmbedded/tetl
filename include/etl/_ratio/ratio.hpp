@@ -3,10 +3,10 @@
 #ifndef TETL_RATIO_RATIO_HPP
 #define TETL_RATIO_RATIO_HPP
 
-#include "etl/_cstdint/intmax_t.hpp"
-#include "etl/_math/abs.hpp"
-#include "etl/_math/sign.hpp"
-#include "etl/_numeric/gcd.hpp"
+#include <etl/_cstdint/intmax_t.hpp>
+#include <etl/_math/abs.hpp>
+#include <etl/_math/sign.hpp>
+#include <etl/_numeric/gcd.hpp>
 
 namespace etl {
 

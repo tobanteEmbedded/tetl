@@ -3,8 +3,8 @@
 #ifndef TETL_CHRONO_TIME_POINT_HPP
 #define TETL_CHRONO_TIME_POINT_HPP
 
-#include "etl/_type_traits/common_type.hpp"
-#include "etl/_type_traits/is_convertible.hpp"
+#include <etl/_type_traits/common_type.hpp>
+#include <etl/_type_traits/is_convertible.hpp>
 
 namespace etl::chrono {
 

@@ -3,9 +3,9 @@
 #ifndef TETL_COMPLEX_TANH_HPP
 #define TETL_COMPLEX_TANH_HPP
 
-#include "etl/_complex/complex.hpp"
-#include "etl/_complex/cosh.hpp"
-#include "etl/_complex/sinh.hpp"
+#include <etl/_complex/complex.hpp>
+#include <etl/_complex/cosh.hpp>
+#include <etl/_complex/sinh.hpp>
 
 namespace etl {
 

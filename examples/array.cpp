@@ -2,13 +2,13 @@
 
 #undef NDEBUG
 
+#include <etl/algorithm.hpp> // for all_of, copy
+#include <etl/array.hpp>     // for array
+#include <etl/cassert.hpp>   // for TETL_ASSERT
+#include <etl/iterator.hpp>  // for begin, end
+
 #include <stdio.h>  // for printf
 #include <stdlib.h> // for EXIT_SUCCESS
-
-#include "etl/algorithm.hpp" // for all_of, copy
-#include "etl/array.hpp"     // for array
-#include "etl/cassert.hpp"   // for TETL_ASSERT
-#include "etl/iterator.hpp"  // for begin, end
 
 auto main() -> int
 {

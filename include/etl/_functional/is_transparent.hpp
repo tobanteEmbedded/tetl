@@ -3,9 +3,9 @@
 #ifndef TETL_FUNCTIONAL_IS_TRANSPARENT_HPP
 #define TETL_FUNCTIONAL_IS_TRANSPARENT_HPP
 
-#include "etl/_type_traits/bool_constant.hpp"
-#include "etl/_type_traits/is_same.hpp"
-#include "etl/_type_traits/void_t.hpp"
+#include <etl/_type_traits/bool_constant.hpp>
+#include <etl/_type_traits/is_same.hpp>
+#include <etl/_type_traits/void_t.hpp>
 
 namespace etl::detail {
 

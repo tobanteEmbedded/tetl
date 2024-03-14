@@ -3,7 +3,7 @@
 #ifndef TETL_SYSTEM_ERROR_ERROC_HPP
 #define TETL_SYSTEM_ERROR_ERROC_HPP
 
-#include "etl/_system_error/is_error_condition_enum.hpp"
+#include <etl/_system_error/is_error_condition_enum.hpp>
 
 namespace etl {
 

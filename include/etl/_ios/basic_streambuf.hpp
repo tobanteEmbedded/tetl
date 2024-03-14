@@ -3,9 +3,9 @@
 #ifndef TETL_IOS_BASIC_STREAMBUF_HPP
 #define TETL_IOS_BASIC_STREAMBUF_HPP
 
-#include "etl/_cstddef/size_t.hpp"
-#include "etl/_ios/ios_base.hpp"
-#include "etl/_type_traits/is_same.hpp"
+#include <etl/_cstddef/size_t.hpp>
+#include <etl/_ios/ios_base.hpp>
+#include <etl/_type_traits/is_same.hpp>
 
 namespace etl {
 

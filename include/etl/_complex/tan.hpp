@@ -3,9 +3,9 @@
 #ifndef TETL_COMPLEX_TAN_HPP
 #define TETL_COMPLEX_TAN_HPP
 
-#include "etl/_complex/complex.hpp"
-#include "etl/_complex/cos.hpp"
-#include "etl/_complex/sin.hpp"
+#include <etl/_complex/complex.hpp>
+#include <etl/_complex/cos.hpp>
+#include <etl/_complex/sin.hpp>
 
 namespace etl {
 

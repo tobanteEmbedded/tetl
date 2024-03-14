@@ -2,11 +2,11 @@
 
 #undef NDEBUG
 
-#include "etl/set.hpp"       // for static_set
-#include "etl/algorithm.hpp" // for for_each
-#include "etl/array.hpp"     // for array
-#include "etl/cassert.hpp"   // for TETL_ASSERT
-#include "etl/iterator.hpp"  // for begin, end
+#include <etl/algorithm.hpp> // for for_each
+#include <etl/array.hpp>     // for array
+#include <etl/cassert.hpp>   // for TETL_ASSERT
+#include <etl/iterator.hpp>  // for begin, end
+#include <etl/set.hpp>       // for static_set
 
 #include <stdio.h> // for printf
 

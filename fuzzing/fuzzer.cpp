@@ -2,13 +2,13 @@
 
 #include "fuzzing.hpp"
 
-#include "etl/algorithm.hpp"
-#include "etl/cmath.hpp"
-#include "etl/cstring.hpp"
-#include "etl/iterator.hpp"
-#include "etl/set.hpp"
-#include "etl/string.hpp"
-#include "etl/vector.hpp"
+#include <etl/algorithm.hpp>
+#include <etl/cmath.hpp>
+#include <etl/cstring.hpp>
+#include <etl/iterator.hpp>
+#include <etl/set.hpp>
+#include <etl/string.hpp>
+#include <etl/vector.hpp>
 
 #include <set>
 #include <string>

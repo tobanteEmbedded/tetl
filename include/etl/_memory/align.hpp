@@ -3,10 +3,9 @@
 #ifndef TETL_MEMORY_ALIGN_HPP
 #define TETL_MEMORY_ALIGN_HPP
 
-#include "etl/_bit/bit_cast.hpp"
-#include "etl/_cstddef/size_t.hpp"
-
-#include "etl/_cstdint/uintptr_t.hpp"
+#include <etl/_bit/bit_cast.hpp>
+#include <etl/_cstddef/size_t.hpp>
+#include <etl/_cstdint/uintptr_t.hpp>
 
 namespace etl {
 

@@ -3,8 +3,8 @@
 #ifndef TETL_SIMD_IS_VECTORIZABLE_HPP
 #define TETL_SIMD_IS_VECTORIZABLE_HPP
 
-#include "etl/_type_traits/is_arithmetic.hpp"
-#include "etl/_type_traits/is_same.hpp"
+#include <etl/_type_traits/is_arithmetic.hpp>
+#include <etl/_type_traits/is_same.hpp>
 
 namespace etl::detail {
 template <typename T>

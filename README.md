@@ -21,8 +21,8 @@ Tobante's embedded template library. A STL-like C++ template library designed fo
 ## Quick Start
 
 ```cpp
-#include <etl/algorithm.hpp>  
-#include <etl/array.hpp>      
+#include <etl/algorithm.hpp>
+#include <etl/array.hpp>
 
 auto main() -> int {
   auto const numbers = etl::array{1, 2, 3, 4, 5};
@@ -800,7 +800,7 @@ build_flags = -std=gnu++20 -Wno-register -I 3rd_party/tetl/include
 Get access to all intrinsic macros & library version macro and constants. This header also include `<version>` from C++20 if it is available.
 
 ```cpp
-#include "etl/version.hpp"
+#include <etl/version.hpp>
 
 #include <stdio.h>
 
@@ -833,7 +833,7 @@ auto main() -> int
 - **Include:** [`etl/warning.hpp`](./include/etl/warning.hpp)
 
 ```cpp
-#include "etl/warning.hpp"
+#include <etl/warning.hpp>
 
 auto main(int argc, char** argv) -> int
 {

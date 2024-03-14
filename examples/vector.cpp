@@ -1,11 +1,10 @@
 // SPDX-License-Identifier: BSL-1.0
 
-// #undef NDEBUG
+#undef NDEBUG
 
-#include "etl/vector.hpp" // for static_vector
-
-#include "etl/cassert.hpp" // for assert
-#include "etl/cctype.hpp"  // for toupper
+#include <etl/cassert.hpp> // for assert
+#include <etl/cctype.hpp>  // for toupper
+#include <etl/vector.hpp>  // for static_vector
 
 #include <stdio.h>  // for printf
 #include <stdlib.h> // for EXIT_SUCCESS

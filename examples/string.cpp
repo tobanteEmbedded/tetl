@@ -2,11 +2,11 @@
 
 #undef NDEBUG
 
-#include "etl/string.hpp" // for static_string
+#include <etl/string.hpp> // for static_string
 
-#include "etl/algorithm.hpp" // for transform
-#include "etl/cassert.hpp"   // for TETL_ASSERT
-#include "etl/cctype.hpp"    // for toupper
+#include <etl/algorithm.hpp> // for transform
+#include <etl/cassert.hpp>   // for TETL_ASSERT
+#include <etl/cctype.hpp>    // for toupper
 
 #include <stdio.h>  // for printf
 #include <stdlib.h> // for EXIT_SUCCESS

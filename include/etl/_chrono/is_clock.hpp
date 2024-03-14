@@ -3,7 +3,7 @@
 #ifndef TETL_CHRONO_IS_CLOCK_HPP
 #define TETL_CHRONO_IS_CLOCK_HPP
 
-#include "etl/_type_traits/bool_constant.hpp"
+#include <etl/_type_traits/bool_constant.hpp>
 
 namespace etl::chrono {
 

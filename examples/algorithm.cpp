@@ -2,8 +2,8 @@
 
 #include <stdio.h>
 
-#include "etl/algorithm.hpp"
-#include "etl/vector.hpp"
+#include <etl/algorithm.hpp>
+#include <etl/vector.hpp>
 
 auto main() -> int
 {

@@ -2,10 +2,10 @@
 
 #undef NDEBUG
 
-#include <stdlib.h> // for EXIT_SUCCESS
+#include <etl/bitset.hpp>  // for bitset, bitset<>::reference
+#include <etl/cassert.hpp> // for TETL_ASSERT
 
-#include "etl/bitset.hpp"  // for bitset, bitset<>::reference
-#include "etl/cassert.hpp" // for TETL_ASSERT
+#include <stdlib.h> // for EXIT_SUCCESS
 
 auto main() -> int
 {

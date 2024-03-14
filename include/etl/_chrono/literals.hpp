@@ -3,8 +3,8 @@
 #ifndef TETL_CHRONO_LITERALS_HPP
 #define TETL_CHRONO_LITERALS_HPP
 
-#include "etl/_chrono/day.hpp"
-#include "etl/_chrono/duration.hpp"
+#include <etl/_chrono/day.hpp>
+#include <etl/_chrono/duration.hpp>
 
 namespace etl::inline literals::inline chrono_literals {
 

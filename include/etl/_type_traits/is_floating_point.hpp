@@ -3,9 +3,9 @@
 #ifndef TETL_TYPE_TRAITS_IS_FLOATING_POINT_HPP
 #define TETL_TYPE_TRAITS_IS_FLOATING_POINT_HPP
 
-#include "etl/_type_traits/bool_constant.hpp"
-#include "etl/_type_traits/is_same.hpp"
-#include "etl/_type_traits/remove_cv.hpp"
+#include <etl/_type_traits/bool_constant.hpp>
+#include <etl/_type_traits/is_same.hpp>
+#include <etl/_type_traits/remove_cv.hpp>
 
 namespace etl {
 

@@ -2,9 +2,9 @@
 
 #undef NDEBUG
 
-#include "etl/cmath.hpp"
-#include "etl/cassert.hpp"
-#include "etl/warning.hpp"
+#include <etl/cassert.hpp>
+#include <etl/cmath.hpp>
+#include <etl/warning.hpp>
 
 constexpr auto test() -> bool
 {
