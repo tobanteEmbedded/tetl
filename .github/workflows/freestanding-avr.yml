@@ -35,5 +35,8 @@ jobs:
           -D CMAKE_CXX_STANDARD=${{ matrix.cxx }}
           -D TETL_BUILD_WERROR=ON
 
+      - name: Build tests -- Debug
+        run: cmake --build build --config Debug
+
       - name: Build tests -- Release
         run: cmake --build build --config Release
