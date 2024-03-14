@@ -58,7 +58,7 @@ struct tuple_leaf {
     }
 
 private:
-    T _value;
+    T _value; // NOLINT(cppcoreguidelines-avoid-const-or-ref-data-members)
 };
 
 template <typename... Ts>

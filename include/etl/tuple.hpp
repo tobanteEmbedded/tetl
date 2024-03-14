@@ -15,6 +15,7 @@
 #include <etl/_tuple/make_tuple.hpp>
 #include <etl/_tuple/tie.hpp>
 #include <etl/_tuple/tuple.hpp>
+#include <etl/_tuple/tuple_cat.hpp>
 #include <etl/_tuple/tuple_element.hpp>
 #include <etl/_tuple/tuple_size.hpp>
 
