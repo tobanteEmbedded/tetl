@@ -30,8 +30,6 @@
 namespace etl {
 
 namespace detail {
-template <size_t Size>
-using make_tuple_indices = typename make_integer_sequence<size_t, Size>::to_tuple_indices;
 
 template <etl::size_t I, typename T>
 struct tuple_leaf {
@@ -67,7 +65,7 @@ template <typename... Ts>
 struct tuple_impl;
 
 template <size_t... Idx, typename... Ts>
-struct tuple_impl<tuple_indices<Idx...>, Ts...> : tuple_leaf<Idx, Ts>... {
+struct tuple_impl<etl::index_sequence<Idx...>, Ts...> : tuple_leaf<Idx, Ts>... {
 private:
 public:
     explicit(not(is_implicit_default_constructible_v<Ts> && ...)) constexpr tuple_impl()
@@ -127,7 +125,7 @@ private:
     template <typename T, typename... Us>
     friend constexpr auto get(tuple<Us...> const&& t) -> auto const&&; // NOLINT
 
-    using impl_t = detail::tuple_impl<detail::make_tuple_indices<sizeof...(Ts)>, Ts...>;
+    using impl_t = detail::tuple_impl<etl::index_sequence_for<Ts...>, Ts...>;
     TETL_NO_UNIQUE_ADDRESS impl_t _impl; // NOLINT(modernize-use-default-member-init)
 
     template <etl::size_t I>
@@ -225,17 +223,16 @@ template <etl::size_t I, typename... Ts>
 }
 
 template <typename... Ts, typename... Us>
+    requires(sizeof...(Ts) == sizeof...(Us))
 [[nodiscard]] constexpr auto operator==(tuple<Ts...> const& lhs, tuple<Us...> const& rhs) -> bool
 {
-    static_assert(sizeof...(Ts) == sizeof...(Us));
-
     if constexpr (sizeof...(Ts) == 0) {
         return false;
     } else {
         return [&]<etl::size_t... Is>(etl::index_sequence<Is...> /*i*/) {
             using etl::get;
             return ((get<Is>(lhs) == get<Is>(rhs)) and ...);
-        }(etl::make_index_sequence<sizeof...(Ts)>{});
+        }(etl::index_sequence_for<Ts...>{});
     }
 }
 

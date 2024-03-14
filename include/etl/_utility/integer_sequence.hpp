@@ -10,11 +10,6 @@
 
 namespace etl {
 
-namespace detail {
-template <size_t...>
-struct tuple_indices { };
-} // namespace detail
-
 template <typename T, T... Ints>
 struct integer_sequence {
     static_assert(is_integral_v<T>, "T must be an integral type.");
@@ -22,8 +17,6 @@ struct integer_sequence {
     using value_type = T;
 
     [[nodiscard]] static constexpr auto size() noexcept -> size_t { return sizeof...(Ints); }
-
-    using to_tuple_indices = typename detail::tuple_indices<Ints...>;
 };
 
 template <typename T, T Size>

@@ -31,10 +31,10 @@ private:
 
     [[nodiscard]] static constexpr auto _dynamic_index(rank_type i) noexcept -> rank_type
     {
-        return []<etl::size_t... Idxs>(etl::size_t idx, integer_sequence<etl::size_t, Idxs...>) {
+        return []<etl::size_t... Idxs>(etl::size_t idx, etl::index_sequence<Idxs...> /*is*/) {
             // NOLINTNEXTLINE(bugprone-misplaced-widening-cast)
             return static_cast<rank_type>((((Idxs < idx) ? (Extents == dynamic_extent ? 1 : 0) : 0) + ... + 0));
-        }(i, make_integer_sequence<etl::size_t, rank()>{});
+        }(i, etl::make_index_sequence<rank()>{});
     }
 
     [[nodiscard]] static constexpr auto _dynamic_index_inv(rank_type i) noexcept -> rank_type
@@ -174,18 +174,18 @@ template <typename IndexType, typename Integrals>
 struct dextents_impl;
 
 template <typename IndexType, etl::size_t... Integrals>
-struct dextents_impl<IndexType, index_sequence<Integrals...>> {
+struct dextents_impl<IndexType, etl::index_sequence<Integrals...>> {
     using type = extents<IndexType, ((void)Integrals, dynamic_extent)...>;
 };
 
 } // namespace detail
 
 template <typename... Integrals>
-    requires(is_convertible_v<Integrals, etl::size_t> && ...)
-extents(Integrals...) -> extents<etl::size_t, etl::size_t((Integrals(), dynamic_extent))...>;
+    requires(etl::is_convertible_v<Integrals, etl::size_t> and ...)
+extents(Integrals...) -> extents<etl::size_t, etl::size_t((Integrals(), etl::dynamic_extent))...>;
 
 template <typename IndexType, etl::size_t Rank>
-using dextents = typename detail::dextents_impl<IndexType, make_index_sequence<Rank>>::type;
+using dextents = typename detail::dextents_impl<IndexType, etl::make_index_sequence<Rank>>::type;
 
 } // namespace etl
 
