@@ -185,6 +185,12 @@ public:
     constexpr auto swap(tuple& other) noexcept((is_nothrow_swappable_v<Ts> && ...)) -> void { _impl.swap(other._impl); }
 };
 
+template <etl::size_t I, typename... Ts>
+struct tuple_element<I, tuple<Ts...>> {
+    static_assert(I < sizeof...(Ts));
+    using type = decltype(declval<tuple<Ts...>>().get_type(index_c<I>));
+};
+
 template <typename... Ts>
 struct tuple_size<tuple<Ts...>> : integral_constant<size_t, sizeof...(Ts)> { };
 
@@ -219,45 +225,19 @@ template <etl::size_t I, typename... Ts>
     return TETL_MOVE(t).template get_impl<I>(index_c<I>);
 }
 
-template <etl::size_t I, typename... Ts>
-struct tuple_element<I, tuple<Ts...>> {
-    static_assert(I < sizeof...(Ts));
-    using type = decltype(declval<tuple<Ts...>>().get_type(index_c<I>));
-};
-
-namespace detail {
-
-template <size_t... Idx, typename... Ts, typename... Us>
-constexpr auto tuple_equal_impl(index_sequence<Idx...> /*i*/, tuple<Ts...> const& l, tuple<Us...> const& r) -> bool
-{
-    return ((get<Idx>(l) == get<Idx>(r)) && ...);
-}
-
 template <typename... Ts, typename... Us>
-constexpr auto tuple_equal(tuple<Ts...> const& l, tuple<Us...> const& r) -> bool
-{
-    static_assert(sizeof...(Ts) != 0);
-    static_assert(sizeof...(Ts) == sizeof...(Us));
-    return tuple_equal_impl(make_index_sequence<sizeof...(Ts)>{}, l, r);
-}
-} // namespace detail
-
-template <typename... Ts, typename... Us>
-constexpr auto operator==(tuple<Ts...> const& lhs, tuple<Us...> const& rhs) -> bool
+[[nodiscard]] constexpr auto operator==(tuple<Ts...> const& lhs, tuple<Us...> const& rhs) -> bool
 {
     static_assert(sizeof...(Ts) == sizeof...(Us));
+
     if constexpr (sizeof...(Ts) == 0) {
         return false;
     } else {
-        return detail::tuple_equal(lhs, rhs);
+        return [&]<etl::size_t... Is>(etl::index_sequence<Is...> /*i*/) {
+            using etl::get;
+            return ((get<Is>(lhs) == get<Is>(rhs)) and ...);
+        }(etl::make_index_sequence<sizeof...(Ts)>{});
     }
-}
-
-template <typename... Ts, typename... Us>
-constexpr auto operator!=(tuple<Ts...> const& lhs, tuple<Us...> const& rhs) -> bool
-{
-    static_assert(sizeof...(Ts) == sizeof...(Us));
-    return !(lhs == rhs);
 }
 
 } // namespace etl
