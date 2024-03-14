@@ -42,27 +42,6 @@ operator==(string_constant<CharT, CharsL...> /*lhs*/, string_constant<CharT, Cha
     return false;
 }
 
-inline namespace string_constant_literals {
-
-#if defined(__clang__)
-    #pragma clang diagnostic push
-    #pragma clang diagnostic ignored "-Wgnu-string-literal-operator-template"
-#endif
-
-#if defined(__GNUC__) or defined(__clang__)
-template <typename T, T... Chars>
-constexpr auto operator""_sc()
-{
-    return etl::string_constant<T, Chars...>{};
-}
-#endif
-
-#if defined(__clang__)
-    #pragma clang diagnostic pop
-#endif
-
-} // namespace string_constant_literals
-
 namespace detail {
 
 template <auto CharArray>

@@ -9,7 +9,6 @@
 constexpr auto test() -> bool
 {
     using namespace etl::string_view_literals;
-    using namespace etl::string_constant_literals;
 
     auto foo    = TETL_STRING_C("foo");
     auto barbaz = TETL_STRING_C("barbaz");
@@ -21,11 +20,6 @@ constexpr auto test() -> bool
 
     ASSERT(foo != barbaz);
     ASSERT(foo != "barbaz"_sv);
-
-#if defined(__GNUC__) or defined(__clang__)
-    ASSERT(foo == "foo"_sc);
-    ASSERT(foo != "barbaz"_sc);
-#endif
 
     return true;
 }
