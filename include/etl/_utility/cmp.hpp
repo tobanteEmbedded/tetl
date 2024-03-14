@@ -12,28 +12,20 @@
 namespace etl {
 
 namespace detail {
-// clang-format off
-template <typename T>
-struct is_integer_and_not_char
-    : bool_constant<
-        is_integral_v<T>
-        and (
-                not is_same_v<T, bool>
-            and not is_same_v<T, char>
-            and not is_same_v<T, char16_t>
-            and not is_same_v<T, char32_t>
-            and not is_same_v<T, wchar_t>
-        )>
-{
-};
-
-// clang-format on
 
 template <typename T>
-inline constexpr auto int_and_not_char_v = is_integer_and_not_char<T>::value;
+concept integer_and_not_char =              //
+    etl::is_integral_v<T>                   //
+    and (                                   //
+        not etl::is_same_v<T, bool>         //
+        and not etl::is_same_v<T, char>     //
+        and not etl::is_same_v<T, char16_t> //
+        and not etl::is_same_v<T, char32_t> //
+        and not etl::is_same_v<T, wchar_t>  //
+    );
 
 template <typename T, typename U>
-inline constexpr auto cmp_int_v = int_and_not_char_v<T> && int_and_not_char_v<U>;
+concept comparable_integers = integer_and_not_char<T> and integer_and_not_char<U>;
 
 } // namespace detail
 
@@ -46,7 +38,7 @@ inline constexpr auto cmp_int_v = int_and_not_char_v<T> && int_and_not_char_v<U>
 /// type).
 /// https://en.cppreference.com/w/cpp/utility/intcmp
 template <typename T, typename U>
-    requires(detail::cmp_int_v<T, U>)
+    requires etl::detail::comparable_integers<T, U>
 [[nodiscard]] constexpr auto cmp_equal(T t, U u) noexcept -> bool
 {
     using UT = etl::make_unsigned_t<T>;
@@ -70,10 +62,10 @@ template <typename T, typename U>
 /// type).
 /// https://en.cppreference.com/w/cpp/utility/intcmp
 template <typename T, typename U>
-    requires(detail::cmp_int_v<T, U>)
+    requires etl::detail::comparable_integers<T, U>
 [[nodiscard]] constexpr auto cmp_not_equal(T t, U u) noexcept -> bool
 {
-    return !cmp_equal(t, u);
+    return not etl::cmp_equal(t, u);
 }
 
 /// \brief Compare the values of two integers t and u. Unlike builtin comparison
@@ -85,7 +77,7 @@ template <typename T, typename U>
 /// type).
 /// https://en.cppreference.com/w/cpp/utility/intcmp
 template <typename T, typename U>
-    requires(detail::cmp_int_v<T, U>)
+    requires etl::detail::comparable_integers<T, U>
 [[nodiscard]] constexpr auto cmp_less(T t, U u) noexcept -> bool
 {
     using UT = etl::make_unsigned_t<T>;
@@ -108,10 +100,10 @@ template <typename T, typename U>
 /// type).
 /// https://en.cppreference.com/w/cpp/utility/intcmp
 template <typename T, typename U>
-    requires(detail::cmp_int_v<T, U>)
+    requires etl::detail::comparable_integers<T, U>
 [[nodiscard]] constexpr auto cmp_greater(T t, U u) noexcept -> bool
 {
-    return cmp_less(u, t);
+    return etl::cmp_less(u, t);
 }
 
 /// \brief Compare the values of two integers t and u. Unlike builtin comparison
@@ -123,10 +115,10 @@ template <typename T, typename U>
 /// type).
 /// https://en.cppreference.com/w/cpp/utility/intcmp
 template <typename T, typename U>
-    requires(detail::cmp_int_v<T, U>)
+    requires etl::detail::comparable_integers<T, U>
 [[nodiscard]] constexpr auto cmp_less_equal(T t, U u) noexcept -> bool
 {
-    return !cmp_greater(t, u);
+    return not etl::cmp_greater(t, u);
 }
 
 /// \brief Compare the values of two integers t and u. Unlike builtin comparison
@@ -138,10 +130,10 @@ template <typename T, typename U>
 /// type).
 /// https://en.cppreference.com/w/cpp/utility/intcmp
 template <typename T, typename U>
-    requires(detail::cmp_int_v<T, U>)
+    requires etl::detail::comparable_integers<T, U>
 [[nodiscard]] constexpr auto cmp_greater_equal(T t, U u) noexcept -> bool
 {
-    return !cmp_less(t, u);
+    return not etl::cmp_less(t, u);
 }
 
 /// \brief Returns true if the value of t is in the range of values that can be
@@ -154,10 +146,11 @@ template <typename T, typename U>
 ///
 /// https://en.cppreference.com/w/cpp/utility/in_range
 template <typename R, typename T>
-    requires(detail::int_and_not_char_v<T>)
+    requires etl::detail::integer_and_not_char<T>
 [[nodiscard]] constexpr auto in_range(T t) noexcept -> bool
 {
-    return cmp_greater_equal(t, numeric_limits<R>::min()) && cmp_less_equal(t, numeric_limits<R>::max());
+    using limits = etl::numeric_limits<R>;
+    return etl::cmp_greater_equal(t, limits::min()) and etl::cmp_less_equal(t, limits::max());
 }
 
 } // namespace etl

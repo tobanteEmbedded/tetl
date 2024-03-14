@@ -9,18 +9,16 @@
 
 namespace etl {
 
-namespace detail {
-template <typename T, typename U>
-struct is_nothrow_assignable_helper : etl::bool_constant<noexcept(etl::declval<T>() = etl::declval<U>())> { };
-} // namespace detail
-
 /// \brief If the expression etl::declval<T>() = etl::declval<U>() is
 /// well-formed in unevaluated context, provides the member constant value equal
 /// true. Otherwise, value is false. Access checks are performed as if from a
 /// context unrelated to either type.
 template <typename T, typename U>
-struct is_nothrow_assignable
-    : bool_constant<is_assignable_v<T, U> && detail::is_nothrow_assignable_helper<T, U>::value> { };
+struct is_nothrow_assignable : etl::false_type { };
+
+template <typename T, typename U>
+    requires etl::is_assignable_v<T, U>
+struct is_nothrow_assignable<T, U> : etl::bool_constant<noexcept(etl::declval<T>() = etl::declval<U>())> { };
 
 template <typename T, typename U>
 inline constexpr bool is_nothrow_assignable_v = is_nothrow_assignable<T, U>::value;

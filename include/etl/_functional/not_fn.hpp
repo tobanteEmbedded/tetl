@@ -25,7 +25,7 @@ struct not_fn_t {
     F f;
 
     template <typename... Args>
-        requires(negate_invocable<F&, Args...>)
+        requires negate_invocable<F&, Args...>
     constexpr auto operator()(Args&&... args) & noexcept(noexcept(not etl::invoke(f, TETL_FORWARD(args)...))
     ) -> decltype(auto)
     {
@@ -33,7 +33,7 @@ struct not_fn_t {
     }
 
     template <typename... Args>
-        requires(negate_invocable<F const&, Args...>)
+        requires negate_invocable<F const&, Args...>
     constexpr auto operator()(Args&&... args) const& noexcept(noexcept(not etl::invoke(f, TETL_FORWARD(args)...))
     ) -> decltype(auto)
     {
@@ -41,7 +41,7 @@ struct not_fn_t {
     }
 
     template <typename... Args>
-        requires(negate_invocable<F, Args...>)
+        requires negate_invocable<F, Args...>
     constexpr auto operator()(Args&&... args) && noexcept(noexcept(not etl::invoke(TETL_MOVE(f), TETL_FORWARD(args)...))
     ) -> decltype(auto)
     {
@@ -49,7 +49,7 @@ struct not_fn_t {
     }
 
     template <typename... Args>
-        requires(negate_invocable<F const, Args...>)
+        requires negate_invocable<F const, Args...>
     constexpr auto operator()(Args&&... args
     ) const&& noexcept(noexcept(not etl::invoke(TETL_MOVE(f), TETL_FORWARD(args)...))) -> decltype(auto)
     {
@@ -57,19 +57,15 @@ struct not_fn_t {
     }
 
     template <typename... Args>
-        requires(not negate_invocable<F&, Args...>)
     auto operator()(Args&&...) & -> void = delete;
 
     template <typename... Args>
-        requires(not negate_invocable<F const&, Args...>)
     auto operator()(Args&&...) const& -> void = delete;
 
     template <typename... Args>
-        requires(not negate_invocable<F, Args...>)
     auto operator()(Args&&...) && -> void = delete;
 
     template <typename... Args>
-        requires(not negate_invocable<F const, Args...>)
     auto operator()(Args&&...) const&& -> void = delete;
 };
 

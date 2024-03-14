@@ -34,7 +34,7 @@ template <detail::bit_uint T>
 [[nodiscard]] constexpr auto popcount(T val) noexcept -> int
 {
     if (is_constant_evaluated()) {
-        return detail::popcount_fallback(val);
+        return etl::detail::popcount_fallback(val);
     }
 #if __has_builtin(__builtin_popcount)
     if constexpr (sizeof(T) == sizeof(unsigned long long)) {
@@ -45,7 +45,7 @@ template <detail::bit_uint T>
         return static_cast<int>(__builtin_popcount(val));
     }
 #else
-    return detail::popcount_fallback(val);
+    return etl::detail::popcount_fallback(val);
 #endif
 }
 

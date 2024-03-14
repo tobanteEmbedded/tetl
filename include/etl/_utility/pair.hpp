@@ -136,8 +136,8 @@ struct pair {
         swap(second, other.second);
     }
 
-    T1 first;  // NOLINT(modernize-use-default-member-init,cppcoreguidelines-avoid-const-or-ref-data-members)
-    T2 second; // NOLINT(modernize-use-default-member-init,cppcoreguidelines-avoid-const-or-ref-data-members)
+    TETL_NO_UNIQUE_ADDRESS T1 first;  // NOLINT
+    TETL_NO_UNIQUE_ADDRESS T2 second; // NOLINT
 
 }; // namespace etl
 
@@ -179,15 +179,7 @@ template <typename T1, typename T2>
 template <typename T1, typename T2>
 constexpr auto operator==(pair<T1, T2> const& lhs, pair<T1, T2> const& rhs) -> bool
 {
-    return (lhs.first == rhs.first) && (lhs.second == rhs.second);
-}
-
-/// \brief Tests if both elements of lhs and rhs are equal, that is, compares
-/// lhs.first with rhs.first and lhs.second with rhs.second.
-template <typename T1, typename T2>
-constexpr auto operator!=(pair<T1, T2> const& lhs, pair<T1, T2> const& rhs) -> bool
-{
-    return !(lhs == rhs);
+    return (lhs.first == rhs.first) and (lhs.second == rhs.second);
 }
 
 /// \brief Compares lhs and rhs lexicographically by operator<, that is,

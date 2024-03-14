@@ -6,56 +6,57 @@
 namespace etl {
 
 namespace detail {
+
 template <typename>
-struct make_unsigned_helper;
+struct make_unsigned;
 
 template <>
-struct make_unsigned_helper<signed char> {
+struct make_unsigned<signed char> {
     using type = unsigned char;
 };
 
 template <>
-struct make_unsigned_helper<signed short> {
+struct make_unsigned<signed short> {
     using type = unsigned short;
 };
 
 template <>
-struct make_unsigned_helper<signed int> {
+struct make_unsigned<signed int> {
     using type = unsigned int;
 };
 
 template <>
-struct make_unsigned_helper<signed long> {
+struct make_unsigned<signed long> {
     using type = unsigned long;
 };
 
 template <>
-struct make_unsigned_helper<signed long long> {
+struct make_unsigned<signed long long> {
     using type = unsigned long long;
 };
 
 template <>
-struct make_unsigned_helper<unsigned char> {
+struct make_unsigned<unsigned char> {
     using type = unsigned char;
 };
 
 template <>
-struct make_unsigned_helper<unsigned short> {
+struct make_unsigned<unsigned short> {
     using type = unsigned short;
 };
 
 template <>
-struct make_unsigned_helper<unsigned int> {
+struct make_unsigned<unsigned int> {
     using type = unsigned int;
 };
 
 template <>
-struct make_unsigned_helper<unsigned long> {
+struct make_unsigned<unsigned long> {
     using type = unsigned long;
 };
 
 template <>
-struct make_unsigned_helper<unsigned long long> {
+struct make_unsigned<unsigned long long> {
     using type = unsigned long long;
 };
 
@@ -68,7 +69,7 @@ struct make_unsigned_helper<unsigned long long> {
 /// provided. The behavior of a program that adds specializations for
 /// make_unsigned is undefined.
 template <typename Type>
-struct make_unsigned : detail::make_unsigned_helper<Type> { };
+struct make_unsigned : etl::detail::make_unsigned<Type> { };
 
 template <typename T>
 using make_unsigned_t = typename make_unsigned<T>::type;

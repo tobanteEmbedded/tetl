@@ -27,7 +27,7 @@ struct default_searcher {
     template <typename ForwardIter2>
     constexpr auto operator()(ForwardIter2 f, ForwardIter2 l) const -> etl::pair<ForwardIter2, ForwardIter2>
     {
-        if (auto i = etl::detail::search_impl(f, l, _first, _last, _predicate); i != l) {
+        if (auto i = etl::search(f, l, _first, _last, _predicate); i != l) {
             auto j = etl::next(i, etl::distance(_first, _last));
             return etl::pair<ForwardIter2, ForwardIter2>{i, j};
         }

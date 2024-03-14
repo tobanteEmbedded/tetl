@@ -22,8 +22,8 @@
 namespace etl {
 
 namespace detail {
-template <size_t Offset, size_t Count, size_t Extent>
-[[nodiscard]] TETL_CONSTEVAL auto subspan_extent() -> size_t
+template <etl::size_t Offset, etl::size_t Count, etl::size_t Extent>
+[[nodiscard]] consteval auto subspan_extent() -> etl::size_t
 {
     if (Count != dynamic_extent) {
         return Count;

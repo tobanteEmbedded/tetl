@@ -10,7 +10,6 @@
 #include <etl/_config/builtin_types.hpp>
 #include <etl/_config/builtin_functions.hpp>
 #include <etl/_config/debug_trap.hpp>
-#include <etl/_config/keywords.hpp>
 #include <etl/_config/version.hpp>
 #include <etl/_config/workarounds.hpp>
 

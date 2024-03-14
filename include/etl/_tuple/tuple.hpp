@@ -3,6 +3,8 @@
 #ifndef TETL_TUPLE_TUPLE_HPP
 #define TETL_TUPLE_TUPLE_HPP
 
+#include <etl/_config/all.hpp>
+
 #include <etl/_tuple/ignore.hpp>
 #include <etl/_tuple/is_tuple_like.hpp>
 #include <etl/_tuple/tuple_element.hpp>
@@ -58,7 +60,7 @@ struct tuple_leaf {
     }
 
 private:
-    T _value; // NOLINT(cppcoreguidelines-avoid-const-or-ref-data-members)
+    TETL_NO_UNIQUE_ADDRESS T _value; // NOLINT(cppcoreguidelines-avoid-const-or-ref-data-members)
 };
 
 template <typename... Ts>
@@ -125,38 +127,35 @@ private:
     template <typename T, typename... Us>
     friend constexpr auto get(tuple<Us...> const&& t) -> auto const&&; // NOLINT
 
-    // clang-format off
-
     using impl_t = detail::tuple_impl<detail::make_tuple_indices<sizeof...(Ts)>, Ts...>;
-    impl_t _impl; // NOLINT(modernize-use-default-member-init)
+    TETL_NO_UNIQUE_ADDRESS impl_t _impl; // NOLINT(modernize-use-default-member-init)
 
-    template <size_t I>
-    [[nodiscard]] constexpr auto get_impl(index_constant<I> ic) &  noexcept -> auto&
+    template <etl::size_t I>
+    [[nodiscard]] constexpr auto get_impl(etl::index_constant<I> ic) & noexcept -> auto&
     {
         return _impl.get_impl(ic);
     }
 
-    template <size_t I>
-    [[nodiscard]] constexpr auto get_impl(index_constant<I> ic) const&  noexcept -> auto const&
+    template <etl::size_t I>
+    [[nodiscard]] constexpr auto get_impl(etl::index_constant<I> ic) const& noexcept -> auto const&
     {
         return _impl.get_impl(ic);
     }
 
-    template <size_t I>
-    [[nodiscard]] constexpr auto get_impl(index_constant<I> ic) && noexcept -> auto&&
+    template <etl::size_t I>
+    [[nodiscard]] constexpr auto get_impl(etl::index_constant<I> ic) && noexcept -> auto&&
     {
         return TETL_MOVE(_impl).get_impl(ic);
     }
 
-    template <size_t I>
-    [[nodiscard]] constexpr auto get_impl(index_constant<I> ic) const&&  noexcept -> auto const&&
+    template <etl::size_t I>
+    [[nodiscard]] constexpr auto get_impl(etl::index_constant<I> ic) const&& noexcept -> auto const&&
     {
         return TETL_MOVE(_impl).get_impl(ic);
     }
 
-    template <size_t I>
-    auto get_type(index_constant<I> ic) -> decltype(_impl.get_type(ic));
-    // clang-format on
+    template <etl::size_t I>
+    auto get_type(etl::index_constant<I> ic) -> decltype(_impl.get_type(ic));
 
 public:
     // No. 1

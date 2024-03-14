@@ -6,56 +6,57 @@
 namespace etl {
 
 namespace detail {
+
 template <typename>
-struct make_signed_helper;
+struct make_signed;
 
 template <>
-struct make_signed_helper<signed char> {
+struct make_signed<signed char> {
     using type = signed char;
 };
 
 template <>
-struct make_signed_helper<signed short> {
+struct make_signed<signed short> {
     using type = signed short;
 };
 
 template <>
-struct make_signed_helper<signed int> {
+struct make_signed<signed int> {
     using type = signed int;
 };
 
 template <>
-struct make_signed_helper<signed long> {
+struct make_signed<signed long> {
     using type = signed long;
 };
 
 template <>
-struct make_signed_helper<signed long long> {
+struct make_signed<signed long long> {
     using type = signed long long;
 };
 
 template <>
-struct make_signed_helper<unsigned char> {
+struct make_signed<unsigned char> {
     using type = signed char;
 };
 
 template <>
-struct make_signed_helper<unsigned short> {
+struct make_signed<unsigned short> {
     using type = signed short;
 };
 
 template <>
-struct make_signed_helper<unsigned int> {
+struct make_signed<unsigned int> {
     using type = signed int;
 };
 
 template <>
-struct make_signed_helper<unsigned long> {
+struct make_signed<unsigned long> {
     using type = signed long;
 };
 
 template <>
-struct make_signed_helper<unsigned long long> {
+struct make_signed<unsigned long long> {
     using type = signed long long;
 };
 
@@ -73,7 +74,7 @@ struct make_signed_helper<unsigned long long> {
 /// static_assert(is_same_v<make_signed_t<unsigned>, int>);
 /// ```
 template <typename Type>
-struct make_signed : detail::make_signed_helper<Type> { };
+struct make_signed : etl::detail::make_signed<Type> { };
 
 template <typename T>
 using make_signed_t = typename make_signed<T>::type;
