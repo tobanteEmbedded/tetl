@@ -32,11 +32,12 @@ constexpr auto operator""_sc()
 }
 
 template <auto Str>
+    requires(etl::size(Str) > 0)
 consteval auto to_string_constant()
 {
     return []<etl::size_t... idx>(etl::index_sequence<idx...>) {
         return string_constant<char, etl::get<idx>(Str)...>{};
-    }(etl::make_index_sequence<etl::size(Str)>{});
+    }(etl::make_index_sequence<etl::size(Str) - 1>{});
 }
 
 #define TETL_STRING_CONSTANT(str) to_string_constant<etl::to_array((str))>()

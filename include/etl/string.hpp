@@ -16,5 +16,6 @@
 #include <etl/_string/basic_static_string.hpp>
 #include <etl/_string/static_string.hpp>
 #include <etl/_string/static_wstring.hpp>
+#include <etl/_string/string_constant.hpp>
 
 #endif // TETL_STRING_HPP
