@@ -30,5 +30,6 @@
 #include <etl/_utility/piecewise_construct.hpp>
 #include <etl/_utility/swap.hpp>
 #include <etl/_utility/to_underlying.hpp>
+#include <etl/_utility/unreachable.hpp>
 
 #endif // TETL_UTILITY_HPP
