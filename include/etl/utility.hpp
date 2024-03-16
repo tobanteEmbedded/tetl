@@ -9,7 +9,12 @@
 #include <etl/_config/all.hpp>
 
 #include <etl/_utility/as_const.hpp>
-#include <etl/_utility/cmp.hpp>
+#include <etl/_utility/cmp_equal.hpp>
+#include <etl/_utility/cmp_greater.hpp>
+#include <etl/_utility/cmp_greater_equal.hpp>
+#include <etl/_utility/cmp_less.hpp>
+#include <etl/_utility/cmp_less_equal.hpp>
+#include <etl/_utility/cmp_not_equal.hpp>
 #include <etl/_utility/exchange.hpp>
 #include <etl/_utility/forward.hpp>
 #include <etl/_utility/in_place.hpp>

@@ -6,7 +6,7 @@
 #include <etl/_limits/numeric_limits.hpp>
 #include <etl/_linalg/concepts.hpp>
 #include <etl/_type_traits/is_arithmetic.hpp>
-#include <etl/_utility/cmp.hpp>
+#include <etl/_utility/cmp_less.hpp>
 
 namespace etl::linalg {
 
@@ -26,7 +26,7 @@ constexpr auto idx_abs_max(InVec v) -> typename InVec::size_type
     auto idx  = numeric_limits<typename InVec::size_type>::max();
     auto maxV = numeric_limits<decltype(getValue(v(0)))>::min();
 
-    for (typename InVec::size_type i{0}; cmp_less(i, v.extent(0)); ++i) {
+    for (typename InVec::size_type i{0}; etl::cmp_less(i, v.extent(0)); ++i) {
         if (auto const val = getValue(v(i)); val > maxV) {
             idx  = i;
             maxV = val;

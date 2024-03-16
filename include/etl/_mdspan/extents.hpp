@@ -13,7 +13,7 @@
 #include <etl/_type_traits/is_convertible.hpp>
 #include <etl/_type_traits/is_nothrow_convertible.hpp>
 #include <etl/_type_traits/make_unsigned.hpp>
-#include <etl/_utility/cmp.hpp>
+#include <etl/_utility/cmp_not_equal.hpp>
 #include <etl/_utility/index_sequence.hpp>
 
 namespace etl {

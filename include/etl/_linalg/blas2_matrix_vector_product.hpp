@@ -4,7 +4,7 @@
 #define TETL_LINALG_BLAS2_MATRIX_VECTOR_PRODUCT_HPP
 
 #include <etl/_linalg/concepts.hpp>
-#include <etl/_utility/cmp.hpp>
+#include <etl/_utility/cmp_less.hpp>
 
 namespace etl::linalg {
 
@@ -16,9 +16,9 @@ constexpr auto matrix_vector_product(InMat a, InVec x, OutVec y) noexcept -> voi
 
     using size_type = detail::common_size_type_t<InMat, InVec, OutVec>;
 
-    for (size_type i(0); cmp_less(i, a.extent(0)); ++i) {
+    for (size_type i(0); etl::cmp_less(i, a.extent(0)); ++i) {
         y(i) = typename OutVec::element_type{};
-        for (size_type j(0); cmp_less(j, a.extent(1)); ++j) {
+        for (size_type j(0); etl::cmp_less(j, a.extent(1)); ++j) {
             y(i) += a(i, j) * x(j);
         }
     }
