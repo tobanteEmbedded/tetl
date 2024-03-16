@@ -2,7 +2,7 @@
 #ifndef TETL_NUMERIC_ABS_HPP
 #define TETL_NUMERIC_ABS_HPP
 
-#include "etl/_limits/numeric_limits.hpp"
+#include <etl/_limits/numeric_limits.hpp>
 
 namespace etl {
 
@@ -10,8 +10,8 @@ namespace etl {
 template <typename Type>
 [[nodiscard]] constexpr auto abs(Type input) noexcept -> Type
 {
-    using limits = numeric_limits<Type>;
-    if constexpr (limits::is_signed || !limits::is_specialized) {
+    using limits = etl::numeric_limits<Type>;
+    if constexpr (limits::is_signed or not limits::is_specialized) {
         if (input < 0) {
             return static_cast<Type>(-input);
         }

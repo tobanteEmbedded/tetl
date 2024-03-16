@@ -3,8 +3,8 @@
 #ifndef TETL_BIT_HAS_SINGLE_BIT_HPP
 #define TETL_BIT_HAS_SINGLE_BIT_HPP
 
-#include "etl/_bit/bit_uint.hpp"
-#include "etl/_bit/popcount.hpp"
+#include <etl/_bit/bit_uint.hpp>
+#include <etl/_bit/popcount.hpp>
 
 namespace etl {
 

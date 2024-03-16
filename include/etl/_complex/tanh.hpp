@@ -12,7 +12,7 @@ namespace etl {
 template <typename T>
 [[nodiscard]] constexpr auto tanh(complex<T> const& z) -> complex<T>
 {
-    return sinh(z) / cosh(z);
+    return etl::sinh(z) / etl::cosh(z);
 }
 
 } // namespace etl

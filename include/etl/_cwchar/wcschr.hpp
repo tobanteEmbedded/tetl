@@ -3,7 +3,7 @@
 #ifndef TETL_CWCHAR_WCSCHR_HPP
 #define TETL_CWCHAR_WCSCHR_HPP
 
-#include "etl/_strings/cstr_algorithm.hpp"
+#include <etl/_strings/cstr_algorithm.hpp>
 
 namespace etl {
 /// \brief Finds the first occurrence of the wide character ch in the wide

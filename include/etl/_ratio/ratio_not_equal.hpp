@@ -3,8 +3,8 @@
 #ifndef TETL_RATIO_NOT_EQUAL_HPP
 #define TETL_RATIO_NOT_EQUAL_HPP
 
-#include "etl/_ratio/ratio.hpp"
-#include "etl/_type_traits/bool_constant.hpp"
+#include <etl/_ratio/ratio.hpp>
+#include <etl/_type_traits/bool_constant.hpp>
 
 namespace etl {
 

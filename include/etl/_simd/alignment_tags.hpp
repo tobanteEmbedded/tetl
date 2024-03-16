@@ -3,7 +3,7 @@
 #ifndef TETL_SIMD_ALIGNMENT_TAGS_HPP
 #define TETL_SIMD_ALIGNMENT_TAGS_HPP
 
-#include "etl/_cstddef/size_t.hpp"
+#include <etl/_cstddef/size_t.hpp>
 
 namespace etl {
 

@@ -3,7 +3,7 @@
 #ifndef TETL_TYPE_TRAITS_ALIGNED_UNION_HPP
 #define TETL_TYPE_TRAITS_ALIGNED_UNION_HPP
 
-#include "etl/_cstddef/size_t.hpp"
+#include <etl/_cstddef/size_t.hpp>
 
 namespace etl {
 

@@ -3,9 +3,9 @@
 #ifndef TETL_COMPARE_SYNTH_THREE_WAY_HPP
 #define TETL_COMPARE_SYNTH_THREE_WAY_HPP
 
-#include "etl/_compare/weak_ordering.hpp"
-#include "etl/_concepts/boolean_testable.hpp"
-#include "etl/_type_traits/declval.hpp"
+#include <etl/_compare/weak_ordering.hpp>
+#include <etl/_concepts/boolean_testable.hpp>
+#include <etl/_type_traits/declval.hpp>
 
 namespace etl {
 

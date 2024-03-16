@@ -3,8 +3,8 @@
 #ifndef TETL_COMPLEX_ABS_HPP
 #define TETL_COMPLEX_ABS_HPP
 
-#include "etl/_cmath/hypot.hpp"
-#include "etl/_complex/complex.hpp"
+#include <etl/_cmath/hypot.hpp>
+#include <etl/_complex/complex.hpp>
 
 namespace etl {
 

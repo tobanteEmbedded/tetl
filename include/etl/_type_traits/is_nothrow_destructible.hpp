@@ -3,9 +3,9 @@
 #ifndef TETL_TYPE_TRAITS_IS_NOTHROW_DESTRUCTIBLE_HPP
 #define TETL_TYPE_TRAITS_IS_NOTHROW_DESTRUCTIBLE_HPP
 
-#include "etl/_type_traits/bool_constant.hpp"
-#include "etl/_type_traits/declval.hpp"
-#include "etl/_type_traits/is_destructible.hpp"
+#include <etl/_type_traits/bool_constant.hpp>
+#include <etl/_type_traits/declval.hpp>
+#include <etl/_type_traits/is_destructible.hpp>
 
 namespace etl {
 

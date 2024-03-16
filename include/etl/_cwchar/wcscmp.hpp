@@ -3,7 +3,7 @@
 #ifndef TETL_CWCHAR_WCSCMP_HPP
 #define TETL_CWCHAR_WCSCMP_HPP
 
-#include "etl/_strings/cstr_algorithm.hpp"
+#include <etl/_strings/cstr_algorithm.hpp>
 
 namespace etl {
 /// \brief Compares two null-terminated wide strings lexicographically.

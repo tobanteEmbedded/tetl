@@ -21,13 +21,13 @@ template <typename T>
 template <typename Float>
 [[nodiscard]] constexpr auto norm(Float f) noexcept -> enable_if_t<is_floating_point_v<Float>, complex<Float>>
 {
-    return norm(complex<Float>(f));
+    return etl::norm(etl::complex<Float>(f));
 }
 
 template <typename Integer>
 [[nodiscard]] constexpr auto norm(Integer i) noexcept -> enable_if_t<is_integral_v<Integer>, complex<double>>
 {
-    return norm(complex<double>(i));
+    return etl::norm(etl::complex<double>(i));
 }
 
 } // namespace etl

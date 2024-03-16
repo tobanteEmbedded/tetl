@@ -3,8 +3,8 @@
 #ifndef TETL_COMPARE_COMMON_THREE_WAY_RESULT_HPP
 #define TETL_COMPARE_COMMON_THREE_WAY_RESULT_HPP
 
-#include "etl/_type_traits/declval.hpp"
-#include "etl/_type_traits/remove_reference.hpp"
+#include <etl/_type_traits/declval.hpp>
+#include <etl/_type_traits/remove_reference.hpp>
 
 namespace etl {
 

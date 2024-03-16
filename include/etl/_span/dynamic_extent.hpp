@@ -3,8 +3,8 @@
 #ifndef TETL_SPAN_DYNAMIC_EXTENT_HPP
 #define TETL_SPAN_DYNAMIC_EXTENT_HPP
 
-#include "etl/_cstddef/size_t.hpp"
-#include "etl/_limits/numeric_limits.hpp"
+#include <etl/_cstddef/size_t.hpp>
+#include <etl/_limits/numeric_limits.hpp>
 
 namespace etl {
 

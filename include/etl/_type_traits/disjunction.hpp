@@ -3,8 +3,8 @@
 #ifndef TETL_TYPE_TRAITS_DISJUNCTION_HPP
 #define TETL_TYPE_TRAITS_DISJUNCTION_HPP
 
-#include "etl/_type_traits/bool_constant.hpp"
-#include "etl/_type_traits/conditional.hpp"
+#include <etl/_type_traits/bool_constant.hpp>
+#include <etl/_type_traits/conditional.hpp>
 
 namespace etl {
 

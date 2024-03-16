@@ -3,9 +3,9 @@
 #ifndef TETL_TYPE_TRAITS_IS_COPY_ASSIGNABLE_HPP
 #define TETL_TYPE_TRAITS_IS_COPY_ASSIGNABLE_HPP
 
-#include "etl/_type_traits/add_lvalue_reference.hpp"
-#include "etl/_type_traits/bool_constant.hpp"
-#include "etl/_type_traits/is_assignable.hpp"
+#include <etl/_type_traits/add_lvalue_reference.hpp>
+#include <etl/_type_traits/bool_constant.hpp>
+#include <etl/_type_traits/is_assignable.hpp>
 
 namespace etl {
 

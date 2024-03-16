@@ -3,7 +3,7 @@
 #ifndef TETL_RATIO_SUBTRACT_HPP
 #define TETL_RATIO_SUBTRACT_HPP
 
-#include "etl/_ratio/ratio.hpp"
+#include <etl/_ratio/ratio.hpp>
 
 namespace etl {
 

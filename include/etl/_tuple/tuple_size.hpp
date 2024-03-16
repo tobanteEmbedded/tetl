@@ -3,8 +3,8 @@
 #ifndef TETL_TUPLE_TUPLE_SIZE_HPP
 #define TETL_TUPLE_TUPLE_SIZE_HPP
 
-#include "etl/_cstddef/size_t.hpp"
-#include "etl/_type_traits/integral_constant.hpp"
+#include <etl/_cstddef/size_t.hpp>
+#include <etl/_type_traits/integral_constant.hpp>
 
 namespace etl {
 

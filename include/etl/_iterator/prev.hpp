@@ -3,8 +3,8 @@
 #ifndef TETL_ITERATOR_PREV_HPP
 #define TETL_ITERATOR_PREV_HPP
 
-#include "etl/_iterator/advance.hpp"
-#include "etl/_iterator/iterator_traits.hpp"
+#include <etl/_iterator/advance.hpp>
+#include <etl/_iterator/iterator_traits.hpp>
 
 namespace etl {
 

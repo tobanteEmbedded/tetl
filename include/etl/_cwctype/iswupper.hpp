@@ -3,7 +3,7 @@
 #ifndef TETL_CWCTYPE_ISWUPPER_HPP
 #define TETL_CWCTYPE_ISWUPPER_HPP
 
-#include "etl/_cwchar/wint_t.hpp"
+#include <etl/_cwchar/wint_t.hpp>
 
 namespace etl {
 

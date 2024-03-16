@@ -3,8 +3,8 @@
 #ifndef TETL_ITERATOR_REVERSE_ITERATOR_HPP
 #define TETL_ITERATOR_REVERSE_ITERATOR_HPP
 
-#include "etl/_iterator/iterator_traits.hpp"
-#include "etl/_memory/addressof.hpp"
+#include <etl/_iterator/iterator_traits.hpp>
+#include <etl/_memory/addressof.hpp>
 
 namespace etl {
 

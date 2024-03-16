@@ -3,8 +3,8 @@
 #ifndef TETL_BIT_ROTL_HPP
 #define TETL_BIT_ROTL_HPP
 
-#include "etl/_bit/bit_uint.hpp"
-#include "etl/_limits/numeric_limits.hpp"
+#include <etl/_bit/bit_uint.hpp>
+#include <etl/_limits/numeric_limits.hpp>
 
 namespace etl {
 

@@ -3,8 +3,8 @@
 #ifndef TETL_UTILITY_INDEX_SEQUENCE_HPP
 #define TETL_UTILITY_INDEX_SEQUENCE_HPP
 
-#include "etl/_cstddef/size_t.hpp"
-#include "etl/_utility/integer_sequence.hpp"
+#include <etl/_cstddef/size_t.hpp>
+#include <etl/_utility/integer_sequence.hpp>
 
 namespace etl {
 

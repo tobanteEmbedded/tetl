@@ -3,8 +3,8 @@
 #ifndef TETL_MEMORY_TO_ADDRESS_HPP
 #define TETL_MEMORY_TO_ADDRESS_HPP
 
-#include "etl/_memory/pointer_traits.hpp"
-#include "etl/_type_traits/is_function.hpp"
+#include <etl/_memory/pointer_traits.hpp>
+#include <etl/_type_traits/is_function.hpp>
 
 namespace etl {
 

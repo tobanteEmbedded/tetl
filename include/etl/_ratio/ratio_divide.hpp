@@ -3,7 +3,7 @@
 #ifndef TETL_RATIO_DIVIDE_HPP
 #define TETL_RATIO_DIVIDE_HPP
 
-#include "etl/_ratio/ratio.hpp"
+#include <etl/_ratio/ratio.hpp>
 
 namespace etl {
 

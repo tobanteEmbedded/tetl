@@ -3,8 +3,8 @@
 #ifndef TETL_TYPE_TRAITS_COMMON_REFERENCE_HPP
 #define TETL_TYPE_TRAITS_COMMON_REFERENCE_HPP
 
-#include "etl/_type_traits/integral_constant.hpp"
-#include "etl/_type_traits/is_same.hpp"
+#include <etl/_type_traits/integral_constant.hpp>
+#include <etl/_type_traits/is_same.hpp>
 
 namespace etl {
 

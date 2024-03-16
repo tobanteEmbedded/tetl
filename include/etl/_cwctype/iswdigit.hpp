@@ -3,7 +3,7 @@
 #ifndef TETL_CWCTYPE_ISWDIGIT_HPP
 #define TETL_CWCTYPE_ISWDIGIT_HPP
 
-#include "etl/_cwchar/wint_t.hpp"
+#include <etl/_cwchar/wint_t.hpp>
 
 namespace etl {
 /// \brief Checks if the given wide character corresponds (if narrowed) to one

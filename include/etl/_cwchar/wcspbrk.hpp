@@ -3,8 +3,8 @@
 #ifndef TETL_CWCHAR_WCSPBRK_HPP
 #define TETL_CWCHAR_WCSPBRK_HPP
 
-#include "etl/_cstddef/size_t.hpp"
-#include "etl/_strings/cstr_algorithm.hpp"
+#include <etl/_cstddef/size_t.hpp>
+#include <etl/_strings/cstr_algorithm.hpp>
 
 namespace etl {
 

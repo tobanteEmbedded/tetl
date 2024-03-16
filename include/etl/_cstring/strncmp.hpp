@@ -3,8 +3,8 @@
 #ifndef TETL_CSTRING_STRNCMP_HPP
 #define TETL_CSTRING_STRNCMP_HPP
 
-#include "etl/_cstddef/size_t.hpp"
-#include "etl/_strings/cstr_algorithm.hpp"
+#include <etl/_cstddef/size_t.hpp>
+#include <etl/_strings/cstr_algorithm.hpp>
 
 namespace etl {
 

@@ -3,7 +3,7 @@
 #ifndef TETL_SYSTEM_ERROR_IS_ERROR_CONDITION_ENUM_HPP
 #define TETL_SYSTEM_ERROR_IS_ERROR_CONDITION_ENUM_HPP
 
-#include "etl/_type_traits/bool_constant.hpp"
+#include <etl/_type_traits/bool_constant.hpp>
 
 namespace etl {
 

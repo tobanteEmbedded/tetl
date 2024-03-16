@@ -10,9 +10,9 @@
 namespace etl {
 
 template <typename T>
-[[nodiscard]] constexpr auto polar(T const& r, T const& theta = T()) noexcept -> complex<T>
+[[nodiscard]] constexpr auto polar(T const& r, T const& theta = T()) noexcept -> etl::complex<T>
 {
-    return complex<T>{r * cos(theta), r * sin(theta)};
+    return etl::complex<T>{r * etl::cos(theta), r * etl::sin(theta)};
 }
 
 } // namespace etl

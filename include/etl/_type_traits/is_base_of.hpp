@@ -3,8 +3,8 @@
 #ifndef TETL_TYPE_TRAITS_IS_BASE_OF_HPP
 #define TETL_TYPE_TRAITS_IS_BASE_OF_HPP
 
-#include "etl/_type_traits/bool_constant.hpp"
-#include "etl/_type_traits/is_class.hpp"
+#include <etl/_type_traits/bool_constant.hpp>
+#include <etl/_type_traits/is_class.hpp>
 
 namespace etl {
 

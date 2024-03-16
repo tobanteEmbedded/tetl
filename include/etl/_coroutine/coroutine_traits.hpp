@@ -3,7 +3,7 @@
 #ifndef TETL_COROUTINE_COROUTINE_TRAITS_HPP
 #define TETL_COROUTINE_COROUTINE_TRAITS_HPP
 
-#include "etl/_type_traits/void_t.hpp"
+#include <etl/_type_traits/void_t.hpp>
 
 #if defined(__cpp_coroutines)
 

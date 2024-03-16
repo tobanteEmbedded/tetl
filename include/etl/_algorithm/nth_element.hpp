@@ -3,8 +3,8 @@
 #ifndef TETL_ALGORITHM_NTH_ELEMENT_HPP
 #define TETL_ALGORITHM_NTH_ELEMENT_HPP
 
-#include "etl/_algorithm/sort.hpp"
-#include "etl/_warning/ignore_unused.hpp"
+#include <etl/_algorithm/sort.hpp>
+#include <etl/_warning/ignore_unused.hpp>
 
 namespace etl {
 
@@ -20,15 +20,15 @@ template <typename RandomIt, typename Compare>
 constexpr auto nth_element(RandomIt first, RandomIt nth, RandomIt last, Compare comp) -> void
 {
     // TODO: Improve. Currently forwards to regular sort.
-    ignore_unused(nth);
-    sort(first, last, comp);
+    etl::ignore_unused(nth);
+    etl::sort(first, last, comp);
 }
 
 template <typename RandomIt>
 constexpr auto nth_element(RandomIt first, RandomIt nth, RandomIt last) -> void
 {
-    ignore_unused(nth);
-    sort(first, last);
+    etl::ignore_unused(nth);
+    etl::sort(first, last);
 }
 
 } // namespace etl

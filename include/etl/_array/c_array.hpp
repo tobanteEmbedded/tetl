@@ -3,7 +3,7 @@
 #ifndef TETL_ARRAY_C_ARRAY_HPP
 #define TETL_ARRAY_C_ARRAY_HPP
 
-#include "etl/_cstddef/size_t.hpp"
+#include <etl/_cstddef/size_t.hpp>
 
 namespace etl {
 

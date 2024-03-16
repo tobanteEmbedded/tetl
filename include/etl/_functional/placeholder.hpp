@@ -5,7 +5,7 @@
 #ifndef TETL_FUNCTIONAL_PLACEHOLDER_HPP
 #define TETL_FUNCTIONAL_PLACEHOLDER_HPP
 
-#include "etl/_type_traits/integral_constant.hpp"
+#include <etl/_type_traits/integral_constant.hpp>
 
 namespace etl {
 

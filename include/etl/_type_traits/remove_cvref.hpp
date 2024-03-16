@@ -3,8 +3,8 @@
 #ifndef TETL_TYPE_TRAITS_REMOVE_CVREF_HPP
 #define TETL_TYPE_TRAITS_REMOVE_CVREF_HPP
 
-#include "etl/_type_traits/remove_cv.hpp"
-#include "etl/_type_traits/remove_reference.hpp"
+#include <etl/_type_traits/remove_cv.hpp>
+#include <etl/_type_traits/remove_reference.hpp>
 
 namespace etl {
 

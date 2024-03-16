@@ -3,8 +3,8 @@
 #ifndef TETL_MEMORY_DESTROY_HPP
 #define TETL_MEMORY_DESTROY_HPP
 
-#include "etl/_memory/addressof.hpp"
-#include "etl/_memory/destroy_at.hpp"
+#include <etl/_memory/addressof.hpp>
+#include <etl/_memory/destroy_at.hpp>
 
 namespace etl {
 

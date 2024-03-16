@@ -3,8 +3,8 @@
 #ifndef TETL_TYPE_TRAITS_IS_UNSIGNED_HPP
 #define TETL_TYPE_TRAITS_IS_UNSIGNED_HPP
 
-#include "etl/_type_traits/bool_constant.hpp"
-#include "etl/_type_traits/is_arithmetic.hpp"
+#include <etl/_type_traits/bool_constant.hpp>
+#include <etl/_type_traits/is_arithmetic.hpp>
 
 namespace etl {
 

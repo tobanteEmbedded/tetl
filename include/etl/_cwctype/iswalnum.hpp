@@ -3,7 +3,7 @@
 #ifndef TETL_CWCTYPE_ISWALNUM_HPP
 #define TETL_CWCTYPE_ISWALNUM_HPP
 
-#include "etl/_cwchar/wint_t.hpp"
+#include <etl/_cwchar/wint_t.hpp>
 
 namespace etl {
 
@@ -19,10 +19,10 @@ namespace etl {
 /// https://en.cppreference.com/w/cpp/string/wide/iswalnum
 [[nodiscard]] constexpr auto iswalnum(wint_t ch) noexcept -> int
 {
-    auto isDigit = ch >= L'0' && ch <= L'9';
-    auto isLower = ch >= L'a' && ch <= L'z';
-    auto isUpper = ch >= L'A' && ch <= L'Z';
-    return static_cast<int>(isDigit || isLower || isUpper);
+    auto isDigit = ch >= L'0' and ch <= L'9';
+    auto isLower = ch >= L'a' and ch <= L'z';
+    auto isUpper = ch >= L'A' and ch <= L'Z';
+    return static_cast<int>(isDigit or isLower or isUpper);
 }
 
 } // namespace etl

@@ -3,9 +3,9 @@
 #ifndef TETL_TYPE_TRAITS_COMMON_TYPE_HPP
 #define TETL_TYPE_TRAITS_COMMON_TYPE_HPP
 
-#include "etl/_type_traits/decay.hpp"
-#include "etl/_type_traits/declval.hpp"
-#include "etl/_type_traits/void_t.hpp"
+#include <etl/_type_traits/decay.hpp>
+#include <etl/_type_traits/declval.hpp>
+#include <etl/_type_traits/void_t.hpp>
 
 namespace etl {
 

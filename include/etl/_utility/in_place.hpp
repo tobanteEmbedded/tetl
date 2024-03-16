@@ -3,7 +3,7 @@
 #ifndef TETL_UTILITY_IN_PLACE_HPP
 #define TETL_UTILITY_IN_PLACE_HPP
 
-#include "etl/_cstddef/size_t.hpp"
+#include <etl/_cstddef/size_t.hpp>
 
 namespace etl {
 

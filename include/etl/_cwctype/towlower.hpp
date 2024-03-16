@@ -3,8 +3,8 @@
 #ifndef TETL_CCTYPE_TOLOWER_HPP
 #define TETL_CCTYPE_TOLOWER_HPP
 
-#include "etl/_cwchar/wint_t.hpp"
-#include "etl/_cwctype/iswupper.hpp"
+#include <etl/_cwchar/wint_t.hpp>
+#include <etl/_cwctype/iswupper.hpp>
 
 namespace etl {
 

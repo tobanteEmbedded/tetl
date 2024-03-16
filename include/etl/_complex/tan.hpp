@@ -12,7 +12,7 @@ namespace etl {
 template <typename T>
 [[nodiscard]] constexpr auto tan(complex<T> const& z) -> complex<T>
 {
-    return sin(z) / cos(z);
+    return etl::sin(z) / etl::cos(z);
 }
 
 } // namespace etl

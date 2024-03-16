@@ -3,7 +3,7 @@
 #ifndef TETL_MDSPAN_IS_EXTENTS_HPP
 #define TETL_MDSPAN_IS_EXTENTS_HPP
 
-#include "etl/_cstddef/size_t.hpp"
+#include <etl/_cstddef/size_t.hpp>
 
 namespace etl {
 

@@ -3,7 +3,7 @@
 #ifndef TETL_CWCTYPE_ISWPUNCT_HPP
 #define TETL_CWCTYPE_ISWPUNCT_HPP
 
-#include "etl/_cwchar/wint_t.hpp"
+#include <etl/_cwchar/wint_t.hpp>
 
 namespace etl {
 

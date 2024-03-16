@@ -3,8 +3,8 @@
 #ifndef TETL_CWCTYPE_ISWPRINT_HPP
 #define TETL_CWCTYPE_ISWPRINT_HPP
 
-#include "etl/_cwchar/wint_t.hpp"
-#include "etl/_cwctype/iswgraph.hpp"
+#include <etl/_cwchar/wint_t.hpp>
+#include <etl/_cwctype/iswgraph.hpp>
 
 namespace etl {
 /// \brief Checks if the given wide character can be printed, i.e. it is either

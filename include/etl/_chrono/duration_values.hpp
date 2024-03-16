@@ -3,7 +3,7 @@
 #ifndef TETL_CHRONO_DURATION_VALUES_HPP
 #define TETL_CHRONO_DURATION_VALUES_HPP
 
-#include "etl/_limits/numeric_limits.hpp"
+#include <etl/_limits/numeric_limits.hpp>
 
 namespace etl::chrono {
 /// \brief The etl::chrono::duration_values type defines three common durations.
