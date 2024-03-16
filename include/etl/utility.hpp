@@ -17,6 +17,7 @@
 #include <etl/_utility/cmp_not_equal.hpp>
 #include <etl/_utility/exchange.hpp>
 #include <etl/_utility/forward.hpp>
+#include <etl/_utility/forward_like.hpp>
 #include <etl/_utility/in_place.hpp>
 #include <etl/_utility/in_place_index.hpp>
 #include <etl/_utility/in_place_type.hpp>
