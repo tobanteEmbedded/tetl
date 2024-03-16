@@ -12,20 +12,22 @@
 namespace etl {
 
 template <typename T, typename U>
-[[nodiscard]] constexpr auto&& forward_like(U&& x) noexcept
+[[nodiscard]] constexpr auto forward_like(U&& x) noexcept -> auto&&
 {
-    constexpr auto is_adding_const = etl::is_const_v<etl::remove_reference_t<T>>;
+    constexpr auto isAddingConst = etl::is_const_v<etl::remove_reference_t<T>>;
 
     if constexpr (etl::is_lvalue_reference_v<T&&>) {
-        if constexpr (is_adding_const)
+        if constexpr (isAddingConst) {
             return etl::as_const(x);
-        else
+        } else {
             return static_cast<U&>(x);
+        }
     } else {
-        if constexpr (is_adding_const)
+        if constexpr (isAddingConst) {
             return TETL_MOVE(etl::as_const(x));
-        else
+        } else {
             return TETL_MOVE(x);
+        }
     }
 }
 

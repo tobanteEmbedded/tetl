@@ -5,9 +5,7 @@
 
 #include <etl/_type_traits/is_same.hpp>
 
-namespace etl {
-
-namespace detail {
+namespace etl::detail {
 
 template <typename T>
 concept integer_and_not_char =              //
@@ -23,8 +21,6 @@ concept integer_and_not_char =              //
 template <typename T, typename U>
 concept comparable_integers = integer_and_not_char<T> and integer_and_not_char<U>;
 
-} // namespace detail
-
-} // namespace etl
+} // namespace etl::detail
 
 #endif // TETL_UTILITY_COMPARABLE_INTEGERS_HPP
