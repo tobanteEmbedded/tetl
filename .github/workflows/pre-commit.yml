@@ -1,0 +1,19 @@
+name: Pre-Commit Hooks
+
+on: [push, pull_request]
+
+jobs:
+  check:
+    runs-on: ubuntu-22.04
+    steps:
+      - name: Check out code
+        uses: actions/checkout@v4
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install pre-commit
+
+      - name: Check
+        run: |
+          pre-commit run --all-files
