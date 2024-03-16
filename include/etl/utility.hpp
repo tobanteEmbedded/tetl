@@ -26,6 +26,7 @@
 #include <etl/_utility/integer_sequence.hpp>
 #include <etl/_utility/move.hpp>
 #include <etl/_utility/move_if_noexcept.hpp>
+#include <etl/_utility/non_type.hpp>
 #include <etl/_utility/pair.hpp>
 #include <etl/_utility/piecewise_construct.hpp>
 #include <etl/_utility/swap.hpp>
