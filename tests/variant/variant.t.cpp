@@ -386,14 +386,14 @@ static auto test() -> bool
     return true;
 }
 
-constexpr auto test_variant_type_selector_t() -> bool
+constexpr auto test_variant_ctor_type_selector_t() -> bool
 {
     using string_t = etl::static_string<15>;
 
-    assert(etl::is_same_v<etl::detail::variant_type_selector_t<int, int, float>, int>);
-    assert(etl::is_same_v<etl::detail::variant_type_selector_t<float, int, float>, float>);
-    assert(etl::is_same_v<etl::detail::variant_type_selector_t<string_t, int, string_t>, string_t>);
-    assert(etl::is_same_v<etl::detail::variant_type_selector_t<char const*, int, string_t>, string_t>);
+    assert(etl::is_same_v<etl::detail::variant_ctor_type_selector_t<int, int, float>, int>);
+    assert(etl::is_same_v<etl::detail::variant_ctor_type_selector_t<float, int, float>, float>);
+    assert(etl::is_same_v<etl::detail::variant_ctor_type_selector_t<string_t, int, string_t>, string_t>);
+    assert(etl::is_same_v<etl::detail::variant_ctor_type_selector_t<char const*, int, string_t>, string_t>);
 
     return true;
 }
@@ -403,8 +403,8 @@ auto main() -> int
     assert(test());
     assert(test_non_trivial());
 
-    assert(test_variant_type_selector_t());
-    static_assert(test_variant_type_selector_t());
+    assert(test_variant_ctor_type_selector_t());
+    static_assert(test_variant_ctor_type_selector_t());
 
     return 0;
 }

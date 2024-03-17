@@ -37,6 +37,7 @@
 #include <etl/_utility/swap.hpp>
 #include <etl/_variant/bad_variant_access.hpp>
 #include <etl/_variant/monostate.hpp>
+#include <etl/_variant/overload.hpp>
 #include <etl/_variant/variant_alternative.hpp>
 #include <etl/_variant/variant_fwd.hpp>
 #include <etl/_variant/variant_size.hpp>
@@ -244,26 +245,23 @@ template <typename... Ts>
 using variant_storage_for = detail::variant_storage<0, Ts...>;
 
 template <typename... Ts>
-inline constexpr auto enable_variant_swap = ((is_move_constructible_v<Ts> && is_swappable_v<Ts>) && ...);
+inline constexpr auto enable_variant_swap = ((etl::is_move_constructible_v<Ts> && etl::is_swappable_v<Ts>) && ...);
 
 template <typename T>
-struct variant_type_selector_type {
-    [[nodiscard]] static auto select(T /*t*/) -> T;
+struct variant_ctor_type_selector_single {
+    auto operator()(T /*t*/) const -> T;
 };
 
 template <typename... Ts>
-struct variant_type_selector : variant_type_selector_type<Ts>... {
-    using variant_type_selector_type<Ts>::select...;
-};
+inline constexpr auto variant_ctor_type_selector = etl::overload{variant_ctor_type_selector_single<Ts>{}...};
 
 template <typename T, typename... Ts>
-using variant_type_selector_t = decltype(variant_type_selector<Ts...>::select(T()));
+using variant_ctor_type_selector_t = decltype(variant_ctor_type_selector<Ts...>(T()));
 
 } // namespace detail
 
-/// \brief This is a special value equal to the largest value representable by
-/// the type size_t, used as the return value of index() when
-/// valueless_by_exception() is true.
+/// \brief This is a special value equal to the largest value representable by the
+/// type size_t, used as the return value of index() when valueless_by_exception() is true.
 inline constexpr auto variant_npos = etl::numeric_limits<etl::size_t>::max();
 
 /// \brief The class template variant represents a type-safe union. An
@@ -403,7 +401,7 @@ public:
     auto _impl() noexcept { return &_data; } // NOLINT
 
 private:
-    detail::variant_storage_for<Ts...> _data;
+    etl::detail::variant_storage_for<Ts...> _data;
     internal_size_t _index{0};
 };
 
