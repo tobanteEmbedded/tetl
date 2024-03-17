@@ -34,6 +34,7 @@
 |                                    `std::invoke_r()`                                     |  [P2136R3](https://www.open-std.org/jtc1/sc22/wg21/docs/papers/2021/p2136r3.html)  | **Done** |         |
 |               DR17: `std::visit()` for classes derived from `std::variant`               |  [P2162R2](https://www.open-std.org/jtc1/sc22/wg21/docs/papers/2021/p2162r2.html)  |          |         |
 | Prohibiting `std::basic_string` and `std::basic_string_view` construction from `nullptr` |  [P2166R1](https://www.open-std.org/jtc1/sc22/wg21/docs/papers/2020/p2166r1.html)  | **Done** |         |
+|                  DR20: constexpr for `std::optional` and `std::variant`                  |  [P2231R1](https://www.open-std.org/jtc1/sc22/wg21/docs/papers/2021/p2231r1.html)  | **Done** |         |
 |         Require `std::span` & `std::basic_string_view` to be _TriviallyCopyable_         |  [P2251R1](https://www.open-std.org/jtc1/sc22/wg21/docs/papers/2021/p2251r1.pdf)   | **Done** |         |
 |      constexpr for integral overloads of `std::to_chars()` and `std::from_chars()`.      |  [P2291R3](https://www.open-std.org/jtc1/sc22/wg21/docs/papers/2021/p2291r3.pdf)   | **Done** |         |
 |               Add a conditional noexcept specification to `std::exchange`                |  [P2401R0](https://www.open-std.org/jtc1/sc22/wg21/docs/papers/2021/p2401r0.html)  | **Done** |         |
