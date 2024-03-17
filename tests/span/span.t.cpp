@@ -218,13 +218,16 @@ constexpr auto test() -> bool
         assert(twot[1] == T(6));
     }
 
-    if (not etl::is_constant_evaluated()) {
-        auto data = etl::array<T, 6>{};
-        auto sp   = etl::span<T>{data};
-        ASSERT(etl::as_bytes(sp).size() == sizeof(T) * data.size());
-        ASSERT(etl::as_writable_bytes(sp).size() == sizeof(T) * data.size());
-    }
+    return true;
+}
 
+template <typename T>
+static auto test_as_bytes() -> bool
+{
+    auto data = etl::array<T, 6>{};
+    auto sp   = etl::span<T>{data};
+    ASSERT(etl::as_bytes(sp).size() == sizeof(T) * data.size());
+    ASSERT(etl::as_writable_bytes(sp).size() == sizeof(T) * data.size());
     return true;
 }
 
@@ -247,5 +250,16 @@ auto main() -> int
 {
     ASSERT(test_all());
     static_assert(test_all());
+
+    ASSERT(test_as_bytes<etl::int8_t>());
+    ASSERT(test_as_bytes<etl::int16_t>());
+    ASSERT(test_as_bytes<etl::int32_t>());
+    ASSERT(test_as_bytes<etl::int64_t>());
+    ASSERT(test_as_bytes<etl::uint8_t>());
+    ASSERT(test_as_bytes<etl::uint16_t>());
+    ASSERT(test_as_bytes<etl::uint32_t>());
+    ASSERT(test_as_bytes<etl::uint64_t>());
+    ASSERT(test_as_bytes<float>());
+    ASSERT(test_as_bytes<double>());
     return 0;
 }
