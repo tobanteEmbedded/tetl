@@ -39,9 +39,9 @@ For examples look at the [examples](./examples) subdirectory or the test files i
 
 ## Status
 
-| **License**                                                                                                                                 | **Lines of Code**                                    | **Progress**                                                                                                        | **Documentation**                                             |
-| ------------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------- |
-| [![License](https://img.shields.io/badge/License-Boost%201.0-lightblue.svg)](https://github.com/tobanteEmbedded/tetl/blob/main/LICENSE.txt) | ![LOC](https://sloc.xyz/github/tobanteEmbedded/tetl) | [Spreadsheet](https://docs.google.com/spreadsheets/d/1-qwa7tFnjFdgY9XKBy2fAsDozAfG8lXsJXHwA_ITQqM/edit?usp=sharing) | [API Reference](https://tobanteembedded.github.io/tetl-docs/) |
+| **License**                                                                                                                                 | **Lines of Code**                                       | **Progress**                                                                                                        | **Documentation**                                             |
+| ------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------- |
+| [![License](https://img.shields.io/badge/License-Boost%201.0-lightblue.svg)](https://github.com/tobanteEmbedded/tetl/blob/main/LICENSE.txt) | ![LOC](https://tokei.rs/b1/github/tobanteEmbedded/tetl) | [Spreadsheet](https://docs.google.com/spreadsheets/d/1-qwa7tFnjFdgY9XKBy2fAsDozAfG8lXsJXHwA_ITQqM/edit?usp=sharing) | [API Reference](https://tobanteembedded.github.io/tetl-docs/) |
 
 ### Hosted
 
