@@ -198,6 +198,30 @@ private:
     rep _rep{};
 };
 
+} // namespace etl::chrono
+
+namespace etl {
+
+/// \brief Exposes the type named type, which is the common type of two
+/// etl::chrono::durations, whose period is the greatest common divisor of
+/// Period1 and Period2.
+/// \details The period of the resulting duration can be computed by forming a
+/// ratio of the greatest common divisor of Period1::num and Period2::num and
+/// the least common multiple of Period1::den and Period2::den.
+template <typename Rep1, typename Period1, typename Rep2, typename Period2>
+struct common_type<chrono::duration<Rep1, Period1>, chrono::duration<Rep2, Period2>> {
+private:
+    static constexpr auto num = gcd(Period1::num, Period2::num);
+    static constexpr auto den = lcm(Period1::den, Period2::den);
+
+public:
+    using type = chrono::duration<common_type_t<Rep1, Rep2>, ratio<num, den>>;
+};
+
+} // namespace etl
+
+namespace etl::chrono {
+
 /// \brief Performs basic arithmetic operations between two durations or between
 /// a duration and a tick count.
 ///
@@ -452,23 +476,5 @@ constexpr auto operator""_ns(long double m) -> etl::chrono::duration<long double
 namespace etl::chrono {
 using namespace etl::literals::chrono_literals;
 } // namespace etl::chrono
-
-namespace etl {
-/// \brief Exposes the type named type, which is the common type of two
-/// etl::chrono::durations, whose period is the greatest common divisor of
-/// Period1 and Period2.
-/// \details The period of the resulting duration can be computed by forming a
-/// ratio of the greatest common divisor of Period1::num and Period2::num and
-/// the least common multiple of Period1::den and Period2::den.
-template <typename Rep1, typename Period1, typename Rep2, typename Period2>
-struct common_type<chrono::duration<Rep1, Period1>, chrono::duration<Rep2, Period2>> {
-private:
-    static constexpr auto num = gcd(Period1::num, Period2::num);
-    static constexpr auto den = lcm(Period1::den, Period2::den);
-
-public:
-    using type = chrono::duration<common_type_t<Rep1, Rep2>, ratio<num, den>>;
-};
-} // namespace etl
 
 #endif // TETL_CHRONO_DURATION_HPP
