@@ -20,6 +20,7 @@
 | :--------------------------------------------------------------------------------------: | :--------------------------------------------------------------------------------: | :------: | :-----: |
 |                                       `<expected>`                                       | [P0323R12](https://www.open-std.org/jtc1/sc22/wg21/docs/papers/2022/p0323r12.html) |  _WIP_   |         |
 |                         constexpr for `<cmath>` and `<cstdlib>`                          |  [P0533R9](https://www.open-std.org/jtc1/sc22/wg21/docs/papers/2021/p0533r9.pdf)   | **Done** |         |
+|                                   `std::unreachable()`                                   |  [P0627R6](https://www.open-std.org/jtc1/sc22/wg21/docs/papers/2021/p0627r6.pdf)   | **Done** |         |
 |                          Monadic operations for `std::optional`                          |  [P0798R8](https://www.open-std.org/jtc1/sc22/wg21/docs/papers/2021/p0798r8.html)  |  _WIP_   |         |
 |                                  `std::is_scoped_enum`                                   |  [P1048R1](https://www.open-std.org/jtc1/sc22/wg21/docs/papers/2020/p1048r1.pdf)   | **Done** |         |
 |                       `std::basic_string::resize_and_overwrite()`                        | [P1072R10](https://www.open-std.org/jtc1/sc22/wg21/docs/papers/2021/p1072r10.html) |          |         |
