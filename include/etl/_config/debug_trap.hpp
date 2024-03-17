@@ -3,8 +3,8 @@
 #ifndef TETL_CONFIG_DEBUG_TRAP_HPP
 #define TETL_CONFIG_DEBUG_TRAP_HPP
 
-#include "etl/_config/attributes.hpp"
-#include "etl/_config/preprocessor.hpp"
+#include <etl/_config/attributes.hpp>
+#include <etl/_config/preprocessor.hpp>
 
 #if !defined(TETL_NDEBUG) && defined(NDEBUG) && !defined(TETL_DEBUG)
     #define TETL_NDEBUG 1

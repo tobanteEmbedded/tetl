@@ -3,7 +3,7 @@
 #ifndef TETL_STDEXCEPT_DOMAIN_ERROR_HPP
 #define TETL_STDEXCEPT_DOMAIN_ERROR_HPP
 
-#include "etl/_stdexcept/logic_error.hpp"
+#include <etl/_stdexcept/logic_error.hpp>
 
 namespace etl {
 

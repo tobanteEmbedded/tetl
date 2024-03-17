@@ -3,7 +3,7 @@
 #ifndef TETL_TYPE_TRAITS_DECLVAL_HPP
 #define TETL_TYPE_TRAITS_DECLVAL_HPP
 
-#include "etl/_type_traits/add_rvalue_reference.hpp"
+#include <etl/_type_traits/add_rvalue_reference.hpp>
 
 namespace etl {
 

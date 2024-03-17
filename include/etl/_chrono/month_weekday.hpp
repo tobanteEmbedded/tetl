@@ -3,8 +3,8 @@
 #ifndef TETL_CHRONO_MONTH_WEEKDAY_HPP
 #define TETL_CHRONO_MONTH_WEEKDAY_HPP
 
-#include "etl/_chrono/month.hpp"
-#include "etl/_chrono/weekday_indexed.hpp"
+#include <etl/_chrono/month.hpp>
+#include <etl/_chrono/weekday_indexed.hpp>
 
 namespace etl::chrono {
 

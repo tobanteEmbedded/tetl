@@ -3,7 +3,7 @@
 #ifndef TETL_ALGORITHM_COUNT_IF_HPP
 #define TETL_ALGORITHM_COUNT_IF_HPP
 
-#include "etl/_iterator/iterator_traits.hpp"
+#include <etl/_iterator/iterator_traits.hpp>
 
 namespace etl {
 

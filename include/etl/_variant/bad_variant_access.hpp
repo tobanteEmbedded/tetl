@@ -3,7 +3,7 @@
 #ifndef TETL_VARIANT_BAD_VARIANT_ACCESS_HPP
 #define TETL_VARIANT_BAD_VARIANT_ACCESS_HPP
 
-#include "etl/_exception/exception.hpp"
+#include <etl/_exception/exception.hpp>
 
 namespace etl {
 

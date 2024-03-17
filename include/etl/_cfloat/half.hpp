@@ -3,8 +3,8 @@
 #ifndef TETL_CFLOAT_HALF_HPP
 #define TETL_CFLOAT_HALF_HPP
 
-#include "etl/_bit/bit_cast.hpp"
-#include "etl/_cstdint/uint_t.hpp"
+#include <etl/_bit/bit_cast.hpp>
+#include <etl/_cstdint/uint_t.hpp>
 
 namespace etl {
 

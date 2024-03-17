@@ -3,7 +3,7 @@
 #ifndef TETL_CHRONO_WEEKDAY_LAST_HPP
 #define TETL_CHRONO_WEEKDAY_LAST_HPP
 
-#include "etl/_chrono/weekday.hpp"
+#include <etl/_chrono/weekday.hpp>
 
 namespace etl::chrono {
 

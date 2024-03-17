@@ -3,8 +3,8 @@
 #ifndef TETL_TYPE_TRAITS_IS_NOTHROW_SWAPPABLE_HPP
 #define TETL_TYPE_TRAITS_IS_NOTHROW_SWAPPABLE_HPP
 
-#include "etl/_type_traits/add_lvalue_reference.hpp"
-#include "etl/_type_traits/is_nothrow_swappable_with.hpp"
+#include <etl/_type_traits/add_lvalue_reference.hpp>
+#include <etl/_type_traits/is_nothrow_swappable_with.hpp>
 
 namespace etl {
 

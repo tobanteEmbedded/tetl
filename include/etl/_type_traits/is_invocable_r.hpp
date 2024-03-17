@@ -3,8 +3,8 @@
 #ifndef TETL_TYPE_TRAITS_IS_INVOCABLE_R_HPP
 #define TETL_TYPE_TRAITS_IS_INVOCABLE_R_HPP
 
-#include "etl/_type_traits/invoke_result.hpp"
-#include "etl/_type_traits/is_invocable.hpp"
+#include <etl/_type_traits/invoke_result.hpp>
+#include <etl/_type_traits/is_invocable.hpp>
 
 namespace etl {
 

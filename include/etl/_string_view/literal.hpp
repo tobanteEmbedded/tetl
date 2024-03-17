@@ -3,7 +3,7 @@
 #ifndef TETL_STRING_VIEW_LITERAL_HPP
 #define TETL_STRING_VIEW_LITERAL_HPP
 
-#include "etl/_string_view/string_view.hpp"
+#include <etl/_string_view/string_view.hpp>
 
 namespace etl::inline literals::inline string_view_literals {
 

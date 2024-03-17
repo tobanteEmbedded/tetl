@@ -3,7 +3,7 @@
 #ifndef TETL_UTILITY_TO_UNDERLYING_HPP
 #define TETL_UTILITY_TO_UNDERLYING_HPP
 
-#include "etl/_type_traits/underlying_type.hpp"
+#include <etl/_type_traits/underlying_type.hpp>
 
 namespace etl {
 

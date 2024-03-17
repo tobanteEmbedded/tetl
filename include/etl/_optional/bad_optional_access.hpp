@@ -3,7 +3,7 @@
 #ifndef TETL_OPTIONAL_BAD_OPTIONAL_ACCESS_HPP
 #define TETL_OPTIONAL_BAD_OPTIONAL_ACCESS_HPP
 
-#include "etl/_exception/exception.hpp"
+#include <etl/_exception/exception.hpp>
 
 namespace etl {
 

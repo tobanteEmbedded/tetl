@@ -3,7 +3,7 @@
 #ifndef TETL_STDEXCEPT_LOGIC_ERROR_HPP
 #define TETL_STDEXCEPT_LOGIC_ERROR_HPP
 
-#include "etl/_exception/exception.hpp"
+#include <etl/_exception/exception.hpp>
 
 namespace etl {
 

@@ -3,8 +3,8 @@
 #ifndef TETL_TYPE_TRAITS_REMOVE_CV_HPP
 #define TETL_TYPE_TRAITS_REMOVE_CV_HPP
 
-#include "etl/_type_traits/remove_const.hpp"
-#include "etl/_type_traits/remove_volatile.hpp"
+#include <etl/_type_traits/remove_const.hpp>
+#include <etl/_type_traits/remove_volatile.hpp>
 
 namespace etl {
 

@@ -3,8 +3,8 @@
 #ifndef TETL_COMPARE_PARTIAL_ORDERING_HPP
 #define TETL_COMPARE_PARTIAL_ORDERING_HPP
 
-#include "etl/_compare/detail.hpp"
-#include "etl/_cstddef/nullptr_t.hpp"
+#include <etl/_compare/detail.hpp>
+#include <etl/_cstddef/nullptr_t.hpp>
 
 namespace etl {
 

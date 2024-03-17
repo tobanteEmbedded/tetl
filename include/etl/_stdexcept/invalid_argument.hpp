@@ -3,7 +3,7 @@
 #ifndef TETL_STDEXCEPT_INVALID_ARGUMENT_HPP
 #define TETL_STDEXCEPT_INVALID_ARGUMENT_HPP
 
-#include "etl/_stdexcept/logic_error.hpp"
+#include <etl/_stdexcept/logic_error.hpp>
 
 namespace etl {
 

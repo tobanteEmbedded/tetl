@@ -3,7 +3,7 @@
 #ifndef TETL_UTILITY_AS_CONST_HPP
 #define TETL_UTILITY_AS_CONST_HPP
 
-#include "etl/_type_traits/add_const.hpp"
+#include <etl/_type_traits/add_const.hpp>
 
 namespace etl {
 /// \brief Forms lvalue reference to const type of t.

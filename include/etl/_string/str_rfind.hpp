@@ -4,8 +4,8 @@
 #ifndef TETL_STRING_STR_RFIND_HPP
 #define TETL_STRING_STR_RFIND_HPP
 
-#include "etl/_algorithm/find_end.hpp"
-#include "etl/_algorithm/min.hpp"
+#include <etl/_algorithm/find_end.hpp>
+#include <etl/_algorithm/min.hpp>
 
 namespace etl::detail {
 

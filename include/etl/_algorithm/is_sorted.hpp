@@ -3,7 +3,7 @@
 #ifndef TETL_ALGORITHM_IS_SORTED_HPP
 #define TETL_ALGORITHM_IS_SORTED_HPP
 
-#include "etl/_algorithm/is_sorted_until.hpp"
+#include <etl/_algorithm/is_sorted_until.hpp>
 
 namespace etl {
 

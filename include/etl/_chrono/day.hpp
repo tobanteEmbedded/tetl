@@ -3,8 +3,8 @@
 #ifndef TETL_CHRONO_DAY_HPP
 #define TETL_CHRONO_DAY_HPP
 
-#include "etl/_chrono/duration.hpp"
-#include "etl/_cstdint/uint_t.hpp"
+#include <etl/_chrono/duration.hpp>
+#include <etl/_cstdint/uint_t.hpp>
 
 namespace etl::chrono {
 

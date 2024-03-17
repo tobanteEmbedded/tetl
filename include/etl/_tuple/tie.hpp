@@ -3,7 +3,7 @@
 #ifndef TETL_TUPLE_TIE_HPP
 #define TETL_TUPLE_TIE_HPP
 
-#include "etl/_tuple/tuple.hpp"
+#include <etl/_tuple/tuple.hpp>
 
 namespace etl {
 
