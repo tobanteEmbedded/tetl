@@ -13,8 +13,6 @@ namespace etl {
 /// \param f Function object, to be applied to the result of dereferencing every
 /// iterator in the range.
 ///
-/// \complexity Exactly `last - first` applications of f.
-///
 /// https://en.cppreference.com/w/cpp/algorithm/for_each
 template <typename InputIt, typename UnaryFunc>
 constexpr auto for_each(InputIt first, InputIt last, UnaryFunc f) noexcept -> UnaryFunc

@@ -14,7 +14,6 @@ struct remove_volatile {
     using type = Type;
 };
 
-/// \exclude
 template <typename Type>
 struct remove_volatile<Type volatile> {
     using type = Type;

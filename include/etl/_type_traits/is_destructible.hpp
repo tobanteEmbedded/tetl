@@ -59,11 +59,9 @@ struct is_destructible_safe<T, false, true> : etl::true_type { };
 template <typename T>
 struct is_destructible : detail::is_destructible_safe<T> { };
 
-/// \exclude
 template <typename Type>
 struct is_destructible<Type[]> : false_type { };
 
-/// \exclude
 template <>
 struct is_destructible<void> : false_type { };
 

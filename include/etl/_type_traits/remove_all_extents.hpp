@@ -15,13 +15,11 @@ struct remove_all_extents {
     using type = T;
 };
 
-/// \exclude
 template <typename T>
 struct remove_all_extents<T[]> {
     using type = typename remove_all_extents<T>::type;
 };
 
-/// \exclude
 template <typename T, size_t N>
 struct remove_all_extents<T[N]> {
     using type = typename remove_all_extents<T>::type;

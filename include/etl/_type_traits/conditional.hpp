@@ -12,7 +12,6 @@ struct conditional {
     using type = T;
 };
 
-/// \exclude
 template <typename T, typename F>
 struct conditional<false, T, F> {
     using type = F;

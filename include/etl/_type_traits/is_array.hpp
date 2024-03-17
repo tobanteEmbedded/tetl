@@ -16,11 +16,9 @@ namespace etl {
 template <typename T>
 struct is_array : etl::false_type { };
 
-/// \exclude
 template <typename T>
 struct is_array<T[]> : etl::true_type { };
 
-/// \exclude
 template <typename T, etl::size_t N>
 struct is_array<T[N]> : etl::true_type { };
 

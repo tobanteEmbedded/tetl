@@ -17,7 +17,6 @@ namespace etl {
 template <typename... T>
 struct common_type;
 
-/// \exclude
 template <typename T>
 struct common_type<T> : common_type<T, T> { };
 
@@ -41,11 +40,9 @@ struct common_type_multi_impl<etl::void_t<typename common_type<T1, T2>::type>, T
     : common_type<typename common_type<T1, T2>::type, R...> { };
 } // namespace detail
 
-/// \exclude
 template <typename T1, typename T2>
 struct common_type<T1, T2> : detail::common_type_2_impl<etl::decay_t<T1>, etl::decay_t<T2>> { };
 
-/// \exclude
 template <typename T1, typename T2, typename... R>
 struct common_type<T1, T2, R...> : detail::common_type_multi_impl<void, T1, T2, R...> { };
 

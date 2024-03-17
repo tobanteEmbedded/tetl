@@ -14,7 +14,6 @@ struct remove_const {
     using type = Type;
 };
 
-/// \exclude
 template <typename Type>
 struct remove_const<Type const> {
     using type = Type;

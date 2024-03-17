@@ -13,7 +13,6 @@ namespace etl {
 template <typename T>
 struct is_const : etl::false_type { };
 
-/// \exclude
 template <typename T>
 struct is_const<T const> : etl::true_type { };
 

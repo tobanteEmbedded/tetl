@@ -10,9 +10,7 @@ namespace etl {
 /// \ingroup algorithm-header
 /// @{
 
-/// \brief Checks if unary predicate p returns true for at least one element in
-/// the range `[first, last)`.
-/// \complexity At most `last - first` applications of the predicate.
+/// \brief Checks if unary predicate p returns true for at least one element in the range `[first, last)`.
 template <typename InputIt, typename Predicate>
 [[nodiscard]] constexpr auto any_of(InputIt first, InputIt last, Predicate p) -> bool
 {

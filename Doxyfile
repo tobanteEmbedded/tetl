@@ -2,13 +2,14 @@ PROJECT_NAME           = tetl
 PROJECT_NUMBER         = 0.4.0
 
 USE_MDFILE_AS_MAINPAGE = README.md
-INPUT                  = ./README.md ./include
+INPUT                  = ./README.md ./CONTRIBUTING.md ./include ./docs
 INPUT_ENCODING         = UTF-8
 FILE_PATTERNS          = *.hpp *.md
 RECURSIVE              = YES
 EXTRACT_ALL            = YES
 EXTRACT_PRIVATE        = NO # document private members & functions
 EXTRACT_STATIC         = YES # document static members & functions
+INTERNAL_DOCS		   = NO
 
 EXAMPLE_PATH           = ./examples
 EXAMPLE_PATTERNS       = *.cpp
@@ -22,7 +23,7 @@ SORT_MEMBER_DOCS       = NO
 SHOW_INCLUDE_FILES     = NO
 
 # Disable doc gen for symbols detail namespace.
-EXCLUDE_SYMBOLS = "detail" "*internal*"
+EXCLUDE_SYMBOLS = "detail" "*internal*" "*_cpo"
 
 # Generate html output
 GENERATE_HTML          = YES
@@ -34,4 +35,4 @@ INCLUDE_GRAPH          = NO
 
 # Set output directory
 OUTPUT_DIRECTORY       = ./build-doxygen
-HTML_EXTRA_STYLESHEET  = 3rd_party/doxygen-awesome-css/doxygen-awesome.css 3rd_party/doxygen-awesome-css/doxygen-awesome-sidebar-only.css
+# HTML_EXTRA_STYLESHEET  = 3rd_party/doxygen-awesome-css/doxygen-awesome.css 3rd_party/doxygen-awesome-css/doxygen-awesome-sidebar-only.css

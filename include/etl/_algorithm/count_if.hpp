@@ -18,9 +18,6 @@ namespace etl {
 /// \param last The range of elements to examine.
 /// \param p Unary predicate which returns ​true for the required elements.
 ///
-/// \complexity Exactly `last - first` comparisons / applications of the
-/// predicate.
-///
 /// https://en.cppreference.com/w/cpp/algorithm/count
 template <typename InputIt, typename Predicate>
 [[nodiscard]] constexpr auto count_if(InputIt first, InputIt last, Predicate p) ->

@@ -16,13 +16,11 @@ struct remove_extent {
     using type = T;
 };
 
-/// \exclude
 template <typename T>
 struct remove_extent<T[]> {
     using type = T;
 };
 
-/// \exclude
 template <typename T, etl::size_t N>
 struct remove_extent<T[N]> {
     using type = T;

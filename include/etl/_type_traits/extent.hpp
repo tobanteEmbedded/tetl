@@ -15,19 +15,15 @@ namespace etl {
 template <typename T, unsigned N = 0>
 struct extent : etl::integral_constant<etl::size_t, 0> { };
 
-/// \exclude
 template <typename T>
 struct extent<T[], 0> : etl::integral_constant<etl::size_t, 0> { };
 
-/// \exclude
 template <typename T, unsigned N>
 struct extent<T[], N> : extent<T, N - 1> { };
 
-/// \exclude
 template <typename T, etl::size_t I>
 struct extent<T[I], 0> : integral_constant<etl::size_t, I> { };
 
-/// \exclude
 template <typename T, etl::size_t I, unsigned N>
 struct extent<T[I], N> : extent<T, N - 1> { };
 

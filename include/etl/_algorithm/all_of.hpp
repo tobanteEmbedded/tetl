@@ -6,12 +6,11 @@
 #include <etl/_algorithm/find_if_not.hpp>
 
 namespace etl {
+
 /// \ingroup algorithm-header
 /// @{
 
-/// \brief Checks if unary predicate p returns true for all elements in the
-/// range `[first, last)`.
-/// \complexity At most `last - first` applications of the predicate.
+/// \brief Checks if unary predicate p returns true for all elements in the range `[first, last)`.
 template <typename InputIt, typename Predicate>
 [[nodiscard]] constexpr auto all_of(InputIt first, InputIt last, Predicate p) -> bool
 {

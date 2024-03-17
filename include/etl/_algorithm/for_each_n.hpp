@@ -13,8 +13,6 @@ namespace etl {
 /// \param f Function object, to be applied to the result of dereferencing every
 /// iterator in the range.
 ///
-/// \complexity Exactly n applications of f.
-///
 /// https://en.cppreference.com/w/cpp/algorithm/for_each_n
 template <typename InputIt, typename Size, typename UnaryFunc>
 constexpr auto for_each_n(InputIt first, Size n, UnaryFunc f) noexcept -> InputIt

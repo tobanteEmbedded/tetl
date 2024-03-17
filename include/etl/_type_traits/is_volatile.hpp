@@ -10,7 +10,6 @@ namespace etl {
 template <typename T>
 struct is_volatile : etl::false_type { };
 
-/// \exclude
 template <typename T>
 struct is_volatile<T volatile> : etl::true_type { };
 

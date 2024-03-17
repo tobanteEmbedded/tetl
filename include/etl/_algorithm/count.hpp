@@ -14,9 +14,6 @@ namespace etl {
 /// \param last The range of elements to examine.
 /// \param value The value to search for.
 ///
-/// \complexity Exactly `last - first` comparisons / applications of the
-/// predicate.
-///
 /// https://en.cppreference.com/w/cpp/algorithm/count
 template <typename InputIt, typename T>
 [[nodiscard]] constexpr auto count(InputIt first, InputIt last, T const& value) ->

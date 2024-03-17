@@ -10,13 +10,11 @@ struct remove_reference {
     using type = T;
 };
 
-/// \exclude
 template <typename T>
 struct remove_reference<T&> {
     using type = T;
 };
 
-/// \exclude
 template <typename T>
 struct remove_reference<T&&> {
     using type = T;

@@ -13,25 +13,21 @@ struct remove_pointer {
     using type = T;
 };
 
-/// \exclude
 template <typename T>
 struct remove_pointer<T*> {
     using type = T;
 };
 
-/// \exclude
 template <typename T>
 struct remove_pointer<T* const> {
     using type = T;
 };
 
-/// \exclude
 template <typename T>
 struct remove_pointer<T* volatile> {
     using type = T;
 };
 
-/// \exclude
 template <typename T>
 struct remove_pointer<T* const volatile> {
     using type = T;

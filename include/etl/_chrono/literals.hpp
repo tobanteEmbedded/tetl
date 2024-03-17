@@ -110,8 +110,8 @@ constexpr auto operator""_ns(long double m) -> etl::chrono::duration<long double
 
 } // namespace etl::inline literals::inline chrono_literals
 
-namespace et_l::chrono {
+namespace etl::chrono {
 using namespace etl::literals::chrono_literals;
-} // namespace et_l::chrono
+} // namespace etl::chrono
 
 #endif // TETL_CHRONO_LITERALS_HPP

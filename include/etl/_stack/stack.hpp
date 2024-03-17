@@ -97,7 +97,6 @@ struct stack {
     }
 
     /// \brief Removes the top element from the stack.
-    /// \complexity Equal to the complexity of Container::pop_back.
     constexpr auto pop() noexcept(noexcept(declval<Container>().pop_back())) -> void { c.pop_back(); }
 
     /// \brief Exchanges the contents of the container adaptor with those of

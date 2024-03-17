@@ -13,7 +13,6 @@ namespace etl {
 template <typename T>
 struct is_rvalue_reference : false_type { };
 
-/// \exclude
 template <typename T>
 struct is_rvalue_reference<T&&> : true_type { };
 
