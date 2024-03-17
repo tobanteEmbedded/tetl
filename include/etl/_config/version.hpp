@@ -9,19 +9,19 @@
 
 /// \brief The minor release version
 // NOLINTNEXTLINE(modernize-macro-to-enum)
-#define TETL_VERSION_MINOR 4
+#define TETL_VERSION_MINOR 1
 
 /// \brief The patch release version
 // NOLINTNEXTLINE(modernize-macro-to-enum)
 #define TETL_VERSION_PATCH 0
 
 /// \brief The library version as a string literal
-#define TETL_VERSION_STRING "0.4.0"
+#define TETL_VERSION_STRING "0.1.0"
 
 #if defined(__STDC_HOSTED__)
-    #define TETL_HOSTED 1
+    #define TETL_HOSTED
 #else
-    #define TETL_FREESTANDING 1
+    #define TETL_FREESTANDING
 #endif
 
 #endif // TETL_CONFIG_VERSION_HPP
