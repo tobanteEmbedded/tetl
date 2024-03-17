@@ -29,3 +29,4 @@
 |                       `std::basic_string::resize_and_overwrite()`                        | [P1072R10](https://www.open-std.org/jtc1/sc22/wg21/docs/papers/2021/p1072r10.html) |          |         |
 |                          Monadic operations for `std::optional`                          |  [P0798R8](https://www.open-std.org/jtc1/sc22/wg21/docs/papers/2021/p0798r8.html)  |  _WIP_   |         |
 |               Add a conditional noexcept specification to `std::exchange`                |  [P2401R0](https://www.open-std.org/jtc1/sc22/wg21/docs/papers/2021/p2401r0.html)  | **Done** |         |
+|         Require `std::span` & `std::basic_string_view` to be _TriviallyCopyable_         |  [P2251R1](https://www.open-std.org/jtc1/sc22/wg21/docs/papers/2021/p2251r1.pdf)   | **Done** |         |

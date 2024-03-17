@@ -3,6 +3,7 @@
 #include <etl/string_view.hpp>
 
 #include <etl/string.hpp>
+#include <etl/type_traits.hpp>
 
 #include "testing/testing.hpp"
 
@@ -11,6 +12,11 @@ using namespace etl::literals;
 
 constexpr auto test() -> bool
 {
+    {
+        // P2251R1
+        ASSERT(etl::is_trivially_copyable_v<etl::string_view>);
+    }
+
     {
         assert(string_view{}.data() == nullptr);
         assert(string_view{}.size() == 0);

@@ -5,14 +5,23 @@
 #include <etl/algorithm.hpp>
 #include <etl/cstdint.hpp>
 #include <etl/iterator.hpp>
+#include <etl/type_traits.hpp>
 #include <etl/utility.hpp>
 #include <etl/vector.hpp>
 
 #include "testing/testing.hpp"
 
 template <typename T>
-auto test() -> bool
+constexpr auto test() -> bool
 {
+    {
+        // P2251R1
+        ASSERT(etl::is_trivially_copyable_v<etl::span<T>>);
+        ASSERT(etl::is_trivially_copyable_v<etl::span<T const>>);
+        ASSERT(etl::is_trivially_copyable_v<etl::span<T, 16>>);
+        ASSERT(etl::is_trivially_copyable_v<etl::span<T const, 16>>);
+    }
+
     // deduction guides
     // from C array
     {
@@ -139,11 +148,7 @@ auto test() -> bool
     }
 
     {
-        auto rng = []() {
-            static auto i = T{127};
-            return T{i--};
-        };
-
+        auto rng = [i = T{127}]() mutable { return T{i--}; };
         auto vec = etl::static_vector<T, 8>{};
         etl::generate_n(etl::back_inserter(vec), 4, rng);
         auto sp = etl::span<T>{etl::begin(vec), etl::size(vec)};
@@ -213,36 +218,34 @@ auto test() -> bool
         assert(twot[1] == T(6));
     }
 
-    {
+    if (not etl::is_constant_evaluated()) {
         auto data = etl::array<T, 6>{};
         auto sp   = etl::span<T>{data};
-        assert(etl::as_bytes(sp).size() == sizeof(T) * data.size());
-        assert(etl::as_writable_bytes(sp).size() == sizeof(T) * data.size());
+        ASSERT(etl::as_bytes(sp).size() == sizeof(T) * data.size());
+        ASSERT(etl::as_writable_bytes(sp).size() == sizeof(T) * data.size());
     }
 
     return true;
 }
 
-static auto test_all() -> bool
+constexpr auto test_all() -> bool
 {
-    assert(test<etl::int8_t>());
-    assert(test<etl::int16_t>());
-    assert(test<etl::int32_t>());
-    assert(test<etl::int64_t>());
-    assert(test<etl::uint8_t>());
-    assert(test<etl::uint16_t>());
-    assert(test<etl::uint32_t>());
-    assert(test<etl::uint64_t>());
-    assert(test<float>());
-    assert(test<double>());
+    ASSERT(test<etl::int8_t>());
+    ASSERT(test<etl::int16_t>());
+    ASSERT(test<etl::int32_t>());
+    ASSERT(test<etl::int64_t>());
+    ASSERT(test<etl::uint8_t>());
+    ASSERT(test<etl::uint16_t>());
+    ASSERT(test<etl::uint32_t>());
+    ASSERT(test<etl::uint64_t>());
+    ASSERT(test<float>());
+    ASSERT(test<double>());
     return true;
 }
 
 auto main() -> int
 {
-    assert(test_all());
-
-    // TODO: [tobi] Enable constexpr tests
-    // static_assert(test_all());
+    ASSERT(test_all());
+    static_assert(test_all());
     return 0;
 }
