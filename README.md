@@ -170,111 +170,111 @@ build_flags = -std=gnu++20 -Wno-register -I 3rd_party/tetl/include
 
 ## Header Overview
 
-|             **Header**              |       **Library**        |     **Status**     |                                       **Implementation Progress (Spreadsheet)**                                        |
-| :---------------------------------: | :----------------------: | :----------------: | :--------------------------------------------------------------------------------------------------------------------: |
-|       [algorithm](#algorithm)       |        Algorithms        | :heavy_check_mark: |  [algorithm](https://docs.google.com/spreadsheets/d/1-qwa7tFnjFdgY9XKBy2fAsDozAfG8lXsJXHwA_ITQqM/edit#gid=1451123716)  |
-|                 any                 |         Utility          |        :x:         |                                                                                                                        |
-|           [array](#array)           |        Containers        | :heavy_check_mark: |    [array](https://docs.google.com/spreadsheets/d/1-qwa7tFnjFdgY9XKBy2fAsDozAfG8lXsJXHwA_ITQqM/edit#gid=1320059600)    |
-|               atomic                |          Atomic          |        :x:         |                                                                                                                        |
-|               barrier               |          Thread          |        :x:         |                                                                                                                        |
-|             [bit](#bit)             |         Numeric          | :heavy_check_mark: |     [bit](https://docs.google.com/spreadsheets/d/1-qwa7tFnjFdgY9XKBy2fAsDozAfG8lXsJXHwA_ITQqM/edit#gid=1927645890)     |
-|          [bitset](#bitset)          |         Utility          | :heavy_check_mark: |    [bitset](https://docs.google.com/spreadsheets/d/1-qwa7tFnjFdgY9XKBy2fAsDozAfG8lXsJXHwA_ITQqM/edit#gid=692946382)    |
-|         [cassert](#cassert)         | Utility / Error Handling | :heavy_check_mark: |   [cassert](https://docs.google.com/spreadsheets/d/1-qwa7tFnjFdgY9XKBy2fAsDozAfG8lXsJXHwA_ITQqM/edit#gid=460740183)    |
-|          [cctype](#cctype)          |         Strings          | :heavy_check_mark: |    [cctype](https://docs.google.com/spreadsheets/d/1-qwa7tFnjFdgY9XKBy2fAsDozAfG8lXsJXHwA_ITQqM/edit#gid=522168028)    |
-|               cerrno                | Utility / Error Handling |        :x:         |                                                                                                                        |
-|                cfenv                |         Numeric          |        :x:         |                                                          TODO                                                          |
-|          [cfloat](#cfloat)          | Utility / Numeric Limits | :heavy_check_mark: |   [cfloat](https://docs.google.com/spreadsheets/d/1-qwa7tFnjFdgY9XKBy2fAsDozAfG8lXsJXHwA_ITQqM/edit#gid=1012838019)    |
-|        [charconv](#charconv)        |         Strings          | :heavy_check_mark: |   [charconv](https://docs.google.com/spreadsheets/d/1-qwa7tFnjFdgY9XKBy2fAsDozAfG8lXsJXHwA_ITQqM/edit#gid=345887816)   |
-|          [chrono](#chrono)          |         Utility          | :heavy_check_mark: |   [chrono](https://docs.google.com/spreadsheets/d/1-qwa7tFnjFdgY9XKBy2fAsDozAfG8lXsJXHwA_ITQqM/edit#gid=1279150724)    |
-|              cinttypes              | Utility / Numeric Limits |        :x:         |                                                          TODO                                                          |
-|         [climits](#climits)         | Utility / Numeric Limits | :heavy_check_mark: |   [climits](https://docs.google.com/spreadsheets/d/1-qwa7tFnjFdgY9XKBy2fAsDozAfG8lXsJXHwA_ITQqM/edit#gid=1904156895)   |
-|               clocale               |       Localization       |        :x:         |                                                                                                                        |
-|           [cmath](#cmath)           |         Numeric          | :heavy_check_mark: |    [cmath](https://docs.google.com/spreadsheets/d/1-qwa7tFnjFdgY9XKBy2fAsDozAfG8lXsJXHwA_ITQqM/edit#gid=868070087)     |
-|         [compare](#compare)         |         Utility          | :heavy_check_mark: |   [compare](https://docs.google.com/spreadsheets/d/1-qwa7tFnjFdgY9XKBy2fAsDozAfG8lXsJXHwA_ITQqM/edit#gid=1676133546)   |
-|         [complex](#complex)         |         Numeric          | :heavy_check_mark: |   [complex](https://docs.google.com/spreadsheets/d/1-qwa7tFnjFdgY9XKBy2fAsDozAfG8lXsJXHwA_ITQqM/edit#gid=1768885550)   |
-|        [concepts](#concepts)        |         Concepts         | :heavy_check_mark: |   [concepts](https://docs.google.com/spreadsheets/d/1-qwa7tFnjFdgY9XKBy2fAsDozAfG8lXsJXHwA_ITQqM/edit#gid=73781271)    |
-|         condition_variable          |          Thread          |        :x:         |                                                                                                                        |
-|              coroutine              |        Coroutines        |        :x:         |                                                                                                                        |
-|               csetjmp               |         Utility          |        :x:         |                                                                                                                        |
-|               csignal               |         Utility          |        :x:         |                                                                                                                        |
-|         [cstddef](#cstddef)         |         Utility          | :heavy_check_mark: |   [cstddef](https://docs.google.com/spreadsheets/d/1-qwa7tFnjFdgY9XKBy2fAsDozAfG8lXsJXHwA_ITQqM/edit#gid=1660546405)   |
-|         [cstdint](#cstdint)         | Utility / Numeric Limits | :heavy_check_mark: |   [cstdint](https://docs.google.com/spreadsheets/d/1-qwa7tFnjFdgY9XKBy2fAsDozAfG8lXsJXHwA_ITQqM/edit#gid=2005735528)   |
-|          [cstdio](#cstdio)          |       Input/Output       | :heavy_check_mark: |   [cstdio](https://docs.google.com/spreadsheets/d/1-qwa7tFnjFdgY9XKBy2fAsDozAfG8lXsJXHwA_ITQqM/edit#gid=1576270107)    |
-|         [cstdlib](#cstdlib)         |         Utility          | :heavy_check_mark: |   [cstdlib](https://docs.google.com/spreadsheets/d/1-qwa7tFnjFdgY9XKBy2fAsDozAfG8lXsJXHwA_ITQqM/edit#gid=1705155517)   |
-|         [cstring](#cstring)         |         Strings          | :heavy_check_mark: |   [cstring](https://docs.google.com/spreadsheets/d/1-qwa7tFnjFdgY9XKBy2fAsDozAfG8lXsJXHwA_ITQqM/edit#gid=1824871501)   |
-|           [ctime](#ctime)           |         Utility          | :heavy_check_mark: |    [ctime](https://docs.google.com/spreadsheets/d/1-qwa7tFnjFdgY9XKBy2fAsDozAfG8lXsJXHwA_ITQqM/edit#gid=1082109762)    |
-|               cuchar                |         Strings          |        :x:         |                                                                                                                        |
-|          [cwchar](#cwchar)          |         Strings          | :heavy_check_mark: |   [cwchar](https://docs.google.com/spreadsheets/d/1-qwa7tFnjFdgY9XKBy2fAsDozAfG8lXsJXHwA_ITQqM/edit#gid=1105944467)    |
-|         [cwctype](#cwctype)         |         Strings          | :heavy_check_mark: |   [cwctype](https://docs.google.com/spreadsheets/d/1-qwa7tFnjFdgY9XKBy2fAsDozAfG8lXsJXHwA_ITQqM/edit#gid=1740196036)   |
-|                deque                |        Containers        |        :x:         |                                                          TODO                                                          |
-|       [exception](#exception)       | Utility / Error Handling | :heavy_check_mark: |   [exception](https://docs.google.com/spreadsheets/d/1-qwa7tFnjFdgY9XKBy2fAsDozAfG8lXsJXHwA_ITQqM/edit?usp=sharing)    |
-|              execution              |        Algorithms        |        :x:         |                                                                                                                        |
-|        [expected](#expected)        | Utility / Error Handling | :heavy_check_mark: |  [expected](https://docs.google.com/spreadsheets/d/1-qwa7tFnjFdgY9XKBy2fAsDozAfG8lXsJXHwA_ITQqM/edit#gid=1624993362)   |
-|        [flat_set](#flat_set)        |        Conatiners        | :heavy_check_mark: |   [flat_set](https://docs.google.com/spreadsheets/d/1-qwa7tFnjFdgY9XKBy2fAsDozAfG8lXsJXHwA_ITQqM/edit#gid=291280131)   |
-|        [flat_map](#flat_map)        |        Conatiners        | :heavy_check_mark: |  [flat_map](https://docs.google.com/spreadsheets/d/1-qwa7tFnjFdgY9XKBy2fAsDozAfG8lXsJXHwA_ITQqM/edit#gid=1047136935)   |
-|             filesystem              |        Filesystem        |        :x:         |                                                                                                                        |
-|          [format](#format)          |         Strings          | :heavy_check_mark: |    [format](https://docs.google.com/spreadsheets/d/1-qwa7tFnjFdgY9XKBy2fAsDozAfG8lXsJXHwA_ITQqM/edit#gid=159875067)    |
-|            forward_list             |        Containers        |        :x:         |                                                                                                                        |
-|      [functional](#functional)      |         Utility          | :heavy_check_mark: |  [functional](https://docs.google.com/spreadsheets/d/1-qwa7tFnjFdgY9XKBy2fAsDozAfG8lXsJXHwA_ITQqM/edit#gid=291953395)  |
-|               future                |          Thread          |        :x:         |                                                                                                                        |
-|               fstream               |       Input/Output       |        :x:         |                                                                                                                        |
-|              ifstream               |       Input/Output       |        :x:         |                                                                                                                        |
-|          initializer_list           |         Utility          |        :x:         |                                                                                                                        |
-|               iomanip               |       Input/Output       |        :x:         |                                                                                                                        |
-|             [ios](#ios)             |       Input/Output       | :heavy_check_mark: |     [ios](https://docs.google.com/spreadsheets/d/1-qwa7tFnjFdgY9XKBy2fAsDozAfG8lXsJXHwA_ITQqM/edit#gid=2084657878)     |
-|               iosfwd                |       Input/Output       |        :x:         |                                                                                                                        |
-|              iostream               |       Input/Output       |        :x:         |                                                                                                                        |
-|        [iterator](#iterator)        |         Iterator         | :heavy_check_mark: |  [iterator](https://docs.google.com/spreadsheets/d/1-qwa7tFnjFdgY9XKBy2fAsDozAfG8lXsJXHwA_ITQqM/edit#gid=2084657878)   |
-|               istream               |       Input/Output       |        :x:         |                                                                                                                        |
-|                latch                |          Thread          |        :x:         |                                                                                                                        |
-|          [limits](#limits)          | Utility / Numeric Limits | :heavy_check_mark: |   [limits](https://docs.google.com/spreadsheets/d/1-qwa7tFnjFdgY9XKBy2fAsDozAfG8lXsJXHwA_ITQqM/edit#gid=2084657878)    |
-|                list                 |        Containers        |        :x:         |                                                                                                                        |
-|               locale                |       Localization       |        :x:         |                                                                                                                        |
-|          [linalg](#linalg)          |         Numeric          | :heavy_check_mark: |   [linalg](https://docs.google.com/spreadsheets/d/1-qwa7tFnjFdgY9XKBy2fAsDozAfG8lXsJXHwA_ITQqM/edit#gid=1038174926)    |
-|          [mdspan](#mdspan)          |        Containers        | :heavy_check_mark: |    [mdspan](https://docs.google.com/spreadsheets/d/1-qwa7tFnjFdgY9XKBy2fAsDozAfG8lXsJXHwA_ITQqM/edit#gid=713673184)    |
-|          [memory](#memory)          | Utility / Dynamic Memory | :heavy_check_mark: |   [memory](https://docs.google.com/spreadsheets/d/1-qwa7tFnjFdgY9XKBy2fAsDozAfG8lXsJXHwA_ITQqM/edit#gid=2084657878)    |
-|           memory_resource           | Utility / Dynamic Memory |        :x:         |                                                                                                                        |
-|           [mutex](#mutex)           |          Thread          | :heavy_check_mark: |    [mutex](https://docs.google.com/spreadsheets/d/1-qwa7tFnjFdgY9XKBy2fAsDozAfG8lXsJXHwA_ITQqM/edit#gid=2084657878)    |
-|             [new](#new)             | Utility / Dynamic Memory | :heavy_check_mark: |     [new](https://docs.google.com/spreadsheets/d/1-qwa7tFnjFdgY9XKBy2fAsDozAfG8lXsJXHwA_ITQqM/edit#gid=2084657878)     |
-|         [numbers](#numbers)         |         Numeric          | :heavy_check_mark: |   [numbers](https://docs.google.com/spreadsheets/d/1-qwa7tFnjFdgY9XKBy2fAsDozAfG8lXsJXHwA_ITQqM/edit#gid=641824361)    |
-|         [numeric](#numeric)         |         Numeric          | :heavy_check_mark: |   [numeric](https://docs.google.com/spreadsheets/d/1-qwa7tFnjFdgY9XKBy2fAsDozAfG8lXsJXHwA_ITQqM/edit#gid=1599843301)   |
-|        [optional](#optional)        |         Utility          | :heavy_check_mark: |  [optional](https://docs.google.com/spreadsheets/d/1-qwa7tFnjFdgY9XKBy2fAsDozAfG8lXsJXHwA_ITQqM/edit#gid=1965816070)   |
-|               ostream               |       Input/Output       |        :x:         |                                                                                                                        |
-|                queue                |        Containers        |        :x:         |                                                          TODO                                                          |
-|          [random](#random)          |         Numeric          | :heavy_check_mark: |   [random](https://docs.google.com/spreadsheets/d/1-qwa7tFnjFdgY9XKBy2fAsDozAfG8lXsJXHwA_ITQqM/edit#gid=1617592580)    |
-|          [ranges](#ranges)          |          Ranges          | :heavy_check_mark: |   [ranges](https://docs.google.com/spreadsheets/d/1-qwa7tFnjFdgY9XKBy2fAsDozAfG8lXsJXHwA_ITQqM/edit#gid=1838971204)    |
-|                regex                |   Regular Expressions    |        :x:         |                                                                                                                        |
-|           [ratio](#ratio)           |         Numeric          | :heavy_check_mark: |    [ratio](https://docs.google.com/spreadsheets/d/1-qwa7tFnjFdgY9XKBy2fAsDozAfG8lXsJXHwA_ITQqM/edit#gid=1383686309)    |
-|          scoped_allocator           | Utility / Dynamic Memory |        :x:         |                                                                                                                        |
-|           [scope](#scope)           |         Utility          | :heavy_check_mark: |                                                                                                                        |
-|              semaphore              |          Thread          |        :x:         |                                                                                                                        |
-| [source_location](#source_location) |         Utility          | :heavy_check_mark: |                                                                                                                        |
-|             [set](#set)             |        Containers        | :heavy_check_mark: |     [set](https://docs.google.com/spreadsheets/d/1-qwa7tFnjFdgY9XKBy2fAsDozAfG8lXsJXHwA_ITQqM/edit#gid=930086747)      |
-|            shared_mutex             |          Thread          |        :x:         |                                                                                                                        |
-|            [span](#span)            |        Containers        | :heavy_check_mark: |    [span](https://docs.google.com/spreadsheets/d/1-qwa7tFnjFdgY9XKBy2fAsDozAfG8lXsJXHwA_ITQqM/edit#gid=1750377555)     |
-|           [stack](#stack)           |        Containers        | :heavy_check_mark: |    [stack](https://docs.google.com/spreadsheets/d/1-qwa7tFnjFdgY9XKBy2fAsDozAfG8lXsJXHwA_ITQqM/edit#gid=385809287)     |
-|             stack_trace             |         Utility          |        :x:         |                                                                                                                        |
-|       [stdexcept](#stdexcept)       | Utility / Error Handling | :heavy_check_mark: |   [stdexcept](https://docs.google.com/spreadsheets/d/1-qwa7tFnjFdgY9XKBy2fAsDozAfG8lXsJXHwA_ITQqM/edit?usp=sharing)    |
-|              streambuf              |       Input/Output       |        :x:         |                                                                                                                        |
-|          [string](#string)          |         Strings          | :heavy_check_mark: |    [string](https://docs.google.com/spreadsheets/d/1-qwa7tFnjFdgY9XKBy2fAsDozAfG8lXsJXHwA_ITQqM/edit#gid=43463000)     |
-|     [string_view](#string_view)     |         Strings          | :heavy_check_mark: | [string_view](https://docs.google.com/spreadsheets/d/1-qwa7tFnjFdgY9XKBy2fAsDozAfG8lXsJXHwA_ITQqM/edit#gid=1803550736) |
-|             stop_token              |          Thread          |        :x:         |                                                                                                                        |
-|               sstream               |       Input/Output       |        :x:         |                                                                                                                        |
-|    [system_error](#system_error)    | Utility / Error Handling | :heavy_check_mark: | [system_error](https://docs.google.com/spreadsheets/d/1-qwa7tFnjFdgY9XKBy2fAsDozAfG8lXsJXHwA_ITQqM/edit#gid=635426347) |
-|             sync_stream             |       Input/Output       |        :x:         |                                                                                                                        |
-|               thread                |          Thread          |        :x:         |                                                                                                                        |
-|           [tuple](#tuple)           |         Utility          | :heavy_check_mark: |    [tuple](https://docs.google.com/spreadsheets/d/1-qwa7tFnjFdgY9XKBy2fAsDozAfG8lXsJXHwA_ITQqM/edit#gid=857929646)     |
-|             type_index              |         Utility          |        :x:         |                                                                                                                        |
-|              type_info              |         Utility          |        :x:         |                                                                                                                        |
-|     [type_traits](#type_traits)     |         Utility          | :heavy_check_mark: | [type_traits](https://docs.google.com/spreadsheets/d/1-qwa7tFnjFdgY9XKBy2fAsDozAfG8lXsJXHwA_ITQqM/edit#gid=1691010448) |
-|            unordered_map            |        Containers        |        :x:         |                                                          TODO                                                          |
-|            unordered_set            |        Containers        |        :x:         |                                                          TODO                                                          |
-|         [utility](#utility)         |         Utility          | :heavy_check_mark: |   [utility](https://docs.google.com/spreadsheets/d/1-qwa7tFnjFdgY9XKBy2fAsDozAfG8lXsJXHwA_ITQqM/edit#gid=1484976254)   |
-|              valarray               |         Numeric          |        :x:         |                                                                                                                        |
-|         [variant](#variant)         |         Utility          | :heavy_check_mark: |   [variant](https://docs.google.com/spreadsheets/d/1-qwa7tFnjFdgY9XKBy2fAsDozAfG8lXsJXHwA_ITQqM/edit#gid=503059518)    |
-|          [vector](#vector)          |        Containers        | :heavy_check_mark: |   [vector](https://docs.google.com/spreadsheets/d/1-qwa7tFnjFdgY9XKBy2fAsDozAfG8lXsJXHwA_ITQqM/edit#gid=1613833122)    |
-|         [version](#version)         |         Utility          | :heavy_check_mark: |                                                                                                                        |
-|         [warning](#warning)         |         Utility          | :heavy_check_mark: |                                                      Non-standard                                                      |
+|             **Header**              |       **Library**        | **Status** |                                       **Implementation Progress (Spreadsheet)**                                        |
+| :---------------------------------: | :----------------------: | :--------: | :--------------------------------------------------------------------------------------------------------------------: |
+|       [algorithm](#algorithm)       |        Algorithms        |  **Yes**   |  [algorithm](https://docs.google.com/spreadsheets/d/1-qwa7tFnjFdgY9XKBy2fAsDozAfG8lXsJXHwA_ITQqM/edit#gid=1451123716)  |
+|                 any                 |         Utility          |    _No_    |                                                                                                                        |
+|           [array](#array)           |        Containers        |  **Yes**   |    [array](https://docs.google.com/spreadsheets/d/1-qwa7tFnjFdgY9XKBy2fAsDozAfG8lXsJXHwA_ITQqM/edit#gid=1320059600)    |
+|               atomic                |          Atomic          |    _No_    |                                                                                                                        |
+|               barrier               |          Thread          |    _No_    |                                                                                                                        |
+|             [bit](#bit)             |         Numeric          |  **Yes**   |     [bit](https://docs.google.com/spreadsheets/d/1-qwa7tFnjFdgY9XKBy2fAsDozAfG8lXsJXHwA_ITQqM/edit#gid=1927645890)     |
+|          [bitset](#bitset)          |         Utility          |  **Yes**   |    [bitset](https://docs.google.com/spreadsheets/d/1-qwa7tFnjFdgY9XKBy2fAsDozAfG8lXsJXHwA_ITQqM/edit#gid=692946382)    |
+|         [cassert](#cassert)         | Utility / Error Handling |  **Yes**   |   [cassert](https://docs.google.com/spreadsheets/d/1-qwa7tFnjFdgY9XKBy2fAsDozAfG8lXsJXHwA_ITQqM/edit#gid=460740183)    |
+|          [cctype](#cctype)          |         Strings          |  **Yes**   |    [cctype](https://docs.google.com/spreadsheets/d/1-qwa7tFnjFdgY9XKBy2fAsDozAfG8lXsJXHwA_ITQqM/edit#gid=522168028)    |
+|               cerrno                | Utility / Error Handling |    _No_    |                                                                                                                        |
+|                cfenv                |         Numeric          |    _No_    |                                                          TODO                                                          |
+|          [cfloat](#cfloat)          | Utility / Numeric Limits |  **Yes**   |   [cfloat](https://docs.google.com/spreadsheets/d/1-qwa7tFnjFdgY9XKBy2fAsDozAfG8lXsJXHwA_ITQqM/edit#gid=1012838019)    |
+|        [charconv](#charconv)        |         Strings          |  **Yes**   |   [charconv](https://docs.google.com/spreadsheets/d/1-qwa7tFnjFdgY9XKBy2fAsDozAfG8lXsJXHwA_ITQqM/edit#gid=345887816)   |
+|          [chrono](#chrono)          |         Utility          |  **Yes**   |   [chrono](https://docs.google.com/spreadsheets/d/1-qwa7tFnjFdgY9XKBy2fAsDozAfG8lXsJXHwA_ITQqM/edit#gid=1279150724)    |
+|              cinttypes              | Utility / Numeric Limits |    _No_    |                                                          TODO                                                          |
+|         [climits](#climits)         | Utility / Numeric Limits |  **Yes**   |   [climits](https://docs.google.com/spreadsheets/d/1-qwa7tFnjFdgY9XKBy2fAsDozAfG8lXsJXHwA_ITQqM/edit#gid=1904156895)   |
+|               clocale               |       Localization       |    _No_    |                                                                                                                        |
+|           [cmath](#cmath)           |         Numeric          |  **Yes**   |    [cmath](https://docs.google.com/spreadsheets/d/1-qwa7tFnjFdgY9XKBy2fAsDozAfG8lXsJXHwA_ITQqM/edit#gid=868070087)     |
+|         [compare](#compare)         |         Utility          |  **Yes**   |   [compare](https://docs.google.com/spreadsheets/d/1-qwa7tFnjFdgY9XKBy2fAsDozAfG8lXsJXHwA_ITQqM/edit#gid=1676133546)   |
+|         [complex](#complex)         |         Numeric          |  **Yes**   |   [complex](https://docs.google.com/spreadsheets/d/1-qwa7tFnjFdgY9XKBy2fAsDozAfG8lXsJXHwA_ITQqM/edit#gid=1768885550)   |
+|        [concepts](#concepts)        |         Concepts         |  **Yes**   |   [concepts](https://docs.google.com/spreadsheets/d/1-qwa7tFnjFdgY9XKBy2fAsDozAfG8lXsJXHwA_ITQqM/edit#gid=73781271)    |
+|         condition_variable          |          Thread          |    _No_    |                                                                                                                        |
+|              coroutine              |        Coroutines        |    _No_    |                                                                                                                        |
+|               csetjmp               |         Utility          |    _No_    |                                                                                                                        |
+|               csignal               |         Utility          |    _No_    |                                                                                                                        |
+|         [cstddef](#cstddef)         |         Utility          |  **Yes**   |   [cstddef](https://docs.google.com/spreadsheets/d/1-qwa7tFnjFdgY9XKBy2fAsDozAfG8lXsJXHwA_ITQqM/edit#gid=1660546405)   |
+|         [cstdint](#cstdint)         | Utility / Numeric Limits |  **Yes**   |   [cstdint](https://docs.google.com/spreadsheets/d/1-qwa7tFnjFdgY9XKBy2fAsDozAfG8lXsJXHwA_ITQqM/edit#gid=2005735528)   |
+|          [cstdio](#cstdio)          |       Input/Output       |  **Yes**   |   [cstdio](https://docs.google.com/spreadsheets/d/1-qwa7tFnjFdgY9XKBy2fAsDozAfG8lXsJXHwA_ITQqM/edit#gid=1576270107)    |
+|         [cstdlib](#cstdlib)         |         Utility          |  **Yes**   |   [cstdlib](https://docs.google.com/spreadsheets/d/1-qwa7tFnjFdgY9XKBy2fAsDozAfG8lXsJXHwA_ITQqM/edit#gid=1705155517)   |
+|         [cstring](#cstring)         |         Strings          |  **Yes**   |   [cstring](https://docs.google.com/spreadsheets/d/1-qwa7tFnjFdgY9XKBy2fAsDozAfG8lXsJXHwA_ITQqM/edit#gid=1824871501)   |
+|           [ctime](#ctime)           |         Utility          |  **Yes**   |    [ctime](https://docs.google.com/spreadsheets/d/1-qwa7tFnjFdgY9XKBy2fAsDozAfG8lXsJXHwA_ITQqM/edit#gid=1082109762)    |
+|               cuchar                |         Strings          |    _No_    |                                                                                                                        |
+|          [cwchar](#cwchar)          |         Strings          |  **Yes**   |   [cwchar](https://docs.google.com/spreadsheets/d/1-qwa7tFnjFdgY9XKBy2fAsDozAfG8lXsJXHwA_ITQqM/edit#gid=1105944467)    |
+|         [cwctype](#cwctype)         |         Strings          |  **Yes**   |   [cwctype](https://docs.google.com/spreadsheets/d/1-qwa7tFnjFdgY9XKBy2fAsDozAfG8lXsJXHwA_ITQqM/edit#gid=1740196036)   |
+|                deque                |        Containers        |    _No_    |                                                          TODO                                                          |
+|       [exception](#exception)       | Utility / Error Handling |  **Yes**   |   [exception](https://docs.google.com/spreadsheets/d/1-qwa7tFnjFdgY9XKBy2fAsDozAfG8lXsJXHwA_ITQqM/edit?usp=sharing)    |
+|              execution              |        Algorithms        |    _No_    |                                                                                                                        |
+|        [expected](#expected)        | Utility / Error Handling |  **Yes**   |  [expected](https://docs.google.com/spreadsheets/d/1-qwa7tFnjFdgY9XKBy2fAsDozAfG8lXsJXHwA_ITQqM/edit#gid=1624993362)   |
+|        [flat_set](#flat_set)        |        Conatiners        |  **Yes**   |   [flat_set](https://docs.google.com/spreadsheets/d/1-qwa7tFnjFdgY9XKBy2fAsDozAfG8lXsJXHwA_ITQqM/edit#gid=291280131)   |
+|        [flat_map](#flat_map)        |        Conatiners        |  **Yes**   |  [flat_map](https://docs.google.com/spreadsheets/d/1-qwa7tFnjFdgY9XKBy2fAsDozAfG8lXsJXHwA_ITQqM/edit#gid=1047136935)   |
+|             filesystem              |        Filesystem        |    _No_    |                                                                                                                        |
+|          [format](#format)          |         Strings          |  **Yes**   |    [format](https://docs.google.com/spreadsheets/d/1-qwa7tFnjFdgY9XKBy2fAsDozAfG8lXsJXHwA_ITQqM/edit#gid=159875067)    |
+|            forward_list             |        Containers        |    _No_    |                                                                                                                        |
+|      [functional](#functional)      |         Utility          |  **Yes**   |  [functional](https://docs.google.com/spreadsheets/d/1-qwa7tFnjFdgY9XKBy2fAsDozAfG8lXsJXHwA_ITQqM/edit#gid=291953395)  |
+|               future                |          Thread          |    _No_    |                                                                                                                        |
+|               fstream               |       Input/Output       |    _No_    |                                                                                                                        |
+|              ifstream               |       Input/Output       |    _No_    |                                                                                                                        |
+|          initializer_list           |         Utility          |    _No_    |                                                                                                                        |
+|               iomanip               |       Input/Output       |    _No_    |                                                                                                                        |
+|             [ios](#ios)             |       Input/Output       |  **Yes**   |     [ios](https://docs.google.com/spreadsheets/d/1-qwa7tFnjFdgY9XKBy2fAsDozAfG8lXsJXHwA_ITQqM/edit#gid=2084657878)     |
+|               iosfwd                |       Input/Output       |    _No_    |                                                                                                                        |
+|              iostream               |       Input/Output       |    _No_    |                                                                                                                        |
+|        [iterator](#iterator)        |         Iterator         |  **Yes**   |  [iterator](https://docs.google.com/spreadsheets/d/1-qwa7tFnjFdgY9XKBy2fAsDozAfG8lXsJXHwA_ITQqM/edit#gid=2084657878)   |
+|               istream               |       Input/Output       |    _No_    |                                                                                                                        |
+|                latch                |          Thread          |    _No_    |                                                                                                                        |
+|          [limits](#limits)          | Utility / Numeric Limits |  **Yes**   |   [limits](https://docs.google.com/spreadsheets/d/1-qwa7tFnjFdgY9XKBy2fAsDozAfG8lXsJXHwA_ITQqM/edit#gid=2084657878)    |
+|                list                 |        Containers        |    _No_    |                                                                                                                        |
+|               locale                |       Localization       |    _No_    |                                                                                                                        |
+|          [linalg](#linalg)          |         Numeric          |  **Yes**   |   [linalg](https://docs.google.com/spreadsheets/d/1-qwa7tFnjFdgY9XKBy2fAsDozAfG8lXsJXHwA_ITQqM/edit#gid=1038174926)    |
+|          [mdspan](#mdspan)          |        Containers        |  **Yes**   |    [mdspan](https://docs.google.com/spreadsheets/d/1-qwa7tFnjFdgY9XKBy2fAsDozAfG8lXsJXHwA_ITQqM/edit#gid=713673184)    |
+|          [memory](#memory)          | Utility / Dynamic Memory |  **Yes**   |   [memory](https://docs.google.com/spreadsheets/d/1-qwa7tFnjFdgY9XKBy2fAsDozAfG8lXsJXHwA_ITQqM/edit#gid=2084657878)    |
+|           memory_resource           | Utility / Dynamic Memory |    _No_    |                                                                                                                        |
+|           [mutex](#mutex)           |          Thread          |  **Yes**   |    [mutex](https://docs.google.com/spreadsheets/d/1-qwa7tFnjFdgY9XKBy2fAsDozAfG8lXsJXHwA_ITQqM/edit#gid=2084657878)    |
+|             [new](#new)             | Utility / Dynamic Memory |  **Yes**   |     [new](https://docs.google.com/spreadsheets/d/1-qwa7tFnjFdgY9XKBy2fAsDozAfG8lXsJXHwA_ITQqM/edit#gid=2084657878)     |
+|         [numbers](#numbers)         |         Numeric          |  **Yes**   |   [numbers](https://docs.google.com/spreadsheets/d/1-qwa7tFnjFdgY9XKBy2fAsDozAfG8lXsJXHwA_ITQqM/edit#gid=641824361)    |
+|         [numeric](#numeric)         |         Numeric          |  **Yes**   |   [numeric](https://docs.google.com/spreadsheets/d/1-qwa7tFnjFdgY9XKBy2fAsDozAfG8lXsJXHwA_ITQqM/edit#gid=1599843301)   |
+|        [optional](#optional)        |         Utility          |  **Yes**   |  [optional](https://docs.google.com/spreadsheets/d/1-qwa7tFnjFdgY9XKBy2fAsDozAfG8lXsJXHwA_ITQqM/edit#gid=1965816070)   |
+|               ostream               |       Input/Output       |    _No_    |                                                                                                                        |
+|                queue                |        Containers        |    _No_    |                                                          TODO                                                          |
+|          [random](#random)          |         Numeric          |  **Yes**   |   [random](https://docs.google.com/spreadsheets/d/1-qwa7tFnjFdgY9XKBy2fAsDozAfG8lXsJXHwA_ITQqM/edit#gid=1617592580)    |
+|          [ranges](#ranges)          |          Ranges          |  **Yes**   |   [ranges](https://docs.google.com/spreadsheets/d/1-qwa7tFnjFdgY9XKBy2fAsDozAfG8lXsJXHwA_ITQqM/edit#gid=1838971204)    |
+|                regex                |   Regular Expressions    |    _No_    |                                                                                                                        |
+|           [ratio](#ratio)           |         Numeric          |  **Yes**   |    [ratio](https://docs.google.com/spreadsheets/d/1-qwa7tFnjFdgY9XKBy2fAsDozAfG8lXsJXHwA_ITQqM/edit#gid=1383686309)    |
+|          scoped_allocator           | Utility / Dynamic Memory |    _No_    |                                                                                                                        |
+|           [scope](#scope)           |         Utility          |  **Yes**   |                                                                                                                        |
+|              semaphore              |          Thread          |    _No_    |                                                                                                                        |
+| [source_location](#source_location) |         Utility          |  **Yes**   |                                                                                                                        |
+|             [set](#set)             |        Containers        |  **Yes**   |     [set](https://docs.google.com/spreadsheets/d/1-qwa7tFnjFdgY9XKBy2fAsDozAfG8lXsJXHwA_ITQqM/edit#gid=930086747)      |
+|            shared_mutex             |          Thread          |    _No_    |                                                                                                                        |
+|            [span](#span)            |        Containers        |  **Yes**   |    [span](https://docs.google.com/spreadsheets/d/1-qwa7tFnjFdgY9XKBy2fAsDozAfG8lXsJXHwA_ITQqM/edit#gid=1750377555)     |
+|           [stack](#stack)           |        Containers        |  **Yes**   |    [stack](https://docs.google.com/spreadsheets/d/1-qwa7tFnjFdgY9XKBy2fAsDozAfG8lXsJXHwA_ITQqM/edit#gid=385809287)     |
+|             stack_trace             |         Utility          |    _No_    |                                                                                                                        |
+|       [stdexcept](#stdexcept)       | Utility / Error Handling |  **Yes**   |   [stdexcept](https://docs.google.com/spreadsheets/d/1-qwa7tFnjFdgY9XKBy2fAsDozAfG8lXsJXHwA_ITQqM/edit?usp=sharing)    |
+|              streambuf              |       Input/Output       |    _No_    |                                                                                                                        |
+|          [string](#string)          |         Strings          |  **Yes**   |    [string](https://docs.google.com/spreadsheets/d/1-qwa7tFnjFdgY9XKBy2fAsDozAfG8lXsJXHwA_ITQqM/edit#gid=43463000)     |
+|     [string_view](#string_view)     |         Strings          |  **Yes**   | [string_view](https://docs.google.com/spreadsheets/d/1-qwa7tFnjFdgY9XKBy2fAsDozAfG8lXsJXHwA_ITQqM/edit#gid=1803550736) |
+|             stop_token              |          Thread          |    _No_    |                                                                                                                        |
+|               sstream               |       Input/Output       |    _No_    |                                                                                                                        |
+|    [system_error](#system_error)    | Utility / Error Handling |  **Yes**   | [system_error](https://docs.google.com/spreadsheets/d/1-qwa7tFnjFdgY9XKBy2fAsDozAfG8lXsJXHwA_ITQqM/edit#gid=635426347) |
+|             sync_stream             |       Input/Output       |    _No_    |                                                                                                                        |
+|               thread                |          Thread          |    _No_    |                                                                                                                        |
+|           [tuple](#tuple)           |         Utility          |  **Yes**   |    [tuple](https://docs.google.com/spreadsheets/d/1-qwa7tFnjFdgY9XKBy2fAsDozAfG8lXsJXHwA_ITQqM/edit#gid=857929646)     |
+|             type_index              |         Utility          |    _No_    |                                                                                                                        |
+|              type_info              |         Utility          |    _No_    |                                                                                                                        |
+|     [type_traits](#type_traits)     |         Utility          |  **Yes**   | [type_traits](https://docs.google.com/spreadsheets/d/1-qwa7tFnjFdgY9XKBy2fAsDozAfG8lXsJXHwA_ITQqM/edit#gid=1691010448) |
+|            unordered_map            |        Containers        |    _No_    |                                                          TODO                                                          |
+|            unordered_set            |        Containers        |    _No_    |                                                          TODO                                                          |
+|         [utility](#utility)         |         Utility          |  **Yes**   |   [utility](https://docs.google.com/spreadsheets/d/1-qwa7tFnjFdgY9XKBy2fAsDozAfG8lXsJXHwA_ITQqM/edit#gid=1484976254)   |
+|              valarray               |         Numeric          |    _No_    |                                                                                                                        |
+|         [variant](#variant)         |         Utility          |  **Yes**   |   [variant](https://docs.google.com/spreadsheets/d/1-qwa7tFnjFdgY9XKBy2fAsDozAfG8lXsJXHwA_ITQqM/edit#gid=503059518)    |
+|          [vector](#vector)          |        Containers        |  **Yes**   |   [vector](https://docs.google.com/spreadsheets/d/1-qwa7tFnjFdgY9XKBy2fAsDozAfG8lXsJXHwA_ITQqM/edit#gid=1613833122)    |
+|         [version](#version)         |         Utility          |  **Yes**   |                                                                                                                        |
+|         [warning](#warning)         |         Utility          |  **Yes**   |                                                      Non-standard                                                      |
 
 ## Header Detail
 
