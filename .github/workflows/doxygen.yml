@@ -26,13 +26,13 @@ jobs:
       - name: Disable Jekyll processing
         run: touch build-doxygen/html/.nojekyll
 
-      # - name: Pushes to documentation repo
-      #   uses: cpina/github-action-push-to-another-repository@main
-      #   env:
-      #     API_TOKEN_GITHUB: ${{ secrets.DOXYGEN_PUSH_TOKEN }}
-      #   with:
-      #     source-directory: "build-doxygen/html"
-      #     destination-github-username: "tobanteEmbedded"
-      #     destination-repository-name: "tetl-docs"
-      #     user-email: tobanteEmbedded@gmail.com
-      #     target-branch: main
+      - name: Pushes to documentation repo
+        uses: cpina/github-action-push-to-another-repository@main
+        env:
+          API_TOKEN_GITHUB: ${{ secrets.DOXYGEN_PUSH_TOKEN }}
+        with:
+          source-directory: "build-doxygen/html"
+          destination-github-username: "tobanteEmbedded"
+          destination-repository-name: "tetl-docs"
+          user-email: tobanteEmbedded@gmail.com
+          target-branch: main
