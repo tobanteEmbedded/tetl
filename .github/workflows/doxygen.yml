@@ -29,7 +29,7 @@ jobs:
       - name: Pushes to documentation repo
         uses: cpina/github-action-push-to-another-repository@main
         env:
-          API_TOKEN_GITHUB: ${{ secrets.DOXYGEN_PUSH_TOKEN }}
+          SSH_DEPLOY_KEY: ${{ secrets.SSH_DEPLOY_KEY }}
         with:
           source-directory: "build-doxygen/html"
           destination-github-username: "tobanteEmbedded"
