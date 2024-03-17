@@ -42,19 +42,19 @@ template <typename Assertion>
 
 /// \brief The default assert handler. This will be called, if an assertion
 /// is triggered at runtime.
-[[noreturn]] inline auto tetl_default_assert_handler(assert_msg const& msg) -> void
+[[noreturn]] inline auto default_assert_handler(assert_msg const& msg) -> void
 {
     etl::ignore_unused(msg);
     ::exit(1); // NOLINT
 }
 
 namespace detail {
-[[noreturn]] inline auto tetl_call_assert_handler(assert_msg const& msg) -> void
+[[noreturn]] inline auto call_assert_handler(assert_msg const& msg) -> void
 {
 #if defined(TETL_ENABLE_CUSTOM_ASSERT_HANDLER)
     etl::tetl_assert_handler(msg);
 #else
-    etl::tetl_default_assert_handler(msg);
+    etl::default_assert_handler(msg);
 #endif
 }
 
@@ -75,7 +75,7 @@ namespace detail {
                         etl::is_hosted() ? TETL_BUILTIN_FUNCTION() : nullptr,                                          \
                         etl::is_hosted() ? TETL_PP_STRINGIFY((__VA_ARGS__)) : nullptr,                                 \
                     };                                                                                                 \
-                    etl::detail::tetl_call_assert_handler(msg);                                                        \
+                    etl::detail::call_assert_handler(msg);                                                             \
                 }                                                                                                      \
             } while (false)
     #else
