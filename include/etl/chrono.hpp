@@ -17,7 +17,6 @@
 #include <etl/_chrono/floor.hpp>
 #include <etl/_chrono/is_clock.hpp>
 #include <etl/_chrono/last_spec.hpp>
-#include <etl/_chrono/literals.hpp>
 #include <etl/_chrono/local_t.hpp>
 #include <etl/_chrono/month.hpp>
 #include <etl/_chrono/month_day.hpp>

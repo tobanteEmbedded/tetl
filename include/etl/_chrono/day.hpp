@@ -103,4 +103,22 @@ private:
 
 } // namespace etl::chrono
 
+// NOLINTNEXTLINE(modernize-concat-nested-namespaces)
+namespace etl {
+inline namespace literals {
+inline namespace chrono_literals {
+
+/// \brief Forms a etl::chrono::day literal representing a day of the month in the calendar.
+[[nodiscard]] constexpr auto operator""_d(unsigned long long d) noexcept -> etl::chrono::day
+{
+    return etl::chrono::day{static_cast<uint32_t>(d)};
+}
+
+} // namespace chrono_literals
+} // namespace literals
+} // namespace etl
+
+namespace etl::chrono {
+using namespace etl::literals::chrono_literals;
+} // namespace etl::chrono
 #endif // TETL_CHRONO_DAY_HPP
