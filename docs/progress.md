@@ -38,4 +38,5 @@
 |               Add a conditional noexcept specification to `std::exchange`                |  [P2401R0](https://www.open-std.org/jtc1/sc22/wg21/docs/papers/2021/p2401r0.html)  | **Done** |         |
 |                                 constexpr `std::bitset`                                  |  [P2417R2](https://www.open-std.org/jtc1/sc22/wg21/docs/papers/2022/p2417r2.pdf)   | **Done** |         |
 |                                  `std::forward_like()`                                   |  [P2445R1](https://www.open-std.org/jtc1/sc22/wg21/docs/papers/2022/p2445r1.pdf)   | **Done** |         |
+|                 Add a conditional noexcept specification to `std::apply`                 |  [P2517R1](https://www.open-std.org/jtc1/sc22/wg21/docs/papers/2022/p2517r1.html)  |          |         |
 |              `std::unexpected<E>` should have `error()` as member accessor               |  [P2549R1](https://www.open-std.org/jtc1/sc22/wg21/docs/papers/2022/p2549r1.html)  | **Done** |         |
