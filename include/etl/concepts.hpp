@@ -35,6 +35,7 @@
 
 // Non-standard extensions
 #include <etl/_concepts/boolean_testable.hpp>
+#include <etl/_concepts/integer.hpp>
 #include <etl/_concepts/weakly_equality_comparable_with.hpp>
 
 #endif // TETL_CONCEPTS_HPP
