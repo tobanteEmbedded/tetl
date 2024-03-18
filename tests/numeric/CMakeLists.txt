@@ -2,6 +2,7 @@ project(numeric)
 
 tetl_add_test(${PROJECT_NAME} abs)
 tetl_add_test(${PROJECT_NAME} accumulate)
+tetl_add_test(${PROJECT_NAME} add_sat)
 tetl_add_test(${PROJECT_NAME} adjacent_difference)
 tetl_add_test(${PROJECT_NAME} gcd)
 tetl_add_test(${PROJECT_NAME} inner_product)

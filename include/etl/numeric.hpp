@@ -10,6 +10,7 @@
 
 #include <etl/_numeric/abs.hpp>
 #include <etl/_numeric/accumulate.hpp>
+#include <etl/_numeric/add_sat.hpp>
 #include <etl/_numeric/adjacent_difference.hpp>
 #include <etl/_numeric/gcd.hpp>
 #include <etl/_numeric/inner_product.hpp>
