@@ -63,48 +63,48 @@ Unless stated otherwise, all papers are implemented to work with the minimum C++
 
 |  Paper  |                                        Name                                        |  Status  | Comment |
 | :-----: | :--------------------------------------------------------------------------------: | :------: | :-----: |
-| P0463R1 |                                   `std::endian`                                    | **Done** |         |
-| P0202R3 |                    constexpr for `<algorithm>` and `<utility>`                     | **Done** |         |
-| P0415R1 |                           More constexpr for `<complex>`                           | **Done** |         |
-| P0457R2 |     String prefix and suffix checking: string(\_view) ::starts_with/ends_with      | **Done** |         |
-| P0768R1 |                   Library support for `operator<=>` `<compare>`                    |          |         |
-| P0550R2 |                                `std::remove_cvref`                                 | **Done** |         |
-| P0600R1 |                      `[[nodiscard]]` in the standard library                       | **Done** |         |
-| P0616R0 |                      Using `std::move` in numeric algorithms                       | **Done** |         |
-| P0653R2 |                   Utility to convert a pointer to a raw pointer                    |          |         |
 | P0122R7 |                                    `std::span`                                     | **Done** |         |
-| P0355R7 |                               Calendar and timezone                                |  _WIP_   |         |
-| P0754R2 |                                    `<version>`                                     | **Done** |         |
-| P0858R0 |                          _ConstexprIterator_ requirements                          |          |         |
-| P0458R2 | `contains()` member function of associative containers, e.g.`std::map::contains()` | **Done** |         |
-| P0475R1 |              DR11: Guaranteed copy elision for piecewise construction              |          |         |
-| P0476R2 |                                 `std::bit_cast()`                                  | **Done** |         |
-| P0556R3 |                           Integral power-of-2 operations                           | **Done** |         |
-| P1956R1 |                On the names of low-level bit manipulation functions                | **Done** |         |
-| P0646R1 |                Improving the return value of erase-like algorithms                 |  _WIP_   |         |
-| P0722R3 |                              `std::destroying_delete`                              |          |         |
-| P0758R1 |                           `std::is_nothrow_convertible`                            | **Done** |         |
-| P0769R2 |                     Add `std::shift_left/right` to <algorithm>                     | **Done** |         |
-| P0879R0 |               Constexpr for `std::swap()` and swap related functions               | **Done** |         |
-| P0887R1 |                                `std::type_identity`                                | **Done** |         |
-| P0898R3 |                                  Concepts library                                  |  _WIP_   |         |
+| P0202R3 |                    constexpr for `<algorithm>` and `<utility>`                     | **Done** |         |
 | P0318R1 |                `std::unwrap_ref_decay` and `std::unwrap_reference`                 |          |         |
+| P0325R4 |                                 `std::to_array()`                                  | **Done** |         |
+| P0339R6 |                   `polymorphic_allocator<>` as a vocabulary type                   |          |         |
+| P0355R7 |                               Calendar and timezone                                |  _WIP_   |         |
 | P0356R5 |                                `std::bind_front()`                                 |  _WIP_   |         |
 | P0357R3 |                   `std::reference_wrapper` for incomplete types                    |          |         |
+| P0415R1 |                           More constexpr for `<complex>`                           | **Done** |         |
+| P0457R2 |     String prefix and suffix checking: string(\_view) ::starts_with/ends_with      | **Done** |         |
+| P0458R2 | `contains()` member function of associative containers, e.g.`std::map::contains()` | **Done** |         |
+| P0463R1 |                                   `std::endian`                                    | **Done** |         |
+| P0466R5 |            Layout-compatibility and pointer-interconvertibility traits             |          |         |
+| P0475R1 |              DR11: Guaranteed copy elision for piecewise construction              |          |         |
+| P0476R2 |                                 `std::bit_cast()`                                  | **Done** |         |
 | P0482R6 |                           Library support for `char8_t`                            |          |         |
+| P0553R4 |                                   Bit operations                                   | **Done** |         |
+| P0556R3 |                           Integral power-of-2 operations                           | **Done** |         |
+| P0550R2 |                                `std::remove_cvref`                                 | **Done** |         |
+| P0586R2 |                             Safe integral comparisons                              | **Done** |         |
 | P0591R4 |             Utility functions to implement uses-allocator construction             |          |         |
+| P0600R1 |                      `[[nodiscard]]` in the standard library                       | **Done** |         |
 | P0602R4 |   DR17: `std::variant` and `std::optional` should propagate copy/move triviality   |  _WIP_   |         |
 | P0608R3 |                    A sane `std::variant` converting constructor                    |  _WIP_   |         |
+| P0616R0 |                      Using `std::move` in numeric algorithms                       | **Done** |         |
+| P0631R8 |                               Mathematical constants                               | **Done** |         |
+| P0646R1 |                Improving the return value of erase-like algorithms                 |  _WIP_   |         |
+| P0653R2 |                   Utility to convert a pointer to a raw pointer                    |          |         |
+| P0722R3 |                              `std::destroying_delete`                              |          |         |
+| P0754R2 |                                    `<version>`                                     | **Done** |         |
+| P0758R1 |                           `std::is_nothrow_convertible`                            | **Done** |         |
+| P0768R1 |                   Library support for `operator<=>` `<compare>`                    |          |         |
+| P0769R2 |                     Add `std::shift_left/right` to <algorithm>                     | **Done** |         |
 | P0771R1 |               `std::function`'s move constructor should be noexcept                |          |         |
+| P0784R7 |                  constexpr `std::allocator` and related utilities                  |          |         |
+| P0811R3 |                        `std::lerp()` and `std::midpoint()`                         | **Done** |         |
+| P0858R0 |                          _ConstexprIterator_ requirements                          |          |         |
+| P0879R0 |               Constexpr for `std::swap()` and swap related functions               | **Done** |         |
+| P0887R1 |                                `std::type_identity`                                | **Done** |         |
 | P0896R4 |                              The One Ranges Proposal                               |  _WIP_   |         |
+| P0898R3 |                                  Concepts library                                  |  _WIP_   |         |
 | P0919R3 |                   Heterogeneous lookup for unordered containers                    |          |         |
 | P0972R0 |            `<chrono>` `zero()`, `min()`, and `max()` should be noexcept            |          |         |
-| P0339R6 |                   `polymorphic_allocator<>` as a vocabulary type                   |          |         |
-| P0811R3 |                        `std::lerp()` and `std::midpoint()`                         | **Done** |         |
-| P0325R4 |                                 `std::to_array()`                                  | **Done** |         |
-| P0466R5 |            Layout-compatibility and pointer-interconvertibility traits             |          |         |
-| P0553R4 |                                   Bit operations                                   | **Done** |         |
-| P0631R8 |                               Mathematical constants                               | **Done** |         |
-| P0784R7 |                  constexpr `std::allocator` and related utilities                  |          |         |
 | P0980R1 |                              constexpr `std::string`                               |          |         |
-| P0586R2 |                             Safe integral comparisons                              | **Done** |         |
+| P1956R1 |                On the names of low-level bit manipulation functions                | **Done** |         |
