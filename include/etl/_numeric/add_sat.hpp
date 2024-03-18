@@ -15,8 +15,10 @@
 
 namespace etl {
 
+namespace detail {
+
 template <etl::integer Int>
-[[nodiscard]] constexpr auto add_sat(Int x, Int y) noexcept -> Int
+[[nodiscard]] constexpr auto add_sat_fallback(Int x, Int y) noexcept -> Int
 {
     constexpr auto min = etl::numeric_limits<Int>::min();
     constexpr auto max = etl::numeric_limits<Int>::max();
@@ -34,8 +36,42 @@ template <etl::integer Int>
     } else if constexpr (sizeof(Int) == 4 and etl::is_unsigned_v<Int>) {
         return Int(etl::clamp(etl::uint64_t(x) + etl::uint64_t(y), etl::uint64_t(min), etl::uint64_t(max)));
     } else {
-        static_assert(etl::always_false<Int>);
+        if (x >= 0) {
+            if (max - x < y) {
+                return max;
+            }
+        } else {
+            if (y < min - x) {
+                return min;
+            }
+        }
+        return x + y;
     }
+}
+
+} // namespace detail
+
+template <etl::integer Int>
+[[nodiscard]] constexpr auto add_sat(Int x, Int y) noexcept -> Int
+{
+#if defined(__GNUC__) or defined(__clang__)
+    constexpr auto min = etl::numeric_limits<Int>::min();
+    constexpr auto max = etl::numeric_limits<Int>::max();
+
+    if (Int sum{0}; not __builtin_add_overflow(x, y, &sum)) {
+        return sum;
+    }
+    if constexpr (etl::is_unsigned_v<Int>) {
+        return max;
+    } else {
+        if (x > Int(0)) {
+            return max;
+        }
+        return min;
+    }
+#else
+    return etl::detail::add_sat_fallback(x, y);
+#endif
 }
 
 } // namespace etl
