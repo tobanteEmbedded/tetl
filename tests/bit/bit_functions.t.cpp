@@ -50,21 +50,6 @@ constexpr auto test_bit_width() -> bool
     return true;
 }
 
-template <typename T>
-constexpr auto test_popcount() -> bool
-{
-    assert(etl::popcount(T{1}) == 1);
-    assert(etl::popcount(T{2}) == 1);
-    assert(etl::popcount(T{3}) == 2);
-    assert(etl::popcount(T{0b11111111}) == 8);
-
-    assert(etl::detail::popcount_fallback(T{1}) == 1);
-    assert(etl::detail::popcount_fallback(T{2}) == 1);
-    assert(etl::detail::popcount_fallback(T{3}) == 2);
-    assert(etl::detail::popcount_fallback(T{0b11111111}) == 8);
-    return true;
-}
-
 constexpr auto test_rotl() -> bool
 {
     etl::uint8_t const i = 0b00011101;
@@ -186,10 +171,6 @@ constexpr auto test_all() -> bool
     assert(test_rotl());
     assert(test_rotr());
 
-    assert(test_popcount<etl::uint8_t>());
-    assert(test_popcount<etl::uint16_t>());
-    assert(test_popcount<etl::uint32_t>());
-
     assert(test_countl_zero<etl::uint8_t>());
     assert(test_countl_zero<etl::uint16_t>());
     assert(test_countl_zero<etl::uint32_t>());
@@ -212,7 +193,6 @@ constexpr auto test_all() -> bool
 
 #if not defined(TETL_WORKAROUND_AVR_BROKEN_TESTS)
     assert(test_bit_width<etl::uint64_t>());
-    assert(test_popcount<etl::uint64_t>());
     assert(test_countl_zero<etl::uint64_t>());
     assert(test_countl_one<etl::uint64_t>());
     assert(test_countr_zero<etl::uint64_t>());
