@@ -55,7 +55,7 @@
 |  [P2517R1](https://www.open-std.org/jtc1/sc22/wg21/docs/papers/2022/p2517r1.html)  |                 Add a conditional noexcept specification to `std::apply`                 |          |         |
 |  [P2549R1](https://www.open-std.org/jtc1/sc22/wg21/docs/papers/2022/p2549r1.html)  |              `std::unexpected<E>` should have `error()` as member accessor               | **Done** |         |
 
-## C++23
+## C++20
 
 |  Paper  |                                        Name                                        |  Status  | Comment |
 | :-----: | :--------------------------------------------------------------------------------: | :------: | :-----: |
