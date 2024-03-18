@@ -198,6 +198,45 @@ constexpr auto test() -> bool
     TEST_IS_TRAIT_CV_FALSE(is_unsigned, etl::int32_t);
     TEST_IS_TRAIT_CV_FALSE(is_unsigned, etl::int64_t);
 
+    TEST_IS_TRAIT_CV(is_unsigned_integer, unsigned char);
+    TEST_IS_TRAIT_CV(is_unsigned_integer, unsigned short);
+    TEST_IS_TRAIT_CV(is_unsigned_integer, unsigned int);
+    TEST_IS_TRAIT_CV(is_unsigned_integer, unsigned long);
+    TEST_IS_TRAIT_CV(is_unsigned_integer, unsigned long long);
+    TEST_IS_TRAIT_CV(is_unsigned_integer, etl::uint8_t);
+    TEST_IS_TRAIT_CV(is_unsigned_integer, etl::uint16_t);
+    TEST_IS_TRAIT_CV(is_unsigned_integer, etl::uint32_t);
+    TEST_IS_TRAIT_CV(is_unsigned_integer, etl::uint64_t);
+
+    TEST_IS_TRAIT_CV(is_signed_integer, signed char);
+    TEST_IS_TRAIT_CV(is_signed_integer, signed short);
+    TEST_IS_TRAIT_CV(is_signed_integer, signed int);
+    TEST_IS_TRAIT_CV(is_signed_integer, signed long);
+    TEST_IS_TRAIT_CV(is_signed_integer, signed long long);
+    TEST_IS_TRAIT_CV(is_signed_integer, etl::int8_t);
+    TEST_IS_TRAIT_CV(is_signed_integer, etl::int16_t);
+    TEST_IS_TRAIT_CV(is_signed_integer, etl::int32_t);
+    TEST_IS_TRAIT_CV(is_signed_integer, etl::int64_t);
+
+    TEST_IS_TRAIT_CV(is_integer, unsigned char);
+    TEST_IS_TRAIT_CV(is_integer, unsigned short);
+    TEST_IS_TRAIT_CV(is_integer, unsigned int);
+    TEST_IS_TRAIT_CV(is_integer, unsigned long);
+    TEST_IS_TRAIT_CV(is_integer, unsigned long long);
+    TEST_IS_TRAIT_CV(is_integer, signed char);
+    TEST_IS_TRAIT_CV(is_integer, signed short);
+    TEST_IS_TRAIT_CV(is_integer, signed int);
+    TEST_IS_TRAIT_CV(is_integer, signed long);
+    TEST_IS_TRAIT_CV(is_integer, signed long long);
+    TEST_IS_TRAIT_CV(is_integer, etl::uint8_t);
+    TEST_IS_TRAIT_CV(is_integer, etl::uint16_t);
+    TEST_IS_TRAIT_CV(is_integer, etl::uint32_t);
+    TEST_IS_TRAIT_CV(is_integer, etl::uint64_t);
+    TEST_IS_TRAIT_CV(is_integer, etl::int8_t);
+    TEST_IS_TRAIT_CV(is_integer, etl::int16_t);
+    TEST_IS_TRAIT_CV(is_integer, etl::int32_t);
+    TEST_IS_TRAIT_CV(is_integer, etl::int64_t);
+
     struct AlignmenTest {
         float f; // NOLINT
     };
