@@ -44,4 +44,10 @@
     #define TETL_NO_UNIQUE_ADDRESS [[no_unique_address]]
 #endif
 
+#if defined(__GNUC__) or defined(__clang__)
+    #define TETL_MAY_ALIAS [[gnu::may_alias]]
+#else
+    #define TETL_MAY_ALIAS
+#endif
+
 #endif // TETL_CONFIG_ATTRIBUTES_HPP

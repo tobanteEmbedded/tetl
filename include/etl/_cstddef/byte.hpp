@@ -6,6 +6,7 @@
 #include <etl/_concepts/integral.hpp>
 
 namespace etl {
+
 /// \brief etl::byte is a distinct type that implements the concept of byte as
 /// specified in the C++ language definition.
 ///
@@ -15,34 +16,32 @@ namespace etl {
 /// the only operators defined for it are the bitwise ones.
 ///
 /// https://en.cppreference.com/w/cpp/types/byte
-enum struct byte : unsigned char {
+enum struct TETL_MAY_ALIAS byte : unsigned char {
 };
 
 /// \brief Equivalent to: `return Int(b);`
-template <integral Int>
+template <etl::integral Int>
 [[nodiscard]] constexpr auto to_integer(etl::byte b) noexcept -> Int
 {
     return static_cast<Int>(b);
 }
 
-/// \brief Equivalent to: `return etl::byte(static_cast<unsigned int>(b) <<`
-/// shift)
-template <integral Int>
+/// \brief Equivalent to: `return etl::byte(static_cast<unsigned int>(b) <<  shift);`
+template <etl::integral Int>
 [[nodiscard]] constexpr auto operator<<(etl::byte b, Int shift) noexcept -> etl::byte
 {
     return etl::byte(static_cast<unsigned int>(b) << shift);
 }
 
-/// \brief Equivalent to: `return etl::byte(static_cast<unsigned int>(b) >>`
-/// shift)
-template <integral Int>
+/// \brief Equivalent to: `return etl::byte(static_cast<unsigned int>(b) >> shift);`
+template <etl::integral Int>
 [[nodiscard]] constexpr auto operator>>(etl::byte b, Int shift) noexcept -> etl::byte
 {
     return etl::byte(static_cast<unsigned int>(b) >> shift);
 }
 
 /// \brief Equivalent to: `return b = b << shift;`
-template <integral Int>
+template <etl::integral Int>
 constexpr auto operator<<=(etl::byte& b, Int shift) noexcept -> etl::byte&
 
 {
@@ -50,28 +49,25 @@ constexpr auto operator<<=(etl::byte& b, Int shift) noexcept -> etl::byte&
 }
 
 /// \brief Equivalent to: `return b = b >> shift;`
-template <integral Int>
+template <etl::integral Int>
 constexpr auto operator>>=(etl::byte& b, Int shift) noexcept -> etl::byte&
 {
     return b = b >> shift;
 }
 
-/// \brief Equivalent to: `return byte(static_cast<unsigned int>(lhs) |
-/// static_cast<unsigned int>(rhs));`
+/// \brief Equivalent to: `return byte(static_cast<unsigned int>(lhs) | static_cast<unsigned int>(rhs));`
 [[nodiscard]] constexpr auto operator|(etl::byte lhs, etl::byte rhs) noexcept -> etl::byte
 {
     return etl::byte(static_cast<unsigned int>(lhs) | static_cast<unsigned int>(rhs));
 }
 
-/// \brief Equivalent to: `return byte(static_cast<unsigned int>(lhs) &
-/// static_cast<unsigned int>(rhs));`
+/// \brief Equivalent to: `return byte(static_cast<unsigned int>(lhs) & static_cast<unsigned int>(rhs));`
 [[nodiscard]] constexpr auto operator&(etl::byte lhs, etl::byte rhs) noexcept -> etl::byte
 {
     return etl::byte(static_cast<unsigned int>(lhs) & static_cast<unsigned int>(rhs));
 }
 
-/// \brief Equivalent to: `return byte(static_cast<unsigned int>(lhs) ^
-/// static_cast<unsigned int>(rhs));`
+/// \brief Equivalent to: `return byte(static_cast<unsigned int>(lhs) ^ static_cast<unsigned int>(rhs));`
 [[nodiscard]] constexpr auto operator^(etl::byte lhs, etl::byte rhs) noexcept -> etl::byte
 {
     return etl::byte(static_cast<unsigned int>(lhs) ^ static_cast<unsigned int>(rhs));
