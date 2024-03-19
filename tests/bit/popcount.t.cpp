@@ -16,61 +16,61 @@ concept has_popcount = requires(T t) { etl::popcount(t); };
 template <typename T>
 constexpr auto test() -> bool
 {
-    ASSERT_NOEXCEPT(etl::popcount(T{1}));
-    ASSERT_SAME_TYPE(decltype(etl::popcount(T{1})), int);
+    CHECK_NOEXCEPT(etl::popcount(T{1}));
+    CHECK_SAME_TYPE(decltype(etl::popcount(T{1})), int);
 
-    ASSERT(etl::popcount(T{0}) == 0);
-    ASSERT(etl::popcount(T{1}) == 1);
-    ASSERT(etl::popcount(T{2}) == 1);
-    ASSERT(etl::popcount(T{3}) == 2);
-    ASSERT(etl::popcount(T{0b11111111}) == 8);
-    ASSERT(etl::popcount(etl::numeric_limits<T>::max()) == etl::numeric_limits<T>::digits);
+    CHECK(etl::popcount(T{0}) == 0);
+    CHECK(etl::popcount(T{1}) == 1);
+    CHECK(etl::popcount(T{2}) == 1);
+    CHECK(etl::popcount(T{3}) == 2);
+    CHECK(etl::popcount(T{0b11111111}) == 8);
+    CHECK(etl::popcount(etl::numeric_limits<T>::max()) == etl::numeric_limits<T>::digits);
 
-    ASSERT(etl::detail::popcount_fallback(T{1}) == 1);
-    ASSERT(etl::detail::popcount_fallback(T{2}) == 1);
-    ASSERT(etl::detail::popcount_fallback(T{3}) == 2);
-    ASSERT(etl::detail::popcount_fallback(T{0b11111111}) == 8);
-    ASSERT(etl::detail::popcount_fallback(etl::numeric_limits<T>::max()) == etl::numeric_limits<T>::digits);
+    CHECK(etl::detail::popcount_fallback(T{1}) == 1);
+    CHECK(etl::detail::popcount_fallback(T{2}) == 1);
+    CHECK(etl::detail::popcount_fallback(T{3}) == 2);
+    CHECK(etl::detail::popcount_fallback(T{0b11111111}) == 8);
+    CHECK(etl::detail::popcount_fallback(etl::numeric_limits<T>::max()) == etl::numeric_limits<T>::digits);
 
     return true;
 }
 
 constexpr auto test_all() -> bool
 {
-    ASSERT(has_popcount<etl::uint8_t>);
-    ASSERT(has_popcount<etl::uint16_t>);
-    ASSERT(has_popcount<etl::uint32_t>);
-    ASSERT(has_popcount<etl::uint64_t>);
+    CHECK(has_popcount<etl::uint8_t>);
+    CHECK(has_popcount<etl::uint16_t>);
+    CHECK(has_popcount<etl::uint32_t>);
+    CHECK(has_popcount<etl::uint64_t>);
 
-    ASSERT(has_popcount<unsigned char>);
-    ASSERT(has_popcount<unsigned short>);
-    ASSERT(has_popcount<unsigned int>);
-    ASSERT(has_popcount<unsigned long>);
-    ASSERT(has_popcount<unsigned long long>);
+    CHECK(has_popcount<unsigned char>);
+    CHECK(has_popcount<unsigned short>);
+    CHECK(has_popcount<unsigned int>);
+    CHECK(has_popcount<unsigned long>);
+    CHECK(has_popcount<unsigned long long>);
 
-    ASSERT(not has_popcount<etl::int8_t>);
-    ASSERT(not has_popcount<etl::int16_t>);
-    ASSERT(not has_popcount<etl::int32_t>);
-    ASSERT(not has_popcount<etl::int64_t>);
-    ASSERT(not has_popcount<etl::ptrdiff_t>);
+    CHECK(not has_popcount<etl::int8_t>);
+    CHECK(not has_popcount<etl::int16_t>);
+    CHECK(not has_popcount<etl::int32_t>);
+    CHECK(not has_popcount<etl::int64_t>);
+    CHECK(not has_popcount<etl::ptrdiff_t>);
 
-    ASSERT(not has_popcount<signed char>);
-    ASSERT(not has_popcount<signed short>);
-    ASSERT(not has_popcount<signed int>);
-    ASSERT(not has_popcount<signed long>);
-    ASSERT(not has_popcount<signed long long>);
+    CHECK(not has_popcount<signed char>);
+    CHECK(not has_popcount<signed short>);
+    CHECK(not has_popcount<signed int>);
+    CHECK(not has_popcount<signed long>);
+    CHECK(not has_popcount<signed long long>);
 
-    ASSERT(not has_popcount<bool>);
-    ASSERT(not has_popcount<char>);
-    ASSERT(not has_popcount<char8_t>);
-    ASSERT(not has_popcount<char16_t>);
-    ASSERT(not has_popcount<char32_t>);
+    CHECK(not has_popcount<bool>);
+    CHECK(not has_popcount<char>);
+    CHECK(not has_popcount<char8_t>);
+    CHECK(not has_popcount<char16_t>);
+    CHECK(not has_popcount<char32_t>);
 
-    ASSERT(test<etl::uint8_t>());
-    ASSERT(test<etl::uint16_t>());
-    ASSERT(test<etl::uint32_t>());
-    ASSERT(test<etl::uint64_t>());
-    ASSERT(test<etl::size_t>());
+    CHECK(test<etl::uint8_t>());
+    CHECK(test<etl::uint16_t>());
+    CHECK(test<etl::uint32_t>());
+    CHECK(test<etl::uint64_t>());
+    CHECK(test<etl::size_t>());
 
     return true;
 }
@@ -79,7 +79,7 @@ constexpr auto test_all() -> bool
 
 auto main() -> int
 {
-    ASSERT(test_all());
+    CHECK(test_all());
     static_assert(test_all());
     return 0;
 }

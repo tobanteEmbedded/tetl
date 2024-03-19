@@ -14,21 +14,21 @@ constexpr auto test() -> bool
     auto const lhs = etl::monostate{};
     auto const rhs = etl::monostate{};
 
-    ASSERT(lhs == rhs);
-    ASSERT(lhs <= rhs);
-    ASSERT(lhs >= rhs);
-    ASSERT(not(lhs != rhs));
-    ASSERT(not(lhs < rhs));
-    ASSERT(not(lhs > rhs));
+    CHECK(lhs == rhs);
+    CHECK(lhs <= rhs);
+    CHECK(lhs >= rhs);
+    CHECK(not(lhs != rhs));
+    CHECK(not(lhs < rhs));
+    CHECK(not(lhs > rhs));
 
-    ASSERT_NOEXCEPT(lhs == rhs);
-    ASSERT_NOEXCEPT(lhs <= rhs);
-    ASSERT_NOEXCEPT(lhs >= rhs);
-    ASSERT_NOEXCEPT(lhs != rhs);
-    ASSERT_NOEXCEPT(lhs < rhs);
-    ASSERT_NOEXCEPT(lhs > rhs);
+    CHECK_NOEXCEPT(lhs == rhs);
+    CHECK_NOEXCEPT(lhs <= rhs);
+    CHECK_NOEXCEPT(lhs >= rhs);
+    CHECK_NOEXCEPT(lhs != rhs);
+    CHECK_NOEXCEPT(lhs < rhs);
+    CHECK_NOEXCEPT(lhs > rhs);
 
-    ASSERT(etl::is_empty_v<etl::monostate>);
+    CHECK(etl::is_empty_v<etl::monostate>);
 
     return true;
 }
@@ -37,7 +37,7 @@ constexpr auto test() -> bool
 
 auto main() -> int
 {
-    ASSERT(test());
+    CHECK(test());
     static_assert(test());
 
     return 0;

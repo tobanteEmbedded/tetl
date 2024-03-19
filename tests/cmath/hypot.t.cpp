@@ -17,71 +17,71 @@ constexpr auto test() -> bool
     auto const inf = etl::numeric_limits<Float>::infinity();
 
     // etl::hypot(x, y)
-    ASSERT_NOEXCEPT(etl::hypot(Float(1), Float(2)));
-    ASSERT_SAME_TYPE(decltype(etl::hypot(Float(1), Float(2))), Float);
+    CHECK_NOEXCEPT(etl::hypot(Float(1), Float(2)));
+    CHECK_SAME_TYPE(decltype(etl::hypot(Float(1), Float(2))), Float);
 
-    ASSERT(etl::isnan(etl::hypot(nan, Float(1))));
-    ASSERT(etl::isnan(etl::hypot(Float(42), nan)));
+    CHECK(etl::isnan(etl::hypot(nan, Float(1))));
+    CHECK(etl::isnan(etl::hypot(Float(42), nan)));
 
-    ASSERT(etl::isinf(etl::hypot(inf, Float(1))));
-    ASSERT(etl::isinf(etl::hypot(Float(42), inf)));
+    CHECK(etl::isinf(etl::hypot(inf, Float(1))));
+    CHECK(etl::isinf(etl::hypot(Float(42), inf)));
 
-    ASSERT_APPROX(etl::hypot(Float(0), Float(1)), Float(1));
-    ASSERT_APPROX(etl::hypot(Float(1), Float(1)), Float(1.414214));
+    CHECK_APPROX(etl::hypot(Float(0), Float(1)), Float(1));
+    CHECK_APPROX(etl::hypot(Float(1), Float(1)), Float(1.414214));
 
     // etl::hypotf(x, y)
     if constexpr (etl::same_as<Float, float>) {
-        ASSERT_NOEXCEPT(etl::hypotf(1.0F, 2.0F));
-        ASSERT_SAME_TYPE(decltype(etl::hypotf(1.0F, 2.0F)), float);
+        CHECK_NOEXCEPT(etl::hypotf(1.0F, 2.0F));
+        CHECK_SAME_TYPE(decltype(etl::hypotf(1.0F, 2.0F)), float);
 
-        ASSERT(etl::isnan(etl::hypotf(nan, 1.0F)));
-        ASSERT(etl::isnan(etl::hypotf(42.0F, nan)));
+        CHECK(etl::isnan(etl::hypotf(nan, 1.0F)));
+        CHECK(etl::isnan(etl::hypotf(42.0F, nan)));
 
-        ASSERT(etl::isinf(etl::hypotf(inf, 1.0F)));
-        ASSERT(etl::isinf(etl::hypotf(42.0F, inf)));
+        CHECK(etl::isinf(etl::hypotf(inf, 1.0F)));
+        CHECK(etl::isinf(etl::hypotf(42.0F, inf)));
 
-        ASSERT_APPROX(etl::hypotf(0.0F, 1.0F), 1.0F);
-        ASSERT_APPROX(etl::hypotf(1.0F, 1.0F), 1.414214F);
+        CHECK_APPROX(etl::hypotf(0.0F, 1.0F), 1.0F);
+        CHECK_APPROX(etl::hypotf(1.0F, 1.0F), 1.414214F);
     }
 
     // etl::hypotl(x, y)
     if constexpr (etl::same_as<Float, long double>) {
-        ASSERT_NOEXCEPT(etl::hypotl(1.0L, 2.0L));
-        ASSERT_SAME_TYPE(decltype(etl::hypotl(1.0L, 2.0L)), long double);
+        CHECK_NOEXCEPT(etl::hypotl(1.0L, 2.0L));
+        CHECK_SAME_TYPE(decltype(etl::hypotl(1.0L, 2.0L)), long double);
 
-        ASSERT(etl::isnan(etl::hypotl(nan, 1.0L)));
-        ASSERT(etl::isnan(etl::hypotl(42.0L, nan)));
+        CHECK(etl::isnan(etl::hypotl(nan, 1.0L)));
+        CHECK(etl::isnan(etl::hypotl(42.0L, nan)));
 
-        ASSERT(etl::isinf(etl::hypotl(inf, 1.0L)));
-        ASSERT(etl::isinf(etl::hypotl(42.0L, inf)));
+        CHECK(etl::isinf(etl::hypotl(inf, 1.0L)));
+        CHECK(etl::isinf(etl::hypotl(42.0L, inf)));
 
-        ASSERT_APPROX(etl::hypotl(0.0L, 1.0L), 1.0L);
-        ASSERT_APPROX(etl::hypotl(1.0L, 1.0L), 1.414214L);
+        CHECK_APPROX(etl::hypotl(0.0L, 1.0L), 1.0L);
+        CHECK_APPROX(etl::hypotl(1.0L, 1.0L), 1.414214L);
     }
 
     // etl::hypot(x, y, z)
-    ASSERT_NOEXCEPT(etl::hypot(Float(1), Float(2), Float(3)));
-    ASSERT_SAME_TYPE(decltype(etl::hypot(Float(1), Float(2), Float(3))), Float);
+    CHECK_NOEXCEPT(etl::hypot(Float(1), Float(2), Float(3)));
+    CHECK_SAME_TYPE(decltype(etl::hypot(Float(1), Float(2), Float(3))), Float);
 
-    ASSERT(etl::isnan(etl::hypot(nan, Float(1), Float(1))));
-    ASSERT(etl::isnan(etl::hypot(Float(42), nan, Float(42))));
-    ASSERT(etl::isnan(etl::hypot(Float(42), Float(42), nan)));
+    CHECK(etl::isnan(etl::hypot(nan, Float(1), Float(1))));
+    CHECK(etl::isnan(etl::hypot(Float(42), nan, Float(42))));
+    CHECK(etl::isnan(etl::hypot(Float(42), Float(42), nan)));
 
-    ASSERT(etl::isinf(etl::hypot(inf, Float(1), Float(1))));
-    ASSERT(etl::isinf(etl::hypot(Float(42), inf, Float(42))));
-    ASSERT(etl::isinf(etl::hypot(Float(42), Float(42), inf)));
+    CHECK(etl::isinf(etl::hypot(inf, Float(1), Float(1))));
+    CHECK(etl::isinf(etl::hypot(Float(42), inf, Float(42))));
+    CHECK(etl::isinf(etl::hypot(Float(42), Float(42), inf)));
 
-    ASSERT_APPROX(etl::hypot(Float(0), Float(0), Float(1)), Float(1));
-    ASSERT_APPROX(etl::hypot(Float(1), Float(1), Float(1)), Float(1.732051));
+    CHECK_APPROX(etl::hypot(Float(0), Float(0), Float(1)), Float(1));
+    CHECK_APPROX(etl::hypot(Float(1), Float(1), Float(1)), Float(1.732051));
 
     return true;
 }
 
 constexpr auto test_all() -> bool
 {
-    ASSERT(test<float>());
-    ASSERT(test<double>());
-    ASSERT(test<long double>());
+    CHECK(test<float>());
+    CHECK(test<double>());
+    CHECK(test<long double>());
 
     return true;
 }
@@ -90,7 +90,7 @@ constexpr auto test_all() -> bool
 
 auto main() -> int
 {
-    ASSERT(test_all());
+    CHECK(test_all());
     static_assert(test_all());
     return 0;
 }

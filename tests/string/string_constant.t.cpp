@@ -12,21 +12,21 @@ constexpr auto test() -> bool
 
     auto foo    = TETL_STRING_C("foo");
     auto barbaz = TETL_STRING_C("barbaz");
-    ASSERT(foo.size() == 3);
-    ASSERT(foo == "foo"_sv);
+    CHECK(foo.size() == 3);
+    CHECK(foo == "foo"_sv);
 
-    ASSERT(barbaz.size() == 6);
-    ASSERT(barbaz == "barbaz"_sv);
+    CHECK(barbaz.size() == 6);
+    CHECK(barbaz == "barbaz"_sv);
 
-    ASSERT(foo != barbaz);
-    ASSERT(foo != "barbaz"_sv);
+    CHECK(foo != barbaz);
+    CHECK(foo != "barbaz"_sv);
 
     return true;
 }
 
 auto main() -> int
 {
-    ASSERT(test());
+    CHECK(test());
     static_assert(test());
     return 0;
 }

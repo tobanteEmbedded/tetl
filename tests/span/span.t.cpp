@@ -16,10 +16,10 @@ constexpr auto test() -> bool
 {
     {
         // P2251R1
-        ASSERT(etl::is_trivially_copyable_v<etl::span<T>>);
-        ASSERT(etl::is_trivially_copyable_v<etl::span<T const>>);
-        ASSERT(etl::is_trivially_copyable_v<etl::span<T, 16>>);
-        ASSERT(etl::is_trivially_copyable_v<etl::span<T const, 16>>);
+        CHECK(etl::is_trivially_copyable_v<etl::span<T>>);
+        CHECK(etl::is_trivially_copyable_v<etl::span<T const>>);
+        CHECK(etl::is_trivially_copyable_v<etl::span<T, 16>>);
+        CHECK(etl::is_trivially_copyable_v<etl::span<T const, 16>>);
     }
 
     // deduction guides
@@ -226,40 +226,40 @@ static auto test_as_bytes() -> bool
 {
     auto data = etl::array<T, 6>{};
     auto sp   = etl::span<T>{data};
-    ASSERT(etl::as_bytes(sp).size() == sizeof(T) * data.size());
-    ASSERT(etl::as_writable_bytes(sp).size() == sizeof(T) * data.size());
+    CHECK(etl::as_bytes(sp).size() == sizeof(T) * data.size());
+    CHECK(etl::as_writable_bytes(sp).size() == sizeof(T) * data.size());
     return true;
 }
 
 constexpr auto test_all() -> bool
 {
-    ASSERT(test<etl::int8_t>());
-    ASSERT(test<etl::int16_t>());
-    ASSERT(test<etl::int32_t>());
-    ASSERT(test<etl::int64_t>());
-    ASSERT(test<etl::uint8_t>());
-    ASSERT(test<etl::uint16_t>());
-    ASSERT(test<etl::uint32_t>());
-    ASSERT(test<etl::uint64_t>());
-    ASSERT(test<float>());
-    ASSERT(test<double>());
+    CHECK(test<etl::int8_t>());
+    CHECK(test<etl::int16_t>());
+    CHECK(test<etl::int32_t>());
+    CHECK(test<etl::int64_t>());
+    CHECK(test<etl::uint8_t>());
+    CHECK(test<etl::uint16_t>());
+    CHECK(test<etl::uint32_t>());
+    CHECK(test<etl::uint64_t>());
+    CHECK(test<float>());
+    CHECK(test<double>());
     return true;
 }
 
 auto main() -> int
 {
-    ASSERT(test_all());
+    CHECK(test_all());
     static_assert(test_all());
 
-    ASSERT(test_as_bytes<etl::int8_t>());
-    ASSERT(test_as_bytes<etl::int16_t>());
-    ASSERT(test_as_bytes<etl::int32_t>());
-    ASSERT(test_as_bytes<etl::int64_t>());
-    ASSERT(test_as_bytes<etl::uint8_t>());
-    ASSERT(test_as_bytes<etl::uint16_t>());
-    ASSERT(test_as_bytes<etl::uint32_t>());
-    ASSERT(test_as_bytes<etl::uint64_t>());
-    ASSERT(test_as_bytes<float>());
-    ASSERT(test_as_bytes<double>());
+    CHECK(test_as_bytes<etl::int8_t>());
+    CHECK(test_as_bytes<etl::int16_t>());
+    CHECK(test_as_bytes<etl::int32_t>());
+    CHECK(test_as_bytes<etl::int64_t>());
+    CHECK(test_as_bytes<etl::uint8_t>());
+    CHECK(test_as_bytes<etl::uint16_t>());
+    CHECK(test_as_bytes<etl::uint32_t>());
+    CHECK(test_as_bytes<etl::uint64_t>());
+    CHECK(test_as_bytes<float>());
+    CHECK(test_as_bytes<double>());
     return 0;
 }

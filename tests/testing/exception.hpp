@@ -11,12 +11,12 @@
 
 #define CHECK_EXCEPTION_TYPE(ExceptionType, BaseType)                                                                  \
     do {                                                                                                               \
-        ASSERT(etl::is_default_constructible_v<ExceptionType>);                                                        \
-        ASSERT(etl::is_constructible_v<ExceptionType, char const*>);                                                   \
-        ASSERT(etl::is_base_of_v<BaseType, ExceptionType>);                                                            \
-        ASSERT(etl::is_base_of_v<etl::exception, ExceptionType>);                                                      \
+        CHECK(etl::is_default_constructible_v<ExceptionType>);                                                         \
+        CHECK(etl::is_constructible_v<ExceptionType, char const*>);                                                    \
+        CHECK(etl::is_base_of_v<BaseType, ExceptionType>);                                                             \
+        CHECK(etl::is_base_of_v<etl::exception, ExceptionType>);                                                       \
         auto const e = ExceptionType{"test"};                                                                          \
-        ASSERT(e.what() == etl::string_view("test"));                                                                  \
+        CHECK(e.what() == etl::string_view("test"));                                                                   \
     } while (false)
 
 #endif // TETL_TEST_EXCEPTION_HPP

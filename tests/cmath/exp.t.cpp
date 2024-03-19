@@ -8,11 +8,11 @@
 template <typename T>
 constexpr auto test() -> bool
 {
-    ASSERT_APPROX(etl::exp(T(0)), T(1));
-    ASSERT_APPROX(etl::exp(T(0.5)), T(1.64872));
-    ASSERT_APPROX(etl::exp(T(1)), T(2.71828));
-    ASSERT_APPROX(etl::exp(T(2)), T(7.38906));
-    ASSERT_APPROX(etl::exp(T(4)), T(54.5982));
+    CHECK_APPROX(etl::exp(T(0)), T(1));
+    CHECK_APPROX(etl::exp(T(0.5)), T(1.64872));
+    CHECK_APPROX(etl::exp(T(1)), T(2.71828));
+    CHECK_APPROX(etl::exp(T(2)), T(7.38906));
+    CHECK_APPROX(etl::exp(T(4)), T(54.5982));
     return true;
 }
 

@@ -18,13 +18,13 @@ using namespace etl::detail;
 template <typename T>
 constexpr auto test_floats() -> bool
 {
-    ASSERT_APPROX(string_to_floating_point<T>("0"), T(0.0));
-    ASSERT_APPROX(string_to_floating_point<T>("10"), T(10.0));
-    ASSERT_APPROX(string_to_floating_point<T>("100.0"), T(100.0));
-    ASSERT_APPROX(string_to_floating_point<T>("1000.000"), T(1000.0));
-    ASSERT_APPROX(string_to_floating_point<T>("10000"), T(10000.0));
-    ASSERT_APPROX(string_to_floating_point<T>("999999.0"), T(999999.0));
-    ASSERT_APPROX(string_to_floating_point<T>("9999999"), T(9999999.0));
+    CHECK_APPROX(string_to_floating_point<T>("0"), T(0.0));
+    CHECK_APPROX(string_to_floating_point<T>("10"), T(10.0));
+    CHECK_APPROX(string_to_floating_point<T>("100.0"), T(100.0));
+    CHECK_APPROX(string_to_floating_point<T>("1000.000"), T(1000.0));
+    CHECK_APPROX(string_to_floating_point<T>("10000"), T(10000.0));
+    CHECK_APPROX(string_to_floating_point<T>("999999.0"), T(999999.0));
+    CHECK_APPROX(string_to_floating_point<T>("9999999"), T(9999999.0));
     return true;
 }
 

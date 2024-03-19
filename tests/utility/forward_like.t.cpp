@@ -14,8 +14,8 @@ constexpr auto test() -> bool
         // mutable l-value
         auto t = T(0);
         auto u = T(1);
-        ASSERT(not etl::is_const_v<decltype(etl::forward_like<decltype(t)>(u))>);
-        ASSERT(etl::is_rvalue_reference_v<decltype(etl::forward_like<decltype(t)>(u))>);
+        CHECK(not etl::is_const_v<decltype(etl::forward_like<decltype(t)>(u))>);
+        CHECK(etl::is_rvalue_reference_v<decltype(etl::forward_like<decltype(t)>(u))>);
     }
 
     return true;
@@ -23,20 +23,20 @@ constexpr auto test() -> bool
 
 constexpr auto test_all() -> bool
 {
-    ASSERT(test<etl::uint8_t>());
-    ASSERT(test<etl::int8_t>());
-    ASSERT(test<etl::uint16_t>());
-    ASSERT(test<etl::int16_t>());
-    ASSERT(test<etl::uint32_t>());
-    ASSERT(test<etl::int32_t>());
-    ASSERT(test<etl::uint64_t>());
-    ASSERT(test<etl::int64_t>());
+    CHECK(test<etl::uint8_t>());
+    CHECK(test<etl::int8_t>());
+    CHECK(test<etl::uint16_t>());
+    CHECK(test<etl::int16_t>());
+    CHECK(test<etl::uint32_t>());
+    CHECK(test<etl::int32_t>());
+    CHECK(test<etl::uint64_t>());
+    CHECK(test<etl::int64_t>());
     return true;
 }
 
 auto main() -> int
 {
-    ASSERT(test_all());
+    CHECK(test_all());
     static_assert(test_all());
     return 0;
 }

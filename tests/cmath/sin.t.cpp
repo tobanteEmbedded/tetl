@@ -14,10 +14,10 @@ constexpr auto test() -> bool
     assert(etl::sinl(0) == 0.0L);
     assert(etl::sin(T(0)) == T(0));
 
-    ASSERT_APPROX(etl::sin(T(1)), T(0.841471));
-    ASSERT_APPROX(etl::sin(T(2)), T(0.909297));
+    CHECK_APPROX(etl::sin(T(1)), T(0.841471));
+    CHECK_APPROX(etl::sin(T(2)), T(0.909297));
 
-    ASSERT_APPROX(etl::sin(static_cast<T>(etl::numbers::pi)), T(0));
+    CHECK_APPROX(etl::sin(static_cast<T>(etl::numbers::pi)), T(0));
 
     return true;
 }

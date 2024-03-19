@@ -15,39 +15,39 @@ constexpr auto test() -> bool
 {
     // epmty range
     auto const e = etl::static_vector<T, 4>{};
-    ASSERT(!etl::binary_search(begin(e), end(e), T(0)));
-    ASSERT(!etl::binary_search(FwdIter(begin(e)), FwdIter(end(e)), T(0)));
+    CHECK(!etl::binary_search(begin(e), end(e), T(0)));
+    CHECK(!etl::binary_search(FwdIter(begin(e)), FwdIter(end(e)), T(0)));
 
     // range
     auto const data = etl::array{T(0), T(1), T(2)};
-    ASSERT(etl::binary_search(begin(data), end(data), T(0)));
-    ASSERT(etl::binary_search(begin(data), end(data), T(1)));
-    ASSERT(etl::binary_search(begin(data), end(data), T(2)));
-    ASSERT(!etl::binary_search(begin(data), end(data), T(3)));
-    ASSERT(!etl::binary_search(begin(data), end(data), T(4)));
+    CHECK(etl::binary_search(begin(data), end(data), T(0)));
+    CHECK(etl::binary_search(begin(data), end(data), T(1)));
+    CHECK(etl::binary_search(begin(data), end(data), T(2)));
+    CHECK(!etl::binary_search(begin(data), end(data), T(3)));
+    CHECK(!etl::binary_search(begin(data), end(data), T(4)));
 
     return true;
 }
 
 constexpr auto test_all() -> bool
 {
-    ASSERT(test<etl::uint8_t>());
-    ASSERT(test<etl::int8_t>());
-    ASSERT(test<etl::uint16_t>());
-    ASSERT(test<etl::int16_t>());
-    ASSERT(test<etl::uint32_t>());
-    ASSERT(test<etl::int32_t>());
-    ASSERT(test<etl::uint64_t>());
-    ASSERT(test<etl::int64_t>());
-    ASSERT(test<float>());
-    ASSERT(test<double>());
+    CHECK(test<etl::uint8_t>());
+    CHECK(test<etl::int8_t>());
+    CHECK(test<etl::uint16_t>());
+    CHECK(test<etl::int16_t>());
+    CHECK(test<etl::uint32_t>());
+    CHECK(test<etl::int32_t>());
+    CHECK(test<etl::uint64_t>());
+    CHECK(test<etl::int64_t>());
+    CHECK(test<float>());
+    CHECK(test<double>());
 
     return true;
 }
 
 auto main() -> int
 {
-    ASSERT(test_all());
+    CHECK(test_all());
     static_assert(test_all());
     return 0;
 }

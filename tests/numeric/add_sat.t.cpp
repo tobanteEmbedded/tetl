@@ -12,18 +12,18 @@ constexpr auto test(auto add) -> bool
 {
     using limits = etl::numeric_limits<T>;
 
-    ASSERT(add(T(0), T(0)) == T(0));
-    ASSERT(add(T(1), T(0)) == T(1));
-    ASSERT(add(T(1), T(1)) == T(2));
+    CHECK(add(T(0), T(0)) == T(0));
+    CHECK(add(T(1), T(0)) == T(1));
+    CHECK(add(T(1), T(1)) == T(2));
 
-    ASSERT(add(limits::max(), T(0)) == limits::max());
-    ASSERT(add(limits::max(), T(1)) == limits::max());
-    ASSERT(add(limits::max(), T(2)) == limits::max());
+    CHECK(add(limits::max(), T(0)) == limits::max());
+    CHECK(add(limits::max(), T(1)) == limits::max());
+    CHECK(add(limits::max(), T(2)) == limits::max());
 
     if constexpr (etl::is_signed_v<T>) {
-        ASSERT(add(limits::min(), T(-0)) == limits::min());
-        ASSERT(add(limits::min(), T(-1)) == limits::min());
-        ASSERT(add(limits::min(), T(-2)) == limits::min());
+        CHECK(add(limits::min(), T(-0)) == limits::min());
+        CHECK(add(limits::min(), T(-1)) == limits::min());
+        CHECK(add(limits::min(), T(-2)) == limits::min());
     }
 
     return true;

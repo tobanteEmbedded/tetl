@@ -14,7 +14,7 @@ constexpr auto test() -> bool
 {
     {
         // P2251R1
-        ASSERT(etl::is_trivially_copyable_v<etl::string_view>);
+        CHECK(etl::is_trivially_copyable_v<etl::string_view>);
     }
 
     {

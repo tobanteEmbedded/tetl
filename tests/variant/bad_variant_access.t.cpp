@@ -17,7 +17,7 @@ constexpr auto test() -> bool
 
 auto main() -> int
 {
-    ASSERT(test());
+    CHECK(test());
     static_assert(test());
 
     return 0;

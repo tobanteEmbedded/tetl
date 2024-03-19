@@ -16,7 +16,7 @@ constexpr auto binom(int n, int k) -> T
 template <typename T>
 constexpr auto test() -> bool
 {
-    ASSERT_APPROX(binom<T>(1, 1), T(1));
+    CHECK_APPROX(binom<T>(1, 1), T(1));
     return true;
 }
 } // namespace
@@ -26,8 +26,8 @@ auto main() -> int
     static_assert(test<float>());
     static_assert(test<double>());
     static_assert(test<long double>());
-    ASSERT(test<float>());
-    ASSERT(test<double>());
-    ASSERT(test<long double>());
+    CHECK(test<float>());
+    CHECK(test<double>());
+    CHECK(test<long double>());
     return 0;
 }
