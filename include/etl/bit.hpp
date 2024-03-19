@@ -24,5 +24,6 @@
 #include <etl/_bit/flip_bit.hpp>
 #include <etl/_bit/reset_bit.hpp>
 #include <etl/_bit/set_bit.hpp>
+#include <etl/_bit/test_bit.hpp>
 
 #endif // TETL_BIT_HPP
