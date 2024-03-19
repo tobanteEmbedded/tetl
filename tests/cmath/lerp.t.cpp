@@ -2,39 +2,50 @@
 
 #include <etl/cmath.hpp>
 
+#include "testing/approx.hpp"
 #include "testing/testing.hpp"
 
-template <typename T>
+namespace {
+template <typename Float>
 constexpr auto test() -> bool
 {
-    assert(etl::lerp(T(0), T(1), T(0)) == T(0));
-    assert(etl::lerp(T(0), T(1), T(0.5)) == T(0.5));
+    ASSERT_NOEXCEPT(etl::lerp(Float(0), Float(1), Float(0)));
+    ASSERT_SAME_TYPE(decltype(etl::lerp(Float(0), Float(1), Float(0))), Float);
 
-    assert(etl::lerp(T(0), T(20), T(0)) == T(0));
-    assert(etl::lerp(T(0), T(20), T(0.5)) == T(10));
-    assert(etl::lerp(T(0), T(20), T(2)) == T(40));
+    ASSERT_APPROX(etl::lerp(Float(0), Float(1), Float(0)), Float(0), Float(1e-6));
+    ASSERT_APPROX(etl::lerp(Float(0), Float(1), Float(0.5)), Float(0.5), Float(1e-6));
+    ASSERT_APPROX(etl::lerp(Float(0), Float(1), Float(1)), Float(1), Float(1e-6));
 
-    assert(etl::lerp(T(20), T(0), T(0)) == T(20));
-    assert(etl::lerp(T(20), T(0), T(0.5)) == T(10));
-    assert(etl::lerp(T(20), T(0), T(2)) == T(-20));
+    ASSERT_APPROX(etl::lerp(Float(0), Float(20), Float(0)), Float(0), Float(1e-6));
+    ASSERT_APPROX(etl::lerp(Float(0), Float(20), Float(0.5)), Float(10), Float(1e-6));
+    ASSERT_APPROX(etl::lerp(Float(0), Float(20), Float(1)), Float(20), Float(1e-6));
+    ASSERT_APPROX(etl::lerp(Float(0), Float(20), Float(2)), Float(40), Float(1e-6));
 
-    assert(etl::lerp(T(0), T(-20), T(0)) == T(0));
-    assert(etl::lerp(T(0), T(-20), T(0.5)) == T(-10));
-    assert(etl::lerp(T(0), T(-20), T(2)) == T(-40));
+    ASSERT_APPROX(etl::lerp(Float(20), Float(0), Float(0)), Float(20), Float(1e-6));
+    ASSERT_APPROX(etl::lerp(Float(20), Float(0), Float(0.5)), Float(10), Float(1e-6));
+    ASSERT_APPROX(etl::lerp(Float(20), Float(0), Float(1)), Float(0), Float(1e-6));
+    ASSERT_APPROX(etl::lerp(Float(20), Float(0), Float(2)), Float(-20), Float(1e-6));
 
-    assert(etl::lerp(T(-10), T(-20), T(0)) == T(-10));
-    assert(etl::lerp(T(-10), T(-20), T(0.5)) == T(-15));
-    assert(etl::lerp(T(-10), T(-20), T(2)) == T(-30));
+    ASSERT_APPROX(etl::lerp(Float(0), Float(-20), Float(0)), Float(0), Float(1e-6));
+    ASSERT_APPROX(etl::lerp(Float(0), Float(-20), Float(0.5)), Float(-10), Float(1e-6));
+    ASSERT_APPROX(etl::lerp(Float(0), Float(-20), Float(1)), Float(-20), Float(1e-6));
+    ASSERT_APPROX(etl::lerp(Float(0), Float(-20), Float(2)), Float(-40), Float(1e-6));
+
+    ASSERT_APPROX(etl::lerp(Float(-10), Float(-20), Float(0)), Float(-10), Float(1e-6));
+    ASSERT_APPROX(etl::lerp(Float(-10), Float(-20), Float(0.5)), Float(-15), Float(1e-6));
+    ASSERT_APPROX(etl::lerp(Float(-10), Float(-20), Float(1)), Float(-20), Float(1e-6));
+    ASSERT_APPROX(etl::lerp(Float(-10), Float(-20), Float(2)), Float(-30), Float(1e-6));
     return true;
 }
+} // namespace
 
 auto main() -> int
 {
+    ASSERT(test<float>());
+    ASSERT(test<double>());
+    ASSERT(test<long double>());
     static_assert(test<float>());
     static_assert(test<double>());
     static_assert(test<long double>());
-    assert(test<float>());
-    assert(test<double>());
-    assert(test<long double>());
     return 0;
 }
