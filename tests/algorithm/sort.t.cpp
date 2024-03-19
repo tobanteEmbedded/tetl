@@ -539,7 +539,6 @@ constexpr auto test_all() -> bool
 
 auto main() -> int
 {
-    assert(test_all());
-    static_assert(test_all());
+    STATIC_CHECK(test_all());
     return 0;
 }

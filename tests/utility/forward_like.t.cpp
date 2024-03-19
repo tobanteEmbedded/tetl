@@ -10,13 +10,11 @@
 template <typename T>
 constexpr auto test() -> bool
 {
-    {
-        // mutable l-value
-        auto t = T(0);
-        auto u = T(1);
-        CHECK(not etl::is_const_v<decltype(etl::forward_like<decltype(t)>(u))>);
-        CHECK(etl::is_rvalue_reference_v<decltype(etl::forward_like<decltype(t)>(u))>);
-    }
+    // mutable l-value
+    auto t = T(0);
+    auto u = T(1);
+    CHECK(not etl::is_const_v<decltype(etl::forward_like<decltype(t)>(u))>);
+    CHECK(etl::is_rvalue_reference_v<decltype(etl::forward_like<decltype(t)>(u))>);
 
     return true;
 }
@@ -36,7 +34,6 @@ constexpr auto test_all() -> bool
 
 auto main() -> int
 {
-    CHECK(test_all());
-    static_assert(test_all());
+    STATIC_CHECK(test_all());
     return 0;
 }

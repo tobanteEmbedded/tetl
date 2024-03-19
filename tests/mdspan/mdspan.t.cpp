@@ -119,7 +119,6 @@ template <typename IndexType>
 
 auto main() -> int
 {
-    CHECK(test_all());
-    static_assert(test_all());
+    STATIC_CHECK(test_all());
     return 0;
 }

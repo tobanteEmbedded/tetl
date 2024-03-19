@@ -248,8 +248,7 @@ constexpr auto test_all() -> bool
 
 auto main() -> int
 {
-    CHECK(test_all());
-    static_assert(test_all());
+    STATIC_CHECK(test_all());
 
     CHECK(test_as_bytes<etl::int8_t>());
     CHECK(test_as_bytes<etl::int16_t>());

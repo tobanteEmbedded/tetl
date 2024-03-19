@@ -8,32 +8,32 @@ constexpr auto test() -> bool
 {
     using etl::language_standard;
 
-    assert(language_standard::cpp_17 == language_standard::cpp_17);
-    assert(language_standard::cpp_20 == language_standard::cpp_20);
-    assert(language_standard::cpp_23 == language_standard::cpp_23);
-    assert(language_standard::cpp_26 == language_standard::cpp_26);
+    CHECK(language_standard::cpp_17 == language_standard::cpp_17);
+    CHECK(language_standard::cpp_20 == language_standard::cpp_20);
+    CHECK(language_standard::cpp_23 == language_standard::cpp_23);
+    CHECK(language_standard::cpp_26 == language_standard::cpp_26);
 
-    assert(language_standard::cpp_17 < language_standard::cpp_20);
-    assert(language_standard::cpp_17 < language_standard::cpp_23);
-    assert(language_standard::cpp_17 < language_standard::cpp_26);
+    CHECK(language_standard::cpp_17 < language_standard::cpp_20);
+    CHECK(language_standard::cpp_17 < language_standard::cpp_23);
+    CHECK(language_standard::cpp_17 < language_standard::cpp_26);
 
-    assert(language_standard::cpp_20 > language_standard::cpp_17);
-    assert(language_standard::cpp_23 > language_standard::cpp_17);
+    CHECK(language_standard::cpp_20 > language_standard::cpp_17);
+    CHECK(language_standard::cpp_23 > language_standard::cpp_17);
 
 #if TETL_CPP_STANDARD == 17
-    assert(etl::current_standard == language_standard::cpp_17);
+    CHECK(etl::current_standard == language_standard::cpp_17);
 #endif
 
 #if TETL_CPP_STANDARD == 20
-    assert(etl::current_standard == language_standard::cpp_20);
+    CHECK(etl::current_standard == language_standard::cpp_20);
 #endif
 
 #if TETL_CPP_STANDARD == 23
-    assert(etl::current_standard == language_standard::cpp_23);
+    CHECK(etl::current_standard == language_standard::cpp_23);
 #endif
 
 #if TETL_CPP_STANDARD == 26
-    assert(etl::current_standard == language_standard::cpp_26);
+    CHECK(etl::current_standard == language_standard::cpp_26);
 #endif
 
     return true;
@@ -41,7 +41,6 @@ constexpr auto test() -> bool
 
 auto main() -> int
 {
-    assert(test());
-    static_assert(test());
+    STATIC_CHECK(test());
     return 0;
 }
