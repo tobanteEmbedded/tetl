@@ -724,6 +724,51 @@ struct numeric_limits<double> {
 };
 
 
+template <>
+struct numeric_limits<long double> {
+    static constexpr bool is_specialized = true;
+
+    static constexpr auto min() noexcept { return LDBL_MIN; }
+    static constexpr auto max() noexcept { return LDBL_MAX; }
+    static constexpr auto lowest() noexcept { return -LDBL_MAX; }
+
+    static constexpr int digits       = LDBL_MANT_DIG;
+    static constexpr int digits10     = LDBL_DIG;
+    static constexpr int max_digits10 = 2 + LDBL_MANT_DIG * 301L / 1000;
+
+    static constexpr bool is_signed  = true;
+    static constexpr bool is_integer = false;
+    static constexpr bool is_exact   = false;
+    static constexpr int radix       = FLT_RADIX;
+    static constexpr auto epsilon() noexcept -> long double { return LDBL_EPSILON; }
+    static constexpr auto round_error() noexcept -> long double { return 0.5L; }
+
+    static constexpr int min_exponent   = LDBL_MIN_EXP;
+    static constexpr int min_exponent10 = LDBL_MIN_10_EXP;
+    static constexpr int max_exponent   = LDBL_MAX_EXP;
+    static constexpr int max_exponent10 = LDBL_MAX_10_EXP;
+
+    static constexpr bool has_infinity             = true;
+    static constexpr bool has_quiet_NaN            = true; // NOLINT(readability-identifier-naming)
+    static constexpr bool has_signaling_NaN        = true; // NOLINT(readability-identifier-naming)
+    static constexpr bool has_denorm_loss          = false;
+    static constexpr float_denorm_style has_denorm = denorm_present;
+
+    static constexpr auto infinity() noexcept -> long double { return TETL_BUILTIN_HUGE_VALL; }
+    static constexpr auto quiet_NaN() noexcept -> long double { return TETL_BUILTIN_NANL(""); }     // NOLINT(readability-identifier-naming)
+    static constexpr auto signaling_NaN() noexcept -> long double { return TETL_BUILTIN_NANSL(""); } // NOLINT(readability-identifier-naming)
+    static constexpr auto denorm_min() noexcept -> long double { return 0.0L; }
+
+    static constexpr bool is_iec559  = true;
+    static constexpr bool is_bounded = true;
+    static constexpr bool is_modulo  = false;
+
+    static constexpr bool traps                    = false;
+    static constexpr bool tinyness_before          = false;
+    static constexpr float_round_style round_style = round_toward_zero;
+};
+
+
 template <typename T>
 struct numeric_limits<T const> : numeric_limits<T> { };
 template <typename T>
