@@ -26,8 +26,8 @@ constexpr auto test() -> bool
     ASSERT(etl::isinf(etl::hypot(inf, Float(1))));
     ASSERT(etl::isinf(etl::hypot(Float(42), inf)));
 
-    ASSERT(approx(etl::hypot(Float(0), Float(1)), Float(1)));
-    ASSERT(approx(etl::hypot(Float(1), Float(1)), Float(1.414214)));
+    ASSERT_APPROX(etl::hypot(Float(0), Float(1)), Float(1));
+    ASSERT_APPROX(etl::hypot(Float(1), Float(1)), Float(1.414214));
 
     // etl::hypotf(x, y)
     if constexpr (etl::same_as<Float, float>) {
@@ -40,8 +40,8 @@ constexpr auto test() -> bool
         ASSERT(etl::isinf(etl::hypotf(inf, 1.0F)));
         ASSERT(etl::isinf(etl::hypotf(42.0F, inf)));
 
-        ASSERT(approx(etl::hypotf(0.0F, 1.0F), 1.0F));
-        ASSERT(approx(etl::hypotf(1.0F, 1.0F), 1.414214F));
+        ASSERT_APPROX(etl::hypotf(0.0F, 1.0F), 1.0F);
+        ASSERT_APPROX(etl::hypotf(1.0F, 1.0F), 1.414214F);
     }
 
     // etl::hypotl(x, y)
@@ -55,8 +55,8 @@ constexpr auto test() -> bool
         ASSERT(etl::isinf(etl::hypotl(inf, 1.0L)));
         ASSERT(etl::isinf(etl::hypotl(42.0L, inf)));
 
-        ASSERT(approx(etl::hypotl(0.0L, 1.0L), 1.0L));
-        ASSERT(approx(etl::hypotl(1.0L, 1.0L), 1.414214L));
+        ASSERT_APPROX(etl::hypotl(0.0L, 1.0L), 1.0L);
+        ASSERT_APPROX(etl::hypotl(1.0L, 1.0L), 1.414214L);
     }
 
     // etl::hypot(x, y, z)
@@ -71,8 +71,8 @@ constexpr auto test() -> bool
     ASSERT(etl::isinf(etl::hypot(Float(42), inf, Float(42))));
     ASSERT(etl::isinf(etl::hypot(Float(42), Float(42), inf)));
 
-    ASSERT(approx(etl::hypot(Float(0), Float(0), Float(1)), Float(1)));
-    ASSERT(approx(etl::hypot(Float(1), Float(1), Float(1)), Float(1.732051)));
+    ASSERT_APPROX(etl::hypot(Float(0), Float(0), Float(1)), Float(1));
+    ASSERT_APPROX(etl::hypot(Float(1), Float(1), Float(1)), Float(1.732051));
 
     return true;
 }

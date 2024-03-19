@@ -8,7 +8,7 @@
 #include <etl/type_traits.hpp>
 
 #define ASSERT(...)           assert((__VA_ARGS__))
-#define ASSERT_NOEXCEPT(...)  static_assert(noexcept(__VA_ARGS__), "Operation must be noexcept")
-#define ASSERT_SAME_TYPE(...) static_assert(etl::is_same_v<__VA_ARGS__>, "Type mismatch")
+#define ASSERT_NOEXCEPT(...)  ASSERT(noexcept(__VA_ARGS__))
+#define ASSERT_SAME_TYPE(...) ASSERT(etl::is_same_v<__VA_ARGS__>)
 
 #endif // TETL_TEST_TESTING_TESTING_HPP

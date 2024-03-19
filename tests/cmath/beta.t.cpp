@@ -2,11 +2,10 @@
 
 #include <etl/cmath.hpp>
 
-#include <etl/numbers.hpp>
-
 #include "testing/approx.hpp"
 #include "testing/testing.hpp"
 
+namespace {
 template <typename T>
 constexpr auto binom(int n, int k) -> T
 {
@@ -17,17 +16,18 @@ constexpr auto binom(int n, int k) -> T
 template <typename T>
 constexpr auto test() -> bool
 {
-    assert(approx(binom<T>(1, 1), T(1)));
+    ASSERT_APPROX(binom<T>(1, 1), T(1));
     return true;
 }
+} // namespace
 
 auto main() -> int
 {
     static_assert(test<float>());
     static_assert(test<double>());
     static_assert(test<long double>());
-    assert(test<float>());
-    assert(test<double>());
-    assert(test<long double>());
+    ASSERT(test<float>());
+    ASSERT(test<double>());
+    ASSERT(test<long double>());
     return 0;
 }
