@@ -14,16 +14,16 @@ constexpr auto test_one() -> bool
     using unsigned_t = etl::make_unsigned_t<IndexType>;
     using extents_t  = etl::extents<IndexType, 2, etl::dynamic_extent>;
 
-    static_assert(etl::is_trivially_copyable_v<extents_t>);
-    static_assert(etl::is_nothrow_copy_constructible_v<extents_t>);
-    static_assert(etl::is_nothrow_move_constructible_v<extents_t>);
-    static_assert(etl::is_nothrow_copy_assignable_v<extents_t>);
-    static_assert(etl::is_nothrow_move_assignable_v<extents_t>);
-    static_assert(etl::is_nothrow_swappable_v<extents_t>);
+    CHECK(etl::is_trivially_copyable_v<extents_t>);
+    CHECK(etl::is_nothrow_copy_constructible_v<extents_t>);
+    CHECK(etl::is_nothrow_move_constructible_v<extents_t>);
+    CHECK(etl::is_nothrow_copy_assignable_v<extents_t>);
+    CHECK(etl::is_nothrow_move_assignable_v<extents_t>);
+    CHECK(etl::is_nothrow_swappable_v<extents_t>);
 
-    static_assert(etl::same_as<typename extents_t::index_type, IndexType>);
-    static_assert(etl::same_as<typename extents_t::size_type, unsigned_t>);
-    static_assert(etl::same_as<typename extents_t::rank_type, etl::size_t>);
+    CHECK(etl::same_as<typename extents_t::index_type, IndexType>);
+    CHECK(etl::same_as<typename extents_t::size_type, unsigned_t>);
+    CHECK(etl::same_as<typename extents_t::rank_type, etl::size_t>);
 
     {
         // rank 1, all dynamic
@@ -147,7 +147,6 @@ constexpr auto test_extents() -> bool
 
 auto main() -> int
 {
-    CHECK(test_extents());
-    static_assert(test_extents());
+    STATIC_CHECK(test_extents());
     return 0;
 }

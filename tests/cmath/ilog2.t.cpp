@@ -35,29 +35,17 @@ constexpr auto test() -> bool
 
 auto main() -> int
 {
-    static_assert(test<signed char>());
-    static_assert(test<signed short>());
-    static_assert(test<signed int>());
-    static_assert(test<signed long>());
-    static_assert(test<signed long long>());
+    STATIC_CHECK(test<signed char>());
+    STATIC_CHECK(test<signed short>());
+    STATIC_CHECK(test<signed int>());
+    STATIC_CHECK(test<signed long>());
+    STATIC_CHECK(test<signed long long>());
 
-    static_assert(test<unsigned char>());
-    static_assert(test<unsigned short>());
-    static_assert(test<unsigned int>());
-    static_assert(test<unsigned long>());
-    static_assert(test<unsigned long long>());
-
-    CHECK(test<signed char>());
-    CHECK(test<signed short>());
-    CHECK(test<signed int>());
-    CHECK(test<signed long>());
-    CHECK(test<signed long long>());
-
-    CHECK(test<unsigned char>());
-    CHECK(test<unsigned short>());
-    CHECK(test<unsigned int>());
-    CHECK(test<unsigned long>());
-    CHECK(test<unsigned long long>());
+    STATIC_CHECK(test<unsigned char>());
+    STATIC_CHECK(test<unsigned short>());
+    STATIC_CHECK(test<unsigned int>());
+    STATIC_CHECK(test<unsigned long>());
+    STATIC_CHECK(test<unsigned long long>());
 
     return 0;
 }

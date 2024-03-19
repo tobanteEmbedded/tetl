@@ -30,11 +30,8 @@ constexpr auto test() -> bool
 
 auto main() -> int
 {
-    static_assert(test<float>());
-    static_assert(test<double>());
-    static_assert(test<long double>());
-    CHECK(test<float>());
-    CHECK(test<double>());
-    CHECK(test<long double>());
+    STATIC_CHECK(test<float>());
+    STATIC_CHECK(test<double>());
+    STATIC_CHECK(test<long double>());
     return 0;
 }

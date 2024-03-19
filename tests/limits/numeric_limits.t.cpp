@@ -172,40 +172,26 @@ template <typename T>
 
 auto main() -> int
 {
-    CHECK(test_bool());
-    static_assert(test_bool());
+    STATIC_CHECK(test_bool());
 
-    CHECK(test_signed<signed char>());
-    static_assert(test_signed<signed char>());
-    CHECK(test_signed<signed short>());
-    static_assert(test_signed<signed short>());
-    CHECK(test_signed<signed int>());
-    static_assert(test_signed<signed int>());
-    CHECK(test_signed<signed long>());
-    static_assert(test_signed<signed long>());
+    STATIC_CHECK(test_signed<signed char>());
+    STATIC_CHECK(test_signed<signed short>());
+    STATIC_CHECK(test_signed<signed int>());
+    STATIC_CHECK(test_signed<signed long>());
 
-    CHECK(test_unsigned<unsigned char>());
-    static_assert(test_unsigned<unsigned char>());
-    CHECK(test_unsigned<unsigned short>());
-    static_assert(test_unsigned<unsigned short>());
-    CHECK(test_unsigned<unsigned int>());
-    static_assert(test_unsigned<unsigned int>());
-    CHECK(test_unsigned<unsigned long>());
-    static_assert(test_unsigned<unsigned long>());
+    STATIC_CHECK(test_unsigned<unsigned char>());
+    STATIC_CHECK(test_unsigned<unsigned short>());
+    STATIC_CHECK(test_unsigned<unsigned int>());
+    STATIC_CHECK(test_unsigned<unsigned long>());
 
-    CHECK(test_float_round_style());
-    static_assert(test_float_round_style());
+    STATIC_CHECK(test_float_round_style());
 
-    CHECK(test_float());
-    static_assert(test_float());
+    STATIC_CHECK(test_float());
 
 #if not defined(TETL_WORKAROUND_AVR_BROKEN_TESTS)
-    CHECK(test_signed<signed long long>());
-    static_assert(test_signed<signed long long>());
-    CHECK(test_unsigned<unsigned long long>());
-    static_assert(test_unsigned<unsigned long long>());
-    CHECK(test_double());
-    static_assert(test_double());
+    STATIC_CHECK(test_signed<signed long long>());
+    STATIC_CHECK(test_unsigned<unsigned long long>());
+    STATIC_CHECK(test_double());
 #endif
 
     return 0;

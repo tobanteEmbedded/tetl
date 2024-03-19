@@ -12,11 +12,8 @@
 #define CHECK_SAME_TYPE(...) CHECK(etl::is_same_v<__VA_ARGS__>)
 #define STATIC_CHECK(...)                                                                                              \
     do {                                                                                                               \
-        if (etl::is_constant_evaluated()) {                                                                            \
-            static_assert((__VA_ARGS__));                                                                              \
-        } else {                                                                                                       \
-            CHECK(__VA_ARGS__);                                                                                        \
-        }                                                                                                              \
+        static_assert((__VA_ARGS__));                                                                                  \
+        CHECK(__VA_ARGS__);                                                                                            \
     } while (false)
 
 #endif // TETL_TEST_TESTING_TESTING_HPP

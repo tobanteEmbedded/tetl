@@ -533,9 +533,7 @@ static auto test_all() -> bool
 
 auto main() -> int
 {
-    CHECK(test_all());
-
     // TODO: [tobi] Add constexpr tests
-    // static_assert(test_all());
+    CHECK(test_all());
     return 0;
 }

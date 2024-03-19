@@ -17,7 +17,7 @@ public:
 
     constexpr scope_guard(scope_guard&& rhs) noexcept : _func{TETL_MOVE(rhs._func)}, _policy{TETL_MOVE(rhs._policy)} { }
 
-    ~scope_guard()
+    constexpr ~scope_guard()
     {
         if (_policy) {
             _func();

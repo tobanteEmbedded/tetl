@@ -554,7 +554,6 @@ constexpr auto test() -> bool
 
 auto main() -> int
 {
-    CHECK(test());
-    static_assert(test());
+    STATIC_CHECK(test());
     return 0;
 }

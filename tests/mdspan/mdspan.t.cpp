@@ -14,10 +14,10 @@ template <typename ElementType, typename IndexType>
     using extents_t = etl::extents<IndexType, etl::dynamic_extent>;
     using mdspan_t  = etl::mdspan<ElementType, extents_t>;
 
-    static_assert(etl::same_as<typename mdspan_t::element_type, ElementType>);
-    static_assert(etl::same_as<typename mdspan_t::value_type, ElementType>);
-    static_assert(etl::same_as<typename mdspan_t::size_type, size_type>);
-    static_assert(etl::same_as<typename mdspan_t::index_type, IndexType>);
+    CHECK_SAME_TYPE(typename mdspan_t::element_type, ElementType);
+    CHECK_SAME_TYPE(typename mdspan_t::value_type, ElementType);
+    CHECK_SAME_TYPE(typename mdspan_t::size_type, size_type);
+    CHECK_SAME_TYPE(typename mdspan_t::index_type, IndexType);
 
     CHECK_NOEXCEPT(etl::declval<mdspan_t>().rank());
     CHECK_NOEXCEPT(etl::declval<mdspan_t>().rank_dynamic());

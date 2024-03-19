@@ -14,18 +14,18 @@ constexpr auto test_one(etl::array<ElementType, 2> elements) -> bool
 {
     using accessor_t = etl::default_accessor<ElementType>;
 
-    static_assert(etl::is_empty_v<accessor_t>);
+    CHECK(etl::is_empty_v<accessor_t>);
 
-    static_assert(etl::is_nothrow_default_constructible_v<accessor_t>);
-    static_assert(etl::is_nothrow_move_constructible_v<accessor_t>);
-    static_assert(etl::is_nothrow_move_assignable_v<accessor_t>);
-    static_assert(etl::is_nothrow_swappable_v<accessor_t>);
-    static_assert(etl::is_trivially_copyable_v<accessor_t>);
+    CHECK(etl::is_nothrow_default_constructible_v<accessor_t>);
+    CHECK(etl::is_nothrow_move_constructible_v<accessor_t>);
+    CHECK(etl::is_nothrow_move_assignable_v<accessor_t>);
+    CHECK(etl::is_nothrow_swappable_v<accessor_t>);
+    CHECK(etl::is_trivially_copyable_v<accessor_t>);
 
-    static_assert(etl::same_as<typename accessor_t::offset_policy, accessor_t>);
-    static_assert(etl::same_as<typename accessor_t::element_type, ElementType>);
-    static_assert(etl::same_as<typename accessor_t::reference, ElementType&>);
-    static_assert(etl::same_as<typename accessor_t::data_handle_type, ElementType*>);
+    CHECK_SAME_TYPE(typename accessor_t::offset_policy, accessor_t);
+    CHECK_SAME_TYPE(typename accessor_t::element_type, ElementType);
+    CHECK_SAME_TYPE(typename accessor_t::reference, ElementType&);
+    CHECK_SAME_TYPE(typename accessor_t::data_handle_type, ElementType*);
 
     auto accessor = accessor_t{};
     CHECK(accessor.access(elements.data(), 0) == elements[0]);
@@ -61,7 +61,6 @@ constexpr auto test_default_accessor() -> bool
 
 auto main() -> int
 {
-    CHECK(test_default_accessor());
-    static_assert(test_default_accessor());
+    STATIC_CHECK(test_default_accessor());
     return 0;
 }

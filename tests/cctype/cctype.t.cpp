@@ -411,34 +411,19 @@ constexpr auto test_toupper() -> bool
 
 auto main() -> int
 {
-    CHECK(test_isalnum());
-    CHECK(test_isalpha());
-    CHECK(test_islower());
-    CHECK(test_isupper());
-    CHECK(test_isdigit());
-    CHECK(test_isxdigit());
-    CHECK(test_isspace());
-    CHECK(test_isblank());
-    CHECK(test_ispunct());
-    CHECK(test_isgraph());
-    CHECK(test_isprint());
-    CHECK(test_iscntrl());
-    CHECK(test_tolower());
-    CHECK(test_toupper());
-
-    static_assert(test_isalnum());
-    static_assert(test_isalpha());
-    static_assert(test_islower());
-    static_assert(test_isupper());
-    static_assert(test_isdigit());
-    static_assert(test_isxdigit());
-    static_assert(test_isspace());
-    static_assert(test_isblank());
-    static_assert(test_ispunct());
-    static_assert(test_isgraph());
-    static_assert(test_isprint());
-    static_assert(test_iscntrl());
-    static_assert(test_tolower());
-    static_assert(test_toupper());
+    STATIC_CHECK(test_isalnum());
+    STATIC_CHECK(test_isalpha());
+    STATIC_CHECK(test_islower());
+    STATIC_CHECK(test_isupper());
+    STATIC_CHECK(test_isdigit());
+    STATIC_CHECK(test_isxdigit());
+    STATIC_CHECK(test_isspace());
+    STATIC_CHECK(test_isblank());
+    STATIC_CHECK(test_ispunct());
+    STATIC_CHECK(test_isgraph());
+    STATIC_CHECK(test_isprint());
+    STATIC_CHECK(test_iscntrl());
+    STATIC_CHECK(test_tolower());
+    STATIC_CHECK(test_toupper());
     return 0;
 }

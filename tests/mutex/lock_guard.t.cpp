@@ -38,6 +38,5 @@ static auto test() -> bool
 auto main() -> int
 {
     CHECK(test());
-    // static_assert(test());
     return 0;
 }

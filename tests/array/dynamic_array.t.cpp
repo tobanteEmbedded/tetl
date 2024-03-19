@@ -15,12 +15,12 @@ auto test() -> bool
     using Alloc = etl::monotonic_allocator<T>;
     using Array = etl::dynamic_array<T, Alloc>;
 
-    static_assert(etl::same_as<typename Array::value_type, T>);
-    static_assert(etl::same_as<typename Array::allocator_type, Alloc>);
-    static_assert(etl::same_as<typename Array::size_type, etl::size_t>);
-    static_assert(etl::same_as<typename Array::difference_type, etl::ptrdiff_t>);
-    static_assert(etl::same_as<typename Array::pointer, T*>);
-    static_assert(etl::same_as<typename Array::const_pointer, T const*>);
+    CHECK_SAME_TYPE(typename Array::value_type, T);
+    CHECK_SAME_TYPE(typename Array::allocator_type, Alloc);
+    CHECK_SAME_TYPE(typename Array::size_type, etl::size_t);
+    CHECK_SAME_TYPE(typename Array::difference_type, etl::ptrdiff_t);
+    CHECK_SAME_TYPE(typename Array::pointer, T*);
+    CHECK_SAME_TYPE(typename Array::const_pointer, T const*);
 
     {
         auto memory = etl::array<etl::byte, 64>{};

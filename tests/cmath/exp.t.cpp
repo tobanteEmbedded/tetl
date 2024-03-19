@@ -18,10 +18,8 @@ constexpr auto test() -> bool
 
 auto main() -> int
 {
-    static_assert(test<float>());
-    static_assert(test<double>());
-    CHECK(test<float>());
-    CHECK(test<double>());
+    STATIC_CHECK(test<float>());
+    STATIC_CHECK(test<double>());
 
     // TODO: Fix long double tests
     // static_assert(test<long double>());

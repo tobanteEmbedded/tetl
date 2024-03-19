@@ -4,7 +4,7 @@
 
 #include "testing/testing.hpp"
 
-static auto test() -> bool
+constexpr auto test() -> bool
 {
     {
         auto counter = 0;
@@ -51,7 +51,6 @@ static auto test() -> bool
 
 auto main() -> int
 {
-    CHECK(test());
-    // static_assert(test());
+    STATIC_CHECK(test());
     return 0;
 }

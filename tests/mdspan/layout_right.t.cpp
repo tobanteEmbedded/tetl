@@ -14,21 +14,21 @@ constexpr auto test_layout_right() -> bool
     using extents_2d_t = etl::extents<IndexType, 2, etl::dynamic_extent>;
     using mapping_2d_t = etl::layout_right::mapping<extents_2d_t>;
 
-    static_assert(etl::is_trivial_v<etl::layout_right>);
-    static_assert(etl::is_trivially_copyable_v<mapping_2d_t>);
+    CHECK(etl::is_trivial_v<etl::layout_right>);
+    CHECK(etl::is_trivially_copyable_v<mapping_2d_t>);
 
-    static_assert(etl::same_as<typename mapping_2d_t::extents_type, extents_2d_t>);
-    static_assert(etl::same_as<typename mapping_2d_t::index_type, IndexType>);
-    static_assert(etl::same_as<typename mapping_2d_t::size_type, typename extents_2d_t::size_type>);
-    static_assert(etl::same_as<typename mapping_2d_t::rank_type, typename extents_2d_t::rank_type>);
-    static_assert(etl::same_as<typename mapping_2d_t::layout_type, etl::layout_right>);
+    CHECK(etl::same_as<typename mapping_2d_t::extents_type, extents_2d_t>);
+    CHECK(etl::same_as<typename mapping_2d_t::index_type, IndexType>);
+    CHECK(etl::same_as<typename mapping_2d_t::size_type, typename extents_2d_t::size_type>);
+    CHECK(etl::same_as<typename mapping_2d_t::rank_type, typename extents_2d_t::rank_type>);
+    CHECK(etl::same_as<typename mapping_2d_t::layout_type, etl::layout_right>);
 
     {
         auto const mapping = mapping_2d_t{};
         auto const copy    = mapping;
         CHECK(copy == mapping);
-        static_assert(etl::is_nothrow_default_constructible_v<mapping_2d_t>);
-        static_assert(etl::is_nothrow_copy_constructible_v<mapping_2d_t>);
+        CHECK(etl::is_nothrow_default_constructible_v<mapping_2d_t>);
+        CHECK(etl::is_nothrow_copy_constructible_v<mapping_2d_t>);
     }
 
     {
@@ -36,14 +36,14 @@ constexpr auto test_layout_right() -> bool
         auto copy    = mapping_2d_t{};
         copy         = mapping;
         CHECK(copy == mapping);
-        static_assert(etl::is_nothrow_copy_assignable_v<mapping_2d_t>);
+        CHECK(etl::is_nothrow_copy_assignable_v<mapping_2d_t>);
     }
 
     {
         auto ext     = extents_2d_t(42);
         auto mapping = mapping_2d_t(ext);
         CHECK(mapping.extents() == ext);
-        static_assert(etl::is_nothrow_constructible_v<mapping_2d_t, extents_2d_t>);
+        CHECK(etl::is_nothrow_constructible_v<mapping_2d_t, extents_2d_t>);
     }
 
     {
