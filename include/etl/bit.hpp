@@ -21,8 +21,8 @@
 #include <etl/_bit/rotr.hpp>
 
 // Non-standard extensions
-#include <etl/_bit/clear_bit.hpp>
 #include <etl/_bit/flip_bit.hpp>
+#include <etl/_bit/reset_bit.hpp>
 #include <etl/_bit/set_bit.hpp>
 
 #endif // TETL_BIT_HPP
