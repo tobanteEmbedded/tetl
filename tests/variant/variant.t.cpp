@@ -6,44 +6,17 @@
 #include <etl/string.hpp>
 #include <etl/type_traits.hpp>
 
-#include "testing/exception.hpp"
 #include "testing/testing.hpp"
-
-using etl::int8_t;
-using etl::monostate;
-using etl::uint16_t;
-using etl::uint32_t;
-using etl::uint64_t;
-using etl::uint8_t;
-using etl::variant;
 
 static auto test() -> bool
 {
-    TEST_EXCEPTION(etl::bad_variant_access, etl::exception);
-
-    {
-        using etl::is_base_of_v;
-        using etl::is_constructible_v;
-        using etl::is_default_constructible_v;
-
-        ASSERT(is_default_constructible_v<etl::bad_variant_access>);
-        ASSERT(is_constructible_v<etl::bad_variant_access, char const*>);
-        ASSERT(is_base_of_v<etl::exception, etl::bad_variant_access>);
-    }
-
-    {
-        // All instances of monostate compare equal.
-        auto lhs = monostate{};
-        auto rhs = monostate{};
-
-        ASSERT(lhs == rhs);
-        ASSERT(lhs <= rhs);
-        ASSERT(lhs >= rhs);
-
-        ASSERT(not(lhs != rhs));
-        ASSERT(not(lhs < rhs));
-        ASSERT(not(lhs > rhs));
-    }
+    using etl::int8_t;
+    using etl::monostate;
+    using etl::uint16_t;
+    using etl::uint32_t;
+    using etl::uint64_t;
+    using etl::uint8_t;
+    using etl::variant;
 
     {
 
