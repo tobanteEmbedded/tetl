@@ -131,8 +131,8 @@ constexpr auto test() -> bool
         auto operator()(int /*unused*/) -> float { return 1.0F; }
     };
 
-    CHECK(etl::is_same_v<etl::invoke_result_t<S, char, int&>, T>);
-    CHECK(etl::is_same_v<etl::invoke_result_t<S, int>, float>);
+    CHECK_SAME_TYPE(etl::invoke_result_t<S, char, int&>, T);
+    CHECK_SAME_TYPE(etl::invoke_result_t<S, int>, float);
 
     CHECK(etl::is_invocable_v<T()>);
     CHECK(!(etl::is_invocable_v<T(), T>));

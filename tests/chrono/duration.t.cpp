@@ -73,15 +73,15 @@ constexpr auto test() -> bool
     {
         using ms = etl::chrono::milliseconds;
         using us = etl::chrono::microseconds;
-        CHECK(etl::is_same_v<etl::common_type<ms, us>::type, us>);
-        CHECK(etl::is_same_v<etl::common_type<us, ms>::type, us>);
+        CHECK_SAME_TYPE(etl::common_type<ms, us>::type, us);
+        CHECK_SAME_TYPE(etl::common_type<us, ms>::type, us);
     }
 
     {
         using ms = etl::chrono::milliseconds;
         using ns = etl::chrono::nanoseconds;
-        CHECK(etl::is_same_v<etl::common_type<ms, ns>::type, ns>);
-        CHECK(etl::is_same_v<etl::common_type<ns, ms>::type, ns>);
+        CHECK_SAME_TYPE(etl::common_type<ms, ns>::type, ns);
+        CHECK_SAME_TYPE(etl::common_type<ns, ms>::type, ns);
     }
 
     if constexpr (etl::is_integral_v<T>) {

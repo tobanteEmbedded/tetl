@@ -10,15 +10,15 @@
 template <typename T>
 constexpr auto test() -> bool
 {
-    CHECK(etl::is_same_v<etl::unexpect_t, etl::decay_t<decltype(etl::unexpect)>>);
+    CHECK_SAME_TYPE(etl::unexpect_t, etl::decay_t<decltype(etl::unexpect)>);
     CHECK(etl::is_default_constructible_v<etl::unexpect_t>);
 
     auto unex = etl::unexpected{T(42)};
     CHECK(unex.error() == T(42));
-    CHECK(etl::is_same_v<decltype(unex.error()), T&>);
-    CHECK(etl::is_same_v<decltype(etl::as_const(unex).error()), T const&>);
-    CHECK(etl::is_same_v<decltype(etl::move(unex).error()), T&&>);
-    CHECK(etl::is_same_v<decltype(etl::move(etl::as_const(unex)).error()), T const&&>);
+    CHECK_SAME_TYPE(decltype(unex.error()), T&);
+    CHECK_SAME_TYPE(decltype(etl::as_const(unex).error()), T const&);
+    CHECK_SAME_TYPE(decltype(etl::move(unex).error()), T&&);
+    CHECK_SAME_TYPE(decltype(etl::move(etl::as_const(unex)).error()), T const&&);
 
     auto other = etl::unexpected{T(99)};
     CHECK(other.error() == T(99));

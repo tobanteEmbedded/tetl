@@ -141,7 +141,7 @@ constexpr auto test_builtin_types() -> bool
     }
 
     {
-        CHECK(etl::is_same_v<typename etl::tuple_element<1, etl::array<T, 2>>::type, T>);
+        CHECK_SAME_TYPE(typename etl::tuple_element<1, etl::array<T, 2>>::type, T);
     }
 
     {
@@ -165,12 +165,12 @@ constexpr auto test_builtin_types() -> bool
 
         // deduces both element type and length
         auto a2 = etl::to_array({0, 2, 1, 3});
-        CHECK(etl::is_same_v<decltype(a2), etl::array<int, 4>>);
+        CHECK_SAME_TYPE(decltype(a2), etl::array<int, 4>);
 
         // deduces length with element type specified
         // implicit conversion happens
         auto a3 = etl::to_array<T>({0, 1, 3});
-        CHECK(etl::is_same_v<decltype(a3), etl::array<T, 3>>);
+        CHECK_SAME_TYPE(decltype(a3), etl::array<T, 3>);
 
         auto a4 = etl::to_array<etl::pair<T, float>>({
             {T{3},    0.0F},

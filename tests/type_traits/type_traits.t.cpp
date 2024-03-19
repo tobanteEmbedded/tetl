@@ -172,7 +172,7 @@ constexpr auto test() -> bool
         CHECK(decltype(constant)::value == T{0});
         CHECK(constant() == T{0});
         CHECK(static_cast<T>(constant) == T{0});
-        CHECK(etl::is_same_v<T, typename decltype(constant)::value_type>);
+        CHECK_SAME_TYPE(T, typename decltype(constant)::value_type);
     }
 
     // false
@@ -181,7 +181,7 @@ constexpr auto test() -> bool
         CHECK(decltype(constant)::value == false);
         CHECK(constant() == false);
         CHECK(static_cast<bool>(constant) == false);
-        CHECK(etl::is_same_v<bool, decltype(constant)::value_type>);
+        CHECK_SAME_TYPE(bool, decltype(constant)::value_type);
     }
 
     // true
@@ -190,18 +190,18 @@ constexpr auto test() -> bool
         CHECK(decltype(constant)::value == true);
         CHECK(constant() == true);
         CHECK(static_cast<bool>(constant) == true);
-        CHECK(etl::is_same_v<bool, decltype(constant)::value_type>);
+        CHECK_SAME_TYPE(bool, decltype(constant)::value_type);
     }
 
     // true_type
     {
-        CHECK(etl::is_same_v<bool, etl::true_type::value_type>);
+        CHECK_SAME_TYPE(bool, etl::true_type::value_type);
         CHECK(etl::true_type::value == true);
     }
 
     // false_type
     {
-        CHECK(etl::is_same_v<bool, etl::false_type::value_type>);
+        CHECK_SAME_TYPE(bool, etl::false_type::value_type);
         CHECK(etl::false_type::value == false);
     }
 

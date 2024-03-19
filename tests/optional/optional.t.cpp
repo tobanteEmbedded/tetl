@@ -427,15 +427,15 @@ constexpr auto test() -> bool
     }
 
     auto opt1 = etl::make_optional(T{42});
-    CHECK(etl::is_same_v<typename decltype(opt1)::value_type, T>);
+    CHECK_SAME_TYPE(typename decltype(opt1)::value_type, T);
 
     auto value2 = T{};
     auto opt2   = etl::make_optional(T{value2});
-    CHECK(etl::is_same_v<typename decltype(opt2)::value_type, T>);
+    CHECK_SAME_TYPE(typename decltype(opt2)::value_type, T);
 
     auto const value3 = T{};
     auto const opt3   = etl::make_optional(T{value3});
-    CHECK(etl::is_same_v<typename decltype(opt3)::value_type, T>);
+    CHECK_SAME_TYPE(typename decltype(opt3)::value_type, T);
 
     struct SMO {
         T data_1;
@@ -445,7 +445,7 @@ constexpr auto test() -> bool
     };
 
     auto const opt143 = etl::make_optional<SMO>(T{42}, 1);
-    CHECK(etl::is_same_v<typename decltype(opt143)::value_type, SMO>);
+    CHECK_SAME_TYPE(typename decltype(opt143)::value_type, SMO);
 
     CHECK(opt143.value().data_1 == T{42});
     CHECK(opt143.value().data_2 == 1);
