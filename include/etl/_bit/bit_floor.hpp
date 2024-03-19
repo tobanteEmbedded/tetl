@@ -22,7 +22,7 @@ template <etl::standard_unsigned_integer UInt>
 [[nodiscard]] constexpr auto bit_floor(UInt x) noexcept -> UInt
 {
     if (x != 0) {
-        return UInt(1) << (static_cast<UInt>(etl::bit_width(x)) - UInt(1));
+        return UInt(1) << static_cast<UInt>(static_cast<UInt>(etl::bit_width(x)) - UInt(1));
     }
     return 0;
 }

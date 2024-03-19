@@ -3,6 +3,7 @@
 #ifndef TETL_BIT_COUNTR_ONE_HPP
 #define TETL_BIT_COUNTR_ONE_HPP
 
+#include <etl/_bit/test_bit.hpp>
 #include <etl/_concepts/standard_unsigned_integer.hpp>
 #include <etl/_limits/numeric_limits.hpp>
 
@@ -20,12 +21,10 @@ namespace etl {
 template <etl::standard_unsigned_integer UInt>
 [[nodiscard]] constexpr auto countr_one(UInt x) noexcept -> int
 {
-    auto isBitSet = [](auto val, int pos) -> bool { return val & (UInt{1} << static_cast<UInt>(pos)); };
-
     auto totalBits = etl::numeric_limits<UInt>::digits;
     auto result    = 0;
     while (result != totalBits) {
-        if (!isBitSet(x, result)) {
+        if (not etl::test_bit(x, static_cast<UInt>(result))) {
             break;
         }
         ++result;
