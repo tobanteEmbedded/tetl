@@ -12,24 +12,36 @@
 
 namespace etl {
 
-/// \brief Computes the square root of the sum of the squares of x and y,
-/// without undue overflow or underflow at intermediate stages of the
-/// computation.
-///
-/// - hypot(x,y) is INF if x or y is +INF or -INF; else
-/// - hypot(x,y) is NAN if x or y is NAN.
-///
-/// https://en.cppreference.com/w/cpp/numeric/math/hypot
-[[nodiscard]] constexpr auto hypot(float x, float y) noexcept -> float
-{
-    if (etl::isinf(x) or etl::isinf(y)) {
-        return etl::numeric_limits<float>::infinity();
+namespace detail {
+
+inline constexpr struct hypot {
+    template <typename Float>
+    [[nodiscard]] constexpr auto operator()(Float x, Float y) const noexcept -> Float
+    {
+        if (etl::isinf(x) or etl::isinf(y)) {
+            return etl::numeric_limits<Float>::infinity();
+        }
+        if (etl::isnan(x) or etl::isnan(y)) {
+            return etl::numeric_limits<Float>::quiet_NaN();
+        }
+        return etl::sqrt(x * x + y * y);
     }
-    if (etl::isnan(x) or etl::isnan(y)) {
-        return etl::numeric_limits<float>::quiet_NaN();
+
+    template <typename Float>
+    [[nodiscard]] constexpr auto operator()(Float x, Float y, Float z) const noexcept -> Float
+    {
+        if (etl::isinf(x) or etl::isinf(y) or etl::isinf(z)) {
+            return etl::numeric_limits<Float>::infinity();
+        }
+        if (etl::isnan(x) or etl::isnan(y) or etl::isnan(z)) {
+            return etl::numeric_limits<Float>::quiet_NaN();
+        }
+        return etl::sqrt(x * x + y * y + z * z);
     }
-    return etl::sqrt(x * x + y * y);
-}
+
+} hypot;
+
+} // namespace detail
 
 /// \brief Computes the square root of the sum of the squares of x and y,
 /// without undue overflow or underflow at intermediate stages of the
@@ -39,7 +51,7 @@ namespace etl {
 /// - hypot(x,y) is NAN if x or y is NAN.
 ///
 /// https://en.cppreference.com/w/cpp/numeric/math/hypot
-[[nodiscard]] constexpr auto hypotf(float x, float y) noexcept -> float { return etl::hypot(x, y); }
+[[nodiscard]] constexpr auto hypot(float x, float y) noexcept -> float { return etl::detail::hypot(x, y); }
 
 /// \brief Computes the square root of the sum of the squares of x and y,
 /// without undue overflow or underflow at intermediate stages of the
@@ -49,16 +61,17 @@ namespace etl {
 /// - hypot(x,y) is NAN if x or y is NAN.
 ///
 /// https://en.cppreference.com/w/cpp/numeric/math/hypot
-[[nodiscard]] constexpr auto hypot(double x, double y) noexcept -> double
-{
-    if (etl::isinf(x) or etl::isinf(y)) {
-        return etl::numeric_limits<double>::infinity();
-    }
-    if (etl::isnan(x) or etl::isnan(y)) {
-        return etl::numeric_limits<double>::quiet_NaN();
-    }
-    return etl::sqrt(x * x + y * y);
-}
+[[nodiscard]] constexpr auto hypotf(float x, float y) noexcept -> float { return etl::detail::hypot(x, y); }
+
+/// \brief Computes the square root of the sum of the squares of x and y,
+/// without undue overflow or underflow at intermediate stages of the
+/// computation.
+///
+/// - hypot(x,y) is INF if x or y is +INF or -INF; else
+/// - hypot(x,y) is NAN if x or y is NAN.
+///
+/// https://en.cppreference.com/w/cpp/numeric/math/hypot
+[[nodiscard]] constexpr auto hypot(double x, double y) noexcept -> double { return etl::detail::hypot(x, y); }
 
 /// \brief Computes the square root of the sum of the squares of x and y,
 /// without undue overflow or underflow at intermediate stages of the
@@ -70,13 +83,7 @@ namespace etl {
 /// https://en.cppreference.com/w/cpp/numeric/math/hypot
 [[nodiscard]] constexpr auto hypot(long double x, long double y) noexcept -> long double
 {
-    if (etl::isinf(x) or etl::isinf(y)) {
-        return etl::numeric_limits<long double>::infinity();
-    }
-    if (etl::isnan(x) or etl::isnan(y)) {
-        return etl::numeric_limits<long double>::quiet_NaN();
-    }
-    return etl::sqrt(x * x + y * y);
+    return etl::detail::hypot(x, y);
 }
 
 /// \brief Computes the square root of the sum of the squares of x and y,
@@ -87,7 +94,10 @@ namespace etl {
 /// - hypot(x,y) is NAN if x or y is NAN.
 ///
 /// https://en.cppreference.com/w/cpp/numeric/math/hypot
-[[nodiscard]] constexpr auto hypotl(long double x, long double y) noexcept -> long double { return etl::hypot(x, y); }
+[[nodiscard]] constexpr auto hypotl(long double x, long double y) noexcept -> long double
+{
+    return etl::detail::hypot(x, y);
+}
 
 /// \brief Computes the square root of the sum of the squares of x, y, and z,
 /// without undue overflow or underflow at intermediate stages of the
@@ -97,16 +107,7 @@ namespace etl {
 /// - hypot(x,y) is NAN if x or y is NAN.
 ///
 /// https://en.cppreference.com/w/cpp/numeric/math/hypot
-[[nodiscard]] constexpr auto hypot(float x, float y, float z) noexcept -> float
-{
-    if (etl::isinf(x) or etl::isinf(y) or etl::isinf(z)) {
-        return etl::numeric_limits<float>::infinity();
-    }
-    if (etl::isnan(x) or etl::isnan(y) or etl::isnan(z)) {
-        return etl::numeric_limits<float>::quiet_NaN();
-    }
-    return etl::sqrt(x * x + y * y + z * z);
-}
+[[nodiscard]] constexpr auto hypot(float x, float y, float z) noexcept -> float { return etl::detail::hypot(x, y, z); }
 
 /// \brief Computes the square root of the sum of the squares of x, y, and z,
 /// without undue overflow or underflow at intermediate stages of the
@@ -118,13 +119,7 @@ namespace etl {
 /// https://en.cppreference.com/w/cpp/numeric/math/hypot
 [[nodiscard]] constexpr auto hypot(double x, double y, double z) noexcept -> double
 {
-    if (etl::isinf(x) or etl::isinf(y) or etl::isinf(z)) {
-        return etl::numeric_limits<double>::infinity();
-    }
-    if (etl::isnan(x) or etl::isnan(y) or etl::isnan(z)) {
-        return etl::numeric_limits<double>::quiet_NaN();
-    }
-    return etl::sqrt(x * x + y * y + z * z);
+    return etl::detail::hypot(x, y, z);
 }
 
 /// \brief Computes the square root of the sum of the squares of x, y, and z,
@@ -137,13 +132,7 @@ namespace etl {
 /// https://en.cppreference.com/w/cpp/numeric/math/hypot
 [[nodiscard]] constexpr auto hypot(long double x, long double y, long double z) noexcept -> long double
 {
-    if (etl::isinf(x) or etl::isinf(y) or etl::isinf(z)) {
-        return etl::numeric_limits<long double>::infinity();
-    }
-    if (etl::isnan(x) or etl::isnan(y) or etl::isnan(z)) {
-        return etl::numeric_limits<long double>::quiet_NaN();
-    }
-    return etl::sqrt(x * x + y * y + z * z);
+    return etl::detail::hypot(x, y, z);
 }
 
 } // namespace etl
