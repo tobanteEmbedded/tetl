@@ -9,7 +9,7 @@
 #include <etl/string_view.hpp>
 #include <etl/type_traits.hpp>
 
-#define TEST_EXCEPTION(ExceptionType, BaseType)                                                                        \
+#define CHECK_EXCEPTION_TYPE(ExceptionType, BaseType)                                                                  \
     do {                                                                                                               \
         ASSERT(etl::is_default_constructible_v<ExceptionType>);                                                        \
         ASSERT(etl::is_constructible_v<ExceptionType, char const*>);                                                   \

@@ -10,16 +10,16 @@
 
 constexpr auto test() -> bool
 {
-    TEST_EXCEPTION(etl::logic_error, etl::exception);
-    TEST_EXCEPTION(etl::domain_error, etl::logic_error);
-    TEST_EXCEPTION(etl::invalid_argument, etl::logic_error);
-    TEST_EXCEPTION(etl::length_error, etl::logic_error);
-    TEST_EXCEPTION(etl::out_of_range, etl::logic_error);
+    CHECK_EXCEPTION_TYPE(etl::logic_error, etl::exception);
+    CHECK_EXCEPTION_TYPE(etl::domain_error, etl::logic_error);
+    CHECK_EXCEPTION_TYPE(etl::invalid_argument, etl::logic_error);
+    CHECK_EXCEPTION_TYPE(etl::length_error, etl::logic_error);
+    CHECK_EXCEPTION_TYPE(etl::out_of_range, etl::logic_error);
 
-    TEST_EXCEPTION(etl::runtime_error, etl::exception);
-    TEST_EXCEPTION(etl::range_error, etl::runtime_error);
-    TEST_EXCEPTION(etl::overflow_error, etl::runtime_error);
-    TEST_EXCEPTION(etl::underflow_error, etl::runtime_error);
+    CHECK_EXCEPTION_TYPE(etl::runtime_error, etl::exception);
+    CHECK_EXCEPTION_TYPE(etl::range_error, etl::runtime_error);
+    CHECK_EXCEPTION_TYPE(etl::overflow_error, etl::runtime_error);
+    CHECK_EXCEPTION_TYPE(etl::underflow_error, etl::runtime_error);
 
     return true;
 }

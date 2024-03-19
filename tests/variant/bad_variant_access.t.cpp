@@ -9,7 +9,7 @@ namespace {
 
 constexpr auto test() -> bool
 {
-    TEST_EXCEPTION(etl::bad_variant_access, etl::exception);
+    CHECK_EXCEPTION_TYPE(etl::bad_variant_access, etl::exception);
     return true;
 }
 

@@ -12,7 +12,7 @@
 template <typename T>
 constexpr auto test() -> bool
 {
-    TEST_EXCEPTION(etl::bad_optional_access, etl::exception);
+    CHECK_EXCEPTION_TYPE(etl::bad_optional_access, etl::exception);
 
     {
         assert(!(etl::optional<T>{}.has_value()));
