@@ -449,33 +449,32 @@ constexpr auto test() -> bool
 
     CHECK(opt143.value().data_1 == T{42});
     CHECK(opt143.value().data_2 == 1);
-    using etl::is_same_v;
 
     {
         etl::optional opt{T{}};
         etl::ignore_unused(opt);
-        CHECK(is_same_v<typename decltype(opt)::value_type, T>);
+        CHECK_SAME_TYPE(typename decltype(opt)::value_type, T);
     }
 
     {
         T data{};
         etl::optional opt{data};
         etl::ignore_unused(opt);
-        CHECK(is_same_v<typename decltype(opt)::value_type, T>);
+        CHECK_SAME_TYPE(typename decltype(opt)::value_type, T);
     }
 
     {
         T const data{42};
         etl::optional opt44{data};
         etl::ignore_unused(opt44);
-        CHECK(is_same_v<typename decltype(opt44)::value_type, T>);
+        CHECK_SAME_TYPE(typename decltype(opt44)::value_type, T);
     }
 
     {
         T data[2];
         etl::optional opt55{data};
         etl::ignore_unused(opt55);
-        CHECK(is_same_v<typename decltype(opt55)::value_type, T*>);
+        CHECK_SAME_TYPE(typename decltype(opt55)::value_type, T*);
     }
 
     // and_then

@@ -12,8 +12,11 @@
 #include <etl/_config/debug_trap.hpp>
 #include <etl/_config/version.hpp>
 #include <etl/_config/workarounds.hpp>
-
 #include <etl/_config/user.hpp>
 // clang-format on
+
+#if __has_include(<version>)
+    #include <version>
+#endif
 
 #endif // TETL_CONFIG_ALL_HPP

@@ -47,11 +47,9 @@ constexpr auto test() -> bool
         etl::move(begin(source), end(source), begin(d));
 
         // CHECK
-        using etl::all_of;
-
-        CHECK((all_of(begin(d), end(d), [](auto const& s) { return s.move; })));
-        CHECK((all_of(begin(d), end(d), [](auto const& s) { return !s.copy; })));
-        CHECK((all_of(begin(d), end(d), [](auto const& s) { return s.data == 1; })));
+        CHECK(etl::all_of(begin(d), end(d), [](auto const& s) { return s.move; }));
+        CHECK(etl::all_of(begin(d), end(d), [](auto const& s) { return !s.copy; }));
+        CHECK(etl::all_of(begin(d), end(d), [](auto const& s) { return s.data == 1; }));
     }
 
     // move backward
@@ -62,11 +60,9 @@ constexpr auto test() -> bool
         etl::move_backward(begin(source), end(source), end(d));
 
         // CHECK
-        using etl::all_of;
-
-        CHECK(all_of(begin(d), end(d), [](auto const& s) { return s.move; }));
-        CHECK(all_of(begin(d), end(d), [](auto const& s) { return !s.copy; }));
-        CHECK(all_of(begin(d), end(d), [](auto const& s) { return s.data != 0; }));
+        CHECK(etl::all_of(begin(d), end(d), [](auto const& s) { return s.move; }));
+        CHECK(etl::all_of(begin(d), end(d), [](auto const& s) { return !s.copy; }));
+        CHECK(etl::all_of(begin(d), end(d), [](auto const& s) { return s.data != 0; }));
         CHECK(d[0].data == T(1));
         CHECK(d[1].data == T(2));
         CHECK(d[2].data == T(3));

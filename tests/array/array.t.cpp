@@ -71,22 +71,20 @@ constexpr auto test_builtin_types() -> bool
 
     {
         // swap
-        using etl::all_of;
-
         etl::array<T, 4> a{};
         a.fill(T{1});
         etl::array<T, 4> b{};
 
-        CHECK(all_of(begin(a), end(a), [](auto val) { return val == 1; }));
-        CHECK(all_of(begin(b), end(b), [](auto val) { return val == 0; }));
+        CHECK(etl::all_of(begin(a), end(a), [](auto val) { return val == 1; }));
+        CHECK(etl::all_of(begin(b), end(b), [](auto val) { return val == 0; }));
 
         a.swap(b);
-        CHECK(all_of(begin(a), end(a), [](auto val) { return val == 0; }));
-        CHECK(all_of(begin(b), end(b), [](auto val) { return val == 1; }));
+        CHECK(etl::all_of(begin(a), end(a), [](auto val) { return val == 0; }));
+        CHECK(etl::all_of(begin(b), end(b), [](auto val) { return val == 1; }));
 
         etl::swap(a, b);
-        CHECK(all_of(begin(a), end(a), [](auto val) { return val == 1; }));
-        CHECK(all_of(begin(b), end(b), [](auto val) { return val == 0; }));
+        CHECK(etl::all_of(begin(a), end(a), [](auto val) { return val == 1; }));
+        CHECK(etl::all_of(begin(b), end(b), [](auto val) { return val == 0; }));
     }
 
     {
@@ -130,10 +128,10 @@ constexpr auto test_builtin_types() -> bool
 
     {
         // tuple_size
-        CHECK((etl::tuple_size<etl::array<T, 1>>::value == 1));
+        CHECK(etl::tuple_size<etl::array<T, 1>>::value == 1);
 
-        CHECK((etl::tuple_size_v<etl::array<T, 2>> == 2));
-        CHECK((etl::tuple_size_v<etl::array<T, 3>> == 3));
+        CHECK(etl::tuple_size_v<etl::array<T, 2>> == 2);
+        CHECK(etl::tuple_size_v<etl::array<T, 3>> == 3);
 
         auto arr4 = etl::array{T(1), T(2), T(3), T(4)};
         CHECK(etl::tuple_size_v<decltype(arr4)> == 4);
@@ -143,7 +141,7 @@ constexpr auto test_builtin_types() -> bool
     }
 
     {
-        CHECK((etl::is_same_v<typename etl::tuple_element<1, etl::array<T, 2>>::type, T>));
+        CHECK(etl::is_same_v<typename etl::tuple_element<1, etl::array<T, 2>>::type, T>);
     }
 
     {
@@ -167,12 +165,12 @@ constexpr auto test_builtin_types() -> bool
 
         // deduces both element type and length
         auto a2 = etl::to_array({0, 2, 1, 3});
-        CHECK((etl::is_same_v<decltype(a2), etl::array<int, 4>>));
+        CHECK(etl::is_same_v<decltype(a2), etl::array<int, 4>>);
 
         // deduces length with element type specified
         // implicit conversion happens
         auto a3 = etl::to_array<T>({0, 1, 3});
-        CHECK((etl::is_same_v<decltype(a3), etl::array<T, 3>>));
+        CHECK(etl::is_same_v<decltype(a3), etl::array<T, 3>>);
 
         auto a4 = etl::to_array<etl::pair<T, float>>({
             {T{3},    0.0F},

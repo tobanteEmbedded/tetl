@@ -9,7 +9,6 @@
 #include "testing/testing.hpp"
 
 using namespace etl::string_view_literals;
-using etl::string_view;
 
 template <typename T>
 auto test_ints() -> bool

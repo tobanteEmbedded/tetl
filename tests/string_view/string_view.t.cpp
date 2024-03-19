@@ -7,24 +7,23 @@
 
 #include "testing/testing.hpp"
 
-using etl::string_view;
-using namespace etl::literals;
-
 constexpr auto test() -> bool
 {
+    using namespace etl::literals;
+
     {
         // P2251R1
         CHECK(etl::is_trivially_copyable_v<etl::string_view>);
     }
 
     {
-        CHECK(string_view{}.data() == nullptr);
-        CHECK(string_view{}.size() == 0);
-        CHECK(string_view{}.length() == 0);
+        CHECK(etl::string_view{}.data() == nullptr);
+        CHECK(etl::string_view{}.size() == 0);
+        CHECK(etl::string_view{}.length() == 0);
     }
 
     {
-        auto const sv1 = string_view{};
+        auto const sv1 = etl::string_view{};
         auto const sv2 = sv1;
 
         CHECK(sv2.data() == nullptr);
@@ -42,7 +41,7 @@ constexpr auto test() -> bool
     }
 
     {
-        auto const sv = string_view{};
+        auto const sv = etl::string_view{};
         CHECK(sv.data() == nullptr);
         CHECK(sv.begin() == sv.cbegin());
     }
@@ -54,7 +53,7 @@ constexpr auto test() -> bool
     }
 
     {
-        auto const sv = string_view{};
+        auto const sv = etl::string_view{};
         CHECK(sv.data() == nullptr);
         CHECK(sv.end() == sv.cend());
     }
@@ -66,7 +65,7 @@ constexpr auto test() -> bool
     }
 
     {
-        auto const sv = string_view{};
+        auto const sv = etl::string_view{};
         CHECK(sv.data() == nullptr);
         CHECK(sv.rend() == sv.crend());
         CHECK(sv.data() == nullptr);
@@ -83,7 +82,7 @@ constexpr auto test() -> bool
 
     {
         auto const sv = "test"_sv;
-        auto counter  = string_view::size_type{0};
+        auto counter  = etl::string_view::size_type{0};
         for (auto c : sv) {
             etl::ignore_unused(c);
             counter++;
@@ -99,7 +98,7 @@ constexpr auto test() -> bool
         CHECK(sv1[2] == 's');
         CHECK(sv1[3] == 't');
 
-        auto sv2 = string_view{"tobi"};
+        auto sv2 = etl::string_view{"tobi"};
         CHECK(sv2[0] == 't');
         CHECK(sv2[1] == 'o');
         CHECK(sv2[2] == 'b');
@@ -122,11 +121,11 @@ constexpr auto test() -> bool
     }
     {
         auto const sv = "test"_sv;
-        CHECK(sv.max_size() == string_view::size_type(-1));
+        CHECK(sv.max_size() == etl::string_view::size_type(-1));
     }
 
     {
-        auto const t = string_view{};
+        auto const t = etl::string_view{};
         CHECK(t.empty());
 
         auto const f = "test"_sv;
@@ -134,7 +133,7 @@ constexpr auto test() -> bool
     }
 
     {
-        auto sv = string_view{};
+        auto sv = etl::string_view{};
         CHECK(sv.empty());
         sv.remove_prefix(0);
         CHECK(sv.empty());
@@ -149,7 +148,7 @@ constexpr auto test() -> bool
     }
 
     {
-        auto sv = string_view{};
+        auto sv = etl::string_view{};
         CHECK(sv.empty());
         sv.remove_suffix(0);
         CHECK(sv.empty());
@@ -203,8 +202,8 @@ constexpr auto test() -> bool
     {
         auto const sv = "test"_sv;
         CHECK(sv.starts_with("t"_sv));
-        CHECK(sv.starts_with(string_view{"te"}));
-        CHECK(sv.starts_with(string_view{"tes"}));
+        CHECK(sv.starts_with(etl::string_view{"te"}));
+        CHECK(sv.starts_with(etl::string_view{"tes"}));
         CHECK(sv.starts_with("test"_sv));
     }
 
@@ -264,8 +263,8 @@ constexpr auto test() -> bool
         CHECK(sv.find("t", 0, 1) == 0);
         CHECK(sv.find("est", 0, 3) == 1);
 
-        CHECK(sv.find("x", 0, 1) == string_view::npos);
-        CHECK(sv.find("foo", 0, 3) == string_view::npos);
+        CHECK(sv.find("x", 0, 1) == etl::string_view::npos);
+        CHECK(sv.find("foo", 0, 3) == etl::string_view::npos);
     }
 
     {
@@ -273,11 +272,11 @@ constexpr auto test() -> bool
         CHECK(sv.find("t", 0) == 0);
         CHECK(sv.find("est", 0) == 1);
 
-        CHECK(sv.find("x", 0) == string_view::npos);
-        CHECK(sv.find("foo", 0) == string_view::npos);
+        CHECK(sv.find("x", 0) == etl::string_view::npos);
+        CHECK(sv.find("foo", 0) == etl::string_view::npos);
 
-        CHECK(sv.find("xxxxx", 0) == string_view::npos);
-        CHECK(sv.find("foobarbaz", 0) == string_view::npos);
+        CHECK(sv.find("xxxxx", 0) == etl::string_view::npos);
+        CHECK(sv.find("foobarbaz", 0) == etl::string_view::npos);
     }
 
     {
@@ -300,23 +299,23 @@ constexpr auto test() -> bool
 
     {
         auto const sv = "test"_sv;
-        CHECK(sv.rfind("t", string_view::npos, 1) == 3);
-        CHECK(sv.rfind("est", string_view::npos, 3) == 1);
+        CHECK(sv.rfind("t", etl::string_view::npos, 1) == 3);
+        CHECK(sv.rfind("est", etl::string_view::npos, 3) == 1);
 
-        CHECK(sv.rfind("x", string_view::npos, 1) == string_view::npos);
-        CHECK(sv.rfind("foo", string_view::npos, 3) == string_view::npos);
+        CHECK(sv.rfind("x", etl::string_view::npos, 1) == etl::string_view::npos);
+        CHECK(sv.rfind("foo", etl::string_view::npos, 3) == etl::string_view::npos);
     }
 
     {
         auto const sv = "test"_sv;
-        CHECK(sv.rfind("t", string_view::npos) == 3);
-        CHECK(sv.rfind("est", string_view::npos) == 1);
+        CHECK(sv.rfind("t", etl::string_view::npos) == 3);
+        CHECK(sv.rfind("est", etl::string_view::npos) == 1);
 
-        CHECK(sv.rfind("x", 0) == string_view::npos);
-        CHECK(sv.rfind("foo", 0) == string_view::npos);
+        CHECK(sv.rfind("x", 0) == etl::string_view::npos);
+        CHECK(sv.rfind("foo", 0) == etl::string_view::npos);
 
-        CHECK(sv.rfind("xxxxx", 0) == string_view::npos);
-        CHECK(sv.rfind("foobarbaz", 0) == string_view::npos);
+        CHECK(sv.rfind("xxxxx", 0) == etl::string_view::npos);
+        CHECK(sv.rfind("foobarbaz", 0) == etl::string_view::npos);
     }
 
     {
@@ -342,8 +341,8 @@ constexpr auto test() -> bool
         CHECK(sv.find_first_of("t", 0, 1) == 0);
         CHECK(sv.find_first_of("est", 0, 3) == 0);
 
-        CHECK(sv.find_first_of("x", 0, 1) == string_view::npos);
-        CHECK(sv.find_first_of("foo", 0, 3) == string_view::npos);
+        CHECK(sv.find_first_of("x", 0, 1) == etl::string_view::npos);
+        CHECK(sv.find_first_of("foo", 0, 3) == etl::string_view::npos);
     }
 
     {
@@ -351,11 +350,11 @@ constexpr auto test() -> bool
         CHECK(sv.find_first_of("t", 1) == 3);
         CHECK(sv.find_first_of("est", 1) == 1);
 
-        CHECK(sv.find_first_of("x", 0) == string_view::npos);
-        CHECK(sv.find_first_of("foo", 0) == string_view::npos);
+        CHECK(sv.find_first_of("x", 0) == etl::string_view::npos);
+        CHECK(sv.find_first_of("foo", 0) == etl::string_view::npos);
 
-        CHECK(sv.find_first_of("xxxxx", 0) == string_view::npos);
-        CHECK(sv.find_first_of("foobarbaz", 0) == string_view::npos);
+        CHECK(sv.find_first_of("xxxxx", 0) == etl::string_view::npos);
+        CHECK(sv.find_first_of("foobarbaz", 0) == etl::string_view::npos);
     }
 
     {

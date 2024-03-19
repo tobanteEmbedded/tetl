@@ -11,7 +11,7 @@ template <typename T>
 constexpr auto test() -> bool
 {
     auto data = etl::array{T(1), T(2), T(3)};
-    CHECK((*data.rbegin() == *etl::make_reverse_iterator(data.end())));
+    CHECK(*data.rbegin() == *etl::make_reverse_iterator(data.end()));
     return true;
 }
 

@@ -8,11 +8,6 @@
 
 #include "testing/testing.hpp"
 
-using etl::chrono::microseconds;
-using etl::chrono::milliseconds;
-using etl::chrono::minutes;
-using etl::chrono::seconds;
-
 template <typename T>
 constexpr auto test() -> bool
 {
@@ -22,14 +17,14 @@ constexpr auto test() -> bool
     }
 
     {
-        auto const sec   = seconds{1};
-        auto const milli = milliseconds{sec};
+        auto const sec   = etl::chrono::seconds{1};
+        auto const milli = etl::chrono::milliseconds{sec};
         CHECK(milli.count() == 1'000);
     }
 
     {
-        auto const minute = minutes{1};
-        auto const sec    = seconds{minute};
+        auto const minute = etl::chrono::minutes{1};
+        auto const sec    = etl::chrono::seconds{minute};
         CHECK(sec.count() == 60);
     }
 
@@ -78,15 +73,15 @@ constexpr auto test() -> bool
     {
         using ms = etl::chrono::milliseconds;
         using us = etl::chrono::microseconds;
-        CHECK((etl::is_same_v<etl::common_type<ms, us>::type, us>));
-        CHECK((etl::is_same_v<etl::common_type<us, ms>::type, us>));
+        CHECK(etl::is_same_v<etl::common_type<ms, us>::type, us>);
+        CHECK(etl::is_same_v<etl::common_type<us, ms>::type, us>);
     }
 
     {
         using ms = etl::chrono::milliseconds;
         using ns = etl::chrono::nanoseconds;
-        CHECK((etl::is_same_v<etl::common_type<ms, ns>::type, ns>));
-        CHECK((etl::is_same_v<etl::common_type<ns, ms>::type, ns>));
+        CHECK(etl::is_same_v<etl::common_type<ms, ns>::type, ns>);
+        CHECK(etl::is_same_v<etl::common_type<ns, ms>::type, ns>);
     }
 
     if constexpr (etl::is_integral_v<T>) {
@@ -136,66 +131,65 @@ constexpr auto test() -> bool
         CHECK(sec_t(T(4)) % sec_t(T(3)) == sec_t(T(1)));
     }
 
-    CHECK(seconds{1} == seconds{1});
-    CHECK(milliseconds{42} == milliseconds{42});
-    CHECK(microseconds{143} == microseconds{143});
-    CHECK(seconds{1} == milliseconds{1'000});
+    CHECK(etl::chrono::seconds{1} == etl::chrono::seconds{1});
+    CHECK(etl::chrono::milliseconds{42} == etl::chrono::milliseconds{42});
+    CHECK(etl::chrono::microseconds{143} == etl::chrono::microseconds{143});
+    CHECK(etl::chrono::seconds{1} == etl::chrono::milliseconds{1'000});
 
-    CHECK(!(seconds{1} == seconds{0}));
-    CHECK(!(milliseconds{42} == milliseconds{143}));
-    CHECK(!(microseconds{143} == microseconds{42}));
+    CHECK(!(etl::chrono::seconds{1} == etl::chrono::seconds{0}));
+    CHECK(!(etl::chrono::milliseconds{42} == etl::chrono::milliseconds{143}));
+    CHECK(!(etl::chrono::microseconds{143} == etl::chrono::microseconds{42}));
 
-    CHECK(seconds{1} != seconds{0});
-    CHECK(milliseconds{42} != milliseconds{143});
-    CHECK(microseconds{143} != microseconds{42});
+    CHECK(etl::chrono::seconds{1} != etl::chrono::seconds{0});
+    CHECK(etl::chrono::milliseconds{42} != etl::chrono::milliseconds{143});
+    CHECK(etl::chrono::microseconds{143} != etl::chrono::microseconds{42});
 
-    CHECK(!(seconds{1} != seconds{1}));
-    CHECK(!(milliseconds{42} != milliseconds{42}));
-    CHECK(!(microseconds{143} != microseconds{143}));
-    CHECK(!(seconds{1} != milliseconds{1'000}));
+    CHECK(!(etl::chrono::seconds{1} != etl::chrono::seconds{1}));
+    CHECK(!(etl::chrono::milliseconds{42} != etl::chrono::milliseconds{42}));
+    CHECK(!(etl::chrono::microseconds{143} != etl::chrono::microseconds{143}));
+    CHECK(!(etl::chrono::seconds{1} != etl::chrono::milliseconds{1'000}));
 
-    CHECK(seconds{0} < seconds{1});
-    CHECK(milliseconds{999} < seconds{1});
-    CHECK(milliseconds{42} < milliseconds{143});
-    CHECK(microseconds{143} < microseconds{1'000});
+    CHECK(etl::chrono::seconds{0} < etl::chrono::seconds{1});
+    CHECK(etl::chrono::milliseconds{999} < etl::chrono::seconds{1});
+    CHECK(etl::chrono::milliseconds{42} < etl::chrono::milliseconds{143});
+    CHECK(etl::chrono::microseconds{143} < etl::chrono::microseconds{1'000});
 
-    CHECK(!(seconds{1} < seconds{1}));
-    CHECK(!(milliseconds{42} < milliseconds{42}));
-    CHECK(!(microseconds{143} < microseconds{143}));
-    CHECK(!(seconds{1} < milliseconds{1'000}));
+    CHECK(!(etl::chrono::seconds{1} < etl::chrono::seconds{1}));
+    CHECK(!(etl::chrono::milliseconds{42} < etl::chrono::milliseconds{42}));
+    CHECK(!(etl::chrono::microseconds{143} < etl::chrono::microseconds{143}));
+    CHECK(!(etl::chrono::seconds{1} < etl::chrono::milliseconds{1'000}));
 
-    CHECK(seconds{0} <= seconds{1});
-    CHECK(milliseconds{999} <= seconds{1});
-    CHECK(milliseconds{1000} <= seconds{1});
-    CHECK(milliseconds{42} <= milliseconds{143});
-    CHECK(microseconds{143} <= microseconds{1'000});
-    CHECK(seconds{1} <= seconds{1});
+    CHECK(etl::chrono::seconds{0} <= etl::chrono::seconds{1});
+    CHECK(etl::chrono::milliseconds{999} <= etl::chrono::seconds{1});
+    CHECK(etl::chrono::milliseconds{1000} <= etl::chrono::seconds{1});
+    CHECK(etl::chrono::milliseconds{42} <= etl::chrono::milliseconds{143});
+    CHECK(etl::chrono::microseconds{143} <= etl::chrono::microseconds{1'000});
+    CHECK(etl::chrono::seconds{1} <= etl::chrono::seconds{1});
 
-    CHECK(!(seconds{0} > seconds{1}));
-    CHECK(!(milliseconds{999} > seconds{1}));
-    CHECK(!(milliseconds{42} > milliseconds{143}));
-    CHECK(!(microseconds{143} > microseconds{1'000}));
+    CHECK(!(etl::chrono::seconds{0} > etl::chrono::seconds{1}));
+    CHECK(!(etl::chrono::milliseconds{999} > etl::chrono::seconds{1}));
+    CHECK(!(etl::chrono::milliseconds{42} > etl::chrono::milliseconds{143}));
+    CHECK(!(etl::chrono::microseconds{143} > etl::chrono::microseconds{1'000}));
 
-    CHECK(milliseconds{1'000} > milliseconds{42});
-    CHECK(microseconds{144} > microseconds{143});
-    CHECK(seconds{1} > milliseconds{999});
+    CHECK(etl::chrono::milliseconds{1'000} > etl::chrono::milliseconds{42});
+    CHECK(etl::chrono::microseconds{144} > etl::chrono::microseconds{143});
+    CHECK(etl::chrono::seconds{1} > etl::chrono::milliseconds{999});
 
-    CHECK(!(seconds{0} >= seconds{1}));
-    CHECK(!(milliseconds{999} >= seconds{1}));
-    CHECK(!(milliseconds{42} >= milliseconds{143}));
-    CHECK(!(microseconds{143} >= microseconds{1'000}));
+    CHECK(!(etl::chrono::seconds{0} >= etl::chrono::seconds{1}));
+    CHECK(!(etl::chrono::milliseconds{999} >= etl::chrono::seconds{1}));
+    CHECK(!(etl::chrono::milliseconds{42} >= etl::chrono::milliseconds{143}));
+    CHECK(!(etl::chrono::microseconds{143} >= etl::chrono::microseconds{1'000}));
 
-    CHECK(milliseconds{1'000} >= milliseconds{42});
-    CHECK(microseconds{144} >= microseconds{143});
-    CHECK(seconds{1} >= milliseconds{1'000});
+    CHECK(etl::chrono::milliseconds{1'000} >= etl::chrono::milliseconds{42});
+    CHECK(etl::chrono::microseconds{144} >= etl::chrono::microseconds{143});
+    CHECK(etl::chrono::seconds{1} >= etl::chrono::milliseconds{1'000});
 
-    CHECK(etl::chrono::abs(minutes{-10}) == minutes{10});
-    CHECK(etl::chrono::abs(minutes{-143}) == minutes{143});
+    CHECK(etl::chrono::abs(etl::chrono::minutes{-10}) == etl::chrono::minutes{10});
+    CHECK(etl::chrono::abs(etl::chrono::minutes{-143}) == etl::chrono::minutes{143});
 
-    using etl::chrono::duration_cast;
-    CHECK(duration_cast<microseconds>(milliseconds{1}).count() == 1'000);
-    CHECK(duration_cast<seconds>(milliseconds{1'000}).count() == 1);
-    CHECK(duration_cast<microseconds>(milliseconds{99}).count() == 99'000);
+    CHECK(etl::chrono::duration_cast<etl::chrono::microseconds>(etl::chrono::milliseconds{1}).count() == 1'000);
+    CHECK(etl::chrono::duration_cast<etl::chrono::seconds>(etl::chrono::milliseconds{1'000}).count() == 1);
+    CHECK(etl::chrono::duration_cast<etl::chrono::microseconds>(etl::chrono::milliseconds{99}).count() == 99'000);
 
     {
         using namespace etl::literals;

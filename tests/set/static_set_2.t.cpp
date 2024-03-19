@@ -72,13 +72,11 @@ auto test() -> bool // NOLINT(readability-function-size)
         auto vCmp = set.value_comp();
 
         // Compare functions hould be equal
-        CHECK((kCmp(T(), T()) == vCmp(T(), T())));
-        CHECK((kCmp(T(1), T(1)) == vCmp(T(1), T(1))));
-        CHECK((kCmp(T(1), T(2)) == vCmp(T(1), T(2))));
-        CHECK((kCmp(T(2), T(1)) == vCmp(T(2), T(1))));
+        CHECK(kCmp(T(), T()) == vCmp(T(), T()));
+        CHECK(kCmp(T(1), T(1)) == vCmp(T(1), T(1)));
+        CHECK(kCmp(T(1), T(2)) == vCmp(T(1), T(2)));
+        CHECK(kCmp(T(2), T(1)) == vCmp(T(2), T(1)));
     }
-
-    using etl::swap;
 
     // "empty"
     {
@@ -87,7 +85,7 @@ auto test() -> bool // NOLINT(readability-function-size)
         CHECK(lhs.empty());
         CHECK(rhs.empty());
 
-        swap(lhs, rhs);
+        etl::swap(lhs, rhs);
         CHECK(lhs.empty());
         CHECK(rhs.empty());
 
@@ -153,7 +151,7 @@ auto test() -> bool // NOLINT(readability-function-size)
         auto data = etl::array{T(1), T(2), T(3), T(4)};
         auto set  = etl::static_set<T, 4>{begin(data), end(data)};
         CHECK(set.lower_bound(T{1}) == set.begin());
-        CHECK((set.upper_bound(T{1}) == etl::next(set.begin(), 1)));
+        CHECK(set.upper_bound(T{1}) == etl::next(set.begin(), 1));
     }
 
     {

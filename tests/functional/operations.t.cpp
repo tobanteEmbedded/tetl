@@ -122,25 +122,23 @@ constexpr auto test_all() -> bool
     CHECK(etl::logical_not<bool>{}(false));
     CHECK(etl::logical_not{}(false));
 
-    using etl::uint8_t;
-
     CHECK(etl::detail::is_transparent<etl::bit_and<>>::value);
-    CHECK(etl::bit_and<uint8_t>{}(0b0000'0101, 0b0000'1001) == 1);
-    CHECK(etl::bit_and<uint8_t>{}(1, 0) == 0);
+    CHECK(etl::bit_and<etl::uint8_t>{}(0b0000'0101, 0b0000'1001) == 1);
+    CHECK(etl::bit_and<etl::uint8_t>{}(1, 0) == 0);
     CHECK(etl::bit_and{}(1, 1) == 1);
 
     CHECK(etl::detail::is_transparent<etl::bit_or<>>::value);
-    CHECK(etl::bit_or<uint8_t>{}(0b0000'0101, 0b0000'1001) == 0b0000'1101);
-    CHECK(etl::bit_or<uint8_t>{}(1, 0) == 1);
+    CHECK(etl::bit_or<etl::uint8_t>{}(0b0000'0101, 0b0000'1001) == 0b0000'1101);
+    CHECK(etl::bit_or<etl::uint8_t>{}(1, 0) == 1);
     CHECK(etl::bit_or{}(1, 1) == 1);
 
     CHECK(etl::detail::is_transparent<etl::bit_xor<>>::value);
-    CHECK(etl::bit_xor<uint8_t>{}(0b0000'0101, 0b0000'1001) == 0b0000'1100);
-    CHECK(etl::bit_xor<uint8_t>{}(1, 0) == 1);
+    CHECK(etl::bit_xor<etl::uint8_t>{}(0b0000'0101, 0b0000'1001) == 0b0000'1100);
+    CHECK(etl::bit_xor<etl::uint8_t>{}(1, 0) == 1);
     CHECK(etl::bit_xor{}(1, 1) == 0);
 
     CHECK(etl::detail::is_transparent<etl::bit_not<>>::value);
-    CHECK(etl::bit_not<uint8_t>{}(0b0000'0101) == 0b1111'1010);
+    CHECK(etl::bit_not<etl::uint8_t>{}(0b0000'0101) == 0b1111'1010);
 
     return true;
 }

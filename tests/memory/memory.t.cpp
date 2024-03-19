@@ -94,7 +94,7 @@ auto test() -> bool
 
     {
         auto foo = T(1);
-        CHECK((etl::assume_aligned<alignof(T), T>(&foo) == &foo));
+        CHECK(etl::assume_aligned<alignof(T), T>(&foo) == &foo);
     }
 
     return true;

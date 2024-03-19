@@ -127,14 +127,14 @@ static auto test_opional_4() -> bool
 
         etl::optional<SX> l{1};
         etl::optional<SX> r{2};
-        CHECK((l.has_value()));
-        CHECK((r.has_value()));
+        CHECK(l.has_value());
+        CHECK(r.has_value());
 
         l.swap(r);
-        CHECK((l.has_value()));
-        CHECK((r.has_value()));
-        CHECK((l.value().data == 2));
-        CHECK((r.value().data == 1));
+        CHECK(l.has_value());
+        CHECK(r.has_value());
+        CHECK(l.value().data == 2);
+        CHECK(r.value().data == 1);
     }
 
     return true;

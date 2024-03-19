@@ -115,13 +115,13 @@ using PointerToCVMemberFunc       = void (VirtualDtor::*)() const volatile;
 #define TEST_IS_TRAIT(trait, type)                                                                                     \
     do {                                                                                                               \
         CHECK(etl::is_base_of_v<etl::true_type, etl::trait<type>>);                                                    \
-        CHECK((etl::trait<type>::value));                                                                              \
-        CHECK((etl::TETL_PP_CONCAT(trait, _v) < type >));                                                              \
+        CHECK(etl::trait<type>::value);                                                                                \
+        CHECK(etl::TETL_PP_CONCAT(trait, _v) < type >);                                                                \
     } while (false)
 
 #define TEST_IS_TRAIT_FALSE(trait, type)                                                                               \
     do {                                                                                                               \
-        CHECK((etl::is_base_of_v<etl::false_type, etl::trait<type>>));                                                 \
+        CHECK(etl::is_base_of_v<etl::false_type, etl::trait<type>>);                                                   \
         CHECK(!(etl::trait<type>::value));                                                                             \
         CHECK(!(etl::TETL_PP_CONCAT(trait, _v) < type >));                                                             \
     } while (false)

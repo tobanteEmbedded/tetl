@@ -8,67 +8,59 @@
 
 constexpr auto test_8bit() -> bool
 {
-    using etl::uint8_t;
+    CHECK_NOEXCEPT(etl::byteswap(etl::uint8_t{0}));
+    CHECK_SAME_TYPE(decltype(etl::byteswap(etl::uint8_t{0})), etl::uint8_t);
 
-    CHECK_NOEXCEPT(etl::byteswap(uint8_t{0}));
-    CHECK_SAME_TYPE(decltype(etl::byteswap(uint8_t{0})), uint8_t);
-
-    CHECK(etl::byteswap(uint8_t{0}) == uint8_t{0});
-    CHECK(etl::byteswap(uint8_t{1}) == uint8_t{1});
-    CHECK(etl::byteswap(uint8_t{2}) == uint8_t{2});
-    CHECK(etl::byteswap(uint8_t{3}) == uint8_t{3});
-    CHECK(etl::byteswap(uint8_t{100}) == uint8_t{100});
-    CHECK(etl::byteswap(uint8_t{255}) == uint8_t{255});
+    CHECK(etl::byteswap(etl::uint8_t{0}) == etl::uint8_t{0});
+    CHECK(etl::byteswap(etl::uint8_t{1}) == etl::uint8_t{1});
+    CHECK(etl::byteswap(etl::uint8_t{2}) == etl::uint8_t{2});
+    CHECK(etl::byteswap(etl::uint8_t{3}) == etl::uint8_t{3});
+    CHECK(etl::byteswap(etl::uint8_t{100}) == etl::uint8_t{100});
+    CHECK(etl::byteswap(etl::uint8_t{255}) == etl::uint8_t{255});
 
     return true;
 }
 
 constexpr auto test_16bit() -> bool
 {
-    using etl::uint16_t;
+    CHECK_NOEXCEPT(etl::byteswap(etl::uint16_t{0}));
+    CHECK_SAME_TYPE(decltype(etl::byteswap(etl::uint16_t{0})), etl::uint16_t);
 
-    CHECK_NOEXCEPT(etl::byteswap(uint16_t{0}));
-    CHECK_SAME_TYPE(decltype(etl::byteswap(uint16_t{0})), uint16_t);
+    CHECK(etl::byteswap(etl::uint16_t{0}) == etl::uint16_t{0});
+    CHECK(etl::byteswap(etl::uint16_t{0x00AA}) == etl::uint16_t{0xAA00});
+    CHECK(etl::byteswap(etl::uint16_t{0xCAFE}) == etl::uint16_t{0xFECA});
 
-    CHECK(etl::byteswap(uint16_t{0}) == uint16_t{0});
-    CHECK(etl::byteswap(uint16_t{0x00AA}) == uint16_t{0xAA00});
-    CHECK(etl::byteswap(uint16_t{0xCAFE}) == uint16_t{0xFECA});
-
-    CHECK(etl::detail::byteswap_fallback(uint16_t{0}) == uint16_t{0});
-    CHECK(etl::detail::byteswap_fallback(uint16_t{0x00AA}) == uint16_t{0xAA00});
-    CHECK(etl::detail::byteswap_fallback(uint16_t{0xCAFE}) == uint16_t{0xFECA});
+    CHECK(etl::detail::byteswap_fallback(etl::uint16_t{0}) == etl::uint16_t{0});
+    CHECK(etl::detail::byteswap_fallback(etl::uint16_t{0x00AA}) == etl::uint16_t{0xAA00});
+    CHECK(etl::detail::byteswap_fallback(etl::uint16_t{0xCAFE}) == etl::uint16_t{0xFECA});
 
     return true;
 }
 
 constexpr auto test_32bit() -> bool
 {
-    using etl::uint32_t;
+    CHECK_NOEXCEPT(etl::byteswap(etl::uint32_t{0}));
+    CHECK_SAME_TYPE(decltype(etl::byteswap(etl::uint32_t{0})), etl::uint32_t);
 
-    CHECK_NOEXCEPT(etl::byteswap(uint32_t{0}));
-    CHECK_SAME_TYPE(decltype(etl::byteswap(uint32_t{0})), uint32_t);
-
-    CHECK(etl::byteswap(uint32_t{0}) == uint32_t{0});
+    CHECK(etl::byteswap(etl::uint32_t{0}) == etl::uint32_t{0});
     CHECK(etl::byteswap(0xDEADBEEFU) == 0xEFBEADDEU);
 
-    CHECK(etl::detail::byteswap_fallback(uint32_t{0}) == uint32_t{0});
-    CHECK(etl::detail::byteswap_fallback(uint32_t{0xDEADBEEFU}) == uint32_t{0xEFBEADDEU});
+    CHECK(etl::detail::byteswap_fallback(etl::uint32_t{0}) == etl::uint32_t{0});
+    CHECK(etl::detail::byteswap_fallback(etl::uint32_t{0xDEADBEEFU}) == etl::uint32_t{0xEFBEADDEU});
 
     return true;
 }
 
 constexpr auto test_64bit() -> bool
 {
-    using etl::uint64_t;
+    CHECK_NOEXCEPT(etl::byteswap(etl::uint64_t{0}));
+    CHECK_SAME_TYPE(decltype(etl::byteswap(etl::uint64_t{0})), etl::uint64_t);
 
-    CHECK_NOEXCEPT(etl::byteswap(uint64_t{0}));
-    CHECK_SAME_TYPE(decltype(etl::byteswap(uint64_t{0})), uint64_t);
-
-    CHECK(etl::byteswap(uint64_t{0}) == uint64_t{0});
+    CHECK(etl::byteswap(etl::uint64_t{0}) == etl::uint64_t{0});
     CHECK(etl::byteswap(0x0123456789ABCDEFULL) == 0xEFCDAB8967452301ULL);
 
-    CHECK(etl::detail::byteswap_fallback(uint64_t{0}) == uint64_t{0});
-    CHECK(etl::detail::byteswap_fallback(uint64_t{0x0123456789ABCDEFULL}) == uint64_t{0xEFCDAB8967452301ULL});
+    CHECK(etl::detail::byteswap_fallback(etl::uint64_t{0}) == etl::uint64_t{0});
+    CHECK(etl::detail::byteswap_fallback(etl::uint64_t{0x0123456789ABCDEFULL}) == etl::uint64_t{0xEFCDAB8967452301ULL});
 
     return true;
 }

@@ -10,7 +10,6 @@
 template <typename T>
 constexpr auto test() -> bool
 {
-    using etl::is_same_v;
 
     // exchange
     {
@@ -38,9 +37,6 @@ constexpr auto test() -> bool
 
     // to_underlying
     {
-        using etl::is_same_v;
-        using etl::to_underlying;
-
         enum c_enum : T {
             foo = 0,
             bar = 1,
@@ -53,16 +49,16 @@ constexpr auto test() -> bool
             baz = 42,
         };
 
-        CHECK(is_same_v<decltype(to_underlying(c_enum::foo)), T>);
-        CHECK(is_same_v<decltype(to_underlying(s_enum::foo)), T>);
+        CHECK_SAME_TYPE(decltype(etl::to_underlying(c_enum::foo)), T);
+        CHECK_SAME_TYPE(decltype(etl::to_underlying(s_enum::foo)), T);
 
-        CHECK(to_underlying(c_enum::foo) == T{0});
-        CHECK(to_underlying(c_enum::bar) == T{1});
-        CHECK(to_underlying(c_enum::baz) == T{42});
+        CHECK(etl::to_underlying(c_enum::foo) == T{0});
+        CHECK(etl::to_underlying(c_enum::bar) == T{1});
+        CHECK(etl::to_underlying(c_enum::baz) == T{42});
 
-        CHECK(to_underlying(s_enum::foo) == T{0});
-        CHECK(to_underlying(s_enum::bar) == T{1});
-        CHECK(to_underlying(s_enum::baz) == T{42});
+        CHECK(etl::to_underlying(s_enum::foo) == T{0});
+        CHECK(etl::to_underlying(s_enum::bar) == T{1});
+        CHECK(etl::to_underlying(s_enum::baz) == T{42});
     }
 
     {

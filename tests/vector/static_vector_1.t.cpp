@@ -10,27 +10,22 @@
 
 #include "testing/testing.hpp"
 
-using etl::all_of;
-using etl::static_vector;
-
 template <typename T>
 constexpr auto test_cx() -> bool
 {
     {
-        using vec_t = static_vector<T, 16>;
-
-        using etl::is_same_v;
-        CHECK(is_same_v<T, typename vec_t::value_type>);
-        CHECK(is_same_v<T&, typename vec_t::reference>);
-        CHECK(is_same_v<T const&, typename vec_t::const_reference>);
-        CHECK(is_same_v<T*, typename vec_t::pointer>);
-        CHECK(is_same_v<T const*, typename vec_t::const_pointer>);
-        CHECK(is_same_v<T*, typename vec_t::iterator>);
-        CHECK(is_same_v<T const*, typename vec_t::const_iterator>);
+        using vec_t = etl::static_vector<T, 16>;
+        CHECK_SAME_TYPE(typename vec_t::value_type, T);
+        CHECK_SAME_TYPE(typename vec_t::reference, T&);
+        CHECK_SAME_TYPE(typename vec_t::const_reference, T const&);
+        CHECK_SAME_TYPE(typename vec_t::pointer, T*);
+        CHECK_SAME_TYPE(typename vec_t::const_pointer, T const*);
+        CHECK_SAME_TYPE(typename vec_t::iterator, T*);
+        CHECK_SAME_TYPE(typename vec_t::const_iterator, T const*);
     }
 
     {
-        using vec_t = static_vector<T, 16>;
+        using vec_t = etl::static_vector<T, 16>;
 
         CHECK(etl::is_trivial_v<T>);
         CHECK(etl::is_default_constructible_v<vec_t>);
@@ -40,14 +35,14 @@ constexpr auto test_cx() -> bool
             ~NonTrivial() { } // NOLINT
         };
 
-        using non_trivial_vec_t = static_vector<NonTrivial, 16>;
+        using non_trivial_vec_t = etl::static_vector<NonTrivial, 16>;
 
         CHECK(!(etl::is_trivial_v<NonTrivial>));
         CHECK(!(etl::is_trivially_destructible_v<non_trivial_vec_t>));
     }
 
     {
-        auto zero = static_vector<T, 0>{};
+        auto zero = etl::static_vector<T, 0>{};
         CHECK(zero.capacity() == zero.max_size());
         CHECK(zero.empty());
         CHECK(zero.size() == 0);
@@ -57,7 +52,7 @@ constexpr auto test_cx() -> bool
     }
 
     {
-        static_vector<T, 16> lhs{};
+        etl::static_vector<T, 16> lhs{};
         CHECK(lhs.empty());
         CHECK(lhs.size() == 0);
         CHECK(!(lhs.full()));
@@ -66,7 +61,7 @@ constexpr auto test_cx() -> bool
         CHECK(etl::cbegin(lhs) == etl::cend(lhs));
         CHECK(etl::begin(etl::as_const(lhs)) == etl::end(etl::as_const(lhs)));
 
-        static_vector<T, 16> rhs{};
+        etl::static_vector<T, 16> rhs{};
         CHECK(rhs.empty());
         CHECK(rhs.size() == 0);
         CHECK(!(rhs.full()));
@@ -79,51 +74,51 @@ constexpr auto test_cx() -> bool
     }
 
     {
-        auto first  = static_vector<T, 4>(4);
-        auto second = static_vector<T, 4>{begin(first), end(first)};
+        auto first  = etl::static_vector<T, 4>(4);
+        auto second = etl::static_vector<T, 4>{begin(first), end(first)};
         CHECK(first == second);
     }
 
     {
-        static_vector<T, 16> vec(8);
+        etl::static_vector<T, 16> vec(8);
         CHECK(vec.size() == 8);
-        CHECK(all_of(begin(vec), end(vec), [](T v) { return v == T(); }));
+        CHECK(etl::all_of(begin(vec), end(vec), [](T v) { return v == T(); }));
     }
 
     {
-        static_vector<T, 16> vec(16, T(42));
+        etl::static_vector<T, 16> vec(16, T(42));
         CHECK(vec.size() == 16);
-        CHECK(all_of(begin(vec), end(vec), [](T v) { return v == T(42); }));
+        CHECK(etl::all_of(begin(vec), end(vec), [](T v) { return v == T(42); }));
     }
 
     {
-        auto first = static_vector<T, 4>(4);
-        static_vector<T, 4> const& second{first};
+        auto first = etl::static_vector<T, 4>(4);
+        etl::static_vector<T, 4> const& second{first};
         CHECK(first == second);
     }
 
     {
-        auto first = static_vector<T, 4>(4);
-        static_vector<T, 4> copy{etl::move(first)};
+        auto first = etl::static_vector<T, 4>(4);
+        etl::static_vector<T, 4> copy{etl::move(first)};
 
         auto cmp = [](auto val) { return val == T(0); };
-        CHECK(all_of(begin(copy), end(copy), cmp));
+        CHECK(etl::all_of(begin(copy), end(copy), cmp));
     }
 
     {
-        auto first = static_vector<T, 4>(4);
-        static_vector<T, 4> copy{};
+        auto first = etl::static_vector<T, 4>(4);
+        etl::static_vector<T, 4> copy{};
         copy = first;
         CHECK(first == copy);
     }
 
     {
-        auto first = static_vector<T, 4>(4);
-        static_vector<T, 4> copy{};
+        auto first = etl::static_vector<T, 4>(4);
+        etl::static_vector<T, 4> copy{};
         copy = etl::move(first);
 
         auto cmp = [](auto val) { return val == T(0); };
-        CHECK(all_of(begin(copy), end(copy), cmp));
+        CHECK(etl::all_of(begin(copy), end(copy), cmp));
     }
 
     {
@@ -140,7 +135,6 @@ constexpr auto test_cx() -> bool
     }
 
     {
-        using etl::all_of;
 
         auto vec = etl::static_vector<T, 4>{};
         CHECK(vec.size() == 0);
@@ -148,17 +142,17 @@ constexpr auto test_cx() -> bool
         // grow
         vec.resize(etl::size_t{2});
         CHECK(vec.size() == 2);
-        CHECK(all_of(begin(vec), end(vec), [](auto x) { return x == T(); }));
+        CHECK(etl::all_of(begin(vec), end(vec), [](auto x) { return x == T(); }));
 
         // grow full capacity
         vec.resize(etl::size_t{4});
         CHECK(vec.size() == 4);
-        CHECK(all_of(begin(vec), end(vec), [](auto x) { return x == T(); }));
+        CHECK(etl::all_of(begin(vec), end(vec), [](auto x) { return x == T(); }));
 
         // same size
         vec.resize(etl::size_t{4});
         CHECK(vec.size() == 4);
-        CHECK(all_of(begin(vec), end(vec), [](auto x) { return x == T(); }));
+        CHECK(etl::all_of(begin(vec), end(vec), [](auto x) { return x == T(); }));
 
         // shrink
         vec.resize(etl::size_t{2});
@@ -166,25 +160,22 @@ constexpr auto test_cx() -> bool
     }
 
     {
-        using etl::all_of;
-        using etl::as_const;
-
         auto a = etl::static_vector<T, 4>{};
         a.assign(4, T{42});
         CHECK(a.size() == 4);
         CHECK(a.front() == 42);
         CHECK(a.back() == 42);
-        CHECK(as_const(a).size() == 4);
-        CHECK(as_const(a).front() == 42);
-        CHECK(as_const(a).back() == 42);
-        CHECK(all_of(begin(a), end(a), [](auto val) { return val == T(42); }));
+        CHECK(etl::as_const(a).size() == 4);
+        CHECK(etl::as_const(a).front() == 42);
+        CHECK(etl::as_const(a).back() == 42);
+        CHECK(etl::all_of(begin(a), end(a), [](auto val) { return val == T(42); }));
 
         auto b = etl::static_vector<T, 4>{4};
         b.assign(a.begin(), a.end());
         CHECK(b.size() == 4);
         CHECK(b.front() == 42);
         CHECK(b.back() == 42);
-        CHECK(all_of(begin(b), end(b), [](auto val) { return val == T(42); }));
+        CHECK(etl::all_of(begin(b), end(b), [](auto val) { return val == T(42); }));
     }
 
     {

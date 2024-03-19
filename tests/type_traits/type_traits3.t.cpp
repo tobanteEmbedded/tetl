@@ -55,30 +55,24 @@ constexpr auto test() -> bool
     CHECK(!(etl::is_constructible_v<Foo<T>, T, struct S>));
 
     {
-        using etl::conjunction_v;
-        using etl::is_same;
+        CHECK(etl::conjunction_v<etl::true_type>);
+        CHECK(etl::conjunction_v<etl::true_type, etl::true_type>);
+        CHECK(!(etl::conjunction_v<etl::false_type>));
 
-        CHECK(conjunction_v<etl::true_type>);
-        CHECK(conjunction_v<etl::true_type, etl::true_type>);
-        CHECK(!(conjunction_v<etl::false_type>));
-
-        CHECK(conjunction_v<is_same<T, T>, is_same<T const, T const>>);
-        CHECK(!(conjunction_v<is_same<T, T>, etl::false_type>));
+        CHECK(etl::conjunction_v<etl::is_same<T, T>, etl::is_same<T const, T const>>);
+        CHECK(!(etl::conjunction_v<etl::is_same<T, T>, etl::false_type>));
     }
 
     {
-        using etl::disjunction_v;
-        using etl::is_same;
+        CHECK(!(etl::disjunction_v<etl::false_type>));
+        CHECK(!(etl::disjunction_v<etl::false_type, etl::false_type>));
 
-        CHECK(!(disjunction_v<etl::false_type>));
-        CHECK(!(disjunction_v<etl::false_type, etl::false_type>));
+        CHECK(etl::disjunction_v<etl::true_type>);
+        CHECK(etl::disjunction_v<etl::true_type, etl::true_type>);
+        CHECK(etl::disjunction_v<etl::true_type, etl::false_type>);
 
-        CHECK(disjunction_v<etl::true_type>);
-        CHECK(disjunction_v<etl::true_type, etl::true_type>);
-        CHECK(disjunction_v<etl::true_type, etl::false_type>);
-
-        CHECK(disjunction_v<is_same<T, T>, is_same<T const, T const>>);
-        CHECK(disjunction_v<is_same<T, T>, etl::false_type>);
+        CHECK(etl::disjunction_v<etl::is_same<T, T>, etl::is_same<T const, T const>>);
+        CHECK(etl::disjunction_v<etl::is_same<T, T>, etl::false_type>);
     }
 
     TEST_TRAIT_VALUE(negation, etl::true_type, false);
@@ -87,10 +81,8 @@ constexpr auto test() -> bool
     CHECK(etl::is_swappable_with_v<T&, T&>);
 
     {
-        using etl::is_trivially_copyable_v;
-
-        CHECK(is_trivially_copyable_v<T>);
-        CHECK(is_trivially_copyable_v<T*>);
+        CHECK(etl::is_trivially_copyable_v<T>);
+        CHECK(etl::is_trivially_copyable_v<T*>);
 
         struct TCA { // NOLINT
             int m;

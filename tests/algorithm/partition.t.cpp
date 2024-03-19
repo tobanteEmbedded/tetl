@@ -22,7 +22,6 @@ constexpr auto test() -> bool
         CHECK(arr[3] == 4);
     }
 
-    using etl::all_of;
     // empty range
     {
         auto src    = etl::static_vector<T, 5>{};
@@ -47,9 +46,9 @@ constexpr auto test() -> bool
         etl::partition_copy(begin(src), end(src), trueIt, falseIt, predicate);
 
         CHECK(dTrue.size() == 4);
-        CHECK(all_of(begin(dTrue), end(dTrue), [](auto v) { return v < 10; }));
+        CHECK(etl::all_of(begin(dTrue), end(dTrue), [](auto v) { return v < 10; }));
         CHECK(dFalse.size() == 3);
-        CHECK((all_of(begin(dFalse), end(dFalse), [](auto v) { return v >= 10; })));
+        CHECK(etl::all_of(begin(dFalse), end(dFalse), [](auto v) { return v >= 10; }));
     }
 
     // empty range

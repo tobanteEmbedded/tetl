@@ -12,8 +12,6 @@
 template <typename T>
 constexpr auto test() -> bool
 {
-    using etl::all_of;
-
     // c array
     {
         T source[4] = {};
@@ -37,12 +35,9 @@ constexpr auto test() -> bool
 
     // c array
     {
-        using etl::begin;
-        using etl::end;
-
         T t[4] = {};
-        etl::fill_n(begin(t), 4, T{42});
-        CHECK(all_of(begin(t), end(t), [](auto v) { return v == T(42); }));
+        etl::fill_n(etl::begin(t), 4, T{42});
+        CHECK(etl::all_of(etl::begin(t), etl::end(t), [](auto v) { return v == T(42); }));
     }
 
     // etl::array
@@ -52,7 +47,7 @@ constexpr auto test() -> bool
 
         auto t1 = etl::array<T, 4>{};
         CHECK(etl::fill_n(begin(t1), 4, T{42}) == end(t1));
-        CHECK(all_of(begin(t1), end(t1), [](auto v) { return v == T(42); }));
+        CHECK(etl::all_of(begin(t1), end(t1), [](auto v) { return v == T(42); }));
 
         auto tc2   = etl::array<T, 4>{};
         auto* res2 = etl::fill_n(begin(tc2), 2, T{42});

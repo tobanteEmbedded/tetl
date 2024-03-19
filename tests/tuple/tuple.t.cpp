@@ -35,22 +35,18 @@ constexpr auto test() -> bool
     }
 
     {
-        using etl::is_same_v;
-        using etl::tuple;
-        using etl::tuple_element_t;
+        CHECK_SAME_TYPE(etl::tuple_element_t<0, etl::tuple<T, float>>, T);
+        CHECK_SAME_TYPE(etl::tuple_element_t<1, etl::tuple<T, float>>, float);
 
-        CHECK(is_same_v<tuple_element_t<0, tuple<T, float>>, T>);
-        CHECK(is_same_v<tuple_element_t<1, tuple<T, float>>, float>);
+        CHECK_SAME_TYPE(etl::tuple_element_t<0, etl::tuple<T, int>>, T);
+        CHECK_SAME_TYPE(etl::tuple_element_t<1, etl::tuple<T, int>>, int);
 
-        CHECK(is_same_v<tuple_element_t<0, tuple<T, int>>, T>);
-        CHECK(is_same_v<tuple_element_t<1, tuple<T, int>>, int>);
+        CHECK_SAME_TYPE(etl::tuple_element_t<0, etl::tuple<double, T>>, double);
+        CHECK_SAME_TYPE(etl::tuple_element_t<1, etl::tuple<double, T>>, T);
 
-        CHECK(is_same_v<tuple_element_t<0, tuple<double, T>>, double>);
-        CHECK(is_same_v<tuple_element_t<1, tuple<double, T>>, T>);
-
-        CHECK(is_same_v<tuple_element_t<0, tuple<int, T, float>>, int>);
-        CHECK(is_same_v<tuple_element_t<1, tuple<int, T, float>>, T>);
-        CHECK(is_same_v<tuple_element_t<2, tuple<int, T, float>>, float>);
+        CHECK_SAME_TYPE(etl::tuple_element_t<0, etl::tuple<int, T, float>>, int);
+        CHECK_SAME_TYPE(etl::tuple_element_t<1, etl::tuple<int, T, float>>, T);
+        CHECK_SAME_TYPE(etl::tuple_element_t<2, etl::tuple<int, T, float>>, float);
     }
 
     {
@@ -70,37 +66,30 @@ constexpr auto test() -> bool
     }
 
     {
-        using etl::make_from_tuple;
-        using etl::make_tuple;
-
-        auto foo = make_from_tuple<Foo<T>>(make_tuple(T{1}, 1.0F, true));
+        auto foo = etl::make_from_tuple<Foo<T>>(etl::make_tuple(T{1}, 1.0F, true));
         CHECK(foo.f == T{1});
         CHECK(foo.s == 1.0F);
         CHECK(foo.t);
     }
 
     {
-        using etl::is_same_v;
-        using etl::tuple;
-        using etl::tuple_element_t;
+        CHECK_SAME_TYPE(etl::tuple_element_t<0, etl::tuple<T, float>>, T);
+        CHECK_SAME_TYPE(etl::tuple_element_t<1, etl::tuple<T, float>>, float);
 
-        CHECK(is_same_v<tuple_element_t<0, tuple<T, float>>, T>);
-        CHECK(is_same_v<tuple_element_t<1, tuple<T, float>>, float>);
+        CHECK_SAME_TYPE(etl::tuple_element_t<0, etl::tuple<T, int>>, T);
+        CHECK_SAME_TYPE(etl::tuple_element_t<1, etl::tuple<T, int>>, int);
 
-        CHECK(is_same_v<tuple_element_t<0, tuple<T, int>>, T>);
-        CHECK(is_same_v<tuple_element_t<1, tuple<T, int>>, int>);
+        CHECK_SAME_TYPE(etl::tuple_element_t<0, etl::tuple<double, T>>, double);
+        CHECK_SAME_TYPE(etl::tuple_element_t<1, etl::tuple<double, T>>, T);
 
-        CHECK(is_same_v<tuple_element_t<0, tuple<double, T>>, double>);
-        CHECK(is_same_v<tuple_element_t<1, tuple<double, T>>, T>);
+        CHECK_SAME_TYPE(etl::tuple_element_t<0, etl::tuple<int, T, float>>, int);
+        CHECK_SAME_TYPE(etl::tuple_element_t<1, etl::tuple<int, T, float>>, T);
+        CHECK_SAME_TYPE(etl::tuple_element_t<2, etl::tuple<int, T, float>>, float);
 
-        CHECK(is_same_v<tuple_element_t<0, tuple<int, T, float>>, int>);
-        CHECK(is_same_v<tuple_element_t<1, tuple<int, T, float>>, T>);
-        CHECK(is_same_v<tuple_element_t<2, tuple<int, T, float>>, float>);
-
-        CHECK(etl::tuple_size_v<tuple<short>> == 1);
-        CHECK(etl::tuple_size_v<tuple<short, float>> == 2);
-        CHECK(etl::tuple_size_v<tuple<short, float, T>> == 3);
-        CHECK(etl::tuple_size_v<tuple<short, float, T, int>> == 4);
+        CHECK(etl::tuple_size_v<etl::tuple<short>> == 1);
+        CHECK(etl::tuple_size_v<etl::tuple<short, float>> == 2);
+        CHECK(etl::tuple_size_v<etl::tuple<short, float, T>> == 3);
+        CHECK(etl::tuple_size_v<etl::tuple<short, float, T, int>> == 4);
 
         auto t = etl::tuple<int, char>{1, 'a'};
         auto b = etl::tuple<int, char>{2, 'b'};

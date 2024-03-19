@@ -10,8 +10,6 @@
 
 #include "testing/testing.hpp"
 
-using etl::static_vector;
-
 namespace {
 template <typename T>
 struct Vertex {

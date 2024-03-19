@@ -10,7 +10,6 @@
 #include "testing/testing.hpp"
 
 using namespace etl::literals;
-using etl::string_view;
 
 constexpr auto test_str() -> bool
 {
@@ -41,11 +40,11 @@ constexpr auto test_str() -> bool
 
         // NOLINTNEXTLINE(clang-analyzer-security.insecureAPI.strcpy)
         etl::strcat(str, str2);
-        CHECK(string_view{str} == "Hello World!"_sv);
+        CHECK(etl::string_view{str} == "Hello World!"_sv);
 
         // NOLINTNEXTLINE(clang-analyzer-security.insecureAPI.strcpy)
         etl::strcat(str, " Goodbye World!");
-        CHECK(string_view{str} == "Hello World! Goodbye World!"_sv);
+        CHECK(etl::string_view{str} == "Hello World! Goodbye World!"_sv);
     }
 
     // "cstring: strncat"
@@ -55,9 +54,9 @@ constexpr auto test_str() -> bool
 
         // NOLINTNEXTLINE(clang-analyzer-security.insecureAPI.strcpy)
         etl::strcat(str, str2);
-        CHECK(string_view{str} == "Hello World!"_sv);
+        CHECK(etl::string_view{str} == "Hello World!"_sv);
         etl::strncat(str, " Goodbye World!", 3);
-        CHECK(string_view{str} == "Hello World! Go"_sv);
+        CHECK(etl::string_view{str} == "Hello World! Go"_sv);
     }
 
     // "cstring: strncmp"

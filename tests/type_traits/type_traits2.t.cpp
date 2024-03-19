@@ -90,7 +90,6 @@ struct IsAbstract_D : IsAbstract_C {
 
 constexpr auto test_all() -> bool
 {
-    using etl::make_signed_t;
     TEST_TRAIT_TYPE(make_signed, etl::int8_t, etl::int8_t);
     TEST_TRAIT_TYPE(make_signed, etl::int16_t, etl::int16_t);
     TEST_TRAIT_TYPE(make_signed, etl::int32_t, etl::int32_t);

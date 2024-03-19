@@ -14,17 +14,15 @@
 template <typename T>
 constexpr auto test() -> bool
 {
-    using etl::transform;
-
     etl::array<T, 4> a{T(2), T(2), T(2), T(2)};
     auto func = [](auto v) { return static_cast<T>(v * 2); };
-    transform(begin(a), end(a), begin(a), func);
-    CHECK((etl::all_of(begin(a), end(a), [](auto v) { return v == 4; })));
+    etl::transform(begin(a), end(a), begin(a), func);
+    CHECK(etl::all_of(begin(a), end(a), [](auto v) { return v == 4; }));
 
     etl::static_string<32> str("hello");
     etl::static_vector<T, 8> vec{};
     auto const identity = [](auto c) -> T { return static_cast<T>(c); };
-    transform(begin(str), end(str), etl::back_inserter(vec), identity);
+    etl::transform(begin(str), end(str), etl::back_inserter(vec), identity);
 
     CHECK(vec[0] == static_cast<T>('h'));
     CHECK(vec[1] == static_cast<T>('e'));
@@ -32,7 +30,7 @@ constexpr auto test() -> bool
     CHECK(vec[3] == static_cast<T>('l'));
     CHECK(vec[4] == static_cast<T>('o'));
 
-    transform(cbegin(vec), cend(vec), cbegin(vec), begin(vec), etl::plus<T>{});
+    etl::transform(cbegin(vec), cend(vec), cbegin(vec), begin(vec), etl::plus<T>{});
 
     CHECK(vec[0] == static_cast<T>('h' * 2));
     CHECK(vec[1] == static_cast<T>('e' * 2));

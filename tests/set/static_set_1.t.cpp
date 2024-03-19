@@ -17,16 +17,15 @@ template <typename T>
 auto test() -> bool // NOLINT(readability-function-size)
 {
     {
-        using etl::is_same_v;
         using set_t = etl::static_set<T, 16>;
 
-        CHECK(is_same_v<T, typename set_t::value_type>);
-        CHECK(is_same_v<T&, typename set_t::reference>);
-        CHECK(is_same_v<T const&, typename set_t::const_reference>);
-        CHECK(is_same_v<T*, typename set_t::pointer>);
-        CHECK(is_same_v<T const*, typename set_t::const_pointer>);
-        CHECK(is_same_v<T*, typename set_t::iterator>);
-        CHECK(is_same_v<T const*, typename set_t::const_iterator>);
+        CHECK_SAME_TYPE(typename set_t::value_type, T);
+        CHECK_SAME_TYPE(typename set_t::reference, T&);
+        CHECK_SAME_TYPE(typename set_t::const_reference, T const&);
+        CHECK_SAME_TYPE(typename set_t::pointer, T*);
+        CHECK_SAME_TYPE(typename set_t::const_pointer, T const*);
+        CHECK_SAME_TYPE(typename set_t::iterator, T*);
+        CHECK_SAME_TYPE(typename set_t::const_iterator, T const*);
     }
 
     {

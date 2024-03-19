@@ -11,18 +11,10 @@
 template <typename T>
 constexpr auto test() -> bool
 {
-    using etl::adjacent_difference;
-    using etl::array;
-    using etl::begin;
-    using etl::end;
-    using etl::next;
-    using etl::plus;
-    using etl::prev;
-
     // "cppreference.com example"
     {
         etl::array a{T(2), T(4), T(6)};
-        adjacent_difference(a.begin(), a.end(), a.begin());
+        etl::adjacent_difference(a.begin(), a.end(), a.begin());
         CHECK(a[0] == 2);
         CHECK(a[1] == 2);
         CHECK(a[2] == 2);
@@ -31,7 +23,7 @@ constexpr auto test() -> bool
     // "cppreference.com example fibonacci"
     {
         etl::array<T, 4> a{T(1)};
-        adjacent_difference(begin(a), prev(end(a)), next(begin(a)), plus<T>{});
+        etl::adjacent_difference(a.begin(), etl::prev(a.end()), etl::next(a.begin()), etl::plus<T>{});
         CHECK(a[0] == 1);
         CHECK(a[1] == 1);
         CHECK(a[2] == 2);

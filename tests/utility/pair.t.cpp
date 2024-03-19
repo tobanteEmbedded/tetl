@@ -37,13 +37,11 @@ constexpr auto test() -> bool
     etl::ignore_unused(etl::pair<T, DummyStringView>(T(0), DummyStringView()));
     etl::ignore_unused(etl::pair<T, DummyStringView>(T(0), DummyStringView()));
 
-    using etl::is_same_v;
-
     // mutable
     {
         auto p = etl::pair<T, int>{};
-        CHECK(is_same_v<T, decltype(p.first)>);
-        CHECK(is_same_v<int, decltype(p.second)>);
+        CHECK_SAME_TYPE(T, decltype(p.first));
+        CHECK_SAME_TYPE(int, decltype(p.second));
         CHECK(p.first == T{});
         CHECK(p.second == int{});
         CHECK(etl::as_const(p).first == T{});
@@ -53,28 +51,28 @@ constexpr auto test() -> bool
     // same type twice
     {
         auto p = etl::pair<T, T>{};
-        CHECK(is_same_v<T, decltype(p.first)>);
-        CHECK(is_same_v<T, decltype(p.second)>);
+        CHECK_SAME_TYPE(T, decltype(p.first));
+        CHECK_SAME_TYPE(T, decltype(p.second));
         CHECK(p.first == T{});
         CHECK(p.second == T{});
     }
 
     {
         auto p1 = etl::pair{T{0}, 143.0F};
-        CHECK(is_same_v<T, decltype(p1.first)>);
-        CHECK(is_same_v<float, decltype(p1.second)>);
+        CHECK_SAME_TYPE(T, decltype(p1.first));
+        CHECK_SAME_TYPE(float, decltype(p1.second));
         CHECK(p1.first == 0);
         CHECK(p1.second == 143.0);
 
         auto p2 = etl::pair{1.2, T{42}};
-        CHECK(is_same_v<double, decltype(p2.first)>);
-        CHECK(is_same_v<T, decltype(p2.second)>);
+        CHECK_SAME_TYPE(double, decltype(p2.first));
+        CHECK_SAME_TYPE(T, decltype(p2.second));
         CHECK(p2.first == 1.2);
         CHECK(p2.second == T{42});
 
         auto p3 = etl::pair{T{2}, T{42}};
-        CHECK(is_same_v<T, decltype(p3.first)>);
-        CHECK(is_same_v<T, decltype(p3.second)>);
+        CHECK_SAME_TYPE(T, decltype(p3.first));
+        CHECK_SAME_TYPE(T, decltype(p3.second));
         CHECK(p3.first == T{2});
         CHECK(p3.second == T{42});
     }
@@ -84,8 +82,8 @@ constexpr auto test() -> bool
         auto p = etl::make_pair(T{0}, 143.0F);
         auto other{p};
 
-        CHECK(is_same_v<decltype(other.first), decltype(p.first)>);
-        CHECK(is_same_v<decltype(other.second), decltype(p.second)>);
+        CHECK_SAME_TYPE(decltype(other.first), decltype(p.first));
+        CHECK_SAME_TYPE(decltype(other.second), decltype(p.second));
 
         CHECK(other.first == p.first);
         CHECK(other.second == p.second);
@@ -96,8 +94,8 @@ constexpr auto test() -> bool
         auto p     = etl::make_pair(T{0}, 143.0F);
         auto other = etl::pair<T, double>{p};
 
-        CHECK(is_same_v<decltype(other.first), decltype(p.first)>);
-        CHECK(!(is_same_v<decltype(other.second), decltype(p.second)>));
+        CHECK_SAME_TYPE(decltype(other.first), decltype(p.first));
+        CHECK(!(etl::is_same_v<decltype(other.second), decltype(p.second)>));
 
         CHECK(other.first == p.first);
         CHECK(other.second == p.second);
@@ -108,8 +106,8 @@ constexpr auto test() -> bool
         auto p = etl::make_pair(T{0}, 143.0F);
         auto other{etl::move(p)};
 
-        CHECK(is_same_v<decltype(other.first), decltype(p.first)>);
-        CHECK(is_same_v<decltype(other.second), decltype(p.second)>);
+        CHECK_SAME_TYPE(decltype(other.first), decltype(p.first));
+        CHECK_SAME_TYPE(decltype(other.second), decltype(p.second));
 
         CHECK(other.first == p.first);
         CHECK(other.second == p.second);
@@ -120,8 +118,8 @@ constexpr auto test() -> bool
         auto p     = etl::make_pair(T{0}, 143.0F);
         auto other = etl::pair<T, double>{etl::move(p)};
 
-        CHECK(is_same_v<decltype(other.first), decltype(p.first)>);
-        CHECK(!(is_same_v<decltype(other.second), decltype(p.second)>));
+        CHECK_SAME_TYPE(decltype(other.first), decltype(p.first));
+        CHECK(!(etl::is_same_v<decltype(other.second), decltype(p.second)>));
 
         CHECK(other.first == p.first);
         CHECK(other.second == p.second);
@@ -141,8 +139,8 @@ constexpr auto test() -> bool
         auto other = etl::pair<T, double>{};
         other      = p;
 
-        CHECK(is_same_v<decltype(other.first), decltype(p.first)>);
-        CHECK(!(is_same_v<decltype(other.second), decltype(p.second)>));
+        CHECK_SAME_TYPE(decltype(other.first), decltype(p.first));
+        CHECK(!(etl::is_same_v<decltype(other.second), decltype(p.second)>));
 
         CHECK(other.first == p.first);
         CHECK(other.second == static_cast<float>(p.second));
@@ -162,8 +160,8 @@ constexpr auto test() -> bool
         auto p     = etl::make_pair(T{0}, 143.0F);
         other      = etl::move(p);
 
-        CHECK(is_same_v<decltype(other.first), decltype(p.first)>);
-        CHECK(!(is_same_v<decltype(other.second), decltype(p.second)>));
+        CHECK_SAME_TYPE(decltype(other.first), decltype(p.first));
+        CHECK(!(etl::is_same_v<decltype(other.second), decltype(p.second)>));
 
         CHECK(other.first == p.first);
         CHECK(other.second == static_cast<float>(p.second));
@@ -174,21 +172,20 @@ constexpr auto test() -> bool
         T b[3]{};
         etl::pair p{a, b}; // explicit deduction guide is used in this case
 
-        CHECK(is_same_v<T*, decltype(p.first)>);
-        CHECK(is_same_v<T*, decltype(p.second)>);
+        CHECK_SAME_TYPE(T*, decltype(p.first));
+        CHECK_SAME_TYPE(T*, decltype(p.second));
     }
 
     {
         auto p = etl::make_pair(T{0}, 143.0F);
-        CHECK(is_same_v<T, decltype(p.first)>);
-        CHECK(is_same_v<float, decltype(p.second)>);
+        CHECK_SAME_TYPE(T, decltype(p.first));
+        CHECK_SAME_TYPE(float, decltype(p.second));
 
         CHECK(p.first == 0);
         CHECK(p.second == 143.0);
     }
 
     using pair_type = etl::pair<T, int>;
-    using etl::swap;
 
     // empty
     {
@@ -197,7 +194,7 @@ constexpr auto test() -> bool
         CHECK(lhs.first == T());
         CHECK(lhs == rhs);
 
-        swap(lhs, rhs);
+        etl::swap(lhs, rhs);
         CHECK(lhs.first == T());
         CHECK(lhs == rhs);
     }
@@ -300,65 +297,60 @@ constexpr auto test() -> bool
     }
 
     {
-        using etl::tuple_element_t;
         auto p = etl::pair<T, float>{T{42}, 143.0F};
-        CHECK(is_same_v<T, tuple_element_t<0, decltype(p)>>);
-        CHECK(is_same_v<float, tuple_element_t<1, decltype(p)>>);
+        CHECK_SAME_TYPE(etl::tuple_element_t<0, decltype(p)>, T);
+        CHECK_SAME_TYPE(etl::tuple_element_t<1, decltype(p)>, float);
     }
 
     {
-        using etl::pair;
-
         // mutable lvalue ref
         {
-            auto p = pair<T, float>{T{42}, 143.0F};
+            auto p = etl::pair<T, float>{T{42}, 143.0F};
 
             auto& first = etl::get<0>(p);
-            CHECK(is_same_v<decltype(first), T&>);
+            CHECK_SAME_TYPE(decltype(first), T&);
             CHECK(first == T{42});
 
             auto& second = etl::get<1>(p);
-            CHECK(is_same_v<decltype(second), float&>);
+            CHECK_SAME_TYPE(decltype(second), float&);
             CHECK(second == 143.0F);
         }
 
         // const lvalue ref
         {
-            auto const p = pair<T, float>{T{42}, 143.0F};
+            auto const p = etl::pair<T, float>{T{42}, 143.0F};
 
             auto& first = etl::get<0>(p);
-            CHECK(is_same_v<decltype(first), T const&>);
+            CHECK_SAME_TYPE(decltype(first), T const&);
             CHECK(first == T{42});
 
             auto& second = etl::get<1>(p);
-            CHECK(is_same_v<decltype(second), float const&>);
+            CHECK_SAME_TYPE(decltype(second), float const&);
             CHECK(second == 143.0F);
         }
 
         // mutable rvalue ref
         {
-            CHECK(is_same_v<decltype(etl::get<0>(pair{T{42}, 143.0F})), T&&>);
-            CHECK(is_same_v<decltype(etl::get<1>(pair{T{42}, 143.0F})), float&&>);
+            CHECK_SAME_TYPE(decltype(etl::get<0>(etl::pair{T{42}, 143.0F})), T&&);
+            CHECK_SAME_TYPE(decltype(etl::get<1>(etl::pair{T{42}, 143.0F})), float&&);
         }
     }
 
     {
-        using etl::is_same_v;
-
         auto seq0 = etl::make_integer_sequence<T, 0>{};
-        CHECK(is_same_v<T, typename decltype(seq0)::value_type>);
+        CHECK_SAME_TYPE(T, typename decltype(seq0)::value_type);
         CHECK(seq0.size() == 0);
 
         auto seq1 = etl::make_integer_sequence<T, 1>{};
-        CHECK(is_same_v<T, typename decltype(seq1)::value_type>);
+        CHECK_SAME_TYPE(T, typename decltype(seq1)::value_type);
         CHECK(seq1.size() == 1);
 
         auto seq2 = etl::make_integer_sequence<T, 2>{};
-        CHECK(is_same_v<T, typename decltype(seq2)::value_type>);
+        CHECK_SAME_TYPE(T, typename decltype(seq2)::value_type);
         CHECK(seq2.size() == 2);
 
         auto seqIdx = etl::make_index_sequence<10>{};
-        CHECK(is_same_v<etl::size_t, typename decltype(seqIdx)::value_type>);
+        CHECK_SAME_TYPE(etl::size_t, typename decltype(seqIdx)::value_type);
         CHECK(seqIdx.size() == 10);
     }
 

@@ -13,14 +13,11 @@
 template <typename T>
 constexpr auto test() -> bool
 {
-    using etl::back_inserter;
-    using etl::set_difference;
-
     // empty ranges
     auto e1 = etl::static_vector<T, 4>{};
     auto e2 = etl::static_vector<T, 4>{};
     auto d1 = etl::array<T, 4>{};
-    set_difference(begin(e1), end(e1), begin(e2), end(e2), begin(d1));
+    etl::set_difference(begin(e1), end(e1), begin(e2), end(e2), begin(d1));
     CHECK(e1.empty());
     CHECK(e2.empty());
     CHECK(d1[0] == T{0});
@@ -29,7 +26,7 @@ constexpr auto test() -> bool
     auto const v1 = etl::array{T(1), T(2), T(5), T(5), T(5), T(9)};
     auto const v2 = etl::array{T(2), T(5), T(7)};
     auto d2       = etl::static_vector<T, 4>{};
-    set_difference(begin(v1), end(v1), begin(v2), end(v2), back_inserter(d2));
+    etl::set_difference(begin(v1), end(v1), begin(v2), end(v2), etl::back_inserter(d2));
     CHECK(d2[0] == T{1});
     CHECK(d2[1] == T{5});
     CHECK(d2[2] == T{5});
@@ -41,12 +38,12 @@ constexpr auto test() -> bool
     etl::array<T, 3> newOrders{T(2), T(5), T(7)};
     etl::static_vector<T, 2> cutOrders{};
 
-    set_difference(
+    etl::set_difference(
         oldOrders.begin(),
         oldOrders.end(),
         newOrders.begin(),
         newOrders.end(),
-        back_inserter(cutOrders),
+        etl::back_inserter(cutOrders),
         etl::less{}
     );
 
