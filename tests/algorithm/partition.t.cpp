@@ -16,10 +16,10 @@ constexpr auto test() -> bool
     {
         auto arr = etl::array{T(11), T(1), T(12), T(13), T(2), T(3), T(4)};
         etl::partition(begin(arr), end(arr), [](auto n) { return n < 10; });
-        assert(arr[0] == 1);
-        assert(arr[1] == 2);
-        assert(arr[2] == 3);
-        assert(arr[3] == 4);
+        CHECK(arr[0] == 1);
+        CHECK(arr[1] == 2);
+        CHECK(arr[2] == 3);
+        CHECK(arr[3] == 4);
     }
 
     using etl::all_of;
@@ -31,8 +31,8 @@ constexpr auto test() -> bool
         auto pred   = [](auto n) { return n < 10; };
 
         auto res = etl::partition_copy(begin(src), end(src), begin(dTrue), begin(dFalse), pred);
-        assert(res.first == begin(dTrue));
-        assert(res.second == begin(dFalse));
+        CHECK(res.first == begin(dTrue));
+        CHECK(res.second == begin(dFalse));
     }
 
     // range
@@ -46,10 +46,10 @@ constexpr auto test() -> bool
         auto trueIt  = etl::back_inserter(dTrue);
         etl::partition_copy(begin(src), end(src), trueIt, falseIt, predicate);
 
-        assert(dTrue.size() == 4);
-        assert(all_of(begin(dTrue), end(dTrue), [](auto v) { return v < 10; }));
-        assert(dFalse.size() == 3);
-        assert((all_of(begin(dFalse), end(dFalse), [](auto v) { return v >= 10; })));
+        CHECK(dTrue.size() == 4);
+        CHECK(all_of(begin(dTrue), end(dTrue), [](auto v) { return v < 10; }));
+        CHECK(dFalse.size() == 3);
+        CHECK((all_of(begin(dFalse), end(dFalse), [](auto v) { return v >= 10; })));
     }
 
     // empty range
@@ -57,7 +57,7 @@ constexpr auto test() -> bool
         auto data = etl::static_vector<T, 5>{};
         auto pred = [](auto v) { return v < 10; };
         auto* res = etl::partition_point(begin(data), end(data), pred);
-        assert(res == end(data));
+        CHECK(res == end(data));
     }
 
     // range
@@ -65,21 +65,21 @@ constexpr auto test() -> bool
         auto data = etl::array{T(1), T(2), T(10), T(11)};
         auto pred = [](auto v) { return v < 10; };
         auto* res = etl::partition_point(begin(data), end(data), pred);
-        assert(res != end(data));
-        assert(*res == T(10));
+        CHECK(res != end(data));
+        CHECK(*res == T(10));
     }
 
     {
         auto arr = etl::array{T(11), T(1), T(12), T(13), T(2), T(3), T(4)};
 
         etl::stable_partition(begin(arr), end(arr), [](auto n) { return n < 10; });
-        assert(arr[0] == 1);
-        assert(arr[1] == 2);
-        assert(arr[2] == 3);
-        assert(arr[3] == 4);
-        assert(arr[4] == 11);
-        assert(arr[5] == 12);
-        assert(arr[6] == 13);
+        CHECK(arr[0] == 1);
+        CHECK(arr[1] == 2);
+        CHECK(arr[2] == 3);
+        CHECK(arr[3] == 4);
+        CHECK(arr[4] == 11);
+        CHECK(arr[5] == 12);
+        CHECK(arr[6] == 13);
     }
 
     return true;
@@ -87,23 +87,23 @@ constexpr auto test() -> bool
 
 constexpr auto test_all() -> bool
 {
-    assert(test<etl::uint8_t>());
-    assert(test<etl::int8_t>());
-    assert(test<etl::uint16_t>());
-    assert(test<etl::int16_t>());
-    assert(test<etl::uint32_t>());
-    assert(test<etl::int32_t>());
-    assert(test<etl::uint64_t>());
-    assert(test<etl::int64_t>());
-    assert(test<float>());
-    assert(test<double>());
+    CHECK(test<etl::uint8_t>());
+    CHECK(test<etl::int8_t>());
+    CHECK(test<etl::uint16_t>());
+    CHECK(test<etl::int16_t>());
+    CHECK(test<etl::uint32_t>());
+    CHECK(test<etl::int32_t>());
+    CHECK(test<etl::uint64_t>());
+    CHECK(test<etl::int64_t>());
+    CHECK(test<float>());
+    CHECK(test<double>());
 
     return true;
 }
 
 auto main() -> int
 {
-    assert(test_all());
+    CHECK(test_all());
 
     // TODO: Fix
     // static_assert(test_all());

@@ -15,8 +15,8 @@ constexpr auto test_uniform_real_distribution() -> bool
 
     for (auto i{0}; i < 1000; ++i) {
         auto const x = dist(urng);
-        assert(x >= minimum);
-        assert(x < maximum);
+        CHECK(x >= minimum);
+        CHECK(x < maximum);
     }
 
     return true;
@@ -24,20 +24,20 @@ constexpr auto test_uniform_real_distribution() -> bool
 
 constexpr auto test() -> bool
 {
-    assert(test_uniform_real_distribution<etl::xorshift32, float>());
-    assert(test_uniform_real_distribution<etl::xoshiro128plus, float>());
-    assert(test_uniform_real_distribution<etl::xoshiro128plusplus, float>());
-    assert(test_uniform_real_distribution<etl::xoshiro128starstar, float>());
+    CHECK(test_uniform_real_distribution<etl::xorshift32, float>());
+    CHECK(test_uniform_real_distribution<etl::xoshiro128plus, float>());
+    CHECK(test_uniform_real_distribution<etl::xoshiro128plusplus, float>());
+    CHECK(test_uniform_real_distribution<etl::xoshiro128starstar, float>());
 
 #if not defined(TETL_WORKAROUND_AVR_BROKEN_TESTS)
-    assert(test_uniform_real_distribution<etl::xorshift64, double>());
+    CHECK(test_uniform_real_distribution<etl::xorshift64, double>());
 #endif
     return true;
 }
 
 auto main() -> int
 {
-    assert(test());
+    CHECK(test());
     static_assert(test());
     return 0;
 }

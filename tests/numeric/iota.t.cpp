@@ -14,36 +14,36 @@ constexpr auto test() -> bool
     {
         auto data = etl::array<T, 4>{};
         etl::iota(begin(data), end(data), T{0});
-        assert(data[0] == 0);
-        assert(data[1] == 1);
-        assert(data[2] == 2);
-        assert(data[3] == 3);
+        CHECK(data[0] == 0);
+        CHECK(data[1] == 1);
+        CHECK(data[2] == 2);
+        CHECK(data[3] == 3);
     }
 
     // from 42
     {
         auto data = etl::array<T, 4>{};
         etl::iota(begin(data), end(data), T{42});
-        assert(data[0] == 42);
-        assert(data[1] == 43);
-        assert(data[2] == 44);
-        assert(data[3] == 45);
+        CHECK(data[0] == 42);
+        CHECK(data[1] == 43);
+        CHECK(data[2] == 44);
+        CHECK(data[3] == 45);
     }
     return true;
 }
 
 constexpr auto test_all() -> bool
 {
-    assert(test<etl::int8_t>());
-    assert(test<etl::int16_t>());
-    assert(test<etl::int32_t>());
-    assert(test<etl::int64_t>());
-    assert(test<etl::uint8_t>());
-    assert(test<etl::uint16_t>());
-    assert(test<etl::uint32_t>());
-    assert(test<etl::uint64_t>());
-    assert(test<float>());
-    assert(test<double>());
+    CHECK(test<etl::int8_t>());
+    CHECK(test<etl::int16_t>());
+    CHECK(test<etl::int32_t>());
+    CHECK(test<etl::int64_t>());
+    CHECK(test<etl::uint8_t>());
+    CHECK(test<etl::uint16_t>());
+    CHECK(test<etl::uint32_t>());
+    CHECK(test<etl::uint64_t>());
+    CHECK(test<float>());
+    CHECK(test<double>());
 
     return true;
 }

@@ -12,28 +12,28 @@
 template <typename T>
 constexpr auto test() -> bool
 {
-    assert(etl::same_as<etl::iter_value_t<typename etl::array<T, 2>::iterator>, T>);
-    assert(etl::same_as<etl::iter_value_t<typename etl::array<T, 2>::const_iterator>, T>);
-    assert(etl::same_as<etl::iter_value_t<typename etl::array<T, 2>::const_iterator>, T>);
+    CHECK(etl::same_as<etl::iter_value_t<typename etl::array<T, 2>::iterator>, T>);
+    CHECK(etl::same_as<etl::iter_value_t<typename etl::array<T, 2>::const_iterator>, T>);
+    CHECK(etl::same_as<etl::iter_value_t<typename etl::array<T, 2>::const_iterator>, T>);
 
-    assert(etl::same_as<etl::iter_difference_t<typename etl::array<T, 2>::iterator>, etl::ptrdiff_t>);
-    assert(etl::same_as<etl::iter_difference_t<typename etl::array<T, 2>::const_iterator>, etl::ptrdiff_t>);
-    assert(etl::same_as<etl::iter_difference_t<typename etl::array<T, 2>::const_iterator>, etl::ptrdiff_t>);
+    CHECK(etl::same_as<etl::iter_difference_t<typename etl::array<T, 2>::iterator>, etl::ptrdiff_t>);
+    CHECK(etl::same_as<etl::iter_difference_t<typename etl::array<T, 2>::const_iterator>, etl::ptrdiff_t>);
+    CHECK(etl::same_as<etl::iter_difference_t<typename etl::array<T, 2>::const_iterator>, etl::ptrdiff_t>);
     return true;
 }
 
 constexpr auto test_all() -> bool
 {
-    assert(test<etl::int8_t>());
-    assert(test<etl::int16_t>());
-    assert(test<etl::int32_t>());
-    assert(test<etl::int64_t>());
-    assert(test<etl::uint8_t>());
-    assert(test<etl::uint16_t>());
-    assert(test<etl::uint32_t>());
-    assert(test<etl::uint64_t>());
-    assert(test<float>());
-    assert(test<double>());
+    CHECK(test<etl::int8_t>());
+    CHECK(test<etl::int16_t>());
+    CHECK(test<etl::int32_t>());
+    CHECK(test<etl::int64_t>());
+    CHECK(test<etl::uint8_t>());
+    CHECK(test<etl::uint16_t>());
+    CHECK(test<etl::uint32_t>());
+    CHECK(test<etl::uint64_t>());
+    CHECK(test<float>());
+    CHECK(test<double>());
     return true;
 }
 

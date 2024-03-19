@@ -18,27 +18,27 @@ constexpr auto test() -> bool
 
     // for_each
     etl::for_each(vec.begin(), vec.end(), incrementCounter);
-    assert(counter == 4);
+    CHECK(counter == 4);
 
     // for_each_n
     counter = 0;
     etl::for_each_n(vec.begin(), 2, incrementCounter);
-    assert(counter == 2);
+    CHECK(counter == 2);
     return true;
 }
 
 constexpr auto test_all() -> bool
 {
-    assert(test<etl::uint8_t>());
-    assert(test<etl::int8_t>());
-    assert(test<etl::uint16_t>());
-    assert(test<etl::int16_t>());
-    assert(test<etl::uint32_t>());
-    assert(test<etl::int32_t>());
-    assert(test<etl::uint64_t>());
-    assert(test<etl::int64_t>());
-    assert(test<float>());
-    assert(test<double>());
+    CHECK(test<etl::uint8_t>());
+    CHECK(test<etl::int8_t>());
+    CHECK(test<etl::uint16_t>());
+    CHECK(test<etl::int16_t>());
+    CHECK(test<etl::uint32_t>());
+    CHECK(test<etl::int32_t>());
+    CHECK(test<etl::uint64_t>());
+    CHECK(test<etl::int64_t>());
+    CHECK(test<float>());
+    CHECK(test<double>());
 
     return true;
 }

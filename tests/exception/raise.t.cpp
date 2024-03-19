@@ -11,9 +11,9 @@ auto main() -> int
 #if defined(__cpp_exceptions)
     try {
         etl::raise<etl::exception>("should fail");
-        assert(false);
+        CHECK(false);
     } catch (etl::exception const& e) {
-        assert(e.what() == etl::string_view{"should fail"});
+        CHECK(e.what() == etl::string_view{"should fail"});
     }
 #endif
     return 0;

@@ -15,8 +15,8 @@ constexpr auto test_uniform_int_distribution() -> bool
 
     for (auto i{0}; i < 1000; ++i) {
         auto const x = dist(urng);
-        assert(x >= minimum);
-        assert(x <= maximum);
+        CHECK(x >= minimum);
+        CHECK(x <= maximum);
     }
 
     return true;
@@ -24,39 +24,39 @@ constexpr auto test_uniform_int_distribution() -> bool
 
 constexpr auto test() -> bool
 {
-    assert(test_uniform_int_distribution<etl::xorshift32, short>());
-    assert(test_uniform_int_distribution<etl::xorshift32, int>());
-    assert(test_uniform_int_distribution<etl::xorshift32, long>());
-    assert(test_uniform_int_distribution<etl::xorshift32, long long>());
-    assert(test_uniform_int_distribution<etl::xorshift32, unsigned short>());
-    assert(test_uniform_int_distribution<etl::xorshift32, unsigned int>());
-    assert(test_uniform_int_distribution<etl::xorshift32, unsigned long>());
-    assert(test_uniform_int_distribution<etl::xorshift32, unsigned long long>());
+    CHECK(test_uniform_int_distribution<etl::xorshift32, short>());
+    CHECK(test_uniform_int_distribution<etl::xorshift32, int>());
+    CHECK(test_uniform_int_distribution<etl::xorshift32, long>());
+    CHECK(test_uniform_int_distribution<etl::xorshift32, long long>());
+    CHECK(test_uniform_int_distribution<etl::xorshift32, unsigned short>());
+    CHECK(test_uniform_int_distribution<etl::xorshift32, unsigned int>());
+    CHECK(test_uniform_int_distribution<etl::xorshift32, unsigned long>());
+    CHECK(test_uniform_int_distribution<etl::xorshift32, unsigned long long>());
 
-    assert(test_uniform_int_distribution<etl::xorshift64, short>());
-    assert(test_uniform_int_distribution<etl::xorshift64, int>());
-    assert(test_uniform_int_distribution<etl::xorshift64, long>());
-    assert(test_uniform_int_distribution<etl::xorshift64, long long>());
-    assert(test_uniform_int_distribution<etl::xorshift64, unsigned short>());
-    assert(test_uniform_int_distribution<etl::xorshift64, unsigned int>());
-    assert(test_uniform_int_distribution<etl::xorshift64, unsigned long>());
-    assert(test_uniform_int_distribution<etl::xorshift64, unsigned long long>());
+    CHECK(test_uniform_int_distribution<etl::xorshift64, short>());
+    CHECK(test_uniform_int_distribution<etl::xorshift64, int>());
+    CHECK(test_uniform_int_distribution<etl::xorshift64, long>());
+    CHECK(test_uniform_int_distribution<etl::xorshift64, long long>());
+    CHECK(test_uniform_int_distribution<etl::xorshift64, unsigned short>());
+    CHECK(test_uniform_int_distribution<etl::xorshift64, unsigned int>());
+    CHECK(test_uniform_int_distribution<etl::xorshift64, unsigned long>());
+    CHECK(test_uniform_int_distribution<etl::xorshift64, unsigned long long>());
 
-    assert(test_uniform_int_distribution<etl::xoshiro128plusplus, short>());
-    assert(test_uniform_int_distribution<etl::xoshiro128plusplus, int>());
-    assert(test_uniform_int_distribution<etl::xoshiro128plusplus, long>());
-    assert(test_uniform_int_distribution<etl::xoshiro128plusplus, long long>());
-    assert(test_uniform_int_distribution<etl::xoshiro128plusplus, unsigned short>());
-    assert(test_uniform_int_distribution<etl::xoshiro128plusplus, unsigned int>());
-    assert(test_uniform_int_distribution<etl::xoshiro128plusplus, unsigned long>());
-    assert(test_uniform_int_distribution<etl::xoshiro128plusplus, unsigned long long>());
+    CHECK(test_uniform_int_distribution<etl::xoshiro128plusplus, short>());
+    CHECK(test_uniform_int_distribution<etl::xoshiro128plusplus, int>());
+    CHECK(test_uniform_int_distribution<etl::xoshiro128plusplus, long>());
+    CHECK(test_uniform_int_distribution<etl::xoshiro128plusplus, long long>());
+    CHECK(test_uniform_int_distribution<etl::xoshiro128plusplus, unsigned short>());
+    CHECK(test_uniform_int_distribution<etl::xoshiro128plusplus, unsigned int>());
+    CHECK(test_uniform_int_distribution<etl::xoshiro128plusplus, unsigned long>());
+    CHECK(test_uniform_int_distribution<etl::xoshiro128plusplus, unsigned long long>());
 
     return true;
 }
 
 auto main() -> int
 {
-    assert(test());
+    CHECK(test());
     static_assert(test());
     return 0;
 }

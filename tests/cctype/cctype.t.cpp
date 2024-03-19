@@ -7,26 +7,26 @@
 constexpr auto test_isalnum() -> bool
 {
     for (auto ch = 'a'; ch <= 'z'; ++ch) {
-        assert(etl::isalnum(ch));
+        CHECK(etl::isalnum(ch));
     }
     for (auto ch = 'A'; ch <= 'Z'; ++ch) {
-        assert(etl::isalnum(ch));
+        CHECK(etl::isalnum(ch));
     }
     for (auto ch = '0'; ch <= '9'; ++ch) {
-        assert(etl::isalnum(ch));
+        CHECK(etl::isalnum(ch));
     }
 
     for (auto ch = '!'; ch <= '/'; ++ch) {
-        assert(!etl::isalnum(ch));
+        CHECK(!etl::isalnum(ch));
     }
     for (auto ch = ':'; ch <= '@'; ++ch) {
-        assert(!etl::isalnum(ch));
+        CHECK(!etl::isalnum(ch));
     }
     for (auto ch = '['; ch <= '`'; ++ch) {
-        assert(!etl::isalnum(ch));
+        CHECK(!etl::isalnum(ch));
     }
     for (auto ch = '{'; ch <= '~'; ++ch) {
-        assert(!etl::isalnum(ch));
+        CHECK(!etl::isalnum(ch));
     }
 
     return true;
@@ -35,26 +35,26 @@ constexpr auto test_isalnum() -> bool
 constexpr auto test_isalpha() -> bool
 {
     for (auto ch = 'a'; ch <= 'z'; ++ch) {
-        assert(etl::isalpha(ch));
+        CHECK(etl::isalpha(ch));
     }
     for (auto ch = 'A'; ch <= 'Z'; ++ch) {
-        assert(etl::isalpha(ch));
+        CHECK(etl::isalpha(ch));
     }
 
     for (auto ch = '0'; ch <= '9'; ++ch) {
-        assert(!etl::isalpha(ch));
+        CHECK(!etl::isalpha(ch));
     }
     for (auto ch = '!'; ch <= '/'; ++ch) {
-        assert(!etl::isalpha(ch));
+        CHECK(!etl::isalpha(ch));
     }
     for (auto ch = ':'; ch <= '@'; ++ch) {
-        assert(!etl::isalpha(ch));
+        CHECK(!etl::isalpha(ch));
     }
     for (auto ch = '['; ch <= '`'; ++ch) {
-        assert(!etl::isalpha(ch));
+        CHECK(!etl::isalpha(ch));
     }
     for (auto ch = '{'; ch <= '~'; ++ch) {
-        assert(!etl::isalpha(ch));
+        CHECK(!etl::isalpha(ch));
     }
     return true;
 }
@@ -62,26 +62,26 @@ constexpr auto test_isalpha() -> bool
 constexpr auto test_islower() -> bool
 {
     for (auto ch = 'a'; ch <= 'z'; ++ch) {
-        assert(etl::islower(ch));
+        CHECK(etl::islower(ch));
     }
 
     for (auto ch = 'A'; ch <= 'Z'; ++ch) {
-        assert(!etl::islower(ch));
+        CHECK(!etl::islower(ch));
     }
     for (auto ch = '0'; ch <= '9'; ++ch) {
-        assert(!etl::islower(ch));
+        CHECK(!etl::islower(ch));
     }
     for (auto ch = '!'; ch <= '/'; ++ch) {
-        assert(!etl::islower(ch));
+        CHECK(!etl::islower(ch));
     }
     for (auto ch = ':'; ch <= '@'; ++ch) {
-        assert(!etl::islower(ch));
+        CHECK(!etl::islower(ch));
     }
     for (auto ch = '['; ch <= '`'; ++ch) {
-        assert(!etl::islower(ch));
+        CHECK(!etl::islower(ch));
     }
     for (auto ch = '{'; ch <= '~'; ++ch) {
-        assert(!etl::islower(ch));
+        CHECK(!etl::islower(ch));
     }
     return true;
 }
@@ -89,26 +89,26 @@ constexpr auto test_islower() -> bool
 constexpr auto test_isupper() -> bool
 {
     for (auto ch = 'A'; ch <= 'Z'; ++ch) {
-        assert(etl::isupper(ch));
+        CHECK(etl::isupper(ch));
     }
 
     for (auto ch = 'a'; ch <= 'z'; ++ch) {
-        assert(!etl::isupper(ch));
+        CHECK(!etl::isupper(ch));
     }
     for (auto ch = '0'; ch <= '9'; ++ch) {
-        assert(!etl::isupper(ch));
+        CHECK(!etl::isupper(ch));
     }
     for (auto ch = '!'; ch <= '/'; ++ch) {
-        assert(!etl::isupper(ch));
+        CHECK(!etl::isupper(ch));
     }
     for (auto ch = ':'; ch <= '@'; ++ch) {
-        assert(!etl::isupper(ch));
+        CHECK(!etl::isupper(ch));
     }
     for (auto ch = '['; ch <= '`'; ++ch) {
-        assert(!etl::isupper(ch));
+        CHECK(!etl::isupper(ch));
     }
     for (auto ch = '{'; ch <= '~'; ++ch) {
-        assert(!etl::isupper(ch));
+        CHECK(!etl::isupper(ch));
     }
     return true;
 }
@@ -116,26 +116,26 @@ constexpr auto test_isupper() -> bool
 constexpr auto test_isdigit() -> bool
 {
     for (auto ch = '0'; ch <= '9'; ++ch) {
-        assert(etl::isdigit(ch));
+        CHECK(etl::isdigit(ch));
     }
 
     for (auto ch = 'A'; ch <= 'Z'; ++ch) {
-        assert(!etl::isdigit(ch));
+        CHECK(!etl::isdigit(ch));
     }
     for (auto ch = 'a'; ch <= 'z'; ++ch) {
-        assert(!etl::isdigit(ch));
+        CHECK(!etl::isdigit(ch));
     }
     for (auto ch = '!'; ch <= '/'; ++ch) {
-        assert(!etl::isdigit(ch));
+        CHECK(!etl::isdigit(ch));
     }
     for (auto ch = ':'; ch <= '@'; ++ch) {
-        assert(!etl::isdigit(ch));
+        CHECK(!etl::isdigit(ch));
     }
     for (auto ch = '['; ch <= '`'; ++ch) {
-        assert(!etl::isdigit(ch));
+        CHECK(!etl::isdigit(ch));
     }
     for (auto ch = '{'; ch <= '~'; ++ch) {
-        assert(!etl::isdigit(ch));
+        CHECK(!etl::isdigit(ch));
     }
     return true;
 }
@@ -143,100 +143,100 @@ constexpr auto test_isdigit() -> bool
 constexpr auto test_isxdigit() -> bool
 {
     for (auto ch = '0'; ch <= '9'; ++ch) {
-        assert(etl::isxdigit(ch));
+        CHECK(etl::isxdigit(ch));
     }
     for (auto ch = 'A'; ch <= 'F'; ++ch) {
-        assert(etl::isxdigit(ch));
+        CHECK(etl::isxdigit(ch));
     }
     for (auto ch = 'a'; ch <= 'f'; ++ch) {
-        assert(etl::isxdigit(ch));
+        CHECK(etl::isxdigit(ch));
     }
 
     for (auto ch = 'G'; ch <= 'Z'; ++ch) {
-        assert(!etl::isxdigit(ch));
+        CHECK(!etl::isxdigit(ch));
     }
     for (auto ch = 'g'; ch <= 'z'; ++ch) {
-        assert(!etl::isxdigit(ch));
+        CHECK(!etl::isxdigit(ch));
     }
     for (auto ch = '!'; ch <= '/'; ++ch) {
-        assert(!etl::isxdigit(ch));
+        CHECK(!etl::isxdigit(ch));
     }
     for (auto ch = ':'; ch <= '@'; ++ch) {
-        assert(!etl::isxdigit(ch));
+        CHECK(!etl::isxdigit(ch));
     }
     for (auto ch = '['; ch <= '`'; ++ch) {
-        assert(!etl::isxdigit(ch));
+        CHECK(!etl::isxdigit(ch));
     }
     for (auto ch = '{'; ch <= '~'; ++ch) {
-        assert(!etl::isxdigit(ch));
+        CHECK(!etl::isxdigit(ch));
     }
     return true;
 }
 
 constexpr auto test_isspace() -> bool
 {
-    assert(etl::isspace(' '));
-    assert(etl::isspace('\f'));
-    assert(etl::isspace('\n'));
-    assert(etl::isspace('\r'));
-    assert(etl::isspace('\t'));
-    assert(etl::isspace('\v'));
+    CHECK(etl::isspace(' '));
+    CHECK(etl::isspace('\f'));
+    CHECK(etl::isspace('\n'));
+    CHECK(etl::isspace('\r'));
+    CHECK(etl::isspace('\t'));
+    CHECK(etl::isspace('\v'));
 
     for (auto ch = '0'; ch <= '9'; ++ch) {
-        assert(!etl::isspace(ch));
+        CHECK(!etl::isspace(ch));
     }
     for (auto ch = 'a'; ch <= 'z'; ++ch) {
-        assert(!etl::isspace(ch));
+        CHECK(!etl::isspace(ch));
     }
     for (auto ch = 'A'; ch <= 'Z'; ++ch) {
-        assert(!etl::isspace(ch));
+        CHECK(!etl::isspace(ch));
     }
     for (auto ch = '!'; ch <= '/'; ++ch) {
-        assert(!etl::isspace(ch));
+        CHECK(!etl::isspace(ch));
     }
     for (auto ch = ':'; ch <= '@'; ++ch) {
-        assert(!etl::isspace(ch));
+        CHECK(!etl::isspace(ch));
     }
     for (auto ch = '['; ch <= '`'; ++ch) {
-        assert(!etl::isspace(ch));
+        CHECK(!etl::isspace(ch));
     }
     for (auto ch = '{'; ch <= '~'; ++ch) {
-        assert(!etl::isspace(ch));
+        CHECK(!etl::isspace(ch));
     }
     return true;
 }
 
 constexpr auto test_isblank() -> bool
 {
-    assert(etl::isblank(' '));
-    assert(etl::isblank('\t'));
+    CHECK(etl::isblank(' '));
+    CHECK(etl::isblank('\t'));
 
-    assert(!etl::isblank('\f'));
-    assert(!etl::isblank('\n'));
-    assert(!etl::isblank('\r'));
-    assert(!etl::isblank('\v'));
+    CHECK(!etl::isblank('\f'));
+    CHECK(!etl::isblank('\n'));
+    CHECK(!etl::isblank('\r'));
+    CHECK(!etl::isblank('\v'));
 
     for (auto ch = '0'; ch <= '9'; ++ch) {
-        assert(!etl::isblank(ch));
+        CHECK(!etl::isblank(ch));
     }
     for (auto ch = 'a'; ch <= 'z'; ++ch) {
-        assert(!etl::isblank(ch));
+        CHECK(!etl::isblank(ch));
     }
     for (auto ch = 'A'; ch <= 'Z'; ++ch) {
-        assert(!etl::isblank(ch));
+        CHECK(!etl::isblank(ch));
     }
 
     for (auto ch = '!'; ch <= '/'; ++ch) {
-        assert(!etl::isblank(ch));
+        CHECK(!etl::isblank(ch));
     }
     for (auto ch = ':'; ch <= '@'; ++ch) {
-        assert(!etl::isblank(ch));
+        CHECK(!etl::isblank(ch));
     }
     for (auto ch = '['; ch <= '`'; ++ch) {
-        assert(!etl::isblank(ch));
+        CHECK(!etl::isblank(ch));
     }
     for (auto ch = '{'; ch <= '~'; ++ch) {
-        assert(!etl::isblank(ch));
+        CHECK(!etl::isblank(ch));
     }
     return true;
 }
@@ -244,26 +244,26 @@ constexpr auto test_isblank() -> bool
 constexpr auto test_ispunct() -> bool
 {
     for (auto ch = '!'; ch <= '/'; ++ch) {
-        assert(etl::ispunct(ch));
+        CHECK(etl::ispunct(ch));
     }
     for (auto ch = ':'; ch <= '@'; ++ch) {
-        assert(etl::ispunct(ch));
+        CHECK(etl::ispunct(ch));
     }
     for (auto ch = '['; ch <= '`'; ++ch) {
-        assert(etl::ispunct(ch));
+        CHECK(etl::ispunct(ch));
     }
     for (auto ch = '{'; ch <= '~'; ++ch) {
-        assert(etl::ispunct(ch));
+        CHECK(etl::ispunct(ch));
     }
 
     for (auto ch = '0'; ch <= '9'; ++ch) {
-        assert(!etl::ispunct(ch));
+        CHECK(!etl::ispunct(ch));
     }
     for (auto ch = 'a'; ch <= 'z'; ++ch) {
-        assert(!etl::ispunct(ch));
+        CHECK(!etl::ispunct(ch));
     }
     for (auto ch = 'A'; ch <= 'Z'; ++ch) {
-        assert(!etl::ispunct(ch));
+        CHECK(!etl::ispunct(ch));
     }
     return true;
 }
@@ -271,99 +271,99 @@ constexpr auto test_ispunct() -> bool
 constexpr auto test_isgraph() -> bool
 {
     for (auto ch = '!'; ch <= '/'; ++ch) {
-        assert(etl::isgraph(ch));
+        CHECK(etl::isgraph(ch));
     }
     for (auto ch = ':'; ch <= '@'; ++ch) {
-        assert(etl::isgraph(ch));
+        CHECK(etl::isgraph(ch));
     }
     for (auto ch = '['; ch <= '`'; ++ch) {
-        assert(etl::isgraph(ch));
+        CHECK(etl::isgraph(ch));
     }
     for (auto ch = '{'; ch <= '~'; ++ch) {
-        assert(etl::isgraph(ch));
+        CHECK(etl::isgraph(ch));
     }
 
     for (auto ch = '0'; ch <= '9'; ++ch) {
-        assert(etl::isgraph(ch));
+        CHECK(etl::isgraph(ch));
     }
     for (auto ch = 'a'; ch <= 'z'; ++ch) {
-        assert(etl::isgraph(ch));
+        CHECK(etl::isgraph(ch));
     }
     for (auto ch = 'A'; ch <= 'Z'; ++ch) {
-        assert(etl::isgraph(ch));
+        CHECK(etl::isgraph(ch));
     }
 
-    assert(!etl::isgraph(' '));
-    assert(!etl::isgraph('\n'));
-    assert(!etl::isgraph('\f'));
-    assert(!etl::isgraph('\t'));
-    assert(!etl::isgraph('\v'));
+    CHECK(!etl::isgraph(' '));
+    CHECK(!etl::isgraph('\n'));
+    CHECK(!etl::isgraph('\f'));
+    CHECK(!etl::isgraph('\t'));
+    CHECK(!etl::isgraph('\v'));
     return true;
 }
 
 constexpr auto test_isprint() -> bool
 {
-    assert(etl::isprint(' '));
+    CHECK(etl::isprint(' '));
 
     for (auto ch = '!'; ch <= '/'; ++ch) {
-        assert(etl::isprint(ch));
+        CHECK(etl::isprint(ch));
     }
     for (auto ch = ':'; ch <= '@'; ++ch) {
-        assert(etl::isprint(ch));
+        CHECK(etl::isprint(ch));
     }
     for (auto ch = '['; ch <= '`'; ++ch) {
-        assert(etl::isprint(ch));
+        CHECK(etl::isprint(ch));
     }
     for (auto ch = '{'; ch <= '~'; ++ch) {
-        assert(etl::isprint(ch));
+        CHECK(etl::isprint(ch));
     }
 
     for (auto ch = '0'; ch <= '9'; ++ch) {
-        assert(etl::isprint(ch));
+        CHECK(etl::isprint(ch));
     }
     for (auto ch = 'a'; ch <= 'z'; ++ch) {
-        assert(etl::isprint(ch));
+        CHECK(etl::isprint(ch));
     }
     for (auto ch = 'A'; ch <= 'Z'; ++ch) {
-        assert(etl::isprint(ch));
+        CHECK(etl::isprint(ch));
     }
 
-    assert(!etl::isprint('\n'));
-    assert(!etl::isprint('\f'));
-    assert(!etl::isprint('\t'));
-    assert(!etl::isprint('\v'));
+    CHECK(!etl::isprint('\n'));
+    CHECK(!etl::isprint('\f'));
+    CHECK(!etl::isprint('\t'));
+    CHECK(!etl::isprint('\v'));
 
     return true;
 }
 
 constexpr auto test_iscntrl() -> bool
 {
-    assert(etl::iscntrl(0x7F));
+    CHECK(etl::iscntrl(0x7F));
     for (auto ch = 0x00; ch <= 0x1F; ++ch) {
-        assert(etl::iscntrl(ch));
+        CHECK(etl::iscntrl(ch));
     }
 
     for (auto ch = '!'; ch <= '/'; ++ch) {
-        assert(!etl::iscntrl(ch));
+        CHECK(!etl::iscntrl(ch));
     }
     for (auto ch = ':'; ch <= '@'; ++ch) {
-        assert(!etl::iscntrl(ch));
+        CHECK(!etl::iscntrl(ch));
     }
     for (auto ch = '['; ch <= '`'; ++ch) {
-        assert(!etl::iscntrl(ch));
+        CHECK(!etl::iscntrl(ch));
     }
     for (auto ch = '{'; ch <= '~'; ++ch) {
-        assert(!etl::iscntrl(ch));
+        CHECK(!etl::iscntrl(ch));
     }
 
     for (auto ch = '0'; ch <= '9'; ++ch) {
-        assert(!etl::iscntrl(ch));
+        CHECK(!etl::iscntrl(ch));
     }
     for (auto ch = 'a'; ch <= 'z'; ++ch) {
-        assert(!etl::iscntrl(ch));
+        CHECK(!etl::iscntrl(ch));
     }
     for (auto ch = 'A'; ch <= 'Z'; ++ch) {
-        assert(!etl::iscntrl(ch));
+        CHECK(!etl::iscntrl(ch));
     }
 
     return true;
@@ -371,19 +371,19 @@ constexpr auto test_iscntrl() -> bool
 
 constexpr auto test_tolower() -> bool
 {
-    assert(static_cast<char>(etl::tolower('a')) == 'a');
-    assert(static_cast<char>(etl::tolower('A')) == 'a');
+    CHECK(static_cast<char>(etl::tolower('a')) == 'a');
+    CHECK(static_cast<char>(etl::tolower('A')) == 'a');
 
     for (auto ch = '0'; ch <= '9'; ++ch) {
-        assert(static_cast<char>(etl::tolower(ch)) == ch);
+        CHECK(static_cast<char>(etl::tolower(ch)) == ch);
     }
 
     for (auto ch = 'a'; ch <= 'z'; ++ch) {
-        assert(static_cast<char>(etl::tolower(ch)) == ch);
+        CHECK(static_cast<char>(etl::tolower(ch)) == ch);
     }
 
     for (auto ch = 'A'; ch <= 'Z'; ++ch) {
-        assert(static_cast<char>(etl::tolower(ch)) == ch + 32);
+        CHECK(static_cast<char>(etl::tolower(ch)) == ch + 32);
     }
 
     return true;
@@ -391,19 +391,19 @@ constexpr auto test_tolower() -> bool
 
 constexpr auto test_toupper() -> bool
 {
-    assert(static_cast<char>(etl::toupper('a')) == 'A');
-    assert(static_cast<char>(etl::toupper('A')) == 'A');
+    CHECK(static_cast<char>(etl::toupper('a')) == 'A');
+    CHECK(static_cast<char>(etl::toupper('A')) == 'A');
 
     for (auto ch = '0'; ch <= '9'; ++ch) {
-        assert(static_cast<char>(etl::toupper(ch)) == ch);
+        CHECK(static_cast<char>(etl::toupper(ch)) == ch);
     }
 
     for (auto ch = 'A'; ch <= 'Z'; ++ch) {
-        assert(static_cast<char>(etl::toupper(ch)) == ch);
+        CHECK(static_cast<char>(etl::toupper(ch)) == ch);
     }
 
     for (auto ch = 'a'; ch <= 'z'; ++ch) {
-        assert(static_cast<char>(etl::toupper(ch)) == ch - 32);
+        CHECK(static_cast<char>(etl::toupper(ch)) == ch - 32);
     }
 
     return true;
@@ -411,20 +411,20 @@ constexpr auto test_toupper() -> bool
 
 auto main() -> int
 {
-    assert(test_isalnum());
-    assert(test_isalpha());
-    assert(test_islower());
-    assert(test_isupper());
-    assert(test_isdigit());
-    assert(test_isxdigit());
-    assert(test_isspace());
-    assert(test_isblank());
-    assert(test_ispunct());
-    assert(test_isgraph());
-    assert(test_isprint());
-    assert(test_iscntrl());
-    assert(test_tolower());
-    assert(test_toupper());
+    CHECK(test_isalnum());
+    CHECK(test_isalpha());
+    CHECK(test_islower());
+    CHECK(test_isupper());
+    CHECK(test_isdigit());
+    CHECK(test_isxdigit());
+    CHECK(test_isspace());
+    CHECK(test_isblank());
+    CHECK(test_ispunct());
+    CHECK(test_isgraph());
+    CHECK(test_isprint());
+    CHECK(test_iscntrl());
+    CHECK(test_tolower());
+    CHECK(test_toupper());
 
     static_assert(test_isalnum());
     static_assert(test_isalpha());

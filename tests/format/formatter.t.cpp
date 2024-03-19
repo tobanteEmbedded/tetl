@@ -21,13 +21,13 @@ constexpr auto test() -> bool
     // auto formatter = etl::formatter<char, char> {};
 
     // formatter.format('a', ctx);
-    // assert(str[0] == 'a');
+    // CHECK(str[0] == 'a');
 
     // formatter.format('x', ctx);
-    // assert(str[1] == 'x');
+    // CHECK(str[1] == 'x');
 
     // formatter.format('1', ctx);
-    // assert(str[2] == '1');
+    // CHECK(str[2] == '1');
     // }
     // {
     // using string_t = T;
@@ -37,12 +37,12 @@ constexpr auto test() -> bool
 
     // auto f1 = etl::formatter<char[sizeof("abc")], char> {};
     // f1.format("abc", ctx);
-    // assert(etl::string_view(str.data()) == etl::string_view("abc"));
+    // CHECK(etl::string_view(str.data()) == etl::string_view("abc"));
 
     // str.clear();
     // auto f2 = etl::formatter<char[sizeof("foobar")], char> {};
     // f2.format("foobar", ctx);
-    // assert(etl::string_view(str.data()) == etl::string_view("foobar"));
+    // CHECK(etl::string_view(str.data()) == etl::string_view("foobar"));
     // }
     // {
     // using string_t = T;
@@ -53,12 +53,12 @@ constexpr auto test() -> bool
 
     // auto const* cStr1 = "test";
     // formatter.format(cStr1, ctx);
-    // assert(etl::string_view(str.data()) == etl::string_view(cStr1));
+    // CHECK(etl::string_view(str.data()) == etl::string_view(cStr1));
 
     // str.clear();
     // auto const* cStr2 = "abcdef";
     // formatter.format(cStr2, ctx);
-    // assert(etl::string_view(str.data()) == etl::string_view(cStr2));
+    // CHECK(etl::string_view(str.data()) == etl::string_view(cStr2));
     // }
     // {
     // using string_t = T;
@@ -69,12 +69,12 @@ constexpr auto test() -> bool
 
     // etl::string_view str1 = "test";
     // formatter.format(str1, ctx);
-    // assert(etl::string_view(str.data()) == etl::string_view(str1));
+    // CHECK(etl::string_view(str.data()) == etl::string_view(str1));
 
     // str.clear();
     // etl::string_view str2 = "abcdef";
     // formatter.format(str2, ctx);
-    // assert(etl::string_view(str.data()) == etl::string_view(str2));
+    // CHECK(etl::string_view(str.data()) == etl::string_view(str2));
     // }
     // {
     // using string_t = T;
@@ -85,20 +85,20 @@ constexpr auto test() -> bool
 
     // string_t str1 = "test";
     // formatter.format(str1, ctx);
-    // assert(etl::string_view(str.data()) == etl::string_view(str1));
+    // CHECK(etl::string_view(str.data()) == etl::string_view(str1));
 
     // str.clear();
     // string_t str2 = "abcdef";
     // formatter.format(str2, ctx);
-    // assert(etl::string_view(str.data()) == etl::string_view(str2));
+    // CHECK(etl::string_view(str.data()) == etl::string_view(str2));
     // }
     return true;
 }
 
 constexpr auto test_all() -> bool
 {
-    assert(test<etl::static_string<24>>());
-    assert(test<etl::static_string<55>>());
+    CHECK(test<etl::static_string<24>>());
+    CHECK(test<etl::static_string<55>>());
     return true;
 }
 

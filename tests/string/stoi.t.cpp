@@ -9,110 +9,110 @@ constexpr auto test() -> bool
 {
     {
         auto count = etl::size_t(0);
-        assert((etl::stoi(T{"0"}, &count, 10) == 0));
-        assert(count == 1);
+        CHECK(etl::stoi(T{"0"}, &count, 10) == 0);
+        CHECK(count == 1);
     }
 
     {
         auto count = etl::size_t(0);
-        assert((etl::stoi(T{" 123 "}, &count, 10) == 123));
-        assert(count == 4);
+        CHECK(etl::stoi(T{" 123 "}, &count, 10) == 123);
+        CHECK(count == 4);
     }
 
-    assert((etl::stoi(T{" 0"}) == 0));
-    assert((etl::stoi(T{" 0 "}) == 0));
-    assert((etl::stoi(T{"1"}) == 1));
-    assert((etl::stoi(T{"-1"}) == -1));
-    assert((etl::stoi(T{" -1"}) == -1));
-    assert((etl::stoi(T{" -1 "}) == -1));
-    assert((etl::stoi(T{"2"}) == 2));
-    assert((etl::stoi(T{"3"}) == 3));
-    assert((etl::stoi(T{"4"}) == 4));
-    assert((etl::stoi(T{"5"}) == 5));
-    assert((etl::stoi(T{"6"}) == 6));
-    assert((etl::stoi(T{"7"}) == 7));
-    assert((etl::stoi(T{"8"}) == 8));
-    assert((etl::stoi(T{"9"}) == 9));
-    assert((etl::stoi(T{"10"}) == 10));
-    assert((etl::stoi(T{"11"}) == 11));
-    assert((etl::stoi(T{"99"}) == 99));
-    assert((etl::stoi(T{"11123"}) == 11123));
-    assert((etl::stoi(T{" 11123"}) == 11123));
-    assert((etl::stoi(T{" 11123 "}) == 11123));
+    CHECK(etl::stoi(T{" 0"}) == 0);
+    CHECK(etl::stoi(T{" 0 "}) == 0);
+    CHECK(etl::stoi(T{"1"}) == 1);
+    CHECK(etl::stoi(T{"-1"}) == -1);
+    CHECK(etl::stoi(T{" -1"}) == -1);
+    CHECK(etl::stoi(T{" -1 "}) == -1);
+    CHECK(etl::stoi(T{"2"}) == 2);
+    CHECK(etl::stoi(T{"3"}) == 3);
+    CHECK(etl::stoi(T{"4"}) == 4);
+    CHECK(etl::stoi(T{"5"}) == 5);
+    CHECK(etl::stoi(T{"6"}) == 6);
+    CHECK(etl::stoi(T{"7"}) == 7);
+    CHECK(etl::stoi(T{"8"}) == 8);
+    CHECK(etl::stoi(T{"9"}) == 9);
+    CHECK(etl::stoi(T{"10"}) == 10);
+    CHECK(etl::stoi(T{"11"}) == 11);
+    CHECK(etl::stoi(T{"99"}) == 99);
+    CHECK(etl::stoi(T{"11123"}) == 11123);
+    CHECK(etl::stoi(T{" 11123"}) == 11123);
+    CHECK(etl::stoi(T{" 11123 "}) == 11123);
 
-    assert((etl::stol(T{"0"}) == 0L));
-    assert((etl::stol(T{"1"}) == 1L));
-    assert((etl::stol(T{"2"}) == 2L));
-    assert((etl::stol(T{"3"}) == 3L));
-    assert((etl::stol(T{"4"}) == 4L));
-    assert((etl::stol(T{"5"}) == 5L));
-    assert((etl::stol(T{"6"}) == 6L));
-    assert((etl::stol(T{"7"}) == 7L));
-    assert((etl::stol(T{"8"}) == 8L));
-    assert((etl::stol(T{"9"}) == 9L));
-    assert((etl::stol(T{"10"}) == 10L));
-    assert((etl::stol(T{"11"}) == 11L));
-    assert((etl::stol(T{"99"}) == 99L));
-    assert((etl::stol(T{"11123"}) == 11123L));
+    CHECK(etl::stol(T{"0"}) == 0L);
+    CHECK(etl::stol(T{"1"}) == 1L);
+    CHECK(etl::stol(T{"2"}) == 2L);
+    CHECK(etl::stol(T{"3"}) == 3L);
+    CHECK(etl::stol(T{"4"}) == 4L);
+    CHECK(etl::stol(T{"5"}) == 5L);
+    CHECK(etl::stol(T{"6"}) == 6L);
+    CHECK(etl::stol(T{"7"}) == 7L);
+    CHECK(etl::stol(T{"8"}) == 8L);
+    CHECK(etl::stol(T{"9"}) == 9L);
+    CHECK(etl::stol(T{"10"}) == 10L);
+    CHECK(etl::stol(T{"11"}) == 11L);
+    CHECK(etl::stol(T{"99"}) == 99L);
+    CHECK(etl::stol(T{"11123"}) == 11123L);
 
-    assert((etl::stoll(T{"0"}) == 0LL));
-    assert((etl::stoll(T{"1"}) == 1LL));
-    assert((etl::stoll(T{"2"}) == 2LL));
-    assert((etl::stoll(T{"3"}) == 3LL));
-    assert((etl::stoll(T{"4"}) == 4LL));
-    assert((etl::stoll(T{"5"}) == 5LL));
-    assert((etl::stoll(T{"6"}) == 6LL));
-    assert((etl::stoll(T{"7"}) == 7LL));
-    assert((etl::stoll(T{"8"}) == 8LL));
-    assert((etl::stoll(T{"9"}) == 9LL));
-    assert((etl::stoll(T{"10"}) == 10LL));
-    assert((etl::stoll(T{"11"}) == 11LL));
-    assert((etl::stoll(T{"99"}) == 99LL));
-    assert((etl::stoll(T{"11123"}) == 11123LL));
+    CHECK(etl::stoll(T{"0"}) == 0LL);
+    CHECK(etl::stoll(T{"1"}) == 1LL);
+    CHECK(etl::stoll(T{"2"}) == 2LL);
+    CHECK(etl::stoll(T{"3"}) == 3LL);
+    CHECK(etl::stoll(T{"4"}) == 4LL);
+    CHECK(etl::stoll(T{"5"}) == 5LL);
+    CHECK(etl::stoll(T{"6"}) == 6LL);
+    CHECK(etl::stoll(T{"7"}) == 7LL);
+    CHECK(etl::stoll(T{"8"}) == 8LL);
+    CHECK(etl::stoll(T{"9"}) == 9LL);
+    CHECK(etl::stoll(T{"10"}) == 10LL);
+    CHECK(etl::stoll(T{"11"}) == 11LL);
+    CHECK(etl::stoll(T{"99"}) == 99LL);
+    CHECK(etl::stoll(T{"11123"}) == 11123LL);
 
-    assert((etl::stoul(T{"0"}) == 0UL));
-    assert((etl::stoul(T{"1"}) == 1UL));
-    assert((etl::stoul(T{"2"}) == 2UL));
-    assert((etl::stoul(T{"3"}) == 3UL));
-    assert((etl::stoul(T{"4"}) == 4UL));
-    assert((etl::stoul(T{"5"}) == 5UL));
-    assert((etl::stoul(T{"6"}) == 6UL));
-    assert((etl::stoul(T{"7"}) == 7UL));
-    assert((etl::stoul(T{"8"}) == 8UL));
-    assert((etl::stoul(T{"9"}) == 9UL));
-    assert((etl::stoul(T{"10"}) == 10UL));
-    assert((etl::stoul(T{"11"}) == 11UL));
-    assert((etl::stoul(T{"99"}) == 99UL));
-    assert((etl::stoul(T{"11123"}) == 11123UL));
+    CHECK(etl::stoul(T{"0"}) == 0UL);
+    CHECK(etl::stoul(T{"1"}) == 1UL);
+    CHECK(etl::stoul(T{"2"}) == 2UL);
+    CHECK(etl::stoul(T{"3"}) == 3UL);
+    CHECK(etl::stoul(T{"4"}) == 4UL);
+    CHECK(etl::stoul(T{"5"}) == 5UL);
+    CHECK(etl::stoul(T{"6"}) == 6UL);
+    CHECK(etl::stoul(T{"7"}) == 7UL);
+    CHECK(etl::stoul(T{"8"}) == 8UL);
+    CHECK(etl::stoul(T{"9"}) == 9UL);
+    CHECK(etl::stoul(T{"10"}) == 10UL);
+    CHECK(etl::stoul(T{"11"}) == 11UL);
+    CHECK(etl::stoul(T{"99"}) == 99UL);
+    CHECK(etl::stoul(T{"11123"}) == 11123UL);
 
-    assert((etl::stoull(T{"0"}) == 0ULL));
-    assert((etl::stoull(T{"1"}) == 1ULL));
-    assert((etl::stoull(T{"2"}) == 2ULL));
-    assert((etl::stoull(T{"3"}) == 3ULL));
-    assert((etl::stoull(T{"4"}) == 4ULL));
-    assert((etl::stoull(T{"5"}) == 5ULL));
-    assert((etl::stoull(T{"6"}) == 6ULL));
-    assert((etl::stoull(T{"7"}) == 7ULL));
-    assert((etl::stoull(T{"8"}) == 8ULL));
-    assert((etl::stoull(T{"9"}) == 9ULL));
-    assert((etl::stoull(T{"10"}) == 10ULL));
-    assert((etl::stoull(T{"11"}) == 11ULL));
-    assert((etl::stoull(T{"99"}) == 99ULL));
-    assert((etl::stoull(T{"11123"}) == 11123ULL));
+    CHECK(etl::stoull(T{"0"}) == 0ULL);
+    CHECK(etl::stoull(T{"1"}) == 1ULL);
+    CHECK(etl::stoull(T{"2"}) == 2ULL);
+    CHECK(etl::stoull(T{"3"}) == 3ULL);
+    CHECK(etl::stoull(T{"4"}) == 4ULL);
+    CHECK(etl::stoull(T{"5"}) == 5ULL);
+    CHECK(etl::stoull(T{"6"}) == 6ULL);
+    CHECK(etl::stoull(T{"7"}) == 7ULL);
+    CHECK(etl::stoull(T{"8"}) == 8ULL);
+    CHECK(etl::stoull(T{"9"}) == 9ULL);
+    CHECK(etl::stoull(T{"10"}) == 10ULL);
+    CHECK(etl::stoull(T{"11"}) == 11ULL);
+    CHECK(etl::stoull(T{"99"}) == 99ULL);
+    CHECK(etl::stoull(T{"11123"}) == 11123ULL);
 
     return true;
 }
 
 constexpr auto test_all() -> bool
 {
-    assert(test<etl::static_string<16>>());
-    assert(test<etl::static_string<17>>());
-    assert(test<etl::static_string<18>>());
-    assert(test<etl::static_string<24>>());
-    assert(test<etl::static_string<32>>());
-    assert(test<etl::static_string<64>>());
-    assert(test<etl::static_string<128>>());
-    assert(test<etl::static_string<256>>());
+    CHECK(test<etl::static_string<16>>());
+    CHECK(test<etl::static_string<17>>());
+    CHECK(test<etl::static_string<18>>());
+    CHECK(test<etl::static_string<24>>());
+    CHECK(test<etl::static_string<32>>());
+    CHECK(test<etl::static_string<64>>());
+    CHECK(test<etl::static_string<128>>());
+    CHECK(test<etl::static_string<256>>());
     return true;
 }
 

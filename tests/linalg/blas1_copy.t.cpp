@@ -19,10 +19,10 @@ template <typename T, typename IndexType>
         auto out = etl::mdspan<T, etl::extents<IndexType, 4>>{outData.data()};
 
         etl::linalg::copy(in, out);
-        assert(out(0) == in(0));
-        assert(out(1) == in(1));
-        assert(out(2) == in(2));
-        assert(out(3) == in(3));
+        CHECK(out(0) == in(0));
+        CHECK(out(1) == in(1));
+        CHECK(out(2) == in(2));
+        CHECK(out(3) == in(3));
     }
 
     {
@@ -34,10 +34,10 @@ template <typename T, typename IndexType>
         auto out = etl::mdspan<T, etl::dextents<IndexType, 1>>{outData.data(), 4};
 
         etl::linalg::copy(in, out);
-        assert(out(0) == in(0));
-        assert(out(1) == in(1));
-        assert(out(2) == in(2));
-        assert(out(3) == in(3));
+        CHECK(out(0) == in(0));
+        CHECK(out(1) == in(1));
+        CHECK(out(2) == in(2));
+        CHECK(out(3) == in(3));
     }
 
     {
@@ -49,10 +49,10 @@ template <typename T, typename IndexType>
         auto out = etl::mdspan<T, etl::extents<IndexType, 2, 2>>{outData.data()};
 
         etl::linalg::copy(in, out);
-        assert(out(0, 0) == in(0, 0));
-        assert(out(0, 1) == in(0, 1));
-        assert(out(1, 0) == in(1, 0));
-        assert(out(1, 1) == in(1, 1));
+        CHECK(out(0, 0) == in(0, 0));
+        CHECK(out(0, 1) == in(0, 1));
+        CHECK(out(1, 0) == in(1, 0));
+        CHECK(out(1, 1) == in(1, 1));
     }
 
     {
@@ -64,10 +64,10 @@ template <typename T, typename IndexType>
         auto out = etl::mdspan<T, etl::dextents<IndexType, 2>>{outData.data(), 2, 2};
 
         etl::linalg::copy(in, out);
-        assert(out(0, 0) == in(0, 0));
-        assert(out(0, 1) == in(0, 1));
-        assert(out(1, 0) == in(1, 0));
-        assert(out(1, 1) == in(1, 1));
+        CHECK(out(0, 0) == in(0, 0));
+        CHECK(out(0, 1) == in(0, 1));
+        CHECK(out(1, 0) == in(1, 0));
+        CHECK(out(1, 1) == in(1, 1));
     }
 
     return true;
@@ -76,37 +76,37 @@ template <typename T, typename IndexType>
 template <typename IndexType>
 [[nodiscard]] static constexpr auto test_index_type() -> bool
 {
-    assert(test_linalg_copy_real<unsigned char, IndexType>());
-    assert(test_linalg_copy_real<unsigned short, IndexType>());
-    assert(test_linalg_copy_real<unsigned int, IndexType>());
-    assert(test_linalg_copy_real<unsigned long, IndexType>());
-    assert(test_linalg_copy_real<unsigned long long, IndexType>());
+    CHECK(test_linalg_copy_real<unsigned char, IndexType>());
+    CHECK(test_linalg_copy_real<unsigned short, IndexType>());
+    CHECK(test_linalg_copy_real<unsigned int, IndexType>());
+    CHECK(test_linalg_copy_real<unsigned long, IndexType>());
+    CHECK(test_linalg_copy_real<unsigned long long, IndexType>());
 
-    assert(test_linalg_copy_real<signed char, IndexType>());
-    assert(test_linalg_copy_real<signed short, IndexType>());
-    assert(test_linalg_copy_real<signed int, IndexType>());
-    assert(test_linalg_copy_real<signed long, IndexType>());
-    assert(test_linalg_copy_real<signed long long, IndexType>());
+    CHECK(test_linalg_copy_real<signed char, IndexType>());
+    CHECK(test_linalg_copy_real<signed short, IndexType>());
+    CHECK(test_linalg_copy_real<signed int, IndexType>());
+    CHECK(test_linalg_copy_real<signed long, IndexType>());
+    CHECK(test_linalg_copy_real<signed long long, IndexType>());
 
-    assert(test_linalg_copy_real<float, IndexType>());
-    assert(test_linalg_copy_real<double, IndexType>());
+    CHECK(test_linalg_copy_real<float, IndexType>());
+    CHECK(test_linalg_copy_real<double, IndexType>());
 
     return true;
 }
 
 [[nodiscard]] static constexpr auto test_all() -> bool
 {
-    assert(test_index_type<signed char>());
-    assert(test_index_type<signed short>());
-    assert(test_index_type<signed int>());
-    assert(test_index_type<signed long>());
-    assert(test_index_type<signed long long>());
+    CHECK(test_index_type<signed char>());
+    CHECK(test_index_type<signed short>());
+    CHECK(test_index_type<signed int>());
+    CHECK(test_index_type<signed long>());
+    CHECK(test_index_type<signed long long>());
 
-    assert(test_index_type<unsigned char>());
-    assert(test_index_type<unsigned short>());
-    assert(test_index_type<unsigned int>());
-    assert(test_index_type<unsigned long>());
-    assert(test_index_type<unsigned long long>());
+    CHECK(test_index_type<unsigned char>());
+    CHECK(test_index_type<unsigned short>());
+    CHECK(test_index_type<unsigned int>());
+    CHECK(test_index_type<unsigned long>());
+    CHECK(test_index_type<unsigned long long>());
 
     return true;
 }

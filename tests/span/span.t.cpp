@@ -27,24 +27,24 @@ constexpr auto test() -> bool
     {
         T arr[16] = {};
         auto sp   = etl::span{arr};
-        assert(sp.data() == &arr[0]);
-        assert(sp.size() == 16);
+        CHECK(sp.data() == &arr[0]);
+        CHECK(sp.size() == 16);
     }
 
     // from etl::array
     {
         auto arr = etl::array<T, 8>{};
         auto sp  = etl::span{arr};
-        assert(sp.data() == arr.data());
-        assert(sp.size() == 8);
+        CHECK(sp.data() == arr.data());
+        CHECK(sp.size() == 8);
     }
 
     // from etl::array const
     {
         auto const arr = etl::array<T, 8>{};
         auto const sp  = etl::span{arr};
-        assert(sp.data() == arr.data());
-        assert(sp.size() == 8);
+        CHECK(sp.data() == arr.data());
+        CHECK(sp.size() == 8);
     }
 
     // from Container
@@ -53,8 +53,8 @@ constexpr auto test() -> bool
         vec.push_back(T{});
         vec.push_back(T{});
         auto sp = etl::span{vec};
-        assert(sp.data() == vec.data());
-        assert(sp.size() == 2);
+        CHECK(sp.data() == vec.data());
+        CHECK(sp.size() == 2);
     }
 
     // from Container const
@@ -67,35 +67,35 @@ constexpr auto test() -> bool
         }();
 
         auto const sp = etl::span{vec};
-        assert(sp.data() == vec.data());
-        assert(sp.size() == 2);
+        CHECK(sp.data() == vec.data());
+        CHECK(sp.size() == 2);
     }
 
     {
         auto sp = etl::span<char>{};
-        assert(sp.data() == nullptr);
-        assert(sp.size() == 0);
-        assert(sp.empty());
+        CHECK(sp.data() == nullptr);
+        CHECK(sp.size() == 0);
+        CHECK(sp.empty());
     }
 
     // static extent
     {
         auto arr = etl::array<T, 8>{};
         auto sp  = etl::span<T, 8>{etl::begin(arr), etl::size(arr)};
-        assert(!sp.empty());
-        assert(sp.data() == arr.data());
-        assert(sp.size() == arr.size());
-        assert(sp.extent == arr.size());
+        CHECK(!sp.empty());
+        CHECK(sp.data() == arr.data());
+        CHECK(sp.size() == arr.size());
+        CHECK(sp.extent == arr.size());
     }
 
     // static array
     {
         auto arr = etl::array<T, 8>{};
         auto sp  = etl::span<T>{etl::begin(arr), etl::size(arr)};
-        assert(!sp.empty());
-        assert(sp.data() == arr.data());
-        assert(sp.size() == arr.size());
-        assert(sp.extent == etl::dynamic_extent);
+        CHECK(!sp.empty());
+        CHECK(sp.data() == arr.data());
+        CHECK(sp.size() == arr.size());
+        CHECK(sp.extent == etl::dynamic_extent);
     }
 
     // static vector
@@ -105,46 +105,46 @@ constexpr auto test() -> bool
         etl::generate_n(etl::back_inserter(vec), 4, rng);
 
         auto sp = etl::span<T>{etl::begin(vec), etl::size(vec)};
-        assert(!sp.empty());
-        assert(sp.data() == vec.data());
-        assert(sp.size() == vec.size());
-        assert(sp.extent == etl::dynamic_extent);
-        assert(etl::all_of(etl::begin(sp), etl::end(sp), [](auto& x) { return x == T{42}; }));
+        CHECK(!sp.empty());
+        CHECK(sp.data() == vec.data());
+        CHECK(sp.size() == vec.size());
+        CHECK(sp.extent == etl::dynamic_extent);
+        CHECK(etl::all_of(etl::begin(sp), etl::end(sp), [](auto& x) { return x == T{42}; }));
     }
 
     // empty
     {
         auto sp = etl::span<T>{};
-        assert(sp.begin() == sp.end());
-        assert(etl::begin(sp) == etl::end(sp));
-        assert(sp.size() == 0);
+        CHECK(sp.begin() == sp.end());
+        CHECK(etl::begin(sp) == etl::end(sp));
+        CHECK(sp.size() == 0);
     }
 
     // ranged-for
     {
         auto data = etl::array<T, 4>{};
         auto sp   = etl::span<T>{etl::begin(data), etl::size(data)};
-        assert(!(sp.begin() == sp.end()));
-        assert(!(etl::begin(sp) == etl::end(sp)));
+        CHECK(!(sp.begin() == sp.end()));
+        CHECK(!(etl::begin(sp) == etl::end(sp)));
 
         auto counter = 0;
         for (auto const& x : sp) {
             etl::ignore_unused(x);
             counter++;
         }
-        assert(counter == 4);
+        CHECK(counter == 4);
     }
 
     // algorithm
     {
         auto data = etl::array<T, 4>{};
         auto sp   = etl::span<T>{etl::begin(data), etl::size(data)};
-        assert(!(sp.begin() == sp.end()));
-        assert(!(etl::begin(sp) == etl::end(sp)));
+        CHECK(!(sp.begin() == sp.end()));
+        CHECK(!(etl::begin(sp) == etl::end(sp)));
 
         auto counter = 0;
         etl::for_each(etl::begin(sp), etl::end(sp), [&counter](auto /*unused*/) { counter++; });
-        assert(counter == 4);
+        CHECK(counter == 4);
     }
 
     {
@@ -152,16 +152,16 @@ constexpr auto test() -> bool
         auto vec = etl::static_vector<T, 8>{};
         etl::generate_n(etl::back_inserter(vec), 4, rng);
         auto sp = etl::span<T>{etl::begin(vec), etl::size(vec)};
-        assert(sp[0] == T{127});
-        assert(sp[1] == T{126});
-        assert(sp[2] == T{125});
-        assert(sp[3] == T{124});
+        CHECK(sp[0] == T{127});
+        CHECK(sp[1] == T{126});
+        CHECK(sp[2] == T{125});
+        CHECK(sp[3] == T{124});
 
         auto const csp = etl::span{sp};
-        assert(csp[0] == T{127});
-        assert(csp[1] == T{126});
-        assert(csp[2] == T{125});
-        assert(csp[3] == T{124});
+        CHECK(csp[0] == T{127});
+        CHECK(csp[1] == T{126});
+        CHECK(csp[2] == T{125});
+        CHECK(csp[3] == T{124});
     }
 
     {
@@ -169,7 +169,7 @@ constexpr auto test() -> bool
         etl::generate_n(etl::back_inserter(vec), 4, []() { return T{42}; });
         auto sp = etl::span<T>{etl::begin(vec), etl::size(vec)};
 
-        assert(sp.size_bytes() == 4 * sizeof(T));
+        CHECK(sp.size_bytes() == 4 * sizeof(T));
     }
 
     {
@@ -177,22 +177,22 @@ constexpr auto test() -> bool
         auto sp   = etl::span<T>{data};
 
         auto one = sp.first(1);
-        assert(one.size() == 1);
-        assert(one[0] == T(0));
+        CHECK(one.size() == 1);
+        CHECK(one[0] == T(0));
 
         auto two = sp.first(2);
-        assert(two.size() == 2);
-        assert(two[0] == T(0));
-        assert(two[1] == T(1));
+        CHECK(two.size() == 2);
+        CHECK(two[0] == T(0));
+        CHECK(two[1] == T(1));
 
         auto onet = sp.template first<1>();
-        assert(onet.size() == 1);
-        assert(onet[0] == T(0));
+        CHECK(onet.size() == 1);
+        CHECK(onet[0] == T(0));
 
         auto twot = sp.template first<2>();
-        assert(twot.size() == 2);
-        assert(twot[0] == T(0));
-        assert(twot[1] == T(1));
+        CHECK(twot.size() == 2);
+        CHECK(twot[0] == T(0));
+        CHECK(twot[1] == T(1));
     }
 
     {
@@ -200,22 +200,22 @@ constexpr auto test() -> bool
         auto sp   = etl::span<T>{data};
 
         auto one = sp.last(1);
-        assert(one.size() == 1);
-        assert(one[0] == T(6));
+        CHECK(one.size() == 1);
+        CHECK(one[0] == T(6));
 
         auto two = sp.last(2);
-        assert(two.size() == 2);
-        assert(two[0] == T(5));
-        assert(two[1] == T(6));
+        CHECK(two.size() == 2);
+        CHECK(two[0] == T(5));
+        CHECK(two[1] == T(6));
 
         auto onet = sp.template last<1>();
-        assert(onet.size() == 1);
-        assert(onet[0] == T(6));
+        CHECK(onet.size() == 1);
+        CHECK(onet[0] == T(6));
 
         auto twot = sp.template last<2>();
-        assert(twot.size() == 2);
-        assert(twot[0] == T(5));
-        assert(twot[1] == T(6));
+        CHECK(twot.size() == 2);
+        CHECK(twot[0] == T(5));
+        CHECK(twot[1] == T(6));
     }
 
     return true;

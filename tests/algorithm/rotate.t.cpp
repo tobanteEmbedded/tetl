@@ -15,9 +15,9 @@ constexpr auto test() -> bool
 {
     {
         auto data = etl::array{T(1), T(2), T(3), T(4)};
-        assert(data[0] == 1);
+        CHECK(data[0] == 1);
         etl::rotate(begin(data), begin(data) + 1, end(data));
-        assert(data[0] == 2);
+        CHECK(data[0] == 2);
     }
 
     // empty range
@@ -27,8 +27,8 @@ constexpr auto test() -> bool
         auto* pivot = etl::find(begin(s), end(s), T(3));
 
         etl::rotate_copy(s.begin(), pivot, s.end(), etl::back_inserter(d));
-        assert(d.empty());
-        assert(d.size() == s.size());
+        CHECK(d.empty());
+        CHECK(d.size() == s.size());
     }
 
     // cppreference example
@@ -39,12 +39,12 @@ constexpr auto test() -> bool
         // From 1, 2, 3, 4, 5 to 3, 4, 5, 1, 2
         etl::static_vector<T, 5> d{};
         etl::rotate_copy(s.begin(), pivot, s.end(), etl::back_inserter(d));
-        assert(d.size() == s.size());
-        assert(d[0] == T(3));
-        assert(d[1] == T(4));
-        assert(d[2] == T(5));
-        assert(d[3] == T(1));
-        assert(d[4] == T(2));
+        CHECK(d.size() == s.size());
+        CHECK(d[0] == T(3));
+        CHECK(d[1] == T(4));
+        CHECK(d[2] == T(5));
+        CHECK(d[3] == T(1));
+        CHECK(d[4] == T(2));
     }
 
     return true;
@@ -52,16 +52,16 @@ constexpr auto test() -> bool
 
 constexpr auto test_all() -> bool
 {
-    assert(test<etl::uint8_t>());
-    assert(test<etl::int8_t>());
-    assert(test<etl::uint16_t>());
-    assert(test<etl::int16_t>());
-    assert(test<etl::uint32_t>());
-    assert(test<etl::int32_t>());
-    assert(test<etl::uint64_t>());
-    assert(test<etl::int64_t>());
-    assert(test<float>());
-    assert(test<double>());
+    CHECK(test<etl::uint8_t>());
+    CHECK(test<etl::int8_t>());
+    CHECK(test<etl::uint16_t>());
+    CHECK(test<etl::int16_t>());
+    CHECK(test<etl::uint32_t>());
+    CHECK(test<etl::int32_t>());
+    CHECK(test<etl::uint64_t>());
+    CHECK(test<etl::int64_t>());
+    CHECK(test<float>());
+    CHECK(test<double>());
 
     return true;
 }

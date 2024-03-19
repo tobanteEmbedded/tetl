@@ -22,18 +22,18 @@ template <typename T>
 constexpr auto test() -> bool
 {
     auto null = etl::chrono::time_point<null_clock<T>>{};
-    assert(null.time_since_epoch().count() == T{0});
+    CHECK(null.time_since_epoch().count() == T{0});
     return true;
 }
 
 constexpr auto test_all() -> bool
 {
-    assert(test<etl::int8_t>());
-    assert(test<etl::int16_t>());
-    assert(test<etl::int32_t>());
-    assert(test<etl::int64_t>());
-    assert(test<float>());
-    assert(test<double>());
+    CHECK(test<etl::int8_t>());
+    CHECK(test<etl::int16_t>());
+    CHECK(test<etl::int32_t>());
+    CHECK(test<etl::int64_t>());
+    CHECK(test<float>());
+    CHECK(test<double>());
     return true;
 }
 

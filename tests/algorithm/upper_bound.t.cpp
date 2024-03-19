@@ -18,41 +18,41 @@ constexpr auto test() -> bool
     // empty range
     {
         auto const d = etl::static_vector<T, 4>{};
-        assert(upper_bound(begin(d), end(d), T(0)) == end(d));
-        assert(upper_bound(begin(d), end(d), T(0), greater) == end(d));
+        CHECK(upper_bound(begin(d), end(d), T(0)) == end(d));
+        CHECK(upper_bound(begin(d), end(d), T(0), greater) == end(d));
     }
 
     // single element
     {
         auto d = etl::static_vector<T, 4>{};
         d.push_back(T(0));
-        assert(upper_bound(begin(d), end(d), T(0)) == end(d));
-        assert(upper_bound(begin(d), end(d), T(1)) == end(d));
-        assert(upper_bound(begin(d), end(d), T(1), greater) == begin(d));
+        CHECK(upper_bound(begin(d), end(d), T(0)) == end(d));
+        CHECK(upper_bound(begin(d), end(d), T(1)) == end(d));
+        CHECK(upper_bound(begin(d), end(d), T(1), greater) == begin(d));
     }
 
     // multiple elements
     {
         auto const d = etl::array{T(0), T(1), T(2), T(3)};
-        assert(upper_bound(begin(d), end(d), T(0)) == begin(d) + 1);
-        assert(upper_bound(begin(d), end(d), T(1)) == begin(d) + 2);
-        assert(upper_bound(begin(d), end(d), T(5)) == end(d));
+        CHECK(upper_bound(begin(d), end(d), T(0)) == begin(d) + 1);
+        CHECK(upper_bound(begin(d), end(d), T(1)) == begin(d) + 2);
+        CHECK(upper_bound(begin(d), end(d), T(5)) == end(d));
     }
     return true;
 }
 
 constexpr auto test_all() -> bool
 {
-    assert(test<etl::uint8_t>());
-    assert(test<etl::int8_t>());
-    assert(test<etl::uint16_t>());
-    assert(test<etl::int16_t>());
-    assert(test<etl::uint32_t>());
-    assert(test<etl::int32_t>());
-    assert(test<etl::uint64_t>());
-    assert(test<etl::int64_t>());
-    assert(test<float>());
-    assert(test<double>());
+    CHECK(test<etl::uint8_t>());
+    CHECK(test<etl::int8_t>());
+    CHECK(test<etl::uint16_t>());
+    CHECK(test<etl::int16_t>());
+    CHECK(test<etl::uint32_t>());
+    CHECK(test<etl::int32_t>());
+    CHECK(test<etl::uint64_t>());
+    CHECK(test<etl::int64_t>());
+    CHECK(test<float>());
+    CHECK(test<double>());
 
     return true;
 }

@@ -23,13 +23,13 @@ constexpr auto test() -> bool
 
         auto noCase = [](char a, char b) { return etl::tolower(a) < etl::tolower(b); };
 
-        assert(etl::includes(begin(v1), end(v1), v2.begin(), v2.end()));
-        assert(etl::includes(begin(v1), end(v1), v3.begin(), v3.end()));
-        assert(etl::includes(begin(v1), end(v1), v7.begin(), v7.end(), noCase));
+        CHECK(etl::includes(begin(v1), end(v1), v2.begin(), v2.end()));
+        CHECK(etl::includes(begin(v1), end(v1), v3.begin(), v3.end()));
+        CHECK(etl::includes(begin(v1), end(v1), v7.begin(), v7.end(), noCase));
 
-        assert(!(etl::includes(begin(v1), end(v1), v4.begin(), v4.end())));
-        assert(!(etl::includes(begin(v1), end(v1), v5.begin(), v5.end())));
-        assert(!(etl::includes(begin(v1), end(v1), v6.begin(), v6.end())));
+        CHECK(!(etl::includes(begin(v1), end(v1), v4.begin(), v4.end())));
+        CHECK(!(etl::includes(begin(v1), end(v1), v5.begin(), v5.end())));
+        CHECK(!(etl::includes(begin(v1), end(v1), v6.begin(), v6.end())));
     }
 
     {
@@ -40,12 +40,12 @@ constexpr auto test() -> bool
         auto const v5 = etl::array{T(7)};
         auto const v6 = etl::array{T(1), T(3), T(7)};
 
-        assert(etl::includes(begin(v1), end(v1), v2.begin(), v2.end()));
-        assert(etl::includes(begin(v1), end(v1), v3.begin(), v3.end()));
+        CHECK(etl::includes(begin(v1), end(v1), v2.begin(), v2.end()));
+        CHECK(etl::includes(begin(v1), end(v1), v3.begin(), v3.end()));
 
-        assert(!(etl::includes(begin(v1), end(v1), v4.begin(), v4.end())));
-        assert(!(etl::includes(begin(v1), end(v1), v5.begin(), v5.end())));
-        assert(!(etl::includes(begin(v1), end(v1), v6.begin(), v6.end())));
+        CHECK(!(etl::includes(begin(v1), end(v1), v4.begin(), v4.end())));
+        CHECK(!(etl::includes(begin(v1), end(v1), v5.begin(), v5.end())));
+        CHECK(!(etl::includes(begin(v1), end(v1), v6.begin(), v6.end())));
     }
 
     return true;
@@ -53,16 +53,16 @@ constexpr auto test() -> bool
 
 constexpr auto test_all() -> bool
 {
-    assert(test<etl::uint8_t>());
-    assert(test<etl::int8_t>());
-    assert(test<etl::uint16_t>());
-    assert(test<etl::int16_t>());
-    assert(test<etl::uint32_t>());
-    assert(test<etl::int32_t>());
-    assert(test<etl::uint64_t>());
-    assert(test<etl::int64_t>());
-    assert(test<float>());
-    assert(test<double>());
+    CHECK(test<etl::uint8_t>());
+    CHECK(test<etl::int8_t>());
+    CHECK(test<etl::uint16_t>());
+    CHECK(test<etl::int16_t>());
+    CHECK(test<etl::uint32_t>());
+    CHECK(test<etl::int32_t>());
+    CHECK(test<etl::uint64_t>());
+    CHECK(test<etl::int64_t>());
+    CHECK(test<float>());
+    CHECK(test<double>());
 
     return true;
 }

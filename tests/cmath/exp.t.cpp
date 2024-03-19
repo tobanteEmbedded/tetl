@@ -20,11 +20,11 @@ auto main() -> int
 {
     static_assert(test<float>());
     static_assert(test<double>());
-    assert(test<float>());
-    assert(test<double>());
+    CHECK(test<float>());
+    CHECK(test<double>());
 
     // TODO: Fix long double tests
     // static_assert(test<long double>());
-    // assert(test<long double>());
+    // CHECK(test<long double>());
     return 0;
 }

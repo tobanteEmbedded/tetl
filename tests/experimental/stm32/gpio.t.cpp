@@ -18,25 +18,25 @@ static auto test_all() -> bool
     // When pin is set to high, sets bits in bit_set_reset upper word
     {
         gpio.write(stm32::pin_number::pin_1, stm32::pin_state::set);
-        assert((register_bits(memory.bit_set_reset).test(1 + 16)));
+        CHECK(register_bits(memory.bit_set_reset).test(1 + 16));
 
         gpio.write(stm32::pin_number::pin_3, stm32::pin_state::set);
-        assert((register_bits(memory.bit_set_reset).test(3 + 16)));
+        CHECK(register_bits(memory.bit_set_reset).test(3 + 16));
 
         gpio.write(stm32::pin_number::pin_15, stm32::pin_state::set);
-        assert((register_bits(memory.bit_set_reset).test(15 + 16)));
+        CHECK(register_bits(memory.bit_set_reset).test(15 + 16));
     }
 
     // When pin is set to low, sets bits in bit_set_reset lower word
     {
         gpio.write(stm32::pin_number::pin_1, stm32::pin_state::reset);
-        assert((register_bits(memory.bit_set_reset).test(1)));
+        CHECK(register_bits(memory.bit_set_reset).test(1));
 
         gpio.write(stm32::pin_number::pin_3, stm32::pin_state::reset);
-        assert((register_bits(memory.bit_set_reset).test(3)));
+        CHECK(register_bits(memory.bit_set_reset).test(3));
 
         gpio.write(stm32::pin_number::pin_15, stm32::pin_state::reset);
-        assert((register_bits(memory.bit_set_reset).test(15)));
+        CHECK(register_bits(memory.bit_set_reset).test(15));
     }
 
     // When pin is set to toggle, toggles the output data bits
@@ -47,7 +47,7 @@ static auto test_all() -> bool
             auto const original = register_bits(memory.output_data).test(1);
             gpio.toggle_pin(stm32::pin_number::pin_1);
             auto const toggled = register_bits(memory.output_data).test(1);
-            assert((original != toggled));
+            CHECK(original != toggled);
         }
 
         // Using pin 15
@@ -55,7 +55,7 @@ static auto test_all() -> bool
             auto const original = register_bits(memory.output_data).test(15);
             gpio.toggle_pin(stm32::pin_number::pin_15);
             auto const toggled = register_bits(memory.output_data).test(15);
-            assert((original != toggled));
+            CHECK(original != toggled);
         }
     }
     return true;
@@ -63,6 +63,6 @@ static auto test_all() -> bool
 
 auto main() -> int
 {
-    assert(test_all());
+    CHECK(test_all());
     return 0;
 }

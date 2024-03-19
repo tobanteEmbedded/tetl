@@ -37,6 +37,6 @@ static auto test_all() -> bool
 
 auto main() -> int
 {
-    assert(test_all());
+    CHECK(test_all());
     return 0;
 }

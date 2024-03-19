@@ -33,24 +33,24 @@ constexpr auto test_int() -> bool
     auto test = [](int in, auto out) -> bool {
         char buf[12] = {};
         auto res     = integer_to_string(in, etl::begin(buf), 10, sizeof(buf));
-        assert(res.error == integer_to_string_error::none);
-        assert(etl::string_view{buf} == out);
+        CHECK(res.error == integer_to_string_error::none);
+        CHECK(etl::string_view{buf} == out);
         return true;
     };
 
-    assert(test(0, "0"_sv));
-    assert(test(10, "10"_sv));
-    assert(test(-10, "-10"_sv));
-    assert(test(99, "99"_sv));
-    assert(test(-99, "-99"_sv));
-    assert(test(143, "143"_sv));
-    assert(test(999, "999"_sv));
-    assert(test(-999, "-999"_sv));
-    assert(test(1111, "1111"_sv));
+    CHECK(test(0, "0"_sv));
+    CHECK(test(10, "10"_sv));
+    CHECK(test(-10, "-10"_sv));
+    CHECK(test(99, "99"_sv));
+    CHECK(test(-99, "-99"_sv));
+    CHECK(test(143, "143"_sv));
+    CHECK(test(999, "999"_sv));
+    CHECK(test(-999, "-999"_sv));
+    CHECK(test(1111, "1111"_sv));
 
     if constexpr (sizeof(int) >= 4) {
-        assert(test(123456789, "123456789"_sv));
-        assert(test(-123456789, "-123456789"_sv));
+        CHECK(test(123456789, "123456789"_sv));
+        CHECK(test(-123456789, "-123456789"_sv));
     }
 
     return true;
@@ -58,10 +58,10 @@ constexpr auto test_int() -> bool
 
 constexpr auto test_all() -> bool
 {
-    assert(test_int());
-    assert(test_floats<float>());
-    assert(test_floats<double>());
-    assert(test_floats<long double>());
+    CHECK(test_int());
+    CHECK(test_floats<float>());
+    CHECK(test_floats<double>());
+    CHECK(test_floats<long double>());
     return true;
 }
 

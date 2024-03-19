@@ -26,45 +26,45 @@ constexpr auto test() -> bool
     };
     etl::sort(begin(sorted), end(sorted));
 
-    assert(original[0] == T(4));
-    assert(original[1] == T(3));
-    assert(original[2] == T(2));
-    assert(original[3] == T(1));
+    CHECK(original[0] == T(4));
+    CHECK(original[1] == T(3));
+    CHECK(original[2] == T(2));
+    CHECK(original[3] == T(1));
 
-    assert(sorted[0] == T(1));
-    assert(sorted[1] == T(2));
-    assert(sorted[2] == T(3));
-    assert(sorted[3] == T(4));
+    CHECK(sorted[0] == T(1));
+    CHECK(sorted[1] == T(2));
+    CHECK(sorted[2] == T(3));
+    CHECK(sorted[3] == T(4));
 
     for (T& i : original) {
         i *= T(2);
     }
-    assert(sorted[0] == T(2));
-    assert(sorted[1] == T(4));
-    assert(sorted[2] == T(6));
-    assert(sorted[3] == T(8));
+    CHECK(sorted[0] == T(2));
+    CHECK(sorted[1] == T(4));
+    CHECK(sorted[2] == T(6));
+    CHECK(sorted[3] == T(8));
 
     auto lambda = [](T val) { return val; };
-    assert(etl::ref(lambda)(T(0)) == T(0));
-    assert(etl::cref(lambda)(T(42)) == T(42));
-    assert(etl::ref(etl::ref(lambda))(T(42)) == T(42));
-    assert(etl::cref(etl::cref(lambda))(T(42)) == T(42));
+    CHECK(etl::ref(lambda)(T(0)) == T(0));
+    CHECK(etl::cref(lambda)(T(42)) == T(42));
+    CHECK(etl::ref(etl::ref(lambda))(T(42)) == T(42));
+    CHECK(etl::cref(etl::cref(lambda))(T(42)) == T(42));
 
     return true;
 }
 
 constexpr auto test_all() -> bool
 {
-    assert(test<etl::int8_t>());
-    assert(test<etl::int16_t>());
-    assert(test<etl::int32_t>());
-    assert(test<etl::int64_t>());
-    assert(test<etl::uint8_t>());
-    assert(test<etl::uint16_t>());
-    assert(test<etl::uint32_t>());
-    assert(test<etl::uint64_t>());
-    assert(test<float>());
-    assert(test<double>());
+    CHECK(test<etl::int8_t>());
+    CHECK(test<etl::int16_t>());
+    CHECK(test<etl::int32_t>());
+    CHECK(test<etl::int64_t>());
+    CHECK(test<etl::uint8_t>());
+    CHECK(test<etl::uint16_t>());
+    CHECK(test<etl::uint32_t>());
+    CHECK(test<etl::uint64_t>());
+    CHECK(test<float>());
+    CHECK(test<double>());
 
     return true;
 }

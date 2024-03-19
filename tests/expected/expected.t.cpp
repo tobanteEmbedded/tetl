@@ -24,55 +24,55 @@ static auto test() -> bool
 {
     using expected_t = etl::expected<T, E>;
 
-    assert(etl::is_default_constructible_v<expected_t>);
-    assert(etl::is_nothrow_default_constructible_v<expected_t>);
+    CHECK(etl::is_default_constructible_v<expected_t>);
+    CHECK(etl::is_nothrow_default_constructible_v<expected_t>);
 
-    assert(etl::same_as<typename expected_t::value_type, T>);
-    assert(etl::same_as<typename expected_t::error_type, E>);
-    assert(etl::same_as<typename expected_t::unexpected_type, etl::unexpected<E>>);
-    assert(etl::same_as<typename expected_t::template rebind<float>, etl::expected<float, E>>);
+    CHECK(etl::same_as<typename expected_t::value_type, T>);
+    CHECK(etl::same_as<typename expected_t::error_type, E>);
+    CHECK(etl::same_as<typename expected_t::unexpected_type, etl::unexpected<E>>);
+    CHECK(etl::same_as<typename expected_t::template rebind<float>, etl::expected<float, E>>);
 
-    assert(noexcept(etl::declval<expected_t>().has_value()));
-    assert(noexcept(static_cast<bool>(etl::declval<expected_t>())));
+    CHECK(noexcept(etl::declval<expected_t>().has_value()));
+    CHECK(noexcept(static_cast<bool>(etl::declval<expected_t>())));
 
     auto ex1 = expected_t{};
-    assert(ex1.has_value());
-    assert(static_cast<bool>(ex1));
-    assert(etl::as_const(ex1).has_value());
-    assert(static_cast<bool>(etl::as_const(ex1)));
-    assert(ex1.value() == 0);
-    assert(etl::as_const(ex1).value() == 0);
-    assert(ex1.value_or(42.0F) == 0);
-    assert(etl::as_const(ex1).value_or(42.0F) == 0);
-    assert(expected_t().value() == 0);
+    CHECK(ex1.has_value());
+    CHECK(static_cast<bool>(ex1));
+    CHECK(etl::as_const(ex1).has_value());
+    CHECK(static_cast<bool>(etl::as_const(ex1)));
+    CHECK(ex1.value() == 0);
+    CHECK(etl::as_const(ex1).value() == 0);
+    CHECK(ex1.value_or(42.0F) == 0);
+    CHECK(etl::as_const(ex1).value_or(42.0F) == 0);
+    CHECK(expected_t().value() == 0);
 
     auto ex2 = expected_t{etl::in_place, T(42)};
-    assert(ex2.has_value());
-    assert(static_cast<bool>(ex2));
-    assert(etl::as_const(ex2).has_value());
-    assert(static_cast<bool>(etl::as_const(ex2)));
-    assert(ex2.value() == T(42));
-    assert(etl::as_const(ex2).value() == T(42));
-    assert(*ex2 == T(42));
-    assert(*etl::as_const(ex2) == T(42));
+    CHECK(ex2.has_value());
+    CHECK(static_cast<bool>(ex2));
+    CHECK(etl::as_const(ex2).has_value());
+    CHECK(static_cast<bool>(etl::as_const(ex2)));
+    CHECK(ex2.value() == T(42));
+    CHECK(etl::as_const(ex2).value() == T(42));
+    CHECK(*ex2 == T(42));
+    CHECK(*etl::as_const(ex2) == T(42));
 
     auto ex3 = expected_t{etl::unexpect, 143};
-    assert(not ex3.has_value());
-    assert(not static_cast<bool>(ex3));
-    assert(not etl::as_const(ex3).has_value());
-    assert(not static_cast<bool>(etl::as_const(ex3)));
-    assert(ex3.error() == 143);
-    assert(etl::as_const(ex3).error() == 143);
-    assert(ex3.value_or(42.0F) == T(42));
-    assert(etl::as_const(ex3).value_or(42.0F) == T(42));
+    CHECK(not ex3.has_value());
+    CHECK(not static_cast<bool>(ex3));
+    CHECK(not etl::as_const(ex3).has_value());
+    CHECK(not static_cast<bool>(etl::as_const(ex3)));
+    CHECK(ex3.error() == 143);
+    CHECK(etl::as_const(ex3).error() == 143);
+    CHECK(ex3.value_or(42.0F) == T(42));
+    CHECK(etl::as_const(ex3).value_or(42.0F) == T(42));
 
     ex3.emplace(T(99));
-    assert(ex3.has_value());
-    assert(static_cast<bool>(ex3));
-    assert(ex3.value() == T(99));
-    assert(etl::as_const(ex3).value() == T(99));
-    assert(ex3.value_or(42.0F) == T(99));
-    assert(etl::as_const(ex3).value_or(42.0F) == T(99));
+    CHECK(ex3.has_value());
+    CHECK(static_cast<bool>(ex3));
+    CHECK(ex3.value() == T(99));
+    CHECK(etl::as_const(ex3).value() == T(99));
+    CHECK(ex3.value_or(42.0F) == T(99));
+    CHECK(etl::as_const(ex3).value_or(42.0F) == T(99));
 
     return true;
 }
@@ -80,36 +80,36 @@ static auto test() -> bool
 static auto test_all() -> bool
 {
     // E == int
-    assert(test<signed char, int>());
-    assert(test<signed short, int>());
-    // assert(test<signed int, int>());
-    assert(test<signed long, int>());
-    assert(test<signed long long, int>());
+    CHECK(test<signed char, int>());
+    CHECK(test<signed short, int>());
+    // CHECK(test<signed int, int>());
+    CHECK(test<signed long, int>());
+    CHECK(test<signed long long, int>());
 
-    assert(test<unsigned char, int>());
-    assert(test<unsigned short, int>());
-    assert(test<unsigned int, int>());
-    assert(test<unsigned long, int>());
-    assert(test<unsigned long long, int>());
+    CHECK(test<unsigned char, int>());
+    CHECK(test<unsigned short, int>());
+    CHECK(test<unsigned int, int>());
+    CHECK(test<unsigned long, int>());
+    CHECK(test<unsigned long long, int>());
 
     // E == class
-    assert(test<signed char, error_class>());
-    assert(test<signed short, error_class>());
-    assert(test<signed int, error_class>());
-    assert(test<signed long, error_class>());
-    assert(test<signed long long, error_class>());
+    CHECK(test<signed char, error_class>());
+    CHECK(test<signed short, error_class>());
+    CHECK(test<signed int, error_class>());
+    CHECK(test<signed long, error_class>());
+    CHECK(test<signed long long, error_class>());
 
-    assert(test<unsigned char, error_class>());
-    assert(test<unsigned short, error_class>());
-    assert(test<unsigned int, error_class>());
-    assert(test<unsigned long, error_class>());
-    assert(test<unsigned long long, error_class>());
+    CHECK(test<unsigned char, error_class>());
+    CHECK(test<unsigned short, error_class>());
+    CHECK(test<unsigned int, error_class>());
+    CHECK(test<unsigned long, error_class>());
+    CHECK(test<unsigned long long, error_class>());
 
     return true;
 }
 
 auto main() -> int
 {
-    assert(test_all());
+    CHECK(test_all());
     return 0;
 }

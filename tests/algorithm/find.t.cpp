@@ -20,33 +20,33 @@ constexpr auto test() -> bool
         vec.push_back(T(4));
 
         auto const* result1 = etl::find(vec.cbegin(), vec.cend(), T(3));
-        assert(!(result1 == vec.cend()));
+        CHECK(!(result1 == vec.cend()));
 
         auto* result2 = etl::find(vec.begin(), vec.end(), T(5));
-        assert(result2 == vec.end());
+        CHECK(result2 == vec.end());
     }
 
     // empty range
     {
         auto data = etl::static_vector<T, 2>{};
         auto* res = etl::adjacent_find(begin(data), end(data));
-        assert(res == end(data));
+        CHECK(res == end(data));
     }
 
     // no match
     {
         auto const data = etl::array{T(0), T(1), T(2)};
         auto const* res = etl::adjacent_find(begin(data), end(data));
-        assert(res == end(data));
+        CHECK(res == end(data));
     }
 
     // match
     {
         auto const d1 = etl::array{T(0), T(0), T(2)};
-        assert(etl::adjacent_find(begin(d1), end(d1)) == begin(d1));
+        CHECK(etl::adjacent_find(begin(d1), end(d1)) == begin(d1));
 
         auto const d2 = etl::array{T(0), T(2), T(2)};
-        assert(etl::adjacent_find(begin(d2), end(d2)) == begin(d2) + 1);
+        CHECK(etl::adjacent_find(begin(d2), end(d2)) == begin(d2) + 1);
     }
 
     {
@@ -60,10 +60,10 @@ constexpr auto test() -> bool
         auto* res3 = etl::find_if(vec.begin(), vec.end(), [](auto& x) -> bool {
             return static_cast<bool>(static_cast<int>(x) % 2);
         });
-        assert(!(res3 == vec.end()));
+        CHECK(!(res3 == vec.end()));
 
         auto* res4 = etl::find_if(vec.begin(), vec.end(), [](auto& x) -> bool { return static_cast<bool>(x == 100); });
-        assert(res4 == vec.end());
+        CHECK(res4 == vec.end());
     }
 
     {
@@ -76,15 +76,15 @@ constexpr auto test() -> bool
         auto* result5 = etl::find_if_not(vec.begin(), vec.end(), [](auto& x) -> bool {
             return static_cast<bool>(static_cast<int>(x) % 2);
         });
-        assert(!(result5 == vec.end()));
+        CHECK(!(result5 == vec.end()));
 
         auto* result6
             = etl::find_if_not(vec.begin(), vec.end(), [](auto& x) -> bool { return static_cast<bool>(x == 100); });
-        assert(!(result6 == vec.end()));
+        CHECK(!(result6 == vec.end()));
 
         auto* result7
             = etl::find_if_not(vec.begin(), vec.end(), [](auto& x) -> bool { return static_cast<bool>(x != 100); });
-        assert(result7 == vec.end());
+        CHECK(result7 == vec.end());
     }
 
     // empty range
@@ -92,7 +92,7 @@ constexpr auto test() -> bool
         auto tc   = etl::static_vector<T, 16>{};
         auto s    = etl::array{T(2), T(42)};
         auto* res = etl::find_first_of(begin(tc), end(tc), begin(s), end(s));
-        assert(res == end(tc));
+        CHECK(res == end(tc));
     }
 
     // empty matches
@@ -100,7 +100,7 @@ constexpr auto test() -> bool
         auto tc   = etl::static_vector<T, 16>{};
         auto s    = etl::static_vector<T, 16>{};
         auto* res = etl::find_first_of(begin(tc), end(tc), begin(s), end(s));
-        assert(res == end(tc));
+        CHECK(res == end(tc));
     }
 
     // no matches
@@ -108,14 +108,14 @@ constexpr auto test() -> bool
         auto tc   = etl::array{T(0), T(1)};
         auto s    = etl::array{T(2), T(42)};
         auto* res = etl::find_first_of(begin(tc), end(tc), begin(s), end(s));
-        assert(res == end(tc));
+        CHECK(res == end(tc));
     }
 
     // same ranges
     {
         auto tc   = etl::array{T(0), T(1)};
         auto* res = etl::find_first_of(begin(tc), end(tc), begin(tc), end(tc));
-        assert(res == begin(tc));
+        CHECK(res == begin(tc));
     }
 
     // matches
@@ -123,8 +123,8 @@ constexpr auto test() -> bool
         auto tc   = etl::array{T(0), T(1), T(42)};
         auto s    = etl::array{T(2), T(42)};
         auto* res = etl::find_first_of(begin(tc), end(tc), begin(s), end(s));
-        assert(res == end(tc) - 1);
-        assert(*res == T(42));
+        CHECK(res == end(tc) - 1);
+        CHECK(*res == T(42));
     }
 
     return true;
@@ -132,16 +132,16 @@ constexpr auto test() -> bool
 
 constexpr auto test_all() -> bool
 {
-    assert(test<etl::uint8_t>());
-    assert(test<etl::int8_t>());
-    assert(test<etl::uint16_t>());
-    assert(test<etl::int16_t>());
-    assert(test<etl::uint32_t>());
-    assert(test<etl::int32_t>());
-    assert(test<etl::uint64_t>());
-    assert(test<etl::int64_t>());
-    assert(test<float>());
-    assert(test<double>());
+    CHECK(test<etl::uint8_t>());
+    CHECK(test<etl::int8_t>());
+    CHECK(test<etl::uint16_t>());
+    CHECK(test<etl::int16_t>());
+    CHECK(test<etl::uint32_t>());
+    CHECK(test<etl::int32_t>());
+    CHECK(test<etl::uint64_t>());
+    CHECK(test<etl::int64_t>());
+    CHECK(test<float>());
+    CHECK(test<double>());
 
     return true;
 }

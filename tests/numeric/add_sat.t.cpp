@@ -31,25 +31,25 @@ constexpr auto test(auto add) -> bool
 
 constexpr auto test_all() -> bool
 {
-    assert(test<unsigned char>([](auto x, auto y) { return etl::add_sat(x, y); }));
-    assert(test<unsigned short>([](auto x, auto y) { return etl::add_sat(x, y); }));
-    assert(test<unsigned int>([](auto x, auto y) { return etl::add_sat(x, y); }));
-    assert(test<unsigned long>([](auto x, auto y) { return etl::add_sat(x, y); }));
+    CHECK(test<unsigned char>([](auto x, auto y) { return etl::add_sat(x, y); }));
+    CHECK(test<unsigned short>([](auto x, auto y) { return etl::add_sat(x, y); }));
+    CHECK(test<unsigned int>([](auto x, auto y) { return etl::add_sat(x, y); }));
+    CHECK(test<unsigned long>([](auto x, auto y) { return etl::add_sat(x, y); }));
 
-    assert(test<signed char>([](auto x, auto y) { return etl::add_sat(x, y); }));
-    assert(test<signed short>([](auto x, auto y) { return etl::add_sat(x, y); }));
-    assert(test<signed int>([](auto x, auto y) { return etl::add_sat(x, y); }));
-    assert(test<signed long>([](auto x, auto y) { return etl::add_sat(x, y); }));
+    CHECK(test<signed char>([](auto x, auto y) { return etl::add_sat(x, y); }));
+    CHECK(test<signed short>([](auto x, auto y) { return etl::add_sat(x, y); }));
+    CHECK(test<signed int>([](auto x, auto y) { return etl::add_sat(x, y); }));
+    CHECK(test<signed long>([](auto x, auto y) { return etl::add_sat(x, y); }));
 
-    assert(test<unsigned char>([](auto x, auto y) { return etl::detail::add_sat_fallback(x, y); }));
-    assert(test<unsigned short>([](auto x, auto y) { return etl::detail::add_sat_fallback(x, y); }));
-    assert(test<unsigned int>([](auto x, auto y) { return etl::detail::add_sat_fallback(x, y); }));
-    assert(test<unsigned long>([](auto x, auto y) { return etl::detail::add_sat_fallback(x, y); }));
+    CHECK(test<unsigned char>([](auto x, auto y) { return etl::detail::add_sat_fallback(x, y); }));
+    CHECK(test<unsigned short>([](auto x, auto y) { return etl::detail::add_sat_fallback(x, y); }));
+    CHECK(test<unsigned int>([](auto x, auto y) { return etl::detail::add_sat_fallback(x, y); }));
+    CHECK(test<unsigned long>([](auto x, auto y) { return etl::detail::add_sat_fallback(x, y); }));
 
-    assert(test<signed char>([](auto x, auto y) { return etl::detail::add_sat_fallback(x, y); }));
-    assert(test<signed short>([](auto x, auto y) { return etl::detail::add_sat_fallback(x, y); }));
-    assert(test<signed int>([](auto x, auto y) { return etl::detail::add_sat_fallback(x, y); }));
-    assert(test<signed long>([](auto x, auto y) { return etl::detail::add_sat_fallback(x, y); }));
+    CHECK(test<signed char>([](auto x, auto y) { return etl::detail::add_sat_fallback(x, y); }));
+    CHECK(test<signed short>([](auto x, auto y) { return etl::detail::add_sat_fallback(x, y); }));
+    CHECK(test<signed int>([](auto x, auto y) { return etl::detail::add_sat_fallback(x, y); }));
+    CHECK(test<signed long>([](auto x, auto y) { return etl::detail::add_sat_fallback(x, y); }));
 
     return true;
 }

@@ -27,7 +27,7 @@ auto test() -> bool
     auto buffer = etl::array<etl::byte, 64>{};
     auto alloc  = Alloc{buffer};
     auto* ptr   = alloc.allocate(1);
-    assert(ptr != nullptr);
+    CHECK(ptr != nullptr);
     alloc.deallocate(ptr, 1);
 
     return true;
@@ -35,21 +35,21 @@ auto test() -> bool
 
 static auto test_all() -> bool
 {
-    assert(test<etl::int8_t>());
-    assert(test<etl::int16_t>());
-    assert(test<etl::int32_t>());
-    assert(test<etl::int64_t>());
-    assert(test<etl::uint8_t>());
-    assert(test<etl::uint16_t>());
-    assert(test<etl::uint32_t>());
-    assert(test<etl::uint64_t>());
-    assert(test<float>());
-    assert(test<double>());
+    CHECK(test<etl::int8_t>());
+    CHECK(test<etl::int16_t>());
+    CHECK(test<etl::int32_t>());
+    CHECK(test<etl::int64_t>());
+    CHECK(test<etl::uint8_t>());
+    CHECK(test<etl::uint16_t>());
+    CHECK(test<etl::uint32_t>());
+    CHECK(test<etl::uint64_t>());
+    CHECK(test<float>());
+    CHECK(test<double>());
     return true;
 }
 
 auto main() -> int
 {
-    assert(test_all());
+    CHECK(test_all());
     return 0;
 }

@@ -9,22 +9,22 @@
 template <typename T>
 constexpr auto test() -> bool
 {
-    assert(etl::abs<T>(0) == T{0});
-    assert(etl::abs<T>(1) == T{1});
-    assert(etl::abs<T>(-1) == T{1});
-    assert(etl::abs<T>(10) == T{10});
-    assert(etl::abs<T>(-10) == T{10});
+    CHECK(etl::abs<T>(0) == T{0});
+    CHECK(etl::abs<T>(1) == T{1});
+    CHECK(etl::abs<T>(-1) == T{1});
+    CHECK(etl::abs<T>(10) == T{10});
+    CHECK(etl::abs<T>(-10) == T{10});
     return true;
 }
 
 constexpr auto test_all() -> bool
 {
-    assert(test<etl::int8_t>());
-    assert(test<etl::int16_t>());
-    assert(test<etl::int32_t>());
-    assert(test<etl::int64_t>());
-    assert(test<float>());
-    assert(test<double>());
+    CHECK(test<etl::int8_t>());
+    CHECK(test<etl::int16_t>());
+    CHECK(test<etl::int32_t>());
+    CHECK(test<etl::int64_t>());
+    CHECK(test<float>());
+    CHECK(test<double>());
 
     return true;
 }

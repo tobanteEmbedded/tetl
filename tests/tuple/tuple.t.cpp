@@ -30,8 +30,8 @@ constexpr auto test() -> bool
 
     {
         auto t1 = etl::tuple<T, float>{T{1}, 2.0F};
-        assert(etl::get<0>(t1) == T{1});
-        assert(etl::get<1>(t1) == 2.0F);
+        CHECK(etl::get<0>(t1) == T{1});
+        CHECK(etl::get<1>(t1) == 2.0F);
     }
 
     {
@@ -39,34 +39,34 @@ constexpr auto test() -> bool
         using etl::tuple;
         using etl::tuple_element_t;
 
-        assert((is_same_v<tuple_element_t<0, tuple<T, float>>, T>));
-        assert((is_same_v<tuple_element_t<1, tuple<T, float>>, float>));
+        CHECK(is_same_v<tuple_element_t<0, tuple<T, float>>, T>);
+        CHECK(is_same_v<tuple_element_t<1, tuple<T, float>>, float>);
 
-        assert((is_same_v<tuple_element_t<0, tuple<T, int>>, T>));
-        assert((is_same_v<tuple_element_t<1, tuple<T, int>>, int>));
+        CHECK(is_same_v<tuple_element_t<0, tuple<T, int>>, T>);
+        CHECK(is_same_v<tuple_element_t<1, tuple<T, int>>, int>);
 
-        assert((is_same_v<tuple_element_t<0, tuple<double, T>>, double>));
-        assert((is_same_v<tuple_element_t<1, tuple<double, T>>, T>));
+        CHECK(is_same_v<tuple_element_t<0, tuple<double, T>>, double>);
+        CHECK(is_same_v<tuple_element_t<1, tuple<double, T>>, T>);
 
-        assert((is_same_v<tuple_element_t<0, tuple<int, T, float>>, int>));
-        assert((is_same_v<tuple_element_t<1, tuple<int, T, float>>, T>));
-        assert((is_same_v<tuple_element_t<2, tuple<int, T, float>>, float>));
+        CHECK(is_same_v<tuple_element_t<0, tuple<int, T, float>>, int>);
+        CHECK(is_same_v<tuple_element_t<1, tuple<int, T, float>>, T>);
+        CHECK(is_same_v<tuple_element_t<2, tuple<int, T, float>>, float>);
     }
 
     {
 
-        assert((etl::tuple_size_v<etl::tuple<T>> == 1));
-        assert((etl::tuple_size_v<etl::tuple<T, float>> == 2));
-        assert((etl::tuple_size_v<etl::tuple<T, float, char>> == 3));
-        assert((etl::tuple_size_v<etl::tuple<T, float, char, int>> == 4));
+        CHECK(etl::tuple_size_v<etl::tuple<T>> == 1);
+        CHECK(etl::tuple_size_v<etl::tuple<T, float>> == 2);
+        CHECK(etl::tuple_size_v<etl::tuple<T, float, char>> == 3);
+        CHECK(etl::tuple_size_v<etl::tuple<T, float, char, int>> == 4);
     }
 
     {
 
         auto t1 = etl::make_tuple(T{1}, 'a', true);
-        assert(etl::get<0>(t1) == T{1});
-        assert(etl::get<1>(t1) == 'a');
-        assert(etl::get<2>(t1) == true);
+        CHECK(etl::get<0>(t1) == T{1});
+        CHECK(etl::get<1>(t1) == 'a');
+        CHECK(etl::get<2>(t1) == true);
     }
 
     {
@@ -74,9 +74,9 @@ constexpr auto test() -> bool
         using etl::make_tuple;
 
         auto foo = make_from_tuple<Foo<T>>(make_tuple(T{1}, 1.0F, true));
-        assert(foo.f == T{1});
-        assert(foo.s == 1.0F);
-        assert(foo.t);
+        CHECK(foo.f == T{1});
+        CHECK(foo.s == 1.0F);
+        CHECK(foo.t);
     }
 
     {
@@ -84,44 +84,44 @@ constexpr auto test() -> bool
         using etl::tuple;
         using etl::tuple_element_t;
 
-        assert((is_same_v<tuple_element_t<0, tuple<T, float>>, T>));
-        assert((is_same_v<tuple_element_t<1, tuple<T, float>>, float>));
+        CHECK(is_same_v<tuple_element_t<0, tuple<T, float>>, T>);
+        CHECK(is_same_v<tuple_element_t<1, tuple<T, float>>, float>);
 
-        assert((is_same_v<tuple_element_t<0, tuple<T, int>>, T>));
-        assert((is_same_v<tuple_element_t<1, tuple<T, int>>, int>));
+        CHECK(is_same_v<tuple_element_t<0, tuple<T, int>>, T>);
+        CHECK(is_same_v<tuple_element_t<1, tuple<T, int>>, int>);
 
-        assert((is_same_v<tuple_element_t<0, tuple<double, T>>, double>));
-        assert((is_same_v<tuple_element_t<1, tuple<double, T>>, T>));
+        CHECK(is_same_v<tuple_element_t<0, tuple<double, T>>, double>);
+        CHECK(is_same_v<tuple_element_t<1, tuple<double, T>>, T>);
 
-        assert((is_same_v<tuple_element_t<0, tuple<int, T, float>>, int>));
-        assert((is_same_v<tuple_element_t<1, tuple<int, T, float>>, T>));
-        assert((is_same_v<tuple_element_t<2, tuple<int, T, float>>, float>));
+        CHECK(is_same_v<tuple_element_t<0, tuple<int, T, float>>, int>);
+        CHECK(is_same_v<tuple_element_t<1, tuple<int, T, float>>, T>);
+        CHECK(is_same_v<tuple_element_t<2, tuple<int, T, float>>, float>);
 
-        assert((etl::tuple_size_v<tuple<short>> == 1));
-        assert((etl::tuple_size_v<tuple<short, float>> == 2));
-        assert((etl::tuple_size_v<tuple<short, float, T>> == 3));
-        assert((etl::tuple_size_v<tuple<short, float, T, int>> == 4));
+        CHECK(etl::tuple_size_v<tuple<short>> == 1);
+        CHECK(etl::tuple_size_v<tuple<short, float>> == 2);
+        CHECK(etl::tuple_size_v<tuple<short, float, T>> == 3);
+        CHECK(etl::tuple_size_v<tuple<short, float, T, int>> == 4);
 
         auto t = etl::tuple<int, char>{1, 'a'};
         auto b = etl::tuple<int, char>{2, 'b'};
-        assert(etl::get<0>(t) == 1);
-        assert(etl::get<1>(t) == 'a');
-        assert(etl::get<0>(b) == 2);
-        assert(etl::get<1>(b) == 'b');
-        assert(t == t);
-        assert(b == b);
-        assert(t != b);
+        CHECK(etl::get<0>(t) == 1);
+        CHECK(etl::get<1>(t) == 'a');
+        CHECK(etl::get<0>(b) == 2);
+        CHECK(etl::get<1>(b) == 'b');
+        CHECK(t == t);
+        CHECK(b == b);
+        CHECK(t != b);
 
         t.swap(b);
-        assert(etl::get<0>(b) == 1);
-        assert(etl::get<1>(b) == 'a');
-        assert(etl::get<0>(t) == 2);
-        assert(etl::get<1>(t) == 'b');
-        assert(t == t);
-        assert(b == b);
-        assert(t != b);
+        CHECK(etl::get<0>(b) == 1);
+        CHECK(etl::get<1>(b) == 'a');
+        CHECK(etl::get<0>(t) == 2);
+        CHECK(etl::get<1>(t) == 'b');
+        CHECK(t == t);
+        CHECK(b == b);
+        CHECK(t != b);
 
-        assert(etl::get<1>(etl::tuple<int, char>{1, 'c'}) == 'c');
+        CHECK(etl::get<1>(etl::tuple<int, char>{1, 'c'}) == 'c');
     }
 
     return true;
@@ -129,17 +129,17 @@ constexpr auto test() -> bool
 
 constexpr auto test_all() -> bool
 {
-    assert(test<etl::uint8_t>());
-    assert(test<etl::int8_t>());
-    assert(test<etl::uint16_t>());
-    assert(test<etl::int16_t>());
-    assert(test<etl::uint32_t>());
-    assert(test<etl::int32_t>());
-    assert(test<etl::uint64_t>());
-    assert(test<etl::int64_t>());
-    assert(test<float>());
-    assert(test<double>());
-    assert(test<long double>());
+    CHECK(test<etl::uint8_t>());
+    CHECK(test<etl::int8_t>());
+    CHECK(test<etl::uint16_t>());
+    CHECK(test<etl::int16_t>());
+    CHECK(test<etl::uint32_t>());
+    CHECK(test<etl::int32_t>());
+    CHECK(test<etl::uint64_t>());
+    CHECK(test<etl::int64_t>());
+    CHECK(test<float>());
+    CHECK(test<double>());
+    CHECK(test<long double>());
     return true;
 }
 

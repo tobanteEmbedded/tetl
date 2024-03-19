@@ -6,17 +6,17 @@
 template <typename T>
 constexpr auto test() -> bool
 {
-    assert(etl::atoi("0") == T(0));
-    assert(etl::atoi("10") == T(10));
-    assert(etl::atoi("99") == T(99));
-    assert(etl::atoi("143") == T(143));
-    assert(etl::atoi("999") == T(999));
-    assert(etl::atoi("1111") == T(1111));
+    CHECK(etl::atoi("0") == T(0));
+    CHECK(etl::atoi("10") == T(10));
+    CHECK(etl::atoi("99") == T(99));
+    CHECK(etl::atoi("143") == T(143));
+    CHECK(etl::atoi("999") == T(999));
+    CHECK(etl::atoi("1111") == T(1111));
 
 #if not defined(TETL_WORKAROUND_AVR_BROKEN_TESTS)
-    assert(etl::atoi("99999") == T(99999));
-    assert(etl::atoi("999999") == T(999999));
-    assert(etl::atoi("123456789") == T(123456789));
+    CHECK(etl::atoi("99999") == T(99999));
+    CHECK(etl::atoi("999999") == T(999999));
+    CHECK(etl::atoi("123456789") == T(123456789));
 #endif
 
     return true;
@@ -24,9 +24,9 @@ constexpr auto test() -> bool
 
 constexpr auto test_all() -> bool
 {
-    assert(test<int>());
-    assert(test<long>());
-    assert(test<long long>());
+    CHECK(test<int>());
+    CHECK(test<long>());
+    CHECK(test<long long>());
     return true;
 }
 

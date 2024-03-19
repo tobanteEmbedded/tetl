@@ -19,42 +19,42 @@ constexpr auto test() -> bool
     etl::array<T, 4> a{T(2), T(2), T(2), T(2)};
     auto func = [](auto v) { return static_cast<T>(v * 2); };
     transform(begin(a), end(a), begin(a), func);
-    assert((etl::all_of(begin(a), end(a), [](auto v) { return v == 4; })));
+    CHECK((etl::all_of(begin(a), end(a), [](auto v) { return v == 4; })));
 
     etl::static_string<32> str("hello");
     etl::static_vector<T, 8> vec{};
     auto const identity = [](auto c) -> T { return static_cast<T>(c); };
     transform(begin(str), end(str), etl::back_inserter(vec), identity);
 
-    assert((vec[0] == static_cast<T>('h')));
-    assert((vec[1] == static_cast<T>('e')));
-    assert((vec[2] == static_cast<T>('l')));
-    assert((vec[3] == static_cast<T>('l')));
-    assert((vec[4] == static_cast<T>('o')));
+    CHECK(vec[0] == static_cast<T>('h'));
+    CHECK(vec[1] == static_cast<T>('e'));
+    CHECK(vec[2] == static_cast<T>('l'));
+    CHECK(vec[3] == static_cast<T>('l'));
+    CHECK(vec[4] == static_cast<T>('o'));
 
     transform(cbegin(vec), cend(vec), cbegin(vec), begin(vec), etl::plus<T>{});
 
-    assert((vec[0] == static_cast<T>('h' * 2)));
-    assert((vec[1] == static_cast<T>('e' * 2)));
-    assert((vec[2] == static_cast<T>('l' * 2)));
-    assert((vec[3] == static_cast<T>('l' * 2)));
-    assert((vec[4] == static_cast<T>('o' * 2)));
+    CHECK(vec[0] == static_cast<T>('h' * 2));
+    CHECK(vec[1] == static_cast<T>('e' * 2));
+    CHECK(vec[2] == static_cast<T>('l' * 2));
+    CHECK(vec[3] == static_cast<T>('l' * 2));
+    CHECK(vec[4] == static_cast<T>('o' * 2));
 
     return true;
 }
 
 constexpr auto test_all() -> bool
 {
-    assert(test<etl::uint8_t>());
-    assert(test<etl::int8_t>());
-    assert(test<etl::uint16_t>());
-    assert(test<etl::int16_t>());
-    assert(test<etl::uint32_t>());
-    assert(test<etl::int32_t>());
-    assert(test<etl::uint64_t>());
-    assert(test<etl::int64_t>());
-    assert(test<float>());
-    assert(test<double>());
+    CHECK(test<etl::uint8_t>());
+    CHECK(test<etl::int8_t>());
+    CHECK(test<etl::uint16_t>());
+    CHECK(test<etl::int16_t>());
+    CHECK(test<etl::uint32_t>());
+    CHECK(test<etl::int32_t>());
+    CHECK(test<etl::uint64_t>());
+    CHECK(test<etl::int64_t>());
+    CHECK(test<float>());
+    CHECK(test<double>());
 
     return true;
 }

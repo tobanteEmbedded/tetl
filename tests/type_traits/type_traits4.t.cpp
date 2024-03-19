@@ -114,13 +114,13 @@ constexpr auto test() -> bool
 
     using etl::is_trivially_constructible_v;
 
-    assert((is_trivially_constructible_v<T>));
-    assert((is_trivially_constructible_v<T*>));
-    assert((is_trivially_constructible_v<T, T&>));
-    assert((is_trivially_constructible_v<T, T const&>));
+    CHECK(is_trivially_constructible_v<T>);
+    CHECK(is_trivially_constructible_v<T*>);
+    CHECK(is_trivially_constructible_v<T, T&>);
+    CHECK(is_trivially_constructible_v<T, T const&>);
 
-    assert(!(is_trivially_constructible_v<T&>));
-    assert(!(is_trivially_constructible_v<T const&>));
+    CHECK(!(is_trivially_constructible_v<T&>));
+    CHECK(!(is_trivially_constructible_v<T const&>));
 
     class Foo {
         T v1;      // NOLINT
@@ -132,21 +132,21 @@ constexpr auto test() -> bool
         Foo(T n, double f) noexcept : v1(n), v2(f) { }
     };
 
-    assert(!(is_trivially_constructible_v<Foo, T, double>));
-    assert(!(is_trivially_constructible_v<Foo, T>));
+    CHECK(!(is_trivially_constructible_v<Foo, T, double>));
+    CHECK(!(is_trivially_constructible_v<Foo, T>));
 
     using etl::is_nothrow_constructible_v;
 
-    assert((is_nothrow_constructible_v<T>));
-    assert((is_nothrow_constructible_v<T*>));
-    assert((is_nothrow_constructible_v<T, T&>));
-    assert((is_nothrow_constructible_v<T, T const&>));
+    CHECK(is_nothrow_constructible_v<T>);
+    CHECK(is_nothrow_constructible_v<T*>);
+    CHECK(is_nothrow_constructible_v<T, T&>);
+    CHECK(is_nothrow_constructible_v<T, T const&>);
 
-    assert(!(is_nothrow_constructible_v<T&>));
-    assert(!(is_nothrow_constructible_v<T const&>));
+    CHECK(!(is_nothrow_constructible_v<T&>));
+    CHECK(!(is_nothrow_constructible_v<T const&>));
 
-    assert((is_nothrow_constructible_v<Foo, T, double>));
-    assert(!(is_nothrow_constructible_v<Foo, T>));
+    CHECK(is_nothrow_constructible_v<Foo, T, double>);
+    CHECK(!(is_nothrow_constructible_v<Foo, T>));
 
     TEST_IS_TRAIT_CV(is_signed, signed char);
     TEST_IS_TRAIT_CV(is_signed, signed short);
@@ -277,19 +277,19 @@ constexpr auto test() -> bool
 
 constexpr auto test_all() -> bool
 {
-    assert(test<char>());
-    assert(test<etl::uint8_t>());
-    assert(test<etl::uint16_t>());
-    assert(test<etl::uint32_t>());
-    assert(test<etl::uint64_t>());
-    assert(test<etl::int8_t>());
-    assert(test<etl::int16_t>());
-    assert(test<etl::int32_t>());
-    assert(test<etl::int64_t>());
+    CHECK(test<char>());
+    CHECK(test<etl::uint8_t>());
+    CHECK(test<etl::uint16_t>());
+    CHECK(test<etl::uint32_t>());
+    CHECK(test<etl::uint64_t>());
+    CHECK(test<etl::int8_t>());
+    CHECK(test<etl::int16_t>());
+    CHECK(test<etl::int32_t>());
+    CHECK(test<etl::int64_t>());
 
-    assert(test<float>());
-    assert(test<double>());
-    assert(test<long double>());
+    CHECK(test<float>());
+    CHECK(test<double>());
+    CHECK(test<long double>());
 
     return true;
 }

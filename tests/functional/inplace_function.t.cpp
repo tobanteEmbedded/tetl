@@ -15,68 +15,68 @@ auto test() -> bool
 {
     using func_t = etl::inplace_function<T(T), sizeof(void*) * 2U>;
 
-    assert(!static_cast<bool>(etl::inplace_function<T(T)>{}));
-    assert(!static_cast<bool>(etl::inplace_function<T(T)>{nullptr}));
+    CHECK(!static_cast<bool>(etl::inplace_function<T(T)>{}));
+    CHECK(!static_cast<bool>(etl::inplace_function<T(T)>{nullptr}));
 
     auto func = func_t{[](T x) -> T { return static_cast<T>(x + T(1)); }};
-    assert(static_cast<bool>(func));
-    assert(func != nullptr);
-    assert(nullptr != func);
-    assert(!(func == nullptr));
-    assert(!(nullptr == func));
-    assert(func(T(41)) == T(42));
-    assert(etl::invoke(func, T(41)) == T(42));
+    CHECK(static_cast<bool>(func));
+    CHECK(func != nullptr);
+    CHECK(nullptr != func);
+    CHECK(!(func == nullptr));
+    CHECK(!(nullptr == func));
+    CHECK(func(T(41)) == T(42));
+    CHECK(etl::invoke(func, T(41)) == T(42));
 
     auto other = func_t{};
-    assert(other == nullptr);
-    assert(!static_cast<bool>(other));
+    CHECK(other == nullptr);
+    CHECK(!static_cast<bool>(other));
     func.swap(other);
-    assert(static_cast<bool>(other));
-    assert(!static_cast<bool>(func));
-    assert(other(T(41)) == T(42));
-    assert(etl::invoke(other, T(41)) == T(42));
+    CHECK(static_cast<bool>(other));
+    CHECK(!static_cast<bool>(func));
+    CHECK(other(T(41)) == T(42));
+    CHECK(etl::invoke(other, T(41)) == T(42));
 
     swap(other, func);
-    assert(static_cast<bool>(func));
-    assert(!static_cast<bool>(other));
-    assert(func(T(41)) == T(42));
-    assert(etl::invoke(func, T(41)) == T(42));
+    CHECK(static_cast<bool>(func));
+    CHECK(!static_cast<bool>(other));
+    CHECK(func(T(41)) == T(42));
+    CHECK(etl::invoke(func, T(41)) == T(42));
 
     auto copy = func;
-    assert(static_cast<bool>(func));
-    assert(static_cast<bool>(copy));
-    assert(copy(T(41)) == T(42));
+    CHECK(static_cast<bool>(func));
+    CHECK(static_cast<bool>(copy));
+    CHECK(copy(T(41)) == T(42));
 
     auto emptyCopy = other;
-    assert(!static_cast<bool>(emptyCopy));
-    assert(!static_cast<bool>(other));
+    CHECK(!static_cast<bool>(emptyCopy));
+    CHECK(!static_cast<bool>(other));
 
     copy = nullptr;
-    assert(!static_cast<bool>(copy));
+    CHECK(!static_cast<bool>(copy));
 
     copy = etl::move(func);
-    assert(static_cast<bool>(copy));
+    CHECK(static_cast<bool>(copy));
 
     using small_func_t = etl::inplace_function<T(T), sizeof(void*)>;
     auto small         = small_func_t{[](T x) -> T { return x + T(2); }};
     copy               = small;
-    assert(static_cast<bool>(copy));
-    assert(copy(T(1)) == T(3));
+    CHECK(static_cast<bool>(copy));
+    CHECK(copy(T(1)) == T(3));
 
     auto move = func_t{};
     move      = etl::move(small);
-    assert(static_cast<bool>(move));
-    assert(move(T(1)) == T(3));
+    CHECK(static_cast<bool>(move));
+    CHECK(move(T(1)) == T(3));
 
 #if defined(__cpp_exceptions)
     try {
         auto empty = func_t{};
         empty(T{});
-        assert(false);
+        CHECK(false);
     } catch (etl::bad_function_call const& e) {
-        assert(e.what() == "empty inplace_func_vtable"_sv);
+        CHECK(e.what() == "empty inplace_func_vtable"_sv);
     } catch (...) { // NOLINT
-        assert(false);
+        CHECK(false);
     }
 #endif
     return true;
@@ -84,22 +84,22 @@ auto test() -> bool
 
 static auto test_all() -> bool
 {
-    assert(test<etl::int8_t>());
-    assert(test<etl::int16_t>());
-    assert(test<etl::int32_t>());
-    assert(test<etl::int64_t>());
-    assert(test<etl::uint8_t>());
-    assert(test<etl::uint16_t>());
-    assert(test<etl::uint32_t>());
-    assert(test<etl::uint64_t>());
-    assert(test<float>());
-    assert(test<double>());
+    CHECK(test<etl::int8_t>());
+    CHECK(test<etl::int16_t>());
+    CHECK(test<etl::int32_t>());
+    CHECK(test<etl::int64_t>());
+    CHECK(test<etl::uint8_t>());
+    CHECK(test<etl::uint16_t>());
+    CHECK(test<etl::uint32_t>());
+    CHECK(test<etl::uint64_t>());
+    CHECK(test<float>());
+    CHECK(test<double>());
 
     return true;
 }
 
 auto main() -> int
 {
-    assert(test_all());
+    CHECK(test_all());
     return 0;
 }

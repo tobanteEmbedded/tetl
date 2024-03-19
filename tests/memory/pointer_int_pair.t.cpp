@@ -19,14 +19,14 @@ auto test() -> bool
 
         auto ptrValue = T(42);
         pointer_type ptr{&ptrValue, 1U};
-        assert(*ptr.get_pointer() == ptrValue);
-        assert(ptr.get_int() == 1U);
+        CHECK(*ptr.get_pointer() == ptrValue);
+        CHECK(ptr.get_int() == 1U);
 
         auto otherValue = T(143);
         ptr.set_pointer(&otherValue);
         ptr.set_int(2U);
-        assert(*ptr.get_pointer() == otherValue);
-        assert(ptr.get_int() == 2U);
+        CHECK(*ptr.get_pointer() == otherValue);
+        CHECK(ptr.get_int() == 2U);
     }
 
     // nested
@@ -37,26 +37,26 @@ auto test() -> bool
         auto innerValue = T{1};
         auto inner      = inner_type{&innerValue};
         auto outter     = outter_type{inner, true};
-        assert(*inner.get_pointer() == T{1});
-        assert(inner.get_int() == false);
-        assert(outter.get_int() == true);
+        CHECK(*inner.get_pointer() == T{1});
+        CHECK(inner.get_int() == false);
+        CHECK(outter.get_int() == true);
 
         *inner.get_pointer() = T{2};
         inner.set_int(true);
         outter.set_int(false);
 
-        assert(*inner.get_pointer() == T{2});
-        assert(inner.get_int() == true);
-        assert(outter.get_int() == false);
+        CHECK(*inner.get_pointer() == T{2});
+        CHECK(inner.get_int() == true);
+        CHECK(outter.get_int() == false);
 
         auto copy = outter;
-        assert(copy == outter);
-        assert(copy <= outter);
-        assert(copy >= outter);
+        CHECK(copy == outter);
+        CHECK(copy <= outter);
+        CHECK(copy >= outter);
 
-        assert(!(copy != outter));
-        assert(!(copy < outter));
-        assert(!(copy > outter));
+        CHECK(!(copy != outter));
+        CHECK(!(copy < outter));
+        CHECK(!(copy > outter));
     }
 
     return true;
@@ -64,22 +64,22 @@ auto test() -> bool
 
 static auto test_all() -> bool
 {
-    // assert(test<etl::int8_t>());
-    // assert(test<etl::int16_t>());
-    // assert(test<etl::int32_t>());
-    assert(test<etl::int64_t>());
-    // assert(test<etl::uint8_t>());
-    // assert(test<etl::uint16_t>());
-    // assert(test<etl::uint32_t>());
-    assert(test<etl::uint64_t>());
-    // assert(test<float>());
-    assert(test<double>());
+    // CHECK(test<etl::int8_t>());
+    // CHECK(test<etl::int16_t>());
+    // CHECK(test<etl::int32_t>());
+    CHECK(test<etl::int64_t>());
+    // CHECK(test<etl::uint8_t>());
+    // CHECK(test<etl::uint16_t>());
+    // CHECK(test<etl::uint32_t>());
+    CHECK(test<etl::uint64_t>());
+    // CHECK(test<float>());
+    CHECK(test<double>());
     return true;
 }
 
 auto main() -> int
 {
-    assert(test_all());
+    CHECK(test_all());
     return 0;
 }
 #else

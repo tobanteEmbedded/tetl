@@ -21,9 +21,9 @@ constexpr auto test(F func) -> bool
 
 constexpr auto test_all() -> bool
 {
-    assert(test<float>(etl::strtof));
-    assert(test<double>(etl::strtod));
-    assert(test<long double>(etl::strtold));
+    CHECK(test<float>(etl::strtof));
+    CHECK(test<double>(etl::strtod));
+    CHECK(test<long double>(etl::strtold));
     return true;
 }
 

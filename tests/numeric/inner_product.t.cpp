@@ -17,25 +17,25 @@ constexpr auto test() -> bool
     etl::array b{T(5), T(4), T(2), T(3), T(1)};
 
     auto product = etl::inner_product(a.begin(), a.end(), b.begin(), T{0});
-    assert(product == T{21});
+    CHECK(product == T{21});
 
     auto p = etl::inner_product(a.begin(), a.end(), b.begin(), T{0}, etl::plus<T>{}, etl::equal_to<T>{});
-    assert(p == T{2});
+    CHECK(p == T{2});
     return true;
 }
 
 constexpr auto test_all() -> bool
 {
-    assert(test<etl::int8_t>());
-    assert(test<etl::int16_t>());
-    assert(test<etl::int32_t>());
-    assert(test<etl::int64_t>());
-    assert(test<etl::uint8_t>());
-    assert(test<etl::uint16_t>());
-    assert(test<etl::uint32_t>());
-    assert(test<etl::uint64_t>());
-    assert(test<float>());
-    assert(test<double>());
+    CHECK(test<etl::int8_t>());
+    CHECK(test<etl::int16_t>());
+    CHECK(test<etl::int32_t>());
+    CHECK(test<etl::int64_t>());
+    CHECK(test<etl::uint8_t>());
+    CHECK(test<etl::uint16_t>());
+    CHECK(test<etl::uint32_t>());
+    CHECK(test<etl::uint64_t>());
+    CHECK(test<float>());
+    CHECK(test<double>());
 
     return true;
 }

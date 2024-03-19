@@ -13,34 +13,34 @@ constexpr auto test() -> bool
     // {
     //     etl::static_vector<T, 5> vec { 5, T { 2 } };
     //     etl::partial_sum(vec.begin(), vec.end(), vec.begin());
-    //     assert(vec[0] == T { 2 });
-    //     assert(vec[1] == T { 4 });
-    //     assert(vec[2] == T { 6 });
-    //     assert(vec[3] == T { 8 });
+    //     CHECK(vec[0] == T { 2 });
+    //     CHECK(vec[1] == T { 4 });
+    //     CHECK(vec[2] == T { 6 });
+    //     CHECK(vec[3] == T { 8 });
     // }
 
     // // multiplies (pow2)
     // {
     //     etl::static_vector<T, 5> vec { 5, T { 2 } };
     //     etl::partial_sum(begin(vec), end(vec), begin(vec),
-    //     etl::multiplies<>()); assert(vec[0] == T { 2 }); assert(vec[1] == T {
-    //     4 }); assert(vec[2] == T { 8 }); assert(vec[3] == T { 16 });
+    //     etl::multiplies<>()); CHECK(vec[0] == T { 2 }); CHECK(vec[1] == T {
+    //     4 }); CHECK(vec[2] == T { 8 }); CHECK(vec[3] == T { 16 });
     // }
     return true;
 }
 
 constexpr auto test_all() -> bool
 {
-    assert(test<etl::int8_t>());
-    assert(test<etl::int16_t>());
-    assert(test<etl::int32_t>());
-    assert(test<etl::int64_t>());
-    assert(test<etl::uint8_t>());
-    assert(test<etl::uint16_t>());
-    assert(test<etl::uint32_t>());
-    assert(test<etl::uint64_t>());
-    assert(test<float>());
-    assert(test<double>());
+    CHECK(test<etl::int8_t>());
+    CHECK(test<etl::int16_t>());
+    CHECK(test<etl::int32_t>());
+    CHECK(test<etl::int64_t>());
+    CHECK(test<etl::uint8_t>());
+    CHECK(test<etl::uint16_t>());
+    CHECK(test<etl::uint32_t>());
+    CHECK(test<etl::uint64_t>());
+    CHECK(test<float>());
+    CHECK(test<double>());
 
     return true;
 }

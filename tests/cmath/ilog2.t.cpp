@@ -12,22 +12,22 @@ constexpr auto test() -> bool
 {
     static_assert(etl::same_as<decltype(etl::ilog2(etl::declval<Int>())), Int>);
 
-    assert(etl::ilog2(Int(1)) == Int(0));
-    assert(etl::ilog2(Int(2)) == Int(1));
-    assert(etl::ilog2(Int(4)) == Int(2));
-    assert(etl::ilog2(Int(8)) == Int(3));
-    assert(etl::ilog2(Int(16)) == Int(4));
-    assert(etl::ilog2(Int(32)) == Int(5));
-    assert(etl::ilog2(Int(64)) == Int(6));
+    CHECK(etl::ilog2(Int(1)) == Int(0));
+    CHECK(etl::ilog2(Int(2)) == Int(1));
+    CHECK(etl::ilog2(Int(4)) == Int(2));
+    CHECK(etl::ilog2(Int(8)) == Int(3));
+    CHECK(etl::ilog2(Int(16)) == Int(4));
+    CHECK(etl::ilog2(Int(32)) == Int(5));
+    CHECK(etl::ilog2(Int(64)) == Int(6));
 
     if constexpr (sizeof(Int) > 1) {
-        assert(etl::ilog2(Int(128)) == Int(7));
-        assert(etl::ilog2(Int(256)) == Int(8));
-        assert(etl::ilog2(Int(512)) == Int(9));
-        assert(etl::ilog2(Int(1024)) == Int(10));
-        assert(etl::ilog2(Int(2048)) == Int(11));
-        assert(etl::ilog2(Int(4096)) == Int(12));
-        assert(etl::ilog2(Int(8192)) == Int(13));
+        CHECK(etl::ilog2(Int(128)) == Int(7));
+        CHECK(etl::ilog2(Int(256)) == Int(8));
+        CHECK(etl::ilog2(Int(512)) == Int(9));
+        CHECK(etl::ilog2(Int(1024)) == Int(10));
+        CHECK(etl::ilog2(Int(2048)) == Int(11));
+        CHECK(etl::ilog2(Int(4096)) == Int(12));
+        CHECK(etl::ilog2(Int(8192)) == Int(13));
     }
 
     return true;
@@ -47,17 +47,17 @@ auto main() -> int
     static_assert(test<unsigned long>());
     static_assert(test<unsigned long long>());
 
-    assert(test<signed char>());
-    assert(test<signed short>());
-    assert(test<signed int>());
-    assert(test<signed long>());
-    assert(test<signed long long>());
+    CHECK(test<signed char>());
+    CHECK(test<signed short>());
+    CHECK(test<signed int>());
+    CHECK(test<signed long>());
+    CHECK(test<signed long long>());
 
-    assert(test<unsigned char>());
-    assert(test<unsigned short>());
-    assert(test<unsigned int>());
-    assert(test<unsigned long>());
-    assert(test<unsigned long long>());
+    CHECK(test<unsigned char>());
+    CHECK(test<unsigned short>());
+    CHECK(test<unsigned int>());
+    CHECK(test<unsigned long>());
+    CHECK(test<unsigned long long>());
 
     return 0;
 }

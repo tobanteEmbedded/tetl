@@ -11,15 +11,15 @@ template <typename T>
 constexpr auto test_integer() -> bool
 {
     if constexpr (etl::is_signed_v<T>) {
-        assert(etl::midpoint<T>(-3, -4) == -3);
-        assert(etl::midpoint<T>(-4, -3) == -4);
-        assert(etl::midpoint<T>(-3, -4) == -3);
-        assert(etl::midpoint<T>(-4, -3) == -4);
+        CHECK(etl::midpoint<T>(-3, -4) == -3);
+        CHECK(etl::midpoint<T>(-4, -3) == -4);
+        CHECK(etl::midpoint<T>(-3, -4) == -3);
+        CHECK(etl::midpoint<T>(-4, -3) == -4);
     }
 
-    assert(etl::midpoint(T(0), T(2)) == T(1));
-    assert(etl::midpoint(T(0), T(4)) == T(2));
-    assert(etl::midpoint(T(0), T(8)) == T(4));
+    CHECK(etl::midpoint(T(0), T(2)) == T(1));
+    CHECK(etl::midpoint(T(0), T(4)) == T(2));
+    CHECK(etl::midpoint(T(0), T(8)) == T(4));
     return true;
 }
 
@@ -30,29 +30,29 @@ constexpr auto test_floats() -> bool
     {
         auto const a = T(-3.0);
         auto const b = T(-4.0);
-        assert(etl::midpoint(a, b) == T(-3.5));
-        assert(etl::midpoint(b, a) == T(-3.5));
-        assert(etl::midpoint(a, b) == T(-3.5));
-        assert(etl::midpoint(b, a) == T(-3.5));
+        CHECK(etl::midpoint(a, b) == T(-3.5));
+        CHECK(etl::midpoint(b, a) == T(-3.5));
+        CHECK(etl::midpoint(a, b) == T(-3.5));
+        CHECK(etl::midpoint(b, a) == T(-3.5));
     }
 
     {
         auto const small = etl::numeric_limits<T>::min();
-        assert(etl::midpoint(small, small) == small);
+        CHECK(etl::midpoint(small, small) == small);
     }
 
     {
         auto const halfMax = etl::numeric_limits<T>::max() / T(2.0);
         auto const x       = halfMax + T(4.0);
         auto const y       = halfMax + T(8.0);
-        assert(etl::midpoint(x, y) == halfMax + T(6.0));
+        CHECK(etl::midpoint(x, y) == halfMax + T(6.0));
     }
 
     {
         auto const halfMax = etl::numeric_limits<T>::max() / T(2.0);
         auto const x       = -halfMax + T(4.0);
         auto const y       = -halfMax + T(8.0);
-        assert(etl::midpoint(x, y) == -halfMax + T(6.0));
+        CHECK(etl::midpoint(x, y) == -halfMax + T(6.0));
     }
 
     return true;
@@ -63,19 +63,19 @@ constexpr auto test_pointer() -> bool
 {
     {
         T data[] = {T(1), T(2), T(3), T(4)};
-        assert(*etl::midpoint(&data[0], &data[2]) == 2);
-        assert(*etl::midpoint(&data[2], &data[0]) == 2);
-        assert(*etl::midpoint(&data[0], &data[2]) == 2);
-        assert(*etl::midpoint(&data[2], &data[0]) == 2);
+        CHECK(*etl::midpoint(&data[0], &data[2]) == 2);
+        CHECK(*etl::midpoint(&data[2], &data[0]) == 2);
+        CHECK(*etl::midpoint(&data[0], &data[2]) == 2);
+        CHECK(*etl::midpoint(&data[2], &data[0]) == 2);
     }
 
     {
         T data[] = {T(1), T(2), T(3), T(4), T(5)};
-        assert(*etl::midpoint(&data[0], &data[3]) == T(2));
-        assert(*etl::midpoint(&data[0], &data[3]) == T(2));
+        CHECK(*etl::midpoint(&data[0], &data[3]) == T(2));
+        CHECK(*etl::midpoint(&data[0], &data[3]) == T(2));
 
-        assert(*etl::midpoint(&data[3], &data[0]) == T(3));
-        assert(*etl::midpoint(&data[3], &data[0]) == T(3));
+        CHECK(*etl::midpoint(&data[3], &data[0]) == T(3));
+        CHECK(*etl::midpoint(&data[3], &data[0]) == T(3));
     }
 
     return true;
@@ -83,24 +83,24 @@ constexpr auto test_pointer() -> bool
 
 constexpr auto test_all() -> bool
 {
-    assert(test_integer<unsigned char>());
-    assert(test_integer<unsigned short>());
-    assert(test_integer<unsigned int>());
-    assert(test_integer<unsigned long>());
-    assert(test_integer<signed char>());
-    assert(test_integer<signed short>());
-    assert(test_integer<signed int>());
-    assert(test_integer<signed long>());
+    CHECK(test_integer<unsigned char>());
+    CHECK(test_integer<unsigned short>());
+    CHECK(test_integer<unsigned int>());
+    CHECK(test_integer<unsigned long>());
+    CHECK(test_integer<signed char>());
+    CHECK(test_integer<signed short>());
+    CHECK(test_integer<signed int>());
+    CHECK(test_integer<signed long>());
 
-    assert(test_floats<float>());
-    assert(test_floats<double>());
+    CHECK(test_floats<float>());
+    CHECK(test_floats<double>());
 
-    assert(test_pointer<char>());
-    assert(test_pointer<short>());
-    assert(test_pointer<int>());
-    assert(test_pointer<long>());
-    assert(test_pointer<float>());
-    assert(test_pointer<double>());
+    CHECK(test_pointer<char>());
+    CHECK(test_pointer<short>());
+    CHECK(test_pointer<int>());
+    CHECK(test_pointer<long>());
+    CHECK(test_pointer<float>());
+    CHECK(test_pointer<double>());
 
     return true;
 }

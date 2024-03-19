@@ -21,48 +21,48 @@ auto test() -> bool // NOLINT(readability-function-size)
         auto data = etl::array{T(1), T(2), T(3), T(4)};
         auto set  = etl::static_set<T, 4>(begin(data), end(data));
 
-        assert(set.contains(T(3)));
-        assert(set.erase(T(3)) == 1);
-        assert(set.size() == 3);
-        assert(!(set.contains(T(3))));
+        CHECK(set.contains(T(3)));
+        CHECK(set.erase(T(3)) == 1);
+        CHECK(set.size() == 3);
+        CHECK(!(set.contains(T(3))));
 
-        // assert(set.contains(T(1)));
-        // assert(set.erase(begin(set)) == begin(set) + 1);
-        // assert(set.size() == 2);
-        // assert(!(set.contains(T(1))));
+        // CHECK(set.contains(T(1)));
+        // CHECK(set.erase(begin(set)) == begin(set) + 1);
+        // CHECK(set.size() == 2);
+        // CHECK(!(set.contains(T(1))));
 
-        // assert(set.contains(T(2)));
-        // assert(set.erase(begin(set), end(set) - 1) == end(set));
-        // assert(set.size() == 1);
-        // assert(!(set.contains(T(2))));
+        // CHECK(set.contains(T(2)));
+        // CHECK(set.erase(begin(set), end(set) - 1) == end(set));
+        // CHECK(set.size() == 1);
+        // CHECK(!(set.contains(T(2))));
     }
 
     {
         auto set = etl::static_set<T, 4>();
-        assert(set.find(0) == end(set));
+        CHECK(set.find(0) == end(set));
 
         set.emplace(T(0));
-        assert(set.find(0) != end(set));
-        assert(set.find(0) == begin(set));
-        assert(set.find(1) == end(set));
+        CHECK(set.find(0) != end(set));
+        CHECK(set.find(0) == begin(set));
+        CHECK(set.find(1) == end(set));
 
         set.emplace(T(1));
-        assert(set.find(0) != end(set));
-        assert(set.find(1) != end(set));
-        assert(set.find(1) == begin(set) + 1);
+        CHECK(set.find(0) != end(set));
+        CHECK(set.find(1) != end(set));
+        CHECK(set.find(1) == begin(set) + 1);
     }
 
     {
         auto set = etl::static_set<T, 4>();
-        assert(!(set.contains(0)));
+        CHECK(!(set.contains(0)));
 
         set.emplace(T(0));
-        assert(set.contains(0));
-        assert(!(set.contains(1)));
+        CHECK(set.contains(0));
+        CHECK(!(set.contains(1)));
 
         set.emplace(T(1));
-        assert(set.contains(0));
-        assert(set.contains(1));
+        CHECK(set.contains(0));
+        CHECK(set.contains(1));
     }
 
     {
@@ -72,10 +72,10 @@ auto test() -> bool // NOLINT(readability-function-size)
         auto vCmp = set.value_comp();
 
         // Compare functions hould be equal
-        assert((kCmp(T(), T()) == vCmp(T(), T())));
-        assert((kCmp(T(1), T(1)) == vCmp(T(1), T(1))));
-        assert((kCmp(T(1), T(2)) == vCmp(T(1), T(2))));
-        assert((kCmp(T(2), T(1)) == vCmp(T(2), T(1))));
+        CHECK((kCmp(T(), T()) == vCmp(T(), T())));
+        CHECK((kCmp(T(1), T(1)) == vCmp(T(1), T(1))));
+        CHECK((kCmp(T(1), T(2)) == vCmp(T(1), T(2))));
+        CHECK((kCmp(T(2), T(1)) == vCmp(T(2), T(1))));
     }
 
     using etl::swap;
@@ -84,16 +84,16 @@ auto test() -> bool // NOLINT(readability-function-size)
     {
         auto lhs = etl::static_set<T, 4>();
         auto rhs = etl::static_set<T, 4>();
-        assert(lhs.empty());
-        assert(rhs.empty());
+        CHECK(lhs.empty());
+        CHECK(rhs.empty());
 
         swap(lhs, rhs);
-        assert(lhs.empty());
-        assert(rhs.empty());
+        CHECK(lhs.empty());
+        CHECK(rhs.empty());
 
         rhs.swap(lhs);
-        assert(lhs.empty());
-        assert(rhs.empty());
+        CHECK(lhs.empty());
+        CHECK(rhs.empty());
     }
 
     // "same size"
@@ -102,19 +102,19 @@ auto test() -> bool // NOLINT(readability-function-size)
         auto rhsData = etl::array{T(4), T(5), T(6)};
         auto lhs     = etl::static_set<T, 4>(begin(lhsData), end(lhsData));
         auto rhs     = etl::static_set<T, 4>(begin(rhsData), end(rhsData));
-        assert(lhs.size() == rhs.size());
-        assert(*lhs.begin() == T(1));
-        assert(*rhs.begin() == T(4));
+        CHECK(lhs.size() == rhs.size());
+        CHECK(*lhs.begin() == T(1));
+        CHECK(*rhs.begin() == T(4));
 
         lhs.swap(rhs);
-        assert(lhs.size() == rhs.size());
-        assert(*lhs.begin() == T(4));
-        assert(*rhs.begin() == T(1));
+        CHECK(lhs.size() == rhs.size());
+        CHECK(*lhs.begin() == T(4));
+        CHECK(*rhs.begin() == T(1));
 
         swap(rhs, lhs);
-        assert(lhs.size() == rhs.size());
-        assert(*lhs.begin() == T(1));
-        assert(*rhs.begin() == T(4));
+        CHECK(lhs.size() == rhs.size());
+        CHECK(*lhs.begin() == T(1));
+        CHECK(*rhs.begin() == T(4));
     }
 
     // "different size"
@@ -123,37 +123,37 @@ auto test() -> bool // NOLINT(readability-function-size)
         auto rhsData = etl::array{T(4), T(5)};
         auto lhs     = etl::static_set<T, 4>(begin(lhsData), end(lhsData));
         auto rhs     = etl::static_set<T, 4>(begin(rhsData), end(rhsData));
-        assert(lhs.size() == 3);
-        assert(rhs.size() == 2);
-        assert(*lhs.begin() == T(1));
-        assert(*rhs.begin() == T(4));
+        CHECK(lhs.size() == 3);
+        CHECK(rhs.size() == 2);
+        CHECK(*lhs.begin() == T(1));
+        CHECK(*rhs.begin() == T(4));
 
         lhs.swap(rhs);
-        assert(lhs.size() == 2);
-        assert(rhs.size() == 3);
-        assert(*lhs.begin() == T(4));
-        assert(*rhs.begin() == T(1));
+        CHECK(lhs.size() == 2);
+        CHECK(rhs.size() == 3);
+        CHECK(*lhs.begin() == T(4));
+        CHECK(*rhs.begin() == T(1));
 
         swap(rhs, lhs);
-        assert(lhs.size() == 3);
-        assert(rhs.size() == 2);
-        assert(*lhs.begin() == T(1));
-        assert(*rhs.begin() == T(4));
+        CHECK(lhs.size() == 3);
+        CHECK(rhs.size() == 2);
+        CHECK(*lhs.begin() == T(1));
+        CHECK(*rhs.begin() == T(4));
     }
 
     // "empty"
     {
         auto set = etl::static_set<T, 4>{};
-        assert(set.lower_bound(T{}) == set.end());
-        assert(set.upper_bound(T{}) == set.end());
+        CHECK(set.lower_bound(T{}) == set.end());
+        CHECK(set.upper_bound(T{}) == set.end());
     }
 
     // "full"
     {
         auto data = etl::array{T(1), T(2), T(3), T(4)};
         auto set  = etl::static_set<T, 4>{begin(data), end(data)};
-        assert(set.lower_bound(T{1}) == set.begin());
-        assert((set.upper_bound(T{1}) == etl::next(set.begin(), 1)));
+        CHECK(set.lower_bound(T{1}) == set.begin());
+        CHECK((set.upper_bound(T{1}) == etl::next(set.begin(), 1)));
     }
 
     {
@@ -162,8 +162,8 @@ auto test() -> bool // NOLINT(readability-function-size)
 
         auto data = etl::array{str_t{"test"}, str_t{"test"}, str_t{"test"}};
         auto set  = etl::static_set<str_t, 4>{begin(data), end(data)};
-        assert(set.lower_bound("test") == set.begin());
-        assert(set.upper_bound("test") == etl::next(set.begin(), 1));
+        CHECK(set.lower_bound("test") == set.begin());
+        CHECK(set.upper_bound("test") == etl::next(set.begin(), 1));
     }
 
     {
@@ -171,15 +171,15 @@ auto test() -> bool // NOLINT(readability-function-size)
         {
             auto lhs = etl::static_set<T, 2>();
             auto rhs = etl::static_set<T, 2>();
-            assert(lhs == rhs);
-            assert(rhs == lhs);
-            assert(etl::as_const(lhs) == etl::as_const(rhs));
-            assert(etl::as_const(rhs) == etl::as_const(lhs));
+            CHECK(lhs == rhs);
+            CHECK(rhs == lhs);
+            CHECK(etl::as_const(lhs) == etl::as_const(rhs));
+            CHECK(etl::as_const(rhs) == etl::as_const(lhs));
 
-            assert(!(lhs != rhs));
-            assert(!(rhs != lhs));
-            assert(!(etl::as_const(lhs) != etl::as_const(rhs)));
-            assert(!(etl::as_const(rhs) != etl::as_const(lhs)));
+            CHECK(!(lhs != rhs));
+            CHECK(!(rhs != lhs));
+            CHECK(!(etl::as_const(lhs) != etl::as_const(rhs)));
+            CHECK(!(etl::as_const(rhs) != etl::as_const(lhs)));
         }
 
         // "equal"
@@ -188,15 +188,15 @@ auto test() -> bool // NOLINT(readability-function-size)
             auto lhs  = etl::static_set<T, 4>(begin(data), end(data));
             auto rhs  = etl::static_set<T, 4>(begin(data), end(data));
 
-            assert(lhs == rhs);
-            assert(rhs == lhs);
-            assert(etl::as_const(lhs) == etl::as_const(rhs));
-            assert(etl::as_const(rhs) == etl::as_const(lhs));
+            CHECK(lhs == rhs);
+            CHECK(rhs == lhs);
+            CHECK(etl::as_const(lhs) == etl::as_const(rhs));
+            CHECK(etl::as_const(rhs) == etl::as_const(lhs));
 
-            assert(!(lhs != rhs));
-            assert(!(rhs != lhs));
-            assert(!(etl::as_const(lhs) != etl::as_const(rhs)));
-            assert(!(etl::as_const(rhs) != etl::as_const(lhs)));
+            CHECK(!(lhs != rhs));
+            CHECK(!(rhs != lhs));
+            CHECK(!(etl::as_const(lhs) != etl::as_const(rhs)));
+            CHECK(!(etl::as_const(rhs) != etl::as_const(lhs)));
         }
 
         // "not equal"
@@ -205,15 +205,15 @@ auto test() -> bool // NOLINT(readability-function-size)
             auto lhs  = etl::static_set<T, 4>(begin(data), end(data) - 1);
             auto rhs  = etl::static_set<T, 4>(begin(data), end(data));
 
-            assert(lhs != rhs);
-            assert(rhs != lhs);
-            assert(etl::as_const(lhs) != etl::as_const(rhs));
-            assert(etl::as_const(rhs) != etl::as_const(lhs));
+            CHECK(lhs != rhs);
+            CHECK(rhs != lhs);
+            CHECK(etl::as_const(lhs) != etl::as_const(rhs));
+            CHECK(etl::as_const(rhs) != etl::as_const(lhs));
 
-            assert(!(lhs == rhs));
-            assert(!(rhs == lhs));
-            assert(!(etl::as_const(lhs) == etl::as_const(rhs)));
-            assert(!(etl::as_const(rhs) == etl::as_const(lhs)));
+            CHECK(!(lhs == rhs));
+            CHECK(!(rhs == lhs));
+            CHECK(!(etl::as_const(lhs) == etl::as_const(rhs)));
+            CHECK(!(etl::as_const(rhs) == etl::as_const(lhs)));
         }
     }
 
@@ -222,22 +222,22 @@ auto test() -> bool // NOLINT(readability-function-size)
 
 static auto test_all() -> bool
 {
-    assert(test<etl::int8_t>());
-    assert(test<etl::int16_t>());
-    assert(test<etl::int32_t>());
-    assert(test<etl::int64_t>());
-    assert(test<etl::uint8_t>());
-    assert(test<etl::uint16_t>());
-    assert(test<etl::uint32_t>());
-    assert(test<etl::uint64_t>());
-    assert(test<float>());
-    assert(test<double>());
+    CHECK(test<etl::int8_t>());
+    CHECK(test<etl::int16_t>());
+    CHECK(test<etl::int32_t>());
+    CHECK(test<etl::int64_t>());
+    CHECK(test<etl::uint8_t>());
+    CHECK(test<etl::uint16_t>());
+    CHECK(test<etl::uint32_t>());
+    CHECK(test<etl::uint64_t>());
+    CHECK(test<float>());
+    CHECK(test<double>());
     return true;
 }
 
 auto main() -> int
 {
-    assert(test_all());
+    CHECK(test_all());
 
     // TODO: [tobi] Enable constexpr tests
     // static_assert(test_all());

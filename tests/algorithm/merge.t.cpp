@@ -17,42 +17,42 @@ constexpr auto test() -> bool
     {
         auto a = etl::array{T(0), T(0), T(0)};
         auto b = etl::array{T(1), T(1), T(1)};
-        assert((etl::is_sorted(begin(a), end(a))));
-        assert((etl::is_sorted(begin(b), end(b))));
+        CHECK((etl::is_sorted(begin(a), end(a))));
+        CHECK((etl::is_sorted(begin(b), end(b))));
 
         auto r = etl::static_vector<T, a.size() + b.size()>{};
         etl::merge(begin(a), end(a), begin(b), end(b), etl::back_inserter(r));
-        assert((r.size() == 6));
-        assert((etl::is_sorted(begin(r), end(r))));
+        CHECK((r.size() == 6));
+        CHECK((etl::is_sorted(begin(r), end(r))));
     }
 
     // with overlap
     {
         auto a = etl::array{T(0), T(1), T(2)};
         auto b = etl::array{T(1), T(2), T(3)};
-        assert((etl::is_sorted(begin(a), end(a))));
-        assert((etl::is_sorted(begin(b), end(b))));
+        CHECK((etl::is_sorted(begin(a), end(a))));
+        CHECK((etl::is_sorted(begin(b), end(b))));
 
         auto r = etl::static_vector<T, a.size() + b.size()>{};
         etl::merge(begin(a), end(a), begin(b), end(b), etl::back_inserter(r));
-        assert((r.size() == 6));
-        assert((etl::is_sorted(begin(r), end(r))));
+        CHECK((r.size() == 6));
+        CHECK((etl::is_sorted(begin(r), end(r))));
     }
     return true;
 }
 
 constexpr auto test_all() -> bool
 {
-    assert(test<etl::uint8_t>());
-    assert(test<etl::int8_t>());
-    assert(test<etl::uint16_t>());
-    assert(test<etl::int16_t>());
-    assert(test<etl::uint32_t>());
-    assert(test<etl::int32_t>());
-    assert(test<etl::uint64_t>());
-    assert(test<etl::int64_t>());
-    assert(test<float>());
-    assert(test<double>());
+    CHECK(test<etl::uint8_t>());
+    CHECK(test<etl::int8_t>());
+    CHECK(test<etl::uint16_t>());
+    CHECK(test<etl::int16_t>());
+    CHECK(test<etl::uint32_t>());
+    CHECK(test<etl::int32_t>());
+    CHECK(test<etl::uint64_t>());
+    CHECK(test<etl::int64_t>());
+    CHECK(test<float>());
+    CHECK(test<double>());
 
     return true;
 }

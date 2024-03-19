@@ -46,12 +46,12 @@ constexpr auto test() -> bool
         decltype(source) d{};
         etl::move(begin(source), end(source), begin(d));
 
-        // assert
+        // CHECK
         using etl::all_of;
 
-        assert((all_of(begin(d), end(d), [](auto const& s) { return s.move; })));
-        assert((all_of(begin(d), end(d), [](auto const& s) { return !s.copy; })));
-        assert((all_of(begin(d), end(d), [](auto const& s) { return s.data == 1; })));
+        CHECK((all_of(begin(d), end(d), [](auto const& s) { return s.move; })));
+        CHECK((all_of(begin(d), end(d), [](auto const& s) { return !s.copy; })));
+        CHECK((all_of(begin(d), end(d), [](auto const& s) { return s.data == 1; })));
     }
 
     // move backward
@@ -61,15 +61,15 @@ constexpr auto test() -> bool
         decltype(source) d{};
         etl::move_backward(begin(source), end(source), end(d));
 
-        // assert
+        // CHECK
         using etl::all_of;
 
-        assert(all_of(begin(d), end(d), [](auto const& s) { return s.move; }));
-        assert(all_of(begin(d), end(d), [](auto const& s) { return !s.copy; }));
-        assert(all_of(begin(d), end(d), [](auto const& s) { return s.data != 0; }));
-        assert(d[0].data == T(1));
-        assert(d[1].data == T(2));
-        assert(d[2].data == T(3));
+        CHECK(all_of(begin(d), end(d), [](auto const& s) { return s.move; }));
+        CHECK(all_of(begin(d), end(d), [](auto const& s) { return !s.copy; }));
+        CHECK(all_of(begin(d), end(d), [](auto const& s) { return s.data != 0; }));
+        CHECK(d[0].data == T(1));
+        CHECK(d[1].data == T(2));
+        CHECK(d[2].data == T(3));
     }
 
     return true;
@@ -77,16 +77,16 @@ constexpr auto test() -> bool
 
 constexpr auto test_all() -> bool
 {
-    assert(test<etl::uint8_t>());
-    assert(test<etl::int8_t>());
-    assert(test<etl::uint16_t>());
-    assert(test<etl::int16_t>());
-    assert(test<etl::uint32_t>());
-    assert(test<etl::int32_t>());
-    assert(test<etl::uint64_t>());
-    assert(test<etl::int64_t>());
-    assert(test<float>());
-    assert(test<double>());
+    CHECK(test<etl::uint8_t>());
+    CHECK(test<etl::int8_t>());
+    CHECK(test<etl::uint16_t>());
+    CHECK(test<etl::int16_t>());
+    CHECK(test<etl::uint32_t>());
+    CHECK(test<etl::int32_t>());
+    CHECK(test<etl::uint64_t>());
+    CHECK(test<etl::int64_t>());
+    CHECK(test<float>());
+    CHECK(test<double>());
 
     return true;
 }

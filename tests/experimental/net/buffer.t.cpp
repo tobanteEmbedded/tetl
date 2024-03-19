@@ -12,20 +12,20 @@ static auto test_all() -> bool
 {
     {
         auto const buffer = etl::experimental::net::mutable_buffer{};
-        assert((buffer.data() == nullptr));
-        assert((buffer.size() == 0));
+        CHECK(buffer.data() == nullptr);
+        CHECK(buffer.size() == 0);
     }
     {
         auto mem = etl::array<char, 32>{};
         auto buf = etl::experimental::net::make_buffer(mem.data(), mem.size());
-        assert((mem.data() == buf.data()));
-        assert((mem.size() == buf.size()));
+        CHECK(mem.data() == buf.data());
+        CHECK(mem.size() == buf.size());
     }
     {
         auto mem = etl::array<char, 32>{};
         auto buf = etl::experimental::net::make_buffer(mem.data(), mem.size());
         buf += 4;
-        assert((mem.data() != buf.data()));
+        CHECK(mem.data() != buf.data());
     }
     {
         auto mem = etl::array<char, 32>{};
@@ -33,31 +33,31 @@ static auto test_all() -> bool
 
         {
             auto newBuf = buf + 4;
-            assert((newBuf.size() == buf.size() - 4));
+            CHECK(newBuf.size() == buf.size() - 4);
         }
 
         {
             auto newBuf = 8 + buf;
-            assert((newBuf.size() == buf.size() - 8));
+            CHECK(newBuf.size() == buf.size() - 8);
         }
     }
     {
         auto const buf = etl::experimental::net::const_buffer{};
-        assert((buf.data() == nullptr));
-        assert((buf.size() == 0));
+        CHECK(buf.data() == nullptr);
+        CHECK(buf.size() == 0);
     }
     {
         auto const mem = etl::array<char, 32>{};
         auto buf       = etl::experimental::net::make_buffer(mem.data(), mem.size());
-        assert((mem.data() == buf.data()));
-        assert((mem.size() == buf.size()));
+        CHECK(mem.data() == buf.data());
+        CHECK(mem.size() == buf.size());
     }
     {
         auto const mem = etl::array<char, 32>{};
         auto buf       = etl::experimental::net::make_buffer(mem.data(), mem.size());
         buf += 4;
-        assert((mem.data() != buf.data()));
-        assert((mem.size() - 4 == buf.size()));
+        CHECK(mem.data() != buf.data());
+        CHECK(mem.size() - 4 == buf.size());
     }
 
     {
@@ -65,10 +65,10 @@ static auto test_all() -> bool
         auto buf       = etl::experimental::net::make_buffer(mem.data(), mem.size());
 
         auto newBuf1 = buf + 4;
-        assert((newBuf1.size() == buf.size() - 4));
+        CHECK(newBuf1.size() == buf.size() - 4);
 
         auto newBuf2 = 8 + buf;
-        assert((newBuf2.size() == buf.size() - 8));
+        CHECK(newBuf2.size() == buf.size() - 8);
     }
 
     return true;
@@ -76,7 +76,7 @@ static auto test_all() -> bool
 
 auto main() -> int
 {
-    assert(test_all());
+    CHECK(test_all());
     // static_assert(test_all());
     return 0;
 }

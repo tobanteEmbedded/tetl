@@ -17,10 +17,10 @@ constexpr auto test() -> bool
         etl::iota(begin(data), end(data), T{0});
         etl::reverse(begin(data), end(data));
 
-        assert(data[0] == 3);
-        assert(data[1] == 2);
-        assert(data[2] == 1);
-        assert(data[3] == 0);
+        CHECK(data[0] == 3);
+        CHECK(data[1] == 2);
+        CHECK(data[2] == 1);
+        CHECK(data[3] == 0);
     }
 
     // struct
@@ -36,8 +36,8 @@ constexpr auto test() -> bool
 
         etl::reverse(begin(arr), end(arr));
 
-        assert(arr[0].data == T(2));
-        assert(arr[1].data == T(1));
+        CHECK(arr[0].data == T(2));
+        CHECK(arr[1].data == T(1));
     }
     // built-in
     {
@@ -47,10 +47,10 @@ constexpr auto test() -> bool
         auto destination = etl::array<T, 4>{};
         etl::reverse_copy(begin(source), end(source), begin(destination));
 
-        assert(destination[0] == 3);
-        assert(destination[1] == 2);
-        assert(destination[2] == 1);
-        assert(destination[3] == 0);
+        CHECK(destination[0] == 3);
+        CHECK(destination[1] == 2);
+        CHECK(destination[2] == 1);
+        CHECK(destination[3] == 0);
     }
 
     // struct
@@ -67,8 +67,8 @@ constexpr auto test() -> bool
         decltype(source) destination{};
         etl::reverse_copy(begin(source), end(source), begin(destination));
 
-        assert(destination[0].data == T(2));
-        assert(destination[1].data == T(1));
+        CHECK(destination[0].data == T(2));
+        CHECK(destination[1].data == T(1));
     }
 
     return true;
@@ -76,16 +76,16 @@ constexpr auto test() -> bool
 
 constexpr auto test_all() -> bool
 {
-    assert(test<etl::uint8_t>());
-    assert(test<etl::int8_t>());
-    assert(test<etl::uint16_t>());
-    assert(test<etl::int16_t>());
-    assert(test<etl::uint32_t>());
-    assert(test<etl::int32_t>());
-    assert(test<etl::uint64_t>());
-    assert(test<etl::int64_t>());
-    assert(test<float>());
-    assert(test<double>());
+    CHECK(test<etl::uint8_t>());
+    CHECK(test<etl::int8_t>());
+    CHECK(test<etl::uint16_t>());
+    CHECK(test<etl::int16_t>());
+    CHECK(test<etl::uint32_t>());
+    CHECK(test<etl::int32_t>());
+    CHECK(test<etl::uint64_t>());
+    CHECK(test<etl::int64_t>());
+    CHECK(test<float>());
+    CHECK(test<double>());
 
     return true;
 }

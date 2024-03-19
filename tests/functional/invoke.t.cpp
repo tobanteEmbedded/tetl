@@ -30,49 +30,49 @@ template <typename T>
 constexpr auto test() -> bool
 {
     auto lambda = [](T x) -> T { return x; };
-    assert(etl::invoke(lambda, T(1)) == T(1));
-    assert(etl::invoke([]() { return T(42); }) == T(42));
+    CHECK(etl::invoke(lambda, T(1)) == T(1));
+    CHECK(etl::invoke([]() { return T(42); }) == T(42));
 
-    assert(etl::invoke(get_num<T>, T(42)) == T(42));
-    assert(etl::invoke(&Class<T>::get_num, Class<T>{0}, T(42)) == T(42));
-    assert(etl::invoke(&Class<T>::num, Class<T>{2}) == T(2));
+    CHECK(etl::invoke(get_num<T>, T(42)) == T(42));
+    CHECK(etl::invoke(&Class<T>::get_num, Class<T>{0}, T(42)) == T(42));
+    CHECK(etl::invoke(&Class<T>::num, Class<T>{2}) == T(2));
 
     auto c   = Class<T>{0};
     auto ref = etl::ref(c);
-    assert(etl::invoke(&Class<T>::get_num, ref, T(42)) == T(42));
-    assert(etl::invoke(&Class<T>::num, ref) == T(0));
+    CHECK(etl::invoke(&Class<T>::get_num, ref, T(42)) == T(42));
+    CHECK(etl::invoke(&Class<T>::num, ref) == T(0));
 
     auto cref = etl::cref(c);
-    assert(etl::invoke(&Class<T>::get_num, cref, T(42)) == T(42));
-    assert(etl::invoke(&Class<T>::num, cref) == T(0));
+    CHECK(etl::invoke(&Class<T>::get_num, cref, T(42)) == T(42));
+    CHECK(etl::invoke(&Class<T>::num, cref) == T(0));
 
     // Using with a free function:
     auto isSame   = [](T lhs, T rhs) { return etl::equal_to{}(lhs, rhs); };
     auto isDiffer = etl::not_fn(isSame);
-    assert(isDiffer(T(6), T(9)));
-    assert(not isDiffer(T(8), T(8)));
-    assert(etl::as_const(isDiffer)(T(6), T(9)));
-    assert(not etl::as_const(isDiffer)(T(8), T(8)));
+    CHECK(isDiffer(T(6), T(9)));
+    CHECK(not isDiffer(T(8), T(8)));
+    CHECK(etl::as_const(isDiffer)(T(6), T(9)));
+    CHECK(not etl::as_const(isDiffer)(T(8), T(8)));
 
     auto isDifferStateless = etl::not_fn<isSame>();
-    assert(isDifferStateless(T(6), T(9)));
-    assert(not isDifferStateless(T(8), T(8)));
+    CHECK(isDifferStateless(T(6), T(9)));
+    CHECK(not isDifferStateless(T(8), T(8)));
 
     return true;
 }
 
 constexpr auto test_all() -> bool
 {
-    assert(test<etl::int8_t>());
-    assert(test<etl::int16_t>());
-    assert(test<etl::int32_t>());
-    assert(test<etl::int64_t>());
-    assert(test<etl::uint8_t>());
-    assert(test<etl::uint16_t>());
-    assert(test<etl::uint32_t>());
-    assert(test<etl::uint64_t>());
-    assert(test<float>());
-    assert(test<double>());
+    CHECK(test<etl::int8_t>());
+    CHECK(test<etl::int16_t>());
+    CHECK(test<etl::int32_t>());
+    CHECK(test<etl::int64_t>());
+    CHECK(test<etl::uint8_t>());
+    CHECK(test<etl::uint16_t>());
+    CHECK(test<etl::uint32_t>());
+    CHECK(test<etl::uint64_t>());
+    CHECK(test<float>());
+    CHECK(test<double>());
 
     return true;
 }

@@ -23,19 +23,19 @@ constexpr auto test() -> bool
     {
         etl::array a{T(2), T(4), T(6)};
         adjacent_difference(a.begin(), a.end(), a.begin());
-        assert(a[0] == 2);
-        assert(a[1] == 2);
-        assert(a[2] == 2);
+        CHECK(a[0] == 2);
+        CHECK(a[1] == 2);
+        CHECK(a[2] == 2);
     }
 
     // "cppreference.com example fibonacci"
     {
         etl::array<T, 4> a{T(1)};
         adjacent_difference(begin(a), prev(end(a)), next(begin(a)), plus<T>{});
-        assert(a[0] == 1);
-        assert(a[1] == 1);
-        assert(a[2] == 2);
-        assert(a[3] == 3);
+        CHECK(a[0] == 1);
+        CHECK(a[1] == 1);
+        CHECK(a[2] == 2);
+        CHECK(a[3] == 3);
     }
 
     return true;
@@ -43,16 +43,16 @@ constexpr auto test() -> bool
 
 constexpr auto test_all() -> bool
 {
-    assert(test<etl::int8_t>());
-    assert(test<etl::int16_t>());
-    assert(test<etl::int32_t>());
-    assert(test<etl::int64_t>());
-    assert(test<etl::uint8_t>());
-    assert(test<etl::uint16_t>());
-    assert(test<etl::uint32_t>());
-    assert(test<etl::uint64_t>());
-    assert(test<float>());
-    assert(test<double>());
+    CHECK(test<etl::int8_t>());
+    CHECK(test<etl::int16_t>());
+    CHECK(test<etl::int32_t>());
+    CHECK(test<etl::int64_t>());
+    CHECK(test<etl::uint8_t>());
+    CHECK(test<etl::uint16_t>());
+    CHECK(test<etl::uint32_t>());
+    CHECK(test<etl::uint64_t>());
+    CHECK(test<float>());
+    CHECK(test<double>());
 
     return true;
 }

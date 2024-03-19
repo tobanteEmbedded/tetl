@@ -7,14 +7,14 @@
 template <typename T>
 constexpr auto test() -> bool
 {
-    assert(etl::isnan(NAN));
+    CHECK(etl::isnan(NAN));
 
-    assert(!etl::isnan(T{0}));
-    assert(!etl::isnan(T{1}));
-    assert(!etl::isnan(INFINITY));
-    assert(!etl::isnan(HUGE_VAL));
-    assert(!etl::isnan(HUGE_VALF));
-    assert(!etl::isnan(HUGE_VALL));
+    CHECK(!etl::isnan(T{0}));
+    CHECK(!etl::isnan(T{1}));
+    CHECK(!etl::isnan(INFINITY));
+    CHECK(!etl::isnan(HUGE_VAL));
+    CHECK(!etl::isnan(HUGE_VALF));
+    CHECK(!etl::isnan(HUGE_VALL));
     return true;
 }
 
@@ -23,8 +23,8 @@ auto main() -> int
     static_assert(test<float>());
     static_assert(test<double>());
     static_assert(test<long double>());
-    assert(test<float>());
-    assert(test<double>());
-    assert(test<long double>());
+    CHECK(test<float>());
+    CHECK(test<double>());
+    CHECK(test<long double>());
     return 0;
 }

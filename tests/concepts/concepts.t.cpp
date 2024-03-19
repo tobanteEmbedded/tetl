@@ -30,78 +30,78 @@ constexpr auto destructible_test(etl::destructible auto /*v*/) { return true; }
 
 constexpr auto test() -> bool
 {
-    assert(floating_point_test(143.0));
-    assert(floating_point_test(143.0F));
-    assert(floating_point_test(143.0L));
+    CHECK(floating_point_test(143.0));
+    CHECK(floating_point_test(143.0F));
+    CHECK(floating_point_test(143.0L));
 
-    assert(!floating_point_test(etl::int8_t(42)));
-    assert(!floating_point_test(etl::uint8_t(42)));
-    assert(!floating_point_test(etl::int16_t(143)));
-    assert(!floating_point_test(etl::uint16_t(143)));
-    assert(!floating_point_test(etl::int32_t(143)));
-    assert(!floating_point_test(etl::uint32_t(143)));
-    assert(!floating_point_test(etl::int64_t(143)));
-    assert(!floating_point_test(etl::uint64_t(143)));
-    assert(!floating_point_test(143));
-    assert(!floating_point_test(143U));
+    CHECK(!floating_point_test(etl::int8_t(42)));
+    CHECK(!floating_point_test(etl::uint8_t(42)));
+    CHECK(!floating_point_test(etl::int16_t(143)));
+    CHECK(!floating_point_test(etl::uint16_t(143)));
+    CHECK(!floating_point_test(etl::int32_t(143)));
+    CHECK(!floating_point_test(etl::uint32_t(143)));
+    CHECK(!floating_point_test(etl::int64_t(143)));
+    CHECK(!floating_point_test(etl::uint64_t(143)));
+    CHECK(!floating_point_test(143));
+    CHECK(!floating_point_test(143U));
 
-    assert(integral_test(etl::int8_t(42)));
-    assert(integral_test(etl::uint8_t(42)));
-    assert(integral_test(etl::int16_t(143)));
-    assert(integral_test(etl::uint16_t(143)));
-    assert(integral_test(etl::int32_t(143)));
-    assert(integral_test(etl::uint32_t(143)));
-    assert(integral_test(etl::int64_t(143)));
-    assert(integral_test(etl::uint64_t(143)));
-    assert(integral_test(143));
-    assert(integral_test(143U));
+    CHECK(integral_test(etl::int8_t(42)));
+    CHECK(integral_test(etl::uint8_t(42)));
+    CHECK(integral_test(etl::int16_t(143)));
+    CHECK(integral_test(etl::uint16_t(143)));
+    CHECK(integral_test(etl::int32_t(143)));
+    CHECK(integral_test(etl::uint32_t(143)));
+    CHECK(integral_test(etl::int64_t(143)));
+    CHECK(integral_test(etl::uint64_t(143)));
+    CHECK(integral_test(143));
+    CHECK(integral_test(143U));
 
-    assert(!integral_test(143.0));
-    assert(!integral_test(143.0F));
-    assert(!integral_test(143.0L));
+    CHECK(!integral_test(143.0));
+    CHECK(!integral_test(143.0F));
+    CHECK(!integral_test(143.0L));
 
-    assert(signed_integral_test(etl::int8_t(42)));
-    assert(signed_integral_test(etl::int16_t(143)));
-    assert(signed_integral_test(etl::int32_t(143)));
-    assert(signed_integral_test(etl::int64_t(143)));
-    assert(signed_integral_test(143));
+    CHECK(signed_integral_test(etl::int8_t(42)));
+    CHECK(signed_integral_test(etl::int16_t(143)));
+    CHECK(signed_integral_test(etl::int32_t(143)));
+    CHECK(signed_integral_test(etl::int64_t(143)));
+    CHECK(signed_integral_test(143));
 
-    assert(!signed_integral_test(etl::uint8_t(42)));
-    assert(!signed_integral_test(etl::uint16_t(143)));
-    assert(!signed_integral_test(etl::uint32_t(143)));
-    assert(!signed_integral_test(etl::uint64_t(143)));
-    assert(!signed_integral_test(143U));
-    assert(!signed_integral_test(143.0));
-    assert(!signed_integral_test(143.0F));
-    assert(!signed_integral_test(143.0L));
+    CHECK(!signed_integral_test(etl::uint8_t(42)));
+    CHECK(!signed_integral_test(etl::uint16_t(143)));
+    CHECK(!signed_integral_test(etl::uint32_t(143)));
+    CHECK(!signed_integral_test(etl::uint64_t(143)));
+    CHECK(!signed_integral_test(143U));
+    CHECK(!signed_integral_test(143.0));
+    CHECK(!signed_integral_test(143.0F));
+    CHECK(!signed_integral_test(143.0L));
 
-    assert(unsigned_integral_test(etl::uint8_t(42)));
-    assert(unsigned_integral_test(etl::uint16_t(143)));
-    assert(unsigned_integral_test(etl::uint32_t(143)));
-    assert(unsigned_integral_test(etl::uint64_t(143)));
-    assert(unsigned_integral_test(143U));
+    CHECK(unsigned_integral_test(etl::uint8_t(42)));
+    CHECK(unsigned_integral_test(etl::uint16_t(143)));
+    CHECK(unsigned_integral_test(etl::uint32_t(143)));
+    CHECK(unsigned_integral_test(etl::uint64_t(143)));
+    CHECK(unsigned_integral_test(143U));
 
-    assert(!unsigned_integral_test(etl::int8_t(42)));
-    assert(!unsigned_integral_test(etl::int16_t(143)));
-    assert(!unsigned_integral_test(etl::int32_t(143)));
-    assert(!unsigned_integral_test(etl::int64_t(143)));
-    assert(!unsigned_integral_test(143));
-    assert(!unsigned_integral_test(143.0));
-    assert(!unsigned_integral_test(143.0F));
-    assert(!unsigned_integral_test(143.0L));
+    CHECK(!unsigned_integral_test(etl::int8_t(42)));
+    CHECK(!unsigned_integral_test(etl::int16_t(143)));
+    CHECK(!unsigned_integral_test(etl::int32_t(143)));
+    CHECK(!unsigned_integral_test(etl::int64_t(143)));
+    CHECK(!unsigned_integral_test(143));
+    CHECK(!unsigned_integral_test(143.0));
+    CHECK(!unsigned_integral_test(143.0F));
+    CHECK(!unsigned_integral_test(143.0L));
 
-    assert(destructible_test(etl::uint8_t(42)));
-    assert(destructible_test(etl::uint16_t(143)));
-    assert(destructible_test(etl::uint32_t(143)));
-    assert(destructible_test(etl::uint64_t(143)));
-    assert(destructible_test(143U));
+    CHECK(destructible_test(etl::uint8_t(42)));
+    CHECK(destructible_test(etl::uint16_t(143)));
+    CHECK(destructible_test(etl::uint32_t(143)));
+    CHECK(destructible_test(etl::uint64_t(143)));
+    CHECK(destructible_test(143U));
 
     return true;
 }
 
 auto main() -> int
 {
-    assert(test());
+    CHECK(test());
     static_assert(test());
     return 0;
 }

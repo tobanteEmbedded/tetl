@@ -15,41 +15,41 @@ auto test() -> bool
         {
             auto vec  = etl::static_vector<T, 5>{};
             auto iter = etl::back_inserter(vec);
-            assert(vec.size() == 0);
+            CHECK(vec.size() == 0);
             iter = T{1};
-            assert(vec.size() == 1);
+            CHECK(vec.size() == 1);
         }
 
         // "insert lvalue"
         {
             auto vec  = etl::static_vector<T, 5>{};
             auto iter = etl::back_inserter(vec);
-            assert(vec.size() == 0);
+            CHECK(vec.size() == 0);
             auto const val = T{42};
             iter           = val;
-            assert(vec.size() == 1);
+            CHECK(vec.size() == 1);
         }
 
         // "increment/decrement/dereference should not change state (no-op)"
         {
             auto vec  = etl::static_vector<T, 5>{};
             auto iter = etl::back_inserter(vec);
-            assert(vec.size() == 0);
+            CHECK(vec.size() == 0);
             auto const val = T{42};
             iter           = val;
-            assert(vec.size() == 1);
-            assert(&++iter == &iter); // NOLINT
-            assert(vec.size() == 1);
+            CHECK(vec.size() == 1);
+            CHECK(&++iter == &iter); // NOLINT
+            CHECK(vec.size() == 1);
             *iter;
-            assert(vec.size() == 1);
+            CHECK(vec.size() == 1);
         }
 
         // front_inserter
         {
             auto vec  = etl::static_vector<T, 5>{};
             auto iter = etl::front_inserter(vec);
-            assert(&++iter == &iter);    // NOLINT
-            assert(&++iter == &(*iter)); // NOLINT
+            CHECK(&++iter == &iter);    // NOLINT
+            CHECK(&++iter == &(*iter)); // NOLINT
         }
     }
 
@@ -58,22 +58,22 @@ auto test() -> bool
 
 static auto test_all() -> bool
 {
-    assert(test<etl::int8_t>());
-    assert(test<etl::int16_t>());
-    assert(test<etl::int32_t>());
-    assert(test<etl::int64_t>());
-    assert(test<etl::uint8_t>());
-    assert(test<etl::uint16_t>());
-    assert(test<etl::uint32_t>());
-    assert(test<etl::uint64_t>());
-    assert(test<float>());
-    assert(test<double>());
+    CHECK(test<etl::int8_t>());
+    CHECK(test<etl::int16_t>());
+    CHECK(test<etl::int32_t>());
+    CHECK(test<etl::int64_t>());
+    CHECK(test<etl::uint8_t>());
+    CHECK(test<etl::uint16_t>());
+    CHECK(test<etl::uint32_t>());
+    CHECK(test<etl::uint64_t>());
+    CHECK(test<float>());
+    CHECK(test<double>());
     return true;
 }
 
 auto main() -> int
 {
-    assert(test_all());
+    CHECK(test_all());
 
     // TODO: [tobi] Enable constexpr tests
     // static_assert(test_all());

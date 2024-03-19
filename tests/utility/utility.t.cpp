@@ -16,24 +16,24 @@ constexpr auto test() -> bool
     {
         auto original = T{42};
         auto const b  = etl::exchange(original, T{43});
-        assert(original == T{43});
-        assert(b == T{42});
+        CHECK(original == T{43});
+        CHECK(b == T{42});
 
         auto const c = etl::exchange(original, T{44});
-        assert(original == T{44});
-        assert(c == T{43});
+        CHECK(original == T{44});
+        CHECK(c == T{43});
     }
 
     // as_const
     {
         auto original = T{42};
-        assert(!(etl::is_const_v<decltype(original)>));
+        CHECK(!(etl::is_const_v<decltype(original)>));
 
         auto const& ref = etl::as_const(original);
-        assert((etl::is_const_v<etl::remove_reference_t<decltype(ref)>>));
+        CHECK(etl::is_const_v<etl::remove_reference_t<decltype(ref)>>);
 
-        assert((original == 42));
-        assert((original == ref));
+        CHECK(original == 42);
+        CHECK(original == ref);
     }
 
     // to_underlying
@@ -53,36 +53,36 @@ constexpr auto test() -> bool
             baz = 42,
         };
 
-        assert((is_same_v<decltype(to_underlying(c_enum::foo)), T>));
-        assert((is_same_v<decltype(to_underlying(s_enum::foo)), T>));
+        CHECK(is_same_v<decltype(to_underlying(c_enum::foo)), T>);
+        CHECK(is_same_v<decltype(to_underlying(s_enum::foo)), T>);
 
-        assert((to_underlying(c_enum::foo) == T{0}));
-        assert((to_underlying(c_enum::bar) == T{1}));
-        assert((to_underlying(c_enum::baz) == T{42}));
+        CHECK(to_underlying(c_enum::foo) == T{0});
+        CHECK(to_underlying(c_enum::bar) == T{1});
+        CHECK(to_underlying(c_enum::baz) == T{42});
 
-        assert((to_underlying(s_enum::foo) == T{0}));
-        assert((to_underlying(s_enum::bar) == T{1}));
-        assert((to_underlying(s_enum::baz) == T{42}));
+        CHECK(to_underlying(s_enum::foo) == T{0});
+        CHECK(to_underlying(s_enum::bar) == T{1});
+        CHECK(to_underlying(s_enum::baz) == T{42});
     }
 
     {
-        assert((etl::in_range<T>(0)));
-        assert((etl::in_range<T>(etl::numeric_limits<T>::min())));
-        assert((etl::in_range<T>(etl::numeric_limits<T>::max())));
+        CHECK(etl::in_range<T>(0));
+        CHECK(etl::in_range<T>(etl::numeric_limits<T>::min()));
+        CHECK(etl::in_range<T>(etl::numeric_limits<T>::max()));
     }
     return true;
 }
 
 constexpr auto test_all() -> bool
 {
-    assert(test<etl::uint8_t>());
-    assert(test<etl::int8_t>());
-    assert(test<etl::uint16_t>());
-    assert(test<etl::int16_t>());
-    assert(test<etl::uint32_t>());
-    assert(test<etl::int32_t>());
-    assert(test<etl::uint64_t>());
-    assert(test<etl::int64_t>());
+    CHECK(test<etl::uint8_t>());
+    CHECK(test<etl::int8_t>());
+    CHECK(test<etl::uint16_t>());
+    CHECK(test<etl::int16_t>());
+    CHECK(test<etl::uint32_t>());
+    CHECK(test<etl::int32_t>());
+    CHECK(test<etl::uint64_t>());
+    CHECK(test<etl::int64_t>());
     return true;
 }
 

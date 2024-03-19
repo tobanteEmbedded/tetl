@@ -8,14 +8,13 @@
 
 constexpr auto test() -> bool
 {
-    assert((etl::is_default_constructible_v<etl::exception>));
-    assert((etl::is_constructible_v<etl::exception, char const*>));
+    CHECK(etl::is_default_constructible_v<etl::exception>);
+    CHECK(etl::is_constructible_v<etl::exception, char const*>);
     return true;
 }
 
 auto main() -> int
 {
-    assert(test());
-    static_assert(test());
+    STATIC_CHECK(test());
     return 0;
 }

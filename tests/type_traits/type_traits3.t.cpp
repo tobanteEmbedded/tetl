@@ -50,47 +50,47 @@ constexpr auto test() -> bool
     TEST_IS_TRAIT_FALSE(is_constructible, T&);
     TEST_IS_TRAIT_FALSE(is_constructible, T const&);
 
-    assert((etl::is_constructible_v<Foo<T>, T>));
-    assert((etl::is_constructible_v<Foo<T>, T, double>));
-    assert(!(etl::is_constructible_v<Foo<T>, T, struct S>));
+    CHECK(etl::is_constructible_v<Foo<T>, T>);
+    CHECK(etl::is_constructible_v<Foo<T>, T, double>);
+    CHECK(!(etl::is_constructible_v<Foo<T>, T, struct S>));
 
     {
         using etl::conjunction_v;
         using etl::is_same;
 
-        assert((conjunction_v<etl::true_type>));
-        assert((conjunction_v<etl::true_type, etl::true_type>));
-        assert(!(conjunction_v<etl::false_type>));
+        CHECK(conjunction_v<etl::true_type>);
+        CHECK(conjunction_v<etl::true_type, etl::true_type>);
+        CHECK(!(conjunction_v<etl::false_type>));
 
-        assert((conjunction_v<is_same<T, T>, is_same<T const, T const>>));
-        assert(!(conjunction_v<is_same<T, T>, etl::false_type>));
+        CHECK(conjunction_v<is_same<T, T>, is_same<T const, T const>>);
+        CHECK(!(conjunction_v<is_same<T, T>, etl::false_type>));
     }
 
     {
         using etl::disjunction_v;
         using etl::is_same;
 
-        assert(!(disjunction_v<etl::false_type>));
-        assert(!(disjunction_v<etl::false_type, etl::false_type>));
+        CHECK(!(disjunction_v<etl::false_type>));
+        CHECK(!(disjunction_v<etl::false_type, etl::false_type>));
 
-        assert((disjunction_v<etl::true_type>));
-        assert((disjunction_v<etl::true_type, etl::true_type>));
-        assert((disjunction_v<etl::true_type, etl::false_type>));
+        CHECK(disjunction_v<etl::true_type>);
+        CHECK(disjunction_v<etl::true_type, etl::true_type>);
+        CHECK(disjunction_v<etl::true_type, etl::false_type>);
 
-        assert((disjunction_v<is_same<T, T>, is_same<T const, T const>>));
-        assert((disjunction_v<is_same<T, T>, etl::false_type>));
+        CHECK(disjunction_v<is_same<T, T>, is_same<T const, T const>>);
+        CHECK(disjunction_v<is_same<T, T>, etl::false_type>);
     }
 
     TEST_TRAIT_VALUE(negation, etl::true_type, false);
     TEST_TRAIT_VALUE(negation, etl::false_type, true);
 
-    assert((etl::is_swappable_with_v<T&, T&>));
+    CHECK(etl::is_swappable_with_v<T&, T&>);
 
     {
         using etl::is_trivially_copyable_v;
 
-        assert((is_trivially_copyable_v<T>));
-        assert((is_trivially_copyable_v<T*>));
+        CHECK(is_trivially_copyable_v<T>);
+        CHECK(is_trivially_copyable_v<T*>);
 
         struct TCA { // NOLINT
             int m;
@@ -109,28 +109,28 @@ constexpr auto test() -> bool
             int m;
         };
 
-        assert((etl::is_trivially_copyable<TCA>::value));
-        assert((etl::is_trivially_copyable<TCD>::value));
+        CHECK(etl::is_trivially_copyable<TCA>::value);
+        CHECK(etl::is_trivially_copyable<TCD>::value);
 
-        assert(!(etl::is_trivially_copyable<TCB>::value));
+        CHECK(!(etl::is_trivially_copyable<TCB>::value));
     }
 
     {
         // using T = T;
 
-        // assert((etl::is_trivial_v<T>));
-        // assert((etl::is_trivial_v<T const>));
-        // assert((etl::is_trivial_v<T volatile>));
-        // assert((etl::is_trivial_v<T const volatile>));
+        // CHECK(etl::is_trivial_v<T>);
+        // CHECK(etl::is_trivial_v<T const>);
+        // CHECK(etl::is_trivial_v<T volatile>);
+        // CHECK(etl::is_trivial_v<T const volatile>);
 
         struct non_trivial_type {
             non_trivial_type() { } // NOLINT
         };
 
-        assert(!(etl::is_trivial_v<non_trivial_type>));
-        assert(!(etl::is_trivial_v<non_trivial_type const>));
-        assert(!(etl::is_trivial_v<non_trivial_type volatile>));
-        assert(!(etl::is_trivial_v<non_trivial_type const volatile>));
+        CHECK(!(etl::is_trivial_v<non_trivial_type>));
+        CHECK(!(etl::is_trivial_v<non_trivial_type const>));
+        CHECK(!(etl::is_trivial_v<non_trivial_type volatile>));
+        CHECK(!(etl::is_trivial_v<non_trivial_type const volatile>));
     }
 
     struct S {
@@ -139,18 +139,18 @@ constexpr auto test() -> bool
         auto operator()(int /*unused*/) -> float { return 1.0F; }
     };
 
-    assert((etl::is_same_v<etl::invoke_result_t<S, char, int&>, T>));
-    assert((etl::is_same_v<etl::invoke_result_t<S, int>, float>));
+    CHECK(etl::is_same_v<etl::invoke_result_t<S, char, int&>, T>);
+    CHECK(etl::is_same_v<etl::invoke_result_t<S, int>, float>);
 
-    assert(etl::is_invocable_v<T()>);
-    assert(!(etl::is_invocable_v<T(), T>));
+    CHECK(etl::is_invocable_v<T()>);
+    CHECK(!(etl::is_invocable_v<T(), T>));
 
-    assert((etl::is_invocable_r_v<T, T()>));
-    assert((!etl::is_invocable_r_v<T*, T()>));
-    assert((etl::is_invocable_r_v<void, void(T), T>));
-    assert((!etl::is_invocable_r_v<void, void(T), void>));
-    assert((etl::is_invocable_r_v<int (*)(), decltype(func2), char>));
-    assert((!etl::is_invocable_r_v<T (*)(), decltype(func2), void>));
+    CHECK(etl::is_invocable_r_v<T, T()>);
+    CHECK(!etl::is_invocable_r_v<T*, T()>);
+    CHECK(etl::is_invocable_r_v<void, void(T), T>);
+    CHECK(!etl::is_invocable_r_v<void, void(T), void>);
+    CHECK(etl::is_invocable_r_v<int (*)(), decltype(func2), char>);
+    CHECK(!etl::is_invocable_r_v<T (*)(), decltype(func2), void>);
     etl::ignore_unused(func2);
 
     return true;
@@ -158,18 +158,18 @@ constexpr auto test() -> bool
 
 constexpr auto test_all() -> bool
 {
-    assert(test<etl::uint8_t>());
-    assert(test<etl::int8_t>());
-    assert(test<etl::uint16_t>());
-    assert(test<etl::int16_t>());
-    assert(test<etl::uint32_t>());
-    assert(test<etl::int32_t>());
-    assert(test<etl::uint64_t>());
-    assert(test<etl::int64_t>());
+    CHECK(test<etl::uint8_t>());
+    CHECK(test<etl::int8_t>());
+    CHECK(test<etl::uint16_t>());
+    CHECK(test<etl::int16_t>());
+    CHECK(test<etl::uint32_t>());
+    CHECK(test<etl::int32_t>());
+    CHECK(test<etl::uint64_t>());
+    CHECK(test<etl::int64_t>());
 
-    assert(test<float>());
-    assert(test<double>());
-    assert(test<long double>());
+    CHECK(test<float>());
+    CHECK(test<double>());
+    CHECK(test<long double>());
 
     return true;
 }

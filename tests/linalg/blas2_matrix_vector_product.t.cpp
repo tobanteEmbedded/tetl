@@ -21,16 +21,16 @@ template <typename T>
         auto out = etl::mdspan<T, etl::extents<int, 2>>(outData.data());
 
         etl::linalg::matrix_vector_product(mat, vec, out);
-        assert(out(0) == T(0));
-        assert(out(1) == T(0));
+        CHECK(out(0) == T(0));
+        CHECK(out(1) == T(0));
 
         etl::linalg::matrix_vector_product(mat, etl::linalg::scaled(T(2), vec), out);
-        assert(out(0) == T(0));
-        assert(out(1) == T(0));
+        CHECK(out(0) == T(0));
+        CHECK(out(1) == T(0));
 
         etl::linalg::matrix_vector_product(etl::linalg::scaled(T(2), mat), vec, out);
-        assert(out(0) == T(0));
-        assert(out(1) == T(0));
+        CHECK(out(0) == T(0));
+        CHECK(out(1) == T(0));
     }
 
     {
@@ -44,16 +44,16 @@ template <typename T>
         auto out = etl::mdspan<T, etl::extents<int, 2>>(outData.data());
 
         etl::linalg::matrix_vector_product(mat, vec, out);
-        assert(out(0) == T(2));
-        assert(out(1) == T(2));
+        CHECK(out(0) == T(2));
+        CHECK(out(1) == T(2));
 
         etl::linalg::matrix_vector_product(mat, etl::linalg::scaled(T(2), vec), out);
-        assert(out(0) == T(4));
-        assert(out(1) == T(4));
+        CHECK(out(0) == T(4));
+        CHECK(out(1) == T(4));
 
         etl::linalg::matrix_vector_product(etl::linalg::scaled(T(2), mat), vec, out);
-        assert(out(0) == T(4));
-        assert(out(1) == T(4));
+        CHECK(out(0) == T(4));
+        CHECK(out(1) == T(4));
     }
 
     return true;
@@ -61,20 +61,20 @@ template <typename T>
 
 [[nodiscard]] static constexpr auto test_all() -> bool
 {
-    assert(test_linalg_matrix_vector_product<unsigned char>());
-    assert(test_linalg_matrix_vector_product<unsigned short>());
-    assert(test_linalg_matrix_vector_product<unsigned int>());
-    assert(test_linalg_matrix_vector_product<unsigned long>());
-    assert(test_linalg_matrix_vector_product<unsigned long long>());
+    CHECK(test_linalg_matrix_vector_product<unsigned char>());
+    CHECK(test_linalg_matrix_vector_product<unsigned short>());
+    CHECK(test_linalg_matrix_vector_product<unsigned int>());
+    CHECK(test_linalg_matrix_vector_product<unsigned long>());
+    CHECK(test_linalg_matrix_vector_product<unsigned long long>());
 
-    assert(test_linalg_matrix_vector_product<signed char>());
-    assert(test_linalg_matrix_vector_product<signed short>());
-    assert(test_linalg_matrix_vector_product<signed int>());
-    assert(test_linalg_matrix_vector_product<signed long>());
-    assert(test_linalg_matrix_vector_product<signed long long>());
+    CHECK(test_linalg_matrix_vector_product<signed char>());
+    CHECK(test_linalg_matrix_vector_product<signed short>());
+    CHECK(test_linalg_matrix_vector_product<signed int>());
+    CHECK(test_linalg_matrix_vector_product<signed long>());
+    CHECK(test_linalg_matrix_vector_product<signed long long>());
 
-    assert(test_linalg_matrix_vector_product<float>());
-    assert(test_linalg_matrix_vector_product<double>());
+    CHECK(test_linalg_matrix_vector_product<float>());
+    CHECK(test_linalg_matrix_vector_product<double>());
 
     return true;
 }

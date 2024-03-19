@@ -28,101 +28,101 @@ constexpr auto test_one() -> bool
     {
         // rank 1, all dynamic
         auto e = etl::extents<IndexType, etl::dynamic_extent>(42);
-        assert(e.rank() == 1);
-        assert(e.rank_dynamic() == 1);
-        assert(e.static_extent(0) == etl::dynamic_extent);
-        assert(e.extent(0) == 42);
+        CHECK(e.rank() == 1);
+        CHECK(e.rank_dynamic() == 1);
+        CHECK(e.static_extent(0) == etl::dynamic_extent);
+        CHECK(e.extent(0) == 42);
 
         auto other = etl::extents<unsigned_t, etl::dynamic_extent>{e};
-        assert(other.rank() == 1);
-        assert(other.rank_dynamic() == 1);
-        assert(other.static_extent(0) == etl::dynamic_extent);
-        assert(other.extent(0) == 42);
+        CHECK(other.rank() == 1);
+        CHECK(other.rank_dynamic() == 1);
+        CHECK(other.static_extent(0) == etl::dynamic_extent);
+        CHECK(other.extent(0) == 42);
 
-        assert(e == other);
+        CHECK(e == other);
     }
 
     {
         // rank 2, all dynamic
         auto e = etl::extents<IndexType, etl::dynamic_extent, etl::dynamic_extent>{42, 43};
-        assert(e.rank() == 2);
-        assert(e.rank_dynamic() == 2);
-        assert(e.static_extent(0) == etl::dynamic_extent);
-        assert(e.static_extent(1) == etl::dynamic_extent);
-        assert(e.extent(0) == 42);
-        assert(e.extent(1) == 43);
+        CHECK(e.rank() == 2);
+        CHECK(e.rank_dynamic() == 2);
+        CHECK(e.static_extent(0) == etl::dynamic_extent);
+        CHECK(e.static_extent(1) == etl::dynamic_extent);
+        CHECK(e.extent(0) == 42);
+        CHECK(e.extent(1) == 43);
 
         auto other = etl::extents<unsigned_t, etl::dynamic_extent, etl::dynamic_extent>{e};
-        assert(other.rank() == 2);
-        assert(other.rank_dynamic() == 2);
-        assert(other.static_extent(0) == etl::dynamic_extent);
-        assert(other.static_extent(1) == etl::dynamic_extent);
-        assert(other.extent(0) == 42);
-        assert(other.extent(1) == 43);
+        CHECK(other.rank() == 2);
+        CHECK(other.rank_dynamic() == 2);
+        CHECK(other.static_extent(0) == etl::dynamic_extent);
+        CHECK(other.static_extent(1) == etl::dynamic_extent);
+        CHECK(other.extent(0) == 42);
+        CHECK(other.extent(1) == 43);
 
-        assert(e == other);
+        CHECK(e == other);
     }
 
     {
         // rank 1, all static
         auto e = etl::extents<IndexType, 2>{};
-        assert(e.rank() == 1);
-        assert(e.rank_dynamic() == 0);
-        assert(e.static_extent(0) == 2);
-        assert(e.extent(0) == 2);
+        CHECK(e.rank() == 1);
+        CHECK(e.rank_dynamic() == 0);
+        CHECK(e.static_extent(0) == 2);
+        CHECK(e.extent(0) == 2);
 
         auto other = etl::extents<unsigned_t, 2>(e);
-        assert(other.rank() == 1);
-        assert(other.rank_dynamic() == 0);
-        assert(other.static_extent(0) == 2);
-        assert(other.extent(0) == 2);
+        CHECK(other.rank() == 1);
+        CHECK(other.rank_dynamic() == 0);
+        CHECK(other.static_extent(0) == 2);
+        CHECK(other.extent(0) == 2);
 
-        assert(e == other);
+        CHECK(e == other);
     }
 
     {
         // rank 2, all static
         auto e = etl::extents<IndexType, 2, 4>{};
-        assert(e.rank() == 2);
-        assert(e.rank_dynamic() == 0);
-        assert(e.static_extent(0) == 2);
-        assert(e.static_extent(1) == 4);
-        assert(e.extent(0) == 2);
-        assert(e.extent(1) == 4);
+        CHECK(e.rank() == 2);
+        CHECK(e.rank_dynamic() == 0);
+        CHECK(e.static_extent(0) == 2);
+        CHECK(e.static_extent(1) == 4);
+        CHECK(e.extent(0) == 2);
+        CHECK(e.extent(1) == 4);
     }
 
     {
         // rank 3, all static
         auto e = etl::extents<IndexType, 1, 2, 3>{};
-        assert(e.rank() == 3);
-        assert(e.rank_dynamic() == 0);
-        assert(e.static_extent(0) == 1);
-        assert(e.static_extent(1) == 2);
-        assert(e.static_extent(2) == 3);
-        assert(e.extent(0) == 1);
-        assert(e.extent(1) == 2);
-        assert(e.extent(2) == 3);
+        CHECK(e.rank() == 3);
+        CHECK(e.rank_dynamic() == 0);
+        CHECK(e.static_extent(0) == 1);
+        CHECK(e.static_extent(1) == 2);
+        CHECK(e.static_extent(2) == 3);
+        CHECK(e.extent(0) == 1);
+        CHECK(e.extent(1) == 2);
+        CHECK(e.extent(2) == 3);
     }
 
     {
         // rank 2, mixed
         auto e = etl::extents<IndexType, 2, etl::dynamic_extent>(42);
-        assert(e.rank() == 2);
-        assert(e.rank_dynamic() == 1);
-        assert(e.static_extent(0) == 2);
-        assert(e.static_extent(1) == etl::dynamic_extent);
-        assert(e.extent(0) == 2);
-        assert(e.extent(1) == 42);
+        CHECK(e.rank() == 2);
+        CHECK(e.rank_dynamic() == 1);
+        CHECK(e.static_extent(0) == 2);
+        CHECK(e.static_extent(1) == etl::dynamic_extent);
+        CHECK(e.extent(0) == 2);
+        CHECK(e.extent(1) == 42);
 
         auto other = etl::extents<unsigned_t, 2, etl::dynamic_extent>(e);
-        assert(other.rank() == 2);
-        assert(other.rank_dynamic() == 1);
-        assert(other.static_extent(0) == 2);
-        assert(other.static_extent(1) == etl::dynamic_extent);
-        assert(other.extent(0) == 2);
-        assert(other.extent(1) == 42);
+        CHECK(other.rank() == 2);
+        CHECK(other.rank_dynamic() == 1);
+        CHECK(other.static_extent(0) == 2);
+        CHECK(other.static_extent(1) == etl::dynamic_extent);
+        CHECK(other.extent(0) == 2);
+        CHECK(other.extent(1) == 42);
 
-        assert(e == other);
+        CHECK(e == other);
     }
 
     return true;
@@ -130,24 +130,24 @@ constexpr auto test_one() -> bool
 
 constexpr auto test_extents() -> bool
 {
-    assert(test_one<etl::uint8_t>());
-    assert(test_one<etl::uint16_t>());
-    assert(test_one<etl::uint32_t>());
-    assert(test_one<etl::uint64_t>());
+    CHECK(test_one<etl::uint8_t>());
+    CHECK(test_one<etl::uint16_t>());
+    CHECK(test_one<etl::uint32_t>());
+    CHECK(test_one<etl::uint64_t>());
 
-    assert(test_one<etl::int8_t>());
-    assert(test_one<etl::int16_t>());
-    assert(test_one<etl::int32_t>());
-    assert(test_one<etl::int64_t>());
+    CHECK(test_one<etl::int8_t>());
+    CHECK(test_one<etl::int16_t>());
+    CHECK(test_one<etl::int32_t>());
+    CHECK(test_one<etl::int64_t>());
 
-    assert(test_one<etl::size_t>());
-    assert(test_one<etl::ptrdiff_t>());
+    CHECK(test_one<etl::size_t>());
+    CHECK(test_one<etl::ptrdiff_t>());
     return true;
 }
 
 auto main() -> int
 {
-    assert(test_extents());
+    CHECK(test_extents());
     static_assert(test_extents());
     return 0;
 }

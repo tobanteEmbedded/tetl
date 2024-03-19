@@ -13,22 +13,22 @@ auto test() -> bool
 
     {
         using int_ptr_t = etl::small_ptr<int, 0, T>;
-        assert(sizeof(int_ptr_t) == sizeof(T));
+        CHECK(sizeof(int_ptr_t) == sizeof(T));
 
         using float_ptr_t = etl::small_ptr<float, 0, T>;
-        assert(sizeof(float_ptr_t) == sizeof(T));
+        CHECK(sizeof(float_ptr_t) == sizeof(T));
     }
 
     {
         using ptr_t = etl::small_ptr<T, 0, etl::uintptr_t>;
         auto ptr    = ptr_t{};
         etl::ignore_unused(ptr);
-        assert(true);
+        CHECK(true);
     }
 
     {
         using ptr_t = etl::small_ptr<T, 0, etl::uintptr_t>;
-        assert(ptr_t{nullptr}.compressed_value() == 0U);
+        CHECK(ptr_t{nullptr}.compressed_value() == 0U);
     }
 
     {
@@ -36,16 +36,16 @@ auto test() -> bool
 
         // clang-format off
         auto ptr = ptr_t { reinterpret_cast<T*>(32) };
-        assert(ptr.compressed_value() == static_cast<etl::uintptr_t>(32 - 16));
-        assert(reinterpret_cast<etl::uintptr_t>(ptr.operator->()) == static_cast<etl::uintptr_t>(32));
+        CHECK(ptr.compressed_value() == static_cast<etl::uintptr_t>(32 - 16));
+        CHECK(reinterpret_cast<etl::uintptr_t>(ptr.operator->()) == static_cast<etl::uintptr_t>(32));
 
         ptr = ptr_t { reinterpret_cast<T*>(2048) };
-        assert(ptr.compressed_value() == static_cast<etl::uintptr_t>(2048 - 16));
-        assert(reinterpret_cast<etl::uintptr_t>(ptr.operator->()) == static_cast<etl::uintptr_t>(2048));
+        CHECK(ptr.compressed_value() == static_cast<etl::uintptr_t>(2048 - 16));
+        CHECK(reinterpret_cast<etl::uintptr_t>(ptr.operator->()) == static_cast<etl::uintptr_t>(2048));
 
         ptr = ptr_t { reinterpret_cast<T*>(4100) };
-        assert(ptr.compressed_value() == static_cast<etl::uintptr_t>(4100 - 16));
-        assert(reinterpret_cast<etl::uintptr_t>(ptr.operator->()) == static_cast<etl::uintptr_t>(4100));
+        CHECK(ptr.compressed_value() == static_cast<etl::uintptr_t>(4100 - 16));
+        CHECK(reinterpret_cast<etl::uintptr_t>(ptr.operator->()) == static_cast<etl::uintptr_t>(4100));
         // clang-format on
     }
 
@@ -54,7 +54,7 @@ auto test() -> bool
         using ptr_t = etl::small_ptr<T const, 0, etl::uintptr_t>;
         auto val    = T(1.43);
         auto ptr    = ptr_t{&val};
-        assert(ptr.get() == &val);
+        CHECK(ptr.get() == &val);
     }
 
     // get const
@@ -62,7 +62,7 @@ auto test() -> bool
         using ptr_t    = etl::small_ptr<T const, 0, etl::uintptr_t>;
         auto const val = T(1.43);
         auto const ptr = ptr_t{&val};
-        assert(ptr.get() == &val);
+        CHECK(ptr.get() == &val);
     }
 
     // mutable
@@ -70,7 +70,7 @@ auto test() -> bool
         using ptr_t = etl::small_ptr<T, 0, etl::uintptr_t>;
         auto val    = T(1.43);
         auto ptr    = ptr_t{&val};
-        assert(*ptr == val);
+        CHECK(*ptr == val);
     }
 
     // const
@@ -78,7 +78,7 @@ auto test() -> bool
         using ptr_t    = etl::small_ptr<T const, 0, etl::uintptr_t>;
         auto const val = T(1.43);
         auto const ptr = ptr_t{&val};
-        assert(*ptr == val);
+        CHECK(*ptr == val);
     }
 
     {
@@ -86,7 +86,7 @@ auto test() -> bool
 
         auto val  = T(1.43);
         auto ptr  = ptr_t{&val};
-        auto func = [t = val](T* p) { assert(*p == t); };
+        auto func = [t = val](T* p) { CHECK(*p == t); };
         func(ptr);
     }
 
@@ -95,16 +95,16 @@ auto test() -> bool
 
         auto const val = T(1.43);
         auto const ptr = ptr_t{&val};
-        auto func      = [t = val](T const* p) { assert(*p == t); };
+        auto func      = [t = val](T const* p) { CHECK(*p == t); };
         func(ptr);
     }
 
     {
         using ptr_t = etl::small_ptr<T const, 0, etl::uintptr_t>;
         auto data   = etl::array<T, 4>{};
-        assert(ptr_t{&data[1]} - ptr_t{&data[0]} == 1);
-        assert(ptr_t{&data[2]} - ptr_t{&data[0]} == 2);
-        assert(ptr_t{&data[3]} - ptr_t{&data[0]} == 3);
+        CHECK(ptr_t{&data[1]} - ptr_t{&data[0]} == 1);
+        CHECK(ptr_t{&data[2]} - ptr_t{&data[0]} == 2);
+        CHECK(ptr_t{&data[3]} - ptr_t{&data[0]} == 3);
     }
 
     // pre
@@ -113,7 +113,7 @@ auto test() -> bool
         auto const data = etl::array<T, 4>{};
         auto ptr        = ptr_t{&data[1]};
         // NOLINTNEXTLINE(bugprone-assert-side-effect)
-        assert((--ptr).get() == ptr_t{&data[0]}.get());
+        CHECK((--ptr).get() == ptr_t{&data[0]}.get());
     }
 
     // post
@@ -123,8 +123,8 @@ auto test() -> bool
         auto const data = etl::array<T, 4>{};
         auto ptr        = ptr_t{&data[1]};
         // NOLINTNEXTLINE(bugprone-assert-side-effect)
-        assert((ptr--).get() == ptr_t{&data[1]}.get());
-        assert(ptr.get() == ptr_t{&data[0]}.get());
+        CHECK((ptr--).get() == ptr_t{&data[1]}.get());
+        CHECK(ptr.get() == ptr_t{&data[0]}.get());
     }
 
     // pre
@@ -133,7 +133,7 @@ auto test() -> bool
         auto const data = etl::array<T, 4>{};
         auto ptr        = ptr_t{&data[1]};
         // NOLINTNEXTLINE(bugprone-assert-side-effect)
-        assert((++ptr).get() == ptr_t{&data[2]}.get());
+        CHECK((++ptr).get() == ptr_t{&data[2]}.get());
     }
 
     // post
@@ -142,8 +142,8 @@ auto test() -> bool
         auto const data = etl::array<T, 4>{};
         auto ptr        = ptr_t{&data[1]};
         // NOLINTNEXTLINE(bugprone-assert-side-effect)
-        assert((ptr++).get() == ptr_t{&data[1]}.get());
-        assert(ptr.get() == ptr_t{&data[2]}.get());
+        CHECK((ptr++).get() == ptr_t{&data[1]}.get());
+        CHECK(ptr.get() == ptr_t{&data[2]}.get());
     }
 
     return true;
@@ -151,21 +151,21 @@ auto test() -> bool
 
 static auto test_all() -> bool
 {
-    assert(test<etl::int8_t>());
-    assert(test<etl::int16_t>());
-    assert(test<etl::int32_t>());
-    assert(test<etl::int64_t>());
-    assert(test<etl::uint8_t>());
-    assert(test<etl::uint16_t>());
-    assert(test<etl::uint32_t>());
-    assert(test<etl::uint64_t>());
-    assert(test<float>());
-    assert(test<double>());
+    CHECK(test<etl::int8_t>());
+    CHECK(test<etl::int16_t>());
+    CHECK(test<etl::int32_t>());
+    CHECK(test<etl::int64_t>());
+    CHECK(test<etl::uint8_t>());
+    CHECK(test<etl::uint16_t>());
+    CHECK(test<etl::uint32_t>());
+    CHECK(test<etl::uint64_t>());
+    CHECK(test<float>());
+    CHECK(test<double>());
     return true;
 }
 
 auto main() -> int
 {
-    assert(test_all());
+    CHECK(test_all());
     return 0;
 }

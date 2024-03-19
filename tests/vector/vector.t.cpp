@@ -25,40 +25,40 @@ constexpr auto test() -> bool
     {
         auto memory = etl::array<etl::byte, 64>{};
         auto empty  = Vector{Alloc{memory}};
-        assert(empty.size() == 0);
-        assert(etl::as_const(empty).size() == 0);
-        assert(empty.data() == nullptr);
-        assert(etl::as_const(empty).data() == nullptr);
-        assert(empty.begin() == nullptr);
-        assert(etl::as_const(empty).begin() == nullptr);
-        assert(empty.end() == nullptr);
-        assert(etl::as_const(empty).end() == nullptr);
+        CHECK(empty.size() == 0);
+        CHECK(etl::as_const(empty).size() == 0);
+        CHECK(empty.data() == nullptr);
+        CHECK(etl::as_const(empty).data() == nullptr);
+        CHECK(empty.begin() == nullptr);
+        CHECK(etl::as_const(empty).begin() == nullptr);
+        CHECK(empty.end() == nullptr);
+        CHECK(etl::as_const(empty).end() == nullptr);
     }
 
     {
         auto memory = etl::array<etl::byte, 64>{};
         auto zeros  = Vector{2, Alloc{memory}};
-        assert(zeros.size() == 2);
-        assert(etl::as_const(zeros).size() == 2);
-        assert(zeros.data() != nullptr);
-        assert(etl::as_const(zeros).data() != nullptr);
-        assert(zeros.begin() != nullptr);
-        assert(etl::as_const(zeros).begin() != nullptr);
-        assert(zeros.end() != nullptr);
-        assert(etl::as_const(zeros).end() != nullptr);
+        CHECK(zeros.size() == 2);
+        CHECK(etl::as_const(zeros).size() == 2);
+        CHECK(zeros.data() != nullptr);
+        CHECK(etl::as_const(zeros).data() != nullptr);
+        CHECK(zeros.begin() != nullptr);
+        CHECK(etl::as_const(zeros).begin() != nullptr);
+        CHECK(zeros.end() != nullptr);
+        CHECK(etl::as_const(zeros).end() != nullptr);
     }
 
     {
         auto memory = etl::array<etl::byte, 64>{};
         auto ones   = Vector{4, T(1), Alloc{memory}};
-        assert(ones.size() == 4);
-        assert(etl::as_const(ones).size() == 4);
-        assert(ones.data() != nullptr);
-        assert(etl::as_const(ones).data() != nullptr);
-        assert(ones.begin() != nullptr);
-        assert(etl::as_const(ones).begin() != nullptr);
-        assert(ones.end() != nullptr);
-        assert(etl::as_const(ones).end() != nullptr);
+        CHECK(ones.size() == 4);
+        CHECK(etl::as_const(ones).size() == 4);
+        CHECK(ones.data() != nullptr);
+        CHECK(etl::as_const(ones).data() != nullptr);
+        CHECK(ones.begin() != nullptr);
+        CHECK(etl::as_const(ones).begin() != nullptr);
+        CHECK(ones.end() != nullptr);
+        CHECK(etl::as_const(ones).end() != nullptr);
     }
 
     return true;
@@ -66,21 +66,21 @@ constexpr auto test() -> bool
 
 constexpr auto test_all() -> bool
 {
-    assert(test<etl::int8_t>());
-    assert(test<etl::int16_t>());
-    assert(test<etl::int32_t>());
-    assert(test<etl::int64_t>());
-    assert(test<etl::uint8_t>());
-    assert(test<etl::uint16_t>());
-    assert(test<etl::uint32_t>());
-    assert(test<etl::uint64_t>());
-    assert(test<float>());
-    assert(test<double>());
+    CHECK(test<etl::int8_t>());
+    CHECK(test<etl::int16_t>());
+    CHECK(test<etl::int32_t>());
+    CHECK(test<etl::int64_t>());
+    CHECK(test<etl::uint8_t>());
+    CHECK(test<etl::uint16_t>());
+    CHECK(test<etl::uint32_t>());
+    CHECK(test<etl::uint64_t>());
+    CHECK(test<float>());
+    CHECK(test<double>());
     return true;
 }
 
 auto main() -> int
 {
-    assert(test_all());
+    CHECK(test_all());
     return 0;
 }

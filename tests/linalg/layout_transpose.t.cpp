@@ -19,12 +19,12 @@ template <typename IndexType>
         using extents_t       = etl::extents<IndexType, 2, 3>;
         auto const ext        = extents_t{};
         auto const transposed = etl::linalg::detail::transpose_extents(ext);
-        assert(transposed.static_extent(0) == ext.static_extent(1));
-        assert(transposed.static_extent(1) == ext.static_extent(0));
-        assert(transposed.extent(0) == ext.extent(1));
-        assert(transposed.extent(1) == ext.extent(0));
-        assert(transposed.extent(0) == transposed.static_extent(0));
-        assert(transposed.extent(1) == transposed.static_extent(1));
+        CHECK(transposed.static_extent(0) == ext.static_extent(1));
+        CHECK(transposed.static_extent(1) == ext.static_extent(0));
+        CHECK(transposed.extent(0) == ext.extent(1));
+        CHECK(transposed.extent(1) == ext.extent(0));
+        CHECK(transposed.extent(0) == transposed.static_extent(0));
+        CHECK(transposed.extent(1) == transposed.static_extent(1));
     }
 
     {
@@ -32,23 +32,23 @@ template <typename IndexType>
         using extents_t       = etl::dextents<IndexType, 2>;
         auto const ext        = extents_t{IndexType(2), IndexType(3)};
         auto const transposed = etl::linalg::detail::transpose_extents(ext);
-        assert(transposed.static_extent(0) == etl::dynamic_extent);
-        assert(transposed.static_extent(1) == etl::dynamic_extent);
-        assert(transposed.static_extent(0) == ext.static_extent(1));
-        assert(transposed.static_extent(1) == ext.static_extent(0));
-        assert(transposed.extent(0) == ext.extent(1));
-        assert(transposed.extent(1) == ext.extent(0));
-        assert(transposed.extent(0) != transposed.static_extent(0));
-        assert(transposed.extent(1) != transposed.static_extent(1));
+        CHECK(transposed.static_extent(0) == etl::dynamic_extent);
+        CHECK(transposed.static_extent(1) == etl::dynamic_extent);
+        CHECK(transposed.static_extent(0) == ext.static_extent(1));
+        CHECK(transposed.static_extent(1) == ext.static_extent(0));
+        CHECK(transposed.extent(0) == ext.extent(1));
+        CHECK(transposed.extent(1) == ext.extent(0));
+        CHECK(transposed.extent(0) != transposed.static_extent(0));
+        CHECK(transposed.extent(1) != transposed.static_extent(1));
 
         auto const mapping = etl::linalg::layout_transpose<etl::layout_right>::mapping<extents_t>{ext};
-        assert(mapping.extents().extent(0) == IndexType(3));
-        assert(mapping.extents().extent(1) == IndexType(2));
-        assert(mapping.required_span_size() == 6);
-        assert(mapping.is_always_unique());
-        assert(mapping.is_always_strided());
-        assert(mapping.is_unique());
-        assert(mapping.is_strided());
+        CHECK(mapping.extents().extent(0) == IndexType(3));
+        CHECK(mapping.extents().extent(1) == IndexType(2));
+        CHECK(mapping.required_span_size() == 6);
+        CHECK(mapping.is_always_unique());
+        CHECK(mapping.is_always_strided());
+        CHECK(mapping.is_unique());
+        CHECK(mapping.is_strided());
     }
 
     {
@@ -56,12 +56,12 @@ template <typename IndexType>
         using extents_t       = etl::extents<IndexType, 2, etl::dynamic_extent>;
         auto const ext        = extents_t{IndexType(3)};
         auto const transposed = etl::linalg::detail::transpose_extents(ext);
-        assert(transposed.static_extent(0) == etl::dynamic_extent);
-        assert(transposed.static_extent(1) != etl::dynamic_extent);
-        assert(transposed.static_extent(0) == ext.static_extent(1));
-        assert(transposed.static_extent(1) == ext.static_extent(0));
-        assert(transposed.extent(0) == ext.extent(1));
-        assert(transposed.extent(1) == ext.extent(0));
+        CHECK(transposed.static_extent(0) == etl::dynamic_extent);
+        CHECK(transposed.static_extent(1) != etl::dynamic_extent);
+        CHECK(transposed.static_extent(0) == ext.static_extent(1));
+        CHECK(transposed.static_extent(1) == ext.static_extent(0));
+        CHECK(transposed.extent(0) == ext.extent(1));
+        CHECK(transposed.extent(1) == ext.extent(0));
     }
 
     return true;
@@ -69,17 +69,17 @@ template <typename IndexType>
 
 [[nodiscard]] static constexpr auto test_all() -> bool
 {
-    assert(test_layout_transpose<unsigned char>());
-    assert(test_layout_transpose<unsigned short>());
-    assert(test_layout_transpose<unsigned int>());
-    assert(test_layout_transpose<unsigned long>());
-    assert(test_layout_transpose<unsigned long long>());
+    CHECK(test_layout_transpose<unsigned char>());
+    CHECK(test_layout_transpose<unsigned short>());
+    CHECK(test_layout_transpose<unsigned int>());
+    CHECK(test_layout_transpose<unsigned long>());
+    CHECK(test_layout_transpose<unsigned long long>());
 
-    assert(test_layout_transpose<signed char>());
-    assert(test_layout_transpose<signed short>());
-    assert(test_layout_transpose<signed int>());
-    assert(test_layout_transpose<signed long>());
-    assert(test_layout_transpose<signed long long>());
+    CHECK(test_layout_transpose<signed char>());
+    CHECK(test_layout_transpose<signed short>());
+    CHECK(test_layout_transpose<signed int>());
+    CHECK(test_layout_transpose<signed long>());
+    CHECK(test_layout_transpose<signed long long>());
 
     return true;
 }

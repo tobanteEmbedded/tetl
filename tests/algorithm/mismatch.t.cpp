@@ -16,8 +16,8 @@ constexpr auto test() -> bool
         auto lhs    = etl::array{T(0), T(1), T(2)};
         auto rhs    = etl::array{T(0), T(1), T(3)};
         auto result = etl::mismatch(begin(lhs), end(lhs), begin(rhs));
-        assert(*result.first == T(2));
-        assert(*result.second == T(3));
+        CHECK(*result.first == T(2));
+        CHECK(*result.second == T(3));
     }
 
     // first1,last1,first2,last2
@@ -25,24 +25,24 @@ constexpr auto test() -> bool
         auto lhs    = etl::array{T(0), T(1), T(2)};
         auto rhs    = etl::array{T(0), T(1), T(4)};
         auto result = etl::mismatch(begin(lhs), end(lhs), begin(rhs), end(rhs));
-        assert(*result.first == T(2));
-        assert(*result.second == T(4));
+        CHECK(*result.first == T(2));
+        CHECK(*result.second == T(4));
     }
     return true;
 }
 
 constexpr auto test_all() -> bool
 {
-    assert(test<etl::uint8_t>());
-    assert(test<etl::int8_t>());
-    assert(test<etl::uint16_t>());
-    assert(test<etl::int16_t>());
-    assert(test<etl::uint32_t>());
-    assert(test<etl::int32_t>());
-    assert(test<etl::uint64_t>());
-    assert(test<etl::int64_t>());
-    assert(test<float>());
-    assert(test<double>());
+    CHECK(test<etl::uint8_t>());
+    CHECK(test<etl::int8_t>());
+    CHECK(test<etl::uint16_t>());
+    CHECK(test<etl::int16_t>());
+    CHECK(test<etl::uint32_t>());
+    CHECK(test<etl::int32_t>());
+    CHECK(test<etl::uint64_t>());
+    CHECK(test<etl::int64_t>());
+    CHECK(test<float>());
+    CHECK(test<double>());
 
     return true;
 }

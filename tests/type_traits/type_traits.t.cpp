@@ -32,42 +32,42 @@ constexpr auto test_identity() -> bool
     using etl::type_identity;
     using etl::type_identity_t;
 
-    assert((is_same_v<T, typename type_identity<T>::type>));
-    assert((is_same_v<T, type_identity_t<T>>));
+    CHECK(is_same_v<T, typename type_identity<T>::type>);
+    CHECK(is_same_v<T, type_identity_t<T>>);
 
     // clang-format off
     if constexpr (!etl::is_function_v<T>) {
-        assert((is_same_v<T const, typename type_identity<T const>::type>));
-        assert((is_same_v<T volatile, typename type_identity<T volatile>::type>));
-        assert((is_same_v<T const volatile, typename type_identity<T const volatile>::type>));
+        CHECK(is_same_v<T const, typename type_identity<T const>::type>);
+        CHECK(is_same_v<T volatile, typename type_identity<T volatile>::type>);
+        CHECK(is_same_v<T const volatile, typename type_identity<T const volatile>::type>);
 
-        assert((is_same_v<T const, type_identity_t<T const>>));
-        assert((is_same_v<T volatile, type_identity_t<T volatile>>));
-        assert((is_same_v<T const volatile, type_identity_t<T const volatile>>));
+        CHECK(is_same_v<T const, type_identity_t<T const>>);
+        CHECK(is_same_v<T volatile, type_identity_t<T volatile>>);
+        CHECK(is_same_v<T const volatile, type_identity_t<T const volatile>>);
     }
 
     if constexpr (!etl::is_void_v<T>) {
-        assert((is_same_v<T&, typename type_identity<T&>::type>));
-        assert((is_same_v<T&&, typename type_identity<T&&>::type>));
+        CHECK(is_same_v<T&, typename type_identity<T&>::type>);
+        CHECK(is_same_v<T&&, typename type_identity<T&&>::type>);
 
-        assert((is_same_v<T&, type_identity_t<T&>>));
-        assert((is_same_v<T&&, type_identity_t<T&&>>));
+        CHECK(is_same_v<T&, type_identity_t<T&>>);
+        CHECK(is_same_v<T&&, type_identity_t<T&&>>);
     }
 
     if constexpr (!etl::is_void_v<T> && !etl::is_function_v<T>) {
-        assert((is_same_v<T const&, typename type_identity<T const&>::type>));
-        assert((is_same_v<T volatile&, typename type_identity<T volatile&>::type>));
-        assert((is_same_v<T const volatile&, typename type_identity<T const volatile&>::type>));
-        assert((is_same_v<T const&&, typename type_identity<T const&&>::type>));
-        assert((is_same_v<T volatile&&, typename type_identity<T volatile&&>::type>));
-        assert((is_same_v<T const volatile&&, typename type_identity<T const volatile&&>::type>));
+        CHECK(is_same_v<T const&, typename type_identity<T const&>::type>);
+        CHECK(is_same_v<T volatile&, typename type_identity<T volatile&>::type>);
+        CHECK(is_same_v<T const volatile&, typename type_identity<T const volatile&>::type>);
+        CHECK(is_same_v<T const&&, typename type_identity<T const&&>::type>);
+        CHECK(is_same_v<T volatile&&, typename type_identity<T volatile&&>::type>);
+        CHECK(is_same_v<T const volatile&&, typename type_identity<T const volatile&&>::type>);
 
-        assert((is_same_v<T const&, type_identity_t<T const&>>));
-        assert((is_same_v<T volatile&, type_identity_t<T volatile&>>));
-        assert((is_same_v<T const volatile&, type_identity_t<T const volatile&>>));
-        assert((is_same_v<T const&&, type_identity_t<T const&&>>));
-        assert((is_same_v<T volatile&&, type_identity_t<T volatile&&>>));
-        assert((is_same_v<T const volatile&&, type_identity_t<T const volatile&&>>));
+        CHECK(is_same_v<T const&, type_identity_t<T const&>>);
+        CHECK(is_same_v<T volatile&, type_identity_t<T volatile&>>);
+        CHECK(is_same_v<T const volatile&, type_identity_t<T const volatile&>>);
+        CHECK(is_same_v<T const&&, type_identity_t<T const&&>>);
+        CHECK(is_same_v<T volatile&&, type_identity_t<T volatile&&>>);
+        CHECK(is_same_v<T const volatile&&, type_identity_t<T const volatile&&>>);
     }
 
     // clang-format on
@@ -160,7 +160,7 @@ constexpr auto test() -> bool
     TEST_TRAIT_TYPE(remove_all_extents, TCV[2][4][8], TCV);
 
     // TODO: Broken on MSVC
-    //  assert((is_same_v<decay_t<T(T)>, T (*)(T)>));
+    //  CHECK(is_same_v<decay_t<T(T)>, T (*)(T)>);
     TEST_TRAIT_TYPE(decay, T, T);
     TEST_TRAIT_TYPE(decay, T&, T);
     TEST_TRAIT_TYPE(decay, T&&, T);
@@ -168,54 +168,54 @@ constexpr auto test() -> bool
     TEST_TRAIT_TYPE(decay, T[2], T*);
 
     using etl::common_type_t;
-    assert((is_same_v<common_type_t<T>, T>));
-    assert((is_same_v<common_type_t<T, T>, T>));
-    assert((is_same_v<common_type_t<T, T const>, T>));
-    assert((is_same_v<common_type_t<T, T volatile>, T>));
-    assert((is_same_v<common_type_t<T, T const volatile>, T>));
-    assert((is_same_v<common_type_t<T, double>, double>));
+    CHECK(is_same_v<common_type_t<T>, T>);
+    CHECK(is_same_v<common_type_t<T, T>, T>);
+    CHECK(is_same_v<common_type_t<T, T const>, T>);
+    CHECK(is_same_v<common_type_t<T, T volatile>, T>);
+    CHECK(is_same_v<common_type_t<T, T const volatile>, T>);
+    CHECK(is_same_v<common_type_t<T, double>, double>);
 
     if constexpr (etl::is_integral_v<T>) {
         auto const constant = etl::integral_constant<T, T{0}>{};
-        assert(decltype(constant)::value == T{0});
-        assert(constant() == T{0});
-        assert(static_cast<T>(constant) == T{0});
-        assert((etl::is_same_v<T, typename decltype(constant)::value_type>));
+        CHECK(decltype(constant)::value == T{0});
+        CHECK(constant() == T{0});
+        CHECK(static_cast<T>(constant) == T{0});
+        CHECK(etl::is_same_v<T, typename decltype(constant)::value_type>);
     }
 
     // false
     {
         auto const constant = etl::bool_constant<false>{};
-        assert((decltype(constant)::value == false));
-        assert((constant() == false));
-        assert((static_cast<bool>(constant) == false));
-        assert((etl::is_same_v<bool, decltype(constant)::value_type>));
+        CHECK(decltype(constant)::value == false);
+        CHECK(constant() == false);
+        CHECK(static_cast<bool>(constant) == false);
+        CHECK(etl::is_same_v<bool, decltype(constant)::value_type>);
     }
 
     // true
     {
         auto const constant = etl::bool_constant<true>{};
-        assert((decltype(constant)::value == true));
-        assert((constant() == true));
-        assert((static_cast<bool>(constant) == true));
-        assert((etl::is_same_v<bool, decltype(constant)::value_type>));
+        CHECK(decltype(constant)::value == true);
+        CHECK(constant() == true);
+        CHECK(static_cast<bool>(constant) == true);
+        CHECK(etl::is_same_v<bool, decltype(constant)::value_type>);
     }
 
     // true_type
     {
-        assert((etl::is_same_v<bool, etl::true_type::value_type>));
-        assert((etl::true_type::value == true));
+        CHECK(etl::is_same_v<bool, etl::true_type::value_type>);
+        CHECK(etl::true_type::value == true);
     }
 
     // false_type
     {
-        assert((etl::is_same_v<bool, etl::false_type::value_type>));
-        assert((etl::false_type::value == false));
+        CHECK(etl::is_same_v<bool, etl::false_type::value_type>);
+        CHECK(etl::false_type::value == false);
     }
 
-    assert((etl::is_same_v<struct S, T> == false));
-    assert((etl::is_same_v<struct S, T> == false));
-    assert((etl::is_same<T, T>::value == true));
+    CHECK(etl::is_same_v<struct S, T> == false);
+    CHECK(etl::is_same_v<struct S, T> == false);
+    CHECK(etl::is_same<T, T>::value == true);
 
     TEST_IS_TRAIT_CV(is_void, void);
     TEST_IS_TRAIT_CV_FALSE(is_void, T);
@@ -243,34 +243,34 @@ constexpr auto test() -> bool
 
     using etl::is_convertible_v;
 
-    assert((is_convertible_v<void, void>));
+    CHECK(is_convertible_v<void, void>);
 
     // TODO: [tobi] The assertions below trigger an internal compiler error on
     // MSVC
     #if not defined(TETL_MSVC)
 
-    assert(!(is_convertible_v<int, void>));
-    assert(!(is_convertible_v<int, void const>));
+    CHECK(!(is_convertible_v<int, void>));
+    CHECK(!(is_convertible_v<int, void const>));
 
-    assert((is_convertible_v<void, void const>));
-    assert((is_convertible_v<void const, void>));
-    assert((is_convertible_v<void const, void const>));
+    CHECK(is_convertible_v<void, void const>);
+    CHECK(is_convertible_v<void const, void>);
+    CHECK(is_convertible_v<void const, void const>);
 
         #if TETL_CPP_STANDARD < 20
-    assert(!(is_convertible_v<int, void volatile>));
-    assert(!(is_convertible_v<int, void const volatile>));
-    assert((is_convertible_v<void, void volatile>));
-    assert((is_convertible_v<void, void const volatile>));
-    assert((is_convertible_v<void const, void volatile>));
-    assert((is_convertible_v<void const, void const volatile>));
-    assert((is_convertible_v<void volatile, void volatile>));
-    assert((is_convertible_v<void volatile, void const volatile>));
-    assert((is_convertible_v<void volatile, void>));
-    assert((is_convertible_v<void volatile, void const>));
-    assert((is_convertible_v<void const volatile, void>));
-    assert((is_convertible_v<void const volatile, void const>));
-    assert((is_convertible_v<void const volatile, void volatile>));
-    assert((is_convertible_v<void const volatile, void const volatile>));
+    CHECK(!(is_convertible_v<int, void volatile>));
+    CHECK(!(is_convertible_v<int, void const volatile>));
+    CHECK(is_convertible_v<void, void volatile>);
+    CHECK(is_convertible_v<void, void const volatile>);
+    CHECK(is_convertible_v<void const, void volatile>);
+    CHECK(is_convertible_v<void const, void const volatile>);
+    CHECK(is_convertible_v<void volatile, void volatile>);
+    CHECK(is_convertible_v<void volatile, void const volatile>);
+    CHECK(is_convertible_v<void volatile, void>);
+    CHECK(is_convertible_v<void volatile, void const>);
+    CHECK(is_convertible_v<void const volatile, void>);
+    CHECK(is_convertible_v<void const volatile, void const>);
+    CHECK(is_convertible_v<void const volatile, void volatile>);
+    CHECK(is_convertible_v<void const volatile, void const volatile>);
         #endif
 
     #endif
@@ -517,76 +517,76 @@ constexpr auto test() -> bool
     TEST_IS_TRAIT_CV(is_swappable, void*);
 
     // clang-format off
-    assert((test_identity<void>()));
-    assert((test_identity<T>()));
-    assert((test_identity<T*>()));
-    assert((test_identity<T const*>()));
-    assert((test_identity<T volatile*>()));
-    assert((test_identity<T const volatile*>()));
-    assert((test_identity<T[3]>()));
-    assert((test_identity<T[]>()));
-    assert((test_identity<T(T)>()));
-    assert((test_identity<T&(T)>()));
-    assert((test_identity<T const&(T)>()));
-    assert((test_identity<T volatile&(T)>()));
-    assert((test_identity<T const volatile&(T)>()));
-    assert((test_identity<T(T&)>()));
-    assert((test_identity<T(T const&)>()));
-    assert((test_identity<T(T volatile&)>()));
-    assert((test_identity<T(T const volatile&)>()));
-    assert((test_identity<T IDS::*>()));
-    assert((test_identity<T const IDS::*>()));
-    assert((test_identity<T volatile IDS::*>()));
-    assert((test_identity<T const volatile IDS::*>()));
-    assert((test_identity<T (IDS::*)(T)>()));
-    assert((test_identity<T (IDS::*)(T&)>()));
-    assert((test_identity<T (IDS::*)(T const&) const>()));
-    assert((test_identity<T (IDS::*)(T volatile&) volatile>()));
-    assert((test_identity<T (IDS::*)(T const volatile&) const volatile>()));
-    assert((test_identity<T (IDS::*)(T)&>()));
-    assert((test_identity<T (IDS::*)(T) const&>()));
-    assert((test_identity<T (IDS::*)(T) &&>()));
-    assert((test_identity<T (IDS::*)(T) const&&>()));
-    assert((test_identity<T& (IDS::*)(T)>()));
-    assert((test_identity<T const& (IDS::*)(T)>()));
-    assert((test_identity<T volatile& (IDS::*)(T)>()));
-    assert((test_identity<T const volatile& (IDS::*)(T)>()));
+    CHECK(test_identity<void>());
+    CHECK(test_identity<T>());
+    CHECK(test_identity<T*>());
+    CHECK(test_identity<T const*>());
+    CHECK(test_identity<T volatile*>());
+    CHECK(test_identity<T const volatile*>());
+    CHECK(test_identity<T[3]>());
+    CHECK(test_identity<T[]>());
+    CHECK(test_identity<T(T)>());
+    CHECK(test_identity<T&(T)>());
+    CHECK(test_identity<T const&(T)>());
+    CHECK(test_identity<T volatile&(T)>());
+    CHECK(test_identity<T const volatile&(T)>());
+    CHECK(test_identity<T(T&)>());
+    CHECK(test_identity<T(T const&)>());
+    CHECK(test_identity<T(T volatile&)>());
+    CHECK(test_identity<T(T const volatile&)>());
+    CHECK(test_identity<T IDS::*>());
+    CHECK(test_identity<T const IDS::*>());
+    CHECK(test_identity<T volatile IDS::*>());
+    CHECK(test_identity<T const volatile IDS::*>());
+    CHECK(test_identity<T (IDS::*)(T)>());
+    CHECK(test_identity<T (IDS::*)(T&)>());
+    CHECK(test_identity<T (IDS::*)(T const&) const>());
+    CHECK(test_identity<T (IDS::*)(T volatile&) volatile>());
+    CHECK(test_identity<T (IDS::*)(T const volatile&) const volatile>());
+    CHECK(test_identity<T (IDS::*)(T)&>());
+    CHECK(test_identity<T (IDS::*)(T) const&>());
+    CHECK(test_identity<T (IDS::*)(T) &&>());
+    CHECK(test_identity<T (IDS::*)(T) const&&>());
+    CHECK(test_identity<T& (IDS::*)(T)>());
+    CHECK(test_identity<T const& (IDS::*)(T)>());
+    CHECK(test_identity<T volatile& (IDS::*)(T)>());
+    CHECK(test_identity<T const volatile& (IDS::*)(T)>());
     // clang-format on
 
-    assert((sizeof(etl::aligned_union_t<0, char>) == 1));
-    assert((sizeof(etl::aligned_union_t<2, char>) == 2));
-    assert((sizeof(etl::aligned_union_t<2, char[3]>) == 3));
-    assert((sizeof(etl::aligned_union_t<3, char[4]>) == 4));
-    assert((sizeof(etl::aligned_union_t<1, char, T, double>) == 8));
-    assert((sizeof(etl::aligned_union_t<12, char, T, double>) == 16));
+    CHECK(sizeof(etl::aligned_union_t<0, char>) == 1);
+    CHECK(sizeof(etl::aligned_union_t<2, char>) == 2);
+    CHECK(sizeof(etl::aligned_union_t<2, char[3]>) == 3);
+    CHECK(sizeof(etl::aligned_union_t<3, char[4]>) == 4);
+    CHECK(sizeof(etl::aligned_union_t<1, char, T, double>) == 8);
+    CHECK(sizeof(etl::aligned_union_t<12, char, T, double>) == 16);
 
     using etl::type_pack_element_t;
-    assert((is_same_v<type_pack_element_t<0, T>, T>));
-    assert((is_same_v<type_pack_element_t<1, T, float>, float>));
-    assert((is_same_v<type_pack_element_t<2, T, char, short>, short>));
+    CHECK(is_same_v<type_pack_element_t<0, T>, T>);
+    CHECK(is_same_v<type_pack_element_t<1, T, float>, float>);
+    CHECK(is_same_v<type_pack_element_t<2, T, char, short>, short>);
 
-    assert((etl::is_specialized_v<test_is_specialized, Foo<float>>));
-    assert(!(etl::is_specialized_v<test_is_specialized, T>));
-    assert(!(etl::is_specialized_v<test_is_specialized, double>));
+    CHECK(etl::is_specialized_v<test_is_specialized, Foo<float>>);
+    CHECK(!(etl::is_specialized_v<test_is_specialized, T>));
+    CHECK(!(etl::is_specialized_v<test_is_specialized, double>));
 
     return true;
 }
 
 constexpr auto test_all() -> bool
 {
-    assert(test<char>());
-    assert(test<etl::uint8_t>());
-    assert(test<etl::int8_t>());
-    assert(test<etl::uint16_t>());
-    assert(test<etl::int16_t>());
-    assert(test<etl::uint32_t>());
-    assert(test<etl::int32_t>());
-    assert(test<etl::uint64_t>());
-    assert(test<etl::int64_t>());
+    CHECK(test<char>());
+    CHECK(test<etl::uint8_t>());
+    CHECK(test<etl::int8_t>());
+    CHECK(test<etl::uint16_t>());
+    CHECK(test<etl::int16_t>());
+    CHECK(test<etl::uint32_t>());
+    CHECK(test<etl::int32_t>());
+    CHECK(test<etl::uint64_t>());
+    CHECK(test<etl::int64_t>());
 
-    assert(test<float>());
-    assert(test<double>());
-    // assert(test<long double>());
+    CHECK(test<float>());
+    CHECK(test<double>());
+    // CHECK(test<long double>());
 
     return true;
 }

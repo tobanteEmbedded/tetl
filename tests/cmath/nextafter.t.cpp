@@ -12,21 +12,21 @@ constexpr auto test() -> bool
     using etl::uint32_t;
     using etl::uint64_t;
 
-    assert(bit_cast<uint32_t>(nextafter(0.0F, 1.0F)) == 1U);
+    CHECK(bit_cast<uint32_t>(nextafter(0.0F, 1.0F)) == 1U);
 
-    assert(bit_cast<uint32_t>(nextafterf(1.0F, 1.0F)) == 1065353216U);
-    assert(bit_cast<uint32_t>(nextafterf(1.0F, 0.0F)) == 1065353215U);
-    assert(bit_cast<uint32_t>(nextafterf(1.0F, 2.0F)) == 1065353217U);
+    CHECK(bit_cast<uint32_t>(nextafterf(1.0F, 1.0F)) == 1065353216U);
+    CHECK(bit_cast<uint32_t>(nextafterf(1.0F, 0.0F)) == 1065353215U);
+    CHECK(bit_cast<uint32_t>(nextafterf(1.0F, 2.0F)) == 1065353217U);
 
-    assert(bit_cast<uint32_t>(nextafter(1.0F, 1.0F)) == 1065353216U);
-    assert(bit_cast<uint32_t>(nextafter(1.0F, 0.0F)) == 1065353215U);
-    assert(bit_cast<uint32_t>(nextafter(1.0F, 2.0F)) == 1065353217U);
+    CHECK(bit_cast<uint32_t>(nextafter(1.0F, 1.0F)) == 1065353216U);
+    CHECK(bit_cast<uint32_t>(nextafter(1.0F, 0.0F)) == 1065353215U);
+    CHECK(bit_cast<uint32_t>(nextafter(1.0F, 2.0F)) == 1065353217U);
 
 #if not defined(TETL_WORKAROUND_AVR_BROKEN_TESTS)
-    assert(bit_cast<uint64_t>(nextafter(0.0, 1.0)) == 1U);
-    assert(bit_cast<uint64_t>(nextafter(1.0, 1.0)) == 4607182418800017408U);
-    assert(bit_cast<uint64_t>(nextafter(1.0, 0.0)) == 4607182418800017407U);
-    assert(bit_cast<uint64_t>(nextafter(1.0, 2.0)) == 4607182418800017409U);
+    CHECK(bit_cast<uint64_t>(nextafter(0.0, 1.0)) == 1U);
+    CHECK(bit_cast<uint64_t>(nextafter(1.0, 1.0)) == 4607182418800017408U);
+    CHECK(bit_cast<uint64_t>(nextafter(1.0, 0.0)) == 4607182418800017407U);
+    CHECK(bit_cast<uint64_t>(nextafter(1.0, 2.0)) == 4607182418800017409U);
 #endif
 
     return true;
@@ -34,11 +34,11 @@ constexpr auto test() -> bool
 
 auto main() -> int
 {
-    assert(test());
+    CHECK(test());
 
     // TODO
     // static_assert(test<long double>());
-    // assert(test<long double>());
+    // CHECK(test<long double>());
     // static_assert(test<float>());
     // static_assert(test<double>());
     return 0;

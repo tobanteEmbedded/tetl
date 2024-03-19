@@ -16,43 +16,43 @@ constexpr auto test() -> bool
     auto src = etl::array<T, 4>{};
     etl::iota(begin(src), end(src), T{0});
 
-    assert(etl::count(begin(src), end(src), T{0}) == 1);
-    assert(etl::count(begin(src), end(src), T{1}) == 1);
-    assert(etl::count(begin(src), end(src), T{2}) == 1);
-    assert(etl::count(begin(src), end(src), T{3}) == 1);
-    assert(etl::count(begin(src), end(src), T{4}) == 0);
+    CHECK(etl::count(begin(src), end(src), T{0}) == 1);
+    CHECK(etl::count(begin(src), end(src), T{1}) == 1);
+    CHECK(etl::count(begin(src), end(src), T{2}) == 1);
+    CHECK(etl::count(begin(src), end(src), T{3}) == 1);
+    CHECK(etl::count(begin(src), end(src), T{4}) == 0);
 
     // input iterator
-    assert(etl::count(InIter(begin(src)), InIter(end(src)), T(0)) == 1);
+    CHECK(etl::count(InIter(begin(src)), InIter(end(src)), T(0)) == 1);
     // forward iterator
-    assert(etl::count(FwdIter(begin(src)), FwdIter(end(src)), T(0)) == 1);
+    CHECK(etl::count(FwdIter(begin(src)), FwdIter(end(src)), T(0)) == 1);
 
     auto p1 = [](auto val) { return val < T{2}; };
     auto p2 = [](auto val) -> bool { return static_cast<int>(val) % 2; };
 
-    assert(etl::count_if(begin(src), end(src), p1) == 2);
-    assert(etl::count_if(begin(src), end(src), p2) == 2);
+    CHECK(etl::count_if(begin(src), end(src), p1) == 2);
+    CHECK(etl::count_if(begin(src), end(src), p2) == 2);
 
     // input iterator
-    assert(etl::count_if(InIter(begin(src)), InIter(end(src)), p1) == 2);
+    CHECK(etl::count_if(InIter(begin(src)), InIter(end(src)), p1) == 2);
     // forward iterator
-    assert(etl::count_if(FwdIter(begin(src)), FwdIter(end(src)), p1) == 2);
+    CHECK(etl::count_if(FwdIter(begin(src)), FwdIter(end(src)), p1) == 2);
 
     return true;
 }
 
 constexpr auto test_all() -> bool
 {
-    assert(test<etl::uint8_t>());
-    assert(test<etl::int8_t>());
-    assert(test<etl::uint16_t>());
-    assert(test<etl::int16_t>());
-    assert(test<etl::uint32_t>());
-    assert(test<etl::int32_t>());
-    assert(test<etl::uint64_t>());
-    assert(test<etl::int64_t>());
-    assert(test<float>());
-    assert(test<double>());
+    CHECK(test<etl::uint8_t>());
+    CHECK(test<etl::int8_t>());
+    CHECK(test<etl::uint16_t>());
+    CHECK(test<etl::int16_t>());
+    CHECK(test<etl::uint32_t>());
+    CHECK(test<etl::int32_t>());
+    CHECK(test<etl::uint64_t>());
+    CHECK(test<etl::int64_t>());
+    CHECK(test<float>());
+    CHECK(test<double>());
 
     return true;
 }

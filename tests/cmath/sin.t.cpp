@@ -10,9 +10,9 @@
 template <typename T>
 constexpr auto test() -> bool
 {
-    assert(etl::sin(short{0}) == 0.0);
-    assert(etl::sinl(0) == 0.0L);
-    assert(etl::sin(T(0)) == T(0));
+    CHECK(etl::sin(short{0}) == 0.0);
+    CHECK(etl::sinl(0) == 0.0L);
+    CHECK(etl::sin(T(0)) == T(0));
 
     CHECK_APPROX(etl::sin(T(1)), T(0.841471));
     CHECK_APPROX(etl::sin(T(2)), T(0.909297));
@@ -26,13 +26,13 @@ auto main() -> int
 {
     static_assert(test<float>());
     static_assert(test<double>());
-    assert(test<float>());
-    assert(test<double>());
+    CHECK(test<float>());
+    CHECK(test<double>());
 
 #if not defined(TETL_MSVC)
     // TODO
     // static_assert(test<long double>());
-    // assert(test<long double>());
+    // CHECK(test<long double>());
 #endif
     return 0;
 }

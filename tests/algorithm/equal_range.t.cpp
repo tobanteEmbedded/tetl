@@ -35,10 +35,10 @@ constexpr auto test() -> bool
 
     auto const value = S{T(2), '?'};
     auto const p     = etl::equal_range(vec.begin(), vec.end(), value);
-    assert(p.first->name == 'B');
+    CHECK(p.first->name == 'B');
 
     // clang-format off
-    assert(etl::equal_range(FwdIter(begin(vec)), FwdIter(end(vec)), value).first->name == 'B');
+    CHECK(etl::equal_range(FwdIter(begin(vec)), FwdIter(end(vec)), value).first->name == 'B');
     // clang-format on
 
     return true;
@@ -46,16 +46,16 @@ constexpr auto test() -> bool
 
 constexpr auto test_all() -> bool
 {
-    assert(test<etl::uint8_t>());
-    assert(test<etl::int8_t>());
-    assert(test<etl::uint16_t>());
-    assert(test<etl::int16_t>());
-    assert(test<etl::uint32_t>());
-    assert(test<etl::int32_t>());
-    assert(test<etl::uint64_t>());
-    assert(test<etl::int64_t>());
-    assert(test<float>());
-    assert(test<double>());
+    CHECK(test<etl::uint8_t>());
+    CHECK(test<etl::int8_t>());
+    CHECK(test<etl::uint16_t>());
+    CHECK(test<etl::int16_t>());
+    CHECK(test<etl::uint32_t>());
+    CHECK(test<etl::int32_t>());
+    CHECK(test<etl::uint64_t>());
+    CHECK(test<etl::int64_t>());
+    CHECK(test<float>());
+    CHECK(test<double>());
 
     return true;
 }

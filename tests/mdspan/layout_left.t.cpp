@@ -26,7 +26,7 @@ constexpr auto test_one() -> bool
     {
         auto const mapping = mapping_2d_t{};
         auto const copy    = mapping;
-        assert(copy == mapping);
+        CHECK(copy == mapping);
         static_assert(etl::is_nothrow_default_constructible_v<mapping_2d_t>);
         static_assert(etl::is_nothrow_copy_constructible_v<mapping_2d_t>);
     }
@@ -35,66 +35,66 @@ constexpr auto test_one() -> bool
         auto mapping = mapping_2d_t{};
         auto copy    = mapping_2d_t{};
         copy         = mapping;
-        assert(copy == mapping);
+        CHECK(copy == mapping);
         static_assert(etl::is_nothrow_copy_assignable_v<mapping_2d_t>);
     }
 
     {
         auto ext     = extents_2d_t(42);
         auto mapping = mapping_2d_t(ext);
-        assert(mapping.extents() == ext);
+        CHECK(mapping.extents() == ext);
         static_assert(etl::is_nothrow_constructible_v<mapping_2d_t, extents_2d_t>);
     }
 
     {
-        assert(mapping_2d_t::is_always_unique());
-        assert(mapping_2d_t::is_always_exhaustive());
-        assert(mapping_2d_t::is_always_strided());
-        assert(mapping_2d_t::is_unique());
-        assert(mapping_2d_t::is_exhaustive());
-        assert(mapping_2d_t::is_strided());
+        CHECK(mapping_2d_t::is_always_unique());
+        CHECK(mapping_2d_t::is_always_exhaustive());
+        CHECK(mapping_2d_t::is_always_strided());
+        CHECK(mapping_2d_t::is_unique());
+        CHECK(mapping_2d_t::is_exhaustive());
+        CHECK(mapping_2d_t::is_strided());
 
-        assert(mapping_2d_t(extents_2d_t(1)).required_span_size() == 2);
-        assert(mapping_2d_t(extents_2d_t(1))(0, 0) == 0);
-        assert(mapping_2d_t(extents_2d_t(1))(1, 0) == 1);
+        CHECK(mapping_2d_t(extents_2d_t(1)).required_span_size() == 2);
+        CHECK(mapping_2d_t(extents_2d_t(1))(0, 0) == 0);
+        CHECK(mapping_2d_t(extents_2d_t(1))(1, 0) == 1);
 
-        assert(mapping_2d_t(extents_2d_t(42)).required_span_size() == 84);
-        assert(mapping_2d_t(extents_2d_t(42))(0, 0) == 0);
-        assert(mapping_2d_t(extents_2d_t(42))(1, 0) == 1);
-        assert(mapping_2d_t(extents_2d_t(42))(0, 1) == 2);
-        assert(mapping_2d_t(extents_2d_t(42))(1, 1) == 3);
+        CHECK(mapping_2d_t(extents_2d_t(42)).required_span_size() == 84);
+        CHECK(mapping_2d_t(extents_2d_t(42))(0, 0) == 0);
+        CHECK(mapping_2d_t(extents_2d_t(42))(1, 0) == 1);
+        CHECK(mapping_2d_t(extents_2d_t(42))(0, 1) == 2);
+        CHECK(mapping_2d_t(extents_2d_t(42))(1, 1) == 3);
     }
 
     {
         using extents_3d_t = etl::extents<IndexType, etl::dynamic_extent, 2, etl::dynamic_extent>;
         using mapping_3d_t = etl::layout_left::mapping<extents_3d_t>;
 
-        assert(mapping_3d_t::is_always_unique());
-        assert(mapping_3d_t::is_always_exhaustive());
-        assert(mapping_3d_t::is_always_strided());
-        assert(mapping_3d_t::is_unique());
-        assert(mapping_3d_t::is_exhaustive());
-        assert(mapping_3d_t::is_strided());
+        CHECK(mapping_3d_t::is_always_unique());
+        CHECK(mapping_3d_t::is_always_exhaustive());
+        CHECK(mapping_3d_t::is_always_strided());
+        CHECK(mapping_3d_t::is_unique());
+        CHECK(mapping_3d_t::is_exhaustive());
+        CHECK(mapping_3d_t::is_strided());
 
-        assert(mapping_3d_t(extents_3d_t(1, 1)).required_span_size() == 2);
-        assert(mapping_3d_t(extents_3d_t(1, 2)).required_span_size() == 4);
-        assert(mapping_3d_t(extents_3d_t(2, 2)).required_span_size() == 8);
+        CHECK(mapping_3d_t(extents_3d_t(1, 1)).required_span_size() == 2);
+        CHECK(mapping_3d_t(extents_3d_t(1, 2)).required_span_size() == 4);
+        CHECK(mapping_3d_t(extents_3d_t(2, 2)).required_span_size() == 8);
     }
 
     {
         using extents_4d_t = etl::extents<IndexType, etl::dynamic_extent, etl::dynamic_extent, 2, etl::dynamic_extent>;
         using mapping_4d_t = etl::layout_left::mapping<extents_4d_t>;
 
-        assert(mapping_4d_t::is_always_unique());
-        assert(mapping_4d_t::is_always_exhaustive());
-        assert(mapping_4d_t::is_always_strided());
-        assert(mapping_4d_t::is_unique());
-        assert(mapping_4d_t::is_exhaustive());
-        assert(mapping_4d_t::is_strided());
+        CHECK(mapping_4d_t::is_always_unique());
+        CHECK(mapping_4d_t::is_always_exhaustive());
+        CHECK(mapping_4d_t::is_always_strided());
+        CHECK(mapping_4d_t::is_unique());
+        CHECK(mapping_4d_t::is_exhaustive());
+        CHECK(mapping_4d_t::is_strided());
 
-        assert(mapping_4d_t(extents_4d_t(1, 1, 1)).required_span_size() == 2);
-        assert(mapping_4d_t(extents_4d_t(1, 1, 2)).required_span_size() == 4);
-        assert(mapping_4d_t(extents_4d_t(3, 2, 2)).required_span_size() == 24);
+        CHECK(mapping_4d_t(extents_4d_t(1, 1, 1)).required_span_size() == 2);
+        CHECK(mapping_4d_t(extents_4d_t(1, 1, 2)).required_span_size() == 4);
+        CHECK(mapping_4d_t(extents_4d_t(3, 2, 2)).required_span_size() == 24);
     }
 
     return true;
@@ -102,24 +102,24 @@ constexpr auto test_one() -> bool
 
 constexpr auto test_layout_left() -> bool
 {
-    assert(test_one<etl::uint8_t>());
-    assert(test_one<etl::uint16_t>());
-    assert(test_one<etl::uint32_t>());
-    assert(test_one<etl::uint64_t>());
+    CHECK(test_one<etl::uint8_t>());
+    CHECK(test_one<etl::uint16_t>());
+    CHECK(test_one<etl::uint32_t>());
+    CHECK(test_one<etl::uint64_t>());
 
-    assert(test_one<etl::int8_t>());
-    assert(test_one<etl::int16_t>());
-    assert(test_one<etl::int32_t>());
-    assert(test_one<etl::int64_t>());
+    CHECK(test_one<etl::int8_t>());
+    CHECK(test_one<etl::int16_t>());
+    CHECK(test_one<etl::int32_t>());
+    CHECK(test_one<etl::int64_t>());
 
-    assert(test_one<etl::size_t>());
-    assert(test_one<etl::ptrdiff_t>());
+    CHECK(test_one<etl::size_t>());
+    CHECK(test_one<etl::ptrdiff_t>());
     return true;
 }
 
 auto main() -> int
 {
-    assert(test_layout_left());
+    CHECK(test_layout_left());
     static_assert(test_layout_left());
     return 0;
 }
