@@ -31,6 +31,21 @@ constexpr auto test() -> bool
     ASSERT(etl::test_bit(UInt(0b00000111), UInt(1)));
     ASSERT(etl::test_bit(UInt(0b00000111), UInt(2)));
 
+    ASSERT_NOEXCEPT(etl::test_bit<0>(UInt(1)));
+    ASSERT_SAME_TYPE(decltype(etl::test_bit<0>(UInt(1))), bool);
+
+    ASSERT(not etl::test_bit<0>(UInt(0b00000000)));
+    ASSERT(not etl::test_bit<1>(UInt(0b00000000)));
+    ASSERT(not etl::test_bit<2>(UInt(0b00000000)));
+
+    ASSERT(etl::test_bit<0>(UInt(0b00000001)));
+    ASSERT(etl::test_bit<1>(UInt(0b00000010)));
+    ASSERT(etl::test_bit<2>(UInt(0b00000100)));
+
+    ASSERT(etl::test_bit<0>(UInt(0b00000111)));
+    ASSERT(etl::test_bit<1>(UInt(0b00000111)));
+    ASSERT(etl::test_bit<2>(UInt(0b00000111)));
+
     return true;
 }
 

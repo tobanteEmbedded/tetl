@@ -24,6 +24,14 @@ constexpr auto test() -> bool
     ASSERT(etl::flip_bit(T(0b00000100), T(2)) == T(0b00000000));
     ASSERT(etl::flip_bit(T(0b00000011), T(3)) == T(0b00001011));
 
+    ASSERT_NOEXCEPT(etl::flip_bit<0>(T(1)));
+    ASSERT_SAME_TYPE(decltype(etl::flip_bit<0>(T(1))), T);
+
+    ASSERT(etl::flip_bit<0>(T(0b00000001)) == T(0b00000000));
+    ASSERT(etl::flip_bit<1>(T(0b00000010)) == T(0b00000000));
+    ASSERT(etl::flip_bit<2>(T(0b00000100)) == T(0b00000000));
+    ASSERT(etl::flip_bit<3>(T(0b00000011)) == T(0b00001011));
+
     return true;
 }
 

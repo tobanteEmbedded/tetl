@@ -23,6 +23,13 @@ constexpr auto test() -> bool
     ASSERT(etl::set_bit(UInt(0b00000000), UInt(1)) == UInt(0b00000010));
     ASSERT(etl::set_bit(UInt(0b00000000), UInt(2)) == UInt(0b00000100));
 
+    ASSERT_NOEXCEPT(etl::set_bit<0>(UInt(1)));
+    ASSERT_SAME_TYPE(decltype(etl::set_bit<0>(UInt(1))), UInt);
+
+    ASSERT(etl::set_bit<0>(UInt(0b00000000)) == UInt(0b00000001));
+    ASSERT(etl::set_bit<1>(UInt(0b00000000)) == UInt(0b00000010));
+    ASSERT(etl::set_bit<2>(UInt(0b00000000)) == UInt(0b00000100));
+
     return true;
 }
 

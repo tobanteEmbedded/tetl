@@ -4,6 +4,7 @@
 #define TETL_BIT_FLIP_BIT_HPP
 
 #include <etl/_concepts/standard_unsigned_integer.hpp>
+#include <etl/_cstddef/size_t.hpp>
 
 namespace etl {
 
@@ -11,6 +12,12 @@ template <etl::standard_unsigned_integer UInt>
 [[nodiscard]] constexpr auto flip_bit(UInt val, UInt bit) noexcept -> UInt
 {
     return static_cast<UInt>(val ^ static_cast<UInt>(UInt(1) << bit));
+}
+
+template <etl::size_t Bit, etl::standard_unsigned_integer UInt>
+[[nodiscard]] constexpr auto flip_bit(UInt val) noexcept -> UInt
+{
+    return etl::flip_bit(val, static_cast<UInt>(Bit));
 }
 
 } // namespace etl

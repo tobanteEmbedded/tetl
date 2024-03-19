@@ -24,6 +24,14 @@ constexpr auto test() -> bool
     ASSERT(etl::reset_bit(T(0b00000100), T(2)) == T(0b00000000));
     ASSERT(etl::reset_bit(T(0b00000011), T(1)) == T(0b00000001));
 
+    ASSERT_NOEXCEPT(etl::reset_bit<0>(T(1)));
+    ASSERT_SAME_TYPE(decltype(etl::reset_bit<0>(T(1))), T);
+
+    ASSERT(etl::reset_bit<0>(T(0b00000001)) == T(0b00000000));
+    ASSERT(etl::reset_bit<1>(T(0b00000010)) == T(0b00000000));
+    ASSERT(etl::reset_bit<2>(T(0b00000100)) == T(0b00000000));
+    ASSERT(etl::reset_bit<1>(T(0b00000011)) == T(0b00000001));
+
     return true;
 }
 
