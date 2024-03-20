@@ -23,7 +23,7 @@ constexpr auto test() -> bool
     CHECK(etl::is_trivially_destructible_v<trivial_union_t>);
     CHECK(etl::is_trivially_copyable_v<trivial_union_t>);
 
-    CHECK(not etl::is_trivially_destructible_v<non_trivial_union_t>);
+    CHECK_FALSE(etl::is_trivially_destructible_v<non_trivial_union_t>);
 
     auto u = trivial_union_t{etl::index_c<0>, 42};
     CHECK(u[etl::index_c<0>] == 42);

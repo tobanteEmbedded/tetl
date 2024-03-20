@@ -83,7 +83,7 @@ constexpr auto test_from_chars() -> bool
         auto val = T{};
 
         auto foo = "foo"_sv;
-        CHECK(not static_cast<bool>(etl::from_chars(foo.begin(), foo.end(), val)));
+        CHECK_FALSE(static_cast<bool>(etl::from_chars(foo.begin(), foo.end(), val)));
         CHECK(etl::from_chars(foo.begin(), foo.end(), val).ptr == foo.data());
         CHECK(etl::from_chars(foo.begin(), foo.end(), val).ec == etl::errc::invalid_argument);
 

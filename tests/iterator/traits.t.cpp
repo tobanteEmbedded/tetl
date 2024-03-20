@@ -12,13 +12,13 @@
 template <typename T>
 constexpr auto test() -> bool
 {
-    CHECK(etl::same_as<etl::iter_value_t<typename etl::array<T, 2>::iterator>, T>);
-    CHECK(etl::same_as<etl::iter_value_t<typename etl::array<T, 2>::const_iterator>, T>);
-    CHECK(etl::same_as<etl::iter_value_t<typename etl::array<T, 2>::const_iterator>, T>);
+    CHECK_SAME_TYPE(etl::iter_value_t<typename etl::array<T, 2>::iterator>, T);
+    CHECK_SAME_TYPE(etl::iter_value_t<typename etl::array<T, 2>::const_iterator>, T);
+    CHECK_SAME_TYPE(etl::iter_value_t<typename etl::array<T, 2>::const_iterator>, T);
 
-    CHECK(etl::same_as<etl::iter_difference_t<typename etl::array<T, 2>::iterator>, etl::ptrdiff_t>);
-    CHECK(etl::same_as<etl::iter_difference_t<typename etl::array<T, 2>::const_iterator>, etl::ptrdiff_t>);
-    CHECK(etl::same_as<etl::iter_difference_t<typename etl::array<T, 2>::const_iterator>, etl::ptrdiff_t>);
+    CHECK_SAME_TYPE(etl::iter_difference_t<typename etl::array<T, 2>::iterator>, etl::ptrdiff_t);
+    CHECK_SAME_TYPE(etl::iter_difference_t<typename etl::array<T, 2>::const_iterator>, etl::ptrdiff_t);
+    CHECK_SAME_TYPE(etl::iter_difference_t<typename etl::array<T, 2>::const_iterator>, etl::ptrdiff_t);
     return true;
 }
 

@@ -21,9 +21,9 @@ constexpr auto test_one() -> bool
     CHECK(etl::is_nothrow_move_assignable_v<extents_t>);
     CHECK(etl::is_nothrow_swappable_v<extents_t>);
 
-    CHECK(etl::same_as<typename extents_t::index_type, IndexType>);
-    CHECK(etl::same_as<typename extents_t::size_type, unsigned_t>);
-    CHECK(etl::same_as<typename extents_t::rank_type, etl::size_t>);
+    CHECK_SAME_TYPE(typename extents_t::index_type, IndexType);
+    CHECK_SAME_TYPE(typename extents_t::size_type, unsigned_t);
+    CHECK_SAME_TYPE(typename extents_t::rank_type, etl::size_t);
 
     {
         // rank 1, all dynamic

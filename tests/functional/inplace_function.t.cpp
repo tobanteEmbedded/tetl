@@ -22,8 +22,8 @@ auto test() -> bool
     CHECK(static_cast<bool>(func));
     CHECK(func != nullptr);
     CHECK(nullptr != func);
-    CHECK_FALSE((func == nullptr));
-    CHECK_FALSE((nullptr == func));
+    CHECK_FALSE(func == nullptr);
+    CHECK_FALSE(nullptr == func);
     CHECK(func(T(41)) == T(42));
     CHECK(etl::invoke(func, T(41)) == T(42));
 

@@ -13,7 +13,7 @@ constexpr auto test() -> bool
     // mutable l-value
     auto t = T(0);
     auto u = T(1);
-    CHECK(not etl::is_const_v<decltype(etl::forward_like<decltype(t)>(u))>);
+    CHECK_FALSE(etl::is_const_v<decltype(etl::forward_like<decltype(t)>(u))>);
     CHECK(etl::is_rvalue_reference_v<decltype(etl::forward_like<decltype(t)>(u))>);
 
     return true;

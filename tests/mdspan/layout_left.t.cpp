@@ -17,11 +17,11 @@ constexpr auto test_one() -> bool
     CHECK(etl::is_trivial_v<etl::layout_left>);
     CHECK(etl::is_trivially_copyable_v<mapping_2d_t>);
 
-    CHECK(etl::same_as<typename mapping_2d_t::extents_type, extents_2d_t>);
-    CHECK(etl::same_as<typename mapping_2d_t::index_type, IndexType>);
-    CHECK(etl::same_as<typename mapping_2d_t::size_type, typename extents_2d_t::size_type>);
-    CHECK(etl::same_as<typename mapping_2d_t::rank_type, typename extents_2d_t::rank_type>);
-    CHECK(etl::same_as<typename mapping_2d_t::layout_type, etl::layout_left>);
+    CHECK_SAME_TYPE(typename mapping_2d_t::extents_type, extents_2d_t);
+    CHECK_SAME_TYPE(typename mapping_2d_t::index_type, IndexType);
+    CHECK_SAME_TYPE(typename mapping_2d_t::size_type, typename extents_2d_t::size_type);
+    CHECK_SAME_TYPE(typename mapping_2d_t::rank_type, typename extents_2d_t::rank_type);
+    CHECK_SAME_TYPE(typename mapping_2d_t::layout_type, etl::layout_left);
 
     {
         auto const mapping = mapping_2d_t{};

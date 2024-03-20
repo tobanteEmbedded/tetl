@@ -19,11 +19,11 @@
     CHECK(etl::chrono::day(2).ok());
     CHECK(etl::chrono::day(30).ok());
     CHECK(etl::chrono::day(31).ok());
-    CHECK(not etl::chrono::day(0).ok());
-    CHECK(not etl::chrono::day(32).ok());
+    CHECK_FALSE(etl::chrono::day(0).ok());
+    CHECK_FALSE(etl::chrono::day(32).ok());
 
     auto d = etl::chrono::day{};
-    CHECK(not d.ok());
+    CHECK_FALSE(d.ok());
     CHECK(static_cast<etl::uint32_t>(d) == 0U);
 
     ++d;
@@ -44,8 +44,8 @@
     CHECK(etl::chrono::month(2).ok());
     CHECK(etl::chrono::month(11).ok());
     CHECK(etl::chrono::month(12).ok());
-    CHECK(not etl::chrono::month(0).ok());
-    CHECK(not etl::chrono::month(13).ok());
+    CHECK_FALSE(etl::chrono::month(0).ok());
+    CHECK_FALSE(etl::chrono::month(13).ok());
 
     CHECK(etl::chrono::month(1) == etl::chrono::January);
     CHECK(etl::chrono::month(2) == etl::chrono::February);
@@ -61,7 +61,7 @@
     CHECK(etl::chrono::month(12) == etl::chrono::December);
 
     auto m = etl::chrono::month{};
-    CHECK(not m.ok());
+    CHECK_FALSE(m.ok());
     CHECK(static_cast<etl::uint32_t>(m) == 0U);
 
     ++m;
@@ -80,8 +80,8 @@
 {
     CHECK(etl::chrono::year(2000).is_leap());
     CHECK(etl::chrono::year(2004).is_leap());
-    CHECK(not etl::chrono::year(2023).is_leap());
-    CHECK(not etl::chrono::year(1900).is_leap());
+    CHECK_FALSE(etl::chrono::year(2023).is_leap());
+    CHECK_FALSE(etl::chrono::year(1900).is_leap());
 
     auto y = etl::chrono::year{};
     CHECK(y.ok());

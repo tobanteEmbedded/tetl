@@ -12,9 +12,9 @@ template <typename Value, typename Index>
 [[nodiscard]] constexpr auto test_mdarray() -> bool
 {
     using matrix = etl::mdarray<Value, etl::extents<Index, 2, 3>, etl::layout_left, etl::array<Value, 6>>;
-    CHECK(etl::same_as<typename matrix::value_type, Value>);
-    CHECK(etl::same_as<typename matrix::element_type, Value>);
-    CHECK(etl::same_as<typename matrix::container_type, etl::array<Value, 6>>);
+    CHECK_SAME_TYPE(typename matrix::value_type, Value);
+    CHECK_SAME_TYPE(typename matrix::element_type, Value);
+    CHECK_SAME_TYPE(typename matrix::container_type, etl::array<Value, 6>);
 
     CHECK(matrix::rank() == 2);
     CHECK(matrix::rank_dynamic() == 0);

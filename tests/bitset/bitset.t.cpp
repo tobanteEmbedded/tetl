@@ -122,7 +122,7 @@ constexpr auto test_bitset() -> bool
         CHECK(bits.any());
 
         bits.reset(1);
-        CHECK_FALSE((bits.test(1)));
+        CHECK_FALSE(bits.test(1));
         CHECK(bits.any());
 
         bits.reset();
@@ -142,12 +142,12 @@ constexpr auto test_bitset() -> bool
         auto rhs = etl::bitset<N>{};
         CHECK(rhs == lhs);
         CHECK(lhs == rhs);
-        CHECK_FALSE((rhs != lhs));
-        CHECK_FALSE((lhs != rhs));
+        CHECK_FALSE(rhs != lhs);
+        CHECK_FALSE(lhs != rhs);
 
         rhs.flip();
-        CHECK_FALSE((rhs == lhs));
-        CHECK_FALSE((lhs == rhs));
+        CHECK_FALSE(rhs == lhs);
+        CHECK_FALSE(lhs == rhs);
         CHECK(rhs != lhs);
         CHECK(lhs != rhs);
     }
@@ -157,25 +157,25 @@ constexpr auto test_bitset() -> bool
         auto bits      = etl::bitset<N>{};
 
         ref_type r1 = bits[0];
-        CHECK_FALSE((static_cast<bool>(r1)));
+        CHECK_FALSE(static_cast<bool>(r1));
 
         r1 = true;
         CHECK(static_cast<bool>(r1));
 
         r1 = false;
         CHECK(~r1);
-        CHECK_FALSE((static_cast<bool>(r1)));
+        CHECK_FALSE(static_cast<bool>(r1));
 
         bits.set(1);
         ref_type r2 = bits[1];
         CHECK(static_cast<bool>(r2));
         r2.flip();
-        CHECK_FALSE((static_cast<bool>(r2)));
+        CHECK_FALSE(static_cast<bool>(r2));
         r2.flip();
         CHECK(static_cast<bool>(r2));
 
         r2 = r1;
-        CHECK_FALSE((static_cast<bool>(r2)));
+        CHECK_FALSE(static_cast<bool>(r2));
     }
 
     {

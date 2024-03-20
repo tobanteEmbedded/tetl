@@ -15,12 +15,12 @@ constexpr auto test() -> bool
     using Alloc  = etl::monotonic_allocator<T>;
     using Vector = etl::vector<T, Alloc>;
 
-    CHECK(etl::same_as<typename Vector::value_type, T>);
-    CHECK(etl::same_as<typename Vector::allocator_type, Alloc>);
-    CHECK(etl::same_as<typename Vector::size_type, etl::size_t>);
-    CHECK(etl::same_as<typename Vector::difference_type, etl::ptrdiff_t>);
-    CHECK(etl::same_as<typename Vector::pointer, T*>);
-    CHECK(etl::same_as<typename Vector::const_pointer, T const*>);
+    CHECK_SAME_TYPE(typename Vector::value_type, T);
+    CHECK_SAME_TYPE(typename Vector::allocator_type, Alloc);
+    CHECK_SAME_TYPE(typename Vector::size_type, etl::size_t);
+    CHECK_SAME_TYPE(typename Vector::difference_type, etl::ptrdiff_t);
+    CHECK_SAME_TYPE(typename Vector::pointer, T*);
+    CHECK_SAME_TYPE(typename Vector::const_pointer, T const*);
 
     {
         auto memory = etl::array<etl::byte, 64>{};

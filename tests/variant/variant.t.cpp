@@ -40,15 +40,15 @@ static auto test() -> bool
 
         auto v1 = etl::variant<int, float>{};
         CHECK(etl::holds_alternative<int>(v1));
-        CHECK(not etl::holds_alternative<float>(v1));
+        CHECK_FALSE(etl::holds_alternative<float>(v1));
 
         auto v2 = etl::variant<float, int>{};
         CHECK(etl::holds_alternative<float>(v2));
-        CHECK(not etl::holds_alternative<int>(v2));
+        CHECK_FALSE(etl::holds_alternative<int>(v2));
 
         auto v3 = etl::variant<S, int>{};
         CHECK(etl::holds_alternative<S>(v3));
-        CHECK(not etl::holds_alternative<int>(v3));
+        CHECK_FALSE(etl::holds_alternative<int>(v3));
         CHECK(etl::get_if<S>(&v3)->x == 42);
     }
 
@@ -312,7 +312,7 @@ static auto test() -> bool
         auto v3 = variant_t{T{1}};
         etl::visit(funcs, v3);
         CHECK(calledT);
-        CHECK(not calledFloat);
+        CHECK_FALSE(calledFloat);
     }
 
     return true;

@@ -27,10 +27,10 @@ static auto test() -> bool
     CHECK(etl::is_default_constructible_v<expected_t>);
     CHECK(etl::is_nothrow_default_constructible_v<expected_t>);
 
-    CHECK(etl::same_as<typename expected_t::value_type, T>);
-    CHECK(etl::same_as<typename expected_t::error_type, E>);
-    CHECK(etl::same_as<typename expected_t::unexpected_type, etl::unexpected<E>>);
-    CHECK(etl::same_as<typename expected_t::template rebind<float>, etl::expected<float, E>>);
+    CHECK_SAME_TYPE(typename expected_t::value_type, T);
+    CHECK_SAME_TYPE(typename expected_t::error_type, E);
+    CHECK_SAME_TYPE(typename expected_t::unexpected_type, etl::unexpected<E>);
+    CHECK_SAME_TYPE(typename expected_t::template rebind<float>, etl::expected<float, E>);
 
     CHECK(noexcept(etl::declval<expected_t>().has_value()));
     CHECK(noexcept(static_cast<bool>(etl::declval<expected_t>())));
@@ -57,10 +57,10 @@ static auto test() -> bool
     CHECK(*etl::as_const(ex2) == T(42));
 
     auto ex3 = expected_t{etl::unexpect, 143};
-    CHECK(not ex3.has_value());
-    CHECK(not static_cast<bool>(ex3));
-    CHECK(not etl::as_const(ex3).has_value());
-    CHECK(not static_cast<bool>(etl::as_const(ex3)));
+    CHECK_FALSE(ex3.has_value());
+    CHECK_FALSE(static_cast<bool>(ex3));
+    CHECK_FALSE(etl::as_const(ex3).has_value());
+    CHECK_FALSE(static_cast<bool>(etl::as_const(ex3)));
     CHECK(ex3.error() == 143);
     CHECK(etl::as_const(ex3).error() == 143);
     CHECK(ex3.value_or(42.0F) == T(42));

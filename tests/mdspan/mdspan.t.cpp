@@ -43,7 +43,7 @@ template <typename ElementType, typename IndexType>
         CHECK(m.static_extent(0) == etl::dynamic_extent);
         CHECK(m.extent(0) == buffer.size());
 
-        CHECK(not m.empty());
+        CHECK_FALSE(m.empty());
         CHECK(m.size() == buffer.size());
 
         CHECK(m(0) == ElementType(1));
@@ -64,7 +64,7 @@ template <typename ElementType, typename IndexType>
         CHECK(m.extent(0) == 2);
         CHECK(m.extent(1) == 8);
 
-        CHECK(not m.empty());
+        CHECK_FALSE(m.empty());
         CHECK(m.size() == buffer.size());
 
         CHECK(m(0, 0) == ElementType(1));

@@ -50,13 +50,13 @@ constexpr auto test() -> bool
     auto isSame   = [](T lhs, T rhs) { return etl::equal_to{}(lhs, rhs); };
     auto isDiffer = etl::not_fn(isSame);
     CHECK(isDiffer(T(6), T(9)));
-    CHECK(not isDiffer(T(8), T(8)));
+    CHECK_FALSE(isDiffer(T(8), T(8)));
     CHECK(etl::as_const(isDiffer)(T(6), T(9)));
-    CHECK(not etl::as_const(isDiffer)(T(8), T(8)));
+    CHECK_FALSE(etl::as_const(isDiffer)(T(8), T(8)));
 
     auto isDifferStateless = etl::not_fn<isSame>();
     CHECK(isDifferStateless(T(6), T(9)));
-    CHECK(not isDifferStateless(T(8), T(8)));
+    CHECK_FALSE(isDifferStateless(T(8), T(8)));
 
     return true;
 }

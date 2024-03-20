@@ -168,7 +168,7 @@ constexpr auto test_sort() -> bool
             T{42},
         };
 
-        CHECK_FALSE((etl::is_sorted(begin(src), end(src), etl::greater{})));
+        CHECK_FALSE(etl::is_sorted(begin(src), end(src), etl::greater{}));
     }
 
     // empty range always returns true

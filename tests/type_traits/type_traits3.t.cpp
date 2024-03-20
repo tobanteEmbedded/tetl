@@ -52,20 +52,20 @@ constexpr auto test() -> bool
 
     CHECK(etl::is_constructible_v<Foo<T>, T>);
     CHECK(etl::is_constructible_v<Foo<T>, T, double>);
-    CHECK_FALSE((etl::is_constructible_v<Foo<T>, T, struct S>));
+    CHECK_FALSE(etl::is_constructible_v<Foo<T>, T, struct S>);
 
     {
         CHECK(etl::conjunction_v<etl::true_type>);
         CHECK(etl::conjunction_v<etl::true_type, etl::true_type>);
-        CHECK_FALSE((etl::conjunction_v<etl::false_type>));
+        CHECK_FALSE(etl::conjunction_v<etl::false_type>);
 
         CHECK(etl::conjunction_v<etl::is_same<T, T>, etl::is_same<T const, T const>>);
-        CHECK_FALSE((etl::conjunction_v<etl::is_same<T, T>, etl::false_type>));
+        CHECK_FALSE(etl::conjunction_v<etl::is_same<T, T>, etl::false_type>);
     }
 
     {
-        CHECK_FALSE((etl::disjunction_v<etl::false_type>));
-        CHECK_FALSE((etl::disjunction_v<etl::false_type, etl::false_type>));
+        CHECK_FALSE(etl::disjunction_v<etl::false_type>);
+        CHECK_FALSE(etl::disjunction_v<etl::false_type, etl::false_type>);
 
         CHECK(etl::disjunction_v<etl::true_type>);
         CHECK(etl::disjunction_v<etl::true_type, etl::true_type>);
@@ -104,7 +104,7 @@ constexpr auto test() -> bool
         CHECK(etl::is_trivially_copyable<TCA>::value);
         CHECK(etl::is_trivially_copyable<TCD>::value);
 
-        CHECK_FALSE((etl::is_trivially_copyable<TCB>::value));
+        CHECK_FALSE(etl::is_trivially_copyable<TCB>::value);
     }
 
     {
@@ -119,10 +119,10 @@ constexpr auto test() -> bool
             non_trivial_type() { } // NOLINT
         };
 
-        CHECK_FALSE((etl::is_trivial_v<non_trivial_type>));
-        CHECK_FALSE((etl::is_trivial_v<non_trivial_type const>));
-        CHECK_FALSE((etl::is_trivial_v<non_trivial_type volatile>));
-        CHECK_FALSE((etl::is_trivial_v<non_trivial_type const volatile>));
+        CHECK_FALSE(etl::is_trivial_v<non_trivial_type>);
+        CHECK_FALSE(etl::is_trivial_v<non_trivial_type const>);
+        CHECK_FALSE(etl::is_trivial_v<non_trivial_type volatile>);
+        CHECK_FALSE(etl::is_trivial_v<non_trivial_type const volatile>);
     }
 
     struct S {
@@ -135,7 +135,7 @@ constexpr auto test() -> bool
     CHECK_SAME_TYPE(etl::invoke_result_t<S, int>, float);
 
     CHECK(etl::is_invocable_v<T()>);
-    CHECK_FALSE((etl::is_invocable_v<T(), T>));
+    CHECK_FALSE(etl::is_invocable_v<T(), T>);
 
     CHECK(etl::is_invocable_r_v<T, T()>);
     CHECK_FALSE(etl::is_invocable_r_v<T*, T()>);

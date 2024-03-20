@@ -37,7 +37,7 @@ constexpr auto test() -> bool
     CHECK(s2.find(T(42)) == etl::begin(s2));
 
     auto r2 = s2.insert(T(42));
-    CHECK(not r2.second);
+    CHECK_FALSE(r2.second);
     CHECK(s2.size() == 1);
     CHECK(s2.find(T(42)) == etl::begin(s2));
 

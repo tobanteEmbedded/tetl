@@ -19,9 +19,9 @@ constexpr auto test() -> bool
     CHECK_NOEXCEPT(etl::test_bit(UInt(1), UInt(0)));
     CHECK_SAME_TYPE(decltype(etl::test_bit(UInt(1), UInt(0))), bool);
 
-    CHECK(not etl::test_bit(UInt(0b00000000), UInt(0)));
-    CHECK(not etl::test_bit(UInt(0b00000000), UInt(1)));
-    CHECK(not etl::test_bit(UInt(0b00000000), UInt(2)));
+    CHECK_FALSE(etl::test_bit(UInt(0b00000000), UInt(0)));
+    CHECK_FALSE(etl::test_bit(UInt(0b00000000), UInt(1)));
+    CHECK_FALSE(etl::test_bit(UInt(0b00000000), UInt(2)));
 
     CHECK(etl::test_bit(UInt(0b00000001), UInt(0)));
     CHECK(etl::test_bit(UInt(0b00000010), UInt(1)));
@@ -34,9 +34,9 @@ constexpr auto test() -> bool
     CHECK_NOEXCEPT(etl::test_bit<0>(UInt(1)));
     CHECK_SAME_TYPE(decltype(etl::test_bit<0>(UInt(1))), bool);
 
-    CHECK(not etl::test_bit<0>(UInt(0b00000000)));
-    CHECK(not etl::test_bit<1>(UInt(0b00000000)));
-    CHECK(not etl::test_bit<2>(UInt(0b00000000)));
+    CHECK_FALSE(etl::test_bit<0>(UInt(0b00000000)));
+    CHECK_FALSE(etl::test_bit<1>(UInt(0b00000000)));
+    CHECK_FALSE(etl::test_bit<2>(UInt(0b00000000)));
 
     CHECK(etl::test_bit<0>(UInt(0b00000001)));
     CHECK(etl::test_bit<1>(UInt(0b00000010)));
@@ -62,23 +62,23 @@ constexpr auto test_all() -> bool
     CHECK(has_test_bit<unsigned long>);
     CHECK(has_test_bit<unsigned long long>);
 
-    CHECK(not has_test_bit<etl::int8_t>);
-    CHECK(not has_test_bit<etl::int16_t>);
-    CHECK(not has_test_bit<etl::int32_t>);
-    CHECK(not has_test_bit<etl::int64_t>);
-    CHECK(not has_test_bit<etl::ptrdiff_t>);
+    CHECK_FALSE(has_test_bit<etl::int8_t>);
+    CHECK_FALSE(has_test_bit<etl::int16_t>);
+    CHECK_FALSE(has_test_bit<etl::int32_t>);
+    CHECK_FALSE(has_test_bit<etl::int64_t>);
+    CHECK_FALSE(has_test_bit<etl::ptrdiff_t>);
 
-    CHECK(not has_test_bit<signed char>);
-    CHECK(not has_test_bit<signed short>);
-    CHECK(not has_test_bit<signed int>);
-    CHECK(not has_test_bit<signed long>);
-    CHECK(not has_test_bit<signed long long>);
+    CHECK_FALSE(has_test_bit<signed char>);
+    CHECK_FALSE(has_test_bit<signed short>);
+    CHECK_FALSE(has_test_bit<signed int>);
+    CHECK_FALSE(has_test_bit<signed long>);
+    CHECK_FALSE(has_test_bit<signed long long>);
 
-    CHECK(not has_test_bit<bool>);
-    CHECK(not has_test_bit<char>);
-    CHECK(not has_test_bit<char8_t>);
-    CHECK(not has_test_bit<char16_t>);
-    CHECK(not has_test_bit<char32_t>);
+    CHECK_FALSE(has_test_bit<bool>);
+    CHECK_FALSE(has_test_bit<char>);
+    CHECK_FALSE(has_test_bit<char8_t>);
+    CHECK_FALSE(has_test_bit<char16_t>);
+    CHECK_FALSE(has_test_bit<char32_t>);
 
     CHECK(test<etl::uint8_t>());
     CHECK(test<etl::uint16_t>());

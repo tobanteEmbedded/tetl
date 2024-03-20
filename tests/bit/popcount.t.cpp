@@ -48,23 +48,23 @@ constexpr auto test_all() -> bool
     CHECK(has_popcount<unsigned long>);
     CHECK(has_popcount<unsigned long long>);
 
-    CHECK(not has_popcount<etl::int8_t>);
-    CHECK(not has_popcount<etl::int16_t>);
-    CHECK(not has_popcount<etl::int32_t>);
-    CHECK(not has_popcount<etl::int64_t>);
-    CHECK(not has_popcount<etl::ptrdiff_t>);
+    CHECK_FALSE(has_popcount<etl::int8_t>);
+    CHECK_FALSE(has_popcount<etl::int16_t>);
+    CHECK_FALSE(has_popcount<etl::int32_t>);
+    CHECK_FALSE(has_popcount<etl::int64_t>);
+    CHECK_FALSE(has_popcount<etl::ptrdiff_t>);
 
-    CHECK(not has_popcount<signed char>);
-    CHECK(not has_popcount<signed short>);
-    CHECK(not has_popcount<signed int>);
-    CHECK(not has_popcount<signed long>);
-    CHECK(not has_popcount<signed long long>);
+    CHECK_FALSE(has_popcount<signed char>);
+    CHECK_FALSE(has_popcount<signed short>);
+    CHECK_FALSE(has_popcount<signed int>);
+    CHECK_FALSE(has_popcount<signed long>);
+    CHECK_FALSE(has_popcount<signed long long>);
 
-    CHECK(not has_popcount<bool>);
-    CHECK(not has_popcount<char>);
-    CHECK(not has_popcount<char8_t>);
-    CHECK(not has_popcount<char16_t>);
-    CHECK(not has_popcount<char32_t>);
+    CHECK_FALSE(has_popcount<bool>);
+    CHECK_FALSE(has_popcount<char>);
+    CHECK_FALSE(has_popcount<char8_t>);
+    CHECK_FALSE(has_popcount<char16_t>);
+    CHECK_FALSE(has_popcount<char32_t>);
 
     CHECK(test<etl::uint8_t>());
     CHECK(test<etl::uint16_t>());

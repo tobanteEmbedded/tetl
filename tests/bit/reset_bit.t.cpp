@@ -48,23 +48,23 @@ constexpr auto test_all() -> bool
     CHECK(has_reset_bit<unsigned long>);
     CHECK(has_reset_bit<unsigned long long>);
 
-    CHECK(not has_reset_bit<etl::int8_t>);
-    CHECK(not has_reset_bit<etl::int16_t>);
-    CHECK(not has_reset_bit<etl::int32_t>);
-    CHECK(not has_reset_bit<etl::int64_t>);
-    CHECK(not has_reset_bit<etl::ptrdiff_t>);
+    CHECK_FALSE(has_reset_bit<etl::int8_t>);
+    CHECK_FALSE(has_reset_bit<etl::int16_t>);
+    CHECK_FALSE(has_reset_bit<etl::int32_t>);
+    CHECK_FALSE(has_reset_bit<etl::int64_t>);
+    CHECK_FALSE(has_reset_bit<etl::ptrdiff_t>);
 
-    CHECK(not has_reset_bit<signed char>);
-    CHECK(not has_reset_bit<signed short>);
-    CHECK(not has_reset_bit<signed int>);
-    CHECK(not has_reset_bit<signed long>);
-    CHECK(not has_reset_bit<signed long long>);
+    CHECK_FALSE(has_reset_bit<signed char>);
+    CHECK_FALSE(has_reset_bit<signed short>);
+    CHECK_FALSE(has_reset_bit<signed int>);
+    CHECK_FALSE(has_reset_bit<signed long>);
+    CHECK_FALSE(has_reset_bit<signed long long>);
 
-    CHECK(not has_reset_bit<bool>);
-    CHECK(not has_reset_bit<char>);
-    CHECK(not has_reset_bit<char8_t>);
-    CHECK(not has_reset_bit<char16_t>);
-    CHECK(not has_reset_bit<char32_t>);
+    CHECK_FALSE(has_reset_bit<bool>);
+    CHECK_FALSE(has_reset_bit<char>);
+    CHECK_FALSE(has_reset_bit<char8_t>);
+    CHECK_FALSE(has_reset_bit<char16_t>);
+    CHECK_FALSE(has_reset_bit<char32_t>);
 
     CHECK(test<etl::uint8_t>());
     CHECK(test<etl::uint16_t>());

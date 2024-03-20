@@ -482,9 +482,9 @@ constexpr auto test() -> bool
         auto to42 = [](auto) -> etl::optional<int> { return 42; };
 
         auto empty = etl::optional<T>{};
-        CHECK(not static_cast<bool>(empty.and_then(to42)));
-        CHECK(not static_cast<bool>(etl::as_const(empty).and_then(to42)));
-        CHECK(not static_cast<bool>(etl::optional<T>().and_then(to42)));
+        CHECK_FALSE(static_cast<bool>(empty.and_then(to42)));
+        CHECK_FALSE(static_cast<bool>(etl::as_const(empty).and_then(to42)));
+        CHECK_FALSE(static_cast<bool>(etl::optional<T>().and_then(to42)));
 
         auto one = etl::optional<T>{T(1)};
         CHECK(static_cast<bool>(one.and_then(to42)));
@@ -497,16 +497,16 @@ constexpr auto test() -> bool
         // lvalue
         auto empty = etl::optional<T>{};
         auto zero  = etl::optional<T>{T(0)};
-        CHECK(not empty.or_else([] { return etl::optional<T>(); }).has_value());
+        CHECK_FALSE(empty.or_else([] { return etl::optional<T>(); }).has_value());
         CHECK(empty.or_else([] { return etl::optional<T>(T(0)); }).has_value());
         CHECK(zero.or_else([] { return etl::optional<T>(); }).has_value());
 
-        CHECK(not etl::as_const(empty).or_else([] { return etl::optional<T>(); }).has_value());
+        CHECK_FALSE(etl::as_const(empty).or_else([] { return etl::optional<T>(); }).has_value());
         CHECK(etl::as_const(empty).or_else([] { return etl::optional<T>(T(0)); }).has_value());
         CHECK(etl::as_const(zero).or_else([] { return etl::optional<T>(); }).has_value());
 
         // rvalue
-        CHECK(not etl::optional<T>().or_else([] { return etl::optional<T>(); }).has_value());
+        CHECK_FALSE(etl::optional<T>().or_else([] { return etl::optional<T>(); }).has_value());
         CHECK(etl::optional<T>(T(0)).or_else([] { return etl::optional<T>(); }).has_value());
         CHECK(etl::optional<T>().or_else([] { return etl::optional<T>(T(0)); }).has_value());
     }

@@ -10,9 +10,9 @@ template <typename Int>
 constexpr auto test_strided_slice() -> bool
 {
     auto slice = etl::strided_slice{Int(1), Int(2), Int(3)};
-    CHECK(etl::same_as<typename decltype(slice)::offset_type, Int>);
-    CHECK(etl::same_as<typename decltype(slice)::extent_type, Int>);
-    CHECK(etl::same_as<typename decltype(slice)::stride_type, Int>);
+    CHECK_SAME_TYPE(typename decltype(slice)::offset_type, Int);
+    CHECK_SAME_TYPE(typename decltype(slice)::extent_type, Int);
+    CHECK_SAME_TYPE(typename decltype(slice)::stride_type, Int);
 
     CHECK(slice.offset == Int(1));
     CHECK(slice.extent == Int(2));

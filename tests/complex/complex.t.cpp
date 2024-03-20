@@ -11,8 +11,8 @@ template <typename T>
 constexpr auto test() -> bool
 {
     CHECK(etl::tuple_size_v<etl::complex<T>> == 2);
-    CHECK(etl::same_as<etl::tuple_element_t<0, etl::complex<T>>, T>);
-    CHECK(etl::same_as<etl::tuple_element_t<1, etl::complex<T>>, T>);
+    CHECK_SAME_TYPE(etl::tuple_element_t<0, etl::complex<T>>, T);
+    CHECK_SAME_TYPE(etl::tuple_element_t<1, etl::complex<T>>, T);
 
     auto tc = etl::complex<T>{};
     CHECK(tc.real() == T(0));
