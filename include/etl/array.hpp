@@ -14,5 +14,6 @@
 // Non-standard extensions
 #include <etl/_array/c_array.hpp>
 #include <etl/_array/dynamic_array.hpp>
+#include <etl/_array/uninitialized_array.hpp>
 
 #endif // TETL_ARRAY_HPP
