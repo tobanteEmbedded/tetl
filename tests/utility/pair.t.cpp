@@ -95,7 +95,7 @@ constexpr auto test() -> bool
         auto other = etl::pair<T, double>{p};
 
         CHECK_SAME_TYPE(decltype(other.first), decltype(p.first));
-        CHECK(!(etl::is_same_v<decltype(other.second), decltype(p.second)>));
+        CHECK_FALSE(etl::is_same_v<decltype(other.second), decltype(p.second)>);
 
         CHECK(other.first == p.first);
         CHECK(other.second == p.second);
@@ -119,7 +119,7 @@ constexpr auto test() -> bool
         auto other = etl::pair<T, double>{etl::move(p)};
 
         CHECK_SAME_TYPE(decltype(other.first), decltype(p.first));
-        CHECK(!(etl::is_same_v<decltype(other.second), decltype(p.second)>));
+        CHECK_FALSE(etl::is_same_v<decltype(other.second), decltype(p.second)>);
 
         CHECK(other.first == p.first);
         CHECK(other.second == p.second);
@@ -140,7 +140,7 @@ constexpr auto test() -> bool
         other      = p;
 
         CHECK_SAME_TYPE(decltype(other.first), decltype(p.first));
-        CHECK(!(etl::is_same_v<decltype(other.second), decltype(p.second)>));
+        CHECK_FALSE(etl::is_same_v<decltype(other.second), decltype(p.second)>);
 
         CHECK(other.first == p.first);
         CHECK(other.second == static_cast<float>(p.second));
@@ -161,7 +161,7 @@ constexpr auto test() -> bool
         other      = etl::move(p);
 
         CHECK_SAME_TYPE(decltype(other.first), decltype(p.first));
-        CHECK(!(etl::is_same_v<decltype(other.second), decltype(p.second)>));
+        CHECK_FALSE(etl::is_same_v<decltype(other.second), decltype(p.second)>);
 
         CHECK(other.first == p.first);
         CHECK(other.second == static_cast<float>(p.second));
@@ -221,8 +221,8 @@ constexpr auto test() -> bool
         CHECK(p1 == p2);
         CHECK(p2 == p1);
 
-        CHECK(!(p3 == p2));
-        CHECK(!(p3 == p1));
+        CHECK_FALSE(p3 == p2);
+        CHECK_FALSE(p3 == p1);
     }
 
     {
@@ -230,8 +230,8 @@ constexpr auto test() -> bool
         auto const p2 = etl::make_pair(T{42}, 143.0F);
         auto const p3 = etl::make_pair(T{123}, 143.0F);
 
-        CHECK(!(p1 != p2));
-        CHECK(!(p2 != p1));
+        CHECK_FALSE(p1 != p2);
+        CHECK_FALSE(p2 != p1);
 
         CHECK(p3 != p2);
         CHECK(p3 != p1);
@@ -242,8 +242,8 @@ constexpr auto test() -> bool
         auto const p2 = etl::make_pair(T{42}, 143.0F);
         auto const p3 = etl::make_pair(T{123}, 143.0F);
 
-        CHECK(!(p1 < p2));
-        CHECK(!(p2 < p1));
+        CHECK_FALSE(p1 < p2);
+        CHECK_FALSE(p2 < p1);
 
         CHECK(p2 < p3);
         CHECK(p1 < p3);
@@ -267,10 +267,10 @@ constexpr auto test() -> bool
         auto const p3 = etl::make_pair(T{123}, 143.0F);
 
         CHECK(p1 > p2);
-        CHECK(!(p2 > p1));
+        CHECK_FALSE(p2 > p1);
 
-        CHECK(!(p2 > p3));
-        CHECK(!(p1 > p3));
+        CHECK_FALSE(p2 > p3);
+        CHECK_FALSE(p1 > p3);
     }
 
     {
@@ -279,10 +279,10 @@ constexpr auto test() -> bool
         auto const p3 = etl::make_pair(T{123}, 143.0F);
 
         CHECK(p1 >= p2);
-        CHECK(!(p2 >= p1));
+        CHECK_FALSE(p2 >= p1);
 
-        CHECK(!(p2 >= p3));
-        CHECK(!(p1 >= p3));
+        CHECK_FALSE(p2 >= p3);
+        CHECK_FALSE(p1 >= p3);
     }
 
     {

@@ -105,12 +105,12 @@ constexpr auto test_builtin_types() -> bool
         etl::array<T, 3> lhs{T{1}, T{2}, T{3}};
         etl::array<T, 3> rhs{T{7}, T{8}, T{9}};
 
-        CHECK(!(lhs == rhs));
+        CHECK_FALSE(lhs == rhs);
         CHECK(lhs != rhs);
         CHECK(lhs < rhs);
         CHECK(lhs <= rhs);
-        CHECK(!(lhs > rhs));
-        CHECK(!(lhs >= rhs));
+        CHECK_FALSE(lhs > rhs);
+        CHECK_FALSE(lhs >= rhs);
     }
 
     {
@@ -119,10 +119,10 @@ constexpr auto test_builtin_types() -> bool
         etl::array<T, 3> rhs{T{1}, T{2}, T{3}};
 
         CHECK(lhs == rhs);
-        CHECK(!(lhs != rhs));
-        CHECK(!(lhs < rhs));
+        CHECK_FALSE(lhs != rhs);
+        CHECK_FALSE(lhs < rhs);
         CHECK(lhs <= rhs);
-        CHECK(!(lhs > rhs));
+        CHECK_FALSE(lhs > rhs);
         CHECK(lhs >= rhs);
     }
 

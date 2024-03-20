@@ -27,9 +27,9 @@ constexpr auto test() -> bool
         CHECK(etl::includes(begin(v1), end(v1), v3.begin(), v3.end()));
         CHECK(etl::includes(begin(v1), end(v1), v7.begin(), v7.end(), noCase));
 
-        CHECK(!(etl::includes(begin(v1), end(v1), v4.begin(), v4.end())));
-        CHECK(!(etl::includes(begin(v1), end(v1), v5.begin(), v5.end())));
-        CHECK(!(etl::includes(begin(v1), end(v1), v6.begin(), v6.end())));
+        CHECK_FALSE(etl::includes(begin(v1), end(v1), v4.begin(), v4.end()));
+        CHECK_FALSE(etl::includes(begin(v1), end(v1), v5.begin(), v5.end()));
+        CHECK_FALSE(etl::includes(begin(v1), end(v1), v6.begin(), v6.end()));
     }
 
     {
@@ -43,9 +43,9 @@ constexpr auto test() -> bool
         CHECK(etl::includes(begin(v1), end(v1), v2.begin(), v2.end()));
         CHECK(etl::includes(begin(v1), end(v1), v3.begin(), v3.end()));
 
-        CHECK(!(etl::includes(begin(v1), end(v1), v4.begin(), v4.end())));
-        CHECK(!(etl::includes(begin(v1), end(v1), v5.begin(), v5.end())));
-        CHECK(!(etl::includes(begin(v1), end(v1), v6.begin(), v6.end())));
+        CHECK_FALSE(etl::includes(begin(v1), end(v1), v4.begin(), v4.end()));
+        CHECK_FALSE(etl::includes(begin(v1), end(v1), v5.begin(), v5.end()));
+        CHECK_FALSE(etl::includes(begin(v1), end(v1), v6.begin(), v6.end()));
     }
 
     return true;

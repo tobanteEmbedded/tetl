@@ -15,16 +15,16 @@ constexpr auto test() -> bool
 {
     // epmty range
     auto const e = etl::static_vector<T, 4>{};
-    CHECK(!etl::binary_search(begin(e), end(e), T(0)));
-    CHECK(!etl::binary_search(FwdIter(begin(e)), FwdIter(end(e)), T(0)));
+    CHECK_FALSE(etl::binary_search(begin(e), end(e), T(0)));
+    CHECK_FALSE(etl::binary_search(FwdIter(begin(e)), FwdIter(end(e)), T(0)));
 
     // range
     auto const data = etl::array{T(0), T(1), T(2)};
     CHECK(etl::binary_search(begin(data), end(data), T(0)));
     CHECK(etl::binary_search(begin(data), end(data), T(1)));
     CHECK(etl::binary_search(begin(data), end(data), T(2)));
-    CHECK(!etl::binary_search(begin(data), end(data), T(3)));
-    CHECK(!etl::binary_search(begin(data), end(data), T(4)));
+    CHECK_FALSE(etl::binary_search(begin(data), end(data), T(3)));
+    CHECK_FALSE(etl::binary_search(begin(data), end(data), T(4)));
 
     return true;
 }

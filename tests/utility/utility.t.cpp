@@ -26,7 +26,7 @@ constexpr auto test() -> bool
     // as_const
     {
         auto original = T{42};
-        CHECK(!(etl::is_const_v<decltype(original)>));
+        CHECK_FALSE(etl::is_const_v<decltype(original)>);
 
         auto const& ref = etl::as_const(original);
         CHECK(etl::is_const_v<etl::remove_reference_t<decltype(ref)>>);

@@ -8,6 +8,7 @@
 #include <etl/type_traits.hpp>
 
 #define CHECK(...)           assert((__VA_ARGS__))
+#define CHECK_FALSE(...)     assert(not(__VA_ARGS__))
 #define CHECK_NOEXCEPT(...)  CHECK(noexcept(__VA_ARGS__))
 #define CHECK_SAME_TYPE(...) CHECK(etl::is_same_v<__VA_ARGS__>)
 #define STATIC_CHECK(...)                                                                                              \

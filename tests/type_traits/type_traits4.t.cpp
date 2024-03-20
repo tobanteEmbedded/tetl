@@ -117,8 +117,8 @@ constexpr auto test() -> bool
     CHECK(etl::is_trivially_constructible_v<T, T&>);
     CHECK(etl::is_trivially_constructible_v<T, T const&>);
 
-    CHECK(!(etl::is_trivially_constructible_v<T&>));
-    CHECK(!(etl::is_trivially_constructible_v<T const&>));
+    CHECK_FALSE(etl::is_trivially_constructible_v<T&>);
+    CHECK_FALSE(etl::is_trivially_constructible_v<T const&>);
 
     class Foo {
         T v1;      // NOLINT
@@ -130,19 +130,19 @@ constexpr auto test() -> bool
         Foo(T n, double f) noexcept : v1(n), v2(f) { }
     };
 
-    CHECK(!(etl::is_trivially_constructible_v<Foo, T, double>));
-    CHECK(!(etl::is_trivially_constructible_v<Foo, T>));
+    CHECK_FALSE(etl::is_trivially_constructible_v<Foo, T, double>);
+    CHECK_FALSE(etl::is_trivially_constructible_v<Foo, T>);
 
     CHECK(etl::is_nothrow_constructible_v<T>);
     CHECK(etl::is_nothrow_constructible_v<T*>);
     CHECK(etl::is_nothrow_constructible_v<T, T&>);
     CHECK(etl::is_nothrow_constructible_v<T, T const&>);
 
-    CHECK(!(etl::is_nothrow_constructible_v<T&>));
-    CHECK(!(etl::is_nothrow_constructible_v<T const&>));
+    CHECK_FALSE(etl::is_nothrow_constructible_v<T&>);
+    CHECK_FALSE(etl::is_nothrow_constructible_v<T const&>);
 
     CHECK(etl::is_nothrow_constructible_v<Foo, T, double>);
-    CHECK(!(etl::is_nothrow_constructible_v<Foo, T>));
+    CHECK_FALSE(etl::is_nothrow_constructible_v<Foo, T>);
 
     TEST_IS_TRAIT_CV(is_signed, signed char);
     TEST_IS_TRAIT_CV(is_signed, signed short);

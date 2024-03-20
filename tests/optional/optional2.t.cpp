@@ -24,9 +24,9 @@ static auto test_opional_2() -> bool
         ~SNT() { }
     };
 
-    CHECK(!(etl::is_trivially_destructible_v<SNT>));
-    CHECK(!(etl::is_trivially_move_assignable_v<SNT>));
-    CHECK(!(etl::is_trivially_move_constructible_v<SNT>));
+    CHECK_FALSE(etl::is_trivially_destructible_v<SNT>);
+    CHECK_FALSE(etl::is_trivially_move_assignable_v<SNT>);
+    CHECK_FALSE(etl::is_trivially_move_constructible_v<SNT>);
 
     etl::optional<SNT> opt1{SNT{}};
     CHECK(opt1.has_value());
@@ -51,13 +51,13 @@ static auto test_opional_3() -> bool
     etl::optional<int> opt1{42};
 
     etl::optional<long> opt2{};
-    CHECK(!(opt2.has_value()));
+    CHECK_FALSE(opt2.has_value());
     opt2 = opt1;
     CHECK(opt2.has_value());
     CHECK(opt2.value() == 42);
 
     etl::optional<long> opt3{};
-    CHECK(!(opt3.has_value()));
+    CHECK_FALSE(opt3.has_value());
     opt3 = etl::move(opt1);
     CHECK(opt3.has_value());
     CHECK(opt3.value() == 42);
@@ -89,12 +89,12 @@ static auto test_opional_4() -> bool
         auto operator=(S&& /*s*/) noexcept -> S& { return *this; }
     };
 
-    CHECK(!(etl::is_trivially_destructible_v<S>));
-    CHECK(!(etl::is_trivially_move_assignable_v<S>));
-    CHECK(!(etl::is_trivially_move_constructible_v<S>));
+    CHECK_FALSE(etl::is_trivially_destructible_v<S>);
+    CHECK_FALSE(etl::is_trivially_move_assignable_v<S>);
+    CHECK_FALSE(etl::is_trivially_move_constructible_v<S>);
 
     etl::optional<S> opt1{};
-    CHECK(!(opt1.has_value()));
+    CHECK_FALSE(opt1.has_value());
 
     opt1 = S{};
     CHECK(opt1.has_value());

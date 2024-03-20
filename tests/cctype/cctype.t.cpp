@@ -17,16 +17,16 @@ constexpr auto test_isalnum() -> bool
     }
 
     for (auto ch = '!'; ch <= '/'; ++ch) {
-        CHECK(!etl::isalnum(ch));
+        CHECK_FALSE(etl::isalnum(ch));
     }
     for (auto ch = ':'; ch <= '@'; ++ch) {
-        CHECK(!etl::isalnum(ch));
+        CHECK_FALSE(etl::isalnum(ch));
     }
     for (auto ch = '['; ch <= '`'; ++ch) {
-        CHECK(!etl::isalnum(ch));
+        CHECK_FALSE(etl::isalnum(ch));
     }
     for (auto ch = '{'; ch <= '~'; ++ch) {
-        CHECK(!etl::isalnum(ch));
+        CHECK_FALSE(etl::isalnum(ch));
     }
 
     return true;
@@ -42,19 +42,19 @@ constexpr auto test_isalpha() -> bool
     }
 
     for (auto ch = '0'; ch <= '9'; ++ch) {
-        CHECK(!etl::isalpha(ch));
+        CHECK_FALSE(etl::isalpha(ch));
     }
     for (auto ch = '!'; ch <= '/'; ++ch) {
-        CHECK(!etl::isalpha(ch));
+        CHECK_FALSE(etl::isalpha(ch));
     }
     for (auto ch = ':'; ch <= '@'; ++ch) {
-        CHECK(!etl::isalpha(ch));
+        CHECK_FALSE(etl::isalpha(ch));
     }
     for (auto ch = '['; ch <= '`'; ++ch) {
-        CHECK(!etl::isalpha(ch));
+        CHECK_FALSE(etl::isalpha(ch));
     }
     for (auto ch = '{'; ch <= '~'; ++ch) {
-        CHECK(!etl::isalpha(ch));
+        CHECK_FALSE(etl::isalpha(ch));
     }
     return true;
 }
@@ -66,22 +66,22 @@ constexpr auto test_islower() -> bool
     }
 
     for (auto ch = 'A'; ch <= 'Z'; ++ch) {
-        CHECK(!etl::islower(ch));
+        CHECK_FALSE(etl::islower(ch));
     }
     for (auto ch = '0'; ch <= '9'; ++ch) {
-        CHECK(!etl::islower(ch));
+        CHECK_FALSE(etl::islower(ch));
     }
     for (auto ch = '!'; ch <= '/'; ++ch) {
-        CHECK(!etl::islower(ch));
+        CHECK_FALSE(etl::islower(ch));
     }
     for (auto ch = ':'; ch <= '@'; ++ch) {
-        CHECK(!etl::islower(ch));
+        CHECK_FALSE(etl::islower(ch));
     }
     for (auto ch = '['; ch <= '`'; ++ch) {
-        CHECK(!etl::islower(ch));
+        CHECK_FALSE(etl::islower(ch));
     }
     for (auto ch = '{'; ch <= '~'; ++ch) {
-        CHECK(!etl::islower(ch));
+        CHECK_FALSE(etl::islower(ch));
     }
     return true;
 }
@@ -93,22 +93,22 @@ constexpr auto test_isupper() -> bool
     }
 
     for (auto ch = 'a'; ch <= 'z'; ++ch) {
-        CHECK(!etl::isupper(ch));
+        CHECK_FALSE(etl::isupper(ch));
     }
     for (auto ch = '0'; ch <= '9'; ++ch) {
-        CHECK(!etl::isupper(ch));
+        CHECK_FALSE(etl::isupper(ch));
     }
     for (auto ch = '!'; ch <= '/'; ++ch) {
-        CHECK(!etl::isupper(ch));
+        CHECK_FALSE(etl::isupper(ch));
     }
     for (auto ch = ':'; ch <= '@'; ++ch) {
-        CHECK(!etl::isupper(ch));
+        CHECK_FALSE(etl::isupper(ch));
     }
     for (auto ch = '['; ch <= '`'; ++ch) {
-        CHECK(!etl::isupper(ch));
+        CHECK_FALSE(etl::isupper(ch));
     }
     for (auto ch = '{'; ch <= '~'; ++ch) {
-        CHECK(!etl::isupper(ch));
+        CHECK_FALSE(etl::isupper(ch));
     }
     return true;
 }
@@ -120,22 +120,22 @@ constexpr auto test_isdigit() -> bool
     }
 
     for (auto ch = 'A'; ch <= 'Z'; ++ch) {
-        CHECK(!etl::isdigit(ch));
+        CHECK_FALSE(etl::isdigit(ch));
     }
     for (auto ch = 'a'; ch <= 'z'; ++ch) {
-        CHECK(!etl::isdigit(ch));
+        CHECK_FALSE(etl::isdigit(ch));
     }
     for (auto ch = '!'; ch <= '/'; ++ch) {
-        CHECK(!etl::isdigit(ch));
+        CHECK_FALSE(etl::isdigit(ch));
     }
     for (auto ch = ':'; ch <= '@'; ++ch) {
-        CHECK(!etl::isdigit(ch));
+        CHECK_FALSE(etl::isdigit(ch));
     }
     for (auto ch = '['; ch <= '`'; ++ch) {
-        CHECK(!etl::isdigit(ch));
+        CHECK_FALSE(etl::isdigit(ch));
     }
     for (auto ch = '{'; ch <= '~'; ++ch) {
-        CHECK(!etl::isdigit(ch));
+        CHECK_FALSE(etl::isdigit(ch));
     }
     return true;
 }
@@ -153,22 +153,22 @@ constexpr auto test_isxdigit() -> bool
     }
 
     for (auto ch = 'G'; ch <= 'Z'; ++ch) {
-        CHECK(!etl::isxdigit(ch));
+        CHECK_FALSE(etl::isxdigit(ch));
     }
     for (auto ch = 'g'; ch <= 'z'; ++ch) {
-        CHECK(!etl::isxdigit(ch));
+        CHECK_FALSE(etl::isxdigit(ch));
     }
     for (auto ch = '!'; ch <= '/'; ++ch) {
-        CHECK(!etl::isxdigit(ch));
+        CHECK_FALSE(etl::isxdigit(ch));
     }
     for (auto ch = ':'; ch <= '@'; ++ch) {
-        CHECK(!etl::isxdigit(ch));
+        CHECK_FALSE(etl::isxdigit(ch));
     }
     for (auto ch = '['; ch <= '`'; ++ch) {
-        CHECK(!etl::isxdigit(ch));
+        CHECK_FALSE(etl::isxdigit(ch));
     }
     for (auto ch = '{'; ch <= '~'; ++ch) {
-        CHECK(!etl::isxdigit(ch));
+        CHECK_FALSE(etl::isxdigit(ch));
     }
     return true;
 }
@@ -183,25 +183,25 @@ constexpr auto test_isspace() -> bool
     CHECK(etl::isspace('\v'));
 
     for (auto ch = '0'; ch <= '9'; ++ch) {
-        CHECK(!etl::isspace(ch));
+        CHECK_FALSE(etl::isspace(ch));
     }
     for (auto ch = 'a'; ch <= 'z'; ++ch) {
-        CHECK(!etl::isspace(ch));
+        CHECK_FALSE(etl::isspace(ch));
     }
     for (auto ch = 'A'; ch <= 'Z'; ++ch) {
-        CHECK(!etl::isspace(ch));
+        CHECK_FALSE(etl::isspace(ch));
     }
     for (auto ch = '!'; ch <= '/'; ++ch) {
-        CHECK(!etl::isspace(ch));
+        CHECK_FALSE(etl::isspace(ch));
     }
     for (auto ch = ':'; ch <= '@'; ++ch) {
-        CHECK(!etl::isspace(ch));
+        CHECK_FALSE(etl::isspace(ch));
     }
     for (auto ch = '['; ch <= '`'; ++ch) {
-        CHECK(!etl::isspace(ch));
+        CHECK_FALSE(etl::isspace(ch));
     }
     for (auto ch = '{'; ch <= '~'; ++ch) {
-        CHECK(!etl::isspace(ch));
+        CHECK_FALSE(etl::isspace(ch));
     }
     return true;
 }
@@ -211,32 +211,32 @@ constexpr auto test_isblank() -> bool
     CHECK(etl::isblank(' '));
     CHECK(etl::isblank('\t'));
 
-    CHECK(!etl::isblank('\f'));
-    CHECK(!etl::isblank('\n'));
-    CHECK(!etl::isblank('\r'));
-    CHECK(!etl::isblank('\v'));
+    CHECK_FALSE(etl::isblank('\f'));
+    CHECK_FALSE(etl::isblank('\n'));
+    CHECK_FALSE(etl::isblank('\r'));
+    CHECK_FALSE(etl::isblank('\v'));
 
     for (auto ch = '0'; ch <= '9'; ++ch) {
-        CHECK(!etl::isblank(ch));
+        CHECK_FALSE(etl::isblank(ch));
     }
     for (auto ch = 'a'; ch <= 'z'; ++ch) {
-        CHECK(!etl::isblank(ch));
+        CHECK_FALSE(etl::isblank(ch));
     }
     for (auto ch = 'A'; ch <= 'Z'; ++ch) {
-        CHECK(!etl::isblank(ch));
+        CHECK_FALSE(etl::isblank(ch));
     }
 
     for (auto ch = '!'; ch <= '/'; ++ch) {
-        CHECK(!etl::isblank(ch));
+        CHECK_FALSE(etl::isblank(ch));
     }
     for (auto ch = ':'; ch <= '@'; ++ch) {
-        CHECK(!etl::isblank(ch));
+        CHECK_FALSE(etl::isblank(ch));
     }
     for (auto ch = '['; ch <= '`'; ++ch) {
-        CHECK(!etl::isblank(ch));
+        CHECK_FALSE(etl::isblank(ch));
     }
     for (auto ch = '{'; ch <= '~'; ++ch) {
-        CHECK(!etl::isblank(ch));
+        CHECK_FALSE(etl::isblank(ch));
     }
     return true;
 }
@@ -257,13 +257,13 @@ constexpr auto test_ispunct() -> bool
     }
 
     for (auto ch = '0'; ch <= '9'; ++ch) {
-        CHECK(!etl::ispunct(ch));
+        CHECK_FALSE(etl::ispunct(ch));
     }
     for (auto ch = 'a'; ch <= 'z'; ++ch) {
-        CHECK(!etl::ispunct(ch));
+        CHECK_FALSE(etl::ispunct(ch));
     }
     for (auto ch = 'A'; ch <= 'Z'; ++ch) {
-        CHECK(!etl::ispunct(ch));
+        CHECK_FALSE(etl::ispunct(ch));
     }
     return true;
 }
@@ -293,11 +293,11 @@ constexpr auto test_isgraph() -> bool
         CHECK(etl::isgraph(ch));
     }
 
-    CHECK(!etl::isgraph(' '));
-    CHECK(!etl::isgraph('\n'));
-    CHECK(!etl::isgraph('\f'));
-    CHECK(!etl::isgraph('\t'));
-    CHECK(!etl::isgraph('\v'));
+    CHECK_FALSE(etl::isgraph(' '));
+    CHECK_FALSE(etl::isgraph('\n'));
+    CHECK_FALSE(etl::isgraph('\f'));
+    CHECK_FALSE(etl::isgraph('\t'));
+    CHECK_FALSE(etl::isgraph('\v'));
     return true;
 }
 
@@ -328,10 +328,10 @@ constexpr auto test_isprint() -> bool
         CHECK(etl::isprint(ch));
     }
 
-    CHECK(!etl::isprint('\n'));
-    CHECK(!etl::isprint('\f'));
-    CHECK(!etl::isprint('\t'));
-    CHECK(!etl::isprint('\v'));
+    CHECK_FALSE(etl::isprint('\n'));
+    CHECK_FALSE(etl::isprint('\f'));
+    CHECK_FALSE(etl::isprint('\t'));
+    CHECK_FALSE(etl::isprint('\v'));
 
     return true;
 }
@@ -344,26 +344,26 @@ constexpr auto test_iscntrl() -> bool
     }
 
     for (auto ch = '!'; ch <= '/'; ++ch) {
-        CHECK(!etl::iscntrl(ch));
+        CHECK_FALSE(etl::iscntrl(ch));
     }
     for (auto ch = ':'; ch <= '@'; ++ch) {
-        CHECK(!etl::iscntrl(ch));
+        CHECK_FALSE(etl::iscntrl(ch));
     }
     for (auto ch = '['; ch <= '`'; ++ch) {
-        CHECK(!etl::iscntrl(ch));
+        CHECK_FALSE(etl::iscntrl(ch));
     }
     for (auto ch = '{'; ch <= '~'; ++ch) {
-        CHECK(!etl::iscntrl(ch));
+        CHECK_FALSE(etl::iscntrl(ch));
     }
 
     for (auto ch = '0'; ch <= '9'; ++ch) {
-        CHECK(!etl::iscntrl(ch));
+        CHECK_FALSE(etl::iscntrl(ch));
     }
     for (auto ch = 'a'; ch <= 'z'; ++ch) {
-        CHECK(!etl::iscntrl(ch));
+        CHECK_FALSE(etl::iscntrl(ch));
     }
     for (auto ch = 'A'; ch <= 'Z'; ++ch) {
-        CHECK(!etl::iscntrl(ch));
+        CHECK_FALSE(etl::iscntrl(ch));
     }
 
     return true;

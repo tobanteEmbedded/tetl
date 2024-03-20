@@ -37,8 +37,8 @@ constexpr auto test_cx() -> bool
 
         using non_trivial_vec_t = etl::static_vector<NonTrivial, 16>;
 
-        CHECK(!(etl::is_trivial_v<NonTrivial>));
-        CHECK(!(etl::is_trivially_destructible_v<non_trivial_vec_t>));
+        CHECK_FALSE(etl::is_trivial_v<NonTrivial>);
+        CHECK_FALSE(etl::is_trivially_destructible_v<non_trivial_vec_t>);
     }
 
     {
@@ -55,7 +55,7 @@ constexpr auto test_cx() -> bool
         etl::static_vector<T, 16> lhs{};
         CHECK(lhs.empty());
         CHECK(lhs.size() == 0);
-        CHECK(!(lhs.full()));
+        CHECK_FALSE(lhs.full());
 
         CHECK(etl::begin(lhs) == etl::end(lhs));
         CHECK(etl::cbegin(lhs) == etl::cend(lhs));
@@ -64,13 +64,13 @@ constexpr auto test_cx() -> bool
         etl::static_vector<T, 16> rhs{};
         CHECK(rhs.empty());
         CHECK(rhs.size() == 0);
-        CHECK(!(rhs.full()));
+        CHECK_FALSE(rhs.full());
 
         // comparison empty
         CHECK(lhs == rhs);
         CHECK(rhs == lhs);
-        CHECK(!(lhs != rhs));
-        CHECK(!(rhs != lhs));
+        CHECK_FALSE(lhs != rhs);
+        CHECK_FALSE(rhs != lhs);
     }
 
     {
@@ -129,9 +129,9 @@ constexpr auto test_cx() -> bool
         CHECK(etl::begin(etl::as_const(vec)) == etl::end(etl::as_const(vec)));
 
         vec.push_back(T{2});
-        CHECK(!(etl::begin(vec) == etl::end(vec)));
-        CHECK(!(etl::cbegin(vec) == etl::cend(vec)));
-        CHECK(!(begin(as_const(vec)) == end(as_const(vec))));
+        CHECK_FALSE(etl::begin(vec) == etl::end(vec));
+        CHECK_FALSE(etl::cbegin(vec) == etl::cend(vec));
+        CHECK_FALSE(begin(as_const(vec)) == end(as_const(vec)));
     }
 
     {
@@ -192,18 +192,18 @@ constexpr auto test_cx() -> bool
         CHECK(vec.empty());
 
         vec.push_back(T{1});
-        CHECK(!(vec.empty()));
+        CHECK_FALSE(vec.empty());
         CHECK(vec.front() == T{1});
         CHECK(vec.back() == T{1});
 
         vec.push_back(T{2});
-        CHECK(!(vec.empty()));
+        CHECK_FALSE(vec.empty());
         CHECK(vec.front() == T{1});
         CHECK(vec.back() == T{2});
 
-        CHECK(!(etl::begin(vec) == etl::end(vec)));
-        CHECK(!(etl::cbegin(vec) == etl::cend(vec)));
-        CHECK(!(begin(as_const(vec)) == end(as_const(vec))));
+        CHECK_FALSE(etl::begin(vec) == etl::end(vec));
+        CHECK_FALSE(etl::cbegin(vec) == etl::cend(vec));
+        CHECK_FALSE(begin(as_const(vec)) == end(as_const(vec)));
     }
 
     {
@@ -250,17 +250,17 @@ constexpr auto test_cx() -> bool
         auto lhs1       = etl::static_vector<T, 4>{};
         auto const rhs1 = etl::static_vector<T, 4>{};
         CHECK(lhs1 == rhs1);
-        CHECK(!(lhs1 != rhs1));
+        CHECK_FALSE(lhs1 != rhs1);
 
         auto const lhs2 = etl::static_vector<T, 4>();
         auto const rhs2 = etl::static_vector<T, 4>(2);
         CHECK(lhs2 != rhs2);
-        CHECK(!(lhs2 == rhs2));
+        CHECK_FALSE(lhs2 == rhs2);
 
         auto const lhs3 = etl::static_vector<T, 4>(2);
         auto const rhs3 = etl::static_vector<T, 4>();
         CHECK(lhs3 != rhs3);
-        CHECK(!(lhs3 == rhs3));
+        CHECK_FALSE(lhs3 == rhs3);
     }
 
     // with elements
@@ -273,7 +273,7 @@ constexpr auto test_cx() -> bool
         rhs1.push_back(T(2));
 
         CHECK(lhs1 == rhs1);
-        CHECK(!(lhs1 != rhs1));
+        CHECK_FALSE(lhs1 != rhs1);
 
         auto lhs2 = etl::static_vector<T, 4>{};
         lhs2.push_back(T(1));
@@ -283,14 +283,14 @@ constexpr auto test_cx() -> bool
         rhs2.push_back(T(3));
 
         CHECK(lhs2 != rhs2);
-        CHECK(!(lhs2 == rhs2));
+        CHECK_FALSE(lhs2 == rhs2);
     }
 
     {
         auto lhs       = etl::static_vector<T, 4>();
         auto const rhs = etl::static_vector<T, 4>();
-        CHECK(!(lhs < rhs));
-        CHECK(!(rhs < lhs));
+        CHECK_FALSE(lhs < rhs);
+        CHECK_FALSE(rhs < lhs);
         CHECK(lhs <= rhs);
         CHECK(rhs <= lhs);
     }
@@ -305,15 +305,15 @@ constexpr auto test_cx() -> bool
         CHECK(lhs < rhs);
         CHECK(lhs <= rhs);
 
-        CHECK(!(rhs < lhs));
-        CHECK(!(rhs <= lhs));
+        CHECK_FALSE(rhs < lhs);
+        CHECK_FALSE(rhs <= lhs);
     }
 
     {
         auto lhs       = etl::static_vector<T, 4>();
         auto const rhs = etl::static_vector<T, 4>();
-        CHECK(!(lhs > rhs));
-        CHECK(!(rhs > lhs));
+        CHECK_FALSE(lhs > rhs);
+        CHECK_FALSE(rhs > lhs);
         CHECK(lhs >= rhs);
         CHECK(rhs >= lhs);
     }
@@ -328,8 +328,8 @@ constexpr auto test_cx() -> bool
         CHECK(lhs > rhs);
         CHECK(lhs >= rhs);
 
-        CHECK(!(rhs > lhs));
-        CHECK(!(rhs >= lhs));
+        CHECK_FALSE(rhs > lhs);
+        CHECK_FALSE(rhs >= lhs);
     }
 
     // empty
@@ -346,7 +346,7 @@ constexpr auto test_cx() -> bool
         auto vec  = etl::static_vector<T, 6>(begin(data), end(data));
         CHECK(vec.full());
         CHECK(etl::erase(vec, T(0)) == 3);
-        CHECK(!(vec.full()));
+        CHECK_FALSE(vec.full());
         CHECK(vec.size() == 3);
     }
 

@@ -19,15 +19,15 @@ constexpr auto test() -> bool
     auto const p3 = [](T a) { return a < T(10); };
 
     CHECK(etl::all_of(data.begin(), data.end(), p1));
-    CHECK(!etl::all_of(data.begin(), data.end(), p2));
+    CHECK_FALSE(etl::all_of(data.begin(), data.end(), p2));
     CHECK(etl::all_of(InIter(data.begin()), InIter(data.end()), p1));
 
     CHECK(etl::any_of(data.begin(), data.end(), p1));
-    CHECK(!etl::any_of(data.begin(), data.end(), p2));
+    CHECK_FALSE(etl::any_of(data.begin(), data.end(), p2));
     CHECK(etl::any_of(InIter(data.begin()), InIter(data.end()), p1));
 
     CHECK(etl::none_of(data.begin(), data.end(), p2));
-    CHECK(!etl::none_of(data.begin(), data.end(), p3));
+    CHECK_FALSE(etl::none_of(data.begin(), data.end(), p3));
     CHECK(etl::none_of(InIter(data.begin()), InIter(data.end()), p2));
 
     return true;

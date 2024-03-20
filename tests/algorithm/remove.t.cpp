@@ -45,7 +45,7 @@ constexpr auto test() -> bool
         auto s = etl::array{T(1), T(2), T(3), T(4)};
         auto d = etl::static_vector<T, 4>{};
         etl::remove_copy(begin(s), end(s), etl::back_inserter(d), T(1));
-        CHECK(!d.empty());
+        CHECK_FALSE(d.empty());
         CHECK(d.size() == 3);
         CHECK(etl::all_of(begin(d), end(d), [](auto v) { return v > T(1); }));
     }

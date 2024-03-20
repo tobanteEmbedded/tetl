@@ -15,7 +15,7 @@ static auto test_all() -> bool
     auto callbacks                                      = stm32::isr::vector_t{};
     callbacks[static_cast<size_t>(stm32::isr_ids::nmi)] = dummy_handler;
 
-    CHECK(!dummyHandler01_WasCalled);
+    CHECK_FALSE(dummyHandler01_WasCalled);
     stm32::isr::call(callbacks, stm32::isr_ids::nmi);
     CHECK(dummyHandler01_WasCalled);
 

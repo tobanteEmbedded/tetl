@@ -58,27 +58,27 @@ constexpr auto test() -> bool
     CHECK(etl::detail::is_transparent<etl::equal_to<>>::value);
     CHECK(etl::equal_to<T>{}(T{99}, 99));
     CHECK(etl::equal_to{}(T{1}, T{1}));
-    CHECK(!(etl::equal_to{}(T{2}, T{1})));
-    CHECK(!(etl::equal_to{}(T{99}, T{100})));
-    CHECK(!(etl::equal_to<T>{}(T{99}, T{98})));
+    CHECK_FALSE(etl::equal_to{}(T{2}, T{1}));
+    CHECK_FALSE(etl::equal_to{}(T{99}, T{100}));
+    CHECK_FALSE(etl::equal_to<T>{}(T{99}, T{98}));
 
     CHECK(etl::detail::is_transparent<etl::not_equal_to<>>::value);
-    CHECK(!(etl::not_equal_to<T>{}(T{99}, 99)));
-    CHECK(!(etl::not_equal_to{}(T{1}, T{1})));
+    CHECK_FALSE(etl::not_equal_to<T>{}(T{99}, 99));
+    CHECK_FALSE(etl::not_equal_to{}(T{1}, T{1}));
     CHECK(etl::not_equal_to{}(T{2}, T{1}));
     CHECK(etl::not_equal_to{}(T{99}, T{100}));
     CHECK(etl::not_equal_to<T>{}(T{99}, T{98}));
 
     CHECK(etl::detail::is_transparent<etl::greater<>>::value);
-    CHECK(!(etl::greater<T>{}(T{99}, 99)));
-    CHECK(!(etl::greater{}(T{1}, T{1})));
+    CHECK_FALSE(etl::greater<T>{}(T{99}, 99));
+    CHECK_FALSE(etl::greater{}(T{1}, T{1}));
     CHECK(etl::greater{}(T{2}, T{1}));
     CHECK(etl::greater{}(T{101}, T{100}));
     CHECK(etl::greater<T>{}(T{99}, T{98}));
 
     CHECK(etl::detail::is_transparent<etl::greater_equal<>>::value);
-    CHECK(!(etl::greater_equal<T>{}(T{99}, 100)));
-    CHECK(!(etl::greater_equal{}(T{1}, T{2})));
+    CHECK_FALSE(etl::greater_equal<T>{}(T{99}, 100));
+    CHECK_FALSE(etl::greater_equal{}(T{1}, T{2}));
     CHECK(etl::greater_equal{}(T{2}, T{1}));
     CHECK(etl::greater_equal{}(T{100}, T{100}));
     CHECK(etl::greater_equal<T>{}(T{99}, T{98}));
@@ -86,16 +86,16 @@ constexpr auto test() -> bool
     CHECK(etl::detail::is_transparent<etl::less<>>::value);
     CHECK(etl::less<T>{}(T{99}, 100));
     CHECK(etl::less{}(T{1}, T{2}));
-    CHECK(!(etl::less{}(T{2}, T{1})));
-    CHECK(!(etl::less{}(T{101}, T{100})));
-    CHECK(!(etl::less<T>{}(T{99}, T{98})));
+    CHECK_FALSE(etl::less{}(T{2}, T{1}));
+    CHECK_FALSE(etl::less{}(T{101}, T{100}));
+    CHECK_FALSE(etl::less<T>{}(T{99}, T{98}));
 
     CHECK(etl::detail::is_transparent<etl::less_equal<>>::value);
     CHECK(etl::less_equal<T>{}(T{100}, 100));
     CHECK(etl::less_equal{}(T{1}, T{2}));
-    CHECK(!(etl::less_equal{}(T{2}, T{1})));
-    CHECK(!(etl::less_equal{}(T{101}, T{100})));
-    CHECK(!(etl::less_equal<T>{}(T{99}, T{98})));
+    CHECK_FALSE(etl::less_equal{}(T{2}, T{1}));
+    CHECK_FALSE(etl::less_equal{}(T{101}, T{100}));
+    CHECK_FALSE(etl::less_equal<T>{}(T{99}, T{98}));
 
     return true;
 }
@@ -108,17 +108,17 @@ constexpr auto test_all() -> bool
     CHECK(test<etl::int64_t>());
 
     CHECK(etl::detail::is_transparent<etl::logical_and<>>::value);
-    CHECK(!(etl::logical_and<bool>{}(true, false)));
+    CHECK_FALSE(etl::logical_and<bool>{}(true, false));
     CHECK(etl::logical_and<bool>{}(true, true));
     CHECK(etl::logical_and{}(true, true));
 
     CHECK(etl::detail::is_transparent<etl::logical_or<>>::value);
-    CHECK(!(etl::logical_or<bool>{}(false, false)));
+    CHECK_FALSE(etl::logical_or<bool>{}(false, false));
     CHECK(etl::logical_or<bool>{}(false, true));
     CHECK(etl::logical_or{}(true, false));
 
     CHECK(etl::detail::is_transparent<etl::logical_not<>>::value);
-    CHECK(!(etl::logical_not<bool>{}(true)));
+    CHECK_FALSE(etl::logical_not<bool>{}(true));
     CHECK(etl::logical_not<bool>{}(false));
     CHECK(etl::logical_not{}(false));
 

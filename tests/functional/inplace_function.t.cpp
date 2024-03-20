@@ -15,30 +15,30 @@ auto test() -> bool
 {
     using func_t = etl::inplace_function<T(T), sizeof(void*) * 2U>;
 
-    CHECK(!static_cast<bool>(etl::inplace_function<T(T)>{}));
-    CHECK(!static_cast<bool>(etl::inplace_function<T(T)>{nullptr}));
+    CHECK_FALSE(static_cast<bool>(etl::inplace_function<T(T)>{}));
+    CHECK_FALSE(static_cast<bool>(etl::inplace_function<T(T)>{nullptr}));
 
     auto func = func_t{[](T x) -> T { return static_cast<T>(x + T(1)); }};
     CHECK(static_cast<bool>(func));
     CHECK(func != nullptr);
     CHECK(nullptr != func);
-    CHECK(!(func == nullptr));
-    CHECK(!(nullptr == func));
+    CHECK_FALSE((func == nullptr));
+    CHECK_FALSE((nullptr == func));
     CHECK(func(T(41)) == T(42));
     CHECK(etl::invoke(func, T(41)) == T(42));
 
     auto other = func_t{};
     CHECK(other == nullptr);
-    CHECK(!static_cast<bool>(other));
+    CHECK_FALSE(static_cast<bool>(other));
     func.swap(other);
     CHECK(static_cast<bool>(other));
-    CHECK(!static_cast<bool>(func));
+    CHECK_FALSE(static_cast<bool>(func));
     CHECK(other(T(41)) == T(42));
     CHECK(etl::invoke(other, T(41)) == T(42));
 
     swap(other, func);
     CHECK(static_cast<bool>(func));
-    CHECK(!static_cast<bool>(other));
+    CHECK_FALSE(static_cast<bool>(other));
     CHECK(func(T(41)) == T(42));
     CHECK(etl::invoke(func, T(41)) == T(42));
 
@@ -48,11 +48,11 @@ auto test() -> bool
     CHECK(copy(T(41)) == T(42));
 
     auto emptyCopy = other;
-    CHECK(!static_cast<bool>(emptyCopy));
-    CHECK(!static_cast<bool>(other));
+    CHECK_FALSE(static_cast<bool>(emptyCopy));
+    CHECK_FALSE(static_cast<bool>(other));
 
     copy = nullptr;
-    CHECK(!static_cast<bool>(copy));
+    CHECK_FALSE(static_cast<bool>(copy));
 
     copy = etl::move(func);
     CHECK(static_cast<bool>(copy));

@@ -10,9 +10,9 @@ constexpr auto test() -> bool
     CHECK(etl::isinf(HUGE_VAL));
     CHECK(etl::isinf(HUGE_VALF));
     CHECK(etl::isinf(HUGE_VALL));
-    CHECK(!etl::isinf(NAN));
-    CHECK(!etl::isinf(T{0}));
-    CHECK(!etl::isinf(T{1}));
+    CHECK_FALSE(etl::isinf(NAN));
+    CHECK_FALSE(etl::isinf(T{0}));
+    CHECK_FALSE(etl::isinf(T{1}));
     return true;
 }
 

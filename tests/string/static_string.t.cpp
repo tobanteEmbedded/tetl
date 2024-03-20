@@ -18,7 +18,7 @@ template <typename T>
     {
         string str{};
 
-        CHECK(!str.full());
+        CHECK_FALSE(str.full());
         CHECK(str.empty());
         CHECK(str.capacity() == str.max_size());
         CHECK(str.size() == etl::size_t(0));
@@ -29,8 +29,8 @@ template <typename T>
         auto testCtorChar = [](etl::size_t size, char ch) {
             using string_t = T;
             auto str       = string_t{size, ch};
-            CHECK(!str.empty());
-            CHECK(!str.full());
+            CHECK_FALSE(str.empty());
+            CHECK_FALSE(str.full());
             CHECK(str.size() == size);
 
             auto equal = [ch](auto c) { return c == ch; };
@@ -50,7 +50,7 @@ template <typename T>
         auto testCtorCharPointerSize = [](char const* s, etl::size_t size) {
             using string_t = T;
             string_t str{s, size};
-            CHECK(!str.full());
+            CHECK_FALSE(str.full());
             CHECK(str.capacity() == str.max_size());
             CHECK(str.size() == size);
             CHECK(str.length() == size);
@@ -74,7 +74,7 @@ template <typename T>
         auto testCtorCharPointers = [](char const* s, etl::size_t size) {
             using string_t = T;
             string_t str{s, etl::next(s, static_cast<etl::ptrdiff_t>(size))};
-            CHECK(!str.full());
+            CHECK_FALSE(str.full());
             CHECK(str.capacity() == str.max_size());
             CHECK(str.size() == size);
             CHECK(str.length() == size);
@@ -110,7 +110,7 @@ template <typename T>
         etl::string_view sv{"test"};
         string dest{sv};
 
-        CHECK(!dest.full());
+        CHECK_FALSE(dest.full());
         CHECK(dest.size() == etl::size_t(4));
         CHECK(dest.length() == etl::size_t(4));
         CHECK(dest[0] == 't');
@@ -123,7 +123,7 @@ template <typename T>
         etl::string_view sv{"test"};
         string dest{sv, 2, 2};
 
-        CHECK(!dest.full());
+        CHECK_FALSE(dest.full());
         CHECK(dest.size() == etl::size_t(2));
         CHECK(dest.length() == etl::size_t(2));
         CHECK(dest[0] == 's');
@@ -478,9 +478,9 @@ template <typename T>
 
         CHECK(lhs == "");
         CHECK(lhs == rhs);
-        CHECK(!(lhs != rhs));
+        CHECK_FALSE((lhs != rhs));
         CHECK(rhs == lhs);
-        CHECK(!(rhs != lhs));
+        CHECK_FALSE((rhs != lhs));
     }
 
     {
@@ -490,17 +490,17 @@ template <typename T>
         CHECK(lhs == "");
         CHECK(rhs == "");
         CHECK(lhs == rhs);
-        CHECK(!(lhs != rhs));
-        CHECK(!(lhs != ""));
+        CHECK_FALSE((lhs != rhs));
+        CHECK_FALSE((lhs != ""));
         CHECK(rhs == lhs);
-        CHECK(!(rhs != lhs));
+        CHECK_FALSE((rhs != lhs));
     }
 
     {
-        CHECK(!(string{} < ""));
-        CHECK(!(string{} < string{}));
-        CHECK(!(string{} < etl::static_string<2>{}));
-        CHECK(!(etl::static_string<4>{} < string{}));
+        CHECK_FALSE((string{} < ""));
+        CHECK_FALSE((string{} < string{}));
+        CHECK_FALSE((string{} < etl::static_string<2>{}));
+        CHECK_FALSE((etl::static_string<4>{} < string{}));
     }
 
     {
@@ -510,8 +510,8 @@ template <typename T>
     }
 
     {
-        CHECK(!(string{"def"} < "a"));
-        CHECK(!(string{"def"} < etl::static_string<2>{"a"}));
+        CHECK_FALSE((string{"def"} < "a"));
+        CHECK_FALSE((string{"def"} < etl::static_string<2>{"a"}));
         CHECK(etl::static_string<2>{"a"} < string("test"));
     }
 
@@ -530,28 +530,28 @@ template <typename T>
     }
 
     {
-        CHECK(!(string{"def"} <= "a"));
-        CHECK(!(string{"def"} <= etl::static_string<2>{"a"}));
+        CHECK_FALSE((string{"def"} <= "a"));
+        CHECK_FALSE((string{"def"} <= etl::static_string<2>{"a"}));
         CHECK(etl::static_string<2>{"a"} <= string("test"));
     }
 
     {
-        CHECK(!(string{} > ""));
-        CHECK(!(string{} > string{}));
-        CHECK(!(string{} > etl::static_string<2>{}));
-        CHECK(!(etl::static_string<4>{} > string{}));
+        CHECK_FALSE((string{} > ""));
+        CHECK_FALSE((string{} > string{}));
+        CHECK_FALSE((string{} > etl::static_string<2>{}));
+        CHECK_FALSE((etl::static_string<4>{} > string{}));
     }
 
     {
-        CHECK(!(string{"abc"} > "def"));
-        CHECK(!(string{"abc"} > string{"def"}));
-        CHECK(!(string{"abc"} > string{"defg"}));
-        CHECK(!(string{"abc"} > string{"abc"}));
+        CHECK_FALSE((string{"abc"} > "def"));
+        CHECK_FALSE((string{"abc"} > string{"def"}));
+        CHECK_FALSE((string{"abc"} > string{"defg"}));
+        CHECK_FALSE((string{"abc"} > string{"abc"}));
     }
 
     {
         CHECK(string{"def"} > etl::static_string<2>{"a"});
-        CHECK(!(etl::static_string<2>{"a"} > string("test")));
+        CHECK_FALSE((etl::static_string<2>{"a"} > string("test")));
     }
 
     {
@@ -564,13 +564,13 @@ template <typename T>
     {
         CHECK(string{"abc"} >= "abc");
         CHECK(string{"abc"} >= string{"abc"});
-        CHECK(!(string{"abc"} >= string{"def"}));
-        CHECK(!(string{"abc"} >= string{"defg"}));
+        CHECK_FALSE((string{"abc"} >= string{"def"}));
+        CHECK_FALSE((string{"abc"} >= string{"defg"}));
     }
 
     {
         CHECK(string{"def"} >= etl::static_string<2>{"a"});
-        CHECK(!(etl::static_string<2>{"a"} >= string("test")));
+        CHECK_FALSE((etl::static_string<2>{"a"} >= string("test")));
     }
 
     {
@@ -1004,16 +1004,16 @@ template <typename T>
 
     {
         auto str = string();
-        CHECK(!(str.starts_with("foo"_sv)));
-        CHECK(!(str.starts_with("foo")));
-        CHECK(!(str.starts_with('f')));
+        CHECK_FALSE((str.starts_with("foo"_sv)));
+        CHECK_FALSE((str.starts_with("foo")));
+        CHECK_FALSE((str.starts_with('f')));
     }
 
     {
         auto str = string("test");
-        CHECK(!(str.starts_with("foo"_sv)));
-        CHECK(!(str.starts_with("foo")));
-        CHECK(!(str.starts_with('f')));
+        CHECK_FALSE((str.starts_with("foo"_sv)));
+        CHECK_FALSE((str.starts_with("foo")));
+        CHECK_FALSE((str.starts_with('f')));
     }
 
     {
@@ -1030,16 +1030,16 @@ template <typename T>
 
     {
         auto str = string();
-        CHECK(!(str.ends_with("foo"_sv)));
-        CHECK(!(str.ends_with("foo")));
-        CHECK(!(str.ends_with('o')));
+        CHECK_FALSE((str.ends_with("foo"_sv)));
+        CHECK_FALSE((str.ends_with("foo")));
+        CHECK_FALSE((str.ends_with('o')));
     }
 
     {
         auto str = string("test");
-        CHECK(!(str.ends_with("foo"_sv)));
-        CHECK(!(str.ends_with("foo")));
-        CHECK(!(str.ends_with('o')));
+        CHECK_FALSE((str.ends_with("foo"_sv)));
+        CHECK_FALSE((str.ends_with("foo")));
+        CHECK_FALSE((str.ends_with('o')));
     }
 
     {

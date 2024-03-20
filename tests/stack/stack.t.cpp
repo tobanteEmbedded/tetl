@@ -36,14 +36,14 @@ auto test() -> bool
     auto sCopy = s;
     CHECK(sCopy == s);
     CHECK(s == sCopy);
-    CHECK(!(sCopy != s));
-    CHECK(!(s != sCopy));
+    CHECK_FALSE(sCopy != s);
+    CHECK_FALSE(s != sCopy);
 
     sCopy.pop();
     CHECK(sCopy != s);
     CHECK(s != sCopy);
-    CHECK(!(sCopy == s));
-    CHECK(!(s == sCopy));
+    CHECK_FALSE(sCopy == s);
+    CHECK_FALSE(s == sCopy);
 
     decltype(sCopy) sSwap{};
     sCopy.swap(sSwap);

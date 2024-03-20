@@ -106,22 +106,22 @@ constexpr auto test() -> bool
         CHECK(etl::ratio_equal_v<one_twelfth, etl::ratio<2, 24>>);
         CHECK(etl::ratio_equal_v<one_twelfth, etl::ratio<3, 36>>);
 
-        CHECK(!(etl::ratio_equal_v<one_half, one_twelfth>));
-        CHECK(!(etl::ratio_equal_v<one_twelfth, one_half>));
-        CHECK(!(etl::ratio_equal_v<one_twelfth, etl::ratio<2, 23>>));
-        CHECK(!(etl::ratio_equal_v<one_twelfth, etl::ratio<3, 35>>));
+        CHECK_FALSE(etl::ratio_equal_v<one_half, one_twelfth>);
+        CHECK_FALSE(etl::ratio_equal_v<one_twelfth, one_half>);
+        CHECK_FALSE(etl::ratio_equal_v<one_twelfth, etl::ratio<2, 23>>);
+        CHECK_FALSE(etl::ratio_equal_v<one_twelfth, etl::ratio<3, 35>>);
     }
 
     {
         using one_twelfth = etl::ratio<1, 12>;
         using one_half    = etl::ratio<1, 2>;
 
-        CHECK(!(etl::ratio_not_equal_v<one_half, one_half>));
-        CHECK(!(etl::ratio_not_equal_v<one_half, etl::ratio<2, 4>>));
-        CHECK(!(etl::ratio_not_equal_v<one_half, etl::ratio<3, 6>>));
-        CHECK(!(etl::ratio_not_equal_v<one_twelfth, one_twelfth>));
-        CHECK(!(etl::ratio_not_equal_v<one_twelfth, etl::ratio<2, 24>>));
-        CHECK(!(etl::ratio_not_equal_v<one_twelfth, etl::ratio<3, 36>>));
+        CHECK_FALSE(etl::ratio_not_equal_v<one_half, one_half>);
+        CHECK_FALSE(etl::ratio_not_equal_v<one_half, etl::ratio<2, 4>>);
+        CHECK_FALSE(etl::ratio_not_equal_v<one_half, etl::ratio<3, 6>>);
+        CHECK_FALSE(etl::ratio_not_equal_v<one_twelfth, one_twelfth>);
+        CHECK_FALSE(etl::ratio_not_equal_v<one_twelfth, etl::ratio<2, 24>>);
+        CHECK_FALSE(etl::ratio_not_equal_v<one_twelfth, etl::ratio<3, 36>>);
 
         CHECK(etl::ratio_not_equal_v<one_half, one_twelfth>);
         CHECK(etl::ratio_not_equal_v<one_twelfth, one_half>);
@@ -133,13 +133,13 @@ constexpr auto test() -> bool
         using one_twelfth = etl::ratio<1, 12>;
         using one_half    = etl::ratio<1, 2>;
 
-        CHECK(!(etl::ratio_less_v<one_half, one_half>));
-        CHECK(!(etl::ratio_less_v<one_half, etl::ratio<2, 4>>));
-        CHECK(!(etl::ratio_less_v<one_half, etl::ratio<3, 6>>));
-        CHECK(!(etl::ratio_less_v<one_twelfth, one_twelfth>));
-        CHECK(!(etl::ratio_less_v<one_twelfth, etl::ratio<2, 24>>));
-        CHECK(!(etl::ratio_less_v<one_twelfth, etl::ratio<3, 36>>));
-        CHECK(!(etl::ratio_less_v<one_half, one_twelfth>));
+        CHECK_FALSE(etl::ratio_less_v<one_half, one_half>);
+        CHECK_FALSE(etl::ratio_less_v<one_half, etl::ratio<2, 4>>);
+        CHECK_FALSE(etl::ratio_less_v<one_half, etl::ratio<3, 6>>);
+        CHECK_FALSE(etl::ratio_less_v<one_twelfth, one_twelfth>);
+        CHECK_FALSE(etl::ratio_less_v<one_twelfth, etl::ratio<2, 24>>);
+        CHECK_FALSE(etl::ratio_less_v<one_twelfth, etl::ratio<3, 36>>);
+        CHECK_FALSE(etl::ratio_less_v<one_half, one_twelfth>);
 
         CHECK(etl::ratio_less_v<one_twelfth, one_half>);
         CHECK(etl::ratio_less_v<one_twelfth, etl::ratio<2, 23>>);
@@ -161,7 +161,7 @@ constexpr auto test() -> bool
         CHECK(etl::ratio_less_equal_v<one_twelfth, etl::ratio<2, 23>>);
         CHECK(etl::ratio_less_equal_v<one_twelfth, etl::ratio<3, 35>>);
 
-        CHECK(!(etl::ratio_less_equal_v<one_half, one_twelfth>));
+        CHECK_FALSE(etl::ratio_less_equal_v<one_half, one_twelfth>);
     }
 
     {
@@ -169,13 +169,13 @@ constexpr auto test() -> bool
         using one_twelfth = etl::ratio<1, 12>;
         using one_half    = etl::ratio<1, 2>;
 
-        CHECK(!(etl::ratio_greater_v<one_half, one_half>));
-        CHECK(!(etl::ratio_greater_v<one_half, etl::ratio<2, 4>>));
-        CHECK(!(etl::ratio_greater_v<one_half, etl::ratio<3, 6>>));
-        CHECK(!(etl::ratio_greater_v<one_twelfth, one_twelfth>));
-        CHECK(!(etl::ratio_greater_v<one_twelfth, etl::ratio<2, 24>>));
-        CHECK(!(etl::ratio_greater_v<one_twelfth, etl::ratio<3, 36>>));
-        CHECK(!(etl::ratio_greater_v<one_twelfth, one_half>));
+        CHECK_FALSE(etl::ratio_greater_v<one_half, one_half>);
+        CHECK_FALSE(etl::ratio_greater_v<one_half, etl::ratio<2, 4>>);
+        CHECK_FALSE(etl::ratio_greater_v<one_half, etl::ratio<3, 6>>);
+        CHECK_FALSE(etl::ratio_greater_v<one_twelfth, one_twelfth>);
+        CHECK_FALSE(etl::ratio_greater_v<one_twelfth, etl::ratio<2, 24>>);
+        CHECK_FALSE(etl::ratio_greater_v<one_twelfth, etl::ratio<3, 36>>);
+        CHECK_FALSE(etl::ratio_greater_v<one_twelfth, one_half>);
 
         CHECK(etl::ratio_greater_v<one_half, one_twelfth>);
         CHECK(etl::ratio_greater_v<etl::ratio<2, 23>, one_twelfth>);
@@ -197,7 +197,7 @@ constexpr auto test() -> bool
         CHECK(etl::ratio_greater_equal_v<etl::ratio<2, 23>, one_twelfth>);
         CHECK(etl::ratio_greater_equal_v<etl::ratio<3, 35>, one_twelfth>);
 
-        CHECK(!(etl::ratio_greater_equal_v<one_twelfth, one_half>));
+        CHECK_FALSE(etl::ratio_greater_equal_v<one_twelfth, one_half>);
     }
 
     return true;

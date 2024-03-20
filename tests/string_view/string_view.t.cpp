@@ -129,7 +129,7 @@ constexpr auto test() -> bool
         CHECK(t.empty());
 
         auto const f = "test"_sv;
-        CHECK(!f.empty());
+        CHECK_FALSE(f.empty());
     }
 
     {
@@ -230,7 +230,7 @@ constexpr auto test() -> bool
     {
         auto const sv = "abc"_sv;
         CHECK(sv.ends_with('c'));
-        CHECK(!(sv.ends_with('a')));
+        CHECK_FALSE(sv.ends_with('a'));
     }
 
     {
@@ -497,12 +497,12 @@ constexpr auto test() -> bool
     {
         auto const sv  = "test"_sv;
         auto const str = etl::static_string<16>{"test"};
-        CHECK(!(sv < sv));
+        CHECK_FALSE(sv < sv);
         CHECK(etl::string_view{""} < sv);
         CHECK(sv.substr(0, 1) < sv);
         CHECK("abc"_sv < sv);
-        CHECK(!(sv < str));
-        CHECK(!(str < sv));
+        CHECK_FALSE(sv < str);
+        CHECK_FALSE(str < sv);
     }
 
     {
@@ -515,7 +515,7 @@ constexpr auto test() -> bool
 
     {
         auto const sv = "test"_sv;
-        CHECK(!(sv > sv));
+        CHECK_FALSE(sv > sv);
         CHECK(etl::string_view{"xxxxxx"} > sv);
         CHECK(sv > sv.substr(0, 1));
         CHECK(sv > "abc"_sv);
@@ -539,14 +539,14 @@ constexpr auto test() -> bool
         CHECK("foo"_sv == "foo"_sv);
         CHECK("bar"_sv == "bar"_sv);
 
-        CHECK(!("foo"_sv == etl::static_string<16>{"baz"}));
+        CHECK_FALSE("foo"_sv == etl::static_string<16>{"baz"});
         CHECK("bar"_sv == etl::static_string<16>{"bar"});
 
         CHECK(etl::static_string<16>{"bar"} == "bar"_sv);
-        CHECK(!(etl::static_string<16>{"baz"} == "foo"_sv));
+        CHECK_FALSE(etl::static_string<16>{"baz"} == "foo"_sv);
 
-        CHECK(!("foo"_sv == "test"_sv));
-        CHECK(!("test"_sv == "foo"_sv));
+        CHECK_FALSE("foo"_sv == "test"_sv);
+        CHECK_FALSE("test"_sv == "foo"_sv);
     }
     return true;
 }

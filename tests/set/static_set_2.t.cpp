@@ -24,17 +24,17 @@ auto test() -> bool // NOLINT(readability-function-size)
         CHECK(set.contains(T(3)));
         CHECK(set.erase(T(3)) == 1);
         CHECK(set.size() == 3);
-        CHECK(!(set.contains(T(3))));
+        CHECK_FALSE(set.contains(T(3)));
 
         // CHECK(set.contains(T(1)));
         // CHECK(set.erase(begin(set)) == begin(set) + 1);
         // CHECK(set.size() == 2);
-        // CHECK(!(set.contains(T(1))));
+        // CHECK_FALSE(set.contains(T(1)));
 
         // CHECK(set.contains(T(2)));
         // CHECK(set.erase(begin(set), end(set) - 1) == end(set));
         // CHECK(set.size() == 1);
-        // CHECK(!(set.contains(T(2))));
+        // CHECK_FALSE(set.contains(T(2)));
     }
 
     {
@@ -54,11 +54,11 @@ auto test() -> bool // NOLINT(readability-function-size)
 
     {
         auto set = etl::static_set<T, 4>();
-        CHECK(!(set.contains(0)));
+        CHECK_FALSE(set.contains(0));
 
         set.emplace(T(0));
         CHECK(set.contains(0));
-        CHECK(!(set.contains(1)));
+        CHECK_FALSE(set.contains(1));
 
         set.emplace(T(1));
         CHECK(set.contains(0));
@@ -174,10 +174,10 @@ auto test() -> bool // NOLINT(readability-function-size)
             CHECK(etl::as_const(lhs) == etl::as_const(rhs));
             CHECK(etl::as_const(rhs) == etl::as_const(lhs));
 
-            CHECK(!(lhs != rhs));
-            CHECK(!(rhs != lhs));
-            CHECK(!(etl::as_const(lhs) != etl::as_const(rhs)));
-            CHECK(!(etl::as_const(rhs) != etl::as_const(lhs)));
+            CHECK_FALSE(lhs != rhs);
+            CHECK_FALSE(rhs != lhs);
+            CHECK_FALSE(etl::as_const(lhs) != etl::as_const(rhs));
+            CHECK_FALSE(etl::as_const(rhs) != etl::as_const(lhs));
         }
 
         // "equal"
@@ -191,10 +191,10 @@ auto test() -> bool // NOLINT(readability-function-size)
             CHECK(etl::as_const(lhs) == etl::as_const(rhs));
             CHECK(etl::as_const(rhs) == etl::as_const(lhs));
 
-            CHECK(!(lhs != rhs));
-            CHECK(!(rhs != lhs));
-            CHECK(!(etl::as_const(lhs) != etl::as_const(rhs)));
-            CHECK(!(etl::as_const(rhs) != etl::as_const(lhs)));
+            CHECK_FALSE(lhs != rhs);
+            CHECK_FALSE(rhs != lhs);
+            CHECK_FALSE(etl::as_const(lhs) != etl::as_const(rhs));
+            CHECK_FALSE(etl::as_const(rhs) != etl::as_const(lhs));
         }
 
         // "not equal"
@@ -208,10 +208,10 @@ auto test() -> bool // NOLINT(readability-function-size)
             CHECK(etl::as_const(lhs) != etl::as_const(rhs));
             CHECK(etl::as_const(rhs) != etl::as_const(lhs));
 
-            CHECK(!(lhs == rhs));
-            CHECK(!(rhs == lhs));
-            CHECK(!(etl::as_const(lhs) == etl::as_const(rhs)));
-            CHECK(!(etl::as_const(rhs) == etl::as_const(lhs)));
+            CHECK_FALSE(lhs == rhs);
+            CHECK_FALSE(rhs == lhs);
+            CHECK_FALSE(etl::as_const(lhs) == etl::as_const(rhs));
+            CHECK_FALSE(etl::as_const(rhs) == etl::as_const(lhs));
         }
     }
 

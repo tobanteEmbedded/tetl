@@ -82,7 +82,7 @@ constexpr auto test() -> bool
     {
         auto arr = etl::array<T, 8>{};
         auto sp  = etl::span<T, 8>{etl::begin(arr), etl::size(arr)};
-        CHECK(!sp.empty());
+        CHECK_FALSE(sp.empty());
         CHECK(sp.data() == arr.data());
         CHECK(sp.size() == arr.size());
         CHECK(sp.extent == arr.size());
@@ -92,7 +92,7 @@ constexpr auto test() -> bool
     {
         auto arr = etl::array<T, 8>{};
         auto sp  = etl::span<T>{etl::begin(arr), etl::size(arr)};
-        CHECK(!sp.empty());
+        CHECK_FALSE(sp.empty());
         CHECK(sp.data() == arr.data());
         CHECK(sp.size() == arr.size());
         CHECK(sp.extent == etl::dynamic_extent);
@@ -105,7 +105,7 @@ constexpr auto test() -> bool
         etl::generate_n(etl::back_inserter(vec), 4, rng);
 
         auto sp = etl::span<T>{etl::begin(vec), etl::size(vec)};
-        CHECK(!sp.empty());
+        CHECK_FALSE(sp.empty());
         CHECK(sp.data() == vec.data());
         CHECK(sp.size() == vec.size());
         CHECK(sp.extent == etl::dynamic_extent);
@@ -124,8 +124,8 @@ constexpr auto test() -> bool
     {
         auto data = etl::array<T, 4>{};
         auto sp   = etl::span<T>{etl::begin(data), etl::size(data)};
-        CHECK(!(sp.begin() == sp.end()));
-        CHECK(!(etl::begin(sp) == etl::end(sp)));
+        CHECK_FALSE(sp.begin() == sp.end());
+        CHECK_FALSE(etl::begin(sp) == etl::end(sp));
 
         auto counter = 0;
         for (auto const& x : sp) {
@@ -139,8 +139,8 @@ constexpr auto test() -> bool
     {
         auto data = etl::array<T, 4>{};
         auto sp   = etl::span<T>{etl::begin(data), etl::size(data)};
-        CHECK(!(sp.begin() == sp.end()));
-        CHECK(!(etl::begin(sp) == etl::end(sp)));
+        CHECK_FALSE(sp.begin() == sp.end());
+        CHECK_FALSE(etl::begin(sp) == etl::end(sp));
 
         auto counter = 0;
         etl::for_each(etl::begin(sp), etl::end(sp), [&counter](auto /*unused*/) { counter++; });

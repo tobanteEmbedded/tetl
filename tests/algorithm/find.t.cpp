@@ -20,7 +20,7 @@ constexpr auto test() -> bool
         vec.push_back(T(4));
 
         auto const* result1 = etl::find(vec.cbegin(), vec.cend(), T(3));
-        CHECK(!(result1 == vec.cend()));
+        CHECK_FALSE(result1 == vec.cend());
 
         auto* result2 = etl::find(vec.begin(), vec.end(), T(5));
         CHECK(result2 == vec.end());
@@ -60,7 +60,7 @@ constexpr auto test() -> bool
         auto* res3 = etl::find_if(vec.begin(), vec.end(), [](auto& x) -> bool {
             return static_cast<bool>(static_cast<int>(x) % 2);
         });
-        CHECK(!(res3 == vec.end()));
+        CHECK_FALSE(res3 == vec.end());
 
         auto* res4 = etl::find_if(vec.begin(), vec.end(), [](auto& x) -> bool { return static_cast<bool>(x == 100); });
         CHECK(res4 == vec.end());
@@ -76,11 +76,11 @@ constexpr auto test() -> bool
         auto* result5 = etl::find_if_not(vec.begin(), vec.end(), [](auto& x) -> bool {
             return static_cast<bool>(static_cast<int>(x) % 2);
         });
-        CHECK(!(result5 == vec.end()));
+        CHECK_FALSE(result5 == vec.end());
 
         auto* result6
             = etl::find_if_not(vec.begin(), vec.end(), [](auto& x) -> bool { return static_cast<bool>(x == 100); });
-        CHECK(!(result6 == vec.end()));
+        CHECK_FALSE(result6 == vec.end());
 
         auto* result7
             = etl::find_if_not(vec.begin(), vec.end(), [](auto& x) -> bool { return static_cast<bool>(x != 100); });

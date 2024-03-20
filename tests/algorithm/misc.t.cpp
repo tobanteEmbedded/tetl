@@ -103,7 +103,7 @@ constexpr auto test() -> bool
         auto const b = etl::array{T(3), T(5), T(4), T(1), T(2)};
         auto const c = etl::array{T(3), T(5), T(4), T(1), T(1)};
         CHECK(etl::is_permutation(begin(a), end(a), begin(b), end(b)));
-        CHECK(!etl::is_permutation(begin(a), end(a), begin(c), end(c)));
+        CHECK_FALSE(etl::is_permutation(begin(a), end(a), begin(c), end(c)));
     }
 
     return true;

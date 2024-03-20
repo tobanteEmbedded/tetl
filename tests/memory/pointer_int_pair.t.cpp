@@ -54,9 +54,9 @@ auto test() -> bool
         CHECK(copy <= outter);
         CHECK(copy >= outter);
 
-        CHECK(!(copy != outter));
-        CHECK(!(copy < outter));
-        CHECK(!(copy > outter));
+        CHECK_FALSE(copy != outter);
+        CHECK_FALSE(copy < outter);
+        CHECK_FALSE(copy > outter);
     }
 
     return true;

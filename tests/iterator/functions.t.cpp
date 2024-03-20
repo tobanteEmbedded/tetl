@@ -64,13 +64,13 @@ constexpr auto test() -> bool
     // "iterator: empty
     {
         int carr[4] = {};
-        CHECK(!etl::empty(carr));
+        CHECK_FALSE(etl::empty(carr));
 
         auto arr = etl::array<int, 5>{};
-        CHECK(!etl::empty(arr));
+        CHECK_FALSE(etl::empty(arr));
 
         auto sv1 = etl::string_view{"test"};
-        CHECK(!etl::empty(sv1));
+        CHECK_FALSE(etl::empty(sv1));
 
         auto const sv2 = etl::string_view{};
         CHECK(etl::empty(sv2));

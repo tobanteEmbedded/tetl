@@ -150,9 +150,9 @@ constexpr auto test_has_single_bit() -> bool
     CHECK(etl::has_single_bit(T{1 << 3}));
     CHECK(etl::has_single_bit(T{1 << 4}));
 
-    CHECK(!etl::has_single_bit(T{0}));
-    CHECK(!etl::has_single_bit(T{3}));
-    CHECK(!etl::has_single_bit(T{3 << 4}));
+    CHECK_FALSE(etl::has_single_bit(T{0}));
+    CHECK_FALSE(etl::has_single_bit(T{3}));
+    CHECK_FALSE(etl::has_single_bit(T{3 << 4}));
 
     return true;
 }

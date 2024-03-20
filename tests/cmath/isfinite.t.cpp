@@ -10,11 +10,11 @@ constexpr auto test() -> bool
     CHECK(etl::isfinite(T(0)));
     CHECK(etl::isfinite(T(1)));
 
-    CHECK(!etl::isfinite(INFINITY));
-    CHECK(!etl::isfinite(HUGE_VAL));
-    CHECK(!etl::isfinite(HUGE_VALF));
-    CHECK(!etl::isfinite(HUGE_VALL));
-    CHECK(!etl::isfinite(NAN));
+    CHECK_FALSE(etl::isfinite(INFINITY));
+    CHECK_FALSE(etl::isfinite(HUGE_VAL));
+    CHECK_FALSE(etl::isfinite(HUGE_VALF));
+    CHECK_FALSE(etl::isfinite(HUGE_VALL));
+    CHECK_FALSE(etl::isfinite(NAN));
     return true;
 }
 

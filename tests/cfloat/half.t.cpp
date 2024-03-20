@@ -9,13 +9,13 @@ constexpr auto test_inf() -> bool
     CHECK(etl::isinf(etl::half{etl::binary, 0b0111'1100'0000'0000})); // +inf
     CHECK(etl::isinf(etl::half{etl::binary, 0b1111'1100'0000'0000})); // -inf
 
-    CHECK(!etl::isinf(etl::half{etl::binary, 0b0000'0000'0000'0000})); // +0
-    CHECK(!etl::isinf(etl::half{etl::binary, 0b1000'0000'0000'0000})); // -0
-    CHECK(!etl::isinf(etl::half{etl::binary, 0b0000'0000'0000'0001})); // subnormal
-    CHECK(!etl::isinf(etl::half{etl::binary, 0b0000'0000'0000'0011})); // subnormal
+    CHECK_FALSE(etl::isinf(etl::half{etl::binary, 0b0000'0000'0000'0000})); // +0
+    CHECK_FALSE(etl::isinf(etl::half{etl::binary, 0b1000'0000'0000'0000})); // -0
+    CHECK_FALSE(etl::isinf(etl::half{etl::binary, 0b0000'0000'0000'0001})); // subnormal
+    CHECK_FALSE(etl::isinf(etl::half{etl::binary, 0b0000'0000'0000'0011})); // subnormal
 
-    CHECK(!etl::isinf(etl::half{etl::binary, 0b0111'1100'0000'0001})); // +nan
-    CHECK(!etl::isinf(etl::half{etl::binary, 0b1111'1100'0000'0001})); // -nan
+    CHECK_FALSE(etl::isinf(etl::half{etl::binary, 0b0111'1100'0000'0001})); // +nan
+    CHECK_FALSE(etl::isinf(etl::half{etl::binary, 0b1111'1100'0000'0001})); // -nan
 
     return true;
 }
@@ -25,13 +25,13 @@ constexpr auto test_nan() -> bool
     CHECK(etl::isnan(etl::half{etl::binary, 0b0111'1100'0000'0001})); // +nan
     CHECK(etl::isnan(etl::half{etl::binary, 0b1111'1100'0000'0001})); // -nan
 
-    CHECK(!etl::isnan(etl::half{etl::binary, 0b0000'0000'0000'0000})); // +0
-    CHECK(!etl::isnan(etl::half{etl::binary, 0b1000'0000'0000'0000})); // -0
-    CHECK(!etl::isnan(etl::half{etl::binary, 0b0000'0000'0000'0001})); // subnormal
-    CHECK(!etl::isnan(etl::half{etl::binary, 0b0000'0000'0000'0011})); // subnormal
+    CHECK_FALSE(etl::isnan(etl::half{etl::binary, 0b0000'0000'0000'0000})); // +0
+    CHECK_FALSE(etl::isnan(etl::half{etl::binary, 0b1000'0000'0000'0000})); // -0
+    CHECK_FALSE(etl::isnan(etl::half{etl::binary, 0b0000'0000'0000'0001})); // subnormal
+    CHECK_FALSE(etl::isnan(etl::half{etl::binary, 0b0000'0000'0000'0011})); // subnormal
 
-    CHECK(!etl::isnan(etl::half{etl::binary, 0b0111'1100'0000'0000})); // +inf
-    CHECK(!etl::isnan(etl::half{etl::binary, 0b1111'1100'0000'0000})); // -inf
+    CHECK_FALSE(etl::isnan(etl::half{etl::binary, 0b0111'1100'0000'0000})); // +inf
+    CHECK_FALSE(etl::isnan(etl::half{etl::binary, 0b1111'1100'0000'0000})); // -inf
 
     return true;
 }
@@ -43,16 +43,16 @@ constexpr auto test_normal() -> bool
     CHECK(etl::isnormal(etl::half{etl::binary, 0b0011'1110'0000'0000})); // +1.5
     CHECK(etl::isnormal(etl::half{etl::binary, 0b1011'1110'0000'0000})); // -1.5
 
-    CHECK(!etl::isnormal(etl::half{etl::binary, 0b0000'0000'0000'0000})); // +0
-    CHECK(!etl::isnormal(etl::half{etl::binary, 0b1000'0000'0000'0000})); // -0
-    CHECK(!etl::isnormal(etl::half{etl::binary, 0b0000'0000'0000'0001})); // +sub
-    CHECK(!etl::isnormal(etl::half{etl::binary, 0b1000'0000'0000'0001})); // -sub
+    CHECK_FALSE(etl::isnormal(etl::half{etl::binary, 0b0000'0000'0000'0000})); // +0
+    CHECK_FALSE(etl::isnormal(etl::half{etl::binary, 0b1000'0000'0000'0000})); // -0
+    CHECK_FALSE(etl::isnormal(etl::half{etl::binary, 0b0000'0000'0000'0001})); // +sub
+    CHECK_FALSE(etl::isnormal(etl::half{etl::binary, 0b1000'0000'0000'0001})); // -sub
 
-    CHECK(!etl::isnormal(etl::half{etl::binary, 0b0111'1100'0000'0000})); // +inf
-    CHECK(!etl::isnormal(etl::half{etl::binary, 0b1111'1100'0000'0000})); // -inf
+    CHECK_FALSE(etl::isnormal(etl::half{etl::binary, 0b0111'1100'0000'0000})); // +inf
+    CHECK_FALSE(etl::isnormal(etl::half{etl::binary, 0b1111'1100'0000'0000})); // -inf
 
-    CHECK(!etl::isnormal(etl::half{etl::binary, 0b0111'1100'0000'0001})); // +nan
-    CHECK(!etl::isnormal(etl::half{etl::binary, 0b1111'1100'0000'0001})); // -nan
+    CHECK_FALSE(etl::isnormal(etl::half{etl::binary, 0b0111'1100'0000'0001})); // +nan
+    CHECK_FALSE(etl::isnormal(etl::half{etl::binary, 0b1111'1100'0000'0001})); // -nan
 
     return true;
 }
@@ -68,11 +68,11 @@ constexpr auto test_finite() -> bool
     CHECK(etl::isfinite(etl::half{etl::binary, 0b0000'0000'0000'0001})); // -subnormal
     CHECK(etl::isfinite(etl::half{etl::binary, 0b1000'0000'0000'0001})); // +subnormal
 
-    CHECK(!etl::isfinite(etl::half{etl::binary, 0b0111'1100'0000'0000})); // +inf
-    CHECK(!etl::isfinite(etl::half{etl::binary, 0b1111'1100'0000'0000})); // -inf
+    CHECK_FALSE(etl::isfinite(etl::half{etl::binary, 0b0111'1100'0000'0000})); // +inf
+    CHECK_FALSE(etl::isfinite(etl::half{etl::binary, 0b1111'1100'0000'0000})); // -inf
 
-    CHECK(!etl::isfinite(etl::half{etl::binary, 0b0111'1100'0000'0001})); // +nan
-    CHECK(!etl::isfinite(etl::half{etl::binary, 0b1111'1100'0000'0001})); // -nan
+    CHECK_FALSE(etl::isfinite(etl::half{etl::binary, 0b0111'1100'0000'0001})); // +nan
+    CHECK_FALSE(etl::isfinite(etl::half{etl::binary, 0b1111'1100'0000'0001})); // -nan
 
     return true;
 }
@@ -86,12 +86,12 @@ constexpr auto test_signbit() -> bool
     CHECK(etl::signbit(etl::half{etl::binary, 0b1111'1100'0000'0001})); // -nan
     CHECK(etl::signbit(etl::half{etl::binary, 0b1111'1100'0000'0000})); // -inf
 
-    CHECK(!etl::signbit(etl::half{etl::binary, 0b0000'0000'0000'0000})); // +0
-    CHECK(!etl::signbit(etl::half{etl::binary, 0b0011'1100'0000'0000})); // +1
-    CHECK(!etl::signbit(etl::half{etl::binary, 0b0011'1110'0000'0000})); // +1.5
-    CHECK(!etl::signbit(etl::half{etl::binary, 0b0000'0000'0000'0001})); // subnormal
-    CHECK(!etl::signbit(etl::half{etl::binary, 0b0111'1100'0000'0000})); // +inf
-    CHECK(!etl::signbit(etl::half{etl::binary, 0b0111'1100'0000'0001})); // +nan
+    CHECK_FALSE(etl::signbit(etl::half{etl::binary, 0b0000'0000'0000'0000})); // +0
+    CHECK_FALSE(etl::signbit(etl::half{etl::binary, 0b0011'1100'0000'0000})); // +1
+    CHECK_FALSE(etl::signbit(etl::half{etl::binary, 0b0011'1110'0000'0000})); // +1.5
+    CHECK_FALSE(etl::signbit(etl::half{etl::binary, 0b0000'0000'0000'0001})); // subnormal
+    CHECK_FALSE(etl::signbit(etl::half{etl::binary, 0b0111'1100'0000'0000})); // +inf
+    CHECK_FALSE(etl::signbit(etl::half{etl::binary, 0b0111'1100'0000'0001})); // +nan
 
     return true;
 }

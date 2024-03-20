@@ -11,13 +11,13 @@ static auto test() -> bool
     // "not locked"
     {
         test_mutex mtx{};
-        CHECK(!mtx.is_locked());
+        CHECK_FALSE(mtx.is_locked());
         {
             etl::lock_guard lock{mtx};
             CHECK(mtx.is_locked());
             etl::ignore_unused(lock);
         }
-        CHECK(!mtx.is_locked());
+        CHECK_FALSE(mtx.is_locked());
     }
 
     // "already locked"
@@ -29,7 +29,7 @@ static auto test() -> bool
             CHECK(mtx.is_locked());
             etl::ignore_unused(lock);
         }
-        CHECK(!mtx.is_locked());
+        CHECK_FALSE(mtx.is_locked());
     }
 
     return true;

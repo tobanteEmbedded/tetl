@@ -239,16 +239,16 @@ constexpr auto test() -> bool
     // MSVC
     #if not defined(TETL_MSVC)
 
-    CHECK(!(etl::is_convertible_v<int, void>));
-    CHECK(!(etl::is_convertible_v<int, void const>));
+    CHECK_FALSE(etl::is_convertible_v<int, void>);
+    CHECK_FALSE(etl::is_convertible_v<int, void const>);
 
     CHECK(etl::is_convertible_v<void, void const>);
     CHECK(etl::is_convertible_v<void const, void>);
     CHECK(etl::is_convertible_v<void const, void const>);
 
         #if TETL_CPP_STANDARD < 20
-    CHECK(!(etl::is_convertible_v<int, void volatile>));
-    CHECK(!(etl::is_convertible_v<int, void const volatile>));
+    CHECK_FALSE(etl::is_convertible_v<int, void volatile>);
+    CHECK_FALSE(etl::is_convertible_v<int, void const volatile>);
     CHECK(etl::is_convertible_v<void, void volatile>);
     CHECK(etl::is_convertible_v<void, void const volatile>);
     CHECK(etl::is_convertible_v<void const, void volatile>);
@@ -555,8 +555,8 @@ constexpr auto test() -> bool
     CHECK_SAME_TYPE(etl::type_pack_element_t<2, T, char, short>, short);
 
     CHECK(etl::is_specialized_v<test_is_specialized, Foo<float>>);
-    CHECK(!(etl::is_specialized_v<test_is_specialized, T>));
-    CHECK(!(etl::is_specialized_v<test_is_specialized, double>));
+    CHECK_FALSE(etl::is_specialized_v<test_is_specialized, T>);
+    CHECK_FALSE(etl::is_specialized_v<test_is_specialized, double>);
 
     return true;
 }

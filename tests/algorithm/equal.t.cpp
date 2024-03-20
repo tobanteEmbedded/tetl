@@ -16,13 +16,13 @@ constexpr auto test() -> bool
     auto cmp = etl::not_equal_to{};
 
     CHECK(etl::equal(begin(lhs), end(lhs), begin(rhs)));
-    CHECK(!etl::equal(begin(lhs), end(lhs), begin(rhs), cmp));
+    CHECK_FALSE(etl::equal(begin(lhs), end(lhs), begin(rhs), cmp));
 
     CHECK(etl::equal(begin(lhs), end(lhs), begin(rhs), end(rhs)));
-    CHECK(!etl::equal(begin(lhs), end(lhs), begin(rhs), end(rhs), cmp));
+    CHECK_FALSE(etl::equal(begin(lhs), end(lhs), begin(rhs), end(rhs), cmp));
 
     auto small = etl::array{T(1)};
-    CHECK(!etl::equal(begin(lhs), end(lhs), begin(small), end(small), cmp));
+    CHECK_FALSE(etl::equal(begin(lhs), end(lhs), begin(small), end(small), cmp));
 
     return true;
 }

@@ -9,12 +9,12 @@ constexpr auto test() -> bool
 {
     CHECK(etl::isnan(NAN));
 
-    CHECK(!etl::isnan(T{0}));
-    CHECK(!etl::isnan(T{1}));
-    CHECK(!etl::isnan(INFINITY));
-    CHECK(!etl::isnan(HUGE_VAL));
-    CHECK(!etl::isnan(HUGE_VALF));
-    CHECK(!etl::isnan(HUGE_VALL));
+    CHECK_FALSE(etl::isnan(T{0}));
+    CHECK_FALSE(etl::isnan(T{1}));
+    CHECK_FALSE(etl::isnan(INFINITY));
+    CHECK_FALSE(etl::isnan(HUGE_VAL));
+    CHECK_FALSE(etl::isnan(HUGE_VALF));
+    CHECK_FALSE(etl::isnan(HUGE_VALL));
     return true;
 }
 

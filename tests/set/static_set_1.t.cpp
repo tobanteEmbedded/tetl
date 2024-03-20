@@ -41,8 +41,8 @@ auto test() -> bool // NOLINT(readability-function-size)
 
         using non_trivial_set_t = etl::static_set<NonTrivial, 16>;
 
-        CHECK(!(etl::is_trivial_v<NonTrivial>));
-        CHECK(!(etl::is_trivially_destructible_v<non_trivial_set_t>));
+        CHECK_FALSE(etl::is_trivial_v<NonTrivial>);
+        CHECK_FALSE(etl::is_trivially_destructible_v<non_trivial_set_t>);
     }
 
     // "capacity = 0"
@@ -64,7 +64,7 @@ auto test() -> bool // NOLINT(readability-function-size)
         CHECK(set.size() == 0);
         CHECK(set.max_size() == 4);
         CHECK(set.empty());
-        CHECK(!(set.full()));
+        CHECK_FALSE(set.full());
     }
 
     // "capacity = 16"
@@ -73,7 +73,7 @@ auto test() -> bool // NOLINT(readability-function-size)
         CHECK(set.size() == 0);
         CHECK(set.max_size() == 16);
         CHECK(set.empty());
-        CHECK(!(set.full()));
+        CHECK_FALSE(set.full());
     }
 
     {
@@ -81,8 +81,8 @@ auto test() -> bool // NOLINT(readability-function-size)
         auto set  = etl::static_set<T, 4>(begin(data), end(data));
         CHECK(set.size() == 3);
         CHECK(set.max_size() == 4);
-        CHECK(!(set.empty()));
-        CHECK(!(set.full()));
+        CHECK_FALSE(set.empty());
+        CHECK_FALSE(set.full());
     }
 
     {
@@ -132,11 +132,11 @@ auto test() -> bool // NOLINT(readability-function-size)
         set.emplace(T(1));
         set.emplace(T(4));
         CHECK(set.full());
-        CHECK(!(set.empty()));
+        CHECK_FALSE(set.empty());
 
         set.clear();
         CHECK(set.empty());
-        CHECK(!(set.full()));
+        CHECK_FALSE(set.full());
     }
 
     {
@@ -146,31 +146,31 @@ auto test() -> bool // NOLINT(readability-function-size)
         set.emplace(T(1));
         CHECK(set.contains(1));
         CHECK(set.size() == 1);
-        CHECK(!(set.empty()));
-        CHECK(!(set.full()));
+        CHECK_FALSE(set.empty());
+        CHECK_FALSE(set.full());
 
         // in order, no reordering required
         set.emplace(T(2));
         CHECK(set.contains(2));
         CHECK(set.size() == 2);
-        CHECK(!(set.empty()));
-        CHECK(!(set.full()));
+        CHECK_FALSE(set.empty());
+        CHECK_FALSE(set.full());
 
         // not in order, reordering required!
         set.emplace(T(0));
         CHECK(set.contains(0));
         CHECK(set.size() == 3);
         CHECK(*set.begin() == 0);
-        CHECK(!(set.empty()));
-        CHECK(!(set.full()));
+        CHECK_FALSE(set.empty());
+        CHECK_FALSE(set.full());
 
         // value already in set
         set.emplace(T(0));
         CHECK(set.contains(0));
         CHECK(set.size() == 3);
         CHECK(*set.begin() == 0);
-        CHECK(!(set.empty()));
-        CHECK(!(set.full()));
+        CHECK_FALSE(set.empty());
+        CHECK_FALSE(set.full());
 
         // last element
         CHECK(set.emplace(T(4)).second);
@@ -178,14 +178,14 @@ auto test() -> bool // NOLINT(readability-function-size)
         CHECK(set.size() == 4);
         CHECK(*set.begin() == 0);
         CHECK(set.full());
-        CHECK(!(set.empty()));
+        CHECK_FALSE(set.empty());
 
         // fails, capacity is reached.
         auto res = set.emplace(T(5));
         CHECK(res.first == nullptr);
         CHECK(res.second == false);
         CHECK(set.size() == 4);
-        CHECK(!(set.contains(5)));
+        CHECK_FALSE(set.contains(5));
 
         CHECK(etl::is_sorted(set.begin(), set.end()));
     }

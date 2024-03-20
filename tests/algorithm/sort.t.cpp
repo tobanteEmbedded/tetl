@@ -156,7 +156,7 @@ constexpr auto test_sort() -> bool
         };
 
         CHECK(etl::is_sorted(begin(src), end(src), etl::greater{}));
-        CHECK(!etl::is_sorted(begin(src), end(src)));
+        CHECK_FALSE(etl::is_sorted(begin(src), end(src)));
     }
 
     // custom compare
@@ -168,7 +168,7 @@ constexpr auto test_sort() -> bool
             T{42},
         };
 
-        CHECK(!(etl::is_sorted(begin(src), end(src), etl::greater{})));
+        CHECK_FALSE((etl::is_sorted(begin(src), end(src), etl::greater{})));
     }
 
     // empty range always returns true
@@ -197,10 +197,10 @@ constexpr auto test_sort() -> bool
         auto predicate = [](auto const& val) { return val < T(1); };
 
         auto test1 = etl::array{T(2), T(0), T(2)};
-        CHECK(!etl::is_partitioned(begin(test1), end(test1), predicate));
+        CHECK_FALSE(etl::is_partitioned(begin(test1), end(test1), predicate));
 
         auto test2 = etl::array{T(0), T(0), T(2), T(0)};
-        CHECK(!etl::is_partitioned(begin(test2), end(test2), predicate));
+        CHECK_FALSE(etl::is_partitioned(begin(test2), end(test2), predicate));
     }
 
     return true;

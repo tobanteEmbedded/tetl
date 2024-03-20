@@ -49,9 +49,9 @@ auto test_runtime() -> bool
 
         vec.push_back(T{2});
         CHECK(*etl::rbegin(vec) == T{2});
-        CHECK(!(etl::rbegin(vec) == etl::rend(vec)));
-        CHECK(!(etl::crbegin(vec) == etl::crend(vec)));
-        CHECK(!(rbegin(as_const(vec)) == rend(as_const(vec))));
+        CHECK_FALSE(etl::rbegin(vec) == etl::rend(vec));
+        CHECK_FALSE(etl::crbegin(vec) == etl::crend(vec));
+        CHECK_FALSE(rbegin(as_const(vec)) == rend(as_const(vec)));
 
         vec.push_back(T{3});
         CHECK(*etl::rbegin(vec) == T{3});
@@ -78,8 +78,8 @@ auto test_runtime() -> bool
 
         CHECK(lhs == rhs);
         CHECK(rhs == lhs);
-        CHECK(!(lhs != rhs));
-        CHECK(!(rhs != lhs));
+        CHECK_FALSE(lhs != rhs);
+        CHECK_FALSE(rhs != lhs);
     }
 
     {
@@ -89,12 +89,12 @@ auto test_runtime() -> bool
         CHECK(rhs.empty());
 
         rhs.emplace_back(T(1.20F), T(1.00F), T(1.43F));
-        CHECK(!(rhs.empty()));
-        CHECK(!(rhs == lhs));
+        CHECK_FALSE(rhs.empty());
+        CHECK_FALSE(rhs == lhs);
         CHECK(rhs.size() == 1);
 
         lhs.emplace_back(T(1.20F), T(1.00F), T(1.43F));
-        CHECK(!(lhs.empty()));
+        CHECK_FALSE(lhs.empty());
         CHECK(rhs == lhs);
         CHECK(lhs.size() == 1);
     }
@@ -102,7 +102,7 @@ auto test_runtime() -> bool
     {
         etl::static_vector<Vertex<T>, 3> vec{};
         vec.emplace(vec.end(), T(1.20F), T(1.00F), T(1.43F));
-        CHECK(!(vec.empty()));
+        CHECK_FALSE(vec.empty());
         CHECK(vec.size() == 1);
     }
 

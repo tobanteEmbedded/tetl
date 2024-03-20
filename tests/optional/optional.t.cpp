@@ -15,8 +15,8 @@ constexpr auto test() -> bool
     CHECK_EXCEPTION_TYPE(etl::bad_optional_access, etl::exception);
 
     {
-        CHECK(!(etl::optional<T>{}.has_value()));
-        CHECK(!(etl::optional<T>(etl::nullopt).has_value()));
+        CHECK_FALSE(etl::optional<T>{}.has_value());
+        CHECK_FALSE(etl::optional<T>(etl::nullopt).has_value());
         CHECK(etl::optional<T>{T{}}.has_value());
         CHECK(etl::optional<T>{T(1)}.has_value());
         auto opt = etl::optional<T>{etl::in_place, T{}};
@@ -25,18 +25,18 @@ constexpr auto test() -> bool
 
     {
         etl::optional<T> opt{};
-        CHECK(!(opt.has_value()));
+        CHECK_FALSE(opt.has_value());
 
         // copy ctor
         auto opt1{opt};
-        CHECK(!(opt1.has_value()));
+        CHECK_FALSE(opt1.has_value());
 
         // move ctor
         auto opt2{etl::move(opt)};
-        CHECK(!(opt2.has_value()));
+        CHECK_FALSE(opt2.has_value());
 
         auto opt3{etl::optional<T>{}};
-        CHECK(!(opt3.has_value()));
+        CHECK_FALSE(opt3.has_value());
     }
 
     {
@@ -61,14 +61,14 @@ constexpr auto test() -> bool
 
     {
         etl::optional<T> opt4{};
-        CHECK(!(opt4.has_value()));
+        CHECK_FALSE(opt4.has_value());
         opt4 = etl::nullopt;
-        CHECK(!(opt4.has_value()));
+        CHECK_FALSE(opt4.has_value());
     }
 
     {
         etl::optional<T> opt{};
-        CHECK(!(opt.has_value()));
+        CHECK_FALSE(opt.has_value());
         opt = T(1);
         CHECK(opt.has_value());
         CHECK(opt.value() == T(1));
@@ -86,15 +86,15 @@ constexpr auto test() -> bool
 
     {
         etl::optional<T> opt{};
-        CHECK(!(opt.has_value()));
+        CHECK_FALSE(opt.has_value());
 
         // copy assignment
         opt = etl::optional<T>{};
-        CHECK(!(opt.has_value()));
+        CHECK_FALSE(opt.has_value());
 
         // move assignment
         opt = etl::move(etl::optional<T>{});
-        CHECK(!(opt.has_value()));
+        CHECK_FALSE(opt.has_value());
     }
 
     {
@@ -102,12 +102,12 @@ constexpr auto test() -> bool
         CHECK(opt.has_value());
         CHECK(opt.value() == T(42));
         opt = etl::optional<T>{};
-        CHECK(!(opt.has_value()));
+        CHECK_FALSE(opt.has_value());
     }
 
     {
         etl::optional<T> opt{};
-        CHECK(!(opt.has_value()));
+        CHECK_FALSE(opt.has_value());
         opt = etl::optional<T>{T(42)};
         CHECK(opt.has_value());
         CHECK(opt.value() == T(42));
@@ -132,15 +132,15 @@ constexpr auto test() -> bool
         };
 
         etl::optional<S> opt{};
-        CHECK(!(etl::is_trivially_destructible_v<S>));
+        CHECK_FALSE(etl::is_trivially_destructible_v<S>);
     }
 
     {
         auto opt = etl::optional<T>{};
-        CHECK(!(static_cast<bool>(opt)));
+        CHECK_FALSE(static_cast<bool>(opt));
 
         auto const cOpt = etl::optional<T>{};
-        CHECK(!(static_cast<bool>(cOpt)));
+        CHECK_FALSE(static_cast<bool>(cOpt));
     }
 
     {
@@ -161,10 +161,10 @@ constexpr auto test() -> bool
 
     {
         auto opt = etl::optional<T>{T(1)};
-        CHECK(!(opt.operator->() == nullptr));
+        CHECK_FALSE(opt.operator->() == nullptr);
 
         auto const cOpt = etl::optional<T>{T(1)};
-        CHECK(!(cOpt.operator->() == nullptr));
+        CHECK_FALSE(cOpt.operator->() == nullptr);
     }
 
     {
@@ -192,16 +192,16 @@ constexpr auto test() -> bool
 
     {
         etl::optional<T> opt{};
-        CHECK(!(opt.has_value()));
+        CHECK_FALSE(opt.has_value());
         opt.reset();
-        CHECK(!(opt.has_value()));
+        CHECK_FALSE(opt.has_value());
     }
 
     {
         etl::optional<T> opt{T{}};
         CHECK(opt.has_value());
         opt.reset();
-        CHECK(!(opt.has_value()));
+        CHECK_FALSE(opt.has_value());
     }
 
     {
@@ -223,7 +223,7 @@ constexpr auto test() -> bool
         CHECK(opt.has_value());
         CHECK(counter == 0);
         opt.reset();
-        CHECK(!(opt.has_value()));
+        CHECK_FALSE(opt.has_value());
         CHECK(counter == 1);
     }
 
@@ -236,14 +236,14 @@ constexpr auto test() -> bool
 
     {
         etl::optional<T> opt{};
-        CHECK(!(opt.has_value()));
+        CHECK_FALSE(opt.has_value());
         opt.emplace(T{1});
         CHECK(opt.has_value());
     }
 
     {
         etl::optional<SCTOR> opt{};
-        CHECK(!(opt.has_value()));
+        CHECK_FALSE(opt.has_value());
         opt.emplace(T{1}, T{2});
         CHECK(opt.has_value());
     }
@@ -252,54 +252,54 @@ constexpr auto test() -> bool
         etl::optional<T> lhs1{};
         etl::optional<T> rhs1{};
         CHECK(lhs1 == rhs1);
-        CHECK(!(lhs1 != rhs1));
+        CHECK_FALSE(lhs1 != rhs1);
 
         etl::optional<T> lhs2(etl::nullopt);
         etl::optional<T> rhs2(etl::nullopt);
         CHECK(lhs2 == rhs2);
         CHECK(lhs2 == etl::nullopt);
         CHECK(etl::nullopt == rhs2);
-        CHECK(!(lhs2 != rhs2));
+        CHECK_FALSE(lhs2 != rhs2);
     }
 
     {
         etl::optional<T> lhs1{T{42}};
         etl::optional<T> rhs1{T{42}};
         CHECK(lhs1 == rhs1);
-        CHECK(!(lhs1 != rhs1));
-        CHECK(!(lhs1 == etl::nullopt));
-        CHECK(!(etl::nullopt == lhs1));
+        CHECK_FALSE(lhs1 != rhs1);
+        CHECK_FALSE(lhs1 == etl::nullopt);
+        CHECK_FALSE(etl::nullopt == lhs1);
 
         etl::optional<T> lhs2{T{0}};
         etl::optional<T> rhs2{T{42}};
         CHECK(lhs2 != rhs2);
         CHECK(lhs2 != etl::nullopt);
         CHECK(etl::nullopt != lhs2);
-        CHECK(!(lhs2 == rhs2));
+        CHECK_FALSE(lhs2 == rhs2);
 
         etl::optional<T> lhs3{T{0}};
         etl::optional<T> rhs3(etl::nullopt);
         CHECK(lhs3 != rhs3);
-        CHECK(!(lhs3 == rhs3));
+        CHECK_FALSE(lhs3 == rhs3);
     }
 
     {
         etl::optional<T> lhs1{};
         etl::optional<T> rhs1{};
-        CHECK(!(lhs1 < rhs1));
-        CHECK(!(etl::nullopt < rhs1));
-        CHECK(!(lhs1 < etl::nullopt));
+        CHECK_FALSE(lhs1 < rhs1);
+        CHECK_FALSE(etl::nullopt < rhs1);
+        CHECK_FALSE(lhs1 < etl::nullopt);
 
         etl::optional<T> lhs2(etl::nullopt);
         etl::optional<T> rhs2(etl::nullopt);
-        CHECK(!(lhs2 < rhs2));
+        CHECK_FALSE(lhs2 < rhs2);
     }
 
     {
         etl::optional<T> lhs1{T{42}};
         etl::optional<T> rhs1{T{42}};
-        CHECK(!(lhs1 < rhs1));
-        CHECK(!(lhs1 < etl::nullopt));
+        CHECK_FALSE(lhs1 < rhs1);
+        CHECK_FALSE(lhs1 < etl::nullopt);
         CHECK(etl::nullopt < rhs1);
 
         etl::optional<T> lhs2{T{0}};
@@ -311,23 +311,23 @@ constexpr auto test() -> bool
         CHECK(lhs3 < rhs3);
 
         CHECK(etl::nullopt < rhs3);
-        CHECK(!(lhs3 < etl::nullopt));
+        CHECK_FALSE(lhs3 < etl::nullopt);
     }
 
     {
         etl::optional<T> lhs1{};
         etl::optional<T> rhs1{};
-        CHECK(!(lhs1 > rhs1));
+        CHECK_FALSE(lhs1 > rhs1);
 
         etl::optional<T> lhs2(etl::nullopt);
         etl::optional<T> rhs2(etl::nullopt);
-        CHECK(!(lhs2 > rhs2));
+        CHECK_FALSE(lhs2 > rhs2);
     }
 
     {
         etl::optional<T> lhs1{T{42}};
         etl::optional<T> rhs1{T{42}};
-        CHECK(!(lhs1 > rhs1));
+        CHECK_FALSE(lhs1 > rhs1);
 
         etl::optional<T> lhs2{T{42}};
         etl::optional<T> rhs2{T{0}};
@@ -377,40 +377,40 @@ constexpr auto test() -> bool
         etl::optional<T> lhs2{T{42}};
         etl::optional<T> rhs2{T{0}};
         CHECK(lhs2 >= rhs2);
-        CHECK(!(rhs2 >= lhs2));
+        CHECK_FALSE(rhs2 >= lhs2);
     }
 
     {
         etl::optional<T> opt1{};
         etl::optional<T> opt2{};
-        CHECK(!(opt1.has_value()));
-        CHECK(!(opt2.has_value()));
+        CHECK_FALSE(opt1.has_value());
+        CHECK_FALSE(opt2.has_value());
 
         opt1.swap(opt2);
-        CHECK(!(opt1.has_value()));
-        CHECK(!(opt2.has_value()));
+        CHECK_FALSE(opt1.has_value());
+        CHECK_FALSE(opt2.has_value());
     }
 
     {
         etl::optional<T> opt1{T{1}};
         etl::optional<T> opt2{};
         CHECK(opt1.has_value());
-        CHECK(!(opt2.has_value()));
+        CHECK_FALSE(opt2.has_value());
 
         opt1.swap(opt2);
-        CHECK(!(opt1.has_value()));
+        CHECK_FALSE(opt1.has_value());
         CHECK(opt2.has_value());
         CHECK(opt2.value() == 1);
 
         etl::optional<T> opt3{};
         etl::optional<T> opt4{T{1}};
-        CHECK(!(opt3.has_value()));
+        CHECK_FALSE(opt3.has_value());
         CHECK(opt4.has_value());
 
         opt3.swap(opt4);
         CHECK(opt3.has_value());
         CHECK(opt3.value() == 1);
-        CHECK(!(opt4.has_value()));
+        CHECK_FALSE(opt4.has_value());
     }
 
     {
