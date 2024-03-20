@@ -112,3 +112,42 @@ Unless stated otherwise, all papers are implemented to work with the minimum C++
 | P0972R0 |            `<chrono>` `zero()`, `min()`, and `max()` should be noexcept            |          |         |
 | P0980R1 |                              constexpr `std::string`                               |          |         |
 | P1956R1 |                On the names of low-level bit manipulation functions                | **Done** |         |
+
+## C++17
+
+|  Paper  |                                         Name                                         |  Status  | Comment |
+| :-----: | :----------------------------------------------------------------------------------: | :------: | :-----: |
+|  N3911  |                                    `std::void_t`                                     | **Done** |         |
+|  N3921  |            `string_view`: a non-owning reference to a string, revision 7             | **Done** |         |
+|  N4259  |                             `std::uncaught_exceptions()`                             |          |         |
+|  N4280  |                   `std::size()`, `std::empty()` and `std::data()`                    | **Done** |         |
+|  N4387  |                        Improving `std::pair` and `std::tuple`                        | **Done** |         |
+|  N4389  |                                 `std::bool_constant`                                 | **Done** |         |
+|  N4508  |                            `std::shared_mutex` (untimed)                             |          |         |
+| P0006R0 |                            Type traits variable templates                            | **Done** |         |
+| P0013R1 |                             Logical operator type traits                             | **Done** |         |
+| P0024R2 |                      Parallel algorithms and execution policies                      |          |         |
+| P0025R1 |                                    `std::clamp()`                                    | **Done** |         |
+| P0154R1 |                              Hardware interference size                              | **Done** |         |
+| P0185R1 |                              (nothrow-)swappable traits                              | **Done** |         |
+| P0218R1 |                                 File system library                                  |          |         |
+| P0220R1 |              Adopt Library Fundamentals V1 TS Components for C++17 (R1)              |  _WIP_   |         |
+| P0220R1 |                                      `std::any`                                      |          |         |
+| P0220R1 |                                   `std::optional`                                    | **Done** |         |
+| P0220R1 |                             Polymorphic memory resources                             |          |         |
+| P0226R1 |                            Mathematical special functions                            |          |         |
+| P0063R3 |                        Major portion of C11 standard library                         |  _WIP_   |         |
+| P0083R3 |                                Splicing Maps and Sets                                |          |         |
+| P0084R2 | return type of `emplace` functions of some containers changed from void to reference | **Done** |         |
+| P0088R3 |                                    `std::variant`                                    | **Done** |         |
+| P0209R2 |                               `std::make_from_tuple()`                               | **Done** |         |
+| P0258R2 |                       `std::has_unique_object_representations`                       | **Done** |         |
+| P0295R0 |                            `std::gcd()` and `std::lcm()`                             | **Done** |         |
+| P0005R4 |                                    `std::not_fn`                                     | **Done** |         |
+| P0358R1 |                               Fixes for `std::not_fn`                                | **Done** |         |
+| P0067R5 |                            Elementary string conversions                             |  _WIP_   |         |
+| P0414R2 |               `std::shared_ptr` and `std::weak_ptr` with array support               |          |         |
+| P0156R2 |                                  `std::scoped_lock`                                  |          |         |
+| P0298R3 |                                     `std::byte`                                      | **Done** |         |
+| LWG2911 |                                 `std::is_aggregate`                                  | **Done** |         |
+| LWG3657 |                       DR17: `std::hash<std::filesystem::path>`                       |          |         |
