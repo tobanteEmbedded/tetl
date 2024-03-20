@@ -15,6 +15,7 @@
 #include <etl/_optional/bad_optional_access.hpp>
 #include <etl/_optional/nullopt.hpp>
 #include <etl/_optional/sfinae_base.hpp>
+#include <etl/_type_traits/add_lvalue_reference.hpp>
 #include <etl/_type_traits/conjunction.hpp>
 #include <etl/_type_traits/decay.hpp>
 #include <etl/_type_traits/enable_if.hpp>
@@ -24,6 +25,7 @@
 #include <etl/_type_traits/is_convertible.hpp>
 #include <etl/_type_traits/is_copy_assignable.hpp>
 #include <etl/_type_traits/is_copy_constructible.hpp>
+#include <etl/_type_traits/is_lvalue_reference.hpp>
 #include <etl/_type_traits/is_move_assignable.hpp>
 #include <etl/_type_traits/is_move_constructible.hpp>
 #include <etl/_type_traits/is_nothrow_move_assignable.hpp>
@@ -850,6 +852,94 @@ public:
 
     /// \brief Implementation detail. Do not use!
     using base_type::get;
+};
+
+// https://www.open-std.org/jtc1/sc22/wg21/docs/papers/2024/p2988r3.pdf
+template <typename T>
+struct optional<T&> {
+    using value_type = T&;
+
+    constexpr optional() noexcept = default;
+
+    constexpr optional(etl::nullopt_t /*tag*/) noexcept : _ptr{nullptr} { }
+
+    template <typename U = T>
+        requires(not etl::is_same_v<etl::remove_cvref_t<U>, optional>)
+    constexpr explicit(not etl::is_convertible_v<U, T>) optional(U&& v) : _ptr(etl::addressof(v))
+    {
+        static_assert(etl::is_constructible_v<etl::add_lvalue_reference_t<T>, U>, "Must be able to bind U to T&");
+        static_assert(etl::is_lvalue_reference_v<U>, "U must be an lvalue");
+    }
+
+    template <typename U>
+        requires(not etl::is_same_v<etl::remove_cvref_t<U>, optional>)
+    constexpr explicit(not etl::is_convertible_v<U, T>) optional(optional<U> const& rhs)
+        : _ptr(etl::addressof(rhs.value()))
+    {
+    }
+
+    constexpr optional(optional const& other)     = default;
+    constexpr optional(optional&& other) noexcept = default;
+    constexpr ~optional()                         = default;
+
+    constexpr auto operator=(optional const&) noexcept -> optional& = default;
+    constexpr auto operator=(optional&&) noexcept -> optional&      = default;
+
+    constexpr auto operator=(etl::nullopt_t /*tag*/) noexcept -> optional&
+    {
+        _ptr = nullptr;
+        return *this;
+    }
+
+    template <typename U = T>
+        requires(not etl::is_same_v<etl::remove_cvref_t<U>, optional>
+                 and not etl::conjunction_v<etl::is_scalar<T>, etl::is_same<T, etl::decay_t<U>>>)
+    constexpr auto operator=(U&& v) -> optional&
+    {
+        static_assert(etl::is_constructible_v<etl::add_lvalue_reference_t<T>, U>, "Must be able to bind U to T&");
+        static_assert(etl::is_lvalue_reference_v<U>, "U must be an lvalue");
+        _ptr = etl::addressof(v);
+        return *this;
+    }
+
+    template <typename U>
+    constexpr auto operator=(optional<U> const& rhs) -> optional&
+    {
+        static_assert(etl::is_constructible_v<etl::add_lvalue_reference_t<T>, U>, "Must be able to bind U to T&");
+        _ptr = rhs._ptr;
+        return *this;
+    }
+
+    template <typename U = T>
+        requires(not etl::is_same_v<remove_cvref_t<U>, optional>)
+    constexpr auto emplace(U&& u) noexcept -> optional&
+    {
+        *this = etl::forward<U>(u);
+        return *this;
+    }
+
+    [[nodiscard]] constexpr auto operator->() const noexcept -> T* { return _ptr; }
+
+    [[nodiscard]] constexpr auto operator*() const noexcept -> T& { return *_ptr; }
+
+    [[nodiscard]] constexpr explicit operator bool() const noexcept { return has_value(); }
+
+    [[nodiscard]] constexpr auto has_value() const noexcept -> bool { return _ptr != nullptr; }
+
+    [[nodiscard]] constexpr auto value() const -> T const&
+    {
+        if (not has_value()) {
+            etl::raise<etl::bad_optional_access>("called value() on empty optional");
+        }
+        return *_ptr;
+    }
+
+    constexpr void reset() noexcept { _ptr = nullptr; }
+
+    constexpr void swap(optional& rhs) noexcept { etl::swap(_ptr, rhs._ptr); }
+
+private:
+    T* _ptr{nullptr};
 };
 
 // One deduction guide is provided for etl::optional to account for the

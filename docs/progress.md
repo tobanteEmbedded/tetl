@@ -1,10 +1,14 @@
 # Progress
 
-## Standard
-
 Unless stated otherwise, all papers are implemented to work with the minimum C++ standard (currently C++20).
 
-### C++26
+## Proposal
+
+|                                      Paper                                      |        Name         | Status | Comment |
+| :-----------------------------------------------------------------------------: | :-----------------: | :----: | :-----: |
+| [P2988R3](https://www.open-std.org/jtc1/sc22/wg21/docs/papers/2024/p2988r3.pdf) | `std::optional<T&>` | _WIP_  |         |
+
+## C++26
 
 |                                       Paper                                        |                                   Name                                   |  Status  | Comment |
 | :--------------------------------------------------------------------------------: | :----------------------------------------------------------------------: | :------: | :-----: |
@@ -29,7 +33,7 @@ Unless stated otherwise, all papers are implemented to work with the minimum C++
 |  [P2821R5](https://www.open-std.org/jtc1/sc22/wg21/docs/papers/2023/p2821r5.html)  |                            `std::span::at()`                             |          |         |
 |  [P2937R0](https://www.open-std.org/jtc1/sc22/wg21/docs/papers/2023/p2937r0.html)  |                   Freestanding: removing `std::strtok`                   |          |         |
 
-### C++23
+## C++23
 
 |                                       Paper                                        |                                           Name                                           |  Status  | Comment |
 | :--------------------------------------------------------------------------------: | :--------------------------------------------------------------------------------------: | :------: | :-----: |
@@ -59,7 +63,7 @@ Unless stated otherwise, all papers are implemented to work with the minimum C++
 |  [P2517R1](https://www.open-std.org/jtc1/sc22/wg21/docs/papers/2022/p2517r1.html)  |                 Add a conditional noexcept specification to `std::apply`                 |          |         |
 |  [P2549R1](https://www.open-std.org/jtc1/sc22/wg21/docs/papers/2022/p2549r1.html)  |              `std::unexpected<E>` should have `error()` as member accessor               | **Done** |         |
 
-### C++20
+## C++20
 
 |  Paper  |                                        Name                                        |  Status  | Comment |
 | :-----: | :--------------------------------------------------------------------------------: | :------: | :-----: |
