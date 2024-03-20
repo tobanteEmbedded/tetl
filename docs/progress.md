@@ -151,3 +151,26 @@ Unless stated otherwise, all papers are implemented to work with the minimum C++
 | P0298R3 |                                     `std::byte`                                      | **Done** |         |
 | LWG2911 |                                 `std::is_aggregate`                                  | **Done** |         |
 | LWG3657 |                       DR17: `std::hash<std::filesystem::path>`                       |          |         |
+
+## C++14
+
+| Paper |                              Name                               |  Status  | Comment |
+| :---: | :-------------------------------------------------------------: | :------: | :-----: |
+| N3302 |                    constexpr for `<complex>`                    | **Done** |         |
+| N3421 |                  Transparent operator functors                  | **Done** |         |
+| N3462 |                   `std::result_of` and SFINAE                   | **Done** |         |
+| N3469 |                    constexpr for `<chrono>`                     | **Done** |         |
+| N3470 |                     constexpr for `<array>`                     | **Done** |         |
+| N3471 |  constexpr for `<initializer_list>`, `<utility>` and `<tuple>`  | **Done** |         |
+| N3545 |                 Improved std::integral_constant                 | **Done** |         |
+| N3642 |       User-defined literals for `<chrono>` and `<string>`       | **Done** |         |
+| N3644 |                     Null forward iterators                      | **Done** |         |
+| N3654 |                          `std::quoted`                          |          |         |
+| N3656 |                       `std::make_unique`                        |          |         |
+| N3657 |                Heterogeneous associative lookup                 | **Done** |         |
+| N3658 |                     `std::integer_sequence`                     | **Done** |         |
+| N3659 |                     std::shared_timed_mutex                     |          |         |
+| N3668 |                         `std::exchange`                         | **Done** |         |
+| N3669 |         fixing constexpr member functions without const         | **Done** |         |
+| N3670 |                         `std::get<T>()`                         | **Done** |         |
+| N3671 | Dual-Range `std::equal`, `std::is_permutation`, `std::mismatch` | **Done** |         |
