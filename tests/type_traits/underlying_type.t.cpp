@@ -19,8 +19,8 @@ constexpr auto test() -> bool
         c
     };
 
-    TEST_TRAIT_TYPE_CV(underlying_type, E, T);
-    TEST_TRAIT_TYPE_CV(underlying_type, SE, T);
+    CHECK_TRAIT_TYPE_CV(underlying_type, E, T);
+    CHECK_TRAIT_TYPE_CV(underlying_type, SE, T);
 
     return true;
 }

@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: BSL-1.0
 
-#ifndef TETL_TEST_TYPE_TRAITS_TYPES_HPP
-#define TETL_TEST_TYPE_TRAITS_TYPES_HPP
+#ifndef TETL_TEST_TESTING_TYPES_HPP
+#define TETL_TEST_TESTING_TYPES_HPP
 
 enum Enum {
     efoo,
@@ -112,70 +112,70 @@ using PointerToConstMemberFunc    = void (VirtualDtor::*)() const;
 using PointerToVolatileMemberFunc = void (VirtualDtor::*)() volatile;
 using PointerToCVMemberFunc       = void (VirtualDtor::*)() const volatile;
 
-#define TEST_IS_TRAIT(trait, type)                                                                                     \
+#define CHECK_IS_TRAIT(trait, type)                                                                                    \
     do {                                                                                                               \
         CHECK(etl::is_base_of_v<etl::true_type, etl::trait<type>>);                                                    \
         CHECK(etl::trait<type>::value);                                                                                \
         CHECK(etl::TETL_PP_CONCAT(trait, _v) < type >);                                                                \
     } while (false)
 
-#define TEST_IS_TRAIT_FALSE(trait, type)                                                                               \
+#define CHECK_IS_TRAIT_FALSE(trait, type)                                                                              \
     do {                                                                                                               \
         CHECK(etl::is_base_of_v<etl::false_type, etl::trait<type>>);                                                   \
         CHECK_FALSE(etl::trait<type>::value);                                                                          \
         CHECK_FALSE(etl::TETL_PP_CONCAT(trait, _v) < type >);                                                          \
     } while (false)
 
-#define TEST_IS_TRAIT_C(trait, type)                                                                                   \
-    TEST_IS_TRAIT(trait, type);                                                                                        \
-    TEST_IS_TRAIT(trait, const type)
+#define CHECK_IS_TRAIT_C(trait, type)                                                                                  \
+    CHECK_IS_TRAIT(trait, type);                                                                                       \
+    CHECK_IS_TRAIT(trait, const type)
 
-#define TEST_IS_TRAIT_C_FALSE(trait, type)                                                                             \
-    TEST_IS_TRAIT_FALSE(trait, type);                                                                                  \
-    TEST_IS_TRAIT_FALSE(trait, const type)
+#define CHECK_IS_TRAIT_C_FALSE(trait, type)                                                                            \
+    CHECK_IS_TRAIT_FALSE(trait, type);                                                                                 \
+    CHECK_IS_TRAIT_FALSE(trait, const type)
 
-#define TEST_IS_TRAIT_V(trait, type)                                                                                   \
-    TEST_IS_TRAIT(trait, type);                                                                                        \
-    TEST_IS_TRAIT(trait, volatile type)
+#define CHECK_IS_TRAIT_V(trait, type)                                                                                  \
+    CHECK_IS_TRAIT(trait, type);                                                                                       \
+    CHECK_IS_TRAIT(trait, volatile type)
 
-#define TEST_IS_TRAIT_V_FALSE(trait, type)                                                                             \
-    TEST_IS_TRAIT_FALSE(trait, type);                                                                                  \
-    TEST_IS_TRAIT_FALSE(trait, volatile type)
+#define CHECK_IS_TRAIT_V_FALSE(trait, type)                                                                            \
+    CHECK_IS_TRAIT_FALSE(trait, type);                                                                                 \
+    CHECK_IS_TRAIT_FALSE(trait, volatile type)
 
-#define TEST_IS_TRAIT_CV(trait, type)                                                                                  \
-    TEST_IS_TRAIT(trait, type);                                                                                        \
-    TEST_IS_TRAIT(trait, const type);                                                                                  \
-    TEST_IS_TRAIT(trait, volatile type);                                                                               \
-    TEST_IS_TRAIT(trait, const volatile type)
+#define CHECK_IS_TRAIT_CV(trait, type)                                                                                 \
+    CHECK_IS_TRAIT(trait, type);                                                                                       \
+    CHECK_IS_TRAIT(trait, const type);                                                                                 \
+    CHECK_IS_TRAIT(trait, volatile type);                                                                              \
+    CHECK_IS_TRAIT(trait, const volatile type)
 
-#define TEST_IS_TRAIT_CV_FALSE(trait, type)                                                                            \
-    TEST_IS_TRAIT_FALSE(trait, type);                                                                                  \
-    TEST_IS_TRAIT_FALSE(trait, const type);                                                                            \
-    TEST_IS_TRAIT_FALSE(trait, volatile type);                                                                         \
-    TEST_IS_TRAIT_FALSE(trait, const volatile type)
+#define CHECK_IS_TRAIT_CV_FALSE(trait, type)                                                                           \
+    CHECK_IS_TRAIT_FALSE(trait, type);                                                                                 \
+    CHECK_IS_TRAIT_FALSE(trait, const type);                                                                           \
+    CHECK_IS_TRAIT_FALSE(trait, volatile type);                                                                        \
+    CHECK_IS_TRAIT_FALSE(trait, const volatile type)
 
-#define TEST_TRAIT_VALUE(trait, type, expected)                                                                        \
+#define CHECK_TRAIT_VALUE(trait, type, expected)                                                                       \
     do {                                                                                                               \
         CHECK(etl::trait<type>::value == (expected));                                                                  \
         CHECK((etl::TETL_PP_CONCAT(trait, _v) < type >) == (expected));                                                \
     } while (false)
 
-#define TEST_TRAIT_VALUE_CV(trait, type, expected)                                                                     \
-    TEST_TRAIT_VALUE(trait, type, expected);                                                                           \
-    TEST_TRAIT_VALUE(trait, const type, expected);                                                                     \
-    TEST_TRAIT_VALUE(trait, volatile type, expected);                                                                  \
-    TEST_TRAIT_VALUE(trait, const volatile type, expected)
+#define CHECK_TRAIT_VALUE_CV(trait, type, expected)                                                                    \
+    CHECK_TRAIT_VALUE(trait, type, expected);                                                                          \
+    CHECK_TRAIT_VALUE(trait, const type, expected);                                                                    \
+    CHECK_TRAIT_VALUE(trait, volatile type, expected);                                                                 \
+    CHECK_TRAIT_VALUE(trait, const volatile type, expected)
 
-#define TEST_TRAIT_TYPE(trait, T, e)                                                                                   \
+#define CHECK_TRAIT_TYPE(trait, T, e)                                                                                  \
     do {                                                                                                               \
         CHECK(etl::is_same_v<typename etl::trait<T>::type, e>);                                                        \
         CHECK(etl::is_same_v<etl::TETL_PP_CONCAT(trait, _t) < T>, e >);                                                \
     } while (false)
 
-#define TEST_TRAIT_TYPE_CV(trait, type, expected)                                                                      \
-    TEST_TRAIT_TYPE(trait, type, expected);                                                                            \
-    TEST_TRAIT_TYPE(trait, const type, expected);                                                                      \
-    TEST_TRAIT_TYPE(trait, volatile type, expected);                                                                   \
-    TEST_TRAIT_TYPE(trait, const volatile type, expected)
+#define CHECK_TRAIT_TYPE_CV(trait, type, expected)                                                                     \
+    CHECK_TRAIT_TYPE(trait, type, expected);                                                                           \
+    CHECK_TRAIT_TYPE(trait, const type, expected);                                                                     \
+    CHECK_TRAIT_TYPE(trait, volatile type, expected);                                                                  \
+    CHECK_TRAIT_TYPE(trait, const volatile type, expected)
 
-#endif // TETL_TEST_TYPE_TRAITS_TYPES_HPP
+#endif // TETL_TEST_TESTING_TYPES_HPP

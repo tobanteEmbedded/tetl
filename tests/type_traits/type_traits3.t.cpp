@@ -26,29 +26,29 @@ public:
 template <typename T>
 constexpr auto test() -> bool
 {
-    TEST_IS_TRAIT_CV(is_copy_constructible, T);
-    TEST_IS_TRAIT_CV(is_copy_constructible, T&);
-    TEST_IS_TRAIT_C(is_copy_constructible, CopyAndMovable);
-    TEST_IS_TRAIT_C_FALSE(is_copy_constructible, MovableOnly);
+    CHECK_IS_TRAIT_CV(is_copy_constructible, T);
+    CHECK_IS_TRAIT_CV(is_copy_constructible, T&);
+    CHECK_IS_TRAIT_C(is_copy_constructible, CopyAndMovable);
+    CHECK_IS_TRAIT_C_FALSE(is_copy_constructible, MovableOnly);
 
-    TEST_IS_TRAIT_CV(is_trivially_copy_constructible, T);
-    TEST_IS_TRAIT_CV(is_trivially_copy_constructible, T*);
-    TEST_IS_TRAIT_CV(is_trivially_copy_constructible, EmptyClass);
-    TEST_IS_TRAIT_CV_FALSE(is_trivially_copy_constructible, T&);
+    CHECK_IS_TRAIT_CV(is_trivially_copy_constructible, T);
+    CHECK_IS_TRAIT_CV(is_trivially_copy_constructible, T*);
+    CHECK_IS_TRAIT_CV(is_trivially_copy_constructible, EmptyClass);
+    CHECK_IS_TRAIT_CV_FALSE(is_trivially_copy_constructible, T&);
 
-    TEST_IS_TRAIT_CV(is_scoped_enum, ScopedEnum);
-    TEST_IS_TRAIT_CV(is_scoped_enum, ScopedEnumWithType);
+    CHECK_IS_TRAIT_CV(is_scoped_enum, ScopedEnum);
+    CHECK_IS_TRAIT_CV(is_scoped_enum, ScopedEnumWithType);
 
-    TEST_IS_TRAIT_CV_FALSE(is_scoped_enum, T);
-    TEST_IS_TRAIT_CV_FALSE(is_scoped_enum, EmptyClass);
-    TEST_IS_TRAIT_CV_FALSE(is_scoped_enum, EmptyUnion);
-    TEST_IS_TRAIT_CV_FALSE(is_scoped_enum, Enum);
-    TEST_IS_TRAIT_CV_FALSE(is_scoped_enum, EnumWithType);
+    CHECK_IS_TRAIT_CV_FALSE(is_scoped_enum, T);
+    CHECK_IS_TRAIT_CV_FALSE(is_scoped_enum, EmptyClass);
+    CHECK_IS_TRAIT_CV_FALSE(is_scoped_enum, EmptyUnion);
+    CHECK_IS_TRAIT_CV_FALSE(is_scoped_enum, Enum);
+    CHECK_IS_TRAIT_CV_FALSE(is_scoped_enum, EnumWithType);
 
-    TEST_IS_TRAIT_CV(is_constructible, T);
-    TEST_IS_TRAIT_CV(is_constructible, T*);
-    TEST_IS_TRAIT_FALSE(is_constructible, T&);
-    TEST_IS_TRAIT_FALSE(is_constructible, T const&);
+    CHECK_IS_TRAIT_CV(is_constructible, T);
+    CHECK_IS_TRAIT_CV(is_constructible, T*);
+    CHECK_IS_TRAIT_FALSE(is_constructible, T&);
+    CHECK_IS_TRAIT_FALSE(is_constructible, T const&);
 
     CHECK(etl::is_constructible_v<Foo<T>, T>);
     CHECK(etl::is_constructible_v<Foo<T>, T, double>);
@@ -75,8 +75,8 @@ constexpr auto test() -> bool
         CHECK(etl::disjunction_v<etl::is_same<T, T>, etl::false_type>);
     }
 
-    TEST_TRAIT_VALUE(negation, etl::true_type, false);
-    TEST_TRAIT_VALUE(negation, etl::false_type, true);
+    CHECK_TRAIT_VALUE(negation, etl::true_type, false);
+    CHECK_TRAIT_VALUE(negation, etl::false_type, true);
 
     CHECK(etl::is_swappable_with_v<T&, T&>);
 
