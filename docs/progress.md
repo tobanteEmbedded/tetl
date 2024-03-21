@@ -6,7 +6,7 @@ Unless stated otherwise, all papers are implemented to work with the minimum C++
 
 |                                       Paper                                        |              Name               | Status | Comment |
 | :--------------------------------------------------------------------------------: | :-----------------------------: | :----: | :-----: |
-| [P0843R10](https://www.open-std.org/jtc1/sc22/wg21/docs/papers/2024/p0843r10.html) |       `<inplace_vector>`        |        |         |
+| [P0843R10](https://www.open-std.org/jtc1/sc22/wg21/docs/papers/2024/p0843r10.html) |       `<inplace_vector>`        | _WIP_  |         |
 | [P1144R10](https://www.open-std.org/jtc1/sc22/wg21/docs/papers/2024/p1144r10.html) | `std::is_trivially_relocatable` |        |         |
 |  [P2988R3](https://www.open-std.org/jtc1/sc22/wg21/docs/papers/2024/p2988r3.pdf)   |       `std::optional<T&>`       | _WIP_  |         |
 
