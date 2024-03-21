@@ -28,6 +28,7 @@
 #include <etl/flat_set.hpp>
 #include <etl/format.hpp>
 #include <etl/functional.hpp>
+#include <etl/inplace_vector.hpp>
 #include <etl/ios.hpp>
 #include <etl/iterator.hpp>
 #include <etl/limits.hpp>
