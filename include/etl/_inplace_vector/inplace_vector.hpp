@@ -15,7 +15,7 @@
 #include <etl/_iterator/prev.hpp>
 #include <etl/_iterator/reverse_iterator.hpp>
 #include <etl/_memory/construct_at.hpp>
-#include <etl/_memory/destroy.hpp>
+#include <etl/_memory/ranges_destroy.hpp>
 #include <etl/_type_traits/conditional.hpp>
 #include <etl/_type_traits/is_nothrow_copy_constructible.hpp>
 #include <etl/_type_traits/is_nothrow_move_constructible.hpp>
@@ -68,7 +68,7 @@ struct inplace_vector {
         requires(etl::is_trivially_destructible_v<T>)
     = default;
 
-    constexpr ~inplace_vector() { etl::destroy(begin(), end()); }
+    constexpr ~inplace_vector() { etl::ranges::destroy(*this); }
 
     [[nodiscard]] constexpr auto begin() const noexcept -> T const* { return data(); }
 

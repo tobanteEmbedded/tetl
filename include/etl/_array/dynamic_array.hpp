@@ -9,7 +9,7 @@
 #include <etl/_cstddef/size_t.hpp>
 #include <etl/_iterator/next.hpp>
 #include <etl/_memory/allocator_traits.hpp>
-#include <etl/_memory/destroy.hpp>
+#include <etl/_memory/ranges_destroy.hpp>
 #include <etl/_memory/uninitialized_fill.hpp>
 #include <etl/_type_traits/is_default_constructible.hpp>
 #include <etl/_utility/exchange.hpp>
@@ -60,7 +60,7 @@ struct dynamic_array {
 
     ~dynamic_array()
     {
-        etl::destroy(begin(), end());
+        etl::ranges::destroy(*this);
         etl::allocator_traits<Allocator>::deallocate(_alloc, _ptr, size());
     }
 

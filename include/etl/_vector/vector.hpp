@@ -7,7 +7,7 @@
 #include <etl/_cstddef/size_t.hpp>
 #include <etl/_iterator/next.hpp>
 #include <etl/_memory/allocator_traits.hpp>
-#include <etl/_memory/destroy.hpp>
+#include <etl/_memory/ranges_destroy.hpp>
 #include <etl/_memory/uninitialized_fill.hpp>
 #include <etl/_utility/exchange.hpp>
 #include <etl/_utility/move.hpp>
@@ -93,7 +93,7 @@ struct vector {
 
     constexpr auto clear() noexcept -> void
     {
-        etl::destroy(begin(), end());
+        etl::ranges::destroy(*this);
         _size = 0;
     }
 
