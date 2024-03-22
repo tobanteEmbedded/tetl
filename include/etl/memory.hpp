@@ -19,6 +19,7 @@
 #include <etl/_memory/destroy_n.hpp>
 #include <etl/_memory/pointer_like_traits.hpp>
 #include <etl/_memory/pointer_traits.hpp>
+#include <etl/_memory/ranges_construct_at.hpp>
 #include <etl/_memory/ranges_destroy.hpp>
 #include <etl/_memory/ranges_destroy_at.hpp>
 #include <etl/_memory/to_address.hpp>

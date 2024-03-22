@@ -14,7 +14,7 @@
 #include <etl/_iterator/next.hpp>
 #include <etl/_iterator/prev.hpp>
 #include <etl/_iterator/reverse_iterator.hpp>
-#include <etl/_memory/construct_at.hpp>
+#include <etl/_memory/ranges_construct_at.hpp>
 #include <etl/_memory/ranges_destroy.hpp>
 #include <etl/_type_traits/conditional.hpp>
 #include <etl/_type_traits/is_nothrow_copy_constructible.hpp>
@@ -122,7 +122,7 @@ struct inplace_vector {
         }
 
         auto* ptr = end();
-        etl::construct_at(ptr, TETL_FORWARD(args)...);
+        etl::ranges::construct_at(ptr, TETL_FORWARD(args)...);
         _size = static_cast<internal_size_t>(size() + 1U);
         return ptr;
     }
