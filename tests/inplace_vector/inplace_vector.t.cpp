@@ -132,13 +132,13 @@ auto test_non_trivial() -> bool
 
         ~non_trivial() { }
 
-        non_trivial(non_trivial const&) { }
+        non_trivial(non_trivial const& /*other*/) { }
 
-        non_trivial(non_trivial&&) { }
+        non_trivial(non_trivial&& /*other*/) { }
 
-        auto operator=(non_trivial const&) -> non_trivial& { return *this; }
+        auto operator=(non_trivial const& /*other*/) -> non_trivial& { return *this; }
 
-        auto operator=(non_trivial&&) -> non_trivial& { return *this; }
+        auto operator=(non_trivial&& /*other*/) -> non_trivial& { return *this; }
     };
 
     CHECK_FALSE(etl::is_trivial_v<non_trivial>);
