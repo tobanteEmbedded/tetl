@@ -12,7 +12,9 @@
 #include <etl/_cstddef/ptrdiff_t.hpp>
 #include <etl/_cstddef/size_t.hpp>
 #include <etl/_iterator/next.hpp>
+#include <etl/_iterator/prev.hpp>
 #include <etl/_iterator/reverse_iterator.hpp>
+#include <etl/_memory/construct_at.hpp>
 #include <etl/_memory/destroy.hpp>
 #include <etl/_type_traits/conditional.hpp>
 #include <etl/_type_traits/is_nothrow_copy_constructible.hpp>
@@ -21,6 +23,8 @@
 #include <etl/_type_traits/is_trivially_destructible.hpp>
 #include <etl/_type_traits/is_trivially_move_constructible.hpp>
 #include <etl/_utility/exchange.hpp>
+#include <etl/_utility/forward.hpp>
+#include <etl/_utility/unreachable.hpp>
 
 namespace etl {
 
@@ -41,7 +45,7 @@ struct inplace_vector {
     constexpr inplace_vector() = default;
 
     inplace_vector(inplace_vector const& other)
-        requires(Capacity == 0 or etl::is_trivially_copy_constructible_v<T>)
+        requires(etl::is_trivially_copy_constructible_v<T>)
     = default;
 
     constexpr inplace_vector(inplace_vector const& other) noexcept(etl::is_nothrow_copy_constructible_v<T>)
@@ -51,7 +55,7 @@ struct inplace_vector {
     }
 
     inplace_vector(inplace_vector&& other)
-        requires(Capacity == 0 or etl::is_trivially_move_constructible_v<T>)
+        requires(etl::is_trivially_move_constructible_v<T>)
     = default;
 
     constexpr inplace_vector(inplace_vector&& other) noexcept(etl::is_nothrow_move_constructible_v<T>)
@@ -61,7 +65,7 @@ struct inplace_vector {
     }
 
     ~inplace_vector()
-        requires(Capacity == 0 or etl::is_trivially_destructible_v<T>)
+        requires(etl::is_trivially_destructible_v<T>)
     = default;
 
     constexpr ~inplace_vector() { etl::destroy(begin(), end()); }
@@ -92,16 +96,36 @@ struct inplace_vector {
 
     [[nodiscard]] static constexpr auto max_size() noexcept -> etl::size_t { return Capacity; }
 
-private:
-    struct empty_size_t {
-        template <typename Int>
-        constexpr operator Int() const noexcept
-        {
-            return 0;
-        }
-    };
+    [[nodiscard]] constexpr auto operator[](size_type n) -> reference { return *etl::next(data(), ptrdiff_t(n)); }
 
-    using internal_size_t = etl::conditional_t<Capacity == 0, empty_size_t, etl::smallest_size_t<Capacity>>;
+    [[nodiscard]] constexpr auto operator[](size_type n) const -> const_reference
+    {
+        return *etl::next(data(), ptrdiff_t(n));
+    }
+
+    [[nodiscard]] constexpr auto front() -> reference { return *begin(); }
+
+    [[nodiscard]] constexpr auto front() const -> const_reference { return *begin(); }
+
+    [[nodiscard]] constexpr auto back() -> reference { return *etl::prev(end()); }
+
+    [[nodiscard]] constexpr auto back() const -> const_reference { return *etl::prev(end()); }
+
+    template <typename... Args>
+    constexpr auto try_emplace_back(Args&&... args) -> T*
+    {
+        if (size() == capacity()) {
+            return nullptr;
+        }
+
+        auto* ptr = end();
+        etl::construct_at(ptr, TETL_FORWARD(args)...);
+        _size = static_cast<internal_size_t>(size() + 1U);
+        return ptr;
+    }
+
+private:
+    using internal_size_t = etl::smallest_size_t<Capacity>;
     TETL_NO_UNIQUE_ADDRESS etl::uninitialized_array<T, Capacity> _storage;
     TETL_NO_UNIQUE_ADDRESS internal_size_t _size;
 };
@@ -141,6 +165,24 @@ struct inplace_vector<T, 0> {
     [[nodiscard]] static constexpr auto capacity() noexcept -> etl::size_t { return 0; }
 
     [[nodiscard]] static constexpr auto max_size() noexcept -> etl::size_t { return 0; }
+
+    [[nodiscard]] constexpr auto operator[](size_type /*n*/) -> reference { etl::unreachable(); }
+
+    [[nodiscard]] constexpr auto operator[](size_type /*n*/) const -> const_reference { etl::unreachable(); }
+
+    [[nodiscard]] constexpr auto front() -> reference { etl::unreachable(); }
+
+    [[nodiscard]] constexpr auto front() const -> const_reference { etl::unreachable(); }
+
+    [[nodiscard]] constexpr auto back() -> reference { etl::unreachable(); }
+
+    [[nodiscard]] constexpr auto back() const -> const_reference { etl::unreachable(); }
+
+    template <typename... Args>
+    constexpr auto try_emplace_back(Args&&... /*args*/) -> T*
+    {
+        return nullptr;
+    }
 };
 
 } // namespace etl

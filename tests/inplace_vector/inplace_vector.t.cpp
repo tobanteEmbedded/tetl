@@ -65,6 +65,11 @@ constexpr auto test_empty() -> bool
     CHECK(Vector0().begin() == nullptr);
     CHECK(Vector0().end() == nullptr);
     CHECK(Vector0().data() == Vector0().data());
+
+    auto vec = Vector0{};
+    CHECK(vec.empty());
+    CHECK(vec.try_emplace_back(T(0)) == nullptr);
+    CHECK(vec.empty());
     return true;
 }
 
@@ -85,6 +90,14 @@ constexpr auto test_non_empty() -> bool
     CHECK(Vector().begin() != nullptr);
     CHECK(Vector().end() != nullptr);
     CHECK(Vector().data() != Vector().data());
+
+    auto vec  = Vector{};
+    auto* ptr = vec.try_emplace_back(T(1));
+    CHECK(ptr != nullptr);
+    CHECK(*ptr == T(1));
+    CHECK(vec.size() == 1);
+    CHECK_FALSE(vec.empty());
+
     return true;
 }
 
@@ -125,33 +138,41 @@ constexpr auto test_cx() -> bool
     return true;
 }
 
+struct non_trivial {
+    constexpr non_trivial() = default;
+
+    explicit constexpr non_trivial(int val) : value{val} { }
+
+    constexpr ~non_trivial() { }
+
+    constexpr non_trivial(non_trivial const& /*other*/) { }
+
+    constexpr non_trivial(non_trivial&& /*other*/) { }
+
+    constexpr auto operator=(non_trivial const& /*other*/) -> non_trivial& { return *this; }
+
+    constexpr auto operator=(non_trivial&& /*other*/) -> non_trivial& { return *this; }
+
+    int value{0};
+};
+
 auto test_non_trivial() -> bool
 {
-    struct non_trivial {
-        non_trivial() { }
-
-        ~non_trivial() { }
-
-        non_trivial(non_trivial const& /*other*/) { }
-
-        non_trivial(non_trivial&& /*other*/) { }
-
-        auto operator=(non_trivial const& /*other*/) -> non_trivial& { return *this; }
-
-        auto operator=(non_trivial&& /*other*/) -> non_trivial& { return *this; }
-    };
 
     CHECK_FALSE(etl::is_trivial_v<non_trivial>);
     CHECK(test_empty<non_trivial>());
-    CHECK(test_non_empty<non_trivial, 1>());
-    CHECK(test_non_empty<non_trivial, 4>());
 
-    auto empty      = etl::inplace_vector<non_trivial, 4>{};
-    auto const copy = empty;
-    auto const move = etl::move(empty);
-    CHECK(empty.empty()); // NOLINT
-    CHECK(copy.empty());
-    CHECK(move.empty());
+    auto vec        = etl::inplace_vector<non_trivial, 4>{};
+    auto* const p42 = vec.try_emplace_back(42);
+    CHECK(p42 != nullptr);
+    CHECK(p42->value == 42);
+    CHECK(vec.size() == 1);
+
+    auto const copy = vec;
+    auto const move = etl::move(vec);
+    CHECK_FALSE(copy.empty());
+    CHECK_FALSE(move.empty());
+    CHECK(vec.empty()); // NOLINT
 
     return true;
 }
