@@ -9,13 +9,13 @@ concurrency:
 jobs:
   build:
     name: Build
-    runs-on: macos-14
+    runs-on: ubuntu-22.04
     steps:
       - name: Check out code
         uses: actions/checkout@v4
 
       - name: Install doxygen
-        run: brew install doxygen
+        run: sudo apt install -y doxygen
 
       - name: Generate HTML documentation
         run: doxygen Doxyfile
