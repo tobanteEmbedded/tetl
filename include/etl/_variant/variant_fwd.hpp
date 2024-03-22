@@ -26,6 +26,30 @@ struct variant_size;
 template <size_t I, typename T>
 struct variant_alternative;
 
+template <etl::size_t I, typename... Ts>
+constexpr auto unchecked_get(variant<Ts...>& v) -> auto&;
+
+template <etl::size_t I, typename... Ts>
+constexpr auto unchecked_get(variant<Ts...> const& v) -> auto const&;
+
+template <etl::size_t I, typename... Ts>
+constexpr auto unchecked_get(variant<Ts...>&& v) -> auto&&;
+
+template <etl::size_t I, typename... Ts>
+constexpr auto unchecked_get(variant<Ts...> const&& v) -> auto const&&;
+
+template <etl::size_t I, typename... Ts>
+constexpr auto unchecked_get(variant2<Ts...>& v) -> auto&;
+
+template <etl::size_t I, typename... Ts>
+constexpr auto unchecked_get(variant2<Ts...> const& v) -> auto const&;
+
+template <etl::size_t I, typename... Ts>
+constexpr auto unchecked_get(variant2<Ts...>&& v) -> auto&&;
+
+template <etl::size_t I, typename... Ts>
+constexpr auto unchecked_get(variant2<Ts...> const&& v) -> auto const&&;
+
 template <typename T, typename... Types>
 constexpr auto get_if(variant<Types...>* pv) noexcept -> add_pointer_t<T>; // NOLINT
 

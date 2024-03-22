@@ -7,6 +7,8 @@
 
 #include <etl/_container/smallest_size_t.hpp>
 #include <etl/_cstddef/size_t.hpp>
+#include <etl/_memory/addressof.hpp>
+#include <etl/_type_traits/add_pointer.hpp>
 #include <etl/_type_traits/integral_constant.hpp>
 #include <etl/_type_traits/is_copy_constructible.hpp>
 #include <etl/_type_traits/is_default_constructible.hpp>
@@ -48,6 +50,7 @@ public:
         : _index(static_cast<index_type>(I))
         , _union(etl::index_c<I>, TETL_FORWARD(args)...)
     {
+        static_assert(I < sizeof...(Ts));
     }
 
     constexpr variant2(variant2 const&) = default;
@@ -70,29 +73,42 @@ public:
 
     constexpr ~variant2() { /* visit(*this, bounded::destroy);*/ }
 
+    /// \brief Returns the zero-based index of the alternative that is currently held by the variant.
     [[nodiscard]] constexpr auto index() const noexcept -> etl::size_t { return static_cast<etl::size_t>(_index); }
 
+    /// \brief Returns a reference to the object stored in the variant.
+    /// \pre v.index() == I
     template <etl::size_t I>
     constexpr auto operator[](etl::index_constant<I> index) & -> auto&
     {
+        static_assert(I < sizeof...(Ts));
         return _union[index];
     }
 
+    /// \brief Returns a reference to the object stored in the variant.
+    /// \pre v.index() == I
     template <etl::size_t I>
     constexpr auto operator[](etl::index_constant<I> index) const& -> auto const&
     {
+        static_assert(I < sizeof...(Ts));
         return _union[index];
     }
 
+    /// \brief Returns a reference to the object stored in the variant.
+    /// \pre v.index() == I
     template <etl::size_t I>
     constexpr auto operator[](etl::index_constant<I> index) && -> auto&&
     {
+        static_assert(I < sizeof...(Ts));
         return TETL_MOVE(_union)[index];
     }
 
+    /// \brief Returns a reference to the object stored in the variant.
+    /// \pre v.index() == I
     template <etl::size_t I>
     constexpr auto operator[](etl::index_constant<I> index) const&& -> auto const&&
     {
+        static_assert(I < sizeof...(Ts));
         return TETL_MOVE(_union)[index];
     }
 
@@ -103,34 +119,72 @@ private:
 
 /// \brief Returns a reference to the object stored in the variant.
 /// \pre v.index() == I
+/// \relates variant2
 template <etl::size_t I, typename... Ts>
-constexpr auto unchecked_get(variant2<Ts...>& v) -> variant_alternative_t<I, variant2<Ts...>>&
+constexpr auto unchecked_get(variant2<Ts...>& v) -> auto&
 {
+    static_assert(I < sizeof...(Ts));
     return v[etl::index_c<I>];
 }
 
 /// \brief Returns a reference to the object stored in the variant.
 /// \pre v.index() == I
+/// \relates variant2
 template <etl::size_t I, typename... Ts>
-constexpr auto unchecked_get(variant2<Ts...> const& v) -> variant_alternative_t<I, variant2<Ts...>> const&
+constexpr auto unchecked_get(variant2<Ts...> const& v) -> auto const&
 {
+    static_assert(I < sizeof...(Ts));
     return v[etl::index_c<I>];
 }
 
 /// \brief Returns a reference to the object stored in the variant.
 /// \pre v.index() == I
+/// \relates variant2
 template <etl::size_t I, typename... Ts>
-constexpr auto unchecked_get(variant2<Ts...>&& v) -> variant_alternative_t<I, variant2<Ts...>>&&
+constexpr auto unchecked_get(variant2<Ts...>&& v) -> auto&&
 {
+    static_assert(I < sizeof...(Ts));
     return TETL_MOVE(v)[etl::index_c<I>];
 }
 
 /// \brief Returns a reference to the object stored in the variant.
 /// \pre v.index() == I
+/// \relates variant2
 template <etl::size_t I, typename... Ts>
-constexpr auto unchecked_get(variant2<Ts...> const&& v) -> variant_alternative_t<I, variant2<Ts...>> const&&
+constexpr auto unchecked_get(variant2<Ts...> const&& v) -> auto const&&
 {
+    static_assert(I < sizeof...(Ts));
     return TETL_MOVE(v)[etl::index_c<I>];
+}
+
+/// \brief If pv is not a null pointer and pv->index() == I, returns a pointer
+///        to the value stored in the variant pointed to by pv. Otherwise, returns
+///        a null pointer value. The call is ill-formed if I is not a valid index in the variant.
+/// \relates variant2
+template <etl::size_t I, typename... Ts>
+constexpr auto get_if(variant2<Ts...>* pv
+) noexcept -> etl::add_pointer_t<etl::variant_alternative_t<I, etl::variant2<Ts...>>>
+{
+    static_assert(I < sizeof...(Ts));
+    if (pv == nullptr or pv->index() != I) {
+        return nullptr;
+    }
+    return etl::addressof(etl::unchecked_get<I>(*pv));
+}
+
+/// \brief If pv is not a null pointer and pv->index() == I, returns a pointer
+///        to the value stored in the variant pointed to by pv. Otherwise, returns
+///        a null pointer value. The call is ill-formed if I is not a valid index in the variant.
+/// \relates variant2
+template <etl::size_t I, typename... Ts>
+constexpr auto get_if(variant2<Ts...> const* pv
+) noexcept -> etl::add_pointer_t<etl::variant_alternative_t<I, etl::variant2<Ts...>> const>
+{
+    static_assert(I < sizeof...(Ts));
+    if (pv == nullptr or pv->index() != I) {
+        return nullptr;
+    }
+    return etl::addressof(etl::unchecked_get<I>(*pv));
 }
 
 } // namespace etl

@@ -554,33 +554,33 @@ constexpr auto holds_alternative(variant<Ts...> const& v) noexcept -> bool
 /// \brief Returns a reference to the object stored in the variant.
 /// \pre v.index() == I
 template <etl::size_t I, typename... Ts>
-constexpr auto unchecked_get(variant<Ts...>& v) -> variant_alternative_t<I, variant<Ts...>>&
+constexpr auto unchecked_get(variant<Ts...>& v) -> auto&
 {
-    return v.impl()->get_value(index_c<I>);
+    return v.impl()->get_value(etl::index_c<I>);
 }
 
 /// \brief Returns a reference to the object stored in the variant.
 /// \pre v.index() == I
 template <etl::size_t I, typename... Ts>
-constexpr auto unchecked_get(variant<Ts...> const& v) -> variant_alternative_t<I, variant<Ts...>> const&
+constexpr auto unchecked_get(variant<Ts...> const& v) -> auto const&
 {
-    return v.impl()->get_value(index_c<I>);
+    return v.impl()->get_value(etl::index_c<I>);
 }
 
 /// \brief Returns a reference to the object stored in the variant.
 /// \pre v.index() == I
 template <etl::size_t I, typename... Ts>
-constexpr auto unchecked_get(variant<Ts...>&& v) -> variant_alternative_t<I, variant<Ts...>>&&
+constexpr auto unchecked_get(variant<Ts...>&& v) -> auto&&
 {
-    return TETL_MOVE(v.impl()->get_value(index_c<I>));
+    return TETL_MOVE(v.impl()->get_value(etl::index_c<I>));
 }
 
 /// \brief Returns a reference to the object stored in the variant.
 /// \pre v.index() == I
 template <etl::size_t I, typename... Ts>
-constexpr auto unchecked_get(variant<Ts...> const&& v) -> variant_alternative_t<I, variant<Ts...>> const&&
+constexpr auto unchecked_get(variant<Ts...> const&& v) -> auto const&&
 {
-    return TETL_MOVE(v.impl()->get_value(index_c<I>));
+    return TETL_MOVE(v.impl()->get_value(etl::index_c<I>));
 }
 
 /// \brief Index-based non-throwing accessor: If pv is not a null pointer and

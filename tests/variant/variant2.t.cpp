@@ -17,6 +17,8 @@ constexpr auto test() -> bool
     using variant = etl::variant2<int, long, float>;
     CHECK(etl::is_trivially_copyable_v<variant>);
     CHECK(etl::is_trivially_destructible_v<variant>);
+    CHECK(etl::get_if<0>(static_cast<variant*>(nullptr)) == nullptr);
+    CHECK(etl::get_if<1>(static_cast<variant*>(nullptr)) == nullptr);
 
     auto v0 = variant{};
     CHECK(v0.index() == 0);
@@ -32,11 +34,15 @@ constexpr auto test() -> bool
     auto const copy = v1;
     CHECK(copy.index() == 1);
     CHECK(copy[etl::index_c<1>] == 42);
+    CHECK(*etl::get_if<1>(&copy) == 42);
+    CHECK(etl::get_if<0>(&copy) == nullptr);
     CHECK(etl::unchecked_get<1>(copy) == 42);
 
     auto move = etl::move(v1);
     CHECK(move.index() == 1);
     CHECK(move[etl::index_c<1>] == 42);
+    CHECK(*etl::get_if<1>(&move) == 42);
+    CHECK(etl::get_if<0>(&move) == nullptr);
     CHECK(etl::unchecked_get<1>(move) == 42);
     CHECK(etl::unchecked_get<1>(etl::move(move)) == 42);
 
