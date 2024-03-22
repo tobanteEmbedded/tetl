@@ -17,6 +17,15 @@ jobs:
       - name: Install doxygen
         run: sudo apt install -y doxygen
 
+      - name: Install LLVM
+        run: |
+          wget https://apt.llvm.org/llvm.sh
+          chmod +x llvm.sh
+          sudo ./llvm.sh 18 all
+
+      - name: Create compile-commands.json
+        run: cmake -S . -B cmake-build-doc -G "Unix Makefiles" -D CMAKE_BUILD_TYPE=Debug -D CMAKE_C_COMPILER="clang-18" -D CMAKE_CXX_COMPILER="clang++-18"
+
       - name: Download doxygen theme
         run: git clone https://github.com/jothepro/doxygen-awesome-css.git 3rd_party/doxygen-awesome-css
 
@@ -24,14 +33,14 @@ jobs:
         run: doxygen Doxyfile
 
       - name: Disable Jekyll processing
-        run: touch build-doxygen/html/.nojekyll
+        run: touch cmake-build-doc/html/.nojekyll
 
       - name: Pushes to documentation repo
         uses: cpina/github-action-push-to-another-repository@main
         env:
           SSH_DEPLOY_KEY: ${{ secrets.SSH_DEPLOY_KEY }}
         with:
-          source-directory: "build-doxygen/html"
+          source-directory: "cmake-build-doc/html"
           destination-github-username: "tobanteEmbedded"
           destination-repository-name: "tetl-docs"
           user-email: tobanteEmbedded@gmail.com
