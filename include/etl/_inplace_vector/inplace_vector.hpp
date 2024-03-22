@@ -16,6 +16,7 @@
 #include <etl/_iterator/reverse_iterator.hpp>
 #include <etl/_memory/ranges_construct_at.hpp>
 #include <etl/_memory/ranges_destroy.hpp>
+#include <etl/_memory/ranges_destroy_at.hpp>
 #include <etl/_type_traits/conditional.hpp>
 #include <etl/_type_traits/is_nothrow_copy_constructible.hpp>
 #include <etl/_type_traits/is_nothrow_move_constructible.hpp>
@@ -46,7 +47,7 @@ struct inplace_vector {
     constexpr inplace_vector() = default;
 
     inplace_vector(inplace_vector const& other)
-        requires(etl::is_trivially_copy_constructible_v<T>)
+        requires etl::is_trivially_copy_constructible_v<T>
     = default;
 
     constexpr inplace_vector(inplace_vector const& other) noexcept(etl::is_nothrow_copy_constructible_v<T>)
@@ -56,7 +57,7 @@ struct inplace_vector {
     }
 
     inplace_vector(inplace_vector&& other)
-        requires(etl::is_trivially_move_constructible_v<T>)
+        requires etl::is_trivially_move_constructible_v<T>
     = default;
 
     constexpr inplace_vector(inplace_vector&& other) noexcept(etl::is_nothrow_move_constructible_v<T>)
@@ -66,7 +67,7 @@ struct inplace_vector {
     }
 
     ~inplace_vector()
-        requires(etl::is_trivially_destructible_v<T>)
+        requires etl::is_trivially_destructible_v<T>
     = default;
 
     constexpr ~inplace_vector() { etl::ranges::destroy(*this); }
@@ -164,6 +165,12 @@ struct inplace_vector {
         return back();
     }
 
+    constexpr auto pop_back() -> void
+    {
+        etl::ranges::destroy_at(etl::addressof(back()));
+        unsafe_set_size(size() - 1U);
+    }
+
 private:
     constexpr auto unsafe_set_size(size_type newSize) noexcept -> void
     {
@@ -242,6 +249,8 @@ struct inplace_vector<T, 0> {
     {
         etl::unreachable();
     }
+
+    constexpr auto pop_back() -> void { etl::unreachable(); }
 };
 
 } // namespace etl

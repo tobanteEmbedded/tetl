@@ -105,8 +105,13 @@ constexpr auto test_non_empty() -> bool
     CHECK_FALSE(vec.empty());
 
     auto const wasFull = vec.size() == vec.capacity();
-    auto* push         = vec.try_push_back(T(0));
+
+    auto* push = vec.try_push_back(T(0));
     CHECK((push == nullptr) == wasFull);
+
+    auto const oldSize = vec.size();
+    vec.pop_back();
+    CHECK(vec.size() == oldSize - 1);
 
     return true;
 }
@@ -200,6 +205,11 @@ auto test_non_trivial() -> bool
     CHECK(move[0] == move.front());
     CHECK(move[1] == move.back());
     CHECK(move.front() != move.back());
+
+    move.pop_back();
+    CHECK(move.size() == 1);
+    CHECK(move[0] == move.front());
+    CHECK(move.front() == move.back());
 
     return true;
 }
