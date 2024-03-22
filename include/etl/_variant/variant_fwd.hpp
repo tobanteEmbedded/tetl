@@ -14,6 +14,9 @@ namespace etl {
 template <typename... Types>
 struct variant;
 
+template <typename... Types>
+struct variant2;
+
 template <typename T>
 struct variant_size;
 

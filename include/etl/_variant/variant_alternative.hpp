@@ -17,6 +17,12 @@ struct variant_alternative<Idx, etl::variant<Ts...>> {
     using type = type_pack_element_t<Idx, Ts...>;
 };
 
+template <etl::size_t Idx, typename... Ts>
+struct variant_alternative<Idx, etl::variant2<Ts...>> {
+    static_assert(Idx < sizeof...(Ts));
+    using type = type_pack_element_t<Idx, Ts...>;
+};
+
 template <etl::size_t I, typename T>
 using variant_alternative_t = typename variant_alternative<I, T>::type;
 
