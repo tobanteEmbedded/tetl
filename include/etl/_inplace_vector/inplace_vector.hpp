@@ -96,13 +96,6 @@ struct inplace_vector {
 
     [[nodiscard]] static constexpr auto max_size() noexcept -> etl::size_t { return Capacity; }
 
-    [[nodiscard]] constexpr auto operator[](size_type n) -> reference { return *etl::next(data(), ptrdiff_t(n)); }
-
-    [[nodiscard]] constexpr auto operator[](size_type n) const -> const_reference
-    {
-        return *etl::next(data(), ptrdiff_t(n));
-    }
-
     [[nodiscard]] constexpr auto front() -> reference { return *begin(); }
 
     [[nodiscard]] constexpr auto front() const -> const_reference { return *begin(); }
@@ -110,6 +103,16 @@ struct inplace_vector {
     [[nodiscard]] constexpr auto back() -> reference { return *etl::prev(end()); }
 
     [[nodiscard]] constexpr auto back() const -> const_reference { return *etl::prev(end()); }
+
+    [[nodiscard]] constexpr auto operator[](size_type n) -> reference
+    {
+        return *etl::next(data(), static_cast<etl::ptrdiff_t>(n));
+    }
+
+    [[nodiscard]] constexpr auto operator[](size_type n) const -> const_reference
+    {
+        return *etl::next(data(), static_cast<etl::ptrdiff_t>(n));
+    }
 
     template <typename... Args>
     constexpr auto try_emplace_back(Args&&... args) -> T*
@@ -166,10 +169,6 @@ struct inplace_vector<T, 0> {
 
     [[nodiscard]] static constexpr auto max_size() noexcept -> etl::size_t { return 0; }
 
-    [[nodiscard]] constexpr auto operator[](size_type /*n*/) -> reference { etl::unreachable(); }
-
-    [[nodiscard]] constexpr auto operator[](size_type /*n*/) const -> const_reference { etl::unreachable(); }
-
     [[nodiscard]] constexpr auto front() -> reference { etl::unreachable(); }
 
     [[nodiscard]] constexpr auto front() const -> const_reference { etl::unreachable(); }
@@ -177,6 +176,10 @@ struct inplace_vector<T, 0> {
     [[nodiscard]] constexpr auto back() -> reference { etl::unreachable(); }
 
     [[nodiscard]] constexpr auto back() const -> const_reference { etl::unreachable(); }
+
+    [[nodiscard]] constexpr auto operator[](size_type /*n*/) -> reference { etl::unreachable(); }
+
+    [[nodiscard]] constexpr auto operator[](size_type /*n*/) const -> const_reference { etl::unreachable(); }
 
     template <typename... Args>
     constexpr auto try_emplace_back(Args&&... /*args*/) -> T*

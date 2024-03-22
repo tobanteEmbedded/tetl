@@ -96,6 +96,10 @@ constexpr auto test_non_empty() -> bool
     CHECK(ptr != nullptr);
     CHECK(*ptr == T(1));
     CHECK(vec.size() == 1);
+    CHECK(vec[0] == vec.front());
+    CHECK(etl::as_const(vec)[0] == etl::as_const(vec).front());
+    CHECK(vec.front() == vec.back());
+    CHECK(etl::as_const(vec).front() == etl::as_const(vec).back());
     CHECK_FALSE(vec.empty());
 
     return true;
@@ -143,7 +147,7 @@ struct non_trivial {
 
     explicit constexpr non_trivial(int val) : value{val} { }
 
-    constexpr ~non_trivial() { }
+    constexpr ~non_trivial() { } // NOLINT
 
     constexpr non_trivial(non_trivial const& /*other*/) { }
 
@@ -152,6 +156,11 @@ struct non_trivial {
     constexpr auto operator=(non_trivial const& /*other*/) -> non_trivial& { return *this; }
 
     constexpr auto operator=(non_trivial&& /*other*/) -> non_trivial& { return *this; }
+
+    friend constexpr auto operator==(non_trivial const& lhs, non_trivial const& rhs) -> bool
+    {
+        return lhs.value == rhs.value;
+    }
 
     int value{0};
 };
@@ -167,6 +176,8 @@ auto test_non_trivial() -> bool
     CHECK(p42 != nullptr);
     CHECK(p42->value == 42);
     CHECK(vec.size() == 1);
+    CHECK(vec[0] == vec.front());
+    CHECK(vec.front() == vec.back());
 
     auto const copy = vec;
     auto const move = etl::move(vec);
