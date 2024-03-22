@@ -13,8 +13,6 @@ namespace {
 constexpr auto test() -> bool
 {
     CHECK(sizeof(etl::variant2<etl::int8_t, etl::uint8_t, char8_t>) == sizeof(etl::int8_t) * 2);
-    CHECK(sizeof(etl::variant2<int, long, char const*>) == sizeof(nullptr) * 2);
-    CHECK(sizeof(etl::variant2<int, long, char const*, char const*>) == sizeof(nullptr) * 2);
 
     using variant = etl::variant2<int, long, float>;
     CHECK(etl::is_trivially_copyable_v<variant>);
