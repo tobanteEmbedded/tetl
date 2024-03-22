@@ -396,9 +396,9 @@ public:
     }
 
     /// \todo Remove & replace with friendship for get_if.
-    [[nodiscard]] auto _impl() const noexcept { return &_data; } // NOLINT
+    [[nodiscard]] auto impl() const noexcept { return &_data; } // NOLINT
 
-    auto _impl() noexcept { return &_data; } // NOLINT
+    auto impl() noexcept { return &_data; } // NOLINT
 
 private:
     etl::detail::variant_storage_for<Ts...> _data;
@@ -547,19 +547,53 @@ constexpr auto operator>=(variant<Ts...> const& lhs, variant<Ts...> const& rhs) 
 template <typename T, typename... Ts>
 constexpr auto holds_alternative(variant<Ts...> const& v) noexcept -> bool
 {
-    using index_t = decltype(v._impl()->get_index(declval<T>()));
+    using index_t = decltype(v.impl()->get_index(declval<T>()));
     return index_t::value == v.index();
+}
+
+/// \brief Returns a reference to the object stored in the variant.
+/// \pre v.index() == I
+template <etl::size_t I, typename... Ts>
+constexpr auto unchecked_get(variant<Ts...>& v) -> variant_alternative_t<I, variant<Ts...>>&
+{
+    return v.impl()->get_value(index_c<I>);
+}
+
+/// \brief Returns a reference to the object stored in the variant.
+/// \pre v.index() == I
+template <etl::size_t I, typename... Ts>
+constexpr auto unchecked_get(variant<Ts...> const& v) -> variant_alternative_t<I, variant<Ts...>> const&
+{
+    return v.impl()->get_value(index_c<I>);
+}
+
+/// \brief Returns a reference to the object stored in the variant.
+/// \pre v.index() == I
+template <etl::size_t I, typename... Ts>
+constexpr auto unchecked_get(variant<Ts...>&& v) -> variant_alternative_t<I, variant<Ts...>>&&
+{
+    return TETL_MOVE(v.impl()->get_value(index_c<I>));
+}
+
+/// \brief Returns a reference to the object stored in the variant.
+/// \pre v.index() == I
+template <etl::size_t I, typename... Ts>
+constexpr auto unchecked_get(variant<Ts...> const&& v) -> variant_alternative_t<I, variant<Ts...>> const&&
+{
+    return TETL_MOVE(v.impl()->get_value(index_c<I>));
 }
 
 /// \brief Index-based non-throwing accessor: If pv is not a null pointer and
 /// pv->index() == I, returns a pointer to the value stored in the variant
 /// pointed to by pv. Otherwise, returns a null pointer value. The call is
 /// ill-formed if I is not a valid index in the variant.
-template <size_t I, typename... Ts>
+template <etl::size_t I, typename... Ts>
 constexpr auto get_if(variant<Ts...>* pv) noexcept -> add_pointer_t<variant_alternative_t<I, variant<Ts...>>>
 {
-    using alternative_t = variant_alternative_t<I, variant<Ts...>>;
-    return get_if<alternative_t>(pv);
+    if (pv->index() != I) {
+        return nullptr;
+    }
+    return etl::addressof(etl::unchecked_get<I>(*pv));
 }
 
 /// \brief Index-based non-throwing accessor: If pv is not a null pointer and
@@ -570,32 +604,28 @@ template <size_t I, typename... Ts>
 constexpr auto get_if(variant<Ts...> const* pv
 ) noexcept -> add_pointer_t<variant_alternative_t<I, variant<Ts...>> const>
 {
-    using alternative_t = variant_alternative_t<I, variant<Ts...>>;
-    return get_if<alternative_t>(pv);
+    if (pv->index() != I) {
+        return nullptr;
+    }
+    return etl::addressof(etl::unchecked_get<I>(*pv));
 }
 
 /// \brief Type-based non-throwing accessor: The call is ill-formed if T is not
 /// a unique element of Ts....
 template <typename T, typename... Ts>
-constexpr auto get_if(variant<Ts...>* v) noexcept -> add_pointer_t<T>
+constexpr auto get_if(variant<Ts...>* pv) noexcept -> add_pointer_t<T>
 {
-    using idx = decltype((*v)._impl()->get_index(declval<T>()));
-    if (holds_alternative<T>(*v)) {
-        return &(v->_impl()->get_value(index_c<idx::value>));
-    }
-    return nullptr;
+    using index = decltype(pv->impl()->get_index(etl::declval<T>()));
+    return etl::get_if<index::value>(pv);
 }
 
 /// \brief Type-based non-throwing accessor: The call is ill-formed if T is not
 /// a unique element of Ts....
 template <typename T, typename... Ts>
-constexpr auto get_if(variant<Ts...> const* v) noexcept -> add_pointer_t<T const>
+constexpr auto get_if(variant<Ts...> const* pv) noexcept -> add_pointer_t<T const>
 {
-    using idx = decltype((*v)._impl()->get_index(declval<T const>()));
-    if (holds_alternative<T>(*v)) {
-        return &(v->_impl()->get_value(index_c<idx::value>));
-    }
-    return nullptr;
+    using index = decltype(pv->impl()->get_index(etl::declval<T>()));
+    return etl::get_if<index::value>(pv);
 }
 
 /// \brief Index-based value accessor
@@ -610,9 +640,9 @@ template <size_t I, typename... Ts>
 {
     static_assert(I < sizeof...(Ts));
     if (v.index() == I) {
-        return *get_if<I>(&v);
+        return etl::unchecked_get<I>(v);
     }
-    raise<bad_variant_access>("");
+    etl::raise<etl::bad_variant_access>("");
 }
 
 /// \brief Index-based value accessor
@@ -627,9 +657,9 @@ template <size_t I, typename... Ts>
 {
     static_assert(I < sizeof...(Ts));
     if (v.index() == I) {
-        return TETL_MOVE(*get_if<I>(&v));
+        return etl::unchecked_get<I>(TETL_MOVE(v));
     }
-    raise<bad_variant_access>("");
+    etl::raise<etl::bad_variant_access>("");
 }
 
 /// \brief Index-based value accessor
@@ -644,9 +674,9 @@ template <size_t I, typename... Ts>
 {
     static_assert(I < sizeof...(Ts));
     if (v.index() == I) {
-        return *get_if<I>(&v);
+        return etl::unchecked_get<I>(v);
     }
-    raise<bad_variant_access>("");
+    etl::raise<etl::bad_variant_access>("");
 }
 
 /// \brief Index-based value accessor
@@ -661,9 +691,9 @@ template <size_t I, typename... Ts>
 {
     static_assert(I < sizeof...(Ts));
     if (v.index() == I) {
-        return TETL_MOVE(*get_if<I>(&v));
+        return etl::unchecked_get<I>(TETL_MOVE(v));
     }
-    raise<bad_variant_access>("");
+    etl::raise<etl::bad_variant_access>("");
 }
 
 /// \brief Type-based value accessor
@@ -679,7 +709,7 @@ template <typename T, typename... Ts>
     if (holds_alternative<T>(v)) {
         return *get_if<T>(&v);
     }
-    raise<bad_variant_access>("");
+    etl::raise<etl::bad_variant_access>("");
 }
 
 /// \brief Type-based value accessor
@@ -695,7 +725,7 @@ template <typename T, typename... Ts>
     if (holds_alternative<T>(v)) {
         return TETL_MOVE(*get_if<T>(&v));
     }
-    raise<bad_variant_access>("");
+    etl::raise<etl::bad_variant_access>("");
 }
 
 /// \brief Type-based value accessor
@@ -711,7 +741,7 @@ template <typename T, typename... Ts>
     if (holds_alternative<T>(v)) {
         return *get_if<T>(&v);
     }
-    raise<bad_variant_access>("");
+    etl::raise<etl::bad_variant_access>("");
 }
 
 /// \brief Type-based value accessor
@@ -727,7 +757,7 @@ template <typename T, typename... Ts>
     if (holds_alternative<T>(v)) {
         return TETL_MOVE(*get_if<T>(&v));
     }
-    raise<bad_variant_access>("");
+    etl::raise<etl::bad_variant_access>("");
 }
 
 template <typename... Ts>
