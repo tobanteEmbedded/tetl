@@ -24,6 +24,7 @@
 #include <etl/_type_traits/is_trivially_move_constructible.hpp>
 #include <etl/_utility/exchange.hpp>
 #include <etl/_utility/forward.hpp>
+#include <etl/_utility/move.hpp>
 #include <etl/_utility/unreachable.hpp>
 
 namespace etl {
@@ -120,14 +121,55 @@ struct inplace_vector {
         if (size() == capacity()) {
             return nullptr;
         }
+        return etl::addressof(unchecked_emplace_back(TETL_FORWARD(args)...));
+    }
 
-        auto* ptr = end();
-        etl::ranges::construct_at(ptr, TETL_FORWARD(args)...);
-        _size = static_cast<internal_size_t>(size() + 1U);
-        return ptr;
+    constexpr auto try_push_back(T const& val) -> T*
+    {
+        if (size() == capacity()) {
+            return nullptr;
+        }
+
+        return etl::addressof(unchecked_push_back(val));
+    }
+
+    constexpr auto try_push_back(T&& val) -> T*
+    {
+        if (size() == capacity()) {
+            return nullptr;
+        }
+
+        return etl::addressof(unchecked_push_back(TETL_MOVE(val)));
+    }
+
+    template <typename... Args>
+    constexpr auto unchecked_emplace_back(Args&&... args) -> T&
+    {
+        etl::ranges::construct_at(end(), TETL_FORWARD(args)...);
+        unsafe_set_size(size() + 1U);
+        return back();
+    }
+
+    constexpr auto unchecked_push_back(T const& val) -> T&
+    {
+        etl::ranges::construct_at(end(), val);
+        unsafe_set_size(size() + 1U);
+        return back();
+    }
+
+    constexpr auto unchecked_push_back(T&& val) -> T&
+    {
+        etl::ranges::construct_at(end(), TETL_MOVE(val));
+        unsafe_set_size(size() + 1U);
+        return back();
     }
 
 private:
+    constexpr auto unsafe_set_size(size_type newSize) noexcept -> void
+    {
+        _size = static_cast<internal_size_t>(newSize);
+    }
+
     using internal_size_t = etl::smallest_size_t<Capacity>;
     TETL_NO_UNIQUE_ADDRESS etl::uninitialized_array<T, Capacity> _storage;
     TETL_NO_UNIQUE_ADDRESS internal_size_t _size;
@@ -181,10 +223,24 @@ struct inplace_vector<T, 0> {
 
     [[nodiscard]] constexpr auto operator[](size_type /*n*/) const -> const_reference { etl::unreachable(); }
 
+    constexpr auto try_push_back(T const& /*val*/) -> T* { return nullptr; }
+
+    constexpr auto try_push_back(T&& /*val*/) -> T* { return nullptr; }
+
     template <typename... Args>
     constexpr auto try_emplace_back(Args&&... /*args*/) -> T*
     {
         return nullptr;
+    }
+
+    constexpr auto unchecked_push_back(T const& /*val*/) -> T& { etl::unreachable(); }
+
+    constexpr auto unchecked_push_back(T&& /*val*/) -> T& { etl::unreachable(); }
+
+    template <typename... Args>
+    constexpr auto unchecked_emplace_back(Args&&... /*args*/) -> T&
+    {
+        etl::unreachable();
     }
 };
 

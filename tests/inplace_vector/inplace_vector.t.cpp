@@ -70,6 +70,8 @@ constexpr auto test_empty() -> bool
     CHECK(vec.empty());
     CHECK(vec.try_emplace_back(T(0)) == nullptr);
     CHECK(vec.empty());
+    CHECK(vec.try_push_back(T(0)) == nullptr);
+    CHECK(vec.empty());
     return true;
 }
 
@@ -101,6 +103,10 @@ constexpr auto test_non_empty() -> bool
     CHECK(vec.front() == vec.back());
     CHECK(etl::as_const(vec).front() == etl::as_const(vec).back());
     CHECK_FALSE(vec.empty());
+
+    auto const wasFull = vec.size() == vec.capacity();
+    auto* push         = vec.try_push_back(T(0));
+    CHECK((push == nullptr) == wasFull);
 
     return true;
 }
@@ -149,13 +155,17 @@ struct non_trivial {
 
     constexpr ~non_trivial() { } // NOLINT
 
-    constexpr non_trivial(non_trivial const& /*other*/) { }
+    constexpr non_trivial(non_trivial const& /*other*/) = delete;
 
-    constexpr non_trivial(non_trivial&& /*other*/) { }
+    constexpr non_trivial(non_trivial&& other) : value{other.value} { }
 
-    constexpr auto operator=(non_trivial const& /*other*/) -> non_trivial& { return *this; }
+    constexpr auto operator=(non_trivial const& /*other*/) -> non_trivial& = delete;
 
-    constexpr auto operator=(non_trivial&& /*other*/) -> non_trivial& { return *this; }
+    constexpr auto operator=(non_trivial&& other) -> non_trivial&
+    {
+        value = other.value;
+        return *this;
+    }
 
     friend constexpr auto operator==(non_trivial const& lhs, non_trivial const& rhs) -> bool
     {
@@ -179,11 +189,17 @@ auto test_non_trivial() -> bool
     CHECK(vec[0] == vec.front());
     CHECK(vec.front() == vec.back());
 
-    auto const copy = vec;
-    auto const move = etl::move(vec);
-    CHECK_FALSE(copy.empty());
+    auto move = etl::move(vec);
     CHECK_FALSE(move.empty());
     CHECK(vec.empty()); // NOLINT
+
+    auto* const p143 = move.try_push_back(non_trivial{143});
+    CHECK(p143 != nullptr);
+    CHECK(p143->value == 143);
+    CHECK(move.size() == 2);
+    CHECK(move[0] == move.front());
+    CHECK(move[1] == move.back());
+    CHECK(move.front() != move.back());
 
     return true;
 }
