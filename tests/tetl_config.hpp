@@ -27,7 +27,7 @@ template <typename Exception>
 template <typename Assertion>
 [[noreturn]] auto tetl_assert_handler(Assertion const& msg) -> void
 {
-    ::printf("ASSERTION: %s:%d\n", msg.file, msg.line);
+    ::printf("ASSERTION: %s:%d - %s\n", msg.file, msg.line, msg.func);
     ::exit(1); // NOLINT
 }
 } // namespace etl
