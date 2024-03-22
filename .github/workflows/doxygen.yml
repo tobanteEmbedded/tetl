@@ -9,16 +9,13 @@ concurrency:
 jobs:
   build:
     name: Build
-    runs-on: ubuntu-22.04
+    runs-on: macos-14
     steps:
       - name: Check out code
         uses: actions/checkout@v4
 
       - name: Install doxygen
-        run: sudo apt install -y doxygen
-
-      - name: Download doxygen theme
-        run: git clone https://github.com/jothepro/doxygen-awesome-css.git 3rd_party/doxygen-awesome-css
+        run: brew install doxygen
 
       - name: Generate HTML documentation
         run: doxygen Doxyfile

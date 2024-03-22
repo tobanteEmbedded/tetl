@@ -20,6 +20,7 @@ struct in_place_type_t {
     explicit in_place_type_t() = default;
 };
 
+/// \relates in_place_type_t
 template <typename T>
 inline constexpr auto in_place_type = in_place_type_t<T>{};
 

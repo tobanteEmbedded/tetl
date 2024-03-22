@@ -15,10 +15,13 @@ namespace etl {
 /// The corresponding type/type templates `in_place_t`, `in_place_type_t`
 /// and `in_place_index_t` can be used in the constructor's parameter list to
 /// match the intended tag.
+///
+/// \headerfile etl/utility.hpp
 struct in_place_t {
     explicit in_place_t() = default;
 };
 
+/// \relates in_place_t
 inline constexpr auto in_place = in_place_t{};
 
 } // namespace etl

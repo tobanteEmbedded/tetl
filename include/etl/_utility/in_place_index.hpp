@@ -20,6 +20,7 @@ struct in_place_index_t {
     explicit in_place_index_t() = default;
 };
 
+/// \relates in_place_index_t
 template <size_t I>
 inline constexpr auto in_place_index = in_place_index_t<I>{};
 
