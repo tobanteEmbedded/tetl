@@ -15,6 +15,7 @@
 #include <etl/_type_traits/remove_reference.hpp>
 #include <etl/_type_traits/void_t.hpp>
 #include <etl/_utility/forward.hpp>
+#include <etl/_utility/forward_like.hpp>
 #include <etl/_utility/index_sequence.hpp>
 #include <etl/_variant/variant_fwd.hpp>
 
@@ -46,64 +47,31 @@ constexpr bool is_detected_v = is_detected<D, Ts...>::value;
 template <typename T>
 constexpr bool is_variant_v = is_detected_v<variant_access_t, T>;
 
+template <etl::size_t... I>
+[[nodiscard]] constexpr auto sum(etl::index_sequence<I...> /*seq*/) -> etl::size_t
+{
+    return (I + ...);
+}
+
 template <etl::size_t I, etl::size_t... Is>
-[[nodiscard]] constexpr auto prepend(etl::index_sequence<Is...> /*ignore*/) -> etl::index_sequence<I, Is...>
+[[nodiscard]] constexpr auto prepend(etl::index_sequence<Is...> /*seq*/) -> etl::index_sequence<I, Is...>
 {
     return {};
 }
 
-[[nodiscard]] constexpr auto
-next_seq(etl::index_sequence<> /*ignore*/, etl::index_sequence<> /*ignore*/) -> etl::index_sequence<>
+[[nodiscard]] constexpr auto next_seq(etl::index_sequence<> /*i*/, etl::index_sequence<> /*j*/) -> etl::index_sequence<>
 {
     return {};
-}
-
-template <typename T, typename V>
-struct copy_referenceness {
-    using type = T;
-};
-
-template <typename T, typename V>
-struct copy_referenceness<T, V&> {
-    using type = T&;
-};
-
-template <typename T, typename V>
-struct copy_referenceness<T, V&&> {
-    using type = etl::remove_reference_t<T>&&;
-};
-
-template <typename T, typename V>
-using copy_referenceness_t = typename copy_referenceness<T, V>::type;
-
-template <typename T, typename TSource>
-using as_if_forwarded = etl::conditional_t<
-    !etl::is_reference<TSource>{},
-    etl::add_rvalue_reference_t<etl::remove_reference_t<T>>,
-    copy_referenceness_t<T, TSource>>;
-
-template <typename TLike, typename T>
-constexpr auto forward_like(T&& x) noexcept -> decltype(auto)
-{
-    static_assert(!(etl::is_rvalue_reference<decltype(x)>{} && etl::is_lvalue_reference<TLike>{}));
-
-    return static_cast<as_if_forwarded<T, TLike>>(x);
 }
 
 template <etl::size_t I, etl::size_t... Is, etl::size_t J, etl::size_t... Js>
-constexpr auto next_seq(etl::index_sequence<I, Is...> /*ignore*/, etl::index_sequence<J, Js...> /*ignore*/)
+constexpr auto next_seq(etl::index_sequence<I, Is...> /*i*/, etl::index_sequence<J, Js...> /*j*/)
 {
     if constexpr (I + 1 == J) {
         return prepend<0>(next_seq(etl::index_sequence<Is...>{}, etl::index_sequence<Js...>{}));
     } else {
         return etl::index_sequence<I + 1, Is...>{};
     }
-}
-
-template <etl::size_t... I>
-static constexpr auto sum(etl::index_sequence<I...> /*ignore*/) -> etl::size_t
-{
-    return (I + ...);
 }
 
 template <etl::size_t I, typename T>
@@ -152,11 +120,11 @@ template <etl::size_t... Is, etl::size_t... Ms, typename F, typename... Vs>
 constexpr auto visit(etl::index_sequence<Is...> i, etl::index_sequence<Ms...> m, F&& f, Vs&&... vs)
 {
     constexpr auto n = next_seq(i, m);
-    if constexpr (sum(n) == 0) {
+    if constexpr (etl::detail::sum(n) == 0) {
         return f(get<Is>(TETL_FORWARD(vs))...);
     } else {
-        if (etl::tuple(detail::index(vs)...) == etl::tuple(Is...)) {
-            return f(forward_like<Vs>(*get_if<Is>(&vs))...);
+        if (etl::tuple(etl::detail::index(vs)...) == etl::tuple(Is...)) {
+            return f(etl::forward_like<Vs>(*etl::detail::get_if<Is>(&vs))...);
         }
         return visit(n, m, TETL_FORWARD(f), TETL_FORWARD(vs)...);
     }
@@ -180,12 +148,12 @@ inline constexpr etl::size_t zero = 0;
 template <typename F, typename... Vs>
 constexpr auto visit(F&& f, Vs&&... vs)
 {
-    if constexpr (((detail::variant_size<Vs>() == 1) && ...)) {
-        return f(detail::forward_like<Vs>(*detail::get_if<0>(&vs))...);
+    if constexpr (((etl::detail::variant_size<Vs>() == 1) and ...)) {
+        return f(etl::forward_like<Vs>(*etl::detail::get_if<0>(&vs))...);
     } else {
-        return detail::visit(
-            etl::index_sequence<detail::zero<Vs>...>{},
-            etl::index_sequence<detail::variant_size<Vs>()...>{},
+        return etl::detail::visit(
+            etl::index_sequence<etl::detail::zero<Vs>...>{},
+            etl::index_sequence<etl::detail::variant_size<Vs>()...>{},
             TETL_FORWARD(f),
             TETL_FORWARD(vs)...
         );
