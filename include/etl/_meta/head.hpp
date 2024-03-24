@@ -10,9 +10,9 @@ namespace etl::meta {
 template <typename... Ts>
 struct head;
 
-template <typename T, typename... Ts>
-struct head<list<T, Ts...>> {
-    using type = T;
+template <typename Head, typename... Tail>
+struct head<list<Head, Tail...>> {
+    using type = Head;
 };
 
 template <typename List>

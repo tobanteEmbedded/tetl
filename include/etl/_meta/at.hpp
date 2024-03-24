@@ -11,14 +11,14 @@ namespace etl::meta {
 template <etl::size_t I, typename List>
 struct at;
 
-template <typename T, typename... Ts>
-struct at<0, list<T, Ts...>> {
-    using type = T;
+template <typename Head, typename... Tail>
+struct at<0, list<Head, Tail...>> {
+    using type = Head;
 };
 
-template <etl::size_t I, typename T, typename... Ts>
-struct at<I, list<T, Ts...>> {
-    using type = typename at<I - 1, list<Ts...>>::type;
+template <etl::size_t I, typename Head, typename... Tail>
+struct at<I, list<Head, Tail...>> {
+    using type = typename at<I - 1, list<Tail...>>::type;
 };
 
 template <etl::size_t I, typename List>
