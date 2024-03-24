@@ -99,7 +99,6 @@ auto main() -> int
 ### CMake Presets
 
 ```sh
-# Todo: How does "Ninja Multi-Config" work in VSCode when presets are enabled?
 cmake --list-presets=all .
 cmake --preset desktop
 cmake --build --preset desktop
@@ -126,6 +125,20 @@ pre-commit run -a
 ```sh
 doxygen Doxyfile
 open build-doxygen/html/index.html
+```
+
+### VS Code
+
+In `.vscode/settings.json`
+
+```json
+// enable
+"cmake.useCMakePresets": "always"
+```
+
+```json
+// disable
+"cmake.useCMakePresets": "never"
 ```
 
 ## Coding Style
