@@ -7,6 +7,8 @@
 
 namespace etl::meta {
 
+namespace detail {
+
 template <typename T, typename List>
 struct cons;
 
@@ -15,8 +17,10 @@ struct cons<T, list<Ts...>> {
     using type = list<T, Ts...>;
 };
 
+} // namespace detail
+
 template <typename T, typename List>
-using cons_t = typename cons<T, List>::type;
+using cons = typename detail::cons<T, List>::type;
 
 } // namespace etl::meta
 

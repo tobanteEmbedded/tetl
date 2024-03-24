@@ -7,6 +7,8 @@
 
 namespace etl::meta {
 
+namespace detail {
+
 template <typename... Ts>
 struct tail;
 
@@ -15,8 +17,10 @@ struct tail<list<T, Ts...>> {
     using type = list<Ts...>;
 };
 
+} // namespace detail
+
 template <typename List>
-using tail_t = typename tail<List>::type;
+using tail = typename detail::tail<List>::type;
 
 } // namespace etl::meta
 

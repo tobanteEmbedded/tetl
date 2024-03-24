@@ -37,7 +37,7 @@ private:
     static_assert((etl::is_trivially_move_constructible_v<Ts> and ...));
 
     using index_type = etl::smallest_size_t<sizeof...(Ts)>;
-    using first_type = etl::meta::at_t<0, etl::meta::list<Ts...>>;
+    using first_type = etl::meta::at<0, etl::meta::list<Ts...>>;
 
 public:
     constexpr variant2() noexcept(etl::is_nothrow_default_constructible_v<first_type>)
