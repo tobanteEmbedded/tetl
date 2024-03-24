@@ -9,31 +9,31 @@
 namespace {
 constexpr auto test_all() -> bool
 {
-    using etl::meta::at;
-    using etl::meta::head;
+    using etl::meta::at_t;
+    using etl::meta::head_t;
     using etl::meta::list;
-    using etl::meta::push_back;
-    using etl::meta::push_front;
-    using etl::meta::tail;
+    using etl::meta::push_back_t;
+    using etl::meta::push_front_t;
+    using etl::meta::tail_t;
 
-    CHECK_SAME_TYPE(head<list<int, long>>, int);
-    CHECK_SAME_TYPE(head<list<float, long>>, float);
+    CHECK_SAME_TYPE(head_t<list<int, long>>, int);
+    CHECK_SAME_TYPE(head_t<list<float, long>>, float);
 
-    CHECK_SAME_TYPE(tail<list<int, long>>, list<long>);
-    CHECK_SAME_TYPE(tail<list<float, char, long>>, list<char, long>);
+    CHECK_SAME_TYPE(tail_t<list<int, long>>, list<long>);
+    CHECK_SAME_TYPE(tail_t<list<float, char, long>>, list<char, long>);
 
-    CHECK_SAME_TYPE(push_back<int, list<>>, list<int>);
-    CHECK_SAME_TYPE(push_back<int, list<long>>, list<long, int>);
-    CHECK_SAME_TYPE(push_back<int, list<long, float>>, list<long, float, int>);
+    CHECK_SAME_TYPE(push_back_t<int, list<>>, list<int>);
+    CHECK_SAME_TYPE(push_back_t<int, list<long>>, list<long, int>);
+    CHECK_SAME_TYPE(push_back_t<int, list<long, float>>, list<long, float, int>);
 
-    CHECK_SAME_TYPE(push_front<int, list<>>, list<int>);
-    CHECK_SAME_TYPE(push_front<int, list<long>>, list<int, long>);
-    CHECK_SAME_TYPE(push_front<int, list<long, float>>, list<int, long, float>);
+    CHECK_SAME_TYPE(push_front_t<int, list<>>, list<int>);
+    CHECK_SAME_TYPE(push_front_t<int, list<long>>, list<int, long>);
+    CHECK_SAME_TYPE(push_front_t<int, list<long, float>>, list<int, long, float>);
 
-    CHECK_SAME_TYPE(at<0, list<int>>, int);
-    CHECK_SAME_TYPE(at<0, list<int, long, double>>, int);
-    CHECK_SAME_TYPE(at<1, list<int, long, double>>, long);
-    CHECK_SAME_TYPE(at<2, list<int, long, double>>, double);
+    CHECK_SAME_TYPE(at_t<0, list<int>>, int);
+    CHECK_SAME_TYPE(at_t<0, list<int, long, double>>, int);
+    CHECK_SAME_TYPE(at_t<1, list<int, long, double>>, long);
+    CHECK_SAME_TYPE(at_t<2, list<int, long, double>>, double);
 
     return true;
 }

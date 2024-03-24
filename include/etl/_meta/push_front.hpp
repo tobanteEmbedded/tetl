@@ -7,8 +7,6 @@
 
 namespace etl::meta {
 
-namespace detail {
-
 template <typename T, typename List>
 struct push_front;
 
@@ -17,10 +15,8 @@ struct push_front<T, list<Ts...>> {
     using type = list<T, Ts...>;
 };
 
-} // namespace detail
-
 template <typename T, typename List>
-using push_front = typename detail::push_front<T, List>::type;
+using push_front_t = typename push_front<T, List>::type;
 
 } // namespace etl::meta
 

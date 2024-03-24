@@ -270,7 +270,7 @@ template <typename... Ts>
 struct variant {
 private:
     using internal_size_t = etl::smallest_size_t<sizeof...(Ts)>;
-    using first_type      = etl::meta::at<0, etl::meta::list<Ts...>>;
+    using first_type      = etl::meta::at_t<0, etl::meta::list<Ts...>>;
 
 public:
     constexpr variant() noexcept(noexcept(etl::is_nothrow_default_constructible_v<first_type>))
