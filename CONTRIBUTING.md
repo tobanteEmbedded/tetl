@@ -3,9 +3,23 @@
 ## Quick Start
 
 ```sh
-cmake -S . -B build -G "Ninja Multi-Config"
-cmake --build build --config Release
-ctest --test-dir build -C Release --output-on-failure
+# Desktop
+cmake -S . -B cmake-build-desktop -G "Ninja Multi-Config"
+cmake --build cmake-build-desktop --config Debug
+ctest --test-dir cmake-build-desktop -C Debug --output-on-failure
+```
+
+```sh
+# Emscripten
+emcmake cmake -S . -B cmake-build-emscripten -G "Ninja Multi-Config" -D CMAKE_CXX_FLAGS="-fno-exceptions"
+cmake --build cmake-build-emscripten --config Debug
+ctest --test-dir cmake-build-emscripten -C Debug --output-on-failure
+```
+
+```sh
+# AVR
+cmake -S . -B cmake-build-avr-gcc -G "Ninja Multi-Config" -D CMAKE_TOOLCHAIN_FILE="cmake/toolchain/atmega328p.cmake"
+cmake --build cmake-build-avr-gcc --config Debug
 ```
 
 ### Project Layout
@@ -74,7 +88,7 @@ auto main() -> int
     // runs both assert & static_assert
     STATIC_CHECK(test_all());
 
-    // runs only asseert, use if constexpr is not supported
+    // runs only assert, use if constexpr is not supported
     // CHECK(test_all());
     return 0;
 }
