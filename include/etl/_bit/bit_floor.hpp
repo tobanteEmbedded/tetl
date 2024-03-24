@@ -4,7 +4,7 @@
 #define TETL_BIT_BIT_FLOOR_HPP
 
 #include <etl/_bit/bit_width.hpp>
-#include <etl/_concepts/standard_unsigned_integer.hpp>
+#include <etl/_concepts/builtin_unsigned_integer.hpp>
 #include <etl/_limits/numeric_limits.hpp>
 
 namespace etl {
@@ -18,7 +18,7 @@ namespace etl {
 ///
 /// \returns Zero if x is zero; otherwise, the largest integral power of two
 /// that is not greater than x.
-template <etl::standard_unsigned_integer UInt>
+template <etl::builtin_unsigned_integer UInt>
 [[nodiscard]] constexpr auto bit_floor(UInt x) noexcept -> UInt
 {
     if (x != 0) {

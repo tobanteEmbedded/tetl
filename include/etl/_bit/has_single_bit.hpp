@@ -4,7 +4,7 @@
 #define TETL_BIT_HAS_SINGLE_BIT_HPP
 
 #include <etl/_bit/popcount.hpp>
-#include <etl/_concepts/standard_unsigned_integer.hpp>
+#include <etl/_concepts/builtin_unsigned_integer.hpp>
 
 namespace etl {
 
@@ -15,7 +15,7 @@ namespace etl {
 /// unsigned long, unsigned long long, or an extended unsigned integer type).
 ///
 /// \returns true if x is an integral power of two; otherwise false.
-template <etl::standard_unsigned_integer UInt>
+template <etl::builtin_unsigned_integer UInt>
 [[nodiscard]] constexpr auto has_single_bit(UInt x) noexcept -> bool
 {
     return etl::popcount(x) == 1;

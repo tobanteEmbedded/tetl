@@ -4,8 +4,8 @@
 #define TETL_NUMERIC_ADD_SAT_HPP
 
 #include <etl/_algorithm/clamp.hpp>
+#include <etl/_concepts/builtin_integer.hpp>
 #include <etl/_concepts/same_as.hpp>
-#include <etl/_concepts/standard_integer.hpp>
 #include <etl/_cstdint/int_t.hpp>
 #include <etl/_cstdint/uint_t.hpp>
 #include <etl/_limits/numeric_limits.hpp>
@@ -17,7 +17,7 @@ namespace etl {
 
 namespace detail {
 
-template <etl::standard_integer Int>
+template <etl::builtin_integer Int>
 [[nodiscard]] constexpr auto add_sat_fallback(Int x, Int y) noexcept -> Int
 {
     constexpr auto min = etl::numeric_limits<Int>::min();
@@ -51,7 +51,7 @@ template <etl::standard_integer Int>
 
 } // namespace detail
 
-template <etl::standard_integer Int>
+template <etl::builtin_integer Int>
 [[nodiscard]] constexpr auto add_sat(Int x, Int y) noexcept -> Int
 {
 #if defined(__GNUC__) or defined(__clang__)

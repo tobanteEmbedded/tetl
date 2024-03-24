@@ -4,7 +4,7 @@
 #define TETL_BIT_BIT_CEIL_HPP
 
 #include <etl/_bit/bit_width.hpp>
-#include <etl/_concepts/standard_unsigned_integer.hpp>
+#include <etl/_concepts/builtin_unsigned_integer.hpp>
 #include <etl/_limits/numeric_limits.hpp>
 
 namespace etl {
@@ -19,7 +19,7 @@ namespace etl {
 /// unsigned long, unsigned long long, or an extended unsigned integer type).
 ///
 /// \returns The smallest integral power of two that is not smaller than x.
-template <etl::standard_unsigned_integer UInt>
+template <etl::builtin_unsigned_integer UInt>
 [[nodiscard]] constexpr auto bit_ceil(UInt x) noexcept -> UInt
 {
     if (x <= 1U) {

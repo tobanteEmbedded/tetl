@@ -4,7 +4,7 @@
 #define TETL_BIT_BIT_WIDTH_HPP
 
 #include <etl/_bit/countl_zero.hpp>
-#include <etl/_concepts/standard_unsigned_integer.hpp>
+#include <etl/_concepts/builtin_unsigned_integer.hpp>
 #include <etl/_limits/numeric_limits.hpp>
 
 namespace etl {
@@ -15,7 +15,7 @@ namespace etl {
 /// \details This overload only participates in overload resolution if UInt is an
 /// unsigned integer type (that is, unsigned char, unsigned short, unsigned int,
 /// unsigned long, unsigned long long, or an extended unsigned integer type).
-template <etl::standard_unsigned_integer UInt>
+template <etl::builtin_unsigned_integer UInt>
 [[nodiscard]] constexpr auto bit_width(UInt x) noexcept -> int
 {
     return etl::numeric_limits<UInt>::digits - etl::countl_zero(x);

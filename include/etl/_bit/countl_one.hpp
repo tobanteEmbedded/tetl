@@ -3,7 +3,7 @@
 #ifndef TETL_BIT_COUNTL_ONE_HPP
 #define TETL_BIT_COUNTL_ONE_HPP
 
-#include <etl/_concepts/standard_unsigned_integer.hpp>
+#include <etl/_concepts/builtin_unsigned_integer.hpp>
 #include <etl/_limits/numeric_limits.hpp>
 
 namespace etl {
@@ -17,7 +17,7 @@ namespace etl {
 ///
 /// \returns The number of consecutive 1 bits in the value of x, starting from
 /// the most significant bit.
-template <etl::standard_unsigned_integer UInt>
+template <etl::builtin_unsigned_integer UInt>
 [[nodiscard]] constexpr auto countl_one(UInt x) noexcept -> int
 {
     auto const totalBits = etl::numeric_limits<UInt>::digits;

@@ -3,14 +3,14 @@
 #ifndef TETL_BIT_ROTR_HPP
 #define TETL_BIT_ROTR_HPP
 
-#include <etl/_concepts/standard_unsigned_integer.hpp>
+#include <etl/_concepts/builtin_unsigned_integer.hpp>
 #include <etl/_limits/numeric_limits.hpp>
 
 namespace etl {
 
 /// \brief Computes the result of bitwise right-rotating the value of x by s
 /// positions. This operation is also known as a right circular shift.
-template <etl::standard_unsigned_integer UInt>
+template <etl::builtin_unsigned_integer UInt>
 constexpr auto rotr(UInt t, int s) noexcept -> UInt
 {
     auto const cnt    = static_cast<unsigned>(s);

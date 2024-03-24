@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: BSL-1.0
 
-#ifndef TETL_TYPE_TRAITS_IS_STANDARD_UNSIGNED_INTEGER_HPP
-#define TETL_TYPE_TRAITS_IS_STANDARD_UNSIGNED_INTEGER_HPP
+#ifndef TETL_TYPE_TRAITS_IS_BUILTIN_UNSIGNED_INTEGER_HPP
+#define TETL_TYPE_TRAITS_IS_BUILTIN_UNSIGNED_INTEGER_HPP
 
 #include <etl/_type_traits/bool_constant.hpp>
 #include <etl/_type_traits/is_any_of.hpp>
@@ -10,12 +10,12 @@
 namespace etl {
 
 template <typename T>
-inline constexpr auto is_standard_unsigned_integer_v
+inline constexpr auto is_builtin_unsigned_integer_v
     = is_any_of_v<remove_cv_t<T>, unsigned char, unsigned short, unsigned int, unsigned long, unsigned long long>;
 
 template <typename T>
-struct is_standard_unsigned_integer : bool_constant<is_standard_unsigned_integer_v<T> > { };
+struct is_builtin_unsigned_integer : bool_constant<is_builtin_unsigned_integer_v<T> > { };
 
 } // namespace etl
 
-#endif // TETL_TYPE_TRAITS_IS_STANDARD_UNSIGNED_INTEGER_HPP
+#endif // TETL_TYPE_TRAITS_IS_BUILTIN_UNSIGNED_INTEGER_HPP

@@ -5,7 +5,7 @@
 
 #include <etl/_config/all.hpp>
 
-#include <etl/_concepts/standard_unsigned_integer.hpp>
+#include <etl/_concepts/builtin_unsigned_integer.hpp>
 #include <etl/_limits/numeric_limits.hpp>
 #include <etl/_type_traits/is_constant_evaluated.hpp>
 #include <etl/_type_traits/is_same.hpp>
@@ -15,7 +15,7 @@ namespace etl {
 namespace detail {
 
 // https://en.wikichip.org/wiki/population_count
-template <etl::standard_unsigned_integer UInt>
+template <etl::builtin_unsigned_integer UInt>
 [[nodiscard]] constexpr auto popcount_fallback(UInt val) noexcept -> int
 {
     auto c = 0;
@@ -32,7 +32,7 @@ template <etl::standard_unsigned_integer UInt>
 /// \details This overload only participates in overload resolution if UInt is an
 /// unsigned integer type (that is, unsigned char, unsigned short, unsigned int,
 /// unsigned long, unsigned long long, or an extended unsigned integer type).
-template <etl::standard_unsigned_integer UInt>
+template <etl::builtin_unsigned_integer UInt>
 [[nodiscard]] constexpr auto popcount(UInt val) noexcept -> int
 {
     if (not etl::is_constant_evaluated()) {
