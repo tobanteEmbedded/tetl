@@ -16,28 +16,17 @@ struct Vertex {
 
     constexpr Vertex(T xInit, T yInit, T zInit) : x{xInit}, y{yInit}, z{zInit} { }
 
+    friend constexpr auto operator==(Vertex const& lhs, Vertex const& rhs) -> bool = default;
+
     T x{};
     T y{};
     T z{};
 };
 
-template <typename T>
-[[nodiscard]] constexpr auto operator==(Vertex<T> const& lhs, Vertex<T> const& rhs) -> bool
-{
-    return (lhs.x == rhs.x) and (lhs.y == rhs.y) and (lhs.z == rhs.z);
-}
-
-// template <typename T>
-// [[nodiscard]] constexpr auto operator!=(
-//     Vertex<T> const& lhs, Vertex<T> const& rhs) -> bool
-// {
-//     return !(lhs == rhs);
-// }
-
 } // namespace
 
 template <typename T>
-auto test_runtime() -> bool
+auto test() -> bool
 {
     {
         etl::static_vector<T, 16> vec{};
@@ -150,32 +139,32 @@ auto test_runtime() -> bool
     return true;
 }
 
-static auto test_all_runtime() -> bool
+static auto test_all() -> bool
 {
-    CHECK(test_runtime<signed char>());
-    CHECK(test_runtime<signed short>());
-    CHECK(test_runtime<signed int>());
-    CHECK(test_runtime<signed long>());
+    CHECK(test<signed char>());
+    CHECK(test<signed short>());
+    CHECK(test<signed int>());
+    CHECK(test<signed long>());
 
-    CHECK(test_runtime<unsigned char>());
-    CHECK(test_runtime<unsigned short>());
-    CHECK(test_runtime<unsigned int>());
-    CHECK(test_runtime<unsigned long>());
+    CHECK(test<unsigned char>());
+    CHECK(test<unsigned short>());
+    CHECK(test<unsigned int>());
+    CHECK(test<unsigned long>());
 
-    CHECK(test_runtime<char>());
-    CHECK(test_runtime<char8_t>());
+    CHECK(test<char>());
+    CHECK(test<char8_t>());
 
-    CHECK(test_runtime<float>());
-    CHECK(test_runtime<double>());
+    CHECK(test<float>());
+    CHECK(test<double>());
 
 // Overflows .text section in debug builds
 #if not defined(__AVR__)
-    CHECK(test_runtime<signed long long>());
-    CHECK(test_runtime<unsigned long long>());
-    CHECK(test_runtime<char16_t>());
-    CHECK(test_runtime<char32_t>());
-    CHECK(test_runtime<wchar_t>());
-    CHECK(test_runtime<long double>());
+    CHECK(test<signed long long>());
+    CHECK(test<unsigned long long>());
+    CHECK(test<char16_t>());
+    CHECK(test<char32_t>());
+    CHECK(test<wchar_t>());
+    CHECK(test<long double>());
 #endif
 
     return true;
@@ -183,6 +172,6 @@ static auto test_all_runtime() -> bool
 
 auto main() -> int
 {
-    CHECK(test_all_runtime());
+    CHECK(test_all());
     return 0;
 }
