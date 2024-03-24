@@ -5,7 +5,10 @@
 
 #include <etl/_config/all.hpp>
 
+// Non-standard extensions
 #include <etl/_meta/at.hpp>
+#include <etl/_meta/contains.hpp>
+#include <etl/_meta/count.hpp>
 #include <etl/_meta/head.hpp>
 #include <etl/_meta/list.hpp>
 #include <etl/_meta/push_back.hpp>
