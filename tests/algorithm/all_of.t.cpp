@@ -12,22 +12,22 @@
 template <typename T>
 constexpr auto test() -> bool
 {
-    auto data     = etl::array{T(1), T(2), T(3), T(4)};
-    auto const p1 = [](T a) { return etl::abs(a) > T(0); };
-    auto const p2 = [](T a) { return etl::abs(a) > T(10); };
-    auto const p3 = [](T a) { return a < T(10); };
+    auto data            = etl::array{T(1), T(2), T(3), T(4)};
+    auto const greater0  = [](T a) { return a > T(0); };
+    auto const greater10 = [](T a) { return a > T(10); };
+    auto const less10    = [](T a) { return a < T(10); };
 
-    CHECK(etl::all_of(data.begin(), data.end(), p1));
-    CHECK_FALSE(etl::all_of(data.begin(), data.end(), p2));
-    CHECK(etl::all_of(InIter(data.begin()), InIter(data.end()), p1));
+    CHECK(etl::all_of(data.begin(), data.end(), greater0));
+    CHECK_FALSE(etl::all_of(data.begin(), data.end(), greater10));
+    CHECK(etl::all_of(InIter(data.begin()), InIter(data.end()), greater0));
 
-    CHECK(etl::any_of(data.begin(), data.end(), p1));
-    CHECK_FALSE(etl::any_of(data.begin(), data.end(), p2));
-    CHECK(etl::any_of(InIter(data.begin()), InIter(data.end()), p1));
+    CHECK(etl::any_of(data.begin(), data.end(), greater0));
+    CHECK_FALSE(etl::any_of(data.begin(), data.end(), greater10));
+    CHECK(etl::any_of(InIter(data.begin()), InIter(data.end()), greater0));
 
-    CHECK(etl::none_of(data.begin(), data.end(), p2));
-    CHECK_FALSE(etl::none_of(data.begin(), data.end(), p3));
-    CHECK(etl::none_of(InIter(data.begin()), InIter(data.end()), p2));
+    CHECK(etl::none_of(data.begin(), data.end(), greater10));
+    CHECK_FALSE(etl::none_of(data.begin(), data.end(), less10));
+    CHECK(etl::none_of(InIter(data.begin()), InIter(data.end()), greater10));
 
     return true;
 }
