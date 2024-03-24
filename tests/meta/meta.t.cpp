@@ -12,6 +12,7 @@ constexpr auto test_all() -> bool
     using etl::meta::at;
     using etl::meta::head;
     using etl::meta::list;
+    using etl::meta::push_back;
     using etl::meta::push_front;
     using etl::meta::tail;
 
@@ -20,6 +21,10 @@ constexpr auto test_all() -> bool
 
     CHECK_SAME_TYPE(tail<list<int, long>>, list<long>);
     CHECK_SAME_TYPE(tail<list<float, char, long>>, list<char, long>);
+
+    CHECK_SAME_TYPE(push_back<int, list<>>, list<int>);
+    CHECK_SAME_TYPE(push_back<int, list<long>>, list<long, int>);
+    CHECK_SAME_TYPE(push_back<int, list<long, float>>, list<long, float, int>);
 
     CHECK_SAME_TYPE(push_front<int, list<>>, list<int>);
     CHECK_SAME_TYPE(push_front<int, list<long>>, list<int, long>);

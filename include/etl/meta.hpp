@@ -8,6 +8,7 @@
 #include <etl/_meta/at.hpp>
 #include <etl/_meta/head.hpp>
 #include <etl/_meta/list.hpp>
+#include <etl/_meta/push_back.hpp>
 #include <etl/_meta/push_front.hpp>
 #include <etl/_meta/tail.hpp>
 
