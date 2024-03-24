@@ -9,7 +9,6 @@
 #include <etl/string_view.hpp>
 #include <etl/type_traits.hpp>
 #include <etl/utility.hpp>
-#include <etl/warning.hpp>
 
 #include "testing/testing.hpp"
 

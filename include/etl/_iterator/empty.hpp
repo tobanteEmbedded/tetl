@@ -4,7 +4,7 @@
 #define TETL_ITERATOR_EMPTY_HPP
 
 #include <etl/_cstddef/size_t.hpp>
-#include <etl/_warning/ignore_unused.hpp>
+#include <etl/_utility/ignore_unused.hpp>
 
 namespace etl {
 

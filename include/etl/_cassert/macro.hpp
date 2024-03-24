@@ -5,8 +5,8 @@
 
 #include <etl/_config/all.hpp>
 
+#include <etl/_utility/ignore_unused.hpp>
 #include <etl/_version/implementation.hpp>
-#include <etl/_warning/ignore_unused.hpp>
 
 #if __has_include(<stdlib.h>)
     #include <stdlib.h>

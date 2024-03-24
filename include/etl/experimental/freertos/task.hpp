@@ -6,7 +6,7 @@
 #include <etl/version.hpp>
 
 #include <etl/cstddef.hpp>
-#include <etl/warning.hpp>
+#include <etl/utility.hpp>
 
 #if defined(TETL_FREERTOS_USE_STUBS)
     #include <etl/experimental/freertos/stubs.hpp>

@@ -61,7 +61,6 @@
 #include <etl/variant.hpp>
 #include <etl/vector.hpp>
 #include <etl/version.hpp>
-#include <etl/warning.hpp>
 
 auto main(int const argc, char const** argv) -> int
 {

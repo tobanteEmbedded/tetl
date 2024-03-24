@@ -274,7 +274,6 @@ build_flags = -std=gnu++20 -Wno-register -I 3rd_party/tetl/include
 |         [variant](#variant)         |         Utility          |  **Yes**   |   [variant](https://docs.google.com/spreadsheets/d/1-qwa7tFnjFdgY9XKBy2fAsDozAfG8lXsJXHwA_ITQqM/edit#gid=503059518)    |
 |          [vector](#vector)          |        Containers        |  **Yes**   |   [vector](https://docs.google.com/spreadsheets/d/1-qwa7tFnjFdgY9XKBy2fAsDozAfG8lXsJXHwA_ITQqM/edit#gid=1613833122)    |
 |         [version](#version)         |         Utility          |  **Yes**   |                                                                                                                        |
-|         [warning](#warning)         |         Utility          |  **Yes**   |                                                      Non-standard                                                      |
 
 ## Header Detail
 
@@ -823,22 +822,6 @@ auto main() -> int
   if (etl::current_standard == language_standard::cpp_20) { puts("using C++20"); }
   if (etl::current_standard == language_standard::cpp_23) { puts("using C++23"); }
 
-  return 0;
-}
-```
-
-### warning
-
-- **Library:** Utility
-- **Include:** [`etl/warning.hpp`](./include/etl/warning.hpp)
-
-```cpp
-#include <etl/warning.hpp>
-
-auto main(int argc, char** argv) -> int
-{
-  // Explicitly ignore unused arguments or variables.
-  etl::ignore_unused(argc, argv);
   return 0;
 }
 ```

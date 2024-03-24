@@ -6,7 +6,7 @@
 #include <etl/_cstddef/nullptr_t.hpp>
 #include <etl/_cstddef/ptrdiff_t.hpp>
 #include <etl/_cstdint/uint_t.hpp>
-#include <etl/_warning/ignore_unused.hpp>
+#include <etl/_utility/ignore_unused.hpp>
 
 namespace etl {
 

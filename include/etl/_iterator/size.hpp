@@ -7,7 +7,7 @@
 #include <etl/_cstddef/size_t.hpp>
 #include <etl/_type_traits/common_type.hpp>
 #include <etl/_type_traits/make_signed.hpp>
-#include <etl/_warning/ignore_unused.hpp>
+#include <etl/_utility/ignore_unused.hpp>
 
 namespace etl {
 

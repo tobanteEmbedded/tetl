@@ -7,7 +7,7 @@
 
 #include <etl/cstdint.hpp>
 #include <etl/new.hpp>
-#include <etl/warning.hpp>
+#include <etl/utility.hpp>
 
 namespace etl::experimental::hardware::stm32 {
 enum struct pin_number : etl::uint16_t {

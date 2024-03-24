@@ -3,7 +3,7 @@
 #include <etl/optional.hpp>
 
 #include <etl/cstdint.hpp>
-#include <etl/warning.hpp>
+#include <etl/utility.hpp>
 
 #include "testing/exception.hpp"
 #include "testing/testing.hpp"

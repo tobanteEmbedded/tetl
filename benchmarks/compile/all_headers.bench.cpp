@@ -33,7 +33,7 @@
     #include <memory>
     #include <mutex>
     #include <new>
-    // #include <numbers>
+    #include <numbers>
     #include <numeric>
     #include <optional>
     #include <random>
@@ -54,8 +54,7 @@
     #include <utility>
     #include <variant>
     #include <vector>
-// #include <version>
-// #include <warning>
+    #include <version>
 #else
     #include <etl/algorithm.hpp>
     #include <etl/array.hpp>
@@ -90,7 +89,7 @@
     #include <etl/memory.hpp>
     #include <etl/mutex.hpp>
     #include <etl/new.hpp>
-    // #include <etl/numbers.hpp>
+    #include <etl/numbers.hpp>
     #include <etl/numeric.hpp>
     #include <etl/optional.hpp>
     #include <etl/random.hpp>
@@ -111,7 +110,6 @@
     #include <etl/utility.hpp>
     #include <etl/variant.hpp>
     #include <etl/vector.hpp>
-// #include <etl/version.hpp>
-// #include <etl/warning.hpp>
+    #include <etl/version.hpp>
 
 #endif

@@ -42,7 +42,6 @@
 #include <etl/_variant/variant_fwd.hpp>
 #include <etl/_variant/variant_size.hpp>
 #include <etl/_variant/visit.hpp>
-#include <etl/_warning/ignore_unused.hpp>
 
 namespace etl {
 

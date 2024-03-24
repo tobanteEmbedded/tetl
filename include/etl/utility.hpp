@@ -33,4 +33,7 @@
 #include <etl/_utility/to_underlying.hpp>
 #include <etl/_utility/unreachable.hpp>
 
+// Non-standard extensions
+#include <etl/_utility/ignore_unused.hpp>
+
 #endif // TETL_UTILITY_HPP

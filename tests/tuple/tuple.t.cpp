@@ -4,7 +4,7 @@
 
 #include <etl/cstdint.hpp>
 #include <etl/type_traits.hpp>
-#include <etl/warning.hpp>
+#include <etl/utility.hpp>
 
 #include "testing/testing.hpp"
 

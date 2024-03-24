@@ -4,7 +4,6 @@
 
 #include <etl/cstdint.hpp>
 #include <etl/utility.hpp>
-#include <etl/warning.hpp>
 
 #include "testing/exception.hpp"
 #include "testing/testing.hpp"

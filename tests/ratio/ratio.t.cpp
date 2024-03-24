@@ -2,7 +2,7 @@
 
 #include <etl/ratio.hpp>
 
-#include <etl/warning.hpp>
+#include <etl/utility.hpp>
 
 #include "testing/testing.hpp"
 

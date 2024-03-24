@@ -5,7 +5,6 @@
 
 #include <etl/_format/fmt_buffer.hpp>
 #include <etl/_iterator/back_insert_iterator.hpp>
-#include <etl/_warning/ignore_unused.hpp>
 
 namespace etl {
 template <typename T, typename CharT>

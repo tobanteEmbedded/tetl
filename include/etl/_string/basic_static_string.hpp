@@ -26,7 +26,7 @@
 #include <etl/_string/str_rfind.hpp>
 #include <etl/_string_view/string_view.hpp>
 #include <etl/_type_traits/is_convertible.hpp>
-#include <etl/_warning/ignore_unused.hpp>
+#include <etl/_utility/ignore_unused.hpp>
 
 namespace etl {
 

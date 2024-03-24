@@ -1,9 +1,10 @@
 // SPDX-License-Identifier: BSL-1.0
 
-#ifndef TETL_WARNING_IGNORE_UNUSED_HPP
-#define TETL_WARNING_IGNORE_UNUSED_HPP
+#ifndef TETL_UTILITY_IGNORE_UNUSED_HPP
+#define TETL_UTILITY_IGNORE_UNUSED_HPP
 
 namespace etl {
+
 /// \brief Explicitly ignore arguments or variables.
 /// \code
 /// auto main(int argc, char** argv) -> int
@@ -16,6 +17,7 @@ template <typename... Types>
 constexpr auto ignore_unused(Types&&... /*unused*/) -> void
 {
 }
+
 } // namespace etl
 
-#endif // TETL_WARNING_IGNORE_UNUSED_HPP
+#endif // TETL_UTILITY_IGNORE_UNUSED_HPP

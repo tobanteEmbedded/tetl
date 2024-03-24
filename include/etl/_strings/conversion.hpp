@@ -11,7 +11,6 @@
 #include <etl/_cstdint/uint_t.hpp>
 #include <etl/_limits/numeric_limits.hpp>
 #include <etl/_type_traits/is_signed.hpp>
-#include <etl/_warning/ignore_unused.hpp>
 
 namespace etl::detail {
 

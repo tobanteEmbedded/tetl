@@ -6,7 +6,7 @@
 #include <etl/version.hpp>
 
 #include <etl/cstdint.hpp>
-#include <etl/warning.hpp>
+#include <etl/utility.hpp>
 
 namespace etl::experimental::hardware::mcp23017 {
 // ports

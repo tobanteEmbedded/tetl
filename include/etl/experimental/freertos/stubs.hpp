@@ -7,7 +7,7 @@
 
 #include <etl/cstddef.hpp>
 #include <etl/cstdint.hpp>
-#include <etl/warning.hpp>
+#include <etl/utility.hpp>
 
 // BASE
 using BaseType_t             = long;
