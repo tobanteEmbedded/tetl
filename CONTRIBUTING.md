@@ -21,17 +21,64 @@ ctest --test-dir build -C Release --output-on-failure
 └── tests       # Unit tests
 ```
 
-## Coding Style
+## Tests
 
-- Trailing return type is used everywhere. Including if type is `void`
-  - `auto foo() -> double;`
-  - `auto nothing() -> void;`
-- Naming conventions:
-  - Public interface matches the STL conventions
-  - Checked via `clang-tidy`. See [.clang-tidy](./.clang-tidy) config.
-  - Local variables & parameters are `camelBack`
-  - Template arguments are `CamelCase`
-  - Private members have a "\_" prefix. e.g. `int _val;`
+Boilerplate for unit tests:
+
+```cpp
+// SPDX-License-Identifier: BSL-1.0
+#include <etl/utility.hpp>
+
+#include "testing/testing.hpp"
+
+namespace {
+
+template <typename T>
+constexpr auto test() -> bool
+{
+    CHECK(etl::cmp_equal(1, T(1)));
+    CHECK_FALSE(etl::cmp_equal(-1, T(1)));
+    CHECK_NOEXCEPT(etl::cmp_equal(-1, T(1)));
+    CHECK_SAME_TYPE(decltype(etl::cmp_equal(-1, T(1))), bool);
+
+    // more checks
+    // ...
+
+    return true;
+}
+
+constexpr auto test_all() -> bool
+{
+    CHECK(test<signed char>());
+    CHECK(test<signed short>());
+    CHECK(test<signed int>());
+    CHECK(test<signed long>());
+    CHECK(test<signed long long>());
+
+    CHECK(test<unsigned char>());
+    CHECK(test<unsigned short>());
+    CHECK(test<unsigned int>());
+    CHECK(test<unsigned long>());
+    CHECK(test<unsigned long long>());
+
+    // more custom types if needed
+    // ...
+
+    return true;
+}
+
+} // namespace
+
+auto main() -> int
+{
+    // runs both assert & static_assert
+    STATIC_CHECK(test_all());
+
+    // runs only asseert, use if constexpr is not supported
+    // CHECK(test_all());
+    return 0;
+}
+```
 
 ## Tools
 
@@ -63,7 +110,18 @@ pre-commit run -a
 ### doxygen
 
 ```sh
-git clone https://github.com/jothepro/doxygen-awesome-css.git 3rd_party/doxygen-awesome-css
 doxygen Doxyfile
 open build-doxygen/html/index.html
 ```
+
+## Coding Style
+
+- Trailing return type is used everywhere. Including if type is `void`
+  - `auto foo() -> double;`
+  - `auto nothing() -> void;`
+- Naming conventions:
+  - Public interface matches the STL conventions
+  - Checked via `clang-tidy`. See [.clang-tidy](./.clang-tidy) config.
+  - Local variables & parameters are `camelBack`
+  - Template arguments are `CamelCase`
+  - Private members have a "\_" prefix. e.g. `int _val;`
