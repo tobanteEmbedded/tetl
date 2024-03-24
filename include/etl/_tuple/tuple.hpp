@@ -21,7 +21,6 @@
 #include <etl/_type_traits/is_nothrow_move_constructible.hpp>
 #include <etl/_type_traits/is_nothrow_swappable.hpp>
 #include <etl/_type_traits/is_same.hpp>
-#include <etl/_type_traits/type_sequence.hpp>
 #include <etl/_utility/forward.hpp>
 #include <etl/_utility/index_sequence.hpp>
 #include <etl/_utility/move.hpp>

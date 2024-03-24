@@ -7,6 +7,7 @@
 
 #include <etl/_cstddef/size_t.hpp>
 #include <etl/_memory/addressof.hpp>
+#include <etl/_meta/at.hpp>
 #include <etl/_type_traits/add_pointer.hpp>
 #include <etl/_type_traits/integral_constant.hpp>
 #include <etl/_type_traits/is_copy_constructible.hpp>
@@ -36,7 +37,7 @@ private:
     static_assert((etl::is_trivially_move_constructible_v<Ts> and ...));
 
     using index_type = etl::smallest_size_t<sizeof...(Ts)>;
-    using first_type = etl::nth_type_t<0, etl::type_sequence<Ts...>>;
+    using first_type = etl::meta::at_t<0, etl::meta::list<Ts...>>;
 
 public:
     constexpr variant2() noexcept(etl::is_nothrow_default_constructible_v<first_type>)

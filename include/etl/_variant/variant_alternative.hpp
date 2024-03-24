@@ -3,10 +3,10 @@
 #ifndef TETL_VARIANT_VARIANT_ALTERNATIVE_HPP
 #define TETL_VARIANT_VARIANT_ALTERNATIVE_HPP
 
+#include <etl/_meta/at.hpp>
 #include <etl/_type_traits/add_const.hpp>
 #include <etl/_type_traits/add_cv.hpp>
 #include <etl/_type_traits/add_volatile.hpp>
-#include <etl/_type_traits/type_sequence.hpp>
 #include <etl/_variant/variant_fwd.hpp>
 
 namespace etl {
@@ -14,13 +14,13 @@ namespace etl {
 template <etl::size_t Idx, typename... Ts>
 struct variant_alternative<Idx, etl::variant<Ts...>> {
     static_assert(Idx < sizeof...(Ts));
-    using type = etl::nth_type_t<Idx, etl::type_sequence<Ts...>>;
+    using type = etl::meta::at_t<Idx, etl::meta::list<Ts...>>;
 };
 
 template <etl::size_t Idx, typename... Ts>
 struct variant_alternative<Idx, etl::variant2<Ts...>> {
     static_assert(Idx < sizeof...(Ts));
-    using type = etl::nth_type_t<Idx, etl::type_sequence<Ts...>>;
+    using type = etl::meta::at_t<Idx, etl::meta::list<Ts...>>;
 };
 
 template <etl::size_t I, typename T>

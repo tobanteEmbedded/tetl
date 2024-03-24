@@ -15,6 +15,7 @@
 #include <etl/_memory/addressof.hpp>
 #include <etl/_memory/construct_at.hpp>
 #include <etl/_memory/destroy_at.hpp>
+#include <etl/_meta/at.hpp>
 #include <etl/_new/operator.hpp>
 #include <etl/_type_traits/add_pointer.hpp>
 #include <etl/_type_traits/aligned_storage.hpp>
@@ -28,7 +29,6 @@
 #include <etl/_type_traits/is_trivially_destructible.hpp>
 #include <etl/_type_traits/remove_cvref.hpp>
 #include <etl/_type_traits/smallest_size_t.hpp>
-#include <etl/_type_traits/type_sequence.hpp>
 #include <etl/_utility/forward.hpp>
 #include <etl/_utility/in_place_index.hpp>
 #include <etl/_utility/in_place_type.hpp>
@@ -270,7 +270,7 @@ template <typename... Ts>
 struct variant {
 private:
     using internal_size_t = etl::smallest_size_t<sizeof...(Ts)>;
-    using first_type      = etl::nth_type_t<0, etl::type_sequence<Ts...>>;
+    using first_type      = etl::meta::at_t<0, etl::meta::list<Ts...>>;
 
 public:
     constexpr variant() noexcept(noexcept(etl::is_nothrow_default_constructible_v<first_type>))

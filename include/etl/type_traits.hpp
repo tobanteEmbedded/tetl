@@ -128,6 +128,5 @@
 #include <etl/_type_traits/is_builtin_unsigned_integer.hpp>
 #include <etl/_type_traits/is_specialized.hpp>
 #include <etl/_type_traits/smallest_size_t.hpp>
-#include <etl/_type_traits/type_sequence.hpp>
 
 #endif // TETL_TYPETRAITS_HPP
