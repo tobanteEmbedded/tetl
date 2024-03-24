@@ -8,8 +8,7 @@
 namespace etl {
 
 #if defined(TETL_MSVC)
-    // Padding was added at the end of a structure
-    #pragma warning(disable: 4324)
+    #pragma warning(disable: 4324) // Padding was added at the end of a structure
 #endif
 
 /// \brief etl::max_align_t is a trivial standard-layout type whose alignment
@@ -19,8 +18,7 @@ namespace etl {
 struct alignas(long double) max_align_t { };
 
 #if defined(TETL_MSVC)
-    // Padding was added at the end of a structure
-    #pragma warning(default: 4324)
+    #pragma warning(default: 4324) // Padding was added at the end of a structure
 #endif
 
 } // namespace etl
