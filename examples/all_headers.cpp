@@ -37,6 +37,7 @@
 #include <etl/mdarray.hpp>
 #include <etl/mdspan.hpp>
 #include <etl/memory.hpp>
+#include <etl/meta.hpp>
 #include <etl/mutex.hpp>
 #include <etl/new.hpp>
 #include <etl/numbers.hpp>
