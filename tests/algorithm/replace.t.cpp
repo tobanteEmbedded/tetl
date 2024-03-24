@@ -14,16 +14,16 @@ constexpr auto test() -> bool
     // empty range
     {
         auto data = etl::static_vector<T, 4>{};
-        etl::replace(begin(data), end(data), T(0), T(1));
+        etl::replace(data.begin(), data.end(), T(0), T(1));
         CHECK(data.empty());
     }
 
     // range
     {
         auto data = etl::array{T(1), T(2), T(2), T(3)};
-        etl::replace(begin(data), end(data), T(2), T(1));
-        CHECK(etl::count(begin(data), end(data), T(2)) == 0);
-        CHECK(etl::count(begin(data), end(data), T(1)) == 3);
+        etl::replace(data.begin(), data.end(), T(2), T(1));
+        CHECK(etl::count(data.begin(), data.end(), T(2)) == 0);
+        CHECK(etl::count(data.begin(), data.end(), T(1)) == 3);
     }
 
     return true;

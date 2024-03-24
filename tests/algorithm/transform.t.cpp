@@ -15,8 +15,8 @@ constexpr auto test() -> bool
 {
     etl::array<T, 4> a{T(2), T(2), T(2), T(2)};
     auto func = [](auto v) { return static_cast<T>(v * 2); };
-    etl::transform(begin(a), end(a), begin(a), func);
-    CHECK(etl::all_of(begin(a), end(a), [](auto v) { return v == 4; }));
+    etl::transform(a.begin(), a.end(), a.begin(), func);
+    CHECK(etl::all_of(a.begin(), a.end(), [](auto v) { return v == 4; }));
 
     etl::static_string<32> str("hello");
     etl::static_vector<T, 8> vec{};

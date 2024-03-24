@@ -13,7 +13,7 @@ constexpr auto test() -> bool
     // equal_to
     {
         auto data = etl::array<T, 5>{T(1), T(1), T(1), T(2), T(3)};
-        etl::unique(begin(data), end(data));
+        etl::unique(data.begin(), data.end());
         CHECK(data[0] == T(1));
         CHECK(data[1] == T(2));
         CHECK(data[2] == T(3));
@@ -22,7 +22,7 @@ constexpr auto test() -> bool
     // not_equal_to
     {
         auto data = etl::array<T, 5>{T(1), T(1), T(1), T(2), T(3)};
-        etl::unique(begin(data), end(data), etl::not_equal_to{});
+        etl::unique(data.begin(), data.end(), etl::not_equal_to{});
         CHECK(data[0] == T(1));
         CHECK(data[1] == T(1));
         CHECK(data[2] == T(1));
@@ -33,7 +33,7 @@ constexpr auto test() -> bool
         auto src = etl::array<T, 5>{T(1), T(1), T(1), T(2), T(3)};
         decltype(src) dest{};
 
-        etl::unique_copy(begin(src), end(src), begin(dest));
+        etl::unique_copy(src.begin(), src.end(), begin(dest));
         CHECK(dest[0] == T(1));
         CHECK(dest[1] == T(2));
         CHECK(dest[2] == T(3));
@@ -45,7 +45,7 @@ constexpr auto test() -> bool
         decltype(src) dest{};
 
         auto cmp = etl::not_equal_to{};
-        etl::unique_copy(begin(src), end(src), begin(dest), cmp);
+        etl::unique_copy(src.begin(), src.end(), begin(dest), cmp);
         CHECK(dest[0] == T(1));
         CHECK(dest[1] == T(1));
         CHECK(dest[2] == T(1));

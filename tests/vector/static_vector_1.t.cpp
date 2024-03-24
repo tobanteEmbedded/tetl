@@ -167,7 +167,7 @@ constexpr auto test_cx() -> bool
         CHECK(etl::as_const(a).size() == 4);
         CHECK(etl::as_const(a).front() == 42);
         CHECK(etl::as_const(a).back() == 42);
-        CHECK(etl::all_of(begin(a), end(a), [](auto val) { return val == T(42); }));
+        CHECK(etl::all_of(a.begin(), a.end(), [](auto val) { return val == T(42); }));
 
         auto b = etl::static_vector<T, 4>{4};
         b.assign(a.begin(), a.end());
@@ -342,7 +342,7 @@ constexpr auto test_cx() -> bool
     // range
     {
         auto data = etl::array{T(0), T(0), T(1), T(2), T(0), T(2)};
-        auto vec  = etl::static_vector<T, 6>(begin(data), end(data));
+        auto vec  = etl::static_vector<T, 6>(data.begin(), data.end());
         CHECK(vec.full());
         CHECK(etl::erase(vec, T(0)) == 3);
         CHECK_FALSE(vec.full());

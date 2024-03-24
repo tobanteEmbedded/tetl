@@ -419,7 +419,7 @@ template <typename T>
         etl::string_view src{"_test"};
 
         string dest{"abc"};
-        dest.append(begin(src), end(src));
+        dest.append(src.begin(), src.end());
         CHECK(dest == "abc_test"_sv);
     }
 

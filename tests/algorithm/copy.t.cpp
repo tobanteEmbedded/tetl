@@ -69,7 +69,7 @@ constexpr auto test() -> bool
     {
         auto const source = etl::array{T(1), T(2), T(3), T(4)};
         T dest[4]         = {};
-        etl::copy_n(begin(source), 4, etl::begin(dest));
+        etl::copy_n(source.begin(), 4, etl::begin(dest));
         CHECK(dest[0] == T{1});
         CHECK(dest[1] == T{2});
         CHECK(dest[2] == T{3});
@@ -80,7 +80,7 @@ constexpr auto test() -> bool
     {
         auto const source = etl::array{T(1), T(2), T(3), T(4)};
         T dest[3]         = {};
-        etl::copy_n(begin(source), 2, etl::begin(dest));
+        etl::copy_n(source.begin(), 2, etl::begin(dest));
         CHECK(dest[0] == T{1});
         CHECK(dest[1] == T{2});
         CHECK(dest[2] == T{0});
@@ -91,7 +91,7 @@ constexpr auto test() -> bool
         auto const source = etl::array{T(1), T(2), T(3), T(4)};
         auto dest         = vector_t{};
         CHECK(dest.size() == 0);
-        etl::copy_n(begin(source), source.size(), etl::back_inserter(dest));
+        etl::copy_n(source.begin(), source.size(), etl::back_inserter(dest));
         CHECK(dest.size() == 4);
         CHECK(dest[0] == T{1});
         CHECK(dest[1] == T{2});
@@ -103,7 +103,7 @@ constexpr auto test() -> bool
     {
         auto const source = etl::array{T(1), T(2), T(3), T(4)};
         T dest[4]         = {};
-        etl::copy_backward(begin(source), end(source), etl::end(dest));
+        etl::copy_backward(source.begin(), source.end(), etl::end(dest));
         CHECK(dest[0] == T{1});
         CHECK(dest[1] == T{2});
         CHECK(dest[2] == T{3});

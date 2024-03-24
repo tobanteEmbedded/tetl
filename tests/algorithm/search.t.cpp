@@ -15,7 +15,7 @@ constexpr auto test() -> bool
     {
         auto src  = etl::array{T(0), T(0), T(0), T(1), T(2), T(3)};
         auto dest = etl::array{T(1), T(2), T(3)};
-        auto* res = etl::search(begin(src), end(src), begin(dest), end(dest));
+        auto* res = etl::search(src.begin(), src.end(), begin(dest), end(dest));
         CHECK(*res == T(1));
     }
 
@@ -23,7 +23,7 @@ constexpr auto test() -> bool
     {
         auto src  = etl::array{T(0), T(0), T(0), T(0), T(2), T(3)};
         auto dest = etl::array{T(1), T(2), T(3)};
-        auto* res = etl::search(begin(src), end(src), begin(dest), end(dest));
+        auto* res = etl::search(src.begin(), src.end(), begin(dest), end(dest));
         CHECK(res == end(src));
     }
 
@@ -31,7 +31,7 @@ constexpr auto test() -> bool
     {
         auto src  = etl::array{T(0), T(0), T(0), T(0), T(2), T(3)};
         auto dest = etl::static_vector<T, 0>{};
-        auto* res = etl::search(begin(src), end(src), begin(dest), end(dest));
+        auto* res = etl::search(src.begin(), src.end(), begin(dest), end(dest));
         CHECK(res == begin(src));
     }
 
@@ -51,27 +51,27 @@ constexpr auto test() -> bool
     // empty range
     {
         auto src  = etl::static_vector<T, 2>{};
-        auto* res = etl::search_n(begin(src), end(src), 3, T(0));
+        auto* res = etl::search_n(src.begin(), src.end(), 3, T(0));
         CHECK(res == end(src));
     }
 
     // zero or negative count
     {
         auto src = etl::array{T(0), T(0), T(0), T(1), T(2), T(3)};
-        CHECK(etl::search_n(begin(src), end(src), 0, T(0)) == begin(src));
+        CHECK(etl::search_n(src.begin(), src.end(), 0, T(0)) == begin(src));
     }
 
     // no match
     {
         auto src  = etl::array{T(0), T(0), T(0), T(1), T(2), T(3)};
-        auto* res = etl::search_n(begin(src), end(src), 3, T(42));
+        auto* res = etl::search_n(src.begin(), src.end(), 3, T(42));
         CHECK(res == end(src));
     }
 
     // find match
     {
         auto src  = etl::array{T(0), T(0), T(0), T(1), T(2), T(3)};
-        auto* res = etl::search_n(begin(src), end(src), 3, T(0));
+        auto* res = etl::search_n(src.begin(), src.end(), 3, T(0));
         CHECK(res == begin(src));
         CHECK(*res == T(0));
     }
@@ -81,12 +81,12 @@ constexpr auto test() -> bool
         etl::array<T, 12> v{1, 2, 3, 4, 1, 2, 3, 4, 1, 2, 3, 4};
         etl::array<T, 3> t1{1, 2, 3};
 
-        auto* result = etl::find_end(begin(v), end(v), begin(t1), end(t1));
-        CHECK(etl::distance(begin(v), result) == 8);
+        auto* result = etl::find_end(v.begin(), v.end(), begin(t1), end(t1));
+        CHECK(etl::distance(v.begin(), result) == 8);
 
         etl::array<T, 3> t2{4, 5, 6};
-        result = etl::find_end(begin(v), end(v), begin(t2), end(t2));
-        CHECK(result == end(v));
+        result = etl::find_end(v.begin(), v.end(), begin(t2), end(t2));
+        CHECK(result == v.end());
     }
 
     return true;

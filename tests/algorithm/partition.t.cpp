@@ -28,7 +28,7 @@ constexpr auto test() -> bool
         auto dFalse = etl::array<T, 5>{};
         auto pred   = [](auto n) { return n < 10; };
 
-        auto res = etl::partition_copy(begin(src), end(src), begin(dTrue), begin(dFalse), pred);
+        auto res = etl::partition_copy(src.begin(), src.end(), begin(dTrue), begin(dFalse), pred);
         CHECK(res.first == begin(dTrue));
         CHECK(res.second == begin(dFalse));
     }
@@ -42,7 +42,7 @@ constexpr auto test() -> bool
 
         auto falseIt = etl::back_inserter(dFalse);
         auto trueIt  = etl::back_inserter(dTrue);
-        etl::partition_copy(begin(src), end(src), trueIt, falseIt, predicate);
+        etl::partition_copy(src.begin(), src.end(), trueIt, falseIt, predicate);
 
         CHECK(dTrue.size() == 4);
         CHECK(etl::all_of(begin(dTrue), end(dTrue), [](auto v) { return v < 10; }));
@@ -54,7 +54,7 @@ constexpr auto test() -> bool
     {
         auto data = etl::static_vector<T, 5>{};
         auto pred = [](auto v) { return v < 10; };
-        auto* res = etl::partition_point(begin(data), end(data), pred);
+        auto* res = etl::partition_point(data.begin(), data.end(), pred);
         CHECK(res == end(data));
     }
 
@@ -62,7 +62,7 @@ constexpr auto test() -> bool
     {
         auto data = etl::array{T(1), T(2), T(10), T(11)};
         auto pred = [](auto v) { return v < 10; };
-        auto* res = etl::partition_point(begin(data), end(data), pred);
+        auto* res = etl::partition_point(data.begin(), data.end(), pred);
         CHECK(res != end(data));
         CHECK(*res == T(10));
     }

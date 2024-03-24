@@ -28,14 +28,14 @@ constexpr auto test() -> bool
     // empty range
     {
         auto data = etl::static_vector<T, 2>{};
-        auto* res = etl::adjacent_find(begin(data), end(data));
+        auto* res = etl::adjacent_find(data.begin(), data.end());
         CHECK(res == end(data));
     }
 
     // no match
     {
         auto const data = etl::array{T(0), T(1), T(2)};
-        auto const* res = etl::adjacent_find(begin(data), end(data));
+        auto const* res = etl::adjacent_find(data.begin(), data.end());
         CHECK(res == end(data));
     }
 

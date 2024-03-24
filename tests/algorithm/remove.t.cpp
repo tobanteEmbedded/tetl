@@ -14,7 +14,7 @@ constexpr auto test() -> bool
     // empty range
     {
         auto data = etl::static_vector<T, 4>{};
-        auto* res = etl::remove(begin(data), end(data), T{1});
+        auto* res = etl::remove(data.begin(), data.end(), T{1});
         CHECK(res == end(data));
         CHECK(data.empty());
     }
@@ -27,7 +27,7 @@ constexpr auto test() -> bool
         data.push_back(T{0});
         data.push_back(T{0});
 
-        auto* res = etl::remove(begin(data), end(data), T{1});
+        auto* res = etl::remove(data.begin(), data.end(), T{1});
         CHECK(res == end(data) - 1);
         CHECK(data[0] == 0);
     }

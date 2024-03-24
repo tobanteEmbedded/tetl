@@ -75,15 +75,15 @@ constexpr auto test_builtin_types() -> bool
         a.fill(T{1});
         etl::array<T, 4> b{};
 
-        CHECK(etl::all_of(begin(a), end(a), [](auto val) { return val == 1; }));
+        CHECK(etl::all_of(a.begin(), a.end(), [](auto val) { return val == 1; }));
         CHECK(etl::all_of(begin(b), end(b), [](auto val) { return val == 0; }));
 
         a.swap(b);
-        CHECK(etl::all_of(begin(a), end(a), [](auto val) { return val == 0; }));
+        CHECK(etl::all_of(a.begin(), a.end(), [](auto val) { return val == 0; }));
         CHECK(etl::all_of(begin(b), end(b), [](auto val) { return val == 1; }));
 
         etl::swap(a, b);
-        CHECK(etl::all_of(begin(a), end(a), [](auto val) { return val == 1; }));
+        CHECK(etl::all_of(a.begin(), a.end(), [](auto val) { return val == 1; }));
         CHECK(etl::all_of(begin(b), end(b), [](auto val) { return val == 0; }));
     }
 

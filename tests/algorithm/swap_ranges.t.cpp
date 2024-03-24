@@ -16,7 +16,7 @@ constexpr auto test() -> bool
         auto a        = etl::array{T(1), T(2)};
         decltype(a) b = {};
 
-        etl::swap_ranges(begin(a), end(a), begin(b));
+        etl::swap_ranges(a.begin(), a.end(), begin(b));
         CHECK(a[0] == T(0));
         CHECK(a[1] == T(0));
         CHECK(b[0] == T(1));

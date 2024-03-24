@@ -23,7 +23,7 @@ constexpr auto test_sort() -> bool
         src[2]   = T{3};
         src[3]   = T{4};
 
-        etl::sort(begin(src), end(src), etl::less<T>{});
+        etl::sort(src.begin(), src.end(), etl::less<T>{});
         CHECK(src[0] == T{1});
         CHECK(src[1] == T{2});
         CHECK(src[2] == T{3});
@@ -38,7 +38,7 @@ constexpr auto test_sort() -> bool
         src[2]   = T{2};
         src[3]   = T{1};
 
-        etl::sort(begin(src), end(src));
+        etl::sort(src.begin(), src.end());
         CHECK(src[0] == T{1});
         CHECK(src[1] == T{2});
         CHECK(src[2] == T{3});
@@ -53,7 +53,7 @@ constexpr auto test_sort() -> bool
         src[2]   = T{56};
         src[3]   = T{42};
 
-        etl::sort(begin(src), end(src), [](auto const& lhs, auto const& rhs) { return lhs > rhs; });
+        etl::sort(src.begin(), src.end(), [](auto const& lhs, auto const& rhs) { return lhs > rhs; });
         CHECK(src[0] == T{56});
         CHECK(src[1] == T{42});
         CHECK(src[2] == T{1});
@@ -64,14 +64,14 @@ constexpr auto test_sort() -> bool
     {
         auto src = etl::static_vector<T, 4>{};
         CHECK(src.empty());
-        etl::stable_sort(begin(src), end(src), etl::less<T>{});
+        etl::stable_sort(src.begin(), src.end(), etl::less<T>{});
         CHECK(src.empty());
     }
 
     // already sorted
     {
         auto src = etl::array<T, 4>{T{1}, T{2}, T{3}, T{4}};
-        etl::stable_sort(begin(src), end(src));
+        etl::stable_sort(src.begin(), src.end());
         CHECK(src[0] == T{1});
         CHECK(src[1] == T{2});
         CHECK(src[2] == T{3});
@@ -81,7 +81,7 @@ constexpr auto test_sort() -> bool
     // reversed
     {
         auto src = etl::array<T, 4>{T{4}, T{3}, T{2}, T{1}};
-        etl::stable_sort(begin(src), end(src));
+        etl::stable_sort(src.begin(), src.end());
         CHECK(src[0] == T{1});
         CHECK(src[1] == T{2});
         CHECK(src[2] == T{3});
@@ -92,14 +92,14 @@ constexpr auto test_sort() -> bool
     {
         auto src = etl::static_vector<T, 4>{};
         CHECK(src.empty());
-        etl::partial_sort(begin(src), begin(src), end(src), etl::less<T>{});
+        etl::partial_sort(src.begin(), src.begin(), src.end(), etl::less<T>{});
         CHECK(src.empty());
     }
 
     // already sorted
     {
         auto src = etl::array<T, 4>{T{1}, T{2}, T{3}, T{4}};
-        etl::partial_sort(begin(src), begin(src) + 2, end(src));
+        etl::partial_sort(src.begin(), begin(src) + 2, end(src));
         CHECK(src[0] == T{1});
         CHECK(src[1] == T{2});
     }
@@ -107,7 +107,7 @@ constexpr auto test_sort() -> bool
     // reversed
     {
         auto src = etl::array<T, 4>{T{4}, T{3}, T{2}, T{1}};
-        etl::partial_sort(begin(src), begin(src) + 2, end(src));
+        etl::partial_sort(src.begin(), begin(src) + 2, end(src));
         CHECK(src[0] == T{1});
         CHECK(src[1] == T{2});
     }
@@ -116,21 +116,21 @@ constexpr auto test_sort() -> bool
     {
         auto src = etl::static_vector<T, 4>{};
         CHECK(src.empty());
-        etl::nth_element(begin(src), begin(src), end(src));
+        etl::nth_element(src.begin(), src.begin(), src.end());
         CHECK(src.empty());
     }
 
     // already sorted
     {
         auto src = etl::array<T, 4>{T{1}, T{2}, T{3}, T{4}};
-        etl::nth_element(begin(src), begin(src) + 1, end(src), etl::less{});
+        etl::nth_element(src.begin(), begin(src) + 1, end(src), etl::less{});
         CHECK(src[1] == T{2});
     }
 
     // reversed
     {
         auto src = etl::array<T, 4>{T{4}, T{3}, T{2}, T{1}};
-        etl::nth_element(begin(src), begin(src) + 1, end(src));
+        etl::nth_element(src.begin(), begin(src) + 1, end(src));
         CHECK(src[1] == T{2});
     }
 
@@ -143,7 +143,7 @@ constexpr auto test_sort() -> bool
             T{4},
         };
 
-        CHECK(etl::is_sorted(begin(src), end(src), etl::less<T>{}));
+        CHECK(etl::is_sorted(src.begin(), src.end(), etl::less<T>{}));
     }
 
     // reversed
@@ -155,8 +155,8 @@ constexpr auto test_sort() -> bool
             T{1},
         };
 
-        CHECK(etl::is_sorted(begin(src), end(src), etl::greater{}));
-        CHECK_FALSE(etl::is_sorted(begin(src), end(src)));
+        CHECK(etl::is_sorted(src.begin(), src.end(), etl::greater{}));
+        CHECK_FALSE(etl::is_sorted(src.begin(), src.end()));
     }
 
     // custom compare
@@ -168,14 +168,14 @@ constexpr auto test_sort() -> bool
             T{42},
         };
 
-        CHECK_FALSE(etl::is_sorted(begin(src), end(src), etl::greater{}));
+        CHECK_FALSE(etl::is_sorted(src.begin(), src.end(), etl::greater{}));
     }
 
     // empty range always returns true
     {
         auto data      = etl::static_vector<T, 1>{};
         auto predicate = [](auto const& val) { return val < T(1); };
-        CHECK(etl::is_partitioned(begin(data), end(data), predicate));
+        CHECK(etl::is_partitioned(data.begin(), data.end(), predicate));
     }
 
     // true
@@ -218,7 +218,7 @@ constexpr auto test_bubble_sort() -> bool
         src[2]   = T{3};
         src[3]   = T{4};
 
-        etl::bubble_sort(begin(src), end(src), etl::less<T>{});
+        etl::bubble_sort(src.begin(), src.end(), etl::less<T>{});
         CHECK(src[0] == T{1});
         CHECK(src[1] == T{2});
         CHECK(src[2] == T{3});
@@ -233,7 +233,7 @@ constexpr auto test_bubble_sort() -> bool
         src[2]   = T{2};
         src[3]   = T{1};
 
-        etl::bubble_sort(begin(src), end(src));
+        etl::bubble_sort(src.begin(), src.end());
         CHECK(src[0] == T{1});
         CHECK(src[1] == T{2});
         CHECK(src[2] == T{3});
@@ -248,7 +248,7 @@ constexpr auto test_bubble_sort() -> bool
         src[2]   = T{56};
         src[3]   = T{42};
 
-        etl::bubble_sort(begin(src), end(src), [](auto const& lhs, auto const& rhs) { return lhs > rhs; });
+        etl::bubble_sort(src.begin(), src.end(), [](auto const& lhs, auto const& rhs) { return lhs > rhs; });
         CHECK(src[0] == T{56});
         CHECK(src[1] == T{42});
         CHECK(src[2] == T{1});
@@ -270,7 +270,7 @@ constexpr auto test_insertion_sort() -> bool
         src[2]   = T{3};
         src[3]   = T{4};
 
-        etl::insertion_sort(begin(src), end(src), etl::less<T>{});
+        etl::insertion_sort(src.begin(), src.end(), etl::less<T>{});
         CHECK(src[0] == T{1});
         CHECK(src[1] == T{2});
         CHECK(src[2] == T{3});
@@ -285,7 +285,7 @@ constexpr auto test_insertion_sort() -> bool
         src[2]   = T{2};
         src[3]   = T{1};
 
-        etl::insertion_sort(begin(src), end(src));
+        etl::insertion_sort(src.begin(), src.end());
         CHECK(src[0] == T{1});
         CHECK(src[1] == T{2});
         CHECK(src[2] == T{3});
@@ -300,7 +300,7 @@ constexpr auto test_insertion_sort() -> bool
         src[2]   = T{56};
         src[3]   = T{42};
 
-        etl::insertion_sort(begin(src), end(src), [](auto const& lhs, auto const& rhs) { return lhs > rhs; });
+        etl::insertion_sort(src.begin(), src.end(), [](auto const& lhs, auto const& rhs) { return lhs > rhs; });
         CHECK(src[0] == T{56});
         CHECK(src[1] == T{42});
         CHECK(src[2] == T{1});
@@ -322,7 +322,7 @@ constexpr auto test_merge_sort() -> bool
         src[2]   = T{3};
         src[3]   = T{4};
 
-        etl::merge_sort(begin(src), end(src), etl::less<T>{});
+        etl::merge_sort(src.begin(), src.end(), etl::less<T>{});
         CHECK(src[0] == T{1});
         CHECK(src[1] == T{2});
         CHECK(src[2] == T{3});
@@ -337,7 +337,7 @@ constexpr auto test_merge_sort() -> bool
         src[2]   = T{2};
         src[3]   = T{1};
 
-        etl::merge_sort(begin(src), end(src));
+        etl::merge_sort(src.begin(), src.end());
         CHECK(src[0] == T{1});
         CHECK(src[1] == T{2});
         CHECK(src[2] == T{3});
@@ -352,7 +352,7 @@ constexpr auto test_merge_sort() -> bool
         src[2]   = T{56};
         src[3]   = T{42};
 
-        etl::merge_sort(begin(src), end(src), [](auto const& lhs, auto const& rhs) { return lhs > rhs; });
+        etl::merge_sort(src.begin(), src.end(), [](auto const& lhs, auto const& rhs) { return lhs > rhs; });
         CHECK(src[0] == T{56});
         CHECK(src[1] == T{42});
         CHECK(src[2] == T{1});
@@ -374,7 +374,7 @@ constexpr auto test_gnome_sort() -> bool
         src[2]   = T{3};
         src[3]   = T{4};
 
-        etl::gnome_sort(begin(src), end(src), etl::less<T>{});
+        etl::gnome_sort(src.begin(), src.end(), etl::less<T>{});
         CHECK(src[0] == T{1});
         CHECK(src[1] == T{2});
         CHECK(src[2] == T{3});
@@ -389,7 +389,7 @@ constexpr auto test_gnome_sort() -> bool
         src[2]   = T{2};
         src[3]   = T{1};
 
-        etl::gnome_sort(begin(src), end(src));
+        etl::gnome_sort(src.begin(), src.end());
         CHECK(src[0] == T{1});
         CHECK(src[1] == T{2});
         CHECK(src[2] == T{3});
@@ -404,7 +404,7 @@ constexpr auto test_gnome_sort() -> bool
         src[2]   = T{56};
         src[3]   = T{42};
 
-        etl::gnome_sort(begin(src), end(src), [](auto const& lhs, auto const& rhs) { return lhs > rhs; });
+        etl::gnome_sort(src.begin(), src.end(), [](auto const& lhs, auto const& rhs) { return lhs > rhs; });
         CHECK(src[0] == T{56});
         CHECK(src[1] == T{42});
         CHECK(src[2] == T{1});
@@ -426,7 +426,7 @@ constexpr auto test_exchange_sort() -> bool
         src[2]   = T{3};
         src[3]   = T{4};
 
-        etl::exchange_sort(begin(src), end(src), etl::less<T>{});
+        etl::exchange_sort(src.begin(), src.end(), etl::less<T>{});
         CHECK(src[0] == T{1});
         CHECK(src[1] == T{2});
         CHECK(src[2] == T{3});
@@ -441,7 +441,7 @@ constexpr auto test_exchange_sort() -> bool
         src[2]   = T{2};
         src[3]   = T{1};
 
-        etl::exchange_sort(begin(src), end(src));
+        etl::exchange_sort(src.begin(), src.end());
         CHECK(src[0] == T{1});
         CHECK(src[1] == T{2});
         CHECK(src[2] == T{3});
@@ -456,7 +456,7 @@ constexpr auto test_exchange_sort() -> bool
         src[2]   = T{56};
         src[3]   = T{42};
 
-        etl::exchange_sort(begin(src), end(src), [](auto const& lhs, auto const& rhs) { return lhs > rhs; });
+        etl::exchange_sort(src.begin(), src.end(), [](auto const& lhs, auto const& rhs) { return lhs > rhs; });
         CHECK(src[0] == T{56});
         CHECK(src[1] == T{42});
         CHECK(src[2] == T{1});

@@ -43,7 +43,7 @@ constexpr auto test() -> bool
 
         auto source = etl::array{S(T(1)), S(T(1)), S(T(1))};
         decltype(source) d{};
-        etl::move(begin(source), end(source), begin(d));
+        etl::move(source.begin(), source.end(), begin(d));
 
         // CHECK
         CHECK(etl::all_of(begin(d), end(d), [](auto const& s) { return s.move; }));
@@ -56,7 +56,7 @@ constexpr auto test() -> bool
         // move
         auto source = etl::array{S(T(1)), S(T(2)), S(T(3))};
         decltype(source) d{};
-        etl::move_backward(begin(source), end(source), end(d));
+        etl::move_backward(source.begin(), source.end(), end(d));
 
         // CHECK
         CHECK(etl::all_of(begin(d), end(d), [](auto const& s) { return s.move; }));

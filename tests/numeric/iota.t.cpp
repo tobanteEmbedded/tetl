@@ -12,7 +12,7 @@ constexpr auto test() -> bool
     // from 0
     {
         auto data = etl::array<T, 4>{};
-        etl::iota(begin(data), end(data), T{0});
+        etl::iota(data.begin(), data.end(), T{0});
         CHECK(data[0] == 0);
         CHECK(data[1] == 1);
         CHECK(data[2] == 2);
@@ -22,7 +22,7 @@ constexpr auto test() -> bool
     // from 42
     {
         auto data = etl::array<T, 4>{};
-        etl::iota(begin(data), end(data), T{42});
+        etl::iota(data.begin(), data.end(), T{42});
         CHECK(data[0] == 42);
         CHECK(data[1] == 43);
         CHECK(data[2] == 44);

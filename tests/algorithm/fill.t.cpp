@@ -13,23 +13,16 @@ constexpr auto test() -> bool
 {
     // c array
     {
-        T source[4] = {};
-        etl::fill(etl::begin(source), etl::end(source), T{42});
-
-        auto const all42
-            = etl::all_of(etl::begin(source), etl::end(source), [](auto const& val) { return val == T{42}; });
-
-        CHECK(all42);
+        T data[4] = {};
+        etl::fill(etl::begin(data), etl::end(data), T{42});
+        CHECK(etl::all_of(etl::begin(data), etl::end(data), [](auto const& val) { return val == T{42}; }));
     }
 
     // etl::array
     {
-        auto source = etl::array<T, 4>{};
-        etl::fill(begin(source), end(source), T{42});
-
-        auto const all42 = etl::all_of(begin(source), end(source), [](auto const& val) { return val == T{42}; });
-
-        CHECK(all42);
+        auto data = etl::array<T, 4>{};
+        etl::fill(data.begin(), data.end(), T{42});
+        CHECK(etl::all_of(data.begin(), data.end(), [](auto const& val) { return val == T{42}; }));
     }
 
     // c array

@@ -23,27 +23,27 @@ constexpr auto test() -> bool
     {
         auto v = etl::static_vector<T, 4>{};
         v.push_back(T(0));
-        CHECK(etl::lower_bound(begin(v), end(v), T(0)) == begin(v));
-        CHECK(etl::lower_bound(begin(v), end(v), T(1)) == end(v));
-        CHECK(etl::lower_bound(begin(v), end(v), T(0), etl::greater{}) == begin(v));
-        CHECK(etl::lower_bound(begin(v), end(v), T(1), etl::greater{}) == begin(v));
+        CHECK(etl::lower_bound(v.begin(), v.end(), T(0)) == v.begin());
+        CHECK(etl::lower_bound(v.begin(), v.end(), T(1)) == v.end());
+        CHECK(etl::lower_bound(v.begin(), v.end(), T(0), etl::greater{}) == v.begin());
+        CHECK(etl::lower_bound(v.begin(), v.end(), T(1), etl::greater{}) == v.begin());
 
         // reset
         v.clear();
         v.push_back(T(1));
-        CHECK(etl::lower_bound(begin(v), end(v), T(0)) == begin(v));
-        CHECK(etl::lower_bound(begin(v), end(v), T(1)) == begin(v));
-        CHECK(etl::lower_bound(begin(v), end(v), T(0), etl::greater{}) == end(v));
-        CHECK(etl::lower_bound(begin(v), end(v), T(1), etl::greater{}) == begin(v));
+        CHECK(etl::lower_bound(v.begin(), v.end(), T(0)) == v.begin());
+        CHECK(etl::lower_bound(v.begin(), v.end(), T(1)) == v.begin());
+        CHECK(etl::lower_bound(v.begin(), v.end(), T(0), etl::greater{}) == v.end());
+        CHECK(etl::lower_bound(v.begin(), v.end(), T(1), etl::greater{}) == v.begin());
     }
 
     // multiple elements
     {
         auto const a = etl::array{T(0), T(1), T(2), T(3)};
-        CHECK(etl::lower_bound(begin(a), end(a), T(0)) == begin(a));
-        CHECK(etl::lower_bound(begin(a), end(a), T(1)) == begin(a) + 1);
-        CHECK(etl::lower_bound(begin(a), end(a), T(4)) == end(a));
-        CHECK(etl::lower_bound(begin(a), end(a), T(0), etl::greater{}) == end(a));
+        CHECK(etl::lower_bound(a.begin(), a.end(), T(0)) == a.begin());
+        CHECK(etl::lower_bound(a.begin(), a.end(), T(1)) == a.begin() + 1);
+        CHECK(etl::lower_bound(a.begin(), a.end(), T(4)) == a.end());
+        CHECK(etl::lower_bound(a.begin(), a.end(), T(0), etl::greater{}) == a.end());
     }
 
     return true;

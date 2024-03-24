@@ -19,11 +19,11 @@ constexpr auto test() -> bool
 
     // range
     auto const data = etl::array{T(0), T(1), T(2)};
-    CHECK(etl::binary_search(begin(data), end(data), T(0)));
-    CHECK(etl::binary_search(begin(data), end(data), T(1)));
-    CHECK(etl::binary_search(begin(data), end(data), T(2)));
-    CHECK_FALSE(etl::binary_search(begin(data), end(data), T(3)));
-    CHECK_FALSE(etl::binary_search(begin(data), end(data), T(4)));
+    CHECK(etl::binary_search(data.begin(), data.end(), T(0)));
+    CHECK(etl::binary_search(data.begin(), data.end(), T(1)));
+    CHECK(etl::binary_search(data.begin(), data.end(), T(2)));
+    CHECK_FALSE(etl::binary_search(data.begin(), data.end(), T(3)));
+    CHECK_FALSE(etl::binary_search(data.begin(), data.end(), T(4)));
 
     return true;
 }

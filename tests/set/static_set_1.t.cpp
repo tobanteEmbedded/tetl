@@ -78,7 +78,7 @@ auto test() -> bool // NOLINT(readability-function-size)
 
     {
         auto data = etl::array{T(2), T(1), T(0), T(1)};
-        auto set  = etl::static_set<T, 4>(begin(data), end(data));
+        auto set  = etl::static_set<T, 4>(data.begin(), data.end());
         CHECK(set.size() == 3);
         CHECK(set.max_size() == 4);
         CHECK_FALSE(set.empty());
