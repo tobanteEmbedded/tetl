@@ -5,7 +5,8 @@
 
 #undef NDEBUG
 #include <etl/cassert.hpp>
-#include <etl/type_traits.hpp>
+
+#include <etl/_type_traits/is_same.hpp>
 
 #define CHECK(...)           assert((__VA_ARGS__))
 #define CHECK_FALSE(...)     assert(not(__VA_ARGS__))
