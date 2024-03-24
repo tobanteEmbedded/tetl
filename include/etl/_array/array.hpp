@@ -19,6 +19,7 @@
 #include <etl/_tuple/tuple_size.hpp>
 #include <etl/_type_traits/is_nothrow_swappable.hpp>
 #include <etl/_type_traits/remove_cv.hpp>
+#include <etl/_utility/move.hpp>
 
 namespace etl {
 /// \brief array is a container that encapsulates fixed size arrays.
