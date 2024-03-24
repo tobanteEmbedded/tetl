@@ -8,26 +8,17 @@
 
 namespace etl::meta {
 
-namespace detail {
-
-template <etl::size_t I, typename T, typename... Ts>
-struct at_impl {
-    using type = typename at_impl<I - 1, Ts...>::type;
-};
-
-template <typename T, typename... Ts>
-struct at_impl<0, T, Ts...> {
-    using type = T;
-};
-
-} // namespace detail
-
 template <etl::size_t I, typename List>
 struct at;
 
-template <etl::size_t I, typename... Ts>
-struct at<I, list<Ts...>> {
-    using type = typename detail::at_impl<I, Ts...>::type;
+template <typename T, typename... Ts>
+struct at<0, list<T, Ts...>> {
+    using type = T;
+};
+
+template <etl::size_t I, typename T, typename... Ts>
+struct at<I, list<T, Ts...>> {
+    using type = typename at<I - 1, list<Ts...>>::type;
 };
 
 template <etl::size_t I, typename List>
