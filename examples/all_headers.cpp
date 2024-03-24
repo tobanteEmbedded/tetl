@@ -23,6 +23,7 @@
 #include <etl/ctime.hpp>
 #include <etl/cwchar.hpp>
 #include <etl/cwctype.hpp>
+#include <etl/debugging.hpp>
 #include <etl/exception.hpp>
 #include <etl/expected.hpp>
 #include <etl/flat_set.hpp>

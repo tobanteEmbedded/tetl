@@ -23,7 +23,7 @@ Unless stated otherwise, all papers are implemented to work with the minimum C++
 |  [P2264R7](https://www.open-std.org/jtc1/sc22/wg21/docs/papers/2023/p2264r7.html)  |            Make `assert()` macro user friendly for C and C++             |          |         |
 |  [P2497R0](https://www.open-std.org/jtc1/sc22/wg21/docs/papers/2023/p2497r0.html)  |         Testing for success or failure of `<charconv>` functions         | **Done** |         |
 |  [P2538R1](https://www.open-std.org/jtc1/sc22/wg21/docs/papers/2022/p2538r1.html)  |                        ADL-proof `std::projected`                        |          |         |
-|  [P2546R5](https://www.open-std.org/jtc1/sc22/wg21/docs/papers/2023/p2546r5.html)  |                     `<debugging>`: Debugging Support                     |          |         |
+|  [P2546R5](https://www.open-std.org/jtc1/sc22/wg21/docs/papers/2023/p2546r5.html)  |                     `<debugging>`: Debugging Support                     |  _WIP_   |         |
 |  [P2562R1](https://www.open-std.org/jtc1/sc22/wg21/docs/papers/2022/p2562r1.pdf)   |                         constexpr stable sorting                         | **Done** |         |
 |  [P2592R3](https://www.open-std.org/jtc1/sc22/wg21/docs/papers/2023/p2592r3.html)  |             Hashing support for `std::chrono` value classes              |          |         |
 |  [P2630R4](https://www.open-std.org/jtc1/sc22/wg21/docs/papers/2023/p2630r4.html)  |                            `std::submdspan()`                            |  _WIP_   |         |
