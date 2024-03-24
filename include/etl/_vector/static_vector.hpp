@@ -15,7 +15,6 @@
 #include <etl/_cassert/macro.hpp>
 #include <etl/_concepts/same_as.hpp>
 #include <etl/_container/index.hpp>
-#include <etl/_container/smallest_size_t.hpp>
 #include <etl/_cstdint/uint_t.hpp>
 #include <etl/_functional/is_transparent.hpp>
 #include <etl/_iterator/begin.hpp>
@@ -37,6 +36,7 @@
 #include <etl/_type_traits/is_nothrow_move_constructible.hpp>
 #include <etl/_type_traits/is_pointer.hpp>
 #include <etl/_type_traits/is_trivial.hpp>
+#include <etl/_type_traits/smallest_size_t.hpp>
 
 namespace etl {
 namespace detail {

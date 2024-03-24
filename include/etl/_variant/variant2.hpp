@@ -5,7 +5,6 @@
 
 #include <etl/_config/all.hpp>
 
-#include <etl/_container/smallest_size_t.hpp>
 #include <etl/_cstddef/size_t.hpp>
 #include <etl/_memory/addressof.hpp>
 #include <etl/_type_traits/add_pointer.hpp>
@@ -18,6 +17,7 @@
 #include <etl/_type_traits/is_nothrow_move_constructible.hpp>
 #include <etl/_type_traits/is_trivially_copy_constructible.hpp>
 #include <etl/_type_traits/is_trivially_move_constructible.hpp>
+#include <etl/_type_traits/smallest_size_t.hpp>
 #include <etl/_utility/forward.hpp>
 #include <etl/_utility/in_place_index.hpp>
 #include <etl/_variant/variadic_union.hpp>

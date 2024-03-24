@@ -8,7 +8,6 @@
 #include <etl/_algorithm/copy.hpp>
 #include <etl/_algorithm/move.hpp>
 #include <etl/_array/uninitialized_array.hpp>
-#include <etl/_container/smallest_size_t.hpp>
 #include <etl/_cstddef/ptrdiff_t.hpp>
 #include <etl/_cstddef/size_t.hpp>
 #include <etl/_iterator/next.hpp>
@@ -23,6 +22,7 @@
 #include <etl/_type_traits/is_trivially_copy_constructible.hpp>
 #include <etl/_type_traits/is_trivially_destructible.hpp>
 #include <etl/_type_traits/is_trivially_move_constructible.hpp>
+#include <etl/_type_traits/smallest_size_t.hpp>
 #include <etl/_utility/exchange.hpp>
 #include <etl/_utility/forward.hpp>
 #include <etl/_utility/move.hpp>

@@ -4,7 +4,6 @@
 #define TETL_VARIANT_VARIANT_HPP
 
 #include <etl/_array/array.hpp>
-#include <etl/_container/smallest_size_t.hpp>
 #include <etl/_cstddef/size_t.hpp>
 #include <etl/_exception/raise.hpp>
 #include <etl/_functional/equal_to.hpp>
@@ -28,6 +27,7 @@
 #include <etl/_type_traits/is_same.hpp>
 #include <etl/_type_traits/is_trivially_destructible.hpp>
 #include <etl/_type_traits/remove_cvref.hpp>
+#include <etl/_type_traits/smallest_size_t.hpp>
 #include <etl/_type_traits/type_sequence.hpp>
 #include <etl/_utility/forward.hpp>
 #include <etl/_utility/in_place_index.hpp>

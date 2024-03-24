@@ -8,7 +8,6 @@
 #include <etl/_algorithm/remove.hpp>
 #include <etl/_algorithm/rotate.hpp>
 #include <etl/_array/array.hpp>
-#include <etl/_container/smallest_size_t.hpp>
 #include <etl/_cstring/memset.hpp>
 #include <etl/_iterator/begin.hpp>
 #include <etl/_iterator/data.hpp>
@@ -26,6 +25,7 @@
 #include <etl/_string/str_rfind.hpp>
 #include <etl/_string_view/string_view.hpp>
 #include <etl/_type_traits/is_convertible.hpp>
+#include <etl/_type_traits/smallest_size_t.hpp>
 #include <etl/_utility/ignore_unused.hpp>
 
 namespace etl {
