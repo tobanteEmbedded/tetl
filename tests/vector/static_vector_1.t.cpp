@@ -3,7 +3,6 @@
 #include <etl/vector.hpp>
 
 #include <etl/algorithm.hpp>
-#include <etl/cstdint.hpp>
 #include <etl/numeric.hpp>
 #include <etl/type_traits.hpp>
 #include <etl/utility.hpp>
@@ -355,16 +354,27 @@ constexpr auto test_cx() -> bool
 
 constexpr auto test_all_cx() -> bool
 {
-    CHECK(test_cx<etl::int8_t>());
-    CHECK(test_cx<etl::int16_t>());
-    CHECK(test_cx<etl::int32_t>());
-    CHECK(test_cx<etl::int64_t>());
-    CHECK(test_cx<etl::uint8_t>());
-    CHECK(test_cx<etl::uint16_t>());
-    CHECK(test_cx<etl::uint32_t>());
-    CHECK(test_cx<etl::uint64_t>());
+    CHECK(test_cx<signed char>());
+    CHECK(test_cx<signed short>());
+    CHECK(test_cx<signed int>());
+    CHECK(test_cx<signed long>());
+    CHECK(test_cx<signed long long>());
+
+    CHECK(test_cx<unsigned char>());
+    CHECK(test_cx<unsigned short>());
+    CHECK(test_cx<unsigned int>());
+    CHECK(test_cx<unsigned long>());
+    CHECK(test_cx<unsigned long long>());
+
+    CHECK(test_cx<char>());
+    CHECK(test_cx<char8_t>());
+    CHECK(test_cx<char16_t>());
+    CHECK(test_cx<char32_t>());
+    CHECK(test_cx<wchar_t>());
+
     CHECK(test_cx<float>());
     CHECK(test_cx<double>());
+    CHECK(test_cx<long double>());
     return true;
 }
 

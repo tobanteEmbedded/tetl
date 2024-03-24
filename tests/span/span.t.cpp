@@ -3,7 +3,6 @@
 #include <etl/span.hpp>
 
 #include <etl/algorithm.hpp>
-#include <etl/cstdint.hpp>
 #include <etl/iterator.hpp>
 #include <etl/type_traits.hpp>
 #include <etl/utility.hpp>
@@ -233,16 +232,27 @@ static auto test_as_bytes() -> bool
 
 constexpr auto test_all() -> bool
 {
-    CHECK(test<etl::int8_t>());
-    CHECK(test<etl::int16_t>());
-    CHECK(test<etl::int32_t>());
-    CHECK(test<etl::int64_t>());
-    CHECK(test<etl::uint8_t>());
-    CHECK(test<etl::uint16_t>());
-    CHECK(test<etl::uint32_t>());
-    CHECK(test<etl::uint64_t>());
+    CHECK(test<signed char>());
+    CHECK(test<signed short>());
+    CHECK(test<signed int>());
+    CHECK(test<signed long>());
+    CHECK(test<signed long long>());
+
+    CHECK(test<unsigned char>());
+    CHECK(test<unsigned short>());
+    CHECK(test<unsigned int>());
+    CHECK(test<unsigned long>());
+    CHECK(test<unsigned long long>());
+
+    CHECK(test<char>());
+    CHECK(test<char8_t>());
+    CHECK(test<char16_t>());
+    CHECK(test<char32_t>());
+    CHECK(test<wchar_t>());
+
     CHECK(test<float>());
     CHECK(test<double>());
+    CHECK(test<long double>());
     return true;
 }
 
@@ -250,15 +260,26 @@ auto main() -> int
 {
     STATIC_CHECK(test_all());
 
-    CHECK(test_as_bytes<etl::int8_t>());
-    CHECK(test_as_bytes<etl::int16_t>());
-    CHECK(test_as_bytes<etl::int32_t>());
-    CHECK(test_as_bytes<etl::int64_t>());
-    CHECK(test_as_bytes<etl::uint8_t>());
-    CHECK(test_as_bytes<etl::uint16_t>());
-    CHECK(test_as_bytes<etl::uint32_t>());
-    CHECK(test_as_bytes<etl::uint64_t>());
+    CHECK(test_as_bytes<signed char>());
+    CHECK(test_as_bytes<signed short>());
+    CHECK(test_as_bytes<signed int>());
+    CHECK(test_as_bytes<signed long>());
+    CHECK(test_as_bytes<signed long long>());
+
+    CHECK(test_as_bytes<unsigned char>());
+    CHECK(test_as_bytes<unsigned short>());
+    CHECK(test_as_bytes<unsigned int>());
+    CHECK(test_as_bytes<unsigned long>());
+    CHECK(test_as_bytes<unsigned long long>());
+
+    CHECK(test_as_bytes<char>());
+    CHECK(test_as_bytes<char8_t>());
+    CHECK(test_as_bytes<char16_t>());
+    CHECK(test_as_bytes<char32_t>());
+    CHECK(test_as_bytes<wchar_t>());
+
     CHECK(test_as_bytes<float>());
     CHECK(test_as_bytes<double>());
+    CHECK(test_as_bytes<long double>());
     return 0;
 }

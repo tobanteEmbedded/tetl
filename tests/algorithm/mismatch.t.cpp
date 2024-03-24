@@ -3,7 +3,6 @@
 #include <etl/algorithm.hpp>
 
 #include <etl/array.hpp>
-#include <etl/cstdint.hpp>
 #include <etl/iterator.hpp>
 
 #include "testing/testing.hpp"
@@ -33,16 +32,27 @@ constexpr auto test() -> bool
 
 constexpr auto test_all() -> bool
 {
-    CHECK(test<etl::uint8_t>());
-    CHECK(test<etl::int8_t>());
-    CHECK(test<etl::uint16_t>());
-    CHECK(test<etl::int16_t>());
-    CHECK(test<etl::uint32_t>());
-    CHECK(test<etl::int32_t>());
-    CHECK(test<etl::uint64_t>());
-    CHECK(test<etl::int64_t>());
+    CHECK(test<signed char>());
+    CHECK(test<signed short>());
+    CHECK(test<signed int>());
+    CHECK(test<signed long>());
+    CHECK(test<signed long long>());
+
+    CHECK(test<unsigned char>());
+    CHECK(test<unsigned short>());
+    CHECK(test<unsigned int>());
+    CHECK(test<unsigned long>());
+    CHECK(test<unsigned long long>());
+
+    CHECK(test<char>());
+    CHECK(test<char8_t>());
+    CHECK(test<char16_t>());
+    CHECK(test<char32_t>());
+    CHECK(test<wchar_t>());
+
     CHECK(test<float>());
     CHECK(test<double>());
+    CHECK(test<long double>());
 
     return true;
 }

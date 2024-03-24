@@ -3,7 +3,6 @@
 #include <etl/vector.hpp>
 
 #include <etl/algorithm.hpp>
-#include <etl/cstdint.hpp>
 #include <etl/numeric.hpp>
 #include <etl/type_traits.hpp>
 #include <etl/utility.hpp>
@@ -153,16 +152,27 @@ auto test_runtime() -> bool
 
 static auto test_all_runtime() -> bool
 {
-    CHECK(test_runtime<etl::int8_t>());
-    CHECK(test_runtime<etl::int16_t>());
-    CHECK(test_runtime<etl::int32_t>());
-    CHECK(test_runtime<etl::int64_t>());
-    CHECK(test_runtime<etl::uint8_t>());
-    CHECK(test_runtime<etl::uint16_t>());
-    CHECK(test_runtime<etl::uint32_t>());
-    CHECK(test_runtime<etl::uint64_t>());
+    CHECK(test_runtime<signed char>());
+    CHECK(test_runtime<signed short>());
+    CHECK(test_runtime<signed int>());
+    CHECK(test_runtime<signed long>());
+    CHECK(test_runtime<signed long long>());
+
+    CHECK(test_runtime<unsigned char>());
+    CHECK(test_runtime<unsigned short>());
+    CHECK(test_runtime<unsigned int>());
+    CHECK(test_runtime<unsigned long>());
+    CHECK(test_runtime<unsigned long long>());
+
+    CHECK(test_runtime<char>());
+    CHECK(test_runtime<char8_t>());
+    CHECK(test_runtime<char16_t>());
+    CHECK(test_runtime<char32_t>());
+    CHECK(test_runtime<wchar_t>());
+
     CHECK(test_runtime<float>());
     CHECK(test_runtime<double>());
+    CHECK(test_runtime<long double>());
     return true;
 }
 
