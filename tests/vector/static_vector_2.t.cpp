@@ -156,23 +156,28 @@ static auto test_all_runtime() -> bool
     CHECK(test_runtime<signed short>());
     CHECK(test_runtime<signed int>());
     CHECK(test_runtime<signed long>());
-    CHECK(test_runtime<signed long long>());
 
     CHECK(test_runtime<unsigned char>());
     CHECK(test_runtime<unsigned short>());
     CHECK(test_runtime<unsigned int>());
     CHECK(test_runtime<unsigned long>());
-    CHECK(test_runtime<unsigned long long>());
 
     CHECK(test_runtime<char>());
     CHECK(test_runtime<char8_t>());
-    CHECK(test_runtime<char16_t>());
-    CHECK(test_runtime<char32_t>());
-    CHECK(test_runtime<wchar_t>());
 
     CHECK(test_runtime<float>());
     CHECK(test_runtime<double>());
+
+// Overflows .text section in debug builds
+#if not defined(__AVR__)
+    CHECK(test_runtime<signed long long>());
+    CHECK(test_runtime<unsigned long long>());
+    CHECK(test_runtime<char16_t>());
+    CHECK(test_runtime<char32_t>());
+    CHECK(test_runtime<wchar_t>());
     CHECK(test_runtime<long double>());
+#endif
+
     return true;
 }
 
