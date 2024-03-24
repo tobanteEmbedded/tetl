@@ -550,10 +550,6 @@ constexpr auto test() -> bool
     CHECK(sizeof(etl::aligned_union_t<1, char, T, double>) == 8);
     CHECK(sizeof(etl::aligned_union_t<12, char, T, double>) == 16);
 
-    CHECK_SAME_TYPE(etl::type_pack_element_t<0, T>, T);
-    CHECK_SAME_TYPE(etl::type_pack_element_t<1, T, float>, float);
-    CHECK_SAME_TYPE(etl::type_pack_element_t<2, T, char, short>, short);
-
     CHECK(etl::is_specialized_v<test_is_specialized, Foo<float>>);
     CHECK_FALSE(etl::is_specialized_v<test_is_specialized, T>);
     CHECK_FALSE(etl::is_specialized_v<test_is_specialized, double>);

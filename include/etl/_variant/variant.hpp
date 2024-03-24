@@ -28,7 +28,7 @@
 #include <etl/_type_traits/is_same.hpp>
 #include <etl/_type_traits/is_trivially_destructible.hpp>
 #include <etl/_type_traits/remove_cvref.hpp>
-#include <etl/_type_traits/type_pack_element.hpp>
+#include <etl/_type_traits/type_sequence.hpp>
 #include <etl/_utility/forward.hpp>
 #include <etl/_utility/in_place_index.hpp>
 #include <etl/_utility/in_place_type.hpp>
@@ -270,7 +270,7 @@ template <typename... Ts>
 struct variant {
 private:
     using internal_size_t = etl::smallest_size_t<sizeof...(Ts)>;
-    using first_type      = etl::type_pack_element_t<0, Ts...>;
+    using first_type      = etl::nth_type_t<0, etl::type_sequence<Ts...>>;
 
 public:
     constexpr variant() noexcept(noexcept(etl::is_nothrow_default_constructible_v<first_type>))

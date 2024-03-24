@@ -128,7 +128,6 @@
 #include <etl/_type_traits/is_standard_integer.hpp>
 #include <etl/_type_traits/is_standard_signed_integer.hpp>
 #include <etl/_type_traits/is_standard_unsigned_integer.hpp>
-#include <etl/_type_traits/type_pack_element.hpp>
 #include <etl/_type_traits/type_sequence.hpp>
 
 #endif // TETL_TYPETRAITS_HPP
