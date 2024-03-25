@@ -129,23 +129,25 @@ open build-doxygen/html/index.html
 
 ### VS Code
 
-In `.vscode/settings.json`
+Enable one of the following options in `.vscode/settings.json`:
 
 ```json
-// enable
 "cmake.useCMakePresets": "always"
-```
-
-```json
-// disable
 "cmake.useCMakePresets": "never"
 ```
 
 ## Coding Style
 
-- Trailing return type is used everywhere. Including if type is `void`
-  - `auto foo() -> double;`
-  - `auto nothing() -> void;`
+- Trailing return type is used **everywhere**:
+  - `auto func() {}`
+  - `auto func() -> void;`
+  - `auto func() -> double;`
+  - `auto func() -> auto&;`
+  - `auto func() -> decltype(auto);`
+- Keyword `class` is **banned**:
+  - `struct foo {};`
+  - `enum struct foo { baz, baz };`
+  - `template<typename T>`
 - Naming conventions:
   - Public interface matches the STL conventions
   - Checked via `clang-tidy`. See [.clang-tidy](./.clang-tidy) config.

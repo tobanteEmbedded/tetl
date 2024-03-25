@@ -8,7 +8,15 @@
 
 ## Testing
 
+## QEMU
+
+- Run unit test & examples on QEMU emulations.
+- Via `CMAKE_CROSSCOMPILING_EMULATOR`
+  - For Emscripten this is set to `node` in the CMake toolchain file
+
 ### clang-verify
+
+Test that static assertion fire when they should.
 
 - [libcxx: midpoint.verify.cpp](https://github.com/llvm/llvm-project/blob/main/libcxx/test/std/numerics/numeric.ops/numeric.ops.midpoint/midpoint.verify.cpp)
 
