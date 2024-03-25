@@ -5,7 +5,7 @@
 #ifndef TETL_FUNCTIONAL_FUNCTION_REF_HPP
 #define TETL_FUNCTIONAL_FUNCTION_REF_HPP
 
-#include <etl/_functional/invoke.hpp>
+#include <etl/_functional/invoke_r.hpp>
 #include <etl/_memory/addressof.hpp>
 #include <etl/_type_traits/add_pointer.hpp>
 #include <etl/_type_traits/decay.hpp>
@@ -16,77 +16,61 @@
 
 namespace etl {
 
-template <typename Signature>
+namespace detail {
+
+template <bool Noexcept, typename Signature>
 struct function_ref;
 
-/// Non-owning view of a callable.
-///
-/// http://www.open-std.org/jtc1/sc22/wg21/docs/papers/2019/p0792r4.html
-/// https://github.com/TartanLlama/function_ref
-template <typename R, typename... Args>
-struct function_ref<R(Args...)> {
-private:
-    using internal_signature_t = R (*)(void*, Args...);
-
-    void* _obj{nullptr};
-    internal_signature_t _callable{nullptr};
-
-public:
-    /// \brief Constructs a function_ref referring to f.
+template <bool Noexcept, typename R, typename... Args>
+struct function_ref<Noexcept, R(Args...)> {
     template <typename F>
-        requires(not is_same_v<decay_t<F>, function_ref> and is_invocable_r_v<R, F &&, Args...>)
+        requires(not etl::is_same_v<decay_t<F>, function_ref> and etl::is_invocable_r_v<R, F &&, Args...>)
     function_ref(F&& f) noexcept
-        : _obj(const_cast<void*>(reinterpret_cast<void const*>(addressof(f))))
+        : _obj(const_cast<void*>(reinterpret_cast<void const*>(etl::addressof(f))))
         , _callable{
               +[](void* obj, Args... args) -> R {
-                  auto* func = reinterpret_cast<add_pointer_t<F>>(obj);
-                  return invoke(*func, TETL_FORWARD(args)...);
+                  auto* func = reinterpret_cast<etl::add_pointer_t<F>>(obj);
+                  return etl::invoke_r<R>(*func, TETL_FORWARD(args)...);
               },
           }
     {
     }
 
-    /// \brief Reassigns this function_ref to refer to f.
-    template <typename F>
-        requires(is_invocable_r_v<R, F &&, Args...>)
-    auto operator=(F&& f) noexcept -> function_ref&
-    {
-        _obj      = reinterpret_cast<void*>(addressof(f));
-        _callable = +[](void* obj, Args... args) {
-            auto* func = reinterpret_cast<add_pointer_t<F>>(obj);
-            return invoke(*func, TETL_FORWARD(args)...);
-        };
+    constexpr function_ref(function_ref const&) noexcept                    = default;
+    constexpr auto operator=(function_ref const&) noexcept -> function_ref& = default;
 
-        return *this;
-    }
+    template <typename T>
+    auto operator=(T /*t*/) -> function_ref& = delete;
 
-    function_ref(function_ref const& /*other*/) = default;
+    auto operator()(Args... args) const noexcept(Noexcept) -> R { return _callable(_obj, TETL_FORWARD(args)...); }
 
-    auto operator=(function_ref const& /*other*/) -> function_ref& = default;
+private:
+    using internal_signature_t = R (*)(void*, Args...) noexcept(Noexcept);
 
-    /// Exchanges the values of *this and rhs.
-    auto swap(function_ref& other) noexcept -> void
-    {
-        using etl::swap;
-        swap(_obj, other._obj);
-        swap(_callable, other._callable);
-    }
+    void* _obj{nullptr};
+    internal_signature_t _callable{nullptr};
+};
+} // namespace detail
 
-    /// Equivalent to return invoke(f, TETL_FORWARD(args)...);, where f is the
-    /// callable object referred to by *this, qualified with the same
-    /// cv-qualifiers as the function type Signature.
-    auto operator()(Args... args) const -> R { return _callable(_obj, TETL_FORWARD(args)...); }
+/// Non-owning view of a callable.
+///
+/// https://www.open-std.org/jtc1/sc22/wg21/docs/papers/2023/p0792r14.html
+/// https://github.com/TartanLlama/function_ref
+template <typename Signature>
+struct function_ref;
+
+template <typename R, typename... Args>
+struct function_ref<R(Args...)> : etl::detail::function_ref<false, R(Args...)> {
+    using etl::detail::function_ref<false, R(Args...)>::function_ref;
+};
+
+template <typename R, typename... Args>
+struct function_ref<R(Args...) noexcept> : etl::detail::function_ref<true, R(Args...)> {
+    using etl::detail::function_ref<true, R(Args...)>::function_ref;
 };
 
 template <typename R, typename... Args>
 function_ref(R (*)(Args...)) -> function_ref<R(Args...)>;
-
-/// Exchanges the values of lhs and rhs. Equivalent to lhs.swap(rhs).
-template <typename R, typename... Args>
-auto swap(function_ref<R(Args...)>& lhs, function_ref<R(Args...)>& rhs) noexcept -> void
-{
-    lhs.swap(rhs);
-}
 
 } // namespace etl
 
