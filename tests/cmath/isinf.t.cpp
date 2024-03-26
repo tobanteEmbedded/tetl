@@ -2,15 +2,15 @@
 
 #include <etl/cmath.hpp>
 
+#include <etl/limits.hpp>
+
 #include "testing/testing.hpp"
 
 template <typename T>
 constexpr auto test() -> bool
 {
-    CHECK(etl::isinf(HUGE_VAL));
-    CHECK(etl::isinf(HUGE_VALF));
-    CHECK(etl::isinf(HUGE_VALL));
-    CHECK_FALSE(etl::isinf(NAN));
+    CHECK(etl::isinf(etl::numeric_limits<T>::infinity()));
+    CHECK_FALSE(etl::isinf(etl::numeric_limits<T>::quiet_NaN()));
     CHECK_FALSE(etl::isinf(T{0}));
     CHECK_FALSE(etl::isinf(T{1}));
     return true;
