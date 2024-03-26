@@ -24,23 +24,23 @@ template <typename InputIt1, typename InputIt2, typename Predicate>
 template <typename InputIt1, typename InputIt2>
 [[nodiscard]] constexpr auto equal(InputIt1 first1, InputIt1 last1, InputIt2 first2) -> bool
 {
-    return equal(first1, last1, first2, equal_to{});
+    return etl::equal(first1, last1, first2, etl::equal_to());
 }
 
 template <typename InputIt1, typename InputIt2, typename Predicate>
 [[nodiscard]] constexpr auto
 equal(InputIt1 first1, InputIt1 last1, InputIt2 first2, InputIt2 last2, Predicate p) -> bool
 {
-    if (distance(first1, last1) != distance(first2, last2)) {
+    if (etl::distance(first1, last1) != etl::distance(first2, last2)) {
         return false;
     }
-    return equal(first1, last1, first2, p);
+    return etl::equal(first1, last1, first2, p);
 }
 
 template <typename InputIt1, typename InputIt2>
 [[nodiscard]] constexpr auto equal(InputIt1 first1, InputIt1 last1, InputIt2 first2, InputIt2 last2) -> bool
 {
-    return equal(first1, last1, first2, last2, equal_to{});
+    return etl::equal(first1, last1, first2, last2, etl::equal_to());
 }
 
 } // namespace etl
