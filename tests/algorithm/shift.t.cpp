@@ -6,6 +6,7 @@
 #include <etl/iterator.hpp>
 #include <etl/vector.hpp>
 
+#include "testing/iterator.hpp"
 #include "testing/testing.hpp"
 
 template <typename T>
@@ -15,6 +16,15 @@ constexpr auto test() -> bool
     {
         auto d = etl::array{T(1), T(2), T(3), T(4), T(5), T(6)};
         etl::shift_left(begin(d), end(d), 2);
+        CHECK(d[0] == T(3));
+        CHECK(d[1] == T(4));
+        CHECK(d[2] == T(5));
+        CHECK(d[3] == T(6));
+    }
+
+    {
+        auto d = etl::array{T(1), T(2), T(3), T(4), T(5), T(6)};
+        etl::shift_left(forward_iter(begin(d)), forward_iter(end(d)), 2);
         CHECK(d[0] == T(3));
         CHECK(d[1] == T(4));
         CHECK(d[2] == T(5));
@@ -40,23 +50,17 @@ constexpr auto test() -> bool
 
         auto t1 = src;
         etl::shift_right(begin(t1), end(t1), 1);
-        CHECK(t1[0] == T(0));
         CHECK(t1[1] == T(0));
         CHECK(t1[2] == T(1));
         CHECK(t1[3] == T(2));
 
         auto t2 = src;
         etl::shift_right(begin(t2), end(t2), 2);
-        CHECK(t2[0] == T(0));
-        CHECK(t2[1] == T(0));
         CHECK(t2[2] == T(0));
         CHECK(t2[3] == T(1));
 
         auto t3 = src;
         etl::shift_right(begin(t3), end(t3), 3);
-        CHECK(t3[0] == T(0));
-        CHECK(t3[1] == T(0));
-        CHECK(t3[2] == T(0));
         CHECK(t3[3] == T(0));
     }
 

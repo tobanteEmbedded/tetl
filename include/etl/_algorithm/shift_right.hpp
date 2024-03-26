@@ -29,12 +29,12 @@ constexpr auto shift_right(BidiIt first, BidiIt last, typename iterator_traits<B
 {
     // The standard only checks for n == 0. n < 0 would be undefined behavior.
     // This implementation does nothing if n < 0.
-    if (n <= 0 || n >= distance(first, last)) {
+    if (n <= 0 or n >= etl::distance(first, last)) {
         return last;
     }
 
-    auto dest = prev(last);
-    auto src  = prev(dest, n);
+    auto dest = etl::prev(last);
+    auto src  = etl::prev(dest, n);
     for (; src != first; --dest, (void)--src) {
         *dest = TETL_MOVE(*src);
     }
@@ -48,7 +48,7 @@ constexpr auto shift_right(BidiIt first, BidiIt last, typename iterator_traits<B
         }
     }
 
-    return next(first, n);
+    return etl::next(first, n);
 }
 
 } // namespace etl

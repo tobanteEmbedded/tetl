@@ -8,7 +8,7 @@
 #include <etl/numeric.hpp>
 #include <etl/vector.hpp>
 
-#include "testing/iterator_types.hpp"
+#include "testing/iterator.hpp"
 #include "testing/testing.hpp"
 
 template <typename T>
@@ -113,13 +113,13 @@ constexpr auto test() -> bool
     // input iterator
     {
         auto d = etl::static_vector<T, 4>{};
-        etl::copy(InIter(begin(s)), InIter(end(s)), etl::back_inserter(d));
+        etl::copy(input_iter(begin(s)), input_iter(end(s)), etl::back_inserter(d));
         CHECK(etl::equal(begin(s), end(s), begin(d), end(d)));
     }
     // forward iterator
     {
         auto d = etl::static_vector<T, 4>{};
-        etl::copy(FwdIter(begin(s)), FwdIter(end(s)), etl::back_inserter(d));
+        etl::copy(forward_iter(begin(s)), forward_iter(end(s)), etl::back_inserter(d));
         CHECK(etl::equal(begin(s), end(s), begin(d), end(d)));
     }
     return true;

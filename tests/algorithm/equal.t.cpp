@@ -5,6 +5,7 @@
 #include <etl/array.hpp>
 #include <etl/functional.hpp>
 
+#include "testing/iterator.hpp"
 #include "testing/testing.hpp"
 
 template <typename T>
@@ -14,14 +15,18 @@ constexpr auto test() -> bool
     auto rhs = etl::array<T, 2>{T{0}, T{1}};
     auto cmp = etl::not_equal_to{};
 
-    CHECK(etl::equal(begin(lhs), end(lhs), begin(rhs)));
-    CHECK_FALSE(etl::equal(begin(lhs), end(lhs), begin(rhs), cmp));
+    CHECK(etl::equal(lhs.begin(), lhs.end(), rhs.begin()));
+    CHECK(etl::equal(input_iter(lhs.begin()), input_iter(lhs.end()), input_iter(rhs.begin())));
+    CHECK(etl::equal(forward_iter(lhs.begin()), forward_iter(lhs.end()), forward_iter(rhs.begin())));
 
-    CHECK(etl::equal(begin(lhs), end(lhs), begin(rhs), end(rhs)));
-    CHECK_FALSE(etl::equal(begin(lhs), end(lhs), begin(rhs), end(rhs), cmp));
+    CHECK_FALSE(etl::equal(lhs.begin(), lhs.end(), rhs.begin(), cmp));
+    CHECK_FALSE(etl::equal(input_iter(lhs.begin()), input_iter(lhs.end()), input_iter(rhs.begin()), cmp));
+
+    CHECK(etl::equal(lhs.begin(), lhs.end(), rhs.begin(), rhs.end()));
+    CHECK_FALSE(etl::equal(lhs.begin(), lhs.end(), rhs.begin(), rhs.end(), cmp));
 
     auto small = etl::array{T(1)};
-    CHECK_FALSE(etl::equal(begin(lhs), end(lhs), begin(small), end(small), cmp));
+    CHECK_FALSE(etl::equal(lhs.begin(), lhs.end(), small.begin(), small.end(), cmp));
 
     return true;
 }

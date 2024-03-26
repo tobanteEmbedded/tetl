@@ -6,7 +6,7 @@
 #include <etl/numeric.hpp>
 #include <etl/vector.hpp>
 
-#include "testing/iterator_types.hpp"
+#include "testing/iterator.hpp"
 #include "testing/testing.hpp"
 
 template <typename T>
@@ -19,15 +19,15 @@ constexpr auto test() -> bool
 
     CHECK(etl::all_of(data.begin(), data.end(), greater0));
     CHECK_FALSE(etl::all_of(data.begin(), data.end(), greater10));
-    CHECK(etl::all_of(InIter(data.begin()), InIter(data.end()), greater0));
+    CHECK(etl::all_of(input_iter(data.begin()), input_iter(data.end()), greater0));
 
     CHECK(etl::any_of(data.begin(), data.end(), greater0));
     CHECK_FALSE(etl::any_of(data.begin(), data.end(), greater10));
-    CHECK(etl::any_of(InIter(data.begin()), InIter(data.end()), greater0));
+    CHECK(etl::any_of(input_iter(data.begin()), input_iter(data.end()), greater0));
 
     CHECK(etl::none_of(data.begin(), data.end(), greater10));
     CHECK_FALSE(etl::none_of(data.begin(), data.end(), less10));
-    CHECK(etl::none_of(InIter(data.begin()), InIter(data.end()), greater10));
+    CHECK(etl::none_of(input_iter(data.begin()), input_iter(data.end()), greater10));
 
     return true;
 }

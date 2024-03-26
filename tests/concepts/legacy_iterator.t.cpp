@@ -2,6 +2,7 @@
 
 #include <etl/concepts.hpp>
 
+#include "testing/iterator.hpp"
 #include "testing/testing.hpp"
 
 namespace {
@@ -18,19 +19,30 @@ constexpr auto test() -> bool
     CHECK_FALSE(etl::referenceable<void volatile>);
     CHECK_FALSE(etl::referenceable<void const volatile>);
 
+    CHECK(etl::legacy_iterator<char*>);
     CHECK(etl::legacy_iterator<char const*>);
     CHECK_FALSE(etl::legacy_iterator<int>);
     CHECK_FALSE(etl::legacy_iterator<void>);
 
+    CHECK(etl::legacy_input_iterator<char*>);
     CHECK(etl::legacy_input_iterator<char const*>);
+    CHECK(etl::legacy_input_iterator<input_iter<char*>>);
+    CHECK(etl::legacy_input_iterator<input_iter<char const*>>);
     CHECK_FALSE(etl::legacy_input_iterator<int>);
     CHECK_FALSE(etl::legacy_input_iterator<void>);
 
+    CHECK(etl::legacy_forward_iterator<char*>);
     CHECK(etl::legacy_forward_iterator<char const*>);
+    CHECK(etl::legacy_forward_iterator<forward_iter<char*>>);
+    CHECK(etl::legacy_forward_iterator<forward_iter<char const*>>);
     CHECK_FALSE(etl::legacy_forward_iterator<int>);
     CHECK_FALSE(etl::legacy_forward_iterator<void>);
 
     CHECK(etl::legacy_bidirectional_iterator<char const*>);
+    CHECK_FALSE(etl::legacy_bidirectional_iterator<input_iter<char*>>);
+    CHECK_FALSE(etl::legacy_bidirectional_iterator<input_iter<char const*>>);
+    CHECK_FALSE(etl::legacy_bidirectional_iterator<forward_iter<char*>>);
+    CHECK_FALSE(etl::legacy_bidirectional_iterator<forward_iter<char const*>>);
     CHECK_FALSE(etl::legacy_bidirectional_iterator<int>);
     CHECK_FALSE(etl::legacy_bidirectional_iterator<void>);
 

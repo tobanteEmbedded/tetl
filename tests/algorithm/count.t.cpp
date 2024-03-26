@@ -6,7 +6,7 @@
 #include <etl/iterator.hpp>
 #include <etl/numeric.hpp>
 
-#include "testing/iterator_types.hpp"
+#include "testing/iterator.hpp"
 #include "testing/testing.hpp"
 
 template <typename T>
@@ -22,9 +22,9 @@ constexpr auto test() -> bool
     CHECK(etl::count(src.begin(), src.end(), T{4}) == 0);
 
     // input iterator
-    CHECK(etl::count(InIter(src.begin()), InIter(end(src)), T(0)) == 1);
+    CHECK(etl::count(input_iter(src.begin()), input_iter(end(src)), T(0)) == 1);
     // forward iterator
-    CHECK(etl::count(FwdIter(src.begin()), FwdIter(end(src)), T(0)) == 1);
+    CHECK(etl::count(forward_iter(src.begin()), forward_iter(end(src)), T(0)) == 1);
 
     auto p1 = [](auto val) { return val < T{2}; };
     auto p2 = [](auto val) -> bool { return static_cast<int>(val) % 2; };
@@ -33,9 +33,9 @@ constexpr auto test() -> bool
     CHECK(etl::count_if(src.begin(), src.end(), p2) == 2);
 
     // input iterator
-    CHECK(etl::count_if(InIter(src.begin()), InIter(end(src)), p1) == 2);
+    CHECK(etl::count_if(input_iter(src.begin()), input_iter(end(src)), p1) == 2);
     // forward iterator
-    CHECK(etl::count_if(FwdIter(src.begin()), FwdIter(end(src)), p1) == 2);
+    CHECK(etl::count_if(forward_iter(src.begin()), forward_iter(end(src)), p1) == 2);
 
     return true;
 }

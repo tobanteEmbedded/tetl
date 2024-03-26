@@ -5,7 +5,7 @@
 #include <etl/array.hpp>
 #include <etl/functional.hpp>
 
-#include "testing/iterator_types.hpp"
+#include "testing/iterator.hpp"
 #include "testing/testing.hpp"
 
 template <typename T>
@@ -37,7 +37,7 @@ constexpr auto test() -> bool
     CHECK(p.first->name == 'B');
 
     // clang-format off
-    CHECK(etl::equal_range(FwdIter(begin(vec)), FwdIter(end(vec)), value).first->name == 'B');
+    CHECK(etl::equal_range(forward_iter(begin(vec)), forward_iter(end(vec)), value).first->name == 'B');
     // clang-format on
 
     return true;
