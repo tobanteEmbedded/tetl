@@ -26,15 +26,15 @@ constexpr auto test_typedefs() -> bool
 
     auto vec = Vector();
     CHECK_SAME_TYPE(decltype(vec.empty()), bool);
-    CHECK_SAME_TYPE(decltype(vec.size()), etl::size_t);
-    CHECK_SAME_TYPE(decltype(vec.capacity()), etl::size_t);
-    CHECK_SAME_TYPE(decltype(vec.max_size()), etl::size_t);
-    CHECK_SAME_TYPE(decltype(vec.data()), T*);
-    CHECK_SAME_TYPE(decltype(etl::as_const(vec).data()), T const*);
-    CHECK_SAME_TYPE(decltype(vec.begin()), T*);
-    CHECK_SAME_TYPE(decltype(etl::as_const(vec).begin()), T const*);
-    CHECK_SAME_TYPE(decltype(vec.end()), T*);
-    CHECK_SAME_TYPE(decltype(etl::as_const(vec).end()), T const*);
+    CHECK_SAME_TYPE(decltype(vec.size()), typename Vector::size_type);
+    CHECK_SAME_TYPE(decltype(vec.capacity()), typename Vector::size_type);
+    CHECK_SAME_TYPE(decltype(vec.max_size()), typename Vector::size_type);
+    CHECK_SAME_TYPE(decltype(vec.data()), typename Vector::pointer);
+    CHECK_SAME_TYPE(decltype(etl::as_const(vec).data()), typename Vector::const_pointer);
+    CHECK_SAME_TYPE(decltype(vec.begin()), typename Vector::iterator);
+    CHECK_SAME_TYPE(decltype(etl::as_const(vec).begin()), typename Vector::const_iterator);
+    CHECK_SAME_TYPE(decltype(vec.end()), typename Vector::iterator);
+    CHECK_SAME_TYPE(decltype(etl::as_const(vec).end()), typename Vector::const_iterator);
 
     CHECK_NOEXCEPT(vec.empty());
     CHECK_NOEXCEPT(vec.size());
@@ -46,6 +46,7 @@ constexpr auto test_typedefs() -> bool
     CHECK_NOEXCEPT(etl::as_const(vec).begin());
     CHECK_NOEXCEPT(vec.end());
     CHECK_NOEXCEPT(etl::as_const(vec).end());
+    CHECK_NOEXCEPT(vec.clear());
 
     return true;
 }
@@ -72,6 +73,7 @@ constexpr auto test_empty() -> bool
     CHECK(vec.empty());
     CHECK(vec.try_push_back(T(0)) == nullptr);
     CHECK(vec.empty());
+    CHECK_NOEXCEPT(vec.clear());
     return true;
 }
 
@@ -112,6 +114,9 @@ constexpr auto test_non_empty() -> bool
     auto const oldSize = vec.size();
     vec.pop_back();
     CHECK(vec.size() == oldSize - 1);
+
+    vec.clear();
+    CHECK(vec.empty());
 
     return true;
 }
@@ -160,11 +165,15 @@ struct non_trivial {
 
     constexpr ~non_trivial() { } // NOLINT
 
-    constexpr non_trivial(non_trivial const& /*other*/) = delete;
+    constexpr non_trivial(non_trivial const& other) : value{other.value} { }
 
     constexpr non_trivial(non_trivial&& other) : value{other.value} { }
 
-    constexpr auto operator=(non_trivial const& /*other*/) -> non_trivial& = delete;
+    constexpr auto operator=(non_trivial const& other) -> non_trivial&
+    {
+        value = other.value;
+        return *this;
+    }
 
     constexpr auto operator=(non_trivial&& other) -> non_trivial&
     {
@@ -182,11 +191,10 @@ struct non_trivial {
 
 auto test_non_trivial() -> bool
 {
-
-    CHECK_FALSE(etl::is_trivial_v<non_trivial>);
     CHECK(test_empty<non_trivial>());
+    CHECK_FALSE(etl::is_trivial_v<non_trivial>);
 
-    auto vec        = etl::inplace_vector<non_trivial, 4>{};
+    auto vec        = etl::inplace_vector<non_trivial, 3>{};
     auto* const p42 = vec.try_emplace_back(42);
     CHECK(p42 != nullptr);
     CHECK(p42->value == 42);
@@ -206,10 +214,30 @@ auto test_non_trivial() -> bool
     CHECK(move[1] == move.back());
     CHECK(move.front() != move.back());
 
+    auto const nt99 = non_trivial{99};
+    auto* const p99 = move.try_push_back(nt99);
+    CHECK(p99 != nullptr);
+    CHECK(p99->value == 99);
+    CHECK(move.size() == 3);
+    CHECK(move[0] == move.front());
+    CHECK(move[2] == move.back());
+    CHECK(move.front() != move.back());
+
+    CHECK(move.try_emplace_back(nt99) == nullptr);
+    CHECK(move.size() == 3);
+
+    CHECK(move.try_push_back(nt99) == nullptr);
+    CHECK(move.size() == 3);
+
+    move.pop_back();
     move.pop_back();
     CHECK(move.size() == 1);
     CHECK(move[0] == move.front());
     CHECK(move.front() == move.back());
+
+    move.clear();
+    CHECK_NOEXCEPT(move.clear());
+    CHECK(move.empty());
 
     return true;
 }

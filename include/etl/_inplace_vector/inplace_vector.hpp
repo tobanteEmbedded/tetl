@@ -171,6 +171,12 @@ struct inplace_vector {
         unsafe_set_size(size() - 1U);
     }
 
+    constexpr auto clear() noexcept -> void
+    {
+        etl::ranges::destroy(*this);
+        unsafe_set_size(0);
+    }
+
 private:
     constexpr auto unsafe_set_size(size_type newSize) noexcept -> void
     {
@@ -251,6 +257,8 @@ struct inplace_vector<T, 0> {
     }
 
     constexpr auto pop_back() -> void { etl::unreachable(); }
+
+    constexpr auto clear() noexcept -> void { }
 };
 
 } // namespace etl
