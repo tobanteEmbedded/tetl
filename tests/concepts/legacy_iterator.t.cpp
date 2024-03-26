@@ -25,6 +25,10 @@ constexpr auto test() -> bool
     CHECK_FALSE(etl::legacy_input_iterator<int>);
     CHECK_FALSE(etl::legacy_input_iterator<void>);
 
+    CHECK(etl::legacy_forward_iterator<char const*>);
+    CHECK_FALSE(etl::legacy_forward_iterator<int>);
+    CHECK_FALSE(etl::legacy_forward_iterator<void>);
+
     return true;
 }
 
