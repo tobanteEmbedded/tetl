@@ -38,6 +38,8 @@
 #include <etl/_concepts/builtin_integer.hpp>
 #include <etl/_concepts/builtin_signed_integer.hpp>
 #include <etl/_concepts/builtin_unsigned_integer.hpp>
+#include <etl/_concepts/legacy_iterator.hpp>
+#include <etl/_concepts/referenceable.hpp>
 #include <etl/_concepts/weakly_equality_comparable_with.hpp>
 
 #endif // TETL_CONCEPTS_HPP

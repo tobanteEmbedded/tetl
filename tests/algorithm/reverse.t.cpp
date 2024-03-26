@@ -10,64 +10,30 @@
 template <typename T>
 constexpr auto test() -> bool
 {
-    // built-in
+    // reverse
     {
+        // fill
         auto data = etl::array<T, 4>{};
         etl::iota(data.begin(), data.end(), T{0});
+        CHECK(data == etl::array{T(0), T(1), T(2), T(3)});
+
+        // empty range
+        etl::reverse(data.begin(), data.begin());
+        CHECK(data == etl::array{T(0), T(1), T(2), T(3)});
+
+        // full range
         etl::reverse(data.begin(), data.end());
-
-        CHECK(data[0] == 3);
-        CHECK(data[1] == 2);
-        CHECK(data[2] == 1);
-        CHECK(data[3] == 0);
+        CHECK(data == etl::array{T(3), T(2), T(1), T(0)});
     }
 
-    // struct
-    {
-        struct S {
-            T data;
-        };
-
-        auto arr = etl::array{
-            S{T(1)},
-            S{T(2)},
-        };
-
-        etl::reverse(begin(arr), end(arr));
-
-        CHECK(arr[0].data == T(2));
-        CHECK(arr[1].data == T(1));
-    }
-    // built-in
+    // reverse_copy
     {
         auto source = etl::array<T, 4>{};
         etl::iota(source.begin(), source.end(), T{0});
 
         auto destination = etl::array<T, 4>{};
-        etl::reverse_copy(source.begin(), source.end(), begin(destination));
-
-        CHECK(destination[0] == 3);
-        CHECK(destination[1] == 2);
-        CHECK(destination[2] == 1);
-        CHECK(destination[3] == 0);
-    }
-
-    // struct
-    {
-        struct S {
-            T data;
-        };
-
-        auto source = etl::array{
-            S{T(1)},
-            S{T(2)},
-        };
-
-        decltype(source) destination{};
-        etl::reverse_copy(source.begin(), source.end(), begin(destination));
-
-        CHECK(destination[0].data == T(2));
-        CHECK(destination[1].data == T(1));
+        etl::reverse_copy(source.begin(), source.end(), destination.begin());
+        CHECK(destination == etl::array{T(3), T(2), T(1), T(0)});
     }
 
     return true;

@@ -4,17 +4,29 @@
 #define TETL_ALGORITHM_REVERSE_HPP
 
 #include <etl/_algorithm/iter_swap.hpp>
+#include <etl/_iterator/iterator_traits.hpp>
+#include <etl/_iterator/tags.hpp>
+#include <etl/_type_traits/is_base_of.hpp>
 
 namespace etl {
 
 /// \brief Reverses the order of the elements in the range `[first, last)`.
-/// Behaves as if applying iter_swap to every pair of iterators `first + i`,
-/// `(last-i) - 1` for each non-negative `i < (last - first) / 2`.
 template <typename BidirIt>
 constexpr auto reverse(BidirIt first, BidirIt last) -> void
 {
-    while ((first != last) and (first != --last)) {
-        iter_swap(first++, last);
+    using category = typename etl::iterator_traits<BidirIt>::iterator_category;
+    if constexpr (etl::is_base_of_v<etl::random_access_iterator_tag, category>) {
+        if (first == last) {
+            return;
+        }
+
+        for (--last; first < last; (void)++first, --last) {
+            etl::iter_swap(first, last);
+        }
+    } else {
+        while (first != last and first != --last) {
+            etl::iter_swap(first++, last);
+        }
     }
 }
 
