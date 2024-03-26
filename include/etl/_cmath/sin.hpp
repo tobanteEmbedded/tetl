@@ -11,60 +11,60 @@
 
 namespace etl {
 
-/// \brief Computes the osine of arg (measured in radians).
+/// \brief Computes the sine of num (measured in radians).
 /// https://en.cppreference.com/w/cpp/numeric/math/sin
-[[nodiscard]] constexpr auto sin(float arg) noexcept -> float
+[[nodiscard]] constexpr auto sin(float num) noexcept -> float
 {
     if (is_constant_evaluated()) {
 #if __has_constexpr_builtin(__builtin_sinf)
-        return __builtin_sinf(arg);
+        return __builtin_sinf(num);
 #else
-        return etl::detail::gcem::sin(arg);
+        return etl::detail::gcem::sin(num);
 #endif
     }
 #if __has_builtin(__builtin_sinf)
-    return __builtin_sinf(arg);
+    return __builtin_sinf(num);
 #else
-    return etl::detail::gcem::sin(arg);
+    return etl::detail::gcem::sin(num);
 #endif
 }
 
-/// \brief Computes the osine of arg (measured in radians).
+/// \brief Computes the sine of num (measured in radians).
 /// https://en.cppreference.com/w/cpp/numeric/math/sin
-[[nodiscard]] constexpr auto sinf(float arg) noexcept -> float { return etl::sin(arg); }
+[[nodiscard]] constexpr auto sinf(float num) noexcept -> float { return etl::sin(num); }
 
-/// \brief Computes the osine of arg (measured in radians).
+/// \brief Computes the sine of num (measured in radians).
 /// https://en.cppreference.com/w/cpp/numeric/math/sin
-[[nodiscard]] constexpr auto sin(double arg) noexcept -> double
+[[nodiscard]] constexpr auto sin(double num) noexcept -> double
 {
     if (is_constant_evaluated()) {
 #if __has_constexpr_builtin(__builtin_sin)
-        return __builtin_sin(arg);
+        return __builtin_sin(num);
 #else
-        return etl::detail::gcem::sin(arg);
+        return etl::detail::gcem::sin(num);
 #endif
     }
 #if __has_builtin(__builtin_sin)
-    return __builtin_sin(arg);
+    return __builtin_sin(num);
 #else
-    return etl::detail::gcem::sin(arg);
+    return etl::detail::gcem::sin(num);
 #endif
 }
 
-/// \brief Computes the osine of arg (measured in radians).
+/// \brief Computes the sine of num (measured in radians).
 /// https://en.cppreference.com/w/cpp/numeric/math/sin
-[[nodiscard]] constexpr auto sin(long double arg) noexcept -> long double { return etl::detail::gcem::sin(arg); }
+[[nodiscard]] constexpr auto sin(long double num) noexcept -> long double { return etl::detail::gcem::sin(num); }
 
-/// \brief Computes the osine of arg (measured in radians).
+/// \brief Computes the sine of num (measured in radians).
 /// https://en.cppreference.com/w/cpp/numeric/math/sin
-[[nodiscard]] constexpr auto sinl(long double arg) noexcept -> long double { return etl::sin(arg); }
+[[nodiscard]] constexpr auto sinl(long double num) noexcept -> long double { return etl::sin(num); }
 
-/// \brief Computes the osine of arg (measured in radians).
+/// \brief Computes the sine of num (measured in radians).
 /// https://en.cppreference.com/w/cpp/numeric/math/sin
 template <integral T>
-[[nodiscard]] constexpr auto sin(T arg) noexcept -> double
+[[nodiscard]] constexpr auto sin(T num) noexcept -> double
 {
-    return etl::sin(static_cast<double>(arg));
+    return etl::sin(static_cast<double>(num));
 }
 
 } // namespace etl
