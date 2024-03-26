@@ -29,13 +29,13 @@ mismatch(InputIt1 first1, InputIt1 last1, InputIt2 first2, Predicate pred) -> pa
         }
     }
 
-    return pair<InputIt1, InputIt2>(first1, first2);
+    return {first1, first2};
 }
 
 template <typename InputIt1, typename InputIt2>
 [[nodiscard]] constexpr auto mismatch(InputIt1 first1, InputIt1 last1, InputIt2 first2) -> pair<InputIt1, InputIt2>
 {
-    return mismatch(first1, last1, first2, equal_to{});
+    return etl::mismatch(first1, last1, first2, etl::equal_to());
 }
 
 template <typename InputIt1, typename InputIt2, typename Predicate>
@@ -48,14 +48,14 @@ mismatch(InputIt1 first1, InputIt1 last1, InputIt2 first2, InputIt2 last2, Predi
         }
     }
 
-    return pair<InputIt1, InputIt2>(first1, first2);
+    return {first1, first2};
 }
 
 template <typename InputIt1, typename InputIt2>
 [[nodiscard]] constexpr auto
 mismatch(InputIt1 first1, InputIt1 last1, InputIt2 first2, InputIt2 last2) -> pair<InputIt1, InputIt2>
 {
-    return mismatch(first1, last1, first2, last2, equal_to{});
+    return etl::mismatch(first1, last1, first2, last2, etl::equal_to());
 }
 
 } // namespace etl

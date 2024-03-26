@@ -16,16 +16,16 @@ constexpr auto merge_sort(BidirIt first, BidirIt last, Compare comp) -> void
 {
     if (last - first > 1) {
         BidirIt mid = first + (last - first) / 2;
-        merge_sort(first, mid, comp);
-        merge_sort(mid, last, comp);
-        inplace_merge(first, mid, last, comp);
+        etl::merge_sort(first, mid, comp);
+        etl::merge_sort(mid, last, comp);
+        etl::inplace_merge(first, mid, last, comp);
     }
 }
 
 template <typename BidirIt>
 constexpr auto merge_sort(BidirIt first, BidirIt last) -> void
 {
-    merge_sort(first, last, less{});
+    etl::merge_sort(first, last, etl::less());
 }
 
 } // namespace etl

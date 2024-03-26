@@ -20,7 +20,7 @@ template <typename T, typename Compare>
 template <typename T>
 [[nodiscard]] constexpr auto minmax(T const& a, T const& b) -> pair<T const&, T const&>
 {
-    return minmax(a, b, less{});
+    return etl::minmax(a, b, etl::less());
 }
 
 } // namespace etl

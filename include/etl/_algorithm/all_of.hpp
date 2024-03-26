@@ -14,7 +14,7 @@ namespace etl {
 template <typename InputIt, typename Predicate>
 [[nodiscard]] constexpr auto all_of(InputIt first, InputIt last, Predicate p) -> bool
 {
-    return find_if_not(first, last, p) == last;
+    return etl::find_if_not(first, last, p) == last;
 }
 
 /// @}

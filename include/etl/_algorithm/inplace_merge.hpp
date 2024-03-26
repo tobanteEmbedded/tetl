@@ -27,7 +27,7 @@ constexpr auto inplace_merge(BidirIt begin, BidirIt mid, BidirIt end, Compare co
     while (left != mid and right != end) {
         if (comp(*right, *left)) {
             auto value = TETL_MOVE(*right);
-            move_backward(left, mid, mid + 1);
+            etl::move_backward(left, mid, mid + 1);
             *left = TETL_MOVE(value);
             ++right;
             ++mid;
@@ -40,7 +40,7 @@ constexpr auto inplace_merge(BidirIt begin, BidirIt mid, BidirIt end, Compare co
 template <typename BidirIt>
 constexpr auto inplace_merge(BidirIt first, BidirIt mid, BidirIt last) -> void
 {
-    inplace_merge(first, mid, last, less{});
+    etl::inplace_merge(first, mid, last, etl::less{});
 }
 
 } // namespace etl

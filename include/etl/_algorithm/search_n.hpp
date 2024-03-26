@@ -40,7 +40,7 @@ template <typename ForwardIt, typename Size, typename ValueT>
 [[nodiscard]] constexpr auto search_n(ForwardIt first, ForwardIt last, Size count, ValueT const& value) -> ForwardIt
 {
     auto const eq = [](auto const& l, auto const& r) { return l == r; };
-    return search_n(first, last, count, value, eq);
+    return etl::search_n(first, last, count, value, eq);
 }
 
 } // namespace etl

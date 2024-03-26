@@ -28,7 +28,7 @@ find_end(ForwardIt1 first, ForwardIt1 last, ForwardIt2 sFirst, ForwardIt2 sLast,
     }
     auto result = last;
     while (true) {
-        auto newResult = search(first, last, sFirst, sLast, p);
+        auto newResult = etl::search(first, last, sFirst, sLast, p);
         if (newResult == last) {
             break;
         }
@@ -43,7 +43,7 @@ template <typename ForwardIt1, typename ForwardIt2>
 [[nodiscard]] constexpr auto
 find_end(ForwardIt1 first, ForwardIt1 last, ForwardIt2 sFirst, ForwardIt2 sLast) -> ForwardIt1
 {
-    return find_end(first, last, sFirst, sLast, equal_to{});
+    return etl::find_end(first, last, sFirst, sLast, etl::equal_to());
 }
 
 } // namespace etl

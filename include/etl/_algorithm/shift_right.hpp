@@ -25,7 +25,8 @@ namespace etl {
 /// legacy forward iterators. I don't know how to implement that without
 /// dynamic memory, so forward iterators are not supported.
 template <typename BidiIt>
-constexpr auto shift_right(BidiIt first, BidiIt last, typename iterator_traits<BidiIt>::difference_type n) -> BidiIt
+constexpr auto
+shift_right(BidiIt first, BidiIt last, typename etl::iterator_traits<BidiIt>::difference_type n) -> BidiIt
 {
     // The standard only checks for n == 0. n < 0 would be undefined behavior.
     // This implementation does nothing if n < 0.
@@ -41,7 +42,7 @@ constexpr auto shift_right(BidiIt first, BidiIt last, typename iterator_traits<B
 
     // Elements outside the new range should be left in a valid but unspecified state.
     // If the value type has a default constructor we do a little cleanup.
-    using value_type = typename iterator_traits<BidiIt>::value_type;
+    using value_type = typename etl::iterator_traits<BidiIt>::value_type;
     if constexpr (is_default_constructible_v<value_type>) {
         for (; dest != first; --dest) {
             *dest = value_type{};

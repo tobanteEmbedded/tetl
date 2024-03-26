@@ -16,13 +16,13 @@ namespace etl {
 template <typename RandomIt, typename Compare>
 constexpr auto stable_sort(RandomIt first, RandomIt last, Compare comp) -> void
 {
-    insertion_sort(first, last, comp);
+    etl::insertion_sort(first, last, comp);
 }
 
 template <typename RandomIt>
 constexpr auto stable_sort(RandomIt first, RandomIt last) -> void
 {
-    stable_sort(first, last, less{});
+    etl::stable_sort(first, last, etl::less());
 }
 
 } // namespace etl

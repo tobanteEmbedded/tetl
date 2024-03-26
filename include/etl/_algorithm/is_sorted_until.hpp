@@ -27,7 +27,7 @@ template <typename ForwardIt, typename Compare>
 template <typename ForwardIt>
 [[nodiscard]] constexpr auto is_sorted_until(ForwardIt first, ForwardIt last) -> ForwardIt
 {
-    return is_sorted_until(first, last, less<>());
+    return etl::is_sorted_until(first, last, etl::less());
 }
 
 } // namespace etl

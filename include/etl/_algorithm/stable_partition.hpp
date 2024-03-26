@@ -3,7 +3,7 @@
 #ifndef TETL_ALGORITHM_STABLE_PARTITION_HPP
 #define TETL_ALGORITHM_STABLE_PARTITION_HPP
 
-#include "etl/_algorithm/rotate.hpp"
+#include <etl/_algorithm/rotate.hpp>
 
 namespace etl {
 
@@ -22,7 +22,7 @@ constexpr auto stable_partition(BidirIt f, BidirIt l, Predicate p) -> BidirIt
         return f + p(*f);
     }
     auto const m = f + (n / 2);
-    return rotate(stable_partition(f, m, p), m, stable_partition(m, l, p));
+    return etl::rotate(etl::stable_partition(f, m, p), m, etl::stable_partition(m, l, p));
 }
 
 } // namespace etl

@@ -45,7 +45,7 @@ template <typename InputIt, typename ForwardIt>
 [[nodiscard]] constexpr auto find_first_of(InputIt first, InputIt last, ForwardIt sFirst, ForwardIt sLast) -> InputIt
 {
     auto const eq = [](auto const& l, auto const& r) { return l == r; };
-    return find_first_of(first, last, sFirst, sLast, eq);
+    return etl::find_first_of(first, last, sFirst, sLast, eq);
 }
 
 } // namespace etl

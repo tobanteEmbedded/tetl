@@ -11,7 +11,7 @@ namespace etl {
 template <typename InputIt, typename Predicate>
 [[nodiscard]] constexpr auto none_of(InputIt first, InputIt last, Predicate p) -> bool
 {
-    return find_if(first, last, p) == last;
+    return etl::find_if(first, last, p) == last;
 }
 
 } // namespace etl

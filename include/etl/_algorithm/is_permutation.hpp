@@ -19,20 +19,20 @@ template <typename ForwardIt1, typename ForwardIt2>
 [[nodiscard]] constexpr auto is_permutation(ForwardIt1 first, ForwardIt1 last, ForwardIt2 first2) -> bool
 {
     // skip common prefix
-    auto const [fDiff1, fDiff2] = mismatch(first, last, first2);
+    auto const [fDiff1, fDiff2] = etl::mismatch(first, last, first2);
 
     // iterate over the rest, counting how many times each element
     // from `[first, last)` appears in [first2, last2)
     if (fDiff1 != last) {
-        auto last2 = next(fDiff2, distance(fDiff1, last));
+        auto last2 = etl::next(fDiff2, etl::distance(fDiff1, last));
         for (auto i = fDiff1; i != last; ++i) {
             // this *i has been checked
-            if (i != find(fDiff1, i, *i)) {
+            if (i != etl::find(fDiff1, i, *i)) {
                 continue;
             }
 
-            auto m = count(fDiff2, last2, *i);
-            if (m == 0 || count(i, last, *i) != m) {
+            auto m = etl::count(fDiff2, last2, *i);
+            if (m == 0 || etl::count(i, last, *i) != m) {
                 return false;
             }
         }
@@ -45,10 +45,10 @@ template <typename ForwardIt1, typename ForwardIt2>
 [[nodiscard]] constexpr auto
 is_permutation(ForwardIt1 first1, ForwardIt1 last1, ForwardIt2 first2, ForwardIt2 last2) -> bool
 {
-    if (distance(first1, last1) != distance(first2, last2)) {
+    if (etl::distance(first1, last1) != etl::distance(first2, last2)) {
         return false;
     }
-    return is_permutation(first1, last1, first2);
+    return etl::is_permutation(first1, last1, first2);
 }
 
 } // namespace etl

@@ -23,12 +23,12 @@ lower_bound(ForwardIt first, ForwardIt last, T const& value, Compare comp) noexc
     ForwardIt it{};
     diff_t count{};
     diff_t step{};
-    count = distance(first, last);
+    count = etl::distance(first, last);
 
     while (count > 0) {
         it   = first;
         step = count / 2;
-        advance(it, step);
+        etl::advance(it, step);
         if (comp(*it, value)) {
             first = ++it;
             count -= step + 1;
@@ -43,7 +43,7 @@ lower_bound(ForwardIt first, ForwardIt last, T const& value, Compare comp) noexc
 template <typename ForwardIt, typename T>
 [[nodiscard]] constexpr auto lower_bound(ForwardIt first, ForwardIt last, T const& value) noexcept -> ForwardIt
 {
-    return lower_bound(first, last, value, less{});
+    return etl::lower_bound(first, last, value, less());
 }
 
 } // namespace etl

@@ -21,17 +21,17 @@ namespace etl {
 template <typename ForwardIt, typename T, typename Compare>
 [[nodiscard]] constexpr auto upper_bound(ForwardIt first, ForwardIt last, T const& value, Compare comp) -> ForwardIt
 {
-    using diff_t = typename iterator_traits<ForwardIt>::difference_type;
+    using diff_t = typename etl::iterator_traits<ForwardIt>::difference_type;
 
     ForwardIt it{};
     diff_t count{};
     diff_t step{};
-    count = distance(first, last);
+    count = etl::distance(first, last);
 
     while (count > 0) {
         it   = first;
         step = count / 2;
-        advance(it, step);
+        etl::advance(it, step);
         if (!comp(value, *it)) {
             first = ++it;
             count -= step + 1;
@@ -46,7 +46,7 @@ template <typename ForwardIt, typename T, typename Compare>
 template <typename ForwardIt, typename T>
 [[nodiscard]] constexpr auto upper_bound(ForwardIt first, ForwardIt last, T const& value) -> ForwardIt
 {
-    return upper_bound(first, last, value, less{});
+    return etl::upper_bound(first, last, value, etl::less());
 }
 
 } // namespace etl

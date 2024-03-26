@@ -16,14 +16,14 @@ namespace etl {
 template <typename ForwardIt, typename Predicate>
 constexpr auto partition(ForwardIt first, ForwardIt last, Predicate p) -> ForwardIt
 {
-    first = find_if_not(first, last, p);
+    first = etl::find_if_not(first, last, p);
     if (first == last) {
         return first;
     }
 
-    for (ForwardIt i = next(first); i != last; ++i) {
+    for (ForwardIt i = etl::next(first); i != last; ++i) {
         if (p(*i)) {
-            iter_swap(i, first);
+            etl::iter_swap(i, first);
             ++first;
         }
     }

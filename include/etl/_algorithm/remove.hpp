@@ -13,7 +13,7 @@ namespace etl {
 template <typename ForwardIt, typename T>
 [[nodiscard]] constexpr auto remove(ForwardIt first, ForwardIt last, T const& value) -> ForwardIt
 {
-    return remove_if(first, last, [&value](auto const& item) { return item == value; });
+    return etl::remove_if(first, last, [&value](auto const& item) { return item == value; });
 }
 
 } // namespace etl

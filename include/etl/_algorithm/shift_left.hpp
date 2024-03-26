@@ -24,7 +24,7 @@ shift_left(ForwardIt first, ForwardIt const last, typename iterator_traits<Forwa
         return last;
     }
     auto start = first;
-    if constexpr (detail::RandomAccessIterator<ForwardIt>) {
+    if constexpr (etl::detail::RandomAccessIterator<ForwardIt>) {
         if (n >= last - first) {
             return first;
         }

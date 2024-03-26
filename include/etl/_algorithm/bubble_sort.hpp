@@ -17,7 +17,7 @@ constexpr auto bubble_sort(RandomIt first, RandomIt last, Compare comp) -> void
     for (auto i = first; i != last; ++i) {
         for (auto j = first; j < i; ++j) {
             if (comp(*i, *j)) {
-                iter_swap(i, j);
+                etl::iter_swap(i, j);
             }
         }
     }
@@ -26,7 +26,7 @@ constexpr auto bubble_sort(RandomIt first, RandomIt last, Compare comp) -> void
 template <typename RandomIt>
 constexpr auto bubble_sort(RandomIt first, RandomIt last) -> void
 {
-    bubble_sort(first, last, less{});
+    etl::bubble_sort(first, last, etl::less());
 }
 
 } // namespace etl

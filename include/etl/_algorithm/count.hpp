@@ -19,7 +19,7 @@ template <typename InputIt, typename T>
 [[nodiscard]] constexpr auto count(InputIt first, InputIt last, T const& value) ->
     typename iterator_traits<InputIt>::difference_type
 {
-    auto result = typename iterator_traits<InputIt>::difference_type{0};
+    auto result = typename etl::iterator_traits<InputIt>::difference_type{0};
     for (; first != last; ++first) {
         if (*first == value) {
             ++result;

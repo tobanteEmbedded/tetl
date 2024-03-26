@@ -29,7 +29,7 @@ partition_copy(InputIt first, InputIt last, OutputIt1 destinationTrue, OutputIt2
         }
     }
 
-    return make_pair(destinationTrue, destinationFalse);
+    return {destinationTrue, destinationFalse};
 }
 
 } // namespace etl

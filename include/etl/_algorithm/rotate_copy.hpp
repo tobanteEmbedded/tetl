@@ -14,8 +14,8 @@ namespace etl {
 template <typename ForwardIt, typename OutputIt>
 constexpr auto rotate_copy(ForwardIt first, ForwardIt nFirst, ForwardIt last, OutputIt destination) -> OutputIt
 {
-    destination = copy(nFirst, last, destination);
-    return copy(first, nFirst, destination);
+    destination = etl::copy(nFirst, last, destination);
+    return etl::copy(first, nFirst, destination);
 }
 
 } // namespace etl

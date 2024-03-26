@@ -30,10 +30,10 @@ constexpr auto rotate(ForwardIt first, ForwardIt nFirst, ForwardIt last) -> Forw
         if (write == nextRead) {
             nextRead = read;
         }
-        iter_swap(write++, read++);
+        etl::iter_swap(write++, read++);
     }
 
-    rotate(write, nextRead, last);
+    etl::rotate(write, nextRead, last);
     return write;
 }
 

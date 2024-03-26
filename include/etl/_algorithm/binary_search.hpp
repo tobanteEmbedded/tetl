@@ -19,14 +19,14 @@ namespace etl {
 template <typename ForwardIt, typename T, typename Compare>
 [[nodiscard]] constexpr auto binary_search(ForwardIt first, ForwardIt last, T const& value, Compare comp) -> bool
 {
-    first = lower_bound(first, last, value, comp);
+    first = etl::lower_bound(first, last, value, comp);
     return (!(first == last) and !(comp(value, *first)));
 }
 
 template <typename ForwardIt, typename T>
 [[nodiscard]] constexpr auto binary_search(ForwardIt first, ForwardIt last, T const& value) -> bool
 {
-    return binary_search(first, last, value, less{});
+    return etl::binary_search(first, last, value, etl::less());
 }
 
 /// @}

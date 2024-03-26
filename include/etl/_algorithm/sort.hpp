@@ -3,7 +3,7 @@
 #ifndef TETL_ALGORITHM_SORT_HPP
 #define TETL_ALGORITHM_SORT_HPP
 
-#include "etl/_algorithm/gnome_sort.hpp"
+#include <etl/_algorithm/gnome_sort.hpp>
 
 namespace etl {
 
@@ -14,13 +14,13 @@ namespace etl {
 template <typename RandomIt, typename Compare>
 constexpr auto sort(RandomIt first, RandomIt last, Compare comp) -> void
 {
-    gnome_sort(first, last, comp);
+    etl::gnome_sort(first, last, comp);
 }
 
 template <typename RandomIt>
 constexpr auto sort(RandomIt first, RandomIt last) -> void
 {
-    sort(first, last, less{});
+    etl::sort(first, last, etl::less());
 }
 
 } // namespace etl

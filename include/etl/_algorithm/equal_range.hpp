@@ -17,13 +17,13 @@ template <typename ForwardIt, typename T, typename Compare>
 [[nodiscard]] constexpr auto
 equal_range(ForwardIt first, ForwardIt last, T const& value, Compare comp) -> pair<ForwardIt, ForwardIt>
 {
-    return make_pair(lower_bound(first, last, value, comp), upper_bound(first, last, value, comp));
+    return etl::make_pair(etl::lower_bound(first, last, value, comp), etl::upper_bound(first, last, value, comp));
 }
 
 template <typename ForwardIt, typename T>
 [[nodiscard]] constexpr auto equal_range(ForwardIt first, ForwardIt last, T const& value) -> pair<ForwardIt, ForwardIt>
 {
-    return equal_range(first, last, value, less{});
+    return etl::equal_range(first, last, value, etl::less{});
 }
 
 } // namespace etl
