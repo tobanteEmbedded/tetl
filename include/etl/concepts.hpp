@@ -38,6 +38,7 @@
 #include <etl/_concepts/builtin_integer.hpp>
 #include <etl/_concepts/builtin_signed_integer.hpp>
 #include <etl/_concepts/builtin_unsigned_integer.hpp>
+#include <etl/_concepts/legacy_bidirectional_iterator.hpp>
 #include <etl/_concepts/legacy_forward_iterator.hpp>
 #include <etl/_concepts/legacy_input_iterator.hpp>
 #include <etl/_concepts/legacy_iterator.hpp>

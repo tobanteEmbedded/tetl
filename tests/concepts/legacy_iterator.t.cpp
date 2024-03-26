@@ -4,6 +4,7 @@
 
 #include "testing/testing.hpp"
 
+namespace {
 constexpr auto test() -> bool
 {
     CHECK(etl::referenceable<int>);
@@ -29,8 +30,13 @@ constexpr auto test() -> bool
     CHECK_FALSE(etl::legacy_forward_iterator<int>);
     CHECK_FALSE(etl::legacy_forward_iterator<void>);
 
+    CHECK(etl::legacy_bidirectional_iterator<char const*>);
+    CHECK_FALSE(etl::legacy_bidirectional_iterator<int>);
+    CHECK_FALSE(etl::legacy_bidirectional_iterator<void>);
+
     return true;
 }
+} // namespace
 
 auto main() -> int
 {
