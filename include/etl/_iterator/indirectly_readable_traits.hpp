@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: BSL-1.0
 
-#ifndef TETL_ITERATOR_INDIRECT_READABLE_TRAITS_HPP
-#define TETL_ITERATOR_INDIRECT_READABLE_TRAITS_HPP
+#ifndef TETL_ITERATOR_INDIRECTLY_READABLE_TRAITS_HPP
+#define TETL_ITERATOR_INDIRECTLY_READABLE_TRAITS_HPP
 
 #include <etl/_concepts/same_as.hpp>
 #include <etl/_type_traits/is_array.hpp>
@@ -61,4 +61,4 @@ struct indirectly_readable_traits<T> : detail::maybe_value_type<typename T::valu
 
 } // namespace etl
 
-#endif // TETL_ITERATOR_INDIRECT_READABLE_TRAITS_HPP
+#endif // TETL_ITERATOR_INDIRECTLY_READABLE_TRAITS_HPP

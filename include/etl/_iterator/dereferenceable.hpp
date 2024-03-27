@@ -4,15 +4,15 @@
 #define TETL_ITERATOR_DEREFERENCEABLE_HPP
 
 #include <etl/_iterator/can_reference.hpp>
+#include <etl/_type_traits/declval.hpp>
 
 namespace etl::detail {
 
-// clang-format off
 template <typename T>
 concept dereferenceable = requires(T& t) {
-  { *t } -> can_reference;
+    *etl::declval<T&>();
+    { *t } -> can_reference;
 };
-// clang-format on
 
 } // namespace etl::detail
 

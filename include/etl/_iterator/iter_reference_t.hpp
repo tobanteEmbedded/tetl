@@ -8,7 +8,7 @@
 
 namespace etl {
 
-template <detail::dereferenceable T>
+template <etl::detail::dereferenceable T>
 using iter_reference_t = decltype(*etl::declval<T&>());
 
 } // namespace etl
