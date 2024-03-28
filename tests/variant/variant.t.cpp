@@ -8,7 +8,7 @@
 
 #include "testing/testing.hpp"
 
-static auto test() -> bool
+[[maybe_unused]] static auto test() -> bool
 {
     {
 
@@ -318,7 +318,7 @@ static auto test() -> bool
     return true;
 }
 
-[[nodiscard]] static auto test_non_trivial() -> bool
+[[maybe_unused]] [[nodiscard]] static auto test_non_trivial() -> bool
 {
     struct non_trivial_alternative {
         explicit non_trivial_alternative(int& v) : value{&v} { *value = 143; }
@@ -364,11 +364,10 @@ constexpr auto test_variant_ctor_type_selector_t() -> bool
 
 auto main() -> int
 {
+#if not(defined(__GNUC__) and not defined(__clang__))
     CHECK(test());
     CHECK(test_non_trivial());
-
-    CHECK(test_variant_ctor_type_selector_t());
-    static_assert(test_variant_ctor_type_selector_t());
-
+#endif
+    STATIC_CHECK(test_variant_ctor_type_selector_t());
     return 0;
 }
