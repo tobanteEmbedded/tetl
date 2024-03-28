@@ -14,13 +14,11 @@ namespace etl {
 // clang-format off
 template<typename LHS, typename RHS>
 concept assignable_from =
-  etl::is_lvalue_reference_v<LHS> &&
-  etl::common_reference_with<
-    etl::remove_reference_t<LHS> const&,
-    etl::remove_reference_t<RHS> const&> &&
-  requires(LHS lhs, RHS&& rhs) {
-    { lhs = TETL_FORWARD(rhs) } -> etl::same_as<LHS>;
-  };
+        etl::is_lvalue_reference_v<LHS>
+    // and etl::common_reference_with<etl::remove_reference_t<LHS> const&, etl::remove_reference_t<RHS> const&>
+    and requires(LHS lhs, RHS&& rhs) {
+        { lhs = TETL_FORWARD(rhs) } -> etl::same_as<LHS>;
+    };
 // clang-format on
 
 } // namespace etl
