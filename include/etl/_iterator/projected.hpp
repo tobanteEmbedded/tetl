@@ -14,29 +14,29 @@ namespace etl {
 
 namespace detail {
 
-template <typename I, typename Proj>
+template <typename Iter, typename Proj>
 struct projected_impl {
     struct type {
-        using value_type = etl::remove_cvref_t<etl::indirect_result_t<Proj&, I>>;
-        auto operator*() const -> etl::indirect_result_t<Proj&, I>; // not defined
+        using value_type = etl::remove_cvref_t<etl::indirect_result_t<Proj&, Iter>>;
+        auto operator*() const -> etl::indirect_result_t<Proj&, Iter>; // not defined
     };
 };
 
-template <typename I, typename Proj>
-    requires weakly_incrementable<I>
-struct projected_impl<I, Proj> {
+template <typename Iter, typename Proj>
+    requires weakly_incrementable<Iter>
+struct projected_impl<Iter, Proj> {
     struct type {
-        using value_type      = etl::remove_cvref_t<etl::indirect_result_t<Proj&, I>>;
-        using difference_type = etl::iter_difference_t<I>; // conditionally present
+        using value_type      = etl::remove_cvref_t<etl::indirect_result_t<Proj&, Iter>>;
+        using difference_type = etl::iter_difference_t<Iter>; // conditionally present
 
-        auto operator*() const -> etl::indirect_result_t<Proj&, I>; // not defined
+        auto operator*() const -> etl::indirect_result_t<Proj&, Iter>; // not defined
     };
 };
 
 } // namespace detail
 
-template <etl::indirectly_readable I, etl::indirectly_regular_unary_invocable<I> Proj>
-using projected = etl::detail::projected_impl<I, Proj>::type;
+template <etl::indirectly_readable Iter, etl::indirectly_regular_unary_invocable<Iter> Proj>
+using projected = etl::detail::projected_impl<Iter, Proj>::type;
 
 } // namespace etl
 

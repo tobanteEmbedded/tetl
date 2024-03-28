@@ -9,7 +9,7 @@ struct dangling {
     constexpr dangling() noexcept = default;
 
     template <typename... Args>
-    constexpr dangling(Args&&...) noexcept
+    constexpr dangling(Args&&... /*args*/) noexcept
     {
     }
 };
