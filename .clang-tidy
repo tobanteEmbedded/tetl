@@ -4,6 +4,7 @@ Checks: >
   bugprone-*,
   -bugprone-casting-through-void,
   -bugprone-easily-swappable-parameters,
+  -bugprone-exception-escape,
   -bugprone-forwarding-reference-overload,
   -bugprone-inc-dec-in-conditions,
   -bugprone-macro-parentheses,
