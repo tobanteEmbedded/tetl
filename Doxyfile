@@ -1032,7 +1032,8 @@ EXCLUDE_PATTERNS       =
 # wildcard * is used, a substring. Examples: ANamespace, AClass,
 # ANamespace::AClass, ANamespace::*Test
 
-EXCLUDE_SYMBOLS        = "detail" \
+EXCLUDE_SYMBOLS        = "std" \
+                         "detail" \
                          "*internal*" \
                          "*_cpo"
 

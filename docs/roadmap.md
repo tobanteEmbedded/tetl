@@ -8,7 +8,7 @@
 
 ## Testing
 
-## QEMU
+### QEMU
 
 - Run unit test & examples on QEMU emulations.
 - Via `CMAKE_CROSSCOMPILING_EMULATOR`

@@ -9,8 +9,7 @@
 
 namespace etl {
 
-/// \brief Obtains the actual address of the object or function arg, even in
-/// presence of overloaded operator&.
+/// Obtains the actual address of the object or function arg, even in presence of overloaded operator&.
 template <typename T>
     requires(is_object_v<T>)
 constexpr auto addressof(T& arg) noexcept -> T*
@@ -18,6 +17,7 @@ constexpr auto addressof(T& arg) noexcept -> T*
     return __builtin_addressof(arg);
 }
 
+/// Obtains the actual address of the object or function arg, even in presence of overloaded operator&.
 template <typename T>
     requires(not is_object_v<T>)
 constexpr auto addressof(T& arg) noexcept -> T*

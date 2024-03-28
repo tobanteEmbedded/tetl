@@ -6,7 +6,7 @@
 #if __has_attribute(always_inline)
     #define TETL_ALWAYS_INLINE [[gnu::always_inline]]
 #elif defined(_MSC_VER)
-    #define TETL_ALWAYS_INLINE __forceinline
+    #define TETL_ALWAYS_INLINE [[msvc::forceinline]]
 #else
     #define TETL_ALWAYS_INLINE
 #endif
@@ -14,7 +14,7 @@
 #if __has_attribute(noinline)
     #define TETL_NO_INLINE [[gnu::noinline]]
 #elif defined(_MSC_VER)
-    #define TETL_NO_INLINE __declspec(noinline)
+    #define TETL_NO_INLINE [[msvc::noinline]]
 #else
     #define TETL_NO_INLINE
 #endif

@@ -79,7 +79,37 @@ constexpr auto test() -> bool
     CHECK(scaledDiv.imag() == T(-2));
 
     {
+        using namespace etl::literals;
+
+        auto f = 2_if;
+        CHECK(f.real() == 0.0F);
+        CHECK(f.imag() == 2.0F);
+
+        auto d = 2_i;
+        CHECK(d.real() == 0.0);
+        CHECK(d.imag() == 2.0);
+
+        auto ld = 2_il;
+        CHECK(ld.real() == 0.0L);
+        CHECK(ld.imag() == 2.0L);
+    }
+    {
         using namespace etl::complex_literals;
+
+        auto f = 2_if;
+        CHECK(f.real() == 0.0F);
+        CHECK(f.imag() == 2.0F);
+
+        auto d = 2_i;
+        CHECK(d.real() == 0.0);
+        CHECK(d.imag() == 2.0);
+
+        auto ld = 2_il;
+        CHECK(ld.real() == 0.0L);
+        CHECK(ld.imag() == 2.0L);
+    }
+    {
+        using namespace etl::literals::complex_literals;
 
         auto f = 2_if;
         CHECK(f.real() == 0.0F);

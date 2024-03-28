@@ -315,9 +315,9 @@ template <typename T>
     return !(lhs == rhs);
 }
 
-} // namespace etl
-
-namespace etl::inline literals::inline complex_literals {
+// NOLINTNEXTLINE(modernize-concat-nested-namespaces)
+inline namespace literals {
+inline namespace complex_literals {
 
 constexpr auto operator""_il(long double d) -> complex<long double> { return {0.0L, static_cast<long double>(d)}; }
 
@@ -334,6 +334,8 @@ constexpr auto operator""_if(long double d) -> complex<float> { return {0.0F, st
 
 constexpr auto operator""_if(unsigned long long d) -> complex<float> { return {0.0F, static_cast<float>(d)}; }
 
-} // namespace etl::inline literals::inline complex_literals
+} // namespace complex_literals
+} // namespace literals
+} // namespace etl
 
 #endif // TETL_COMPLEX_COMPLEX_HPP

@@ -18,7 +18,7 @@ namespace etl {
 /// wanted number of bytes aligned by the given alignment into the buffer. If
 /// the buffer is too small, the function does nothing and returns nullptr.
 ///
-/// The behavior is undefined if alignment is not a power of two.
+/// \warning The behavior is undefined if alignment is not a power of two.
 [[nodiscard]] inline auto
 align(etl::size_t alignment, etl::size_t size, void*& ptr, etl::size_t& space) noexcept -> void*
 {
