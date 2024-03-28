@@ -43,7 +43,7 @@ constexpr auto test() -> bool
         newOrders.begin(),
         newOrders.end(),
         etl::back_inserter(cutOrders),
-        etl::less{}
+        etl::less()
     );
 
     CHECK(oldOrders[0] == T{1});

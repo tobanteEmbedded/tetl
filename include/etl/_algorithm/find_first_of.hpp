@@ -3,6 +3,8 @@
 #ifndef TETL_ALGORITHM_FIND_FIRST_OF_HPP
 #define TETL_ALGORITHM_FIND_FIRST_OF_HPP
 
+#include <etl/_functional/equal_to.hpp>
+
 namespace etl {
 
 /// \brief Searches the range `[first, last)` for any of the elements in the
@@ -44,8 +46,7 @@ find_first_of(InputIt first, InputIt last, ForwardIt sFirst, ForwardIt sLast, Pr
 template <typename InputIt, typename ForwardIt>
 [[nodiscard]] constexpr auto find_first_of(InputIt first, InputIt last, ForwardIt sFirst, ForwardIt sLast) -> InputIt
 {
-    auto const eq = [](auto const& l, auto const& r) { return l == r; };
-    return etl::find_first_of(first, last, sFirst, sLast, eq);
+    return etl::find_first_of(first, last, sFirst, sLast, etl::equal_to());
 }
 
 } // namespace etl

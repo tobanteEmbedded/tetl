@@ -29,7 +29,7 @@ lexicographical_compare(InputIt1 f1, InputIt1 l1, InputIt2 f2, InputIt2 l2, Comp
 template <typename InputIt1, typename InputIt2>
 [[nodiscard]] constexpr auto lexicographical_compare(InputIt1 f1, InputIt1 l1, InputIt2 f2, InputIt2 l2) -> bool
 {
-    return etl::lexicographical_compare(f1, l1, f2, l2, etl::less<decltype(*f1)>{});
+    return etl::lexicographical_compare(f1, l1, f2, l2, etl::less());
 }
 
 } // namespace etl

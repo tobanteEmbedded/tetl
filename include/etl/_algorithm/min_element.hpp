@@ -3,26 +3,9 @@
 #ifndef TETL_ALGORITHM_MIN_ELEMENT_HPP
 #define TETL_ALGORITHM_MIN_ELEMENT_HPP
 
+#include <etl/_functional/less.hpp>
+
 namespace etl {
-
-/// \brief Finds the smallest element in the range `[first, last)`. Elements are
-/// compared using operator<.
-template <typename ForwardIt>
-[[nodiscard]] constexpr auto min_element(ForwardIt first, ForwardIt last) noexcept -> ForwardIt
-{
-    if (first == last) {
-        return last;
-    }
-
-    ForwardIt smallest = first;
-    ++first;
-    for (; first != last; ++first) {
-        if (*first < *smallest) {
-            smallest = first;
-        }
-    }
-    return smallest;
-}
 
 /// \brief Finds the smallest element in the range `[first, last)`. Elements are
 /// compared using the given binary comparison function comp.
@@ -41,6 +24,14 @@ template <typename ForwardIt, typename Compare>
         }
     }
     return smallest;
+}
+
+/// \brief Finds the smallest element in the range `[first, last)`. Elements are
+/// compared using operator<.
+template <typename ForwardIt>
+[[nodiscard]] constexpr auto min_element(ForwardIt first, ForwardIt last) noexcept -> ForwardIt
+{
+    return etl::min_element(first, last, etl::less());
 }
 
 } // namespace etl

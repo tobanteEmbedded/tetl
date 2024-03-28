@@ -5,6 +5,7 @@
 
 #include <etl/_algorithm/lower_bound.hpp>
 #include <etl/_algorithm/upper_bound.hpp>
+#include <etl/_functional/less.hpp>
 #include <etl/_utility/pair.hpp>
 
 namespace etl {
@@ -23,7 +24,7 @@ equal_range(ForwardIt first, ForwardIt last, T const& value, Compare comp) -> pa
 template <typename ForwardIt, typename T>
 [[nodiscard]] constexpr auto equal_range(ForwardIt first, ForwardIt last, T const& value) -> pair<ForwardIt, ForwardIt>
 {
-    return etl::equal_range(first, last, value, etl::less{});
+    return etl::equal_range(first, last, value, etl::less());
 }
 
 } // namespace etl

@@ -3,6 +3,8 @@
 #ifndef TETL_ALGORITHM_SEARCH_N_HPP
 #define TETL_ALGORITHM_SEARCH_N_HPP
 
+#include <etl/_functional/equal_to.hpp>
+
 namespace etl {
 
 /// \brief Searches the range `[first, last)` for the first sequence of count
@@ -39,8 +41,7 @@ search_n(ForwardIt first, ForwardIt last, Size count, ValueT const& value, Predi
 template <typename ForwardIt, typename Size, typename ValueT>
 [[nodiscard]] constexpr auto search_n(ForwardIt first, ForwardIt last, Size count, ValueT const& value) -> ForwardIt
 {
-    auto const eq = [](auto const& l, auto const& r) { return l == r; };
-    return etl::search_n(first, last, count, value, eq);
+    return etl::search_n(first, last, count, value, etl::equal_to());
 }
 
 } // namespace etl

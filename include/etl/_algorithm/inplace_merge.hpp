@@ -40,7 +40,7 @@ constexpr auto inplace_merge(BidirIt begin, BidirIt mid, BidirIt end, Compare co
 template <typename BidirIt>
 constexpr auto inplace_merge(BidirIt first, BidirIt mid, BidirIt last) -> void
 {
-    etl::inplace_merge(first, mid, last, etl::less{});
+    etl::inplace_merge(first, mid, last, etl::less());
 }
 
 } // namespace etl

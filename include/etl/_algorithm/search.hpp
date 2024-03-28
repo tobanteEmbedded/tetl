@@ -3,6 +3,8 @@
 #ifndef TETL_ALGORITHM_SEARCH_HPP
 #define TETL_ALGORITHM_SEARCH_HPP
 
+#include <etl/_functional/equal_to.hpp>
+
 namespace etl {
 
 /// \brief Searches for the first occurrence of the sequence of elements
@@ -38,7 +40,7 @@ template <typename FwdIt1, typename FwdIt2, typename Predicate>
 template <typename FwdIt1, typename FwdIt2>
 [[nodiscard]] constexpr auto search(FwdIt1 first, FwdIt1 last, FwdIt2 sFirst, FwdIt2 sLast) -> FwdIt1
 {
-    return etl::search(first, last, sFirst, sLast, [](auto const& lhs, auto const& rhs) { return lhs == rhs; });
+    return etl::search(first, last, sFirst, sLast, etl::equal_to());
 }
 
 template <typename FwdIt, typename Searcher>

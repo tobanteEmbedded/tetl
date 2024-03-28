@@ -3,26 +3,9 @@
 #ifndef TETL_ALGORITHM_MAX_ELEMENT_HPP
 #define TETL_ALGORITHM_MAX_ELEMENT_HPP
 
+#include <etl/_functional/less.hpp>
+
 namespace etl {
-
-/// \brief Finds the greatest element in the range `[first, last)`. Elements are
-/// compared using operator<.
-template <typename ForwardIt>
-[[nodiscard]] constexpr auto max_element(ForwardIt first, ForwardIt last) noexcept -> ForwardIt
-{
-    if (first == last) {
-        return last;
-    }
-
-    ForwardIt largest = first;
-    ++first;
-    for (; first != last; ++first) {
-        if (*largest < *first) {
-            largest = first;
-        }
-    }
-    return largest;
-}
 
 /// \brief Finds the greatest element in the range `[first, last)`. Elements are
 /// compared using the given binary comparison function comp.
@@ -41,6 +24,14 @@ template <typename ForwardIt, typename Compare>
         }
     }
     return largest;
+}
+
+/// \brief Finds the greatest element in the range `[first, last)`. Elements are
+/// compared using operator<.
+template <typename ForwardIt>
+[[nodiscard]] constexpr auto max_element(ForwardIt first, ForwardIt last) noexcept -> ForwardIt
+{
+    return etl::max_element(first, last, etl::less());
 }
 
 } // namespace etl

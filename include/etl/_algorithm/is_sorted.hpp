@@ -12,13 +12,13 @@ namespace etl {
 template <typename ForwardIt>
 [[nodiscard]] constexpr auto is_sorted(ForwardIt first, ForwardIt last) -> bool
 {
-    return is_sorted_until(first, last) == last;
+    return etl::is_sorted_until(first, last) == last;
 }
 
 template <typename ForwardIt, typename Compare>
 [[nodiscard]] constexpr auto is_sorted(ForwardIt first, ForwardIt last, Compare comp) -> bool
 {
-    return is_sorted_until(first, last, comp) == last;
+    return etl::is_sorted_until(first, last, comp) == last;
 }
 
 } // namespace etl
