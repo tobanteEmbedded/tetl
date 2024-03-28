@@ -18,7 +18,8 @@ namespace etl {
 /// \returns dest
 constexpr auto wcscpy(wchar_t* dest, wchar_t const* src) -> wchar_t*
 {
-    TETL_ASSERT(dest != nullptr && src != nullptr);
+    TETL_ASSERT(dest != nullptr);
+    TETL_ASSERT(src != nullptr);
     return detail::strcpy_impl(dest, src);
 }
 

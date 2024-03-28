@@ -22,7 +22,8 @@ namespace etl {
 /// \returns dest
 constexpr auto wcsncpy(wchar_t* dest, wchar_t const* src, etl::size_t const count) -> wchar_t*
 {
-    TETL_ASSERT(dest != nullptr && src != nullptr);
+    TETL_ASSERT(dest != nullptr);
+    TETL_ASSERT(src != nullptr);
     return detail::strncpy_impl(dest, src, count);
 }
 

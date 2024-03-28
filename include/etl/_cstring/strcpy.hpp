@@ -19,7 +19,8 @@ namespace etl {
 /// \returns dest
 constexpr auto strcpy(char* dest, char const* src) -> char*
 {
-    TETL_ASSERT(dest != nullptr and src != nullptr);
+    TETL_ASSERT(dest != nullptr);
+    TETL_ASSERT(src != nullptr);
     return detail::strcpy_impl(dest, src);
 }
 

@@ -21,7 +21,8 @@ namespace etl {
 /// \returns dest
 constexpr auto strncpy(char* dest, char const* src, etl::size_t const count) -> char*
 {
-    TETL_ASSERT(dest != nullptr && src != nullptr);
+    TETL_ASSERT(dest != nullptr);
+    TETL_ASSERT(src != nullptr);
     return detail::strncpy_impl(dest, src, count);
 }
 
