@@ -364,7 +364,7 @@ constexpr auto test_variant_ctor_type_selector_t() -> bool
 
 auto main() -> int
 {
-#if not(defined(__GNUC__) and not defined(__clang__))
+#if not(defined(__GNUC__) and __GNUC__ == 12)
     CHECK(test());
     CHECK(test_non_trivial());
 #endif
