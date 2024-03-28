@@ -3,16 +3,11 @@
 #ifndef TETL_TYPE_TRAITS_COMMON_REFERENCE_HPP
 #define TETL_TYPE_TRAITS_COMMON_REFERENCE_HPP
 
+#include <etl/_type_traits/basic_common_reference.hpp>
 #include <etl/_type_traits/integral_constant.hpp>
 #include <etl/_type_traits/is_same.hpp>
 
 namespace etl {
-
-/// \brief The class template basic_common_reference is a customization point
-/// that allows users to influence the result of common_reference for user-defined
-/// types (typically proxy references). The primary template is empty.
-template <typename T, typename U, template <typename> typename TQ, template <typename> typename UQ>
-struct basic_common_reference { };
 
 /// \brief Determines the common reference type of the types T..., that is, the type to which all the
 /// types in T... can be converted or bound. If such a type exists (as determined according to the

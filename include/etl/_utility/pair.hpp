@@ -6,6 +6,7 @@
 #include <etl/_tuple/is_tuple_like.hpp>
 #include <etl/_tuple/tuple_element.hpp>
 #include <etl/_tuple/tuple_size.hpp>
+#include <etl/_type_traits/common_reference.hpp>
 #include <etl/_type_traits/decay.hpp>
 #include <etl/_type_traits/integral_constant.hpp>
 #include <etl/_type_traits/is_assignable.hpp>
@@ -301,6 +302,22 @@ template <size_t I, typename T1, typename T2>
         return TETL_MOVE(p.second);
     }
 }
+
+template <
+    typename T1,
+    typename T2,
+    typename U1,
+    typename U2,
+    template <typename>
+    typename TQual,
+    template <typename>
+    typename UQual>
+    requires requires {
+        typename pair<common_reference_t<TQual<T1>, UQual<U1>>, common_reference_t<TQual<T2>, UQual<U2>>>;
+    }
+struct basic_common_reference<pair<T1, T2>, pair<U1, U2>, TQual, UQual> {
+    using type = pair<common_reference_t<TQual<T1>, UQual<U1>>, common_reference_t<TQual<T2>, UQual<U2>>>;
+};
 
 } // namespace etl
 
