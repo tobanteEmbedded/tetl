@@ -116,14 +116,14 @@ using PointerToCVMemberFunc       = void (VirtualDtor::*)() const volatile;
     do {                                                                                                               \
         CHECK(etl::is_base_of_v<etl::true_type, etl::trait<type>>);                                                    \
         CHECK(etl::trait<type>::value);                                                                                \
-        CHECK(etl::TETL_PP_CONCAT(trait, _v) < type >);                                                                \
+        CHECK(etl::TETL_CONCAT(trait, _v) < type >);                                                                   \
     } while (false)
 
 #define CHECK_IS_TRAIT_FALSE(trait, type)                                                                              \
     do {                                                                                                               \
         CHECK(etl::is_base_of_v<etl::false_type, etl::trait<type>>);                                                   \
         CHECK_FALSE(etl::trait<type>::value);                                                                          \
-        CHECK_FALSE(etl::TETL_PP_CONCAT(trait, _v) < type >);                                                          \
+        CHECK_FALSE(etl::TETL_CONCAT(trait, _v) < type >);                                                             \
     } while (false)
 
 #define CHECK_IS_TRAIT_C(trait, type)                                                                                  \
@@ -157,7 +157,7 @@ using PointerToCVMemberFunc       = void (VirtualDtor::*)() const volatile;
 #define CHECK_TRAIT_VALUE(trait, type, expected)                                                                       \
     do {                                                                                                               \
         CHECK(etl::trait<type>::value == (expected));                                                                  \
-        CHECK((etl::TETL_PP_CONCAT(trait, _v) < type >) == (expected));                                                \
+        CHECK((etl::TETL_CONCAT(trait, _v) < type >) == (expected));                                                   \
     } while (false)
 
 #define CHECK_TRAIT_VALUE_CV(trait, type, expected)                                                                    \
@@ -169,7 +169,7 @@ using PointerToCVMemberFunc       = void (VirtualDtor::*)() const volatile;
 #define CHECK_TRAIT_TYPE(trait, T, e)                                                                                  \
     do {                                                                                                               \
         CHECK(etl::is_same_v<typename etl::trait<T>::type, e>);                                                        \
-        CHECK(etl::is_same_v<etl::TETL_PP_CONCAT(trait, _t) < T>, e >);                                                \
+        CHECK(etl::is_same_v<etl::TETL_CONCAT(trait, _t) < T>, e >);                                                   \
     } while (false)
 
 #define CHECK_TRAIT_TYPE_CV(trait, type, expected)                                                                     \

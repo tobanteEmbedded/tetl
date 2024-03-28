@@ -3,10 +3,11 @@
 #ifndef TETL_OPTIONAL_OPTIONAL_HPP
 #define TETL_OPTIONAL_OPTIONAL_HPP
 
+#include <etl/_config/all.hpp>
+
 #include <etl/_concepts/copy_constructible.hpp>
 #include <etl/_concepts/move_constructible.hpp>
 #include <etl/_concepts/same_as.hpp>
-#include <etl/_config/all.hpp>
 #include <etl/_exception/raise.hpp>
 #include <etl/_functional/hash.hpp>
 #include <etl/_functional/invoke.hpp>
@@ -623,7 +624,7 @@ public:
     /// https://en.cppreference.com/w/cpp/utility/optional/value
     [[nodiscard]] constexpr auto value() & -> value_type&
     {
-        if (TETL_LIKELY(has_value())) {
+        if (has_value()) {
             return this->get();
         }
         etl::raise<etl::bad_optional_access>("called value() on empty optional");
@@ -635,7 +636,7 @@ public:
     /// https://en.cppreference.com/w/cpp/utility/optional/value
     [[nodiscard]] constexpr auto value() const& -> value_type const&
     {
-        if (TETL_LIKELY(has_value())) {
+        if (has_value()) {
             return this->get();
         }
         etl::raise<etl::bad_optional_access>("called value() on empty optional");
@@ -647,7 +648,7 @@ public:
     /// https://en.cppreference.com/w/cpp/utility/optional/value
     [[nodiscard]] constexpr auto value() && -> value_type&&
     {
-        if (TETL_LIKELY(has_value())) {
+        if (has_value()) {
             return TETL_MOVE(this->get());
         }
         etl::raise<etl::bad_optional_access>("called value() on empty optional");
@@ -659,7 +660,7 @@ public:
     /// https://en.cppreference.com/w/cpp/utility/optional/value
     [[nodiscard]] constexpr auto value() const&& -> value_type const&&
     {
-        if (TETL_LIKELY(has_value())) {
+        if (has_value()) {
             return TETL_MOVE(this->get());
         }
         etl::raise<etl::bad_optional_access>("called value() on empty optional");
