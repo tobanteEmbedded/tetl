@@ -17,6 +17,9 @@ namespace etl {
 template <typename... T>
 struct common_reference;
 
+template <typename... T>
+using common_reference_t = typename common_reference<T...>::type;
+
 // if sizeof...(T) is zero
 template <>
 struct common_reference<> { };
@@ -34,8 +37,9 @@ struct common_reference<T, U> {
     using type = T;
 };
 
-template <typename... T>
-using common_reference_t = typename common_reference<T...>::type;
+template <typename T1, typename T2, typename... R>
+    requires requires { typename common_reference_t<T1, T2>; }
+struct common_reference<T1, T2, R...> : common_reference<common_reference_t<T1, T2>, R...> { };
 
 } // namespace etl
 
