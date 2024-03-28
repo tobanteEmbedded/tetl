@@ -6,7 +6,10 @@
 #include <etl/_config/all.hpp>
 
 #include <etl/_ranges/begin.hpp>
+#include <etl/_ranges/borrowed_iterator_t.hpp>
+#include <etl/_ranges/borrowed_range.hpp>
 #include <etl/_ranges/can_borrow.hpp>
+#include <etl/_ranges/dangling.hpp>
 #include <etl/_ranges/decay_copy.hpp>
 #include <etl/_ranges/disable_sized_range.hpp>
 #include <etl/_ranges/enable_borrowed_range.hpp>
