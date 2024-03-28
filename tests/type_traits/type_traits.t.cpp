@@ -8,8 +8,6 @@
 #include "testing/testing.hpp"
 #include "testing/types.hpp"
 
-#if not defined(TETL_WORKAROUND_AVR_BROKEN_TESTS)
-
 namespace {
 template <typename T>
 struct Foo {
@@ -235,9 +233,9 @@ constexpr auto test() -> bool
 
     CHECK(etl::is_convertible_v<void, void>);
 
-    // TODO: [tobi] The assertions below trigger an internal compiler error on
-    // MSVC
-    #if not defined(TETL_COMPILER_MSVC)
+// TODO: [tobi] The assertions below trigger an internal compiler error on
+// MSVC
+#if not defined(TETL_COMPILER_MSVC)
 
     CHECK_FALSE(etl::is_convertible_v<int, void>);
     CHECK_FALSE(etl::is_convertible_v<int, void const>);
@@ -246,7 +244,7 @@ constexpr auto test() -> bool
     CHECK(etl::is_convertible_v<void const, void>);
     CHECK(etl::is_convertible_v<void const, void const>);
 
-        #if TETL_CPP_STANDARD < 20
+    #if TETL_CPP_STANDARD < 20
     CHECK_FALSE(etl::is_convertible_v<int, void volatile>);
     CHECK_FALSE(etl::is_convertible_v<int, void const volatile>);
     CHECK(etl::is_convertible_v<void, void volatile>);
@@ -261,9 +259,9 @@ constexpr auto test() -> bool
     CHECK(etl::is_convertible_v<void const volatile, void const>);
     CHECK(etl::is_convertible_v<void const volatile, void volatile>);
     CHECK(etl::is_convertible_v<void const volatile, void const volatile>);
-        #endif
-
     #endif
+
+#endif
 
     CHECK_IS_TRAIT_CV(is_arithmetic, bool);
     CHECK_IS_TRAIT_CV(is_arithmetic, T);
@@ -547,8 +545,11 @@ constexpr auto test() -> bool
     CHECK(sizeof(etl::aligned_union_t<2, char>) == 2);
     CHECK(sizeof(etl::aligned_union_t<2, char[3]>) == 3);
     CHECK(sizeof(etl::aligned_union_t<3, char[4]>) == 4);
+
+#if not defined(__AVR__)
     CHECK(sizeof(etl::aligned_union_t<1, char, T, double>) == 8);
     CHECK(sizeof(etl::aligned_union_t<12, char, T, double>) == 16);
+#endif
 
     CHECK(etl::is_specialized_v<test_is_specialized, Foo<float>>);
     CHECK_FALSE(etl::is_specialized_v<test_is_specialized, T>);
@@ -581,6 +582,3 @@ auto main() -> int
     STATIC_CHECK(test_all());
     return 0;
 }
-#else
-auto main() -> int { return 0; }
-#endif

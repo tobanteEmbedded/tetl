@@ -7,8 +7,6 @@
 #include "testing/testing.hpp"
 #include "testing/types.hpp"
 
-#if not defined(TETL_WORKAROUND_AVR_BROKEN_TESTS)
-
 template <typename T>
 constexpr auto test() -> bool
 {
@@ -237,36 +235,36 @@ constexpr auto test() -> bool
         float f; // NOLINT
     };
 
-    CHECK_TRAIT_VALUE_CV(alignment_of, char, 1);
-    CHECK_TRAIT_VALUE_CV(alignment_of, signed char, 1);
-    CHECK_TRAIT_VALUE_CV(alignment_of, unsigned char, 1);
+    CHECK_TRAIT_VALUE_CV(alignment_of, char, alignof(char));
+    CHECK_TRAIT_VALUE_CV(alignment_of, signed char, alignof(signed char));
+    CHECK_TRAIT_VALUE_CV(alignment_of, unsigned char, alignof(unsigned char));
 
-    CHECK_TRAIT_VALUE_CV(alignment_of, short, 2);
-    CHECK_TRAIT_VALUE_CV(alignment_of, signed short, 2);
-    CHECK_TRAIT_VALUE_CV(alignment_of, unsigned short, 2);
+    CHECK_TRAIT_VALUE_CV(alignment_of, short, alignof(short));
+    CHECK_TRAIT_VALUE_CV(alignment_of, signed short, alignof(signed short));
+    CHECK_TRAIT_VALUE_CV(alignment_of, unsigned short, alignof(unsigned short));
 
-    CHECK_TRAIT_VALUE_CV(alignment_of, int, 4);
-    CHECK_TRAIT_VALUE_CV(alignment_of, signed int, 4);
-    CHECK_TRAIT_VALUE_CV(alignment_of, unsigned int, 4);
+    CHECK_TRAIT_VALUE_CV(alignment_of, int, alignof(int));
+    CHECK_TRAIT_VALUE_CV(alignment_of, signed int, alignof(signed int));
+    CHECK_TRAIT_VALUE_CV(alignment_of, unsigned int, alignof(unsigned int));
 
     if constexpr (sizeof(long) == 4U) {
-        CHECK_TRAIT_VALUE_CV(alignment_of, long, 4);
-        CHECK_TRAIT_VALUE_CV(alignment_of, signed long, 4);
-        CHECK_TRAIT_VALUE_CV(alignment_of, unsigned long, 4);
+        CHECK_TRAIT_VALUE_CV(alignment_of, long, alignof(long));
+        CHECK_TRAIT_VALUE_CV(alignment_of, signed long, alignof(signed long));
+        CHECK_TRAIT_VALUE_CV(alignment_of, unsigned long, alignof(unsigned long));
     } else {
-        CHECK_TRAIT_VALUE_CV(alignment_of, long, 8);
-        CHECK_TRAIT_VALUE_CV(alignment_of, signed long, 8);
-        CHECK_TRAIT_VALUE_CV(alignment_of, unsigned long, 8);
+        CHECK_TRAIT_VALUE_CV(alignment_of, long, alignof(long));
+        CHECK_TRAIT_VALUE_CV(alignment_of, signed long, alignof(signed long));
+        CHECK_TRAIT_VALUE_CV(alignment_of, unsigned long, alignof(unsigned long));
     }
 
-    CHECK_TRAIT_VALUE_CV(alignment_of, long long, 8);
-    CHECK_TRAIT_VALUE_CV(alignment_of, signed long long, 8);
-    CHECK_TRAIT_VALUE_CV(alignment_of, unsigned long long, 8);
+    CHECK_TRAIT_VALUE_CV(alignment_of, long long, alignof(long long));
+    CHECK_TRAIT_VALUE_CV(alignment_of, signed long long, alignof(signed long long));
+    CHECK_TRAIT_VALUE_CV(alignment_of, unsigned long long, alignof(unsigned long long));
 
-    CHECK_TRAIT_VALUE_CV(alignment_of, float, 4);
-    CHECK_TRAIT_VALUE_CV(alignment_of, double, 8);
+    CHECK_TRAIT_VALUE_CV(alignment_of, float, alignof(float));
+    CHECK_TRAIT_VALUE_CV(alignment_of, double, alignof(double));
 
-    CHECK_TRAIT_VALUE_CV(alignment_of, AlignmenTest, 4);
+    CHECK_TRAIT_VALUE_CV(alignment_of, AlignmenTest, alignof(AlignmenTest));
 
     return true;
 }
@@ -295,6 +293,3 @@ auto main() -> int
     STATIC_CHECK(test_all());
     return 0;
 }
-#else
-auto main() -> int { return 0; }
-#endif
