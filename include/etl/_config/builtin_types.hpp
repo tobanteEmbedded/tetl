@@ -3,7 +3,7 @@
 #ifndef TETL_CONFIG_BUILTIN_TYPES_HPP
 #define TETL_CONFIG_BUILTIN_TYPES_HPP
 
-#if defined(TETL_MSVC)
+#if defined(TETL_COMPILER_MSVC)
     #define TETL_BUILTIN_INT8   signed __int8
     #define TETL_BUILTIN_INT16  signed __int16
     #define TETL_BUILTIN_INT32  signed __int32

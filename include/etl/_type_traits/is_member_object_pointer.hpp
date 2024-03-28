@@ -11,7 +11,7 @@
 
 namespace etl {
 
-#if defined(TETL_CLANG)
+#if defined(TETL_COMPILER_CLANG)
 
 template <typename T>
 inline constexpr bool is_member_object_pointer_v = __is_member_object_pointer(T);

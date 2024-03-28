@@ -31,7 +31,7 @@ template <typename T>
     if (is_constant_evaluated()) {
         return detail::signbit_fallback(arg);
     }
-#if __has_builtin(__builtin_signbit) and not defined(TETL_CLANG)
+#if __has_builtin(__builtin_signbit) and not defined(TETL_COMPILER_CLANG)
     return __builtin_signbit(arg);
 #else
     return detail::signbit_fallback(arg);
@@ -50,7 +50,7 @@ template <typename T>
     if (is_constant_evaluated()) {
         return detail::signbit_fallback(arg);
     }
-#if __has_builtin(__builtin_signbit) and not defined(TETL_CLANG)
+#if __has_builtin(__builtin_signbit) and not defined(TETL_COMPILER_CLANG)
     return __builtin_signbit(arg);
 #else
     return detail::signbit_fallback(arg);
@@ -69,7 +69,7 @@ template <typename T>
     if (is_constant_evaluated()) {
         return detail::signbit_fallback(arg);
     }
-#if __has_builtin(__builtin_signbit) and not defined(TETL_CLANG)
+#if __has_builtin(__builtin_signbit) and not defined(TETL_COMPILER_CLANG)
     return __builtin_signbit(arg);
 #else
     return detail::signbit_fallback(arg);

@@ -29,7 +29,7 @@ auto main() -> int
     CHECK(test<float>());
     CHECK(test<double>());
 
-#if not defined(TETL_MSVC)
+#if not defined(TETL_COMPILER_MSVC)
     // TODO
     // static_assert(test<long double>());
     // CHECK(test<long double>());

@@ -4,17 +4,13 @@
 #define TETL_CONFIG_COMPILER_HPP
 
 #if defined(__clang__)
-    #define TETL_CLANG 1
+    #define TETL_COMPILER_CLANG
 #elif defined(__GNUC__)
-    #define TETL_GCC 1
+    #define TETL_COMPILER_GCC
 #elif defined(_MSC_VER)
-    #define TETL_MSVC 1
-#elif defined(__INTEL_COMPILER)
-    #define TETL_INTEL 1
-#elif defined(__EMSCRIPTEN__)
-    #define TETL_EMSCRIPTEN 1
+    #define TETL_COMPILER_MSVC
 #else
-    #error "unknown compiler"
+    #define TETL_COMPILER_UNKOWN
 #endif
 
 #endif // TETL_CONFIG_COMPILER_HPP

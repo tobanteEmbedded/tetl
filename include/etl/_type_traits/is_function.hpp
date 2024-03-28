@@ -11,7 +11,7 @@
 
 namespace etl {
 
-#if defined(TETL_MSVC)
+#if defined(TETL_COMPILER_MSVC)
     // Qualifier applied to function has no meaning
     #pragma warning(disable: 4180)
 #endif
@@ -19,7 +19,7 @@ namespace etl {
 template <typename T>
 struct is_function : etl::bool_constant<not etl::is_const_v<T const> and not etl::is_reference_v<T>> { };
 
-#if defined(TETL_MSVC)
+#if defined(TETL_COMPILER_MSVC)
     // Qualifier applied to function has no meaning
     #pragma warning(default: 4180)
 #endif

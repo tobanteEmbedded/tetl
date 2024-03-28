@@ -15,7 +15,7 @@
 #include <stdio.h>  // for printf
 #include <stdlib.h> // for exit
 
-#if defined(TETL_MSVC)
+#if defined(TETL_COMPILER_MSVC)
     #pragma warning(disable: 4127) // Conditional expression is constant
 #endif
 
@@ -36,6 +36,6 @@ auto main() -> int
     return EXIT_SUCCESS; // unreachable
 }
 
-#if defined(TETL_MSVC)
+#if defined(TETL_COMPILER_MSVC)
     #pragma warning(default: 4127) // Conditional expression is constant
 #endif

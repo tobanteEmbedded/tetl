@@ -237,7 +237,7 @@ constexpr auto test() -> bool
 
     // TODO: [tobi] The assertions below trigger an internal compiler error on
     // MSVC
-    #if not defined(TETL_MSVC)
+    #if not defined(TETL_COMPILER_MSVC)
 
     CHECK_FALSE(etl::is_convertible_v<int, void>);
     CHECK_FALSE(etl::is_convertible_v<int, void const>);

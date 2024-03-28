@@ -5,7 +5,7 @@
 
 #include <etl/_config/all.hpp>
 
-#if defined(TETL_MSVC)
+#if defined(TETL_COMPILER_MSVC)
     #include <wchar.h>
 #else
 

@@ -7,7 +7,7 @@
 
 namespace etl {
 
-#if defined(TETL_MSVC)
+#if defined(TETL_COMPILER_MSVC)
     #pragma warning(disable: 4324) // Padding was added at the end of a structure
 #endif
 
@@ -17,7 +17,7 @@ namespace etl {
 /// https://en.cppreference.com/w/cpp/types/max_align_t
 struct alignas(long double) max_align_t { };
 
-#if defined(TETL_MSVC)
+#if defined(TETL_COMPILER_MSVC)
     #pragma warning(default: 4324) // Padding was added at the end of a structure
 #endif
 

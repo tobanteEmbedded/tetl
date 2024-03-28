@@ -636,11 +636,11 @@ auto main() -> int
   puts(TETL_VERSION_STRING);  // Print current library version
 
   // Detect compiler
-#if defined(TETL_MSVC)
+#if defined(TETL_COMPILER_MSVC)
   puts("msvc");
-#if defined(TETL_GCC)
+#if defined(TETL_COMPILER_GCC)
   puts("gcc");
-#if defined(TETL_CLANG)
+#if defined(TETL_COMPILER_CLANG)
   puts("clang");
 #else
   puts("other compiler");
