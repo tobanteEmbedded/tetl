@@ -15,8 +15,10 @@
 #include <etl/_iterator/front_insert_iterator.hpp>
 #include <etl/_iterator/incrementable.hpp>
 #include <etl/_iterator/incrementable_traits.hpp>
+#include <etl/_iterator/indirect_result_t.hpp>
 #include <etl/_iterator/indirectly_readable.hpp>
 #include <etl/_iterator/indirectly_readable_traits.hpp>
+#include <etl/_iterator/indirectly_regular_unary_invocable.hpp>
 #include <etl/_iterator/indirectly_unary_invocable.hpp>
 #include <etl/_iterator/input_or_output_iterator.hpp>
 #include <etl/_iterator/iter_common_reference_t.hpp>
@@ -27,6 +29,7 @@
 #include <etl/_iterator/iterator_traits.hpp>
 #include <etl/_iterator/next.hpp>
 #include <etl/_iterator/prev.hpp>
+#include <etl/_iterator/projected.hpp>
 #include <etl/_iterator/ranges_iter_move.hpp>
 #include <etl/_iterator/rbegin.hpp>
 #include <etl/_iterator/rend.hpp>
