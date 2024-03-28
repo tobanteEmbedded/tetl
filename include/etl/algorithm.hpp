@@ -61,6 +61,7 @@
 #include <etl/_algorithm/partition.hpp>
 #include <etl/_algorithm/partition_copy.hpp>
 #include <etl/_algorithm/partition_point.hpp>
+#include <etl/_algorithm/ranges_in_fun_result.hpp>
 #include <etl/_algorithm/remove.hpp>
 #include <etl/_algorithm/remove_copy.hpp>
 #include <etl/_algorithm/remove_copy_if.hpp>
