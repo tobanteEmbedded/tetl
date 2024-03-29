@@ -14,11 +14,17 @@ jobs:
       - name: Check out code
         uses: actions/checkout@v4
 
-      - name: Install doxygen
-        run: sudo apt install -y doxygen
+      - name: Install build tools
+        run: sudo apt install -y bison flex ninja-build
+
+      - name: Build doxygen
+        run: |
+          git clone --depth 1 https://github.com/doxygen/doxygen
+          cmake -S doxygen -B cmake-build-doxygen -G Ninja -D CMAKE_BUILD_TYPE=Release
+          cmake --build cmake-build-doxygen --config Release
 
       - name: Generate HTML documentation
-        run: doxygen Doxyfile
+        run: ./cmake-build-doxygen/bin/doxygen Doxyfile
 
       - name: Disable Jekyll processing
         run: touch cmake-build-doc/html/.nojekyll
