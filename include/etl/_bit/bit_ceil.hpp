@@ -20,7 +20,7 @@ namespace etl {
 ///
 /// \returns The smallest integral power of two that is not smaller than x.
 ///
-/// \ingroup bit-hpp
+/// \ingroup bit
 template <etl::builtin_unsigned_integer UInt>
 [[nodiscard]] constexpr auto bit_ceil(UInt x) noexcept -> UInt
 {

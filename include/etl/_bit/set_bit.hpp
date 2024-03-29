@@ -10,7 +10,7 @@ namespace etl {
 
 /// Set bit at position \p pos
 /// \note Non-standard extension
-/// \ingroup bit-hpp
+/// \ingroup bit
 template <etl::builtin_unsigned_integer UInt>
 [[nodiscard]] constexpr auto set_bit(UInt word, UInt pos) noexcept -> UInt
 {
@@ -19,7 +19,7 @@ template <etl::builtin_unsigned_integer UInt>
 
 /// Set bit at position `Pos`
 /// \note Non-standard extension
-/// \ingroup bit-hpp
+/// \ingroup bit
 template <etl::size_t Pos, etl::builtin_unsigned_integer UInt>
 [[nodiscard]] constexpr auto set_bit(UInt word) noexcept -> UInt
 {

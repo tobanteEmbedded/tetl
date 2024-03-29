@@ -3,9 +3,9 @@
 #ifndef TETL_CONCEPTS_HPP
 #define TETL_CONCEPTS_HPP
 
-/// \defgroup concepts-hpp concepts.hpp
+/// \defgroup concepts concepts.hpp
 /// Fundamental library concepts
-/// \ingroup concepts-lib
+/// \ingroup concepts-library
 
 #include <etl/_config/all.hpp>
 

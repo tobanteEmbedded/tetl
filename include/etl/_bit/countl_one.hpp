@@ -18,7 +18,7 @@ namespace etl {
 /// \returns The number of consecutive 1 bits in the value of x, starting from
 /// the most significant bit.
 ///
-/// \ingroup bit-hpp
+/// \ingroup bit
 template <etl::builtin_unsigned_integer UInt>
 [[nodiscard]] constexpr auto countl_one(UInt x) noexcept -> int
 {

@@ -33,7 +33,7 @@ namespace etl {
 ///
 /// \include array.cpp
 /// \headerfile etl/array.hpp
-/// \ingroup array-hpp
+/// \ingroup array
 template <typename Type, size_t Size>
 struct array {
     using value_type             = Type;

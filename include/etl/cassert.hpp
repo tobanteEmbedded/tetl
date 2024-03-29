@@ -3,9 +3,9 @@
 #ifndef TETL_CASSERT_HPP
 #define TETL_CASSERT_HPP
 
-/// \defgroup cassert-hpp cassert.hpp
+/// \defgroup cassert cassert.hpp
 /// Conditionally compiled macro that compares its argument to zero
-/// \ingroup errors-lib
+/// \ingroup errors-library
 /// \example cassert.cpp
 
 #include <etl/_config/all.hpp>

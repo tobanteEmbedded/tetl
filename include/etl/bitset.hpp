@@ -3,8 +3,8 @@
 #ifndef TETL_BITSET_HPP
 #define TETL_BITSET_HPP
 
-/// \defgroup bitset-hpp bitset.hpp
-/// \ingroup utilities-lib
+/// \defgroup bitset bitset.hpp
+/// \ingroup utilities-library
 /// \example bitset.cpp
 
 #include <etl/_config/all.hpp>

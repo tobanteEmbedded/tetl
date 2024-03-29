@@ -3,9 +3,9 @@
 #ifndef TETL_CTIME_HPP
 #define TETL_CTIME_HPP
 
-/// \defgroup ctime-hpp ctime.hpp
+/// \defgroup ctime ctime.hpp
 /// C-style time/date utilities
-/// \ingroup utilities-lib
+/// \ingroup utilities-library
 
 #include <etl/_config/all.hpp>
 

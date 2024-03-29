@@ -7,7 +7,7 @@
 
 namespace etl {
 
-/// \ingroup algorithm-hpp
+/// \ingroup algorithm
 /// @{
 
 /// \brief Checks if unary predicate p returns true for all elements in the range `[first, last)`.

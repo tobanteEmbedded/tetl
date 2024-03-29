@@ -3,9 +3,9 @@
 #ifndef TETL_NUMERIC_HPP
 #define TETL_NUMERIC_HPP
 
-/// \defgroup numeric-hpp numeric.hpp
+/// \defgroup numeric numeric.hpp
 ///	Numeric operations on values in ranges
-/// \ingroup numerics-lib
+/// \ingroup numerics-library
 /// \example numeric.cpp
 
 #include <etl/_config/all.hpp>

@@ -3,9 +3,9 @@
 #ifndef TETL_CSTDDEF_HPP
 #define TETL_CSTDDEF_HPP
 
-/// \defgroup cstddef-hpp cstddef.hpp
+/// \defgroup cstddef cstddef.hpp
 /// Standard macros and typedefs
-/// \ingroup utilities-lib
+/// \ingroup utilities-library
 
 #include <etl/_config/all.hpp>
 

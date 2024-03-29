@@ -3,8 +3,8 @@
 #ifndef TETL_META_HPP
 #define TETL_META_HPP
 
-/// \defgroup meta-hpp meta.hpp
-/// \ingroup utilities-lib
+/// \defgroup meta meta.hpp
+/// \ingroup utilities-library
 
 #include <etl/_config/all.hpp>
 

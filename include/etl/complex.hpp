@@ -3,9 +3,9 @@
 #ifndef TETL_COMPLEX_HPP
 #define TETL_COMPLEX_HPP
 
-/// \defgroup complex-hpp complex.hpp
+/// \defgroup complex complex.hpp
 /// Complex number type
-/// \ingroup numerics-lib
+/// \ingroup numerics-library
 
 #include <etl/_config/all.hpp>
 

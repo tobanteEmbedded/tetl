@@ -3,9 +3,9 @@
 #ifndef TETL_CWCTYPE_HPP
 #define TETL_CWCTYPE_HPP
 
-/// \defgroup cwctype-hpp cwctype.hpp
+/// \defgroup cwctype cwctype.hpp
 /// Functions to determine the category of wide characters
-/// \ingroup strings-lib
+/// \ingroup strings-library
 
 #include <etl/_config/all.hpp>
 

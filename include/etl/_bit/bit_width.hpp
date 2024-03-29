@@ -16,7 +16,7 @@ namespace etl {
 /// unsigned integer type (that is, unsigned char, unsigned short, unsigned int,
 /// unsigned long, unsigned long long, or an extended unsigned integer type).
 ///
-/// \ingroup bit-hpp
+/// \ingroup bit
 template <etl::builtin_unsigned_integer UInt>
 [[nodiscard]] constexpr auto bit_width(UInt x) noexcept -> int
 {

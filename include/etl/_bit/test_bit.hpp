@@ -10,7 +10,7 @@ namespace etl {
 
 /// Test bit at position \p pos
 /// \note Non-standard extension
-/// \ingroup bit-hpp
+/// \ingroup bit
 template <etl::builtin_unsigned_integer UInt>
 [[nodiscard]] constexpr auto test_bit(UInt word, UInt pos) noexcept -> bool
 {
@@ -19,7 +19,7 @@ template <etl::builtin_unsigned_integer UInt>
 
 /// Test bit at position `Pos`
 /// \note Non-standard extension
-/// \ingroup bit-hpp
+/// \ingroup bit
 template <etl::size_t Pos, etl::builtin_unsigned_integer UInt>
 [[nodiscard]] constexpr auto test_bit(UInt word) noexcept -> bool
 {

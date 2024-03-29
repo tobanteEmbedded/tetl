@@ -36,7 +36,7 @@ inline constexpr auto bit_castable_types =
 ///
 /// https://en.cppreference.com/w/cpp/numeric/bit_cast
 ///
-/// \ingroup bit-hpp
+/// \ingroup bit
 template <typename To, typename From>
     requires(detail::bit_castable_types<To, From>)
 constexpr auto bit_cast(From const& src) noexcept -> To

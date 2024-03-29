@@ -3,9 +3,9 @@
 #ifndef TETL_RANGES_HPP
 #define TETL_RANGES_HPP
 
-/// \defgroup ranges-hpp ranges.hpp
+/// \defgroup ranges ranges.hpp
 /// Range access, primitives, requirements, utilities and adaptors
-/// \ingroup ranges-lib
+/// \ingroup ranges-library
 
 #include <etl/_config/all.hpp>
 

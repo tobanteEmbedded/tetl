@@ -3,9 +3,9 @@
 #ifndef TETL_FUNCTIONAL_HPP
 #define TETL_FUNCTIONAL_HPP
 
-/// \defgroup functional-hpp functional.hpp
+/// \defgroup functional functional.hpp
 /// Function objects, Function invocations, Bind operations and Reference wrappers
-/// \ingroup utilities-lib
+/// \ingroup utilities-library
 
 #include <etl/_config/all.hpp>
 

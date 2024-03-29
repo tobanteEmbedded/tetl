@@ -3,17 +3,17 @@
 #ifndef TETL_CONFIG_DOCS_HPP
 #define TETL_CONFIG_DOCS_HPP
 
-/// \defgroup concepts-lib Concepts Library
-/// \defgroup coroutines-lib Coroutines Library
-/// \defgroup utilities-lib Utilities Library
-/// \defgroup dynamic-memory-lib Dynamic memory management
-/// \defgroup limits-lib Numeric limits
-/// \defgroup errors-lib Error handling
-/// \defgroup strings-lib Strings Library
-/// \defgroup containers-lib Containers Library
-/// \defgroup iterators-lib Iterators Library
-/// \defgroup ranges-lib Ranges Library
-/// \defgroup algorithms-lib Algorithms Library
-/// \defgroup numerics-lib Numerics Library
+/// \defgroup concepts-library Concepts Library
+/// \defgroup coroutines-library Coroutines Library
+/// \defgroup utilities-library Utilities Library
+/// \defgroup dynamic-memory-library Dynamic memory management
+/// \defgroup limits-library Numeric limits
+/// \defgroup errors-library Error handling
+/// \defgroup strings-library Strings Library
+/// \defgroup containers-library Containers Library
+/// \defgroup iterators-library Iterators Library
+/// \defgroup ranges-library Ranges Library
+/// \defgroup algorithms-library Algorithms Library
+/// \defgroup numerics-library Numerics Library
 
 #endif // TETL_CONFIG_DOCS_HPP

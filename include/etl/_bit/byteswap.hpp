@@ -82,7 +82,7 @@ inline constexpr struct byteswap {
 ///
 /// https://en.cppreference.com/w/cpp/numeric/byteswap
 ///
-/// \ingroup bit-hpp
+/// \ingroup bit
 template <integral T>
 [[nodiscard]] constexpr auto byteswap(T val) noexcept -> T
 {

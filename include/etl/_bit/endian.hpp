@@ -11,7 +11,7 @@ namespace etl {
 ///
 /// https://en.cppreference.com/w/cpp/types/endian
 ///
-/// \ingroup bit-hpp
+/// \ingroup bit
 enum struct endian {
 #if defined(DOXYGEN)
     little = implementation defined,

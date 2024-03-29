@@ -3,8 +3,8 @@
 #ifndef TETL_OPTIONAL_HPP
 #define TETL_OPTIONAL_HPP
 
-/// \defgroup optional-hpp optional.hpp
-/// \ingroup utilities-lib
+/// \defgroup optional optional.hpp
+/// \ingroup utilities-library
 /// \example optional.cpp
 
 #include <etl/_config/all.hpp>

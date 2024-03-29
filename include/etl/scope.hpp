@@ -3,8 +3,8 @@
 #ifndef TETL_SCOPE_HPP
 #define TETL_SCOPE_HPP
 
-/// \defgroup scope-hpp scope.hpp
-/// \ingroup utilities-lib
+/// \defgroup scope scope.hpp
+/// \ingroup utilities-library
 
 #include <etl/_config/all.hpp>
 

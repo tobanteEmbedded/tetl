@@ -20,7 +20,7 @@ concept sufficiently_trivial = etl::is_trivially_default_constructible_v<T> and 
 }
 
 /// \headerfile etl/array.hpp
-/// \ingroup array-hpp
+/// \ingroup array
 template <typename T, etl::size_t Size>
 struct uninitialized_array {
     using value_type = T;

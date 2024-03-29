@@ -4,7 +4,7 @@
 #define TETL_ALGORITHM_COPY_BACKWARD_HPP
 
 namespace etl {
-/// \ingroup algorithm-hpp
+/// \ingroup algorithm
 /// @{
 
 /// \brief Copies the elements from the range, defined by `[first, last)`, to

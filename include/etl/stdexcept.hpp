@@ -3,8 +3,8 @@
 #ifndef TETL_STDEXCEPT_HPP
 #define TETL_STDEXCEPT_HPP
 
-/// \defgroup stdexcept-hpp stdexcept.hpp
-/// \ingroup errors-lib
+/// \defgroup stdexcept stdexcept.hpp
+/// \ingroup errors-library
 
 #include <etl/_config/all.hpp>
 

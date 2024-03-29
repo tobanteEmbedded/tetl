@@ -3,8 +3,8 @@
 #ifndef TETL_MDARRAY_HPP
 #define TETL_MDARRAY_HPP
 
-/// \defgroup mdarray-hpp mdarray.hpp
-/// \ingroup containers-lib
+/// \defgroup mdarray mdarray.hpp
+/// \ingroup containers-library
 
 #include <etl/_config/all.hpp>
 

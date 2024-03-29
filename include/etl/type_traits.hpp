@@ -3,9 +3,9 @@
 #ifndef TETL_TYPETRAITS_HPP
 #define TETL_TYPETRAITS_HPP
 
-/// \defgroup type_traits-hpp type_traits.hpp
+/// \defgroup type_traits type_traits.hpp
 /// Compile-time type information
-/// \ingroup utilities-lib
+/// \ingroup utilities-library
 /// \example type_traits.cpp
 
 #include <etl/_config/all.hpp>

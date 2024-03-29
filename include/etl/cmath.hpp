@@ -3,9 +3,9 @@
 #ifndef TETL_CMATH_HPP
 #define TETL_CMATH_HPP
 
-/// \defgroup cmath-hpp cmath.hpp
+/// \defgroup cmath cmath.hpp
 /// Common mathematics functions
-/// \ingroup numerics-lib
+/// \ingroup numerics-library
 
 #include <etl/_config/all.hpp>
 

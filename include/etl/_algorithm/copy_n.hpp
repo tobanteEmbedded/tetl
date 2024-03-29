@@ -4,7 +4,7 @@
 #define TETL_ALGORITHM_COPY_N_HPP
 
 namespace etl {
-/// \ingroup algorithm-hpp
+/// \ingroup algorithm
 /// @{
 
 /// \brief Copies exactly count values from the range beginning at first to the

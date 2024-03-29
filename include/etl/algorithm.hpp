@@ -3,9 +3,9 @@
 #ifndef TETL_ALGORITHM_HPP
 #define TETL_ALGORITHM_HPP
 
-/// \defgroup algorithm-hpp algorithm.hpp
+/// \defgroup algorithm algorithm.hpp
 /// Algorithms that operate on ranges
-/// \ingroup algorithms-lib
+/// \ingroup algorithms-library
 /// \code
 /// #include <etl/algorithm.hpp>
 /// \endcode

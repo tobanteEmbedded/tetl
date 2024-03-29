@@ -3,8 +3,8 @@
 #ifndef TETL_SET_HPP
 #define TETL_SET_HPP
 
-/// \defgroup set-hpp set.hpp
-/// \ingroup containers-lib
+/// \defgroup set set.hpp
+/// \ingroup containers-library
 /// \example set.cpp
 
 #include <etl/_config/all.hpp>

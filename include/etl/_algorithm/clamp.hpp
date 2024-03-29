@@ -7,7 +7,7 @@
 
 namespace etl {
 
-/// \ingroup algorithm-hpp
+/// \ingroup algorithm
 /// @{
 
 /// \brief If v compares less than lo, returns lo; otherwise if hi compares less

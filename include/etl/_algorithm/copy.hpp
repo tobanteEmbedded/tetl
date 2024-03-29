@@ -5,7 +5,7 @@
 
 namespace etl {
 
-/// \ingroup algorithm-hpp
+/// \ingroup algorithm
 /// @{
 
 /// \brief Copies the elements in the range, defined by `[first, last)`, to

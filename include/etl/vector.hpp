@@ -3,8 +3,8 @@
 #ifndef TETL_VECTOR_HPP
 #define TETL_VECTOR_HPP
 
-/// \defgroup vector-hpp vector.hpp
-/// \ingroup containers-lib
+/// \defgroup vector vector.hpp
+/// \ingroup containers-library
 /// \example vector.cpp
 
 #include <etl/_config/all.hpp>

@@ -3,9 +3,9 @@
 #ifndef TETL_NUMBERS_HPP
 #define TETL_NUMBERS_HPP
 
-/// \defgroup numbers-hpp numbers.hpp
+/// \defgroup numbers numbers.hpp
 /// Math constants
-/// \ingroup numerics-lib
+/// \ingroup numerics-library
 
 #include <etl/_config/all.hpp>
 

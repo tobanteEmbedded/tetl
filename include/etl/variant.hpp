@@ -3,8 +3,8 @@
 #ifndef TETL_VARIANT_HPP
 #define TETL_VARIANT_HPP
 
-/// \defgroup variant-hpp variant.hpp
-/// \ingroup utilities-lib
+/// \defgroup variant variant.hpp
+/// \ingroup utilities-library
 
 #include <etl/_config/all.hpp>
 

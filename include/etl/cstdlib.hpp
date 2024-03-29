@@ -3,8 +3,8 @@
 #ifndef TETL_CSTDLIB_HPP
 #define TETL_CSTDLIB_HPP
 
-/// \defgroup cstdlib-hpp cstdlib.hpp
-/// \ingroup utilities-lib
+/// \defgroup cstdlib cstdlib.hpp
+/// \ingroup utilities-library
 
 #include <etl/_config/all.hpp>
 

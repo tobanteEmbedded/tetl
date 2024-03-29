@@ -3,9 +3,9 @@
 #ifndef TETL_MEMORY_HPP
 #define TETL_MEMORY_HPP
 
-/// \defgroup memory-hpp memory.hpp
+/// \defgroup memory memory.hpp
 /// High-level memory management utilities
-/// \ingroup dynamic-memory-lib
+/// \ingroup dynamic-memory-library
 /// \example memory.cpp
 
 #include <etl/_config/all.hpp>

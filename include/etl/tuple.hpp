@@ -3,8 +3,8 @@
 #ifndef TETL_TUPLE_HPP
 #define TETL_TUPLE_HPP
 
-/// \defgroup tuple-hpp tuple.hpp
-/// \ingroup utilities-lib
+/// \defgroup tuple tuple.hpp
+/// \ingroup utilities-library
 /// \example tuple.cpp
 
 #include <etl/_config/all.hpp>

@@ -3,8 +3,8 @@
 #ifndef TETL_STRING_VIEW_HPP
 #define TETL_STRING_VIEW_HPP
 
-/// \defgroup string_view-hpp string_view.hpp
-/// \ingroup strings-lib
+/// \defgroup string_view string_view.hpp
+/// \ingroup strings-library
 
 #include <etl/_config/all.hpp>
 

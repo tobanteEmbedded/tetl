@@ -3,9 +3,9 @@
 #ifndef TETL_LIMITS_HPP
 #define TETL_LIMITS_HPP
 
-/// \defgroup limits-hpp limits.hpp
+/// \defgroup limits limits.hpp
 /// Uniform way to query properties of arithmetic types
-/// \ingroup limits-lib
+/// \ingroup limits-library
 
 #include <etl/_config/all.hpp>
 

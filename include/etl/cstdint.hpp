@@ -3,9 +3,9 @@
 #ifndef TETL_CSTDINT_HPP
 #define TETL_CSTDINT_HPP
 
-/// \defgroup cstdint-hpp cstdint.hpp
+/// \defgroup cstdint cstdint.hpp
 ///	Fixed-width integer types and limits of other types
-/// \ingroup limits-lib
+/// \ingroup limits-library
 
 #include <etl/_config/all.hpp>
 

@@ -3,8 +3,8 @@
 #ifndef TETL_ARRAY_HPP
 #define TETL_ARRAY_HPP
 
-/// \defgroup array-hpp array.hpp
-/// \ingroup containers-lib
+/// \defgroup array array.hpp
+/// \ingroup containers-library
 /// \code
 /// #include <etl/array.hpp>
 /// \endcode

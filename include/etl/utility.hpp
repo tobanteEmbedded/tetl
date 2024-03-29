@@ -3,9 +3,9 @@
 #ifndef TETL_UTILITY_HPP
 #define TETL_UTILITY_HPP
 
-/// \defgroup utility-hpp utility.hpp
+/// \defgroup utility utility.hpp
 /// Various utility components
-/// \ingroup utilities-lib
+/// \ingroup utilities-library
 /// \example utility.cpp
 
 #include <etl/_config/all.hpp>

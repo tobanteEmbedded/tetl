@@ -3,8 +3,8 @@
 #ifndef TETL_STRING_HPP
 #define TETL_STRING_HPP
 
-/// \defgroup string-hpp string.hpp
-/// \ingroup strings-lib
+/// \defgroup string string.hpp
+/// \ingroup strings-library
 /// \example string.cpp
 
 #include <etl/_config/all.hpp>

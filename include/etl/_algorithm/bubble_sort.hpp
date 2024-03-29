@@ -8,7 +8,7 @@
 
 namespace etl {
 
-/// \ingroup algorithm-hpp
+/// \ingroup algorithm
 /// @{
 
 /// \brief Sorts the elements in the range `[first, last)` in non-descending

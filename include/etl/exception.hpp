@@ -3,9 +3,9 @@
 #ifndef TETL_EXCEPTION_HPP
 #define TETL_EXCEPTION_HPP
 
-/// \defgroup exception-hpp exception.hpp
+/// \defgroup exception exception.hpp
 /// Exception handling utilities
-/// \ingroup errors-lib
+/// \ingroup errors-library
 
 #include <etl/_config/all.hpp>
 

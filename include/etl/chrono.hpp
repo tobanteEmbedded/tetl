@@ -3,9 +3,9 @@
 #ifndef TETL_CHRONO_HPP
 #define TETL_CHRONO_HPP
 
-/// \defgroup chrono-hpp chrono.hpp
+/// \defgroup chrono chrono.hpp
 /// C++ time utilities
-/// \ingroup utilities-lib
+/// \ingroup utilities-library
 /// \example chrono.cpp
 
 #include <etl/_config/all.hpp>

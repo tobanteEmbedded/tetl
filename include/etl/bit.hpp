@@ -3,9 +3,9 @@
 #ifndef TETL_BIT_HPP
 #define TETL_BIT_HPP
 
-/// \defgroup bit-hpp bit.hpp
+/// \defgroup bit bit.hpp
 ///	Bit manipulation functions
-/// \ingroup numerics-lib
+/// \ingroup numerics-library
 
 #include <etl/_config/all.hpp>
 

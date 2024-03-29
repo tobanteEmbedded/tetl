@@ -3,9 +3,9 @@
 #ifndef TETL_NEW_HPP
 #define TETL_NEW_HPP
 
-/// \defgroup new-hpp new.hpp
+/// \defgroup new new.hpp
 ///	Low-level memory management utilities
-/// \ingroup dynamic-memory-lib
+/// \ingroup dynamic-memory-library
 
 #include <etl/_config/all.hpp>
 

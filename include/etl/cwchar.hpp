@@ -3,9 +3,9 @@
 #ifndef TETL_CWCHAR_HPP
 #define TETL_CWCHAR_HPP
 
-/// \defgroup cwchar-hpp cwchar.hpp
+/// \defgroup cwchar cwchar.hpp
 /// Various wide and multibyte string handling functions
-/// \ingroup strings-lib
+/// \ingroup strings-library
 
 #include <etl/_config/all.hpp>
 

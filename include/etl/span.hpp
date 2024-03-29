@@ -3,8 +3,8 @@
 #ifndef TETL_SPAN_HPP
 #define TETL_SPAN_HPP
 
-/// \defgroup span-hpp span.hpp
-/// \ingroup containers-lib
+/// \defgroup span span.hpp
+/// \ingroup containers-library
 
 #include <etl/_config/all.hpp>
 
