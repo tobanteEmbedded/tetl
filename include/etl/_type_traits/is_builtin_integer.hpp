@@ -9,6 +9,7 @@
 
 namespace etl {
 
+/// \relates is_builtin_integer
 template <typename T>
 inline constexpr auto is_builtin_integer_v = is_builtin_unsigned_integer_v<T> or is_builtin_signed_integer_v<T>;
 

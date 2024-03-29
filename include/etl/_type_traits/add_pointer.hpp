@@ -25,9 +25,12 @@ auto try_add_pointer(...) -> etl::type_identity<T>;
 /// (if T is a cv- or ref-qualified function type), provides the member typedef
 /// type which is the type T. The behavior of a program that adds
 /// specializations for add_pointer is undefined.
+///
+/// \headerfile etl/type_traits.hpp
 template <typename T>
 struct add_pointer : decltype(etl::detail::try_add_pointer<T>(0)) { };
 
+/// \relates add_pointer
 template <typename T>
 using add_pointer_t = typename etl::add_pointer<T>::type;
 

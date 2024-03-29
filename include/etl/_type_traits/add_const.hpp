@@ -5,6 +5,7 @@
 
 namespace etl {
 
+/// \relates add_const
 template <typename T>
 using add_const_t = T const;
 

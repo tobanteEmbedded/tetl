@@ -9,6 +9,7 @@
 
 namespace etl {
 
+/// \relates is_builtin_signed_integer
 template <typename T>
 inline constexpr auto is_builtin_signed_integer_v
     = etl::is_any_of_v<etl::remove_cv_t<T>, signed char, short, int, long, long long>;

@@ -5,12 +5,15 @@
 
 namespace etl {
 
+/// \relates add_volatile
 template <typename T>
 using add_volatile_t = T volatile;
 
 /// \brief Provides the member typedef type which is the same as T, except it
 /// has a cv-qualifier added (unless T is a function, a reference, or already
 /// has this cv-qualifier). Adds volatile.
+///
+/// \headerfile etl/type_traits.hpp
 template <typename T>
 struct add_volatile {
     using type = add_volatile_t<T>;
