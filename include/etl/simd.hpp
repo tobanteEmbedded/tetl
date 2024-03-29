@@ -3,6 +3,9 @@
 #ifndef TETL_SIMD_HPP
 #define TETL_SIMD_HPP
 
+/// \defgroup simd-hpp simd.hpp
+/// \ingroup utilities-lib
+
 #include <etl/_config/all.hpp>
 
 #include <etl/_simd/alignment_tags.hpp>

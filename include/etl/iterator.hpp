@@ -3,6 +3,9 @@
 #ifndef TETL_ITERATOR_HPP
 #define TETL_ITERATOR_HPP
 
+/// \defgroup iterator-hpp iterator.hpp
+/// \ingroup iterators-lib
+
 #include <etl/_config/all.hpp>
 
 #include <etl/_iterator/advance.hpp>

@@ -3,6 +3,9 @@
 #ifndef TETL_RANGES_HPP
 #define TETL_RANGES_HPP
 
+/// \defgroup ranges-hpp ranges.hpp
+/// \ingroup ranges-lib
+
 #include <etl/_config/all.hpp>
 
 #include <etl/_ranges/begin.hpp>

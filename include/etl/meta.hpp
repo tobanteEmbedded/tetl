@@ -3,6 +3,9 @@
 #ifndef TETL_META_HPP
 #define TETL_META_HPP
 
+/// \defgroup meta-hpp meta.hpp
+/// \ingroup utilities-lib
+
 #include <etl/_config/all.hpp>
 
 // Non-standard extensions

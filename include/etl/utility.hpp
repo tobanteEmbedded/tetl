@@ -4,6 +4,8 @@
 #define TETL_UTILITY_HPP
 
 /// \file This header is part of the utility library.
+/// \defgroup utility-hpp utility.hpp
+/// \ingroup utilities-lib
 /// \example utility.cpp
 
 #include <etl/_config/all.hpp>

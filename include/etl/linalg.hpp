@@ -3,6 +3,9 @@
 #ifndef TETL_LINALG_HPP
 #define TETL_LINALG_HPP
 
+/// \defgroup linalg-hpp linalg.hpp
+/// \ingroup numerics-lib
+
 #include <etl/_config/all.hpp>
 
 #include <etl/_linalg/accessor_conjugate.hpp>

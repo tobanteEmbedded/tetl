@@ -7,7 +7,7 @@
 
 namespace etl {
 
-/// \ingroup algorithm-header
+/// \ingroup algorithm-hpp
 /// @{
 
 /// \brief Returns the number of elements in the range `[first, last)`

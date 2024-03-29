@@ -3,6 +3,9 @@
 #ifndef TETL_COMPARE_HPP
 #define TETL_COMPARE_HPP
 
+/// \defgroup compare-hpp compare.hpp
+/// \ingroup utilities-lib
+
 #include <etl/_config/all.hpp>
 
 #include <etl/_compare/common_comparison_category.hpp>

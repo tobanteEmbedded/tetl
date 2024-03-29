@@ -4,6 +4,8 @@
 #define TETL_VECTOR_HPP
 
 /// \file This header is part of the container library.
+/// \defgroup vector-hpp vector.hpp
+/// \ingroup containers-lib
 /// \example vector.cpp
 
 #include <etl/_config/all.hpp>

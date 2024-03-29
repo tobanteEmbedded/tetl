@@ -22,9 +22,9 @@
 #include <etl/_utility/move.hpp>
 
 namespace etl {
-/// \brief array is a container that encapsulates fixed size arrays.
+/// A container that encapsulates fixed size arrays.
 ///
-/// \details This container is an aggregate type with the same semantics as a
+/// This container is an aggregate type with the same semantics as a
 /// struct holding a C-style array Type[N] as its only non-static data member.
 /// Unlike a C-style array, it doesn't decay to Type* automatically. As an
 /// aggregate type, it can be initialized with aggregate-initialization given at
@@ -32,6 +32,8 @@ namespace etl {
 /// Type: `array<int, 3> a = {1,2,3};`
 ///
 /// \include array.cpp
+/// \headerfile etl/array.hpp
+/// \ingroup array-hpp
 template <typename Type, size_t Size>
 struct array {
     using value_type             = Type;
@@ -190,30 +192,51 @@ struct array {
         }
     }
 
+    /// Specializes the swap algorithm for array. Swaps the contents of lhs and rhs.
+    friend constexpr auto swap(array& lhs, array& rhs) noexcept(noexcept(lhs.swap(rhs))) -> void { lhs.swap(rhs); }
+
+    /// \brief Checks if the contents of lhs and rhs are equal, that is, they have
+    /// the same number of elements and each element in lhs compares equal with the
+    /// element in rhs at the same position.
+    friend constexpr auto operator==(array const& lhs, array const& rhs) -> bool
+    {
+        return etl::equal(lhs.begin(), lhs.end(), rhs.begin());
+    }
+
+    friend constexpr auto operator!=(array const& lhs, array const& rhs) -> bool { return !(lhs == rhs); }
+
+    /// \brief Compares the contents of lhs and rhs lexicographically. The
+    /// comparison is performed by a function equivalent to lexicographical_compare.
+    friend constexpr auto operator<(array const& lhs, array const& rhs) -> bool
+    {
+        return etl::lexicographical_compare(lhs.begin(), lhs.end(), rhs.begin(), rhs.end());
+    }
+
+    friend constexpr auto operator<=(array const& lhs, array const& rhs) -> bool { return !(rhs < lhs); }
+
+    friend constexpr auto operator>(array const& lhs, array const& rhs) -> bool { return rhs < lhs; }
+
+    friend constexpr auto operator>=(array const& lhs, array const& rhs) -> bool { return !(lhs < rhs); }
+
     /// \internal
     Type _internal_data[Size]; // NOLINT(readability-identifier-naming)
 };
 
-// One deduction guide is provided for array to provide an equivalent of
-// experimental::make_array for construction of array from a variadic parameter
-// pack. The program is ill-formed if (is_same_v<T, U> and ...) is not true.
-// Note that it is true when sizeof...(U) is zero.
+/// One deduction guide is provided for array to provide an equivalent of
+/// experimental::make_array for construction of array from a variadic parameter
+/// pack. The program is ill-formed if (is_same_v<T, U> and ...) is not true.
+/// Note that it is true when sizeof...(U) is zero.
+/// \relates array
 template <typename T, typename... U>
 array(T, U...) -> array<T, 1 + sizeof...(U)>;
 
-/// \brief Specializes the swap algorithm for array. Swaps the contents
-/// of lhs and rhs.
-template <typename T, size_t N>
-constexpr auto swap(array<T, N>& lhs, array<T, N>& rhs) noexcept(noexcept(lhs.swap(rhs))) -> void
-{
-    lhs.swap(rhs);
-}
-
 /// \brief Provides access to the number of elements in an array as a
 /// compile-time constant expression.
+/// \relates array
 template <typename T, size_t N>
 struct tuple_size<array<T, N>> : integral_constant<size_t, N> { };
 
+/// \relates array
 template <typename T, etl::size_t Size>
 inline constexpr auto is_tuple_like<etl::array<T, Size>> = true;
 
@@ -227,50 +250,10 @@ struct tuple_element<I, array<T, N>> {
     using type = T;
 };
 
-/// \brief Checks if the contents of lhs and rhs are equal, that is, they have
-/// the same number of elements and each element in lhs compares equal with the
-/// element in rhs at the same position.
-template <typename T, size_t N>
-[[nodiscard]] constexpr auto operator==(array<T, N> const& lhs, array<T, N> const& rhs) -> bool
-{
-    return equal(lhs.begin(), lhs.end(), rhs.begin());
-}
-
-template <typename T, size_t N>
-[[nodiscard]] constexpr auto operator!=(array<T, N> const& lhs, array<T, N> const& rhs) -> bool
-{
-    return !(lhs == rhs);
-}
-
-/// \brief Compares the contents of lhs and rhs lexicographically. The
-/// comparison is performed by a function equivalent to lexicographical_compare.
-template <typename T, size_t N>
-[[nodiscard]] constexpr auto operator<(array<T, N> const& lhs, array<T, N> const& rhs) -> bool
-{
-    return lexicographical_compare(lhs.begin(), lhs.end(), rhs.begin(), rhs.end());
-}
-
-template <typename T, size_t N>
-[[nodiscard]] constexpr auto operator<=(array<T, N> const& lhs, array<T, N> const& rhs) -> bool
-{
-    return !(rhs < lhs);
-}
-
-template <typename T, size_t N>
-[[nodiscard]] constexpr auto operator>(array<T, N> const& lhs, array<T, N> const& rhs) -> bool
-{
-    return rhs < lhs;
-}
-
-template <typename T, size_t N>
-[[nodiscard]] constexpr auto operator>=(array<T, N> const& lhs, array<T, N> const& rhs) -> bool
-{
-    return !(lhs < rhs);
-}
-
 /// \brief Extracts the Ith element element from the array. I must be an integer
 /// value in range [0, N). This is enforced at compile time as opposed to at()
 /// or operator[].
+/// \relates array
 template <size_t Index, typename T, size_t Size>
 [[nodiscard]] constexpr auto get(array<T, Size>& array) noexcept -> T&
 {
@@ -278,6 +261,7 @@ template <size_t Index, typename T, size_t Size>
     return array[Index];
 }
 
+/// \relates array
 template <size_t Index, typename T, size_t Size>
 [[nodiscard]] constexpr auto get(array<T, Size> const& array) noexcept -> T const&
 {
@@ -285,6 +269,7 @@ template <size_t Index, typename T, size_t Size>
     return array[Index];
 }
 
+/// \relates array
 template <size_t Index, typename T, size_t Size>
 [[nodiscard]] constexpr auto get(array<T, Size>&& array) noexcept -> T&&
 {
@@ -292,6 +277,7 @@ template <size_t Index, typename T, size_t Size>
     return TETL_MOVE(array[Index]);
 }
 
+/// \relates array
 template <size_t Index, typename T, size_t Size>
 [[nodiscard]] constexpr auto get(array<T, Size> const&& array) noexcept -> T const&&
 {

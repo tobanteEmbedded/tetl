@@ -4,6 +4,8 @@
 #define TETL_TYPETRAITS_HPP
 
 /// \file This header is part of the utility library.
+/// \defgroup type_traits-hpp type_traits.hpp
+/// \ingroup utilities-lib
 /// \example type_traits.cpp
 
 #include <etl/_config/all.hpp>

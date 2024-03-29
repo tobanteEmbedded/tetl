@@ -4,6 +4,8 @@
 #define TETL_CHRONO_HPP
 
 /// \file This header is part of the utility library.
+/// \defgroup chrono-hpp chrono.hpp
+/// \ingroup utilities-lib
 /// \example chrono.cpp
 
 #include <etl/_config/all.hpp>

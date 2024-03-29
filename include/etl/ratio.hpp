@@ -3,6 +3,9 @@
 #ifndef TETL_RATIO_HPP
 #define TETL_RATIO_HPP
 
+/// \defgroup ratio-hpp ratio.hpp
+/// \ingroup numerics-lib
+
 #include <etl/_config/all.hpp>
 
 #include <etl/_ratio/ratio.hpp>

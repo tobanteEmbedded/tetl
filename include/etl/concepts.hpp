@@ -3,6 +3,9 @@
 #ifndef TETL_CONCEPTS_HPP
 #define TETL_CONCEPTS_HPP
 
+/// \defgroup concepts-hpp concepts.hpp
+/// \ingroup concepts-lib
+
 #include <etl/_config/all.hpp>
 
 #include <etl/_concepts/assignable_from.hpp>

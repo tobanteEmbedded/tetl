@@ -5,6 +5,8 @@
 
 /// \file This header was originally in the C standard library as <ctype.h>.
 /// This header is part of the null-terminated byte strings library.
+/// \defgroup cctype-hpp cctype.hpp
+/// \ingroup strings-lib
 
 #include <etl/_config/all.hpp>
 

@@ -4,6 +4,8 @@
 #define TETL_OPTIONAL_HPP
 
 /// \file This header is part of the utility library.
+/// \defgroup optional-hpp optional.hpp
+/// \ingroup utilities-lib
 /// \example optional.cpp
 
 #include <etl/_config/all.hpp>

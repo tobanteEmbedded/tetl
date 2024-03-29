@@ -3,6 +3,9 @@
 #ifndef TETL_BIT_HPP
 #define TETL_BIT_HPP
 
+/// \defgroup bit-hpp bit.hpp
+/// \ingroup numerics-lib
+
 #include <etl/_config/all.hpp>
 
 #include <etl/_bit/bit_cast.hpp>

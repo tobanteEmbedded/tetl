@@ -19,6 +19,8 @@ template <typename T>
 concept sufficiently_trivial = etl::is_trivially_default_constructible_v<T> and etl::is_trivially_destructible_v<T>;
 }
 
+/// \headerfile etl/array.hpp
+/// \ingroup array-hpp
 template <typename T, etl::size_t Size>
 struct uninitialized_array {
     using value_type = T;

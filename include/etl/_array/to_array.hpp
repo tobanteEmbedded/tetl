@@ -13,6 +13,7 @@ namespace etl {
 /// \brief Creates a array from the one dimensional built-in array a. The
 /// elements of the array are copy-initialized from the corresponding element of
 /// a. Copying or moving multidimensional built-in array is not supported.
+/// \relates array
 template <typename T, size_t N>
 [[nodiscard]] constexpr auto to_array(T (&a)[N]) -> array<remove_cv_t<T>, N>
 {
@@ -21,6 +22,7 @@ template <typename T, size_t N>
     }(etl::make_index_sequence<N>{});
 }
 
+/// \relates array
 template <typename T, size_t N>
 [[nodiscard]] constexpr auto to_array(T (&&a)[N])
 {

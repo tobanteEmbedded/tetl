@@ -3,6 +3,9 @@
 #ifndef TETL_VARIANT_HPP
 #define TETL_VARIANT_HPP
 
+/// \defgroup variant-hpp variant.hpp
+/// \ingroup utilities-lib
+
 #include <etl/_config/all.hpp>
 
 #include <etl/_variant/bad_variant_access.hpp>

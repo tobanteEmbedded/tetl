@@ -3,6 +3,9 @@
 #ifndef TETL_FUNCTIONAL_HPP
 #define TETL_FUNCTIONAL_HPP
 
+/// \defgroup functional-hpp functional.hpp
+/// \ingroup utilities-lib
+
 #include <etl/_config/all.hpp>
 
 #include <etl/_functional/bind_front.hpp>

@@ -4,6 +4,8 @@
 #define TETL_CASSERT_HPP
 
 /// \file This header is part of the error handling library.
+/// \defgroup cassert-hpp cassert.hpp
+/// \ingroup errors-lib
 /// \example cassert.cpp
 
 #include <etl/_config/all.hpp>

@@ -3,6 +3,9 @@
 #ifndef TETL_CSTRING_HPP
 #define TETL_CSTRING_HPP
 
+/// \defgroup cstring-hpp cstring.hpp
+/// \ingroup strings-lib
+
 #include <etl/_config/all.hpp>
 
 #include <etl/_cstring/memchr.hpp>

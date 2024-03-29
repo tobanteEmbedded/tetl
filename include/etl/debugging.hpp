@@ -3,6 +3,9 @@
 #ifndef TETL_DEBUGGING_HPP
 #define TETL_DEBUGGING_HPP
 
+/// \defgroup debugging-hpp debugging.hpp
+/// \ingroup utilities-lib
+
 #include <etl/_config/all.hpp>
 
 #include <etl/_debugging/breakpoint.hpp>

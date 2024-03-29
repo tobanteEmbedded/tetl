@@ -3,6 +3,9 @@
 #ifndef TETL_LIMITS_HPP
 #define TETL_LIMITS_HPP
 
+/// \defgroup limits-hpp limits.hpp
+/// \ingroup limits-lib
+
 #include <etl/_config/all.hpp>
 
 #include <etl/_limits/float_denorm_style.hpp>

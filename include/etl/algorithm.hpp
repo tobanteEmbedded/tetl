@@ -4,7 +4,8 @@
 #define TETL_ALGORITHM_HPP
 
 /// \file This header is part of the algorithm library.
-/// \defgroup algorithm-header algorithm.hpp
+/// \defgroup algorithm-hpp algorithm.hpp
+/// \ingroup algorithms-lib
 /// \code
 /// #include <etl/algorithm.hpp>
 /// \endcode

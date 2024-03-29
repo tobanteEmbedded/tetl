@@ -3,6 +3,9 @@
 #ifndef TETL_STDEXCEPT_HPP
 #define TETL_STDEXCEPT_HPP
 
+/// \defgroup stdexcept-hpp stdexcept.hpp
+/// \ingroup errors-lib
+
 #include <etl/_config/all.hpp>
 
 #include <etl/_stdexcept/domain_error.hpp>

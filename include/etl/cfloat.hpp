@@ -3,6 +3,9 @@
 #ifndef TETL_CFLOAT_HPP
 #define TETL_CFLOAT_HPP
 
+/// \defgroup cfloat-hpp cfloat.hpp
+/// \ingroup limits-lib
+
 #include <etl/_config/all.hpp>
 
 #include <etl/_cfloat/defines.hpp>

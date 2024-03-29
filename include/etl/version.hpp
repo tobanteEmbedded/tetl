@@ -3,6 +3,9 @@
 #ifndef TETL_VERSION_HPP
 #define TETL_VERSION_HPP
 
+/// \defgroup version-hpp version.hpp
+/// \ingroup utilities-lib
+
 #include <etl/_config/all.hpp>
 
 // Non-standard extensions

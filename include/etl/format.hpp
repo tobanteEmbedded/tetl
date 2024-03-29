@@ -3,6 +3,9 @@
 #ifndef TETL_FORMAT_HPP
 #define TETL_FORMAT_HPP
 
+/// \defgroup format-hpp format.hpp
+/// \ingroup strings-lib
+
 #include <etl/_config/all.hpp>
 
 #include <etl/_format/basic_format_arg.hpp>

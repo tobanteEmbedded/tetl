@@ -3,7 +3,8 @@
 #ifndef TETL_NUMERIC_HPP
 #define TETL_NUMERIC_HPP
 
-/// \file This header is part of the algorithm library.
+/// \defgroup numeric-hpp numeric.hpp
+/// \ingroup numerics-lib
 /// \example numeric.cpp
 
 #include <etl/_config/all.hpp>

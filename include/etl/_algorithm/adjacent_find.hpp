@@ -6,7 +6,7 @@
 #include <etl/_functional/equal_to.hpp>
 
 namespace etl {
-/// \ingroup algorithm-header
+/// \ingroup algorithm-hpp
 /// @{
 
 /// \brief Searches the range `[first, last)` for two consecutive equal

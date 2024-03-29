@@ -3,6 +3,9 @@
 #ifndef TETL_MDSPAN_HPP
 #define TETL_MDSPAN_HPP
 
+/// \defgroup mdspan-hpp mdspan.hpp
+/// \ingroup containers-lib
+
 #include <etl/_config/all.hpp>
 
 #include <etl/_mdspan/default_accessor.hpp>

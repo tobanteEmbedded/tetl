@@ -3,6 +3,8 @@
 #ifndef TETL_MEMORY_HPP
 #define TETL_MEMORY_HPP
 
+/// \defgroup memory-hpp memory.hpp
+/// \ingroup dynamic-memory-lib
 /// \example memory.cpp
 
 #include <etl/_config/all.hpp>

@@ -12,6 +12,7 @@
 #include <etl/_config/debug_trap.hpp>
 #include <etl/_config/version.hpp>
 #include <etl/_config/workarounds.hpp>
+#include <etl/_config/docs.hpp>
 #include <etl/_config/user.hpp>
 // clang-format on
 

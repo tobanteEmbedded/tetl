@@ -4,6 +4,8 @@
 #define TETL_SET_HPP
 
 /// \file This header is part of the container library.
+/// \defgroup set-hpp set.hpp
+/// \ingroup containers-lib
 /// \example set.cpp
 
 #include <etl/_config/all.hpp>

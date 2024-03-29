@@ -8,7 +8,7 @@
 
 namespace etl {
 
-/// \ingroup algorithm-header
+/// \ingroup algorithm-hpp
 /// @{
 
 /// \brief Checks if an element equivalent to value appears within the range

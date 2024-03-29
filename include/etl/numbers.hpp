@@ -3,6 +3,9 @@
 #ifndef TETL_NUMBERS_HPP
 #define TETL_NUMBERS_HPP
 
+/// \defgroup numbers-hpp numbers.hpp
+/// \ingroup numerics-lib
+
 #include <etl/_config/all.hpp>
 
 #include <etl/_numbers/constants.hpp>

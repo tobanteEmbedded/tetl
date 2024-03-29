@@ -3,6 +3,9 @@
 #ifndef TETL_NEW_HPP
 #define TETL_NEW_HPP
 
+/// \defgroup new-hpp new.hpp
+/// \ingroup dynamic-memory-lib
+
 #include <etl/_config/all.hpp>
 
 #include <etl/_new/align_val_t.hpp>

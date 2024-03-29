@@ -4,6 +4,8 @@
 #define TETL_CWCTYPE_HPP
 
 /// \file This header was originally in the C standard library as <cwtype.h>.
+/// \defgroup cwctype-hpp cwctype.hpp
+/// \ingroup strings-lib
 
 #include <etl/_config/all.hpp>
 

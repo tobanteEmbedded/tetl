@@ -3,7 +3,11 @@
 #ifndef TETL_ARRAY_HPP
 #define TETL_ARRAY_HPP
 
-/// \file This header is part of the containers library.
+/// \defgroup array-hpp array.hpp
+/// \ingroup containers-lib
+/// \code
+/// #include <etl/array.hpp>
+/// \endcode
 /// \example array.cpp
 
 #include <etl/_config/all.hpp>

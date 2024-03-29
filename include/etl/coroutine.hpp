@@ -3,6 +3,9 @@
 #ifndef TETL_COROUTINE_HPP
 #define TETL_COROUTINE_HPP
 
+/// \defgroup coroutine-hpp coroutine.hpp
+/// \ingroup coroutines-lib
+
 #include <etl/_config/all.hpp>
 
 #include <etl/_coroutine/coroutine_handle.hpp>

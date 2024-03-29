@@ -30,6 +30,7 @@
 
 namespace etl {
 
+/// \ingroup inplace_vector-hpp
 template <typename T, etl::size_t Capacity>
 struct inplace_vector {
     using value_type             = T;

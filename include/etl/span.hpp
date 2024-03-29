@@ -3,6 +3,9 @@
 #ifndef TETL_SPAN_HPP
 #define TETL_SPAN_HPP
 
+/// \defgroup span-hpp span.hpp
+/// \ingroup containers-lib
+
 #include <etl/_config/all.hpp>
 
 #include <etl/_span/as_bytes.hpp>

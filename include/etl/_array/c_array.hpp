@@ -7,9 +7,11 @@
 
 namespace etl {
 
+/// \ingroup array-hpp
 template <typename ValueType, etl::size_t Size>
 using c_array = ValueType[Size];
 
+/// \ingroup array-hpp
 struct empty_c_array { };
 
 } // namespace etl

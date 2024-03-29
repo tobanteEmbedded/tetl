@@ -3,6 +3,9 @@
 #ifndef TETL_CWCHAR_HPP
 #define TETL_CWCHAR_HPP
 
+/// \defgroup cwchar-hpp cwchar.hpp
+/// \ingroup strings-lib
+
 #include <etl/_config/all.hpp>
 
 #include <etl/_cstddef/null.hpp>

@@ -4,7 +4,8 @@
 #define TETL_CSTDDEF_HPP
 
 /// \file This header was originally in the C standard library as <stddef.h>.
-/// This header is part of the utility library.
+/// \defgroup cstddef-hpp cstddef.hpp
+/// \ingroup utilities-lib
 
 #include <etl/_config/all.hpp>
 

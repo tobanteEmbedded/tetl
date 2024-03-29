@@ -3,6 +3,9 @@
 #ifndef TETL_RANDOM_HPP
 #define TETL_RANDOM_HPP
 
+/// \defgroup random-hpp random.hpp
+/// \ingroup numerics-lib
+
 #include <etl/_config/all.hpp>
 
 #include <etl/_random/bernoulli_distribution.hpp>

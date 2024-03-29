@@ -3,6 +3,9 @@
 #ifndef TETL_CLIMITS_HPP
 #define TETL_CLIMITS_HPP
 
+/// \defgroup climits-hpp climits.hpp
+/// \ingroup limits-lib
+
 #include <etl/_config/all.hpp>
 
 #include <etl/_climits/defines.hpp>

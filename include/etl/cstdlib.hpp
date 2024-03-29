@@ -3,6 +3,9 @@
 #ifndef TETL_CSTDLIB_HPP
 #define TETL_CSTDLIB_HPP
 
+/// \defgroup cstdlib-hpp cstdlib.hpp
+/// \ingroup utilities-lib
+
 #include <etl/_config/all.hpp>
 
 #include <etl/_cstddef/nullptr_t.hpp>
