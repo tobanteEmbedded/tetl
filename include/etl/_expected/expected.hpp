@@ -75,14 +75,6 @@ struct expected {
 
     [[nodiscard]] constexpr auto operator*() && noexcept -> T&& { return TETL_MOVE(*etl::get_if<0>(&_u)); }
 
-    [[nodiscard]] constexpr auto value() & -> T& { return etl::get<0>(_u); }
-
-    [[nodiscard]] constexpr auto value() const& -> T const& { return etl::get<0>(_u); }
-
-    [[nodiscard]] constexpr auto value() && -> T&& { return etl::get<0>(TETL_MOVE(_u)); }
-
-    [[nodiscard]] constexpr auto value() const&& -> T const&& { return etl::get<0>(TETL_MOVE(_u)); }
-
     [[nodiscard]] constexpr auto error() & -> E& { return etl::get<1>(_u); }
 
     [[nodiscard]] constexpr auto error() const& -> E const& { return etl::get<1>(_u); }

@@ -40,19 +40,17 @@ static auto test() -> bool
     CHECK(static_cast<bool>(ex1));
     CHECK(etl::as_const(ex1).has_value());
     CHECK(static_cast<bool>(etl::as_const(ex1)));
-    CHECK(ex1.value() == 0);
-    CHECK(etl::as_const(ex1).value() == 0);
+    CHECK(*ex1 == 0);
+    CHECK(*etl::as_const(ex1) == 0);
     CHECK(ex1.value_or(42.0F) == 0);
     CHECK(etl::as_const(ex1).value_or(42.0F) == 0);
-    CHECK(expected_t().value() == 0);
+    CHECK(*expected_t() == 0);
 
     auto ex2 = expected_t{etl::in_place, T(42)};
     CHECK(ex2.has_value());
     CHECK(static_cast<bool>(ex2));
     CHECK(etl::as_const(ex2).has_value());
     CHECK(static_cast<bool>(etl::as_const(ex2)));
-    CHECK(ex2.value() == T(42));
-    CHECK(etl::as_const(ex2).value() == T(42));
     CHECK(*ex2 == T(42));
     CHECK(*etl::as_const(ex2) == T(42));
 
@@ -69,8 +67,8 @@ static auto test() -> bool
     ex3.emplace(T(99));
     CHECK(ex3.has_value());
     CHECK(static_cast<bool>(ex3));
-    CHECK(ex3.value() == T(99));
-    CHECK(etl::as_const(ex3).value() == T(99));
+    CHECK(*ex3 == T(99));
+    CHECK(*etl::as_const(ex3) == T(99));
     CHECK(ex3.value_or(42.0F) == T(99));
     CHECK(etl::as_const(ex3).value_or(42.0F) == T(99));
 
