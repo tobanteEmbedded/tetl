@@ -54,21 +54,21 @@ static auto test_opional_3() -> bool
     CHECK_FALSE(opt2.has_value());
     opt2 = opt1;
     CHECK(opt2.has_value());
-    CHECK(opt2.value() == 42);
+    CHECK(*opt2 == 42);
 
     etl::optional<long> opt3{};
     CHECK_FALSE(opt3.has_value());
     opt3 = etl::move(opt1);
     CHECK(opt3.has_value());
-    CHECK(opt3.value() == 42);
+    CHECK(*opt3 == 42);
 
     etl::optional<long> opt4{opt1};
     CHECK(opt4.has_value());
-    CHECK(opt4.value() == 42);
+    CHECK(*opt4 == 42);
 
     etl::optional<long> opt5{etl::move(opt1)};
     CHECK(opt5.has_value());
-    CHECK(opt5.value() == 42);
+    CHECK(*opt5 == 42);
 
     return true;
 }
@@ -133,8 +133,8 @@ static auto test_opional_4() -> bool
         l.swap(r);
         CHECK(l.has_value());
         CHECK(r.has_value());
-        CHECK(l.value().data == 2);
-        CHECK(r.value().data == 1);
+        CHECK(l->data == 2);
+        CHECK(r->data == 1);
     }
 
     return true;
