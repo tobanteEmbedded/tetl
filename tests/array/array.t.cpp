@@ -30,9 +30,6 @@ constexpr auto test_builtin_types() -> bool
 
         CHECK(a.front() == T{1});
         CHECK(a.back() == x);
-        CHECK(a.at(0) == T{1});
-        CHECK(a.at(1) == T{2});
-        CHECK(a.at(2) == x);
         CHECK(a[0] == T{1});
         CHECK(a[1] == T{2});
         CHECK(a[2] == x);
@@ -40,9 +37,6 @@ constexpr auto test_builtin_types() -> bool
         auto const& ac = a;
         CHECK(ac.front() == T{1});
         CHECK(ac.back() == x);
-        CHECK(ac.at(0) == T{1});
-        CHECK(ac.at(1) == T{2});
-        CHECK(ac.at(2) == x);
         CHECK(ac[0] == T{1});
         CHECK(ac[1] == T{2});
         CHECK(ac[2] == x);

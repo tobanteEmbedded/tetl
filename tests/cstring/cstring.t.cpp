@@ -141,29 +141,29 @@ static auto test_mem() -> bool
         auto source = etl::array<etl::uint8_t, 2>{};
         source[0]   = 1;
         source[1]   = 2;
-        CHECK(source.at(0) == 1);
-        CHECK(source.at(1) == 2);
+        CHECK(source[0] == 1);
+        CHECK(source[1] == 2);
 
         auto destination = etl::array<etl::uint8_t, 2>{};
-        CHECK(destination.at(0) == 0);
-        CHECK(destination.at(1) == 0);
+        CHECK(destination[0] == 0);
+        CHECK(destination[1] == 0);
 
         etl::memcpy(destination.data(), source.data(), source.size());
-        CHECK(source.at(0) == 1);
-        CHECK(source.at(1) == 2);
-        CHECK(destination.at(0) == 1);
-        CHECK(destination.at(1) == 2);
+        CHECK(source[0] == 1);
+        CHECK(source[1] == 2);
+        CHECK(destination[0] == 1);
+        CHECK(destination[1] == 2);
     }
 
     // "cstring: memset"
     {
         auto buffer = etl::array<etl::uint8_t, 2>{};
-        CHECK(buffer.at(0) == 0);
-        CHECK(buffer.at(1) == 0);
+        CHECK(buffer[0] == 0);
+        CHECK(buffer[1] == 0);
 
         etl::memset(buffer.data(), 1, buffer.size());
-        CHECK(buffer.at(0) == 1);
-        CHECK(buffer.at(1) == 1);
+        CHECK(buffer[0] == 1);
+        CHECK(buffer[1] == 1);
     }
 
     return true;

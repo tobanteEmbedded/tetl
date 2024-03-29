@@ -49,20 +49,6 @@ struct array {
     using const_reverse_iterator = typename etl::reverse_iterator<const_iterator>;
 
     /// \brief Accesses the specified item with range checking.
-    [[nodiscard]] constexpr auto at(size_type const pos) noexcept -> reference
-    {
-        TETL_ASSERT(pos < Size);
-        return _internal_data[pos];
-    }
-
-    /// \brief Accesses the specified const item with range checking.
-    [[nodiscard]] constexpr auto at(size_type const pos) const noexcept -> const_reference
-    {
-        TETL_ASSERT(pos < Size);
-        return _internal_data[pos];
-    }
-
-    /// \brief Accesses the specified item with range checking.
     [[nodiscard]] constexpr auto operator[](size_type const pos) noexcept -> reference
     {
         TETL_ASSERT(pos < Size);
