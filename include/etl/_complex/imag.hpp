@@ -10,18 +10,21 @@
 
 namespace etl {
 
+/// \ingroup complex
 template <typename T>
 [[nodiscard]] constexpr auto imag(complex<T> const& z) -> T
 {
     return z.imag();
 }
 
+/// \ingroup complex
 template <typename Float>
 [[nodiscard]] constexpr auto imag(Float /*f*/) noexcept -> enable_if_t<is_floating_point_v<Float>, Float>
 {
     return Float{};
 }
 
+/// \ingroup complex
 template <typename Integer>
 [[nodiscard]] constexpr auto imag(Integer /*i*/) noexcept -> enable_if_t<is_integral_v<Integer>, double>
 {

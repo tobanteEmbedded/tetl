@@ -10,27 +10,33 @@
 namespace etl {
 
 /// \brief Computes the smallest integer value not less than arg.
-/// https://en.cppreference.com/w/cpp/numeric/math/ceil
+/// \details https://en.cppreference.com/w/cpp/numeric/math/ceil
+/// \ingroup cmath
 [[nodiscard]] constexpr auto ceil(float arg) noexcept -> float { return etl::detail::gcem::ceil(arg); }
 
 /// \brief Computes the smallest integer value not less than arg.
-/// https://en.cppreference.com/w/cpp/numeric/math/ceil
+/// \details https://en.cppreference.com/w/cpp/numeric/math/ceil
+/// \ingroup cmath
 [[nodiscard]] constexpr auto ceilf(float arg) noexcept -> float { return etl::detail::gcem::ceil(arg); }
 
 /// \brief Computes the smallest integer value not less than arg.
-/// https://en.cppreference.com/w/cpp/numeric/math/ceil
+/// \details https://en.cppreference.com/w/cpp/numeric/math/ceil
+/// \ingroup cmath
 [[nodiscard]] constexpr auto ceil(double arg) noexcept -> double { return etl::detail::gcem::ceil(arg); }
 
 /// \brief Computes the smallest integer value not less than arg.
-/// https://en.cppreference.com/w/cpp/numeric/math/ceil
+/// \details https://en.cppreference.com/w/cpp/numeric/math/ceil
+/// \ingroup cmath
 [[nodiscard]] constexpr auto ceil(long double arg) noexcept -> long double { return etl::detail::gcem::ceil(arg); }
 
 /// \brief Computes the smallest integer value not less than arg.
-/// https://en.cppreference.com/w/cpp/numeric/math/ceil
+/// \details https://en.cppreference.com/w/cpp/numeric/math/ceil
+/// \ingroup cmath
 [[nodiscard]] constexpr auto ceill(long double arg) noexcept -> long double { return etl::detail::gcem::ceil(arg); }
 
 /// \brief Computes the smallest integer value not less than arg.
-/// https://en.cppreference.com/w/cpp/numeric/math/ceil
+/// \details https://en.cppreference.com/w/cpp/numeric/math/ceil
+/// \ingroup cmath
 template <integral T>
 [[nodiscard]] constexpr auto ceil(T arg) noexcept -> double
 {

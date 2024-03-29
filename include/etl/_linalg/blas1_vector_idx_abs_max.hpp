@@ -10,6 +10,7 @@
 
 namespace etl::linalg {
 
+/// \ingroup linalg
 template <in_vector InVec>
 constexpr auto idx_abs_max(InVec v) -> typename InVec::size_type
 {

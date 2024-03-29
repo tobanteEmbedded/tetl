@@ -9,27 +9,33 @@
 namespace etl {
 
 /// \brief Computes the principal value of the arc sine of arg.
-/// https://en.cppreference.com/w/cpp/numeric/math/asin
+/// \details https://en.cppreference.com/w/cpp/numeric/math/asin
+/// \ingroup cmath
 [[nodiscard]] constexpr auto asin(float arg) noexcept -> float { return etl::detail::gcem::asin(arg); }
 
 /// \brief Computes the principal value of the arc sine of arg.
-/// https://en.cppreference.com/w/cpp/numeric/math/asin
+/// \details https://en.cppreference.com/w/cpp/numeric/math/asin
+/// \ingroup cmath
 [[nodiscard]] constexpr auto asinf(float arg) noexcept -> float { return etl::detail::gcem::asin(arg); }
 
 /// \brief Computes the principal value of the arc sine of arg.
-/// https://en.cppreference.com/w/cpp/numeric/math/asin
+/// \details https://en.cppreference.com/w/cpp/numeric/math/asin
+/// \ingroup cmath
 [[nodiscard]] constexpr auto asin(double arg) noexcept -> double { return etl::detail::gcem::asin(arg); }
 
 /// \brief Computes the principal value of the arc sine of arg.
-/// https://en.cppreference.com/w/cpp/numeric/math/asin
+/// \details https://en.cppreference.com/w/cpp/numeric/math/asin
+/// \ingroup cmath
 [[nodiscard]] constexpr auto asin(long double arg) noexcept -> long double { return etl::detail::gcem::asin(arg); }
 
 /// \brief Computes the principal value of the arc sine of arg.
-/// https://en.cppreference.com/w/cpp/numeric/math/asin
+/// \details https://en.cppreference.com/w/cpp/numeric/math/asin
+/// \ingroup cmath
 [[nodiscard]] constexpr auto asinl(long double arg) noexcept -> long double { return etl::detail::gcem::asin(arg); }
 
 /// \brief Computes the principal value of the arc sine of arg.
-/// https://en.cppreference.com/w/cpp/numeric/math/asin
+/// \details https://en.cppreference.com/w/cpp/numeric/math/asin
+/// \ingroup cmath
 template <integral T>
 [[nodiscard]] constexpr auto asin(T arg) noexcept -> double
 {

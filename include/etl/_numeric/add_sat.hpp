@@ -51,6 +51,7 @@ template <etl::builtin_integer Int>
 
 } // namespace detail
 
+/// \ingroup numeric
 template <etl::builtin_integer Int>
 [[nodiscard]] constexpr auto add_sat(Int x, Int y) noexcept -> Int
 {

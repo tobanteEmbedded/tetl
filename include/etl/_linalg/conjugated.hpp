@@ -10,6 +10,7 @@
 
 namespace etl::linalg {
 
+/// \ingroup linalg
 template <typename ElementType, typename Extents, typename Layout, typename Accessor>
 [[nodiscard]] constexpr auto conjugated(mdspan<ElementType, Extents, Layout, Accessor> a)
 {
@@ -31,6 +32,7 @@ template <typename ElementType, typename Extents, typename Layout, typename Acce
     }
 }
 
+/// \ingroup linalg
 template <typename ElementType, typename Extents, typename Layout, typename NestedAccessor>
 [[nodiscard]] constexpr auto conjugated(mdspan<ElementType, Extents, Layout, accessor_conjugate<NestedAccessor>> a)
 {

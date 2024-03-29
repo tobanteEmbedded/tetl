@@ -120,15 +120,6 @@ operator==(time_point<Clock, Dur1> const& lhs, time_point<Clock, Dur2> const& rh
 /// results time_since_epoch() for the time points.
 template <typename Clock, typename Dur1, typename Dur2>
 [[nodiscard]] constexpr auto
-operator!=(time_point<Clock, Dur1> const& lhs, time_point<Clock, Dur2> const& rhs) noexcept -> bool
-{
-    return !(lhs == rhs);
-}
-
-/// \brief  Compares two time points. The comparison is done by comparing the
-/// results time_since_epoch() for the time points.
-template <typename Clock, typename Dur1, typename Dur2>
-[[nodiscard]] constexpr auto
 operator<(time_point<Clock, Dur1> const& lhs, time_point<Clock, Dur2> const& rhs) noexcept -> bool
 {
     return lhs.time_since_epoch() < rhs.time_since_epoch();

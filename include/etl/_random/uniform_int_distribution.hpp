@@ -7,6 +7,7 @@
 
 namespace etl {
 
+/// \ingroup random
 template <typename IntType = int>
 struct uniform_int_distribution {
     using result_type = IntType;

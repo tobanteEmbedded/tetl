@@ -5,10 +5,10 @@
 
 /// \defgroup array array.hpp
 /// \ingroup containers-library
+/// \example array.cpp
 /// \code
 /// #include <etl/array.hpp>
 /// \endcode
-/// \example array.cpp
 
 #include <etl/_config/all.hpp>
 

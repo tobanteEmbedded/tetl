@@ -6,6 +6,9 @@
 /// \defgroup climits climits.hpp
 /// Limits of integral types
 /// \ingroup limits-library
+/// \code
+/// #include <etl/climits.hpp>
+/// \endcode
 
 #include <etl/_config/all.hpp>
 

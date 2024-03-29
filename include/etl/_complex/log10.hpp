@@ -8,6 +8,7 @@
 
 namespace etl {
 
+/// \ingroup complex
 template <typename T>
 [[nodiscard]] constexpr auto log10(complex<T> const& z) noexcept -> complex<T>
 {

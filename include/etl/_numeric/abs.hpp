@@ -7,6 +7,7 @@
 namespace etl {
 
 /// \brief Returns the absolute value.
+/// \ingroup numeric
 template <typename Type>
 [[nodiscard]] constexpr auto abs(Type input) noexcept -> Type
 {

@@ -12,7 +12,7 @@
 namespace etl {
 
 /// \brief Computes the sine of num (measured in radians).
-/// https://en.cppreference.com/w/cpp/numeric/math/sin
+/// \details https://en.cppreference.com/w/cpp/numeric/math/sin
 [[nodiscard]] constexpr auto sin(float num) noexcept -> float
 {
     if (is_constant_evaluated()) {
@@ -30,11 +30,11 @@ namespace etl {
 }
 
 /// \brief Computes the sine of num (measured in radians).
-/// https://en.cppreference.com/w/cpp/numeric/math/sin
+/// \details https://en.cppreference.com/w/cpp/numeric/math/sin
 [[nodiscard]] constexpr auto sinf(float num) noexcept -> float { return etl::sin(num); }
 
 /// \brief Computes the sine of num (measured in radians).
-/// https://en.cppreference.com/w/cpp/numeric/math/sin
+/// \details https://en.cppreference.com/w/cpp/numeric/math/sin
 [[nodiscard]] constexpr auto sin(double num) noexcept -> double
 {
     if (is_constant_evaluated()) {
@@ -52,15 +52,15 @@ namespace etl {
 }
 
 /// \brief Computes the sine of num (measured in radians).
-/// https://en.cppreference.com/w/cpp/numeric/math/sin
+/// \details https://en.cppreference.com/w/cpp/numeric/math/sin
 [[nodiscard]] constexpr auto sin(long double num) noexcept -> long double { return etl::detail::gcem::sin(num); }
 
 /// \brief Computes the sine of num (measured in radians).
-/// https://en.cppreference.com/w/cpp/numeric/math/sin
+/// \details https://en.cppreference.com/w/cpp/numeric/math/sin
 [[nodiscard]] constexpr auto sinl(long double num) noexcept -> long double { return etl::sin(num); }
 
 /// \brief Computes the sine of num (measured in radians).
-/// https://en.cppreference.com/w/cpp/numeric/math/sin
+/// \details https://en.cppreference.com/w/cpp/numeric/math/sin
 template <integral T>
 [[nodiscard]] constexpr auto sin(T num) noexcept -> double
 {

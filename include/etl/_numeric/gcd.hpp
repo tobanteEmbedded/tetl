@@ -10,6 +10,8 @@ namespace etl {
 ///
 /// \returns If both m and n are zero, returns zero. Otherwise, returns the
 /// greatest common divisor of |m| and |n|.
+///
+/// \ingroup numeric
 template <typename M, typename N>
 [[nodiscard]] constexpr auto gcd(M m, N n) noexcept -> etl::common_type_t<M, N>
 {

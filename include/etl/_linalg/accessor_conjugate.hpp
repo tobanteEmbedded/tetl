@@ -11,6 +11,7 @@
 
 namespace etl::linalg {
 
+/// \ingroup linalg
 template <typename Accessor>
 struct accessor_conjugate {
     using reference = conditional_t<

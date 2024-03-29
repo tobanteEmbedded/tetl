@@ -6,6 +6,9 @@
 /// \defgroup bit bit.hpp
 ///	Bit manipulation functions
 /// \ingroup numerics-library
+/// \code
+/// #include <etl/bit.hpp>
+/// \endcode
 
 #include <etl/_config/all.hpp>
 

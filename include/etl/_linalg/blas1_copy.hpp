@@ -8,6 +8,7 @@
 
 namespace etl::linalg {
 
+/// \ingroup linalg
 template <in_object InObj, out_object OutObj>
     requires(InObj::rank() == OutObj::rank())
 constexpr auto copy(InObj x, OutObj y) -> void

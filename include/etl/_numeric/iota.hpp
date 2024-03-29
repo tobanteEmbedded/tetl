@@ -8,6 +8,7 @@ namespace etl {
 
 /// \brief Fills the range [first, last) with sequentially increasing values,
 /// starting with value and repetitively evaluating ++value.
+/// \ingroup numeric
 template <typename ForwardIt, typename T>
 constexpr auto iota(ForwardIt first, ForwardIt last, T value) -> void
 {

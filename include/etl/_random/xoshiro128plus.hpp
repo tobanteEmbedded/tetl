@@ -12,6 +12,8 @@
 
 namespace etl {
 
+/// \note Non-standard extension
+/// \ingroup random
 struct xoshiro128plus {
     using result_type                  = uint32_t;
     static constexpr auto default_seed = result_type{5489U};
@@ -53,12 +55,6 @@ struct xoshiro128plus {
     operator==(xoshiro128plus const& lhs, xoshiro128plus const& rhs) noexcept -> bool
     {
         return equal(begin(lhs._state), end(lhs._state), begin(rhs._state), end(rhs._state));
-    }
-
-    [[nodiscard]] friend constexpr auto
-    operator!=(xoshiro128plus const& lhs, xoshiro128plus const& rhs) noexcept -> bool
-    {
-        return !(lhs == rhs);
     }
 
 private:

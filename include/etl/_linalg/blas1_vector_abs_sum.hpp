@@ -9,6 +9,7 @@
 
 namespace etl::linalg {
 
+/// \ingroup linalg
 template <in_vector InVec, typename Scalar>
 constexpr auto vector_abs_sum(InVec v, Scalar init) noexcept -> Scalar
 {
@@ -24,6 +25,7 @@ constexpr auto vector_abs_sum(InVec v, Scalar init) noexcept -> Scalar
     return sum;
 }
 
+/// \ingroup linalg
 template <in_vector InVec>
 constexpr auto vector_abs_sum(InVec v) noexcept -> typename InVec::value_type
 {

@@ -9,6 +9,7 @@
 
 namespace etl::linalg {
 
+/// \ingroup linalg
 template <typename ScalingFactor, typename Accessor>
     requires(is_copy_constructible_v<typename Accessor::reference>)
 struct accessor_scaled {

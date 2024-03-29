@@ -6,6 +6,9 @@
 /// \defgroup cmath cmath.hpp
 /// Common mathematics functions
 /// \ingroup numerics-library
+/// \code
+/// #include <etl/cmath.hpp>
+/// \endcode
 
 #include <etl/_config/all.hpp>
 

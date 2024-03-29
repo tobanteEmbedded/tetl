@@ -10,19 +10,26 @@
 namespace etl {
 
 /// \brief Similar to etl::accumulate.
-/// https://en.cppreference.com/w/cpp/algorithm/reduce
+/// \details https://en.cppreference.com/w/cpp/algorithm/reduce
+/// \ingroup numeric
 template <typename InputIter, typename T, typename BinaryOp>
 [[nodiscard]] constexpr auto reduce(InputIter first, InputIter last, T init, BinaryOp op) -> T
 {
     return accumulate(first, last, init, op);
 }
 
+/// \brief Similar to etl::accumulate.
+/// \details https://en.cppreference.com/w/cpp/algorithm/reduce
+/// \ingroup numeric
 template <typename InputIter, typename T>
 [[nodiscard]] constexpr auto reduce(InputIter first, InputIter last, T init) -> T
 {
     return reduce(first, last, init, etl::plus<>());
 }
 
+/// \brief Similar to etl::accumulate.
+/// \details https://en.cppreference.com/w/cpp/algorithm/reduce
+/// \ingroup numeric
 template <typename InputIter>
 [[nodiscard]] constexpr auto reduce(InputIter first, InputIter last) ->
     typename etl::iterator_traits<InputIter>::value_type

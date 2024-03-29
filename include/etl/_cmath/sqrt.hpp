@@ -9,27 +9,27 @@
 namespace etl {
 
 /// \brief Computes the square root of arg.
-/// https://en.cppreference.com/w/cpp/numeric/math/sqrt
+/// \details https://en.cppreference.com/w/cpp/numeric/math/sqrt
 [[nodiscard]] constexpr auto sqrt(float arg) noexcept -> float { return etl::detail::gcem::sqrt(arg); }
 
 /// \brief Computes the square root of arg.
-/// https://en.cppreference.com/w/cpp/numeric/math/sqrt
+/// \details https://en.cppreference.com/w/cpp/numeric/math/sqrt
 [[nodiscard]] constexpr auto sqrtf(float arg) noexcept -> float { return etl::detail::gcem::sqrt(arg); }
 
 /// \brief Computes the square root of arg.
-/// https://en.cppreference.com/w/cpp/numeric/math/sqrt
+/// \details https://en.cppreference.com/w/cpp/numeric/math/sqrt
 [[nodiscard]] constexpr auto sqrt(double arg) noexcept -> double { return etl::detail::gcem::sqrt(arg); }
 
 /// \brief Computes the square root of arg.
-/// https://en.cppreference.com/w/cpp/numeric/math/sqrt
+/// \details https://en.cppreference.com/w/cpp/numeric/math/sqrt
 [[nodiscard]] constexpr auto sqrt(long double arg) noexcept -> long double { return etl::detail::gcem::sqrt(arg); }
 
 /// \brief Computes the square root of arg.
-/// https://en.cppreference.com/w/cpp/numeric/math/sqrt
+/// \details https://en.cppreference.com/w/cpp/numeric/math/sqrt
 [[nodiscard]] constexpr auto sqrtl(long double arg) noexcept -> long double { return etl::detail::gcem::sqrt(arg); }
 
 /// \brief Computes the square root of arg.
-/// https://en.cppreference.com/w/cpp/numeric/math/sqrt
+/// \details https://en.cppreference.com/w/cpp/numeric/math/sqrt
 template <integral T>
 [[nodiscard]] constexpr auto sqrt(T arg) noexcept -> double
 {

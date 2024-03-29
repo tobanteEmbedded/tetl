@@ -8,6 +8,7 @@
 
 namespace etl::linalg {
 
+/// \ingroup linalg
 template <in_matrix InMat, in_vector InVec, out_vector OutVec>
 constexpr auto matrix_vector_product(InMat a, InVec x, OutVec y) noexcept -> void
 {

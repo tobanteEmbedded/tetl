@@ -11,6 +11,7 @@
 
 namespace etl {
 
+/// \ingroup complex
 template <typename T>
 [[nodiscard]] constexpr auto sinh(complex<T> const& z) -> complex<T>
 {

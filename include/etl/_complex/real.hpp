@@ -10,18 +10,21 @@
 
 namespace etl {
 
+/// \ingroup complex
 template <typename T>
 [[nodiscard]] constexpr auto real(complex<T> const& z) -> T
 {
     return z.real();
 }
 
+/// \ingroup complex
 template <typename Float>
 [[nodiscard]] constexpr auto real(Float f) noexcept -> enable_if_t<is_floating_point_v<Float>, Float>
 {
     return f;
 }
 
+/// \ingroup complex
 template <typename Integer>
 [[nodiscard]] constexpr auto real(Integer i) noexcept -> enable_if_t<is_integral_v<Integer>, double>
 {

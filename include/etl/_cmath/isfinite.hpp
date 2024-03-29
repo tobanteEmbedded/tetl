@@ -10,7 +10,7 @@ namespace etl {
 
 /// \brief Determines if the given floating point number arg has finite value
 /// i.e. it is normal, subnormal or zero, but not infinite or NaN.
-/// https://en.cppreference.com/w/cpp/numeric/math/isfinite
+/// \details https://en.cppreference.com/w/cpp/numeric/math/isfinite
 [[nodiscard]] constexpr auto isfinite(float arg) -> bool { return not etl::isnan(arg) and not etl::isinf(arg); }
 
 [[nodiscard]] constexpr auto isfinite(double arg) -> bool { return not etl::isnan(arg) and not etl::isinf(arg); }

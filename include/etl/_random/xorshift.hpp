@@ -10,6 +10,9 @@
 
 namespace etl {
 
+/// https://en.wikipedia.org/wiki/Xorshift
+/// \note Non-standard extension
+/// \ingroup random
 template <unsigned_integral UInt, UInt X, UInt Y, UInt Z>
 struct xorshift {
     using result_type                  = UInt;
@@ -46,26 +49,26 @@ struct xorshift {
         return lhs._state == rhs._state;
     }
 
-    [[nodiscard]] friend constexpr auto operator!=(xorshift const& lhs, xorshift const& rhs) noexcept -> bool
-    {
-        return !(lhs == rhs);
-    }
-
 private:
     result_type _state{default_seed};
 };
 
 /// \brief 16-bit pseudo number generator
-/// http://www.retroprogramming.com/2017/07/xorshift-pseudorandom-numbers-in-z80.html
-/// https://codebase64.org/doku.php?id=base:16bit_xorshift_random_generator
+/// \relates xorshift
+/// \details
+/// - http://www.retroprogramming.com/2017/07/xorshift-pseudorandom-numbers-in-z80.html
+/// - https://codebase64.org/doku.php?id=base:16bit_xorshift_random_generator
+/// \ingroup random
 using xorshift16 = xorshift<uint16_t, 7, 9, 8>;
 
 /// \brief 32-bit pseudo number generator
-/// https://en.wikipedia.org/wiki/Xorshift
+/// \relates xorshift
+/// \ingroup random
 using xorshift32 = xorshift<uint32_t, 13, 17, 5>;
 
 /// \brief 64-bit pseudo number generator
-/// https://en.wikipedia.org/wiki/Xorshift
+/// \relates xorshift
+/// \ingroup random
 using xorshift64 = xorshift<uint64_t, 13, 7, 17>;
 
 } // namespace etl

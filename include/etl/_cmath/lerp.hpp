@@ -10,7 +10,7 @@ namespace etl {
 /// \brief Computes a+t(b−a), i.e. the linear interpolation between a and b for
 /// the parameter t (or extrapolation, when t is outside the range [0,1]).
 ///
-/// https://en.cppreference.com/w/cpp/numeric/lerp
+/// \details https://en.cppreference.com/w/cpp/numeric/lerp
 template <floating_point Float>
 [[nodiscard]] constexpr auto lerp(Float a, Float b, Float t) noexcept -> Float
 {

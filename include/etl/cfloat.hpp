@@ -6,6 +6,9 @@
 /// \defgroup cfloat cfloat.hpp
 /// Limits of floating-point types
 /// \ingroup limits-library
+/// \code
+/// #include <etl/cfloat.hpp>
+/// \endcode
 
 #include <etl/_config/all.hpp>
 

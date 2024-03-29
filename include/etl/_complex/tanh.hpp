@@ -9,6 +9,7 @@
 
 namespace etl {
 
+/// \ingroup complex
 template <typename T>
 [[nodiscard]] constexpr auto tanh(complex<T> const& z) -> complex<T>
 {

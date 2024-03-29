@@ -10,6 +10,9 @@
 
 namespace etl {
 
+/// \ingroup ratio
+/// @{
+
 /// \brief The typename template provides compile-time rational
 /// arithmetic support. Each instantiation of this template exactly represents
 /// any finite rational number as long as its numerator Num and denominator
@@ -38,6 +41,8 @@ using giga  = ratio<1'000'000'000, 1>;
 using tera  = ratio<1'000'000'000'000, 1>;
 using peta  = ratio<1'000'000'000'000'000, 1>;
 using exa   = ratio<1'000'000'000'000'000'000, 1>;
+
+/// @}
 
 } // namespace etl
 

@@ -13,6 +13,7 @@ namespace etl {
 
 /// \brief A complex number
 /// \headerfile etl/complex.hpp
+/// \ingroup complex
 template <typename T>
 struct complex {
     using value_type = T;

@@ -10,6 +10,7 @@
 
 namespace etl {
 
+/// \ingroup complex
 template <typename T>
 [[nodiscard]] constexpr auto norm(complex<T> const& z) noexcept -> T
 {
@@ -18,12 +19,14 @@ template <typename T>
     return x * x + y * y;
 }
 
+/// \ingroup complex
 template <typename Float>
 [[nodiscard]] constexpr auto norm(Float f) noexcept -> enable_if_t<is_floating_point_v<Float>, complex<Float>>
 {
     return etl::norm(etl::complex<Float>(f));
 }
 
+/// \ingroup complex
 template <typename Integer>
 [[nodiscard]] constexpr auto norm(Integer i) noexcept -> enable_if_t<is_integral_v<Integer>, complex<double>>
 {

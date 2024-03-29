@@ -31,7 +31,7 @@ inline constexpr struct isinf {
 /// \brief Determines if the given floating point number arg is a positive or
 /// negative infinity.
 /// \returns true if arg is infinite, false otherwise
-/// https://en.cppreference.com/w/cpp/numeric/math/isinf
+/// \details https://en.cppreference.com/w/cpp/numeric/math/isinf
 [[nodiscard]] constexpr auto isinf(float arg) -> bool { return etl::detail::isinf(arg); }
 
 [[nodiscard]] constexpr auto isinf(double arg) -> bool { return etl::detail::isinf(arg); }

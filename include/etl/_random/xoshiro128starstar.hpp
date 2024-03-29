@@ -12,6 +12,8 @@
 
 namespace etl {
 
+/// \note Non-standard extension
+/// \ingroup random
 struct xoshiro128starstar {
     using result_type                  = uint32_t;
     static constexpr auto default_seed = result_type{5489U};

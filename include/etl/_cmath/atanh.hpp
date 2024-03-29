@@ -9,27 +9,33 @@
 namespace etl {
 
 /// \brief Computes the inverse hyperbolic tangent of arg.
-/// https://en.cppreference.com/w/cpp/numeric/math/atanh
+/// \details https://en.cppreference.com/w/cpp/numeric/math/atanh
+/// \ingroup cmath
 [[nodiscard]] constexpr auto atanh(float arg) noexcept -> float { return etl::detail::gcem::atanh(arg); }
 
 /// \brief Computes the inverse hyperbolic tangent of arg.
-/// https://en.cppreference.com/w/cpp/numeric/math/atanh
+/// \details https://en.cppreference.com/w/cpp/numeric/math/atanh
+/// \ingroup cmath
 [[nodiscard]] constexpr auto atanhf(float arg) noexcept -> float { return etl::detail::gcem::atanh(arg); }
 
 /// \brief Computes the inverse hyperbolic tangent of arg.
-/// https://en.cppreference.com/w/cpp/numeric/math/atanh
+/// \details https://en.cppreference.com/w/cpp/numeric/math/atanh
+/// \ingroup cmath
 [[nodiscard]] constexpr auto atanh(double arg) noexcept -> double { return etl::detail::gcem::atanh(arg); }
 
 /// \brief Computes the inverse hyperbolic tangent of arg.
-/// https://en.cppreference.com/w/cpp/numeric/math/atanh
+/// \details https://en.cppreference.com/w/cpp/numeric/math/atanh
+/// \ingroup cmath
 [[nodiscard]] constexpr auto atanh(long double arg) noexcept -> long double { return etl::detail::gcem::atanh(arg); }
 
 /// \brief Computes the inverse hyperbolic tangent of arg.
-/// https://en.cppreference.com/w/cpp/numeric/math/atanh
+/// \details https://en.cppreference.com/w/cpp/numeric/math/atanh
+/// \ingroup cmath
 [[nodiscard]] constexpr auto atanhl(long double arg) noexcept -> long double { return etl::detail::gcem::atanh(arg); }
 
 /// \brief Computes the inverse hyperbolic tangent of arg.
-/// https://en.cppreference.com/w/cpp/numeric/math/atanh
+/// \details https://en.cppreference.com/w/cpp/numeric/math/atanh
+/// \ingroup cmath
 template <integral T>
 [[nodiscard]] constexpr auto atanh(T arg) noexcept -> double
 {

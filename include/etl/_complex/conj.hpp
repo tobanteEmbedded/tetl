@@ -10,18 +10,21 @@
 
 namespace etl {
 
+/// \ingroup complex
 template <typename T>
 [[nodiscard]] constexpr auto conj(complex<T> const& z) noexcept -> complex<T>
 {
     return complex<T>(z.real(), -z.imag());
 }
 
+/// \ingroup complex
 template <typename Float>
 [[nodiscard]] constexpr auto conj(Float f) noexcept -> enable_if_t<is_floating_point_v<Float>, complex<Float>>
 {
     return complex<Float>(f);
 }
 
+/// \ingroup complex
 template <typename Integer>
 [[nodiscard]] constexpr auto conj(Integer i) noexcept -> enable_if_t<is_integral_v<Integer>, complex<double>>
 {

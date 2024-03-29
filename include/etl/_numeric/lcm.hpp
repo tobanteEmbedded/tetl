@@ -13,6 +13,8 @@ namespace etl {
 ///
 /// \returns If either m or n is zero, returns zero. Otherwise, returns the
 /// least common multiple of |m| and |n|.
+///
+/// \ingroup numeric
 template <typename M, typename N>
     requires(is_integral_v<M> and not is_same_v<M, bool> and is_integral_v<N> and not is_same_v<N, bool>)
 [[nodiscard]] constexpr auto lcm(M m, N n) -> common_type_t<M, N>

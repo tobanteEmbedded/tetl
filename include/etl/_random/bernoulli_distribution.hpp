@@ -9,6 +9,7 @@
 
 namespace etl {
 
+/// \ingroup random
 struct bernoulli_distribution {
     using result_type = bool;
 

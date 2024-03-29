@@ -8,6 +8,7 @@
 
 namespace etl::linalg {
 
+/// \ingroup linalg
 template <in_object InObj1, in_object InObj2, out_object OutObj>
     requires(InObj1::rank() == OutObj::rank() and InObj2::rank() == OutObj::rank())
 constexpr auto add(InObj1 x, InObj2 y, OutObj z) -> void

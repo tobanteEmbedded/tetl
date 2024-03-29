@@ -7,6 +7,9 @@
 /// C++ time utilities
 /// \ingroup utilities-library
 /// \example chrono.cpp
+/// \code
+/// #include <etl/chrono.hpp>
+/// \endcode
 
 #include <etl/_config/all.hpp>
 

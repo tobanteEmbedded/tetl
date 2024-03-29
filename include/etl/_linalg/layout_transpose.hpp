@@ -37,6 +37,7 @@ template <typename Extents>
 
 } // namespace detail
 
+/// \ingroup linalg
 template <typename Layout>
 struct layout_transpose {
     template <typename Extents>

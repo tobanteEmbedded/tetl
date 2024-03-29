@@ -6,6 +6,9 @@
 /// \defgroup cctype cctype.hpp
 /// Functions to determine the category of narrow characters
 /// \ingroup strings-library
+/// \code
+/// #include <etl/cctype.hpp>
+/// \endcode
 
 #include <etl/_config/all.hpp>
 

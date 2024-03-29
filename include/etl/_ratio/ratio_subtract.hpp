@@ -10,6 +10,7 @@ namespace etl {
 /// \brief The alias template ratio_subtract denotes the result of
 /// subtracting two exact rational fractions represented by the ratio
 /// specializations R1 and R2.
+/// \ingroup ratio
 template <typename R1, typename R2>
 using ratio_subtract = ratio<R1::num * R2::den - R2::num * R1::den, R1::den * R2::den>;
 

@@ -58,6 +58,8 @@ template <typename T>
 /// of sgn is returned. If sgn is -0, the result is only negative if the
 /// implementation supports the signed zero consistently in arithmetic
 /// operations.
+///
+/// \ingroup cmath
 [[nodiscard]] constexpr auto copysign(float mag, float sgn) -> float { return detail::copysign_impl(mag, sgn); }
 
 /// \brief Composes a floating point value with the magnitude of mag and the
@@ -73,6 +75,8 @@ template <typename T>
 /// of sgn is returned. If sgn is -0, the result is only negative if the
 /// implementation supports the signed zero consistently in arithmetic
 /// operations.
+///
+/// \ingroup cmath
 [[nodiscard]] constexpr auto copysignf(float mag, float sgn) -> float { return detail::copysign_impl(mag, sgn); }
 
 /// \brief Composes a floating point value with the magnitude of mag and the
@@ -88,6 +92,8 @@ template <typename T>
 /// of sgn is returned. If sgn is -0, the result is only negative if the
 /// implementation supports the signed zero consistently in arithmetic
 /// operations.
+///
+/// \ingroup cmath
 [[nodiscard]] constexpr auto copysign(double mag, double sgn) -> double { return detail::copysign_impl(mag, sgn); }
 
 /// \brief Composes a floating point value with the magnitude of mag and the
@@ -103,6 +109,8 @@ template <typename T>
 /// of sgn is returned. If sgn is -0, the result is only negative if the
 /// implementation supports the signed zero consistently in arithmetic
 /// operations.
+///
+/// \ingroup cmath
 [[nodiscard]] constexpr auto copysign(long double mag, long double sgn) -> long double
 {
     return detail::copysign_impl(mag, sgn);
@@ -121,6 +129,8 @@ template <typename T>
 /// of sgn is returned. If sgn is -0, the result is only negative if the
 /// implementation supports the signed zero consistently in arithmetic
 /// operations.
+///
+/// \ingroup cmath
 [[nodiscard]] constexpr auto copysignl(long double mag, long double sgn) -> long double
 {
     return detail::copysign_impl(mag, sgn);

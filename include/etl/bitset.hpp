@@ -6,6 +6,9 @@
 /// \defgroup bitset bitset.hpp
 /// \ingroup utilities-library
 /// \example bitset.cpp
+/// \code
+/// #include <etl/bitset.hpp>
+/// \endcode
 
 #include <etl/_config/all.hpp>
 

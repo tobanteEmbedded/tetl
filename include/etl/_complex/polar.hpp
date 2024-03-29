@@ -9,6 +9,7 @@
 
 namespace etl {
 
+/// \ingroup complex
 template <typename T>
 [[nodiscard]] constexpr auto polar(T const& r, T const& theta = T()) noexcept -> etl::complex<T>
 {

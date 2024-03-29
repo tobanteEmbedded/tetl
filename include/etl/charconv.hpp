@@ -6,6 +6,9 @@
 /// \defgroup charconv charconv.hpp
 /// etl::to_chars and etl::from_chars
 /// \ingroup strings-library
+/// \code
+/// #include <etl/charconv.hpp>
+/// \endcode
 
 #include <etl/_config/all.hpp>
 

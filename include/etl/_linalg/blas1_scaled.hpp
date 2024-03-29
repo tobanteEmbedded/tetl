@@ -8,6 +8,7 @@
 
 namespace etl::linalg {
 
+/// \ingroup linalg
 template <typename ScalingFactor, typename ElementType, typename Extents, typename Layout, typename Accessor>
 [[nodiscard]] constexpr auto scaled(ScalingFactor alpha, mdspan<ElementType, Extents, Layout, Accessor> x)
 {

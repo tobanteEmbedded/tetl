@@ -8,6 +8,7 @@
 
 namespace etl {
 
+/// \ingroup random
 template <typename RealType = double>
 struct uniform_real_distribution {
     using result_type = RealType;

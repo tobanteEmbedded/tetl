@@ -6,10 +6,10 @@
 /// \defgroup algorithm algorithm.hpp
 /// Algorithms that operate on ranges
 /// \ingroup algorithms-library
+/// \example algorithm.cpp
 /// \code
 /// #include <etl/algorithm.hpp>
 /// \endcode
-/// \example algorithm.cpp
 
 #include <etl/_config/all.hpp>
 

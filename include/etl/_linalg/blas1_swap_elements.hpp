@@ -9,6 +9,7 @@
 
 namespace etl::linalg {
 
+/// \ingroup linalg
 template <inout_object InOutObj1, inout_object InOutObj2>
     requires(InOutObj1::rank() == InOutObj1::rank())
 constexpr auto swap_elements(InOutObj1 x, InOutObj2 y) -> void

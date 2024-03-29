@@ -40,6 +40,7 @@ namespace detail {
 } // namespace detail
 
 /// \brief Generates a random floating point number in range [0,1).
+/// \ingroup random
 template <typename Real, size_t Bits, typename RNG>
 [[nodiscard]] constexpr auto generate_canonical(RNG& g) noexcept(noexcept(g())) -> Real
 {

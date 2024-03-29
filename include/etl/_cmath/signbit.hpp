@@ -25,7 +25,7 @@ template <typename T>
 /// Along with etl::copysign, etl::signbit is one of the only two portable ways
 /// to examine the sign of a NaN.
 ///
-/// https://en.cppreference.com/w/cpp/numeric/math/signbit
+/// \details https://en.cppreference.com/w/cpp/numeric/math/signbit
 [[nodiscard]] constexpr auto signbit(float arg) noexcept -> bool
 {
     if (is_constant_evaluated()) {
@@ -44,7 +44,7 @@ template <typename T>
 /// Along with etl::copysign, etl::signbit is one of the only two portable ways
 /// to examine the sign of a NaN.
 ///
-/// https://en.cppreference.com/w/cpp/numeric/math/signbit
+/// \details https://en.cppreference.com/w/cpp/numeric/math/signbit
 [[nodiscard]] constexpr auto signbit(double arg) noexcept -> bool
 {
     if (is_constant_evaluated()) {
@@ -63,7 +63,7 @@ template <typename T>
 /// Along with etl::copysign, etl::signbit is one of the only two portable ways
 /// to examine the sign of a NaN.
 ///
-/// https://en.cppreference.com/w/cpp/numeric/math/signbit
+/// \details https://en.cppreference.com/w/cpp/numeric/math/signbit
 [[nodiscard]] constexpr auto signbit(long double arg) noexcept -> bool
 {
     if (is_constant_evaluated()) {

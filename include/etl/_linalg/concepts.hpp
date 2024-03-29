@@ -119,27 +119,33 @@ inline constexpr auto imag_if_needed = []<typename T>(T const& val) {
 
 namespace etl::linalg {
 
+/// \ingroup linalg
 template <typename T>
 concept in_vector = detail::is_mdspan<T>::value && T::rank() == 1;
 
+/// \ingroup linalg
 template <typename T>
 concept out_vector
     = detail::is_mdspan<T>::value && T::rank() == 1
    && same_as<remove_const_t<typename T::element_type>, typename T::element_type> && T::is_always_unique();
 
+/// \ingroup linalg
 template <typename T>
 concept inout_vector
     = detail::is_mdspan<T>::value && T::rank() == 1
    && same_as<remove_const_t<typename T::element_type>, typename T::element_type> && T::is_always_unique();
 
+/// \ingroup linalg
 template <typename T>
 concept in_matrix = detail::is_mdspan<T>::value && T::rank() == 2;
 
+/// \ingroup linalg
 template <typename T>
 concept out_matrix
     = detail::is_mdspan<T>::value && T::rank() == 2
    && is_same_v<remove_const_t<typename T::element_type>, typename T::element_type> && T::is_always_unique();
 
+/// \ingroup linalg
 template <typename T>
 concept inout_matrix
     = detail::is_mdspan<T>::value && T::rank() == 2
@@ -153,14 +159,17 @@ concept inout_matrix
 //     (T::is_always_unique() ||
 //      is_same_v<typename T::layout_type, layout_blas_packed>);
 
+/// \ingroup linalg
 template <typename T>
 concept in_object = detail::is_mdspan<T>::value && (T::rank() == 1 || T::rank() == 2);
 
+/// \ingroup linalg
 template <typename T>
 concept out_object
     = detail::is_mdspan<T>::value && (T::rank() == 1 || T::rank() == 2)
    && is_same_v<remove_const_t<typename T::element_type>, typename T::element_type> && T::is_always_unique();
 
+/// \ingroup linalg
 template <typename T>
 concept inout_object
     = detail::is_mdspan<T>::value && (T::rank() == 1 || T::rank() == 2)

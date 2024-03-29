@@ -21,6 +21,8 @@ namespace etl {
 ///
 /// https://www.youtube.com/watch?v=sBtAGxBh-XI)
 /// https://en.cppreference.com/w/cpp/numeric/midpoint
+///
+/// \ingroup numeric
 template <typename Int>
     requires(etl::is_integral_v<Int> and not etl::is_same_v<Int, bool>)
 constexpr auto midpoint(Int a, Int b) noexcept -> Int
@@ -35,6 +37,7 @@ constexpr auto midpoint(Int a, Int b) noexcept -> Int
     return a + static_cast<Int>(half);
 }
 
+/// \ingroup numeric
 template <etl::floating_point Float>
 constexpr auto midpoint(Float a, Float b) noexcept -> Float
 {
@@ -54,6 +57,7 @@ constexpr auto midpoint(Float a, Float b) noexcept -> Float
     return a / 2 + b / 2;
 }
 
+/// \ingroup numeric
 template <typename Ptr>
     requires etl::is_pointer_v<Ptr>
 constexpr auto midpoint(Ptr a, Ptr b) noexcept -> Ptr

@@ -10,6 +10,7 @@
 
 namespace etl::linalg {
 
+/// \ingroup linalg
 template <in_matrix InMat, typename Scalar>
 [[nodiscard]] constexpr auto matrix_frob_norm(InMat a, Scalar init) -> Scalar
 {
@@ -24,6 +25,7 @@ template <in_matrix InMat, typename Scalar>
     return static_cast<Scalar>(sqrt(result));
 }
 
+/// \ingroup linalg
 template <in_matrix InMat>
 [[nodiscard]] constexpr auto matrix_frob_norm(InMat a)
 {

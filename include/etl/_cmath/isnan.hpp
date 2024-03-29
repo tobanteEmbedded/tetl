@@ -13,7 +13,7 @@ namespace etl {
 /// \brief Determines if the given floating point number arg is a not-a-number
 /// (NaN) value.
 ///
-/// https://en.cppreference.com/w/cpp/numeric/math/isnan
+/// \details https://en.cppreference.com/w/cpp/numeric/math/isnan
 [[nodiscard]] constexpr auto isnan(float arg) -> bool
 {
 #if __has_builtin(__builtin_isnanf) or defined(TETL_COMPILER_GCC)
@@ -43,7 +43,7 @@ namespace etl {
 
 /// \brief Determines if the given floating point number arg is a not-a-number
 /// (NaN) value.
-/// https://en.cppreference.com/w/cpp/numeric/math/isnan
+/// \details https://en.cppreference.com/w/cpp/numeric/math/isnan
 template <integral Int>
 [[nodiscard]] constexpr auto isnan(Int arg) -> bool
 {

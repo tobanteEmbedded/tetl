@@ -189,8 +189,6 @@ struct array {
         return etl::equal(lhs.begin(), lhs.end(), rhs.begin());
     }
 
-    friend constexpr auto operator!=(array const& lhs, array const& rhs) -> bool { return !(lhs == rhs); }
-
     /// \brief Compares the contents of lhs and rhs lexicographically. The
     /// comparison is performed by a function equivalent to lexicographical_compare.
     friend constexpr auto operator<(array const& lhs, array const& rhs) -> bool

@@ -8,6 +8,7 @@
 
 namespace etl {
 
+/// \ingroup complex
 template <typename T>
 [[nodiscard]] constexpr auto sin(complex<T> const& z) -> complex<T>
 {

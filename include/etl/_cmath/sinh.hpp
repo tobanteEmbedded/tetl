@@ -9,27 +9,27 @@
 namespace etl {
 
 /// \brief Computes the hyperbolic sine of arg
-/// https://en.cppreference.com/w/cpp/numeric/math/sinh
+/// \details https://en.cppreference.com/w/cpp/numeric/math/sinh
 [[nodiscard]] constexpr auto sinh(float arg) noexcept -> float { return etl::detail::gcem::sinh(arg); }
 
 /// \brief Computes the hyperbolic sine of arg
-/// https://en.cppreference.com/w/cpp/numeric/math/sinh
+/// \details https://en.cppreference.com/w/cpp/numeric/math/sinh
 [[nodiscard]] constexpr auto sinhf(float arg) noexcept -> float { return etl::detail::gcem::sinh(arg); }
 
 /// \brief Computes the hyperbolic sine of arg
-/// https://en.cppreference.com/w/cpp/numeric/math/sinh
+/// \details https://en.cppreference.com/w/cpp/numeric/math/sinh
 [[nodiscard]] constexpr auto sinh(double arg) noexcept -> double { return etl::detail::gcem::sinh(arg); }
 
 /// \brief Computes the hyperbolic sine of arg
-/// https://en.cppreference.com/w/cpp/numeric/math/sinh
+/// \details https://en.cppreference.com/w/cpp/numeric/math/sinh
 [[nodiscard]] constexpr auto sinh(long double arg) noexcept -> long double { return etl::detail::gcem::sinh(arg); }
 
 /// \brief Computes the hyperbolic sine of arg
-/// https://en.cppreference.com/w/cpp/numeric/math/sinh
+/// \details https://en.cppreference.com/w/cpp/numeric/math/sinh
 [[nodiscard]] constexpr auto sinhl(long double arg) noexcept -> long double { return etl::detail::gcem::sinh(arg); }
 
 /// \brief Computes the hyperbolic sine of arg
-/// https://en.cppreference.com/w/cpp/numeric/math/sinh
+/// \details https://en.cppreference.com/w/cpp/numeric/math/sinh
 template <integral T>
 [[nodiscard]] constexpr auto sinh(T arg) noexcept -> double
 {
