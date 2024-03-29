@@ -8,18 +8,22 @@
 
 namespace etl {
 
+/// Test bit at position \p pos
+/// \note Non-standard extension
 /// \ingroup bit-hpp
 template <etl::builtin_unsigned_integer UInt>
-[[nodiscard]] constexpr auto test_bit(UInt val, UInt bit) noexcept -> bool
+[[nodiscard]] constexpr auto test_bit(UInt word, UInt pos) noexcept -> bool
 {
-    return static_cast<UInt>(val & static_cast<UInt>(UInt(1) << static_cast<UInt>(bit))) != UInt(0);
+    return static_cast<UInt>(word & static_cast<UInt>(UInt(1) << pos)) != UInt(0);
 }
 
+/// Test bit at position `Pos`
+/// \note Non-standard extension
 /// \ingroup bit-hpp
-template <etl::size_t Bit, etl::builtin_unsigned_integer UInt>
-[[nodiscard]] constexpr auto test_bit(UInt val) noexcept -> bool
+template <etl::size_t Pos, etl::builtin_unsigned_integer UInt>
+[[nodiscard]] constexpr auto test_bit(UInt word) noexcept -> bool
 {
-    return etl::test_bit(val, static_cast<UInt>(Bit));
+    return etl::test_bit(word, static_cast<UInt>(Pos));
 }
 
 } // namespace etl
