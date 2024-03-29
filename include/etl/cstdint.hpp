@@ -3,10 +3,8 @@
 #ifndef TETL_CSTDINT_HPP
 #define TETL_CSTDINT_HPP
 
-/// \file This header was originally in the C standard library as <stdint.h>.
-/// This header is part of the type support library, providing fixed width
-/// integer types and part of C numeric limits interface.
 /// \defgroup cstdint-hpp cstdint.hpp
+///	Fixed-width integer types and limits of other types
 /// \ingroup limits-lib
 
 #include <etl/_config/all.hpp>

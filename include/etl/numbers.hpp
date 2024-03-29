@@ -4,6 +4,7 @@
 #define TETL_NUMBERS_HPP
 
 /// \defgroup numbers-hpp numbers.hpp
+/// Math constants
 /// \ingroup numerics-lib
 
 #include <etl/_config/all.hpp>

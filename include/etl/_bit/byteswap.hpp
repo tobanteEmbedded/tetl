@@ -81,6 +81,8 @@ inline constexpr struct byteswap {
 /// T has padding bits.
 ///
 /// https://en.cppreference.com/w/cpp/numeric/byteswap
+///
+/// \ingroup bit-hpp
 template <integral T>
 [[nodiscard]] constexpr auto byteswap(T val) noexcept -> T
 {

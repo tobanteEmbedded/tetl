@@ -3,7 +3,6 @@
 #ifndef TETL_STRING_HPP
 #define TETL_STRING_HPP
 
-/// \file This header is part of the strings library.
 /// \defgroup string-hpp string.hpp
 /// \ingroup strings-lib
 /// \example string.cpp

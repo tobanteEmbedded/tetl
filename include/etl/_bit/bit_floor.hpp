@@ -18,6 +18,8 @@ namespace etl {
 ///
 /// \returns Zero if x is zero; otherwise, the largest integral power of two
 /// that is not greater than x.
+///
+/// \ingroup bit-hpp
 template <etl::builtin_unsigned_integer UInt>
 [[nodiscard]] constexpr auto bit_floor(UInt x) noexcept -> UInt
 {

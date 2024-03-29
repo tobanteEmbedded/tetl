@@ -4,6 +4,7 @@
 #define TETL_LINALG_HPP
 
 /// \defgroup linalg-hpp linalg.hpp
+/// Basic linear algebra algorithms
 /// \ingroup numerics-lib
 
 #include <etl/_config/all.hpp>

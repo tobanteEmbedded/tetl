@@ -4,6 +4,7 @@
 #define TETL_RANDOM_HPP
 
 /// \defgroup random-hpp random.hpp
+/// Random number generators and distributions
 /// \ingroup numerics-lib
 
 #include <etl/_config/all.hpp>

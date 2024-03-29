@@ -32,6 +32,8 @@ template <etl::builtin_unsigned_integer UInt>
 /// \details This overload only participates in overload resolution if UInt is an
 /// unsigned integer type (that is, unsigned char, unsigned short, unsigned int,
 /// unsigned long, unsigned long long, or an extended unsigned integer type).
+///
+/// \ingroup bit-hpp
 template <etl::builtin_unsigned_integer UInt>
 [[nodiscard]] constexpr auto popcount(UInt val) noexcept -> int
 {

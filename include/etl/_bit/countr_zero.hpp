@@ -18,6 +18,8 @@ namespace etl {
 ///
 /// \returns The number of consecutive 0 bits in the value of x, starting from
 /// the least significant bit.
+///
+/// \ingroup bit-hpp
 template <etl::builtin_unsigned_integer UInt>
 [[nodiscard]] constexpr auto countr_zero(UInt x) noexcept -> int
 {

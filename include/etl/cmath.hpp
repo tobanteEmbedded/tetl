@@ -4,6 +4,7 @@
 #define TETL_CMATH_HPP
 
 /// \defgroup cmath-hpp cmath.hpp
+/// Common mathematics functions
 /// \ingroup numerics-lib
 
 #include <etl/_config/all.hpp>

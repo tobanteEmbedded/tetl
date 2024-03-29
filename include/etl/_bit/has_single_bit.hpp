@@ -15,6 +15,8 @@ namespace etl {
 /// unsigned long, unsigned long long, or an extended unsigned integer type).
 ///
 /// \returns true if x is an integral power of two; otherwise false.
+///
+/// \ingroup bit-hpp
 template <etl::builtin_unsigned_integer UInt>
 [[nodiscard]] constexpr auto has_single_bit(UInt x) noexcept -> bool
 {

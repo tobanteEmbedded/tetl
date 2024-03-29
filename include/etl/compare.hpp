@@ -4,6 +4,7 @@
 #define TETL_COMPARE_HPP
 
 /// \defgroup compare-hpp compare.hpp
+/// Three-way comparison operator support
 /// \ingroup utilities-lib
 
 #include <etl/_config/all.hpp>

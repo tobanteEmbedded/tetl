@@ -3,8 +3,8 @@
 #ifndef TETL_CWCTYPE_HPP
 #define TETL_CWCTYPE_HPP
 
-/// \file This header was originally in the C standard library as <cwtype.h>.
 /// \defgroup cwctype-hpp cwctype.hpp
+/// Functions to determine the category of wide characters
 /// \ingroup strings-lib
 
 #include <etl/_config/all.hpp>

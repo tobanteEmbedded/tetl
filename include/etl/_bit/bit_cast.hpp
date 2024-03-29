@@ -23,18 +23,20 @@ inline constexpr auto bit_castable_types =
 
 // clang-format on
 
-/// \brief Obtain a value of type To by reinterpreting the object representation
+/// Obtain a value of type To by reinterpreting the object representation
 /// of from. Every bit in the value representation of the returned To object is
 /// equal to the corresponding bit in the object representation of from.
 ///
-/// \details The values of padding bits in the returned To object are
+/// The values of padding bits in the returned To object are
 /// unspecified. If there is no value of type To corresponding to the value
 /// representation produced, the behavior is undefined. If there are multiple
 /// such values, which value is produced is unspecified. This overload only
 /// participates in overload resolution if sizeof(To) == sizeof(From) and both
 /// To and From are TriviallyCopyable types.
 ///
-/// \details https://en.cppreference.com/w/cpp/numeric/bit_cast
+/// https://en.cppreference.com/w/cpp/numeric/bit_cast
+///
+/// \ingroup bit-hpp
 template <typename To, typename From>
     requires(detail::bit_castable_types<To, From>)
 constexpr auto bit_cast(From const& src) noexcept -> To

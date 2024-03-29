@@ -4,6 +4,7 @@
 #define TETL_SYSTEM_ERROR_HPP
 
 /// \defgroup system_error-hpp system_error.hpp
+/// Defines etl::error_code, a platform-dependent error code
 /// \ingroup errors-lib
 
 #include <etl/_config/all.hpp>

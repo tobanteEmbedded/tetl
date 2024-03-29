@@ -4,6 +4,7 @@
 #define TETL_COMPLEX_HPP
 
 /// \defgroup complex-hpp complex.hpp
+/// Complex number type
 /// \ingroup numerics-lib
 
 #include <etl/_config/all.hpp>

@@ -4,6 +4,7 @@
 #define TETL_CONCEPTS_HPP
 
 /// \defgroup concepts-hpp concepts.hpp
+/// Fundamental library concepts
 /// \ingroup concepts-lib
 
 #include <etl/_config/all.hpp>

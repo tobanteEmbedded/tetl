@@ -17,17 +17,16 @@
 namespace etl::experimental::freertos {
 
 /// \brief Stream buffers are an RTOS task to RTOS task, and interrupt to task
-/// communication primitives. Unlike most other FreeRTOS communications
-/// primitives, they are optimised for single reader single writer scenarios,
-/// such as passing data from an interrupt service routine to a task, or from
-/// one microcontroller core to another on dual core CPUs. Data is passed by
-/// copy - the data is copied into the buffer by the sender and out of the
-/// buffer by the read.
+/// communication primitives.
+///
+/// Unlike most other FreeRTOS communications primitives, they are optimised
+/// for single reader single writer scenarios, such as passing data from an
+/// interrupt service routine to a task, or from one microcontroller core to
+/// another on dual core CPUs. Data is passed by copy - the data is copied into
+/// the buffer by the sender and out of the buffer by the read.
 ///
 /// https://www.freertos.org/RTOS-stream-buffer-API.html
 /// https://www.freertos.org/RTOS-stream-message-buffers.html
-///
-/// \ingroup StreamBuffer
 struct stream_buffer {
     using size_type = etl::size_t;
 

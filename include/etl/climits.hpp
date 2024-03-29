@@ -4,6 +4,7 @@
 #define TETL_CLIMITS_HPP
 
 /// \defgroup climits-hpp climits.hpp
+/// Limits of integral types
 /// \ingroup limits-lib
 
 #include <etl/_config/all.hpp>

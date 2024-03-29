@@ -4,6 +4,7 @@
 #define TETL_MEMORY_HPP
 
 /// \defgroup memory-hpp memory.hpp
+/// High-level memory management utilities
 /// \ingroup dynamic-memory-lib
 /// \example memory.cpp
 

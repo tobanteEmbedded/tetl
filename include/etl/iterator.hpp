@@ -4,6 +4,7 @@
 #define TETL_ITERATOR_HPP
 
 /// \defgroup iterator-hpp iterator.hpp
+/// Range iterators
 /// \ingroup iterators-lib
 
 #include <etl/_config/all.hpp>

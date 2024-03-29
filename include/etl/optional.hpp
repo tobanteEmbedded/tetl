@@ -3,7 +3,6 @@
 #ifndef TETL_OPTIONAL_HPP
 #define TETL_OPTIONAL_HPP
 
-/// \file This header is part of the utility library.
 /// \defgroup optional-hpp optional.hpp
 /// \ingroup utilities-lib
 /// \example optional.cpp

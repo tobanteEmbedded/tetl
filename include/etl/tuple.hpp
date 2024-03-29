@@ -3,7 +3,6 @@
 #ifndef TETL_TUPLE_HPP
 #define TETL_TUPLE_HPP
 
-/// \file This header is part of the general utility library.
 /// \defgroup tuple-hpp tuple.hpp
 /// \ingroup utilities-lib
 /// \example tuple.cpp

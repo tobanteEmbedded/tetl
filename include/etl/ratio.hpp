@@ -4,6 +4,7 @@
 #define TETL_RATIO_HPP
 
 /// \defgroup ratio-hpp ratio.hpp
+/// Compile-time rational arithmetic
 /// \ingroup numerics-lib
 
 #include <etl/_config/all.hpp>

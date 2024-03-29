@@ -10,6 +10,8 @@ namespace etl {
 
 /// \brief Computes the result of bitwise left-rotating the value of x by s
 /// positions. This operation is also known as a left circular shift.
+///
+/// \ingroup bit-hpp
 template <etl::builtin_unsigned_integer UInt>
 constexpr auto rotl(UInt t, int s) noexcept -> UInt
 {

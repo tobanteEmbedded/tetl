@@ -3,8 +3,8 @@
 #ifndef TETL_ALGORITHM_HPP
 #define TETL_ALGORITHM_HPP
 
-/// \file This header is part of the algorithm library.
 /// \defgroup algorithm-hpp algorithm.hpp
+/// Algorithms that operate on ranges
 /// \ingroup algorithms-lib
 /// \code
 /// #include <etl/algorithm.hpp>

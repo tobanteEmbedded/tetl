@@ -3,8 +3,8 @@
 #ifndef TETL_CASSERT_HPP
 #define TETL_CASSERT_HPP
 
-/// \file This header is part of the error handling library.
 /// \defgroup cassert-hpp cassert.hpp
+/// Conditionally compiled macro that compares its argument to zero
 /// \ingroup errors-lib
 /// \example cassert.cpp
 

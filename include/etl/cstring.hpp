@@ -4,6 +4,7 @@
 #define TETL_CSTRING_HPP
 
 /// \defgroup cstring-hpp cstring.hpp
+/// Various narrow character string handling functions
 /// \ingroup strings-lib
 
 #include <etl/_config/all.hpp>

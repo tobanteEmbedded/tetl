@@ -3,8 +3,8 @@
 #ifndef TETL_CHRONO_HPP
 #define TETL_CHRONO_HPP
 
-/// \file This header is part of the utility library.
 /// \defgroup chrono-hpp chrono.hpp
+/// C++ time utilities
 /// \ingroup utilities-lib
 /// \example chrono.cpp
 

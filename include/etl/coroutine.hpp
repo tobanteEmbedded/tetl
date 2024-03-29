@@ -4,6 +4,7 @@
 #define TETL_COROUTINE_HPP
 
 /// \defgroup coroutine-hpp coroutine.hpp
+/// Coroutine support library
 /// \ingroup coroutines-lib
 
 #include <etl/_config/all.hpp>

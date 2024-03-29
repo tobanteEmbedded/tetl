@@ -3,9 +3,8 @@
 #ifndef TETL_CCTYPE_HPP
 #define TETL_CCTYPE_HPP
 
-/// \file This header was originally in the C standard library as <ctype.h>.
-/// This header is part of the null-terminated byte strings library.
 /// \defgroup cctype-hpp cctype.hpp
+/// Functions to determine the category of narrow characters
 /// \ingroup strings-lib
 
 #include <etl/_config/all.hpp>

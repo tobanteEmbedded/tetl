@@ -4,6 +4,7 @@
 #define TETL_CHARCONV_HPP
 
 /// \defgroup charconv-hpp charconv.hpp
+/// etl::to_chars and etl::from_chars
 /// \ingroup strings-lib
 
 #include <etl/_config/all.hpp>

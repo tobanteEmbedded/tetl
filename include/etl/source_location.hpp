@@ -3,8 +3,8 @@
 #ifndef TETL_SOURCE_LOCATION_HPP
 #define TETL_SOURCE_LOCATION_HPP
 
-/// \file This header is part of the utility library.
 /// \defgroup source_location-hpp source_location.hpp
+/// Supplies means to obtain source code location
 /// \ingroup utilities-lib
 /// \example source_location.cpp
 

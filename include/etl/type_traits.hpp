@@ -3,8 +3,8 @@
 #ifndef TETL_TYPETRAITS_HPP
 #define TETL_TYPETRAITS_HPP
 
-/// \file This header is part of the utility library.
 /// \defgroup type_traits-hpp type_traits.hpp
+/// Compile-time type information
 /// \ingroup utilities-lib
 /// \example type_traits.cpp
 

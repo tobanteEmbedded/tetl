@@ -4,6 +4,7 @@
 #define TETL_FORMAT_HPP
 
 /// \defgroup format-hpp format.hpp
+/// Formatting library including etl::format
 /// \ingroup strings-lib
 
 #include <etl/_config/all.hpp>

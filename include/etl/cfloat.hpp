@@ -4,6 +4,7 @@
 #define TETL_CFLOAT_HPP
 
 /// \defgroup cfloat-hpp cfloat.hpp
+/// Limits of floating-point types
 /// \ingroup limits-lib
 
 #include <etl/_config/all.hpp>

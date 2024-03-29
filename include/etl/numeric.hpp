@@ -4,6 +4,7 @@
 #define TETL_NUMERIC_HPP
 
 /// \defgroup numeric-hpp numeric.hpp
+///	Numeric operations on values in ranges
 /// \ingroup numerics-lib
 /// \example numeric.cpp
 

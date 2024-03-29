@@ -3,7 +3,6 @@
 #ifndef TETL_BITSET_HPP
 #define TETL_BITSET_HPP
 
-/// \file This header is part of the utility library.
 /// \defgroup bitset-hpp bitset.hpp
 /// \ingroup utilities-lib
 /// \example bitset.cpp

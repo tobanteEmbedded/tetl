@@ -3,8 +3,8 @@
 #ifndef TETL_CSTDDEF_HPP
 #define TETL_CSTDDEF_HPP
 
-/// \file This header was originally in the C standard library as <stddef.h>.
 /// \defgroup cstddef-hpp cstddef.hpp
+/// Standard macros and typedefs
 /// \ingroup utilities-lib
 
 #include <etl/_config/all.hpp>

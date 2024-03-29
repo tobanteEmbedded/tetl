@@ -54,7 +54,6 @@ constexpr auto midpoint(Float a, Float b) noexcept -> Float
     return a / 2 + b / 2;
 }
 
-/// \synopsis_return Ptr
 template <typename Ptr>
     requires etl::is_pointer_v<Ptr>
 constexpr auto midpoint(Ptr a, Ptr b) noexcept -> Ptr

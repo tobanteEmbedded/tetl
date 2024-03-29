@@ -19,6 +19,8 @@ namespace etl {
 /// unsigned long, unsigned long long, or an extended unsigned integer type).
 ///
 /// \returns The smallest integral power of two that is not smaller than x.
+///
+/// \ingroup bit-hpp
 template <etl::builtin_unsigned_integer UInt>
 [[nodiscard]] constexpr auto bit_ceil(UInt x) noexcept -> UInt
 {

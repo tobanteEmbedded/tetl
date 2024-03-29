@@ -4,6 +4,7 @@
 #define TETL_BIT_HPP
 
 /// \defgroup bit-hpp bit.hpp
+///	Bit manipulation functions
 /// \ingroup numerics-lib
 
 #include <etl/_config/all.hpp>

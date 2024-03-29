@@ -8,12 +8,14 @@
 
 namespace etl {
 
+/// \ingroup bit-hpp
 template <etl::builtin_unsigned_integer UInt>
 [[nodiscard]] constexpr auto set_bit(UInt val, UInt bit) noexcept -> UInt
 {
     return static_cast<UInt>(val | static_cast<UInt>(UInt(1) << bit));
 }
 
+/// \ingroup bit-hpp
 template <etl::size_t Bit, etl::builtin_unsigned_integer UInt>
 [[nodiscard]] constexpr auto set_bit(UInt val) noexcept -> UInt
 {

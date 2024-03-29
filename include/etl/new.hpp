@@ -4,6 +4,7 @@
 #define TETL_NEW_HPP
 
 /// \defgroup new-hpp new.hpp
+///	Low-level memory management utilities
 /// \ingroup dynamic-memory-lib
 
 #include <etl/_config/all.hpp>

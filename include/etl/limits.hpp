@@ -4,6 +4,7 @@
 #define TETL_LIMITS_HPP
 
 /// \defgroup limits-hpp limits.hpp
+/// Uniform way to query properties of arithmetic types
 /// \ingroup limits-lib
 
 #include <etl/_config/all.hpp>

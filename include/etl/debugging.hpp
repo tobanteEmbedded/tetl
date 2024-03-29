@@ -4,6 +4,7 @@
 #define TETL_DEBUGGING_HPP
 
 /// \defgroup debugging-hpp debugging.hpp
+/// Debugging library
 /// \ingroup utilities-lib
 
 #include <etl/_config/all.hpp>

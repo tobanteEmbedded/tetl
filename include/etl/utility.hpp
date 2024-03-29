@@ -3,8 +3,8 @@
 #ifndef TETL_UTILITY_HPP
 #define TETL_UTILITY_HPP
 
-/// \file This header is part of the utility library.
 /// \defgroup utility-hpp utility.hpp
+/// Various utility components
 /// \ingroup utilities-lib
 /// \example utility.cpp
 

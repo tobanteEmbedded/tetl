@@ -4,6 +4,7 @@
 #define TETL_CTIME_HPP
 
 /// \defgroup ctime-hpp ctime.hpp
+/// C-style time/date utilities
 /// \ingroup utilities-lib
 
 #include <etl/_config/all.hpp>

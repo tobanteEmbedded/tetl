@@ -1,8 +1,8 @@
 // SPDX-License-Identifier: BSL-1.0
 
-/// \file This header needs to be included after every include of a standard C
-/// header. AVR defines the macros listed below. It doesn't have any include
-/// guards on purpose.
+// This header needs to be included after every include of a standard C
+// header. AVR defines the macros listed below. It doesn't have any include
+// guards on purpose.
 
 #if defined(__AVR__)
     #undef abs
