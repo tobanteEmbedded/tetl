@@ -7,6 +7,7 @@
 
 namespace etl {
 
+/// \ingroup concepts
 template <typename R, typename T, typename U>
 concept equivalence_relation = relation<R, T, U>;
 

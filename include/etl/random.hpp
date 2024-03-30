@@ -3,9 +3,12 @@
 #ifndef TETL_RANDOM_HPP
 #define TETL_RANDOM_HPP
 
-/// \defgroup random random.hpp
+/// \defgroup random random
 /// Random number generators and distributions
 /// \ingroup numerics-library
+/// \code
+/// #include <etl/random.hpp>
+/// \endcode
 
 #include <etl/_config/all.hpp>
 

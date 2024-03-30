@@ -7,6 +7,7 @@
 
 namespace etl {
 
+/// \ingroup concepts
 template <typename R, typename T, typename U>
 concept relation = predicate<R, T, T> and predicate<R, U, U> and predicate<R, T, U> and predicate<R, U, T>;
 

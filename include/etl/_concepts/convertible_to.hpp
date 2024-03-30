@@ -12,6 +12,7 @@ namespace etl {
 /// the same type and value category as those of declval<From>() can be
 /// implicitly and explicitly converted to the type To, and the two forms of
 /// conversion are equivalent.
+/// \ingroup concepts
 template <typename From, typename To>
 concept convertible_to
     = etl::is_convertible_v<From, To> and requires(etl::add_rvalue_reference_t<From> (&f)()) { static_cast<To>(f()); };

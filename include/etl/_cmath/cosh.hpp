@@ -10,26 +10,32 @@ namespace etl {
 
 /// \brief Computes the hyperbolic cosine of arg
 /// \details https://en.cppreference.com/w/cpp/numeric/math/cosh
+/// \ingroup cmath
 [[nodiscard]] constexpr auto cosh(float arg) noexcept -> float { return etl::detail::gcem::cosh(arg); }
 
 /// \brief Computes the hyperbolic cosine of arg
 /// \details https://en.cppreference.com/w/cpp/numeric/math/cosh
+/// \ingroup cmath
 [[nodiscard]] constexpr auto coshf(float arg) noexcept -> float { return etl::detail::gcem::cosh(arg); }
 
 /// \brief Computes the hyperbolic cosine of arg
 /// \details https://en.cppreference.com/w/cpp/numeric/math/cosh
+/// \ingroup cmath
 [[nodiscard]] constexpr auto cosh(double arg) noexcept -> double { return etl::detail::gcem::cosh(arg); }
 
 /// \brief Computes the hyperbolic cosine of arg
 /// \details https://en.cppreference.com/w/cpp/numeric/math/cosh
+/// \ingroup cmath
 [[nodiscard]] constexpr auto cosh(long double arg) noexcept -> long double { return etl::detail::gcem::cosh(arg); }
 
 /// \brief Computes the hyperbolic cosine of arg
 /// \details https://en.cppreference.com/w/cpp/numeric/math/cosh
+/// \ingroup cmath
 [[nodiscard]] constexpr auto coshl(long double arg) noexcept -> long double { return etl::detail::gcem::cosh(arg); }
 
 /// \brief Computes the hyperbolic cosine of arg
 /// \details https://en.cppreference.com/w/cpp/numeric/math/cosh
+/// \ingroup cmath
 template <integral T>
 [[nodiscard]] constexpr auto cosh(T arg) noexcept -> double
 {

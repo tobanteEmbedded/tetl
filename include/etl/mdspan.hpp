@@ -3,7 +3,7 @@
 #ifndef TETL_MDSPAN_HPP
 #define TETL_MDSPAN_HPP
 
-/// \defgroup mdspan mdspan.hpp
+/// \defgroup mdspan mdspan
 /// \ingroup containers-library
 
 #include <etl/_config/all.hpp>

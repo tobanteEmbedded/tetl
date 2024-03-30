@@ -7,8 +7,8 @@
 
 namespace etl {
 
-/// \brief The concept integral<T> is satisfied if and only if T is an integral
-/// type.
+/// \brief The concept integral<T> is satisfied if and only if T is an integral type.
+/// \ingroup concepts
 template <typename T>
 concept integral = is_integral_v<T>;
 

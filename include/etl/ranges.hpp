@@ -3,7 +3,7 @@
 #ifndef TETL_RANGES_HPP
 #define TETL_RANGES_HPP
 
-/// \defgroup ranges ranges.hpp
+/// \defgroup ranges ranges
 /// Range access, primitives, requirements, utilities and adaptors
 /// \ingroup ranges-library
 

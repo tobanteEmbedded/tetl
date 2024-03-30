@@ -3,7 +3,7 @@
 #ifndef TETL_ALGORITHM_HPP
 #define TETL_ALGORITHM_HPP
 
-/// \defgroup algorithm algorithm.hpp
+/// \defgroup algorithm algorithm
 /// Algorithms that operate on ranges
 /// \ingroup algorithms-library
 /// \example algorithm.cpp

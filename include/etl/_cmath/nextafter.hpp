@@ -30,8 +30,8 @@ template <typename T>
 
 /// \brief Returns the next representable value of from in the direction of to.
 /// If from equals to, to is returned.
-///
-/// https://en.cppreference.com/w/cpp/numeric/math/nextafter
+/// \details ttps://en.cppreference.com/w/cpp/numeric/math/nextafter
+/// \ingroup cmath
 [[nodiscard]] constexpr auto nextafter(float from, float to) noexcept -> float
 {
     return detail::nextafter_impl(from, to);
@@ -39,8 +39,8 @@ template <typename T>
 
 /// \brief Returns the next representable value of from in the direction of to.
 /// If from equals to, to is returned.
-///
-/// https://en.cppreference.com/w/cpp/numeric/math/nextafter
+/// \details ttps://en.cppreference.com/w/cpp/numeric/math/nextafter
+/// \ingroup cmath
 [[nodiscard]] constexpr auto nextafterf(float from, float to) noexcept -> float
 {
     return detail::nextafter_impl(from, to);
@@ -48,8 +48,8 @@ template <typename T>
 
 /// \brief Returns the next representable value of from in the direction of to.
 /// If from equals to, to is returned.
-///
-/// https://en.cppreference.com/w/cpp/numeric/math/nextafter
+/// \details ttps://en.cppreference.com/w/cpp/numeric/math/nextafter
+/// \ingroup cmath
 [[nodiscard]] constexpr auto nextafter(double from, double to) noexcept -> double
 {
     return detail::nextafter_impl(from, to);

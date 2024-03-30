@@ -10,6 +10,7 @@ namespace etl {
 /// \brief The concept destructible specifies the concept of all types whose
 /// instances can safely be destroyed at the end of their lifetime (including
 /// reference types).
+/// \ingroup concepts
 template <typename T>
 concept destructible = etl::is_nothrow_destructible_v<T>;
 

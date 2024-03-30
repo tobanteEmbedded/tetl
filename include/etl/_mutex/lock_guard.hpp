@@ -13,6 +13,7 @@ namespace etl {
 /// mutex it is given. When control leaves the scope in which the lock_guard
 /// object was created, the lock_guard is destructed and the mutex is released.
 /// The lock_guard struct is non-copyable.
+/// \ingroup mutex
 template <typename MutexT>
 struct lock_guard {
     using mutex_type = MutexT;

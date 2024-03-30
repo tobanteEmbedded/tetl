@@ -3,7 +3,7 @@
 #ifndef TETL_SET_HPP
 #define TETL_SET_HPP
 
-/// \defgroup set set.hpp
+/// \defgroup set set
 /// \ingroup containers-library
 /// \example set.cpp
 

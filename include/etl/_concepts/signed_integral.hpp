@@ -10,6 +10,7 @@ namespace etl {
 
 /// \brief The concept signed_integral<T> is satisfied if and only if T is an
 /// integral type and is_signed_v<T> is true.
+/// \ingroup concepts
 template <typename T>
 concept signed_integral = etl::integral<T> and etl::is_signed_v<T>;
 

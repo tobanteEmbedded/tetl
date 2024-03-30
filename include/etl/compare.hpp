@@ -3,7 +3,7 @@
 #ifndef TETL_COMPARE_HPP
 #define TETL_COMPARE_HPP
 
-/// \defgroup compare compare.hpp
+/// \defgroup compare compare
 /// Three-way comparison operator support
 /// \ingroup utilities-library
 

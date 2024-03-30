@@ -12,6 +12,7 @@ namespace etl {
 /// chosen)
 ///
 /// \details https://en.cppreference.com/w/cpp/numeric/math/fmax
+/// \ingroup cmath
 [[nodiscard]] constexpr auto fmax(float x, float y) noexcept -> float { return etl::detail::gcem::max(x, y); }
 
 /// \brief Returns the larger of two floating point arguments, treating NaNs as
@@ -19,6 +20,7 @@ namespace etl {
 /// chosen)
 ///
 /// \details https://en.cppreference.com/w/cpp/numeric/math/fmax
+/// \ingroup cmath
 [[nodiscard]] constexpr auto fmaxf(float x, float y) noexcept -> float { return etl::detail::gcem::max(x, y); }
 
 /// \brief Returns the larger of two floating point arguments, treating NaNs as
@@ -26,6 +28,7 @@ namespace etl {
 /// chosen)
 ///
 /// \details https://en.cppreference.com/w/cpp/numeric/math/fmax
+/// \ingroup cmath
 [[nodiscard]] constexpr auto fmax(double x, double y) noexcept -> double { return etl::detail::gcem::max(x, y); }
 
 /// \brief Returns the larger of two floating point arguments, treating NaNs as
@@ -33,6 +36,7 @@ namespace etl {
 /// chosen)
 ///
 /// \details https://en.cppreference.com/w/cpp/numeric/math/fmax
+/// \ingroup cmath
 [[nodiscard]] constexpr auto fmax(long double x, long double y) noexcept -> long double
 {
     return etl::detail::gcem::max(x, y);
@@ -43,6 +47,7 @@ namespace etl {
 /// chosen)
 ///
 /// \details https://en.cppreference.com/w/cpp/numeric/math/fmax
+/// \ingroup cmath
 [[nodiscard]] constexpr auto fmaxl(long double x, long double y) noexcept -> long double
 {
     return etl::detail::gcem::max(x, y);

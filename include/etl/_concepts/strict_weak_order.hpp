@@ -7,6 +7,7 @@
 
 namespace etl {
 
+/// \ingroup concepts
 template <typename R, typename T, typename U>
 concept strict_weak_order = relation<R, T, U>;
 

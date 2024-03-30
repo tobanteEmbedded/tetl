@@ -3,7 +3,7 @@
 #ifndef TETL_ARRAY_HPP
 #define TETL_ARRAY_HPP
 
-/// \defgroup array array.hpp
+/// \defgroup array array
 /// \ingroup containers-library
 /// \example array.cpp
 /// \code

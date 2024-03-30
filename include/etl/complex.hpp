@@ -3,9 +3,12 @@
 #ifndef TETL_COMPLEX_HPP
 #define TETL_COMPLEX_HPP
 
-/// \defgroup complex complex.hpp
+/// \defgroup complex complex
 /// Complex number type
 /// \ingroup numerics-library
+/// \code
+/// #include <etl/complex.hpp>
+/// \endcode
 
 #include <etl/_config/all.hpp>
 

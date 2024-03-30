@@ -7,6 +7,7 @@
 
 namespace etl {
 
+/// \ingroup concepts
 template <typename T>
 concept equality_comparable = weakly_equality_comparable_with<T, T>;
 

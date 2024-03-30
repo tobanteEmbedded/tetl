@@ -3,7 +3,7 @@
 #ifndef TETL_CMATH_HPP
 #define TETL_CMATH_HPP
 
-/// \defgroup cmath cmath.hpp
+/// \defgroup cmath cmath
 /// Common mathematics functions
 /// \ingroup numerics-library
 /// \code

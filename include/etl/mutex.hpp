@@ -3,6 +3,10 @@
 #ifndef TETL_MUTEX_HPP
 #define TETL_MUTEX_HPP
 
+/// \defgroup mutex mutex
+///	Mutual exclusion primitives
+/// \ingroup thread-library
+
 #include <etl/_config/all.hpp>
 
 #include <etl/_mutex/lock_guard.hpp>

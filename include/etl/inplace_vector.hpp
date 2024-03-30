@@ -3,7 +3,7 @@
 #ifndef TETL_INPLACE_VECTOR_HPP
 #define TETL_INPLACE_VECTOR_HPP
 
-/// \defgroup inplace_vector inplace_vector.hpp
+/// \defgroup inplace_vector inplace_vector
 /// \ingroup containers-library
 
 #include <etl/_config/all.hpp>

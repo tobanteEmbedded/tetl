@@ -10,6 +10,7 @@
 
 namespace etl {
 
+/// \ingroup concepts
 template <typename T>
 concept movable = is_object_v<T> and move_constructible<T> and assignable_from<T&, T> and swappable<T>;
 

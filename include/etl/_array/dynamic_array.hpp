@@ -17,7 +17,7 @@
 
 namespace etl {
 
-/// \headerfile etl/array.hpp
+/// \headerfile etl/array
 /// \ingroup array
 template <typename T, typename Allocator>
 struct dynamic_array {

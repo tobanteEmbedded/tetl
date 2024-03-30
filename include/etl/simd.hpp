@@ -3,7 +3,7 @@
 #ifndef TETL_SIMD_HPP
 #define TETL_SIMD_HPP
 
-/// \defgroup simd simd.hpp
+/// \defgroup simd simd
 /// \ingroup utilities-library
 
 #include <etl/_config/all.hpp>

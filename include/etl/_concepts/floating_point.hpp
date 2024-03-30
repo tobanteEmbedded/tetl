@@ -7,8 +7,8 @@
 
 namespace etl {
 
-/// \brief The concept floating_point<T> is satisfied if and only if T is a
-/// floating-point type.
+/// \brief The concept floating_point<T> is satisfied if and only if T is a floating-point type.
+/// \ingroup concepts
 template <typename T>
 concept floating_point = is_floating_point_v<T>;
 

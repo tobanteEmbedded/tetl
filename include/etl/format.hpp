@@ -3,7 +3,7 @@
 #ifndef TETL_FORMAT_HPP
 #define TETL_FORMAT_HPP
 
-/// \defgroup format format.hpp
+/// \defgroup format format
 /// Formatting library including etl::format
 /// \ingroup strings-library
 

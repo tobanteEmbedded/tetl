@@ -3,7 +3,7 @@
 #ifndef TETL_SYSTEM_ERROR_HPP
 #define TETL_SYSTEM_ERROR_HPP
 
-/// \defgroup system_error system_error.hpp
+/// \defgroup system_error system_error
 /// Defines etl::error_code, a platform-dependent error code
 /// \ingroup errors-library
 

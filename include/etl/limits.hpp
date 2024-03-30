@@ -3,7 +3,7 @@
 #ifndef TETL_LIMITS_HPP
 #define TETL_LIMITS_HPP
 
-/// \defgroup limits limits.hpp
+/// \defgroup limits limits
 /// Uniform way to query properties of arithmetic types
 /// \ingroup limits-library
 

@@ -3,7 +3,7 @@
 #ifndef TETL_TUPLE_HPP
 #define TETL_TUPLE_HPP
 
-/// \defgroup tuple tuple.hpp
+/// \defgroup tuple tuple
 /// \ingroup utilities-library
 /// \example tuple.cpp
 

@@ -3,7 +3,7 @@
 #ifndef TETL_STACK_HPP
 #define TETL_STACK_HPP
 
-/// \defgroup stack stack.hpp
+/// \defgroup stack stack
 /// \ingroup containers-library
 
 #include <etl/_config/all.hpp>

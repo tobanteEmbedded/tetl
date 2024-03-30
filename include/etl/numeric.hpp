@@ -3,7 +3,7 @@
 #ifndef TETL_NUMERIC_HPP
 #define TETL_NUMERIC_HPP
 
-/// \defgroup numeric numeric.hpp
+/// \defgroup numeric numeric
 ///	Numeric operations on values in ranges
 /// \ingroup numerics-library
 /// \example numeric.cpp

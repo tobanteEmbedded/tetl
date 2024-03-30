@@ -14,6 +14,8 @@ namespace etl {
 /// string arg or zero if the implementation does not support quiet NaNs.
 ///
 /// https://en.cppreference.com/w/cpp/numeric/math/nan
+///
+/// \ingroup cmath
 [[nodiscard]] constexpr auto nanf(char const* arg) noexcept -> float
 {
     (void)arg;
@@ -26,7 +28,9 @@ namespace etl {
 /// \details Returns the quiet NaN value that corresponds to the identifying
 /// string arg or zero if the implementation does not support quiet NaNs.
 ///
-/// \details https://en.cppreference.com/w/cpp/numeric/math/nan
+/// https://en.cppreference.com/w/cpp/numeric/math/nan
+///
+/// \ingroup cmath
 [[nodiscard]] constexpr auto nan(char const* arg) noexcept -> double
 {
     (void)arg;
@@ -39,7 +43,9 @@ namespace etl {
 /// \details Returns the quiet NaN value that corresponds to the identifying
 /// string arg or zero if the implementation does not support quiet NaNs.
 ///
-/// \details https://en.cppreference.com/w/cpp/numeric/math/nan
+/// https://en.cppreference.com/w/cpp/numeric/math/nan
+///
+/// \ingroup cmath
 [[nodiscard]] constexpr auto nanl(char const* arg) noexcept -> long double
 {
     (void)arg;

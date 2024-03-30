@@ -7,6 +7,7 @@
 
 namespace etl {
 
+/// \ingroup concepts
 template <typename F, typename... Args>
 concept regular_invocable = etl::invocable<F, Args...>;
 

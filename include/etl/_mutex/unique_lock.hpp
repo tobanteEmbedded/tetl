@@ -22,6 +22,8 @@ namespace etl {
 /// unique_lock also meets the Lockable requirements (ex.: can be used in lock);
 /// if Mutex meets the TimedLockable requirements, unique_lock also meets the
 /// TimedLockable requirements.
+///
+/// \ingroup mutex
 template <typename Mutex>
 struct unique_lock {
 private:
@@ -201,15 +203,11 @@ public:
     /// \brief Returns a pointer to the associated mutex, or a null pointer if
     /// there is no associated mutex.
     [[nodiscard]] auto mutex() const noexcept -> mutex_type* { return _mutex; }
-};
 
-/// \brief Specializes the swap algorithm for unique_lock. Exchanges the state
-/// of lhs with that of rhs.
-template <typename Mutex>
-void swap(unique_lock<Mutex>& lhs, unique_lock<Mutex>& rhs) noexcept(noexcept(lhs.swap(rhs)))
-{
-    lhs.swap(rhs);
-}
+    /// \brief Specializes the swap algorithm for unique_lock. Exchanges the state
+    /// of lhs with that of rhs.
+    friend auto swap(unique_lock& lhs, unique_lock& rhs) noexcept(noexcept(lhs.swap(rhs))) -> void { lhs.swap(rhs); }
+};
 
 } // namespace etl
 

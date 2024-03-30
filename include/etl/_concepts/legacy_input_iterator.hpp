@@ -14,6 +14,10 @@
 namespace etl {
 
 // clang-format off
+
+/// \note Non-standard extension
+/// \headerfile etl/concepts.hpp
+/// \ingroup concepts
 template <typename Iter>
 concept legacy_input_iterator = etl::legacy_iterator<Iter> and etl::equality_comparable<Iter> and requires(Iter i) {
     typename etl::incrementable_traits<Iter>::difference_type;
@@ -23,6 +27,7 @@ concept legacy_input_iterator = etl::legacy_iterator<Iter> and etl::equality_com
     // typename etl::common_reference_t<decltype(*i++)&&, typename etl::indirectly_readable_traits<Iter>::value_type&>;
     requires etl::signed_integral<typename etl::incrementable_traits<Iter>::difference_type>;
 };
+
 // clang-format on
 
 } // namespace etl

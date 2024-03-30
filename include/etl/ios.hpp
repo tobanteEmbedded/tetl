@@ -3,6 +3,9 @@
 #ifndef TETL_IOS_HPP
 #define TETL_IOS_HPP
 
+/// \defgroup ios ios
+/// \ingroup io-library
+
 #include <etl/_config/all.hpp>
 
 #include <etl/_ios/basic_streambuf.hpp>

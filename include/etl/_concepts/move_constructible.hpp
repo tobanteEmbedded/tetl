@@ -14,6 +14,8 @@ namespace etl {
 /// contexts, with the usual semantics.
 ///
 /// https://en.cppreference.com/w/cpp/concepts/move_constructible
+///
+/// \ingroup concepts
 template <typename T>
 concept move_constructible = constructible_from<T, T> && convertible_to<T, T>;
 

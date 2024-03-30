@@ -3,7 +3,7 @@
 #ifndef TETL_UTILITY_HPP
 #define TETL_UTILITY_HPP
 
-/// \defgroup utility utility.hpp
+/// \defgroup utility utility
 /// Various utility components
 /// \ingroup utilities-library
 /// \example utility.cpp

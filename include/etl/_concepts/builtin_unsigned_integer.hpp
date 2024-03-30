@@ -7,6 +7,9 @@
 
 namespace etl {
 
+/// \note Non-standard extension
+/// \headerfile etl/concepts.hpp
+/// \ingroup concepts
 template <typename T>
 concept builtin_unsigned_integer = is_builtin_unsigned_integer_v<T>;
 

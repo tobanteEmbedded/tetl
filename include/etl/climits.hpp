@@ -3,7 +3,7 @@
 #ifndef TETL_CLIMITS_HPP
 #define TETL_CLIMITS_HPP
 
-/// \defgroup climits climits.hpp
+/// \defgroup climits climits
 /// Limits of integral types
 /// \ingroup limits-library
 /// \code

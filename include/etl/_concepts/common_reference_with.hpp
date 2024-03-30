@@ -10,11 +10,14 @@
 namespace etl {
 
 // clang-format off
+
+/// \ingroup concepts
 template <typename T, typename U>
 concept common_reference_with =
         same_as<common_reference_t<T, U>, common_reference_t<U, T>>
     and convertible_to<T, common_reference_t<T, U>>
     and convertible_to<U, common_reference_t<T, U>>;
+
 // clang-format on
 
 } // namespace etl

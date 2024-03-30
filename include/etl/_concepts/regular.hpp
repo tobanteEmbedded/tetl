@@ -8,6 +8,7 @@
 
 namespace etl {
 
+/// \ingroup concepts
 template <typename T>
 concept regular = etl::semiregular<T> and etl::equality_comparable<T>;
 

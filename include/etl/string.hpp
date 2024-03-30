@@ -3,7 +3,7 @@
 #ifndef TETL_STRING_HPP
 #define TETL_STRING_HPP
 
-/// \defgroup string string.hpp
+/// \defgroup string string
 /// \ingroup strings-library
 /// \example string.cpp
 

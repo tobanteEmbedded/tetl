@@ -3,7 +3,7 @@
 #ifndef TETL_CHRONO_HPP
 #define TETL_CHRONO_HPP
 
-/// \defgroup chrono chrono.hpp
+/// \defgroup chrono chrono
 /// C++ time utilities
 /// \ingroup utilities-library
 /// \example chrono.cpp

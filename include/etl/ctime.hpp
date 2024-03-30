@@ -3,7 +3,7 @@
 #ifndef TETL_CTIME_HPP
 #define TETL_CTIME_HPP
 
-/// \defgroup ctime ctime.hpp
+/// \defgroup ctime ctime
 /// C-style time/date utilities
 /// \ingroup utilities-library
 

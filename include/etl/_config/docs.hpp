@@ -15,5 +15,7 @@
 /// \defgroup ranges-library Ranges Library
 /// \defgroup algorithms-library Algorithms Library
 /// \defgroup numerics-library Numerics Library
+/// \defgroup io-library Input/Output Library
+/// \defgroup thread-library Thread support Library
 
 #endif // TETL_CONFIG_DOCS_HPP

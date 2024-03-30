@@ -10,6 +10,10 @@
 namespace etl {
 
 // clang-format off
+
+/// \note Non-standard extension
+/// \headerfile etl/concepts.hpp
+/// \ingroup concepts
 template<typename T, typename U>
 concept weakly_equality_comparable_with = requires(remove_reference_t<T> const& t, remove_reference_t<U> const& u) {
     { t == u } -> boolean_testable;
@@ -17,6 +21,7 @@ concept weakly_equality_comparable_with = requires(remove_reference_t<T> const& 
     { u == t } -> boolean_testable;
     { u != t } -> boolean_testable;
 };
+
 // clang-format on
 
 } // namespace etl

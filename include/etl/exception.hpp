@@ -3,7 +3,7 @@
 #ifndef TETL_EXCEPTION_HPP
 #define TETL_EXCEPTION_HPP
 
-/// \defgroup exception exception.hpp
+/// \defgroup exception exception
 /// Exception handling utilities
 /// \ingroup errors-library
 

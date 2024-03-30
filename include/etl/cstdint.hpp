@@ -3,7 +3,7 @@
 #ifndef TETL_CSTDINT_HPP
 #define TETL_CSTDINT_HPP
 
-/// \defgroup cstdint cstdint.hpp
+/// \defgroup cstdint cstdint
 ///	Fixed-width integer types and limits of other types
 /// \ingroup limits-library
 

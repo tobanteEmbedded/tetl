@@ -10,6 +10,9 @@
 
 namespace etl {
 
+/// \note Non-standard extension
+/// \headerfile etl/concepts.hpp
+/// \ingroup concepts
 template <typename Iter>
 concept legacy_bidirectional_iterator = etl::legacy_forward_iterator<Iter> and requires(Iter i) {
     { --i } -> etl::same_as<Iter&>;

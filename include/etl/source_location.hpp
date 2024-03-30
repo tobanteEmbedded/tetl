@@ -3,7 +3,7 @@
 #ifndef TETL_SOURCE_LOCATION_HPP
 #define TETL_SOURCE_LOCATION_HPP
 
-/// \defgroup source_location source_location.hpp
+/// \defgroup source_location source_location
 /// Supplies means to obtain source code location
 /// \ingroup utilities-library
 /// \example source_location.cpp

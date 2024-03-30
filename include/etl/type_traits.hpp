@@ -3,7 +3,7 @@
 #ifndef TETL_TYPETRAITS_HPP
 #define TETL_TYPETRAITS_HPP
 
-/// \defgroup type_traits type_traits.hpp
+/// \defgroup type_traits type_traits
 /// Compile-time type information
 /// \ingroup utilities-library
 /// \example type_traits.cpp

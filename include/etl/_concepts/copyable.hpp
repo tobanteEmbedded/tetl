@@ -9,6 +9,7 @@
 
 namespace etl {
 
+/// \ingroup concepts
 template <typename T>
 concept copyable =                    //
     copy_constructible<T> and         //

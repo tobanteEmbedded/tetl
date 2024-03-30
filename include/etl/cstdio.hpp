@@ -3,6 +3,10 @@
 #ifndef TETL_CSTDIO_HPP
 #define TETL_CSTDIO_HPP
 
+/// \defgroup cstdio cstdio
+///	C-style input-output functions
+/// \ingroup io-library
+
 #include <etl/_config/all.hpp>
 
 #include <etl/_cstddef/max_align_t.hpp>

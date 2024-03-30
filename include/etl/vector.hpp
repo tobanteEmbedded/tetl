@@ -3,7 +3,7 @@
 #ifndef TETL_VECTOR_HPP
 #define TETL_VECTOR_HPP
 
-/// \defgroup vector vector.hpp
+/// \defgroup vector vector
 /// \ingroup containers-library
 /// \example vector.cpp
 

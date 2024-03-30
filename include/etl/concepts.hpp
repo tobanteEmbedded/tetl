@@ -3,7 +3,7 @@
 #ifndef TETL_CONCEPTS_HPP
 #define TETL_CONCEPTS_HPP
 
-/// \defgroup concepts concepts.hpp
+/// \defgroup concepts concepts
 /// Fundamental library concepts
 /// \ingroup concepts-library
 

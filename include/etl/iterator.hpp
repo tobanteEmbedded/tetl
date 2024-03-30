@@ -3,7 +3,7 @@
 #ifndef TETL_ITERATOR_HPP
 #define TETL_ITERATOR_HPP
 
-/// \defgroup iterator iterator.hpp
+/// \defgroup iterator iterator
 /// Range iterators
 /// \ingroup iterators-library
 

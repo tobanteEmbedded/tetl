@@ -3,7 +3,7 @@
 #ifndef TETL_FLAT_SET_HPP
 #define TETL_FLAT_SET_HPP
 
-/// \defgroup flat_set flat_set.hpp
+/// \defgroup flat_set flat_set
 /// \ingroup containers-library
 
 #include <etl/_config/all.hpp>

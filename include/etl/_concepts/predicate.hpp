@@ -9,6 +9,7 @@
 
 namespace etl {
 
+/// \ingroup concepts
 template <typename F, typename... Args>
 concept predicate = regular_invocable<F, Args...> and boolean_testable<invoke_result_t<F, Args...>>;
 

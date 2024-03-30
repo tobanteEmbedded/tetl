@@ -51,6 +51,7 @@ inline constexpr struct hypot {
 /// - hypot(x,y) is NAN if x or y is NAN.
 ///
 /// https://en.cppreference.com/w/cpp/numeric/math/hypot
+/// \ingroup cmath
 [[nodiscard]] constexpr auto hypot(float x, float y) noexcept -> float { return etl::detail::hypot(x, y); }
 
 /// \brief Computes the square root of the sum of the squares of x and y,
@@ -61,6 +62,7 @@ inline constexpr struct hypot {
 /// - hypot(x,y) is NAN if x or y is NAN.
 ///
 /// https://en.cppreference.com/w/cpp/numeric/math/hypot
+/// \ingroup cmath
 [[nodiscard]] constexpr auto hypotf(float x, float y) noexcept -> float { return etl::detail::hypot(x, y); }
 
 /// \brief Computes the square root of the sum of the squares of x and y,
@@ -71,6 +73,7 @@ inline constexpr struct hypot {
 /// - hypot(x,y) is NAN if x or y is NAN.
 ///
 /// https://en.cppreference.com/w/cpp/numeric/math/hypot
+/// \ingroup cmath
 [[nodiscard]] constexpr auto hypot(double x, double y) noexcept -> double { return etl::detail::hypot(x, y); }
 
 /// \brief Computes the square root of the sum of the squares of x and y,
@@ -81,6 +84,7 @@ inline constexpr struct hypot {
 /// - hypot(x,y) is NAN if x or y is NAN.
 ///
 /// https://en.cppreference.com/w/cpp/numeric/math/hypot
+/// \ingroup cmath
 [[nodiscard]] constexpr auto hypot(long double x, long double y) noexcept -> long double
 {
     return etl::detail::hypot(x, y);
@@ -94,6 +98,7 @@ inline constexpr struct hypot {
 /// - hypot(x,y) is NAN if x or y is NAN.
 ///
 /// https://en.cppreference.com/w/cpp/numeric/math/hypot
+/// \ingroup cmath
 [[nodiscard]] constexpr auto hypotl(long double x, long double y) noexcept -> long double
 {
     return etl::detail::hypot(x, y);
@@ -107,6 +112,7 @@ inline constexpr struct hypot {
 /// - hypot(x,y) is NAN if x or y is NAN.
 ///
 /// https://en.cppreference.com/w/cpp/numeric/math/hypot
+/// \ingroup cmath
 [[nodiscard]] constexpr auto hypot(float x, float y, float z) noexcept -> float { return etl::detail::hypot(x, y, z); }
 
 /// \brief Computes the square root of the sum of the squares of x, y, and z,
@@ -117,6 +123,7 @@ inline constexpr struct hypot {
 /// - hypot(x,y) is NAN if x or y is NAN.
 ///
 /// https://en.cppreference.com/w/cpp/numeric/math/hypot
+/// \ingroup cmath
 [[nodiscard]] constexpr auto hypot(double x, double y, double z) noexcept -> double
 {
     return etl::detail::hypot(x, y, z);
@@ -130,6 +137,7 @@ inline constexpr struct hypot {
 /// - hypot(x,y) is NAN if x or y is NAN.
 ///
 /// https://en.cppreference.com/w/cpp/numeric/math/hypot
+/// \ingroup cmath
 [[nodiscard]] constexpr auto hypot(long double x, long double y, long double z) noexcept -> long double
 {
     return etl::detail::hypot(x, y, z);

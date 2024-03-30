@@ -3,7 +3,7 @@
 #ifndef TETL_CWCTYPE_HPP
 #define TETL_CWCTYPE_HPP
 
-/// \defgroup cwctype cwctype.hpp
+/// \defgroup cwctype cwctype
 /// Functions to determine the category of wide characters
 /// \ingroup strings-library
 

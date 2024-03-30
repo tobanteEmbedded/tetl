@@ -3,7 +3,7 @@
 #ifndef TETL_OPTIONAL_HPP
 #define TETL_OPTIONAL_HPP
 
-/// \defgroup optional optional.hpp
+/// \defgroup optional optional
 /// \ingroup utilities-library
 /// \example optional.cpp
 

@@ -3,7 +3,7 @@
 #ifndef TETL_FUNCTIONAL_HPP
 #define TETL_FUNCTIONAL_HPP
 
-/// \defgroup functional functional.hpp
+/// \defgroup functional functional
 /// Function objects, Function invocations, Bind operations and Reference wrappers
 /// \ingroup utilities-library
 

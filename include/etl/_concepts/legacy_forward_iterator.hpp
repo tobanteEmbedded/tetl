@@ -15,6 +15,10 @@
 namespace etl {
 
 // clang-format off
+
+/// \note Non-standard extension
+/// \headerfile etl/concepts.hpp
+/// \ingroup concepts
 template <typename Iter>
 concept legacy_forward_iterator = legacy_input_iterator<Iter>
     and etl::constructible_from<Iter>
@@ -24,6 +28,7 @@ concept legacy_forward_iterator = legacy_input_iterator<Iter>
           { it++ } -> etl::convertible_to<Iter const&>;
           { *it++ } -> etl::same_as<etl::iter_reference_t<Iter>>;
     };
+
 // clang-format on
 
 } // namespace etl

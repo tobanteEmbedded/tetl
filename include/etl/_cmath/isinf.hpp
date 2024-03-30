@@ -32,12 +32,16 @@ inline constexpr struct isinf {
 /// negative infinity.
 /// \returns true if arg is infinite, false otherwise
 /// \details https://en.cppreference.com/w/cpp/numeric/math/isinf
+/// \ingroup cmath
 [[nodiscard]] constexpr auto isinf(float arg) -> bool { return etl::detail::isinf(arg); }
 
+/// \ingroup cmath
 [[nodiscard]] constexpr auto isinf(double arg) -> bool { return etl::detail::isinf(arg); }
 
+/// \ingroup cmath
 [[nodiscard]] constexpr auto isinf(long double arg) -> bool { return etl::detail::isinf(arg); }
 
+/// \ingroup cmath
 template <etl::integral Int>
 [[nodiscard]] constexpr auto isinf(Int arg) -> bool
 {

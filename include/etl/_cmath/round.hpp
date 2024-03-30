@@ -42,6 +42,7 @@ template <typename T>
 /// mode.
 ///
 /// \details https://en.cppreference.com/w/cpp/numeric/math/round
+/// \ingroup cmath
 [[nodiscard]] constexpr auto round(float arg) noexcept -> float { return detail::round_impl(arg); }
 
 /// \brief Computes the nearest integer value to arg (in floating-point format),
@@ -49,6 +50,7 @@ template <typename T>
 /// mode.
 ///
 /// \details https://en.cppreference.com/w/cpp/numeric/math/round
+/// \ingroup cmath
 [[nodiscard]] constexpr auto roundf(float arg) noexcept -> float { return detail::round_impl(arg); }
 
 /// \brief Computes the nearest integer value to arg (in floating-point format),
@@ -56,6 +58,7 @@ template <typename T>
 /// mode.
 ///
 /// \details https://en.cppreference.com/w/cpp/numeric/math/round
+/// \ingroup cmath
 [[nodiscard]] constexpr auto round(double arg) noexcept -> double { return detail::round_impl(arg); }
 
 /// \brief Computes the nearest integer value to arg (in floating-point format),
@@ -63,6 +66,7 @@ template <typename T>
 /// mode.
 ///
 /// \details https://en.cppreference.com/w/cpp/numeric/math/round
+/// \ingroup cmath
 [[nodiscard]] constexpr auto round(long double arg) noexcept -> long double { return detail::round_impl(arg); }
 
 /// \brief Computes the nearest integer value to arg (in floating-point format),
@@ -70,6 +74,7 @@ template <typename T>
 /// mode.
 ///
 /// \details https://en.cppreference.com/w/cpp/numeric/math/round
+/// \ingroup cmath
 [[nodiscard]] constexpr auto roundl(long double arg) noexcept -> long double { return detail::round_impl(arg); }
 
 /// \brief Computes the nearest integer value to arg (in floating-point format),
@@ -77,6 +82,7 @@ template <typename T>
 /// mode.
 ///
 /// \details https://en.cppreference.com/w/cpp/numeric/math/round
+/// \ingroup cmath
 template <integral T>
 [[nodiscard]] constexpr auto round(T arg) noexcept -> double
 {

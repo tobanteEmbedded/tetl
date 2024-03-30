@@ -14,6 +14,7 @@ namespace etl {
 /// of that type can constructed from a (possibly const) lvalue or const rvalue
 /// of that type in both direct- and copy-initialization contexts with the usual
 /// semantics (a copy is constructed with the source unchanged).
+/// \ingroup concepts
 // clang-format off
 template <typename T>
 concept copy_constructible =

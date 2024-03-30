@@ -7,6 +7,9 @@
 
 namespace etl {
 
+/// \note Non-standard extension
+/// \headerfile etl/concepts.hpp
+/// \ingroup concepts
 template <typename T>
 concept referenceable = not etl::is_void_v<T>;
 

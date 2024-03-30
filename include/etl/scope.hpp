@@ -3,7 +3,7 @@
 #ifndef TETL_SCOPE_HPP
 #define TETL_SCOPE_HPP
 
-/// \defgroup scope scope.hpp
+/// \defgroup scope scope
 /// \ingroup utilities-library
 
 #include <etl/_config/all.hpp>

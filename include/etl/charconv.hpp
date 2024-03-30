@@ -3,7 +3,7 @@
 #ifndef TETL_CHARCONV_HPP
 #define TETL_CHARCONV_HPP
 
-/// \defgroup charconv charconv.hpp
+/// \defgroup charconv charconv
 /// etl::to_chars and etl::from_chars
 /// \ingroup strings-library
 /// \code

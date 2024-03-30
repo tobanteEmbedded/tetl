@@ -12,6 +12,7 @@
 namespace etl {
 
 // clang-format off
+/// \ingroup concepts
 template <typename T, typename U>
 concept common_with =
   same_as<common_type_t<T, U>, common_type_t<U, T>> &&

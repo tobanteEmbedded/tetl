@@ -3,7 +3,7 @@
 #ifndef TETL_NEW_HPP
 #define TETL_NEW_HPP
 
-/// \defgroup new new.hpp
+/// \defgroup new new
 ///	Low-level memory management utilities
 /// \ingroup dynamic-memory-library
 

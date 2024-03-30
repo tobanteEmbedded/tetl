@@ -3,7 +3,7 @@
 #ifndef TETL_CCTYPE_HPP
 #define TETL_CCTYPE_HPP
 
-/// \defgroup cctype cctype.hpp
+/// \defgroup cctype cctype
 /// Functions to determine the category of narrow characters
 /// \ingroup strings-library
 /// \code

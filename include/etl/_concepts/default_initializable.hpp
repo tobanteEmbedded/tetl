@@ -14,6 +14,7 @@ namespace etl {
 /// t; is well-formed). Access checking is performed as if in a context
 /// unrelated to T. Only the validity of the immediate context of the variable
 /// initialization is considered.
+/// \ingroup concepts
 // clang-format off
 template <typename T>
 concept default_initializable =

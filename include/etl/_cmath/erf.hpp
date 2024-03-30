@@ -10,26 +10,32 @@ namespace etl {
 
 /// \brief Computes the error function of arg.
 /// \details https://en.cppreference.com/w/cpp/numeric/math/erf
+/// \ingroup cmath
 [[nodiscard]] constexpr auto erf(float arg) noexcept -> float { return etl::detail::gcem::erf(arg); }
 
 /// \brief Computes the error function of arg.
 /// \details https://en.cppreference.com/w/cpp/numeric/math/erf
+/// \ingroup cmath
 [[nodiscard]] constexpr auto erff(float arg) noexcept -> float { return etl::detail::gcem::erf(arg); }
 
 /// \brief Computes the error function of arg.
 /// \details https://en.cppreference.com/w/cpp/numeric/math/erf
+/// \ingroup cmath
 [[nodiscard]] constexpr auto erf(double arg) noexcept -> double { return etl::detail::gcem::erf(arg); }
 
 /// \brief Computes the error function of arg.
 /// \details https://en.cppreference.com/w/cpp/numeric/math/erf
+/// \ingroup cmath
 [[nodiscard]] constexpr auto erf(long double arg) noexcept -> long double { return etl::detail::gcem::erf(arg); }
 
 /// \brief Computes the error function of arg.
 /// \details https://en.cppreference.com/w/cpp/numeric/math/erf
+/// \ingroup cmath
 [[nodiscard]] constexpr auto erfl(long double arg) noexcept -> long double { return etl::detail::gcem::erf(arg); }
 
 /// \brief Computes the error function of arg.
 /// \details https://en.cppreference.com/w/cpp/numeric/math/erf
+/// \ingroup cmath
 template <integral T>
 [[nodiscard]] constexpr auto erf(T arg) noexcept -> double
 {

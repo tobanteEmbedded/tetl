@@ -10,6 +10,7 @@ namespace etl {
 
 /// \brief The constructible_from concept specifies that a variable of type T
 /// can be initialized with the given set of argument types Args....
+/// \ingroup concepts
 template <typename T, typename... Args>
 concept constructible_from = destructible<T> and is_constructible_v<T, Args...>;
 

@@ -3,7 +3,7 @@
 #ifndef TETL_DEBUGGING_HPP
 #define TETL_DEBUGGING_HPP
 
-/// \defgroup debugging debugging.hpp
+/// \defgroup debugging debugging
 /// Debugging library
 /// \ingroup utilities-library
 

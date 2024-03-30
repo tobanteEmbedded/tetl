@@ -8,6 +8,7 @@
 
 namespace etl {
 
+/// \ingroup concepts
 template <typename T>
 concept semiregular = etl::copyable<T> and etl::default_initializable<T>;
 

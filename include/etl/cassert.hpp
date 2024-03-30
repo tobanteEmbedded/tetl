@@ -3,7 +3,7 @@
 #ifndef TETL_CASSERT_HPP
 #define TETL_CASSERT_HPP
 
-/// \defgroup cassert cassert.hpp
+/// \defgroup cassert cassert
 /// Conditionally compiled macro that compares its argument to zero
 /// \ingroup errors-library
 /// \example cassert.cpp

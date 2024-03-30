@@ -3,7 +3,7 @@
 #ifndef TETL_EXPECTED_HPP
 #define TETL_EXPECTED_HPP
 
-/// \defgroup expected expected.hpp
+/// \defgroup expected expected
 /// \ingroup utilities-library
 
 #include <etl/_config/all.hpp>

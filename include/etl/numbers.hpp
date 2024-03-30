@@ -3,9 +3,12 @@
 #ifndef TETL_NUMBERS_HPP
 #define TETL_NUMBERS_HPP
 
-/// \defgroup numbers numbers.hpp
+/// \defgroup numbers numbers
 /// Math constants
 /// \ingroup numerics-library
+/// \code
+/// #include <etl/numbers.hpp>
+/// \endcode
 
 #include <etl/_config/all.hpp>
 

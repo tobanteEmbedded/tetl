@@ -8,40 +8,34 @@
 
 namespace etl {
 
-/// \brief Computes the natural logarithm of the absolute value of the gamma
-/// function of arg.
-///
-/// https://en.cppreference.com/w/cpp/numeric/math/lgamma
+/// \brief Computes the natural logarithm of the absolute value of the gamma function of arg.
+/// \details https://en.cppreference.com/w/cpp/numeric/math/lgamma
+/// \ingroup cmath
 [[nodiscard]] constexpr auto lgamma(float arg) noexcept -> float { return etl::detail::gcem::lgamma(arg); }
 
-/// \brief Computes the natural logarithm of the absolute value of the gamma
-/// function of arg.
-///
-/// https://en.cppreference.com/w/cpp/numeric/math/lgamma
+/// \brief Computes the natural logarithm of the absolute value of the gamma function of arg.
+/// \details https://en.cppreference.com/w/cpp/numeric/math/lgamma
+/// \ingroup cmath
 [[nodiscard]] constexpr auto lgammaf(float arg) noexcept -> float { return etl::detail::gcem::lgamma(arg); }
 
-/// \brief Computes the natural logarithm of the absolute value of the gamma
-/// function of arg.
-///
-/// https://en.cppreference.com/w/cpp/numeric/math/lgamma
+/// \brief Computes the natural logarithm of the absolute value of the gamma function of arg.
+/// \details https://en.cppreference.com/w/cpp/numeric/math/lgamma
+/// \ingroup cmath
 [[nodiscard]] constexpr auto lgamma(double arg) noexcept -> double { return etl::detail::gcem::lgamma(arg); }
 
-/// \brief Computes the natural logarithm of the absolute value of the gamma
-/// function of arg.
-///
-/// https://en.cppreference.com/w/cpp/numeric/math/lgamma
+/// \brief Computes the natural logarithm of the absolute value of the gamma function of arg.
+/// \details https://en.cppreference.com/w/cpp/numeric/math/lgamma
+/// \ingroup cmath
 [[nodiscard]] constexpr auto lgamma(long double arg) noexcept -> long double { return etl::detail::gcem::lgamma(arg); }
 
-/// \brief Computes the natural logarithm of the absolute value of the gamma
-/// function of arg.
-///
-/// https://en.cppreference.com/w/cpp/numeric/math/lgamma
+/// \brief Computes the natural logarithm of the absolute value of the gamma function of arg.
+/// \details https://en.cppreference.com/w/cpp/numeric/math/lgamma
+/// \ingroup cmath
 [[nodiscard]] constexpr auto lgammal(long double arg) noexcept -> long double { return etl::detail::gcem::lgamma(arg); }
 
-/// \brief Computes the natural logarithm of the absolute value of the gamma
-/// function of arg.
-///
-/// https://en.cppreference.com/w/cpp/numeric/math/lgamma
+/// \brief Computes the natural logarithm of the absolute value of the gamma function of arg.
+/// \details https://en.cppreference.com/w/cpp/numeric/math/lgamma
+/// \ingroup cmath
 template <integral T>
 [[nodiscard]] constexpr auto lgamma(T arg) noexcept -> double
 {

@@ -3,7 +3,7 @@
 #ifndef TETL_COROUTINE_HPP
 #define TETL_COROUTINE_HPP
 
-/// \defgroup coroutine coroutine.hpp
+/// \defgroup coroutine coroutine
 /// Coroutine support library
 /// \ingroup coroutines-library
 

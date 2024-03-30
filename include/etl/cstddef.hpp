@@ -3,7 +3,7 @@
 #ifndef TETL_CSTDDEF_HPP
 #define TETL_CSTDDEF_HPP
 
-/// \defgroup cstddef cstddef.hpp
+/// \defgroup cstddef cstddef
 /// Standard macros and typedefs
 /// \ingroup utilities-library
 

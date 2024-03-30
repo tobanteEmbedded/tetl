@@ -3,7 +3,7 @@
 #ifndef TETL_VARIANT_HPP
 #define TETL_VARIANT_HPP
 
-/// \defgroup variant variant.hpp
+/// \defgroup variant variant
 /// \ingroup utilities-library
 
 #include <etl/_config/all.hpp>

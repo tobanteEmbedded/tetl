@@ -3,7 +3,7 @@
 #ifndef TETL_BITSET_HPP
 #define TETL_BITSET_HPP
 
-/// \defgroup bitset bitset.hpp
+/// \defgroup bitset bitset
 /// \ingroup utilities-library
 /// \example bitset.cpp
 /// \code

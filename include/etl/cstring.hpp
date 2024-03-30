@@ -3,7 +3,7 @@
 #ifndef TETL_CSTRING_HPP
 #define TETL_CSTRING_HPP
 
-/// \defgroup cstring cstring.hpp
+/// \defgroup cstring cstring
 /// Various narrow character string handling functions
 /// \ingroup strings-library
 

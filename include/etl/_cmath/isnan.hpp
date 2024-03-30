@@ -10,10 +10,9 @@
 
 namespace etl {
 
-/// \brief Determines if the given floating point number arg is a not-a-number
-/// (NaN) value.
-///
+/// \brief Determines if the given floating point number arg is a not-a-number (NaN) value.
 /// \details https://en.cppreference.com/w/cpp/numeric/math/isnan
+/// \ingroup cmath
 [[nodiscard]] constexpr auto isnan(float arg) -> bool
 {
 #if __has_builtin(__builtin_isnanf) or defined(TETL_COMPILER_GCC)
@@ -23,6 +22,7 @@ namespace etl {
 #endif
 }
 
+/// \ingroup cmath
 [[nodiscard]] constexpr auto isnan(double arg) -> bool
 {
 #if __has_builtin(__builtin_isnan) or defined(TETL_COMPILER_GCC)
@@ -32,6 +32,7 @@ namespace etl {
 #endif
 }
 
+/// \ingroup cmath
 [[nodiscard]] constexpr auto isnan(long double arg) -> bool
 {
 #if __has_builtin(__builtin_isnanl) or defined(TETL_COMPILER_GCC)
@@ -41,9 +42,9 @@ namespace etl {
 #endif
 }
 
-/// \brief Determines if the given floating point number arg is a not-a-number
-/// (NaN) value.
+/// \brief Determines if the given floating point number arg is a not-a-number (NaN) value.
 /// \details https://en.cppreference.com/w/cpp/numeric/math/isnan
+/// \ingroup cmath
 template <integral Int>
 [[nodiscard]] constexpr auto isnan(Int arg) -> bool
 {

@@ -8,6 +8,7 @@
 namespace etl {
 
 /// \todo Convert to ranges::swap once available
+/// \ingroup concepts
 template <typename T>
 concept swappable = requires(T& a, T& b) {
     swap(a, b);

@@ -13,14 +13,13 @@ template <typename T>
 concept boolean_testable_impl = convertible_to<T, bool>;
 } // namespace detail
 
-// clang-format off
-template<typename T>
-concept boolean_testable =
-    detail::boolean_testable_impl<T> &&
-    requires(T&& t) {
-        { not TETL_FORWARD(t) } -> detail::boolean_testable_impl;
-    };
-// clang-format on
+/// \note Non-standard extension
+/// \headerfile etl/concepts.hpp
+/// \ingroup concepts
+template <typename T>
+concept boolean_testable = etl::detail::boolean_testable_impl<T> and requires(T&& t) {
+    { not TETL_FORWARD(t) } -> etl::detail::boolean_testable_impl;
+};
 
 } // namespace etl
 

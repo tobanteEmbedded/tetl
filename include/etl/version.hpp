@@ -3,7 +3,7 @@
 #ifndef TETL_VERSION_HPP
 #define TETL_VERSION_HPP
 
-/// \defgroup version version.hpp
+/// \defgroup version version
 /// Supplies implementation-dependent library information
 /// \ingroup utilities-library
 

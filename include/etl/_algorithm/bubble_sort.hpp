@@ -15,6 +15,8 @@ namespace etl {
 /// order. The order of equal elements is guaranteed to be preserved.
 ///
 /// https://en.wikipedia.org/wiki/Bubble_sort
+///
+/// \note Non-standard extension
 template <typename RandomIt, typename Compare>
 constexpr auto bubble_sort(RandomIt first, RandomIt last, Compare comp) -> void
 {
@@ -27,6 +29,12 @@ constexpr auto bubble_sort(RandomIt first, RandomIt last, Compare comp) -> void
     }
 }
 
+/// \brief Sorts the elements in the range `[first, last)` in non-descending
+/// order. The order of equal elements is guaranteed to be preserved.
+///
+/// https://en.wikipedia.org/wiki/Bubble_sort
+///
+/// \note Non-standard extension
 template <typename RandomIt>
 constexpr auto bubble_sort(RandomIt first, RandomIt last) -> void
 {

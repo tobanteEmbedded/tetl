@@ -10,9 +10,10 @@
 
 namespace etl {
 
-/// \brief Sorts the elements in the range `[first, last)` in non-descending
-/// order.
-/// https://en.wikipedia.org/wiki/Sorting_algorithm#Exchange_sort
+/// \brief Sorts the elements in the range `[first, last)` in non-descending order.
+/// \details https://en.wikipedia.org/wiki/Sorting_algorithm#Exchange_sort
+/// \note Non-standard extension
+/// \ingroup algorithm
 template <typename RandomIt, typename Compare>
 constexpr auto exchange_sort(RandomIt first, RandomIt last, Compare comp) -> void
 {
@@ -25,6 +26,10 @@ constexpr auto exchange_sort(RandomIt first, RandomIt last, Compare comp) -> voi
     }
 }
 
+/// \brief Sorts the elements in the range `[first, last)` in non-descending order.
+/// \details https://en.wikipedia.org/wiki/Sorting_algorithm#Exchange_sort
+/// \note Non-standard extension
+/// \ingroup algorithm
 template <typename RandomIt>
 constexpr auto exchange_sort(RandomIt first, RandomIt last) -> void
 {

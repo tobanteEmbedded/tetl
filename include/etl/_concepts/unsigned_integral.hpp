@@ -10,8 +10,9 @@ namespace etl {
 
 /// \brief The concept unsigned_integral<T> is satisfied if and only if T is an
 /// integral type and is_unsigned_v<T> is true.
+/// \ingroup concepts
 template <typename T>
-concept unsigned_integral = etl::integral<T> && etl::is_unsigned_v<T>;
+concept unsigned_integral = etl::integral<T> and etl::is_unsigned_v<T>;
 
 } // namespace etl
 

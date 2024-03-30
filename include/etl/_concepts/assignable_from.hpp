@@ -12,6 +12,9 @@
 namespace etl {
 
 // clang-format off
+
+/// \headerfile etl/concepts.hpp
+/// \ingroup concepts
 template<typename LHS, typename RHS>
 concept assignable_from =
         etl::is_lvalue_reference_v<LHS>
@@ -19,6 +22,7 @@ concept assignable_from =
     and requires(LHS lhs, RHS&& rhs) {
         { lhs = TETL_FORWARD(rhs) } -> etl::same_as<LHS>;
     };
+
 // clang-format on
 
 } // namespace etl
