@@ -35,32 +35,28 @@ public:
     {
     }
 
-    // TODO: Add noexcept(is_nothrow_invocable_v<Func&, BoundArgs&...,
-    // CallArgs...>)
+    // TODO: Add noexcept(is_nothrow_invocable_v<Func&, BoundArgs&..., CallArgs...>)
     template <typename... CallArgs>
     auto operator()(CallArgs&&... callArgs) & -> invoke_result_t<Func&, BoundArgs&..., CallArgs...>
     {
         return bind_front_caller(_func, _boundArgs, TETL_FORWARD(callArgs)...);
     }
 
-    // TODO: Add noexcept(is_nothrow_invocable_v<Func const&, BoundArgs
-    // const&...,CallArgs...>)
+    // TODO: Add noexcept(is_nothrow_invocable_v<Func const&, BoundArgs const&...,CallArgs...>)
     template <typename... CallArgs>
     auto operator()(CallArgs&&... callArgs) const& -> invoke_result_t<Func const&, BoundArgs const&..., CallArgs...>
     {
         return bind_front_caller(_func, _boundArgs, TETL_FORWARD(callArgs)...);
     }
 
-    // TODO: Add  noexcept(is_nothrow_invocable_v<Func, BoundArgs...,
-    // CallArgs...>)
+    // TODO: Add  noexcept(is_nothrow_invocable_v<Func, BoundArgs..., CallArgs...>)
     template <typename... CallArgs>
     auto operator()(CallArgs&&... callArgs) && -> invoke_result_t<Func, BoundArgs..., CallArgs...>
     {
         return bind_front_caller(TETL_MOVE(_func), TETL_MOVE(_boundArgs), TETL_FORWARD(callArgs)...);
     }
 
-    // TODO: noexcept(is_nothrow_invocable_v<Func const, BoundArgs
-    // const...,CallArgs...>)
+    // TODO: noexcept(is_nothrow_invocable_v<Func const, BoundArgs const...,CallArgs...>)
     template <typename... CallArgs>
     auto operator()(CallArgs&&... callArgs) const&& -> invoke_result_t<Func const, BoundArgs const..., CallArgs...>
     {

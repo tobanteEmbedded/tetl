@@ -21,9 +21,9 @@
 
 namespace etl {
 
+/// \todo variant index doesn't work if same type is used twice
 template <typename T, typename E>
 struct expected {
-    // TODO: variant index doesn't work if same type is used twice
     static_assert(not etl::same_as<T, E>);
 
     using value_type      = T;

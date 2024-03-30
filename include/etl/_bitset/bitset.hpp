@@ -321,12 +321,11 @@ struct bitset {
     /// of true. The resulting string contains N characters with the first
     /// character corresponds to the last (N-1th) bit and the last character
     /// corresponding to the first bit.
+    /// \todo Currently truncates the low bits, if the string is large enough.
     template <size_t Capacity, typename CharT = char, typename Traits = char_traits<CharT>>
     [[nodiscard]] constexpr auto
     to_string(CharT zero = CharT('0'), CharT one = CharT('1')) const -> basic_static_string<CharT, Capacity, Traits>
     {
-        // TODO: [tobi] This currently truncates the low bits, if the string is
-        // large enough.
         auto str = basic_static_string<CharT, Capacity, Traits>{};
         for (auto i{size() - 1U}; i != 0; --i) {
             str.push_back(test(i) ? one : zero);
