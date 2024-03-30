@@ -257,7 +257,6 @@ constexpr auto test_bitset() -> bool
     }
 
     {
-        // TODO [tobi] Test other sizes
         auto const bits = etl::bitset<8>{0b0010'1010};
         CHECK(bits.template to_string<16>() == "00101010"_sv);
         CHECK(bits.template to_string<16>('*') == "**1*1*1*"_sv);

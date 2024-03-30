@@ -326,42 +326,41 @@ template <typename T>
         etl::for_each(str.cbegin(), str.cend(), [](auto const& c) { CHECK(c == char('a')); });
     }
 
-    // TODO: Fix constexpr, fails on gcc-9, but passes gcc-11
-    // {
-    //     string empty {};
-    //     CHECK(empty.rbegin() == empty.rend());
+    {
+        string empty{};
+        CHECK(empty.rbegin() == empty.rend());
 
-    // string str1 { "test" };
-    // CHECK(str1.rbegin() != str1.rend());
-    // auto begin1 = str1.rbegin();
-    // CHECK(*begin1 == 't');
-    // begin1++;
-    // CHECK(*begin1 == 's');
-    // begin1++;
-    // CHECK(*begin1 == 'e');
-    // begin1++;
-    // CHECK(*begin1 == 't');
-    // begin1++;
-    // CHECK(begin1 == str1.rend());
-    // }
+        string str1{"test"};
+        CHECK(str1.rbegin() != str1.rend());
+        auto begin1 = str1.rbegin();
+        CHECK(*begin1 == 't');
+        begin1++;
+        CHECK(*begin1 == 's');
+        begin1++;
+        CHECK(*begin1 == 'e');
+        begin1++;
+        CHECK(*begin1 == 't');
+        begin1++;
+        CHECK(begin1 == str1.rend());
+    }
 
-    // {
-    //     string empty {};
-    //     CHECK(empty.crbegin() == empty.crend());
+    {
+        string empty{};
+        CHECK(empty.crbegin() == empty.crend());
 
-    // string str1 { "test" };
-    // CHECK(str1.crbegin() != str1.crend());
-    // auto begin1 = str1.crbegin();
-    // CHECK(*begin1 == 't');
-    // begin1++;
-    // CHECK(*begin1 == 's');
-    // begin1++;
-    // CHECK(*begin1 == 'e');
-    // begin1++;
-    // CHECK(*begin1 == 't');
-    // begin1++;
-    // CHECK(begin1 == str1.crend());
-    // }
+        string str1{"test"};
+        CHECK(str1.crbegin() != str1.crend());
+        auto begin1 = str1.crbegin();
+        CHECK(*begin1 == 't');
+        begin1++;
+        CHECK(*begin1 == 's');
+        begin1++;
+        CHECK(*begin1 == 'e');
+        begin1++;
+        CHECK(*begin1 == 't');
+        begin1++;
+        CHECK(begin1 == str1.crend());
+    }
 
     {
         auto str = string();
@@ -1280,13 +1279,10 @@ template <typename T>
 
     CHECK(test_1<etl::static_string<24>>());
     CHECK(test_1<etl::static_string<55>>());
-    CHECK(test_1<etl::static_string<64>>());
-    CHECK(test_1<etl::static_string<256>>());
 
     CHECK(test_2<etl::static_string<24>>());
-    // CHECK(test_2<etl::static_string<55>>());
-    // CHECK(test_2<etl::static_string<64>>());
-    // CHECK(test_2<etl::static_string<256>>());
+    CHECK(test_2<etl::static_string<55>>());
+
     return true;
 }
 

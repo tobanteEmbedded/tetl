@@ -8,7 +8,7 @@
 #include "testing/testing.hpp"
 
 template <typename T>
-auto test() -> bool
+constexpr auto test() -> bool
 {
     // back_inserter
     { // "insert rvalue"
@@ -56,7 +56,7 @@ auto test() -> bool
     return true;
 }
 
-static auto test_all() -> bool
+constexpr auto test_all() -> bool
 {
     CHECK(test<etl::int8_t>());
     CHECK(test<etl::int16_t>());
@@ -73,9 +73,6 @@ static auto test_all() -> bool
 
 auto main() -> int
 {
-    CHECK(test_all());
-
-    // TODO: [tobi] Enable constexpr tests
-    // static_assert(test_all());
+    STATIC_CHECK(test_all());
     return 0;
 }
