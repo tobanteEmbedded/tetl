@@ -10,6 +10,7 @@
 
 namespace etl::ranges {
 
+/// \ingroup ranges
 template <typename R>
 concept borrowed_range = etl::ranges::range<R>
                      and (etl::is_lvalue_reference_v<R> or etl::ranges::enable_borrowed_range<etl::remove_cvref_t<R>>);

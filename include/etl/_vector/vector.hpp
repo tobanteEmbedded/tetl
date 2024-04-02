@@ -15,6 +15,8 @@
 
 namespace etl {
 
+/// \headerfile etl/vector.hpp
+/// \ingroup vector
 template <typename T, typename Allocator>
 struct vector {
     using value_type      = T;

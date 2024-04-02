@@ -25,6 +25,7 @@ struct iter_difference<T> {
 
 } // namespace detail
 
+/// \ingroup iterator
 template <typename T>
 using iter_difference_t = typename detail::iter_difference<T>::type;
 

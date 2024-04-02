@@ -8,6 +8,7 @@
 
 namespace etl::ranges {
 
+/// \ingroup ranges
 template <typename T>
 concept sized_range = etl::ranges::range<T> and requires(T& t) { etl::ranges::size(t); };
 

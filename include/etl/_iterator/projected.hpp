@@ -35,6 +35,7 @@ struct projected_impl<Iter, Proj> {
 
 } // namespace detail
 
+/// \ingroup iterator
 template <etl::indirectly_readable Iter, etl::indirectly_regular_unary_invocable<Iter> Proj>
 using projected = etl::detail::projected_impl<Iter, Proj>::type;
 

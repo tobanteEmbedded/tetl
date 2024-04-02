@@ -11,6 +11,7 @@
 namespace etl {
 
 // clang-format off
+/// \ingroup iterator
 template <typename Iter>
 concept weakly_incrementable = etl::movable<Iter> and requires(Iter i) {
     typename etl::iter_difference_t<Iter>;

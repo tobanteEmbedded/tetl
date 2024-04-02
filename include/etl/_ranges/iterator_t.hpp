@@ -8,6 +8,7 @@
 
 namespace etl::ranges {
 
+/// \ingroup ranges
 template <typename T>
 using iterator_t = decltype(etl::ranges::begin(etl::declval<T&>()));
 

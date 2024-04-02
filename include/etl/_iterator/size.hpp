@@ -13,12 +13,14 @@ namespace etl {
 
 /// \brief Returns the size of the given container c or array array. Returns
 /// c.size(), converted to the return type if necessary.
+/// \ingroup iterator
 template <typename C>
 constexpr auto size(C const& c) noexcept(noexcept(c.size())) -> decltype(c.size())
 {
     return c.size();
 }
 
+/// \ingroup iterator
 template <typename T, size_t N>
 constexpr auto size(T const (&array)[N]) noexcept -> size_t
 {
@@ -26,6 +28,7 @@ constexpr auto size(T const (&array)[N]) noexcept -> size_t
     return N;
 }
 
+/// \ingroup iterator
 template <typename C>
 constexpr auto ssize(C const& c) -> common_type_t<ptrdiff_t, make_signed_t<decltype(c.size())>>
 {
@@ -33,6 +36,7 @@ constexpr auto ssize(C const& c) -> common_type_t<ptrdiff_t, make_signed_t<declt
     return static_cast<R>(c.size());
 }
 
+/// \ingroup iterator
 template <typename T, ptrdiff_t N>
 constexpr auto ssize(T const (&array)[static_cast<size_t>(N)]) noexcept -> ptrdiff_t
 {

@@ -8,13 +8,17 @@
 
 namespace etl {
 
-/// \brief Returns whether the given container is empty.
+/// Returns whether the given container is empty.
+/// \ingroup iterator
+
 template <typename C>
 constexpr auto empty(C const& c) noexcept(noexcept(c.empty())) -> decltype(c.empty())
 {
     return c.empty();
 }
 
+/// Returns whether the given container is empty.
+/// \ingroup iterator
 template <typename T, size_t N>
 constexpr auto empty(T (&array)[N]) noexcept -> bool
 {

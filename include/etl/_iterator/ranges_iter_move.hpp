@@ -58,6 +58,7 @@ struct fn {
 } // namespace iter_move_cpo
 
 inline namespace cpo {
+/// \ingroup iterator
 inline constexpr auto iter_move = iter_move_cpo::fn{};
 } // namespace cpo
 

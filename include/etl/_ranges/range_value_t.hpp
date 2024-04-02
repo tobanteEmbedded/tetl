@@ -9,6 +9,7 @@
 
 namespace etl::ranges {
 
+/// \ingroup ranges
 template <etl::ranges::range R>
 using range_value_t = etl::iter_value_t<etl::ranges::iterator_t<R>>;
 

@@ -9,11 +9,15 @@
 
 namespace etl {
 
-/// \brief Increments given iterator it by n elements. If n is negative, the
-/// iterator is decremented. In this case, InputIt must meet the requirements of
-/// LegacyBidirectionalIterator, otherwise the behavior is undefined.
+/// Increments given iterator it by n elements.
+///
+/// If n is negative, the iterator is decremented. In this case,
+/// InputIt must meet the requirements of LegacyBidirectionalIterator,
+/// otherwise the behavior is undefined.
 ///
 /// https://en.cppreference.com/w/cpp/iterator/advance
+///
+/// \ingroup iterator
 template <typename It, typename Distance>
 constexpr auto advance(It& it, Distance n) -> void
 {

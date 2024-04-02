@@ -13,6 +13,7 @@ namespace etl {
 /// container for which it was constructed. The container's push_back() member
 /// function is called whenever the iterator (whether dereferenced or not) is
 /// assigned to. Incrementing the etl::back_insert_iterator is a no-op.
+/// \ingroup iterator
 template <typename Container>
 struct back_insert_iterator {
     using iterator_category = output_iterator_tag;

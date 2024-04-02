@@ -9,6 +9,7 @@
 
 namespace etl::ranges {
 
+/// \ingroup ranges
 template <etl::ranges::sized_range R>
 using range_size_t = decltype(etl::ranges::size(etl::declval<R&>()));
 

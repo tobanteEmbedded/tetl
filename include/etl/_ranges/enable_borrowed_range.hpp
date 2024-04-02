@@ -5,6 +5,7 @@
 
 namespace etl::ranges {
 
+/// \ingroup ranges
 template <typename T>
 inline constexpr bool enable_borrowed_range = false;
 

@@ -9,6 +9,7 @@
 
 namespace etl {
 
+/// \ingroup iterator
 template <typename S, typename Iter>
 concept sentinel_for = semiregular<S> and input_or_output_iterator<Iter> and weakly_equality_comparable_with<S, Iter>;
 

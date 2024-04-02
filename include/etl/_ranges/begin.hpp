@@ -59,6 +59,7 @@ struct fn {
 } // namespace begin_cpo
 
 inline namespace cpo {
+/// \ingroup ranges
 inline constexpr auto begin = begin_cpo::fn{};
 } // namespace cpo
 

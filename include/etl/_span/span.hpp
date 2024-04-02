@@ -48,6 +48,8 @@ template <etl::size_t Offset, etl::size_t Count, etl::size_t Extent>
 /// only one member: a pointer to T.
 ///
 /// \ingroup span
+/// \headerfile etl/span.hpp
+/// \todo Remove size member when `Extent != dynamic_extent`
 template <typename ElementType, size_t Extent = etl::dynamic_extent>
 struct span {
     using element_type     = ElementType;
@@ -238,8 +240,8 @@ struct span {
     }
 
 private:
-    pointer _data   = nullptr;
-    size_type _size = 0;
+    ElementType* _data{nullptr};
+    etl::size_t _size{0};
 };
 
 // Deduction Guides. From raw array.

@@ -16,14 +16,17 @@
 #include <etl/_utility/move.hpp>
 
 namespace etl {
-/// \brief The stack class is a container adapter that gives the programmer
+
+/// The stack class is a container adapter that gives the programmer
 /// the functionality of a stack - specifically, a LIFO (last-in, first-out)
 /// data structure.
 ///
-/// \details The class template acts as a wrapper to the underlying container -
+/// The class template acts as a wrapper to the underlying container -
 /// only a specific set of functions is provided. The stack pushes and pops the
 /// element from the back of the underlying container, known as the top of the
 /// stack.
+///
+/// \ingroup stack
 template <typename T, typename Container>
 struct stack {
     using value_type      = typename Container::value_type;

@@ -5,6 +5,7 @@
 
 namespace etl::ranges {
 
+/// \ingroup ranges
 struct dangling {
     constexpr dangling() noexcept = default;
 

@@ -61,6 +61,7 @@ struct fn {
 } // namespace size_cpo
 
 inline namespace cpo {
+/// \ingroup ranges
 inline constexpr auto size = size_cpo::fn{};
 } // namespace cpo
 

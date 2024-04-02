@@ -15,24 +15,28 @@ namespace etl {
 /// `C::const_iterator` otherwise. Custom overloads of begin may be provided for
 /// classes that do not expose a suitable begin() member function, yet can be
 /// iterated.
+/// \ingroup iterator
 template <typename C>
 constexpr auto begin(C& c) -> decltype(c.begin())
 {
     return c.begin();
 }
 
+/// \ingroup iterator
 template <typename C>
 constexpr auto begin(C const& c) -> decltype(c.begin())
 {
     return c.begin();
 }
 
+/// \ingroup iterator
 template <typename T, etl::size_t N>
 constexpr auto begin(T (&array)[N]) noexcept -> T*
 {
     return &array[0];
 }
 
+/// \ingroup iterator
 template <typename C>
 constexpr auto cbegin(C const& c) noexcept(noexcept(begin(c))) -> decltype(begin(c))
 {

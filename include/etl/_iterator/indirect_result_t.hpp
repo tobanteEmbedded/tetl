@@ -10,6 +10,7 @@
 
 namespace etl {
 
+/// \ingroup iterator
 template <typename F, typename... Iters>
     requires(etl::indirectly_readable<Iters> and ...) and etl::invocable<F, etl::iter_reference_t<Iters>...>
 using indirect_result_t = etl::invoke_result_t<F, etl::iter_reference_t<Iters>...>;

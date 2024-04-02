@@ -17,9 +17,14 @@
 #include <etl/_vector/static_vector.hpp>
 
 namespace etl {
-/// \brief static_set is an associative container that contains a sorted set
+
+/// static_set is an associative container that contains a sorted set
 /// of unique objects of type Key. Sorting is done using the key comparison
 /// function Compare.
+///
+/// \headerfile etl/set.hpp
+/// \ingroup set
+/// \deprecated Replaced by flat_set
 template <typename Key, size_t Capacity, typename Compare = less<Key>>
 struct static_set {
 private:

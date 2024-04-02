@@ -15,6 +15,7 @@ namespace etl {
 /// front_insert_iterator is a no-op.
 ///
 /// \todo Add tests when a container with push_front has been implemented.
+/// \ingroup iterator
 template <typename Container>
 struct front_insert_iterator {
 protected:

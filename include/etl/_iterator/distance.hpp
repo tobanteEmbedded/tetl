@@ -10,8 +10,8 @@
 namespace etl {
 
 /// \brief Returns the number of hops from first to last.
-///
-/// https://en.cppreference.com/w/cpp/iterator/distance
+/// \details https://en.cppreference.com/w/cpp/iterator/distance
+/// \ingroup iterator
 template <typename It>
 constexpr auto distance(It first, It last) -> typename iterator_traits<It>::difference_type
 {

@@ -16,6 +16,8 @@ namespace etl {
 /// `rend()` of the standard library containers.
 ///
 /// https://en.cppreference.com/w/cpp/iterator/reverse_iterator
+///
+/// \ingroup iterator
 template <typename Iter>
 struct reverse_iterator {
     /// The underlying iterator type

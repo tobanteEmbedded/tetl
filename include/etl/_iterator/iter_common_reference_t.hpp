@@ -10,6 +10,7 @@
 
 namespace etl {
 
+/// \ingroup iterator
 template <etl::indirectly_readable T>
 using iter_common_reference_t = etl::common_reference_t<etl::iter_reference_t<T>, etl::iter_value_t<T>&>;
 

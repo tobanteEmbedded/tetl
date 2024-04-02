@@ -54,6 +54,7 @@ struct fn {
 } // namespace end_cpo
 
 inline namespace cpo {
+/// \ingroup ranges
 inline constexpr auto end = end_cpo::fn{};
 } // namespace cpo
 

@@ -11,6 +11,7 @@
 
 namespace etl::ranges {
 
+/// \ingroup ranges
 template <etl::ranges::range R>
 using borrowed_iterator_t
     = etl::conditional_t<etl::ranges::borrowed_range<R>, etl::ranges::iterator_t<R>, etl::ranges::dangling>;

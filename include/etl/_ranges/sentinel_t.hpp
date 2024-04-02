@@ -9,6 +9,7 @@
 
 namespace etl::ranges {
 
+/// \ingroup ranges
 template <etl::ranges::range R>
 using sentinel_t = decltype(etl::ranges::end(etl::declval<R&>()));
 

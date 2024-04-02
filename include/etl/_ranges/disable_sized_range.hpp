@@ -5,6 +5,7 @@
 
 namespace etl::ranges {
 
+/// \ingroup ranges
 template <typename>
 inline constexpr auto disable_sized_range = false;
 
