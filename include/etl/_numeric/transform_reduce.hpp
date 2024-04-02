@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: BSL-1.0
-#ifndef TETL_NUMERIC_TRANSORM_REDUCE_HPP
-#define TETL_NUMERIC_TRANSORM_REDUCE_HPP
+#ifndef TETL_NUMERIC_TRANSFORM_REDUCE_HPP
+#define TETL_NUMERIC_TRANSFORM_REDUCE_HPP
 
 #include <etl/_functional/multiplies.hpp>
 #include <etl/_functional/plus.hpp>
@@ -47,4 +47,4 @@ transform_reduce(InputIt first, InputIt last, T init, BinaryReductionOp reduce, 
 
 } // namespace etl
 
-#endif // TETL_NUMERIC_TRANSORM_REDUCE_HPP
+#endif // TETL_NUMERIC_TRANSFORM_REDUCE_HPP
