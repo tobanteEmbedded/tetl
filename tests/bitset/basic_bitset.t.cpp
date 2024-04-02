@@ -2,19 +2,14 @@
 
 #include <etl/bitset.hpp>
 
+#include <etl/utility.hpp>
+
 #include "testing/testing.hpp"
 
 template <etl::size_t Bits, typename Word>
 constexpr auto test() -> bool
 {
     using bitset = etl::basic_bitset<Bits, Word>;
-
-    CHECK(bitset() == bitset());
-    CHECK(bitset(0b111) == bitset(0b111));
-
-    CHECK_FALSE(bitset(0b111) == bitset());
-    CHECK(bitset(0b111) != bitset());
-    CHECK(bitset(0b111) != bitset(0b110));
 
     {
         auto set = bitset{};
@@ -24,6 +19,7 @@ constexpr auto test() -> bool
         CHECK_FALSE(set.any());
 
         set.unchecked_flip(0);
+        CHECK(etl::as_const(set)[0]);
         CHECK(set[0]);
         CHECK(set.count() == 1);
         CHECK(set.any());
@@ -31,9 +27,7 @@ constexpr auto test() -> bool
 
         set.unchecked_set(0, false);
         CHECK(set.count() == 0);
-        CHECK(set.none());
         CHECK_FALSE(set[0]);
-        CHECK_FALSE(set.any());
     }
 
     {
@@ -45,15 +39,37 @@ constexpr auto test() -> bool
     }
 
     if constexpr (Bits >= 4) {
-        auto const set = bitset(0b1111).unchecked_reset(0).unchecked_flip(1);
+        auto set = bitset(0b1111).unchecked_reset(0).unchecked_flip(1);
         CHECK(set.count() == 2);
-        CHECK(set.any());
-        CHECK_FALSE(set.all());
-        CHECK_FALSE(set.none());
+
+        auto ref = set[0];
+        ref      = true;
+        CHECK(ref);
+        CHECK_FALSE(~ref);
+
+        ref = false;
+        CHECK(~ref);
+        CHECK_FALSE(etl::as_const(set)[0]);
+        CHECK_FALSE(ref);
+
+        ref.flip();
+        CHECK(ref);
+        CHECK(etl::as_const(set)[0]);
+
+        ref = set[2];
+        CHECK(ref);
+        CHECK(etl::as_const(set)[2]);
 
         CHECK((bitset(0b111) & bitset(0b101)) == bitset(0b101));
         CHECK((bitset(0b111) | bitset(0b101)) == bitset(0b111));
         CHECK((bitset(0b111) ^ bitset(0b101)) == bitset(0b010));
+
+        CHECK(bitset() == bitset());
+        CHECK(bitset(0b111) == bitset(0b111));
+
+        CHECK_FALSE(bitset(0b111) == bitset());
+        CHECK(bitset(0b111) != bitset());
+        CHECK(bitset(0b111) != bitset(0b110));
     }
 
     return true;

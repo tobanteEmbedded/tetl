@@ -18,6 +18,7 @@
 #include <etl/_cstddef/size_t.hpp>
 #include <etl/_functional/plus.hpp>
 #include <etl/_limits/numeric_limits.hpp>
+#include <etl/_memory/addressof.hpp>
 #include <etl/_numeric/transform_reduce.hpp>
 
 namespace etl {
@@ -25,6 +26,44 @@ namespace etl {
 /// \ingroup bitset
 template <etl::size_t Bits, etl::unsigned_integral WordType = etl::size_t>
 struct basic_bitset {
+
+    struct reference {
+
+        constexpr auto operator=(bool x) noexcept -> reference&
+        {
+            *_word = etl::set_bit(*_word, _offset, x);
+            return *this;
+        }
+
+        constexpr auto operator=(reference const& x) noexcept -> reference&
+        {
+            *_word = etl::set_bit(*_word, _offset, static_cast<bool>(x));
+            return *this;
+        }
+
+        [[nodiscard]] constexpr operator bool() const noexcept { return etl::test_bit(*_word, _offset); }
+
+        [[nodiscard]] constexpr auto operator~() const noexcept -> bool { return not static_cast<bool>(*this); }
+
+        constexpr auto flip() noexcept -> reference&
+        {
+            *_word = etl::flip_bit(*_word, _offset);
+            return *this;
+        }
+
+    private:
+        constexpr explicit reference(WordType& word, WordType offset) noexcept
+            : _word{etl::addressof(word)}
+            , _offset{offset}
+        {
+        }
+
+        WordType* _word;
+        WordType _offset;
+
+        friend basic_bitset;
+    };
+
     /// Default constructor. Constructs a bitset with all bits set to zero.
     constexpr basic_bitset() = default;
 
@@ -46,6 +85,11 @@ struct basic_bitset {
     [[nodiscard]] constexpr auto operator[](etl::size_t pos) const -> bool
     {
         return etl::test_bit(_words[word_index(pos)], offset_in_word(pos));
+    }
+
+    [[nodiscard]] constexpr auto operator[](etl::size_t pos) -> reference
+    {
+        return reference{_words[word_index(pos)], offset_in_word(pos)};
     }
 
     [[nodiscard]] constexpr auto all() const noexcept -> bool
