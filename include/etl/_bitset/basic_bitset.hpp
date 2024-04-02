@@ -34,11 +34,10 @@ struct basic_bitset {
     /// \todo Replace with `unsigned long long` when AVR numeric_limits are fixed
     constexpr basic_bitset(unsigned long val)
     {
-        auto const n = etl::min(static_cast<size_t>(etl::numeric_limits<unsigned long>::digits), size());
-        for (auto i = etl::size_t(0); i < n; ++i) {
-            if (etl::test_bit(val, static_cast<unsigned long>(i))) {
-                set(i);
-            }
+        auto const digits = static_cast<size_t>(etl::numeric_limits<unsigned long>::digits);
+        auto const m      = etl::min(digits, size());
+        for (auto i = etl::size_t(0); i < m; ++i) {
+            unchecked_set(i, etl::test_bit(val, static_cast<unsigned long>(i)));
         }
     }
 
@@ -79,14 +78,14 @@ struct basic_bitset {
         } else {
             // TODO: Improve
             for (auto i = etl::size_t(0); i < size(); ++i) {
-                set(i, true);
+                unchecked_set(i, true);
             }
         }
 
         return *this;
     }
 
-    constexpr auto set(etl::size_t pos, bool value = true) -> basic_bitset&
+    constexpr auto unchecked_set(etl::size_t pos, bool value = true) -> basic_bitset&
     {
         return transform_bit(pos, [value](auto word, auto bit) { return etl::set_bit(word, bit, value); });
     }
@@ -97,7 +96,7 @@ struct basic_bitset {
         return *this;
     }
 
-    constexpr auto reset(etl::size_t pos) -> basic_bitset&
+    constexpr auto unchecked_reset(etl::size_t pos) -> basic_bitset&
     {
         return transform_bit(pos, [](auto word, auto bit) { return etl::reset_bit(word, bit); });
     }
@@ -118,7 +117,7 @@ struct basic_bitset {
         return *this;
     }
 
-    constexpr auto flip(etl::size_t pos) -> basic_bitset&
+    constexpr auto unchecked_flip(etl::size_t pos) -> basic_bitset&
     {
         return transform_bit(pos, [](auto word, auto bit) { return etl::flip_bit(word, bit); });
     }

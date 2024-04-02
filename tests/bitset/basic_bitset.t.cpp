@@ -23,13 +23,13 @@ constexpr auto test() -> bool
         CHECK_FALSE(set.all());
         CHECK_FALSE(set.any());
 
-        set.flip(0);
+        set.unchecked_flip(0);
         CHECK(set[0]);
         CHECK(set.count() == 1);
         CHECK(set.any());
         CHECK_FALSE(set.none());
 
-        set.set(0, false);
+        set.unchecked_set(0, false);
         CHECK(set.count() == 0);
         CHECK(set.none());
         CHECK_FALSE(set[0]);
@@ -45,7 +45,7 @@ constexpr auto test() -> bool
     }
 
     if constexpr (Bits >= 4) {
-        auto const set = bitset(0b1111).reset(0).flip(1);
+        auto const set = bitset(0b1111).unchecked_reset(0).unchecked_flip(1);
         CHECK(set.count() == 2);
         CHECK(set.any());
         CHECK_FALSE(set.all());
