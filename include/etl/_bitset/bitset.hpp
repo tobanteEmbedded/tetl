@@ -18,6 +18,7 @@ namespace etl {
 /// Bitsets can be manipulated by standard logic operators.
 /// \bug Add tests for sizes that are not a power of two. Broken at the moment.
 /// \todo What if position index is out of bounds? Return nullptr?
+/// \ingroup bitset
 template <etl::size_t N>
 struct bitset {
     /// \brief The primary use of etl::bitset::reference is to provide an
