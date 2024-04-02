@@ -178,21 +178,18 @@ auto main() -> int
     STATIC_CHECK(test_signed<signed short>());
     STATIC_CHECK(test_signed<signed int>());
     STATIC_CHECK(test_signed<signed long>());
+    STATIC_CHECK(test_signed<signed long long>());
 
     STATIC_CHECK(test_unsigned<unsigned char>());
     STATIC_CHECK(test_unsigned<unsigned short>());
     STATIC_CHECK(test_unsigned<unsigned int>());
     STATIC_CHECK(test_unsigned<unsigned long>());
-
-    STATIC_CHECK(test_float_round_style());
+    STATIC_CHECK(test_unsigned<unsigned long long>());
 
     STATIC_CHECK(test_float());
-
-#if not defined(TETL_WORKAROUND_AVR_BROKEN_TESTS)
-    STATIC_CHECK(test_signed<signed long long>());
-    STATIC_CHECK(test_unsigned<unsigned long long>());
     STATIC_CHECK(test_double());
-#endif
+
+    STATIC_CHECK(test_float_round_style());
 
     return 0;
 }

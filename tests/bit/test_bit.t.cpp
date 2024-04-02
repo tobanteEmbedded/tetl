@@ -81,11 +81,8 @@ constexpr auto test_all() -> bool
     CHECK(test<etl::uint8_t>());
     CHECK(test<etl::uint16_t>());
     CHECK(test<etl::uint32_t>());
-    CHECK(test<etl::size_t>());
-
-#if not defined(TETL_WORKAROUND_AVR_BROKEN_TESTS)
     CHECK(test<etl::uint64_t>());
-#endif
+    CHECK(test<etl::size_t>());
 
     return true;
 }

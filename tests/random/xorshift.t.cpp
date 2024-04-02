@@ -16,13 +16,11 @@ constexpr auto test_xorshift32() -> bool
 
 constexpr auto test_xorshift64() -> bool
 {
-#if not defined(TETL_WORKAROUND_AVR_BROKEN_TESTS)
     CHECK(etl::xorshift64::min() == 0);
     CHECK(etl::xorshift64::max() == etl::uint64_t(-2));
     CHECK(etl::xorshift64::default_seed == 5489U);
     CHECK(etl::xorshift64() == etl::xorshift64());
     CHECK(etl::xorshift64() != etl::xorshift64(1));
-#endif
     return true;
 }
 

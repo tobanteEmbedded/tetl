@@ -167,6 +167,7 @@ constexpr auto test_all() -> bool
     CHECK(test_bit_width<etl::uint8_t>());
     CHECK(test_bit_width<etl::uint16_t>());
     CHECK(test_bit_width<etl::uint32_t>());
+    CHECK(test_bit_width<etl::uint64_t>());
 
     CHECK(test_rotl());
     CHECK(test_rotr());
@@ -174,31 +175,27 @@ constexpr auto test_all() -> bool
     CHECK(test_countl_zero<etl::uint8_t>());
     CHECK(test_countl_zero<etl::uint16_t>());
     CHECK(test_countl_zero<etl::uint32_t>());
+    CHECK(test_countl_zero<etl::uint64_t>());
 
     CHECK(test_countl_one<etl::uint8_t>());
     CHECK(test_countl_one<etl::uint16_t>());
     CHECK(test_countl_one<etl::uint32_t>());
+    CHECK(test_countl_one<etl::uint64_t>());
 
     CHECK(test_countr_zero<etl::uint8_t>());
     CHECK(test_countr_zero<etl::uint16_t>());
     CHECK(test_countr_zero<etl::uint32_t>());
+    CHECK(test_countr_zero<etl::uint64_t>());
 
     CHECK(test_countr_one<etl::uint8_t>());
     CHECK(test_countr_one<etl::uint16_t>());
     CHECK(test_countr_one<etl::uint32_t>());
+    CHECK(test_countr_one<etl::uint64_t>());
 
     CHECK(test_has_single_bit<etl::uint8_t>());
     CHECK(test_has_single_bit<etl::uint16_t>());
     CHECK(test_has_single_bit<etl::uint32_t>());
-
-#if not defined(TETL_WORKAROUND_AVR_BROKEN_TESTS)
-    CHECK(test_bit_width<etl::uint64_t>());
-    CHECK(test_countl_zero<etl::uint64_t>());
-    CHECK(test_countl_one<etl::uint64_t>());
-    CHECK(test_countr_zero<etl::uint64_t>());
-    CHECK(test_countr_one<etl::uint64_t>());
     CHECK(test_has_single_bit<etl::uint64_t>());
-#endif
 
     return true;
 }

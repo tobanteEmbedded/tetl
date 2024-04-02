@@ -221,12 +221,9 @@ constexpr auto test_all() -> bool
     CHECK(test<etl::int8_t>());
     CHECK(test<etl::int16_t>());
     CHECK(test<etl::int32_t>());
-    CHECK(test<float>());
-
-#if not defined(TETL_WORKAROUND_AVR_BROKEN_TESTS)
     CHECK(test<etl::int64_t>());
+    CHECK(test<float>());
     CHECK(test<double>());
-#endif
 
     return true;
 }

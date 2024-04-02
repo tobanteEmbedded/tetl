@@ -278,9 +278,6 @@ constexpr auto test_all() -> bool
 
 auto main() -> int
 {
-    CHECK(test_all());
-#if not defined(TETL_WORKAROUND_AVR_BROKEN_TESTS)
-    static_assert(test_all());
-#endif
+    STATIC_CHECK(test_all());
     return 0;
 }
