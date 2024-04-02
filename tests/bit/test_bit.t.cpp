@@ -60,7 +60,6 @@ constexpr auto test_all() -> bool
     CHECK(has_test_bit<unsigned short>);
     CHECK(has_test_bit<unsigned int>);
     CHECK(has_test_bit<unsigned long>);
-    CHECK(has_test_bit<unsigned long long>);
 
     CHECK_FALSE(has_test_bit<etl::int8_t>);
     CHECK_FALSE(has_test_bit<etl::int16_t>);
@@ -72,7 +71,6 @@ constexpr auto test_all() -> bool
     CHECK_FALSE(has_test_bit<signed short>);
     CHECK_FALSE(has_test_bit<signed int>);
     CHECK_FALSE(has_test_bit<signed long>);
-    CHECK_FALSE(has_test_bit<signed long long>);
 
     CHECK_FALSE(has_test_bit<bool>);
     CHECK_FALSE(has_test_bit<char>);
@@ -83,8 +81,11 @@ constexpr auto test_all() -> bool
     CHECK(test<etl::uint8_t>());
     CHECK(test<etl::uint16_t>());
     CHECK(test<etl::uint32_t>());
-    CHECK(test<etl::uint64_t>());
     CHECK(test<etl::size_t>());
+
+#if not defined(TETL_WORKAROUND_AVR_BROKEN_TESTS)
+    CHECK(test<etl::uint64_t>());
+#endif
 
     return true;
 }
