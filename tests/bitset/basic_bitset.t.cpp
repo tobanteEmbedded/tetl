@@ -38,7 +38,7 @@ constexpr auto test() -> bool
     }
 
     {
-        auto const ones = bitset().flip();
+        auto const ones = bitset().set().reset().flip();
         CHECK(ones.count() == Bits);
         CHECK(ones.all());
         CHECK(ones.any());

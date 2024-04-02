@@ -42,22 +42,11 @@ struct basic_bitset {
         }
     }
 
-    [[nodiscard]] constexpr auto any() const noexcept -> bool
-    {
-        if constexpr (not has_padding) {
-            return etl::any_of(_words.cbegin(), _words.cend(), [](auto word) { return word != WordType(0); });
-        } else {
-            return count() > 0;
-        }
-    }
+    [[nodiscard]] constexpr auto any() const noexcept -> bool { return not none(); }
 
     [[nodiscard]] constexpr auto none() const noexcept -> bool
     {
-        if constexpr (not has_padding) {
-            return etl::all_of(_words.cbegin(), _words.cend(), [](auto word) { return word == WordType(0); });
-        } else {
-            return count() == 0;
-        }
+        return etl::all_of(_words.cbegin(), _words.cend(), [](auto word) { return word == WordType(0); });
     }
 
     [[nodiscard]] constexpr auto count() const noexcept -> etl::size_t
