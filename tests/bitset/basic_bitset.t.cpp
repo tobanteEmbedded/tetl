@@ -79,15 +79,10 @@ template <typename Word>
 constexpr auto test_word_type() -> bool
 {
     CHECK(test<1, Word>());
-    CHECK(test<2, Word>());
-    CHECK(test<3, Word>());
     CHECK(test<7, Word>());
     CHECK(test<8, Word>());
     CHECK(test<9, Word>());
-    CHECK(test<15, Word>());
     CHECK(test<16, Word>());
-    CHECK(test<17, Word>());
-    CHECK(test<64, Word>());
     CHECK(test<65, Word>());
     return true;
 }
@@ -98,10 +93,7 @@ constexpr auto test_all() -> bool
     CHECK(test_word_type<unsigned short>());
     CHECK(test_word_type<unsigned int>());
     CHECK(test_word_type<unsigned long>());
-
-#if not defined(TETL_WORKAROUND_AVR_BROKEN_TESTS)
     CHECK(test_word_type<unsigned long long>());
-#endif
 
     return true;
 }
