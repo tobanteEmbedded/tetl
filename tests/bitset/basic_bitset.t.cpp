@@ -9,6 +9,13 @@ constexpr auto test() -> bool
 {
     using bitset = etl::basic_bitset<Bits, Word>;
 
+    CHECK(bitset() == bitset());
+    CHECK(bitset(0b111) == bitset(0b111));
+
+    CHECK_FALSE(bitset(0b111) == bitset());
+    CHECK(bitset(0b111) != bitset());
+    CHECK(bitset(0b111) != bitset(0b110));
+
     {
         auto set = bitset{};
         CHECK(set.count() == 0);
@@ -30,19 +37,19 @@ constexpr auto test() -> bool
     }
 
     {
-        auto const ones = bitset().set();
+        auto const ones = bitset(0b0000'0000).set();
         CHECK(ones.count() == Bits);
         CHECK(ones.all());
         CHECK(ones.any());
         CHECK_FALSE(ones.none());
     }
 
-    {
-        auto const ones = bitset().set().reset().flip();
-        CHECK(ones.count() == Bits);
-        CHECK(ones.all());
-        CHECK(ones.any());
-        CHECK_FALSE(ones.none());
+    if constexpr (Bits >= 4) {
+        auto const set = bitset(0b1111).reset(0).flip(1);
+        CHECK(set.count() == 2);
+        CHECK(set.any());
+        CHECK_FALSE(set.all());
+        CHECK_FALSE(set.none());
     }
 
     return true;

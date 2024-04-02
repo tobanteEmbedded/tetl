@@ -6,6 +6,7 @@
 #include <etl/_algorithm/all_of.hpp>
 #include <etl/_algorithm/any_of.hpp>
 #include <etl/_algorithm/fill.hpp>
+#include <etl/_algorithm/min.hpp>
 #include <etl/_algorithm/transform.hpp>
 #include <etl/_array/array.hpp>
 #include <etl/_bit/flip_bit.hpp>
@@ -24,7 +25,22 @@ namespace etl {
 /// \ingroup bitset
 template <etl::size_t Bits, etl::unsigned_integral WordType = etl::size_t>
 struct basic_bitset {
+    /// Default constructor. Constructs a bitset with all bits set to zero.
     constexpr basic_bitset() = default;
+
+    /// Constructs a bitset, initializing the first (rightmost, least significant)
+    /// M bit positions to the corresponding bit values of val.
+    ///
+    /// \todo Replace with `unsigned long long` when AVR numeric_limits are fixed
+    constexpr basic_bitset(unsigned long val)
+    {
+        auto const n = etl::min(static_cast<size_t>(etl::numeric_limits<unsigned long>::digits), size());
+        for (auto i = etl::size_t(0); i < n; ++i) {
+            if (etl::test_bit(val, static_cast<unsigned long>(i))) {
+                set(i);
+            }
+        }
+    }
 
     [[nodiscard]] constexpr auto size() const noexcept -> etl::size_t { return Bits; }
 
@@ -106,6 +122,8 @@ struct basic_bitset {
     {
         return transform_bit(pos, [](auto word, auto bit) { return etl::flip_bit(word, bit); });
     }
+
+    friend constexpr auto operator==(basic_bitset const& lhs, basic_bitset const& rhs) -> bool = default;
 
 private:
     static constexpr auto ones          = etl::numeric_limits<WordType>::max();
