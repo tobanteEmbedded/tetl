@@ -5,10 +5,13 @@
 
 namespace etl {
 
+/// \ingroup expected
 struct unexpect_t {
     unexpect_t() = default;
 };
 
+/// \relates unexpect_t
+/// \ingroup expected
 inline constexpr auto unexpect = unexpect_t{};
 
 } // namespace etl

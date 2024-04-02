@@ -10,6 +10,7 @@ namespace etl {
 
 /// \brief etl::dynamic_extent is a constant of type etl::size_t that is used
 /// to differentiate etl::span of static and dynamic extent.
+/// \ingroup span
 inline constexpr auto dynamic_extent = numeric_limits<etl::size_t>::max();
 
 } // namespace etl

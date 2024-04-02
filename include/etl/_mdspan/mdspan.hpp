@@ -25,6 +25,7 @@
 
 namespace etl {
 
+/// \ingroup mdspan
 template <
     typename ElementType,
     typename Extents,

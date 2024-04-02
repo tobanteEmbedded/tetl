@@ -8,14 +8,16 @@
 
 namespace etl {
 
-/// \brief Appends a copy of the character string pointed to by src to the end
+/// Appends a copy of the character string pointed to by src to the end
 /// of the character string pointed to by dest. The character src[0] replaces
 /// the null terminator at the end of dest. The resulting byte string is
 /// null-terminated.
 ///
-/// \details The behavior is undefined if the destination array is not large
+/// The behavior is undefined if the destination array is not large
 /// enough for the contents of both src and dest and the terminating null
 /// character. The behavior is undefined if the strings overlap.
+///
+/// \ingroup cstring
 constexpr auto strcat(char* dest, char const* src) -> char*
 {
     return detail::strcat_impl<char, etl::size_t>(dest, src);

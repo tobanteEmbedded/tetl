@@ -7,10 +7,11 @@
 
 namespace etl {
 
-/// \brief Function object for performing bitwise NOT.
-/// Effectively calls operator~ on type T.
+/// \brief Function object for performing bitwise NOT. Effectively calls `operator~` on type T.
 ///
 /// https://en.cppreference.com/w/cpp/utility/functional/bit_not
+///
+/// \ingroup functional
 template <typename T = void>
 struct bit_not {
     [[nodiscard]] constexpr auto operator()(T const& arg) const -> T { return ~arg; }

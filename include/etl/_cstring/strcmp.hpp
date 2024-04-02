@@ -8,11 +8,13 @@
 
 namespace etl {
 
-/// \brief Compares the C string lhs to the C string rhs.
+/// Compares the C string lhs to the C string rhs.
 ///
-/// \details This function starts comparing the first character of each string.
+/// This function starts comparing the first character of each string.
 /// If they are equal to each other, it continues with the following pairs until
 /// the characters differ or until a terminating null-character is reached.
+///
+/// \ingroup cstring
 constexpr auto strcmp(char const* lhs, char const* rhs) -> int { return detail::strcmp_impl<char>(lhs, rhs); }
 
 } // namespace etl

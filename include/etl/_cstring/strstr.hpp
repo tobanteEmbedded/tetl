@@ -7,17 +7,19 @@
 
 namespace etl {
 
-/// \brief Finds the first occurrence of the byte string needle in the byte
+/// Finds the first occurrence of the byte string needle in the byte
 /// string pointed to by haystack. The terminating null characters are not
 /// compared.
+/// \ingroup cstring
 [[nodiscard]] constexpr auto strstr(char* haystack, char* needle) noexcept -> char*
 {
     return detail::strstr_impl<char>(haystack, needle);
 }
 
-/// \brief Finds the first occurrence of the byte string needle in the byte
+/// Finds the first occurrence of the byte string needle in the byte
 /// string pointed to by haystack. The terminating null characters are not
 /// compared.
+/// \ingroup cstring
 [[nodiscard]] constexpr auto strstr(char const* haystack, char const* needle) noexcept -> char const*
 {
     return detail::strstr_impl<char const>(haystack, needle);

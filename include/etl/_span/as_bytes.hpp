@@ -15,23 +15,27 @@ template <typename T, etl::size_t N>
 inline constexpr etl::size_t span_as_bytes_size = N == etl::dynamic_extent ? etl::dynamic_extent : sizeof(T) * N;
 }
 
-/// \brief Obtains a view to the object representation of the elements of the
+/// Obtains a view to the object representation of the elements of the
 /// span s.
 ///
-/// \details If N is dynamic_extent, the extent of the returned span S is also
+/// If N is dynamic_extent, the extent of the returned span S is also
 /// dynamic_extent; otherwise it is sizeof(T) * N.
+/// \relates span
+/// \ingroup span
 template <typename T, size_t N>
 [[nodiscard]] auto as_bytes(span<T, N> s) noexcept -> span<byte const, detail::span_as_bytes_size<T, N>>
 {
     return {reinterpret_cast<byte const*>(s.data()), s.size_bytes()};
 }
 
-/// \brief Obtains a view to the object representation of the elements of the
+/// Obtains a view to the object representation of the elements of the
 /// span s.
 ///
-/// \details If N is dynamic_extent, the extent of the returned span S is also
+/// If N is dynamic_extent, the extent of the returned span S is also
 /// dynamic_extent; otherwise it is sizeof(T) * N. Only participates in overload
 /// resolution if is_const_v<T> is false.
+/// \relates span
+/// \ingroup span
 template <typename T, size_t N>
     requires(not is_const_v<T>)
 [[nodiscard]] auto as_writable_bytes(span<T, N> s) noexcept -> span<byte, detail::span_as_bytes_size<T, N>>

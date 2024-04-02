@@ -42,8 +42,10 @@ namespace etl {
 /// set is linear, including the ones that take an insertion position iterator.
 ///
 /// https://isocpp.org/files/papers/P1222R1.pdf
-///
 /// https://youtu.be/b9ZYM0d6htg
+///
+/// \headerfile etl/flat_set.hpp
+/// \ingroup flat_set
 template <typename Key, typename Container, typename Compare = etl::less<Key>>
 struct flat_set {
     using key_type               = Key;
@@ -303,59 +305,30 @@ struct flat_set {
     template <typename K>
     [[nodiscard]] constexpr auto equal_range(K const& x) const -> etl::pair<const_iterator, const_iterator>;
 
+    friend constexpr auto operator==(flat_set const& x, flat_set const& y) -> bool
+    {
+        return etl::equal(x.begin(), x.end(), y.begin(), y.end());
+    }
+
+    friend constexpr auto operator!=(flat_set const& x, flat_set const& y) -> bool { return !(x == y); }
+
+    friend constexpr auto operator<(flat_set const& x, flat_set const& y) -> bool
+    {
+        return etl::lexicographical_compare(x.begin(), x.end(), y.begin(), y.end());
+    }
+
+    friend constexpr auto operator>(flat_set const& x, flat_set const& y) -> bool { return y < x; }
+
+    friend constexpr auto operator<=(flat_set const& x, flat_set const& y) -> bool { return !(y < x); }
+
+    friend constexpr auto operator>=(flat_set const& x, flat_set const& y) -> bool { return !(x < y); }
+
+    friend constexpr auto swap(flat_set& x, flat_set& y) noexcept(noexcept(x.swap(y))) -> void { return x.swap(y); }
+
 private:
     container_type _container;
     key_compare _compare;
 };
-
-template <typename Key, typename Container, typename Compare>
-[[nodiscard]] constexpr auto
-operator==(flat_set<Key, Container, Compare> const& x, flat_set<Key, Container, Compare> const& y) -> bool
-{
-    return etl::equal(x.begin(), x.end(), y.begin(), y.end());
-}
-
-template <typename Key, typename Container, typename Compare>
-[[nodiscard]] constexpr auto
-operator!=(flat_set<Key, Container, Compare> const& x, flat_set<Key, Container, Compare> const& y) -> bool
-{
-    return !(x == y);
-}
-
-template <typename Key, typename Container, typename Compare>
-[[nodiscard]] constexpr auto
-operator<(flat_set<Key, Container, Compare> const& x, flat_set<Key, Container, Compare> const& y) -> bool
-{
-    return etl::lexicographical_compare(x.begin(), x.end(), y.begin(), y.end());
-}
-
-template <typename Key, typename Container, typename Compare>
-[[nodiscard]] constexpr auto
-operator>(flat_set<Key, Container, Compare> const& x, flat_set<Key, Container, Compare> const& y) -> bool
-{
-    return y < x;
-}
-
-template <typename Key, typename Container, typename Compare>
-[[nodiscard]] constexpr auto
-operator<=(flat_set<Key, Container, Compare> const& x, flat_set<Key, Container, Compare> const& y) -> bool
-{
-    return !(y < x);
-}
-
-template <typename Key, typename Container, typename Compare>
-[[nodiscard]] constexpr auto
-operator>=(flat_set<Key, Container, Compare> const& x, flat_set<Key, Container, Compare> const& y) -> bool
-{
-    return !(x < y);
-}
-
-template <typename Key, typename Container, typename Compare>
-constexpr auto
-swap(flat_set<Key, Container, Compare>& x, flat_set<Key, Container, Compare>& y) noexcept(noexcept(x.swap(y))) -> void
-{
-    return x.swap(y);
-}
 
 } // namespace etl
 

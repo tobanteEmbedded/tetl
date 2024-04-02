@@ -8,7 +8,8 @@
 
 namespace etl {
 
-/// \brief Returns the length of the C string str.
+/// Returns the length of the C string str.
+/// \ingroup cstring
 constexpr auto strlen(char const* str) -> etl::size_t { return detail::strlen_impl<char, etl::size_t>(str); }
 
 } // namespace etl

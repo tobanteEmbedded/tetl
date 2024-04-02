@@ -12,7 +12,7 @@
 namespace etl {
 
 /// \brief A complex number
-/// \headerfile etl/complex
+/// \headerfile etl/complex.hpp
 /// \ingroup complex
 template <typename T>
 struct complex {

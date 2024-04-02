@@ -35,9 +35,9 @@ template <etl::size_t Offset, etl::size_t Count, etl::size_t Extent>
 }
 } // namespace detail
 
-/// \brief A non-owning view over a contiguous sequence of objects.
+/// A non-owning view over a contiguous sequence of objects.
 ///
-/// \details The class template span describes an object that can refer to a
+/// The class template span describes an object that can refer to a
 /// contiguous sequence of objects with the first element of the sequence at
 /// position zero. A span can either have a static extent, in which case the
 /// number of elements in the sequence is known and encoded in the type, or a
@@ -46,6 +46,8 @@ template <etl::size_t Offset, etl::size_t Count, etl::size_t Extent>
 /// If a span has dynamic extent a typical implementation holds
 /// two members: a pointer to T and a size. A span with static extent may have
 /// only one member: a pointer to T.
+///
+/// \ingroup span
 template <typename ElementType, size_t Extent = etl::dynamic_extent>
 struct span {
     using element_type     = ElementType;

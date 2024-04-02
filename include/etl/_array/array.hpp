@@ -32,7 +32,8 @@ namespace etl {
 /// Type: `array<int, 3> a = {1,2,3};`
 ///
 /// \include array.cpp
-/// \headerfile etl/array
+///
+/// \headerfile etl/array.hpp
 /// \ingroup array
 template <typename Type, size_t Size>
 struct array {

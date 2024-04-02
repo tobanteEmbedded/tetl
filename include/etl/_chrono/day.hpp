@@ -8,6 +8,7 @@
 
 namespace etl::chrono {
 
+/// \ingroup chrono
 struct day {
     day() = default;
 

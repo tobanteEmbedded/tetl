@@ -8,17 +8,23 @@
 
 namespace etl::chrono {
 
-/// @brief The class local_t is a pseudo-clock that is used as the first
-///        template argument to etl::chrono::time_point to indicate that
-///        the time point represents local time with respect of a
-///        not-yet-specified time zone. local_time supports streaming and
-///        the full set of time point arithmetic.
+/// The class local_t is a pseudo-clock that is used as the first
+/// template argument to etl::chrono::time_point to indicate that
+/// the time point represents local time with respect of a
+/// not-yet-specified time zone. local_time supports streaming and
+/// the full set of time point arithmetic.
+/// \ingroup chrono
 struct local_t { };
 
+/// \ingroup chrono
 template <typename Duration>
-using local_time    = etl::chrono::time_point<etl::chrono::local_t, Duration>;
+using local_time = etl::chrono::time_point<etl::chrono::local_t, Duration>;
+
+/// \ingroup chrono
 using local_seconds = local_time<etl::chrono::seconds>;
-using local_days    = local_time<etl::chrono::days>;
+
+/// \ingroup chrono
+using local_days = local_time<etl::chrono::days>;
 
 } // namespace etl::chrono
 

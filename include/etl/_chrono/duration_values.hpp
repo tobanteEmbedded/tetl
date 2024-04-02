@@ -6,11 +6,15 @@
 #include <etl/_limits/numeric_limits.hpp>
 
 namespace etl::chrono {
-/// \brief The etl::chrono::duration_values type defines three common durations.
-/// \details The zero, min, and max methods in etl::chrono::duration forward
+
+/// The etl::chrono::duration_values type defines three common durations.
+///
+/// The zero, min, and max methods in etl::chrono::duration forward
 /// their work to these methods. This type can be specialized if the
 /// representation Rep requires a specific implementation to return these
 /// duration objects.
+///
+/// \ingroup chrono
 template <typename Rep>
 struct duration_values {
 public:

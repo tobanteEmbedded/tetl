@@ -8,14 +8,16 @@
 
 namespace etl {
 
-/// \brief Appends a byte string pointed to by src to a byte string pointed to
+/// Appends a byte string pointed to by src to a byte string pointed to
 /// by dest. At most count characters are copied. The resulting byte string is
 /// null-terminated.
 ///
-/// \details The destination byte string must have enough space for the contents
+/// The destination byte string must have enough space for the contents
 /// of both dest and src plus the terminating null character, except that the
 /// size of src is limited to count. The behavior is undefined if the strings
 /// overlap.
+///
+/// \ingroup cstring
 constexpr auto strncat(char* dest, char const* src, etl::size_t const count) -> char*
 {
     return detail::strncat_impl<char, etl::size_t>(dest, src, count);

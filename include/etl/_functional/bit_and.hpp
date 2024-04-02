@@ -7,14 +7,15 @@
 
 namespace etl {
 
-/// \brief Function object for performing bitwise AND. Effectively
-/// calls operator& on type T.
-/// https://en.cppreference.com/w/cpp/utility/functional/bit_and
+/// \brief Function object for performing bitwise AND. Effectively calls `operator&` on type T.
+/// \details https://en.cppreference.com/w/cpp/utility/functional/bit_and
+/// \ingroup functional
 template <typename T = void>
 struct bit_and {
     [[nodiscard]] constexpr auto operator()(T const& lhs, T const& rhs) const -> T { return lhs & rhs; }
 };
 
+/// \ingroup functional
 template <>
 struct bit_and<void> {
     using is_transparent = void;

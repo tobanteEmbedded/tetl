@@ -70,6 +70,8 @@ struct duration_cast_impl<ToDuration, CF, CR, true, true> {
 } // namespace detail
 
 /// \brief Converts a duration to a duration of different type ToDur.
+/// \relates duration
+/// \ingroup chrono
 template <typename ToDur, typename Rep, typename Period>
     requires(detail::is_duration_v<ToDur>)
 [[nodiscard]] constexpr auto duration_cast(duration<Rep, Period> const& duration

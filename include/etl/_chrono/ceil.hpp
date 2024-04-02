@@ -9,6 +9,7 @@
 
 namespace etl::chrono {
 
+/// \ingroup chrono
 template <typename To, typename Rep, typename Period>
     requires(detail::is_duration_v<To>)
 [[nodiscard]] constexpr auto ceil(duration<Rep, Period> const& d
@@ -21,6 +22,7 @@ template <typename To, typename Rep, typename Period>
     return t;
 }
 
+/// \ingroup chrono
 template <typename To, typename Clock, typename Duration>
     requires(detail::is_duration_v<To>)
 [[nodiscard]] constexpr auto ceil(time_point<Clock, Duration> const& tp) -> time_point<Clock, To>

@@ -8,8 +8,9 @@
 
 namespace etl {
 
-/// \brief Copy the first n bytes pointed to by src to the buffer pointed to by
+/// Copy the first n bytes pointed to by src to the buffer pointed to by
 /// dest. Source and destination may overlap.
+/// \ingroup cstring
 constexpr auto memmove(void* dest, void const* src, etl::size_t count) -> void*
 {
     return detail::memmove_impl<unsigned char>(dest, src, count);

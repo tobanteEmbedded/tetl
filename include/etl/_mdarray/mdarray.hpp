@@ -9,6 +9,7 @@
 
 namespace etl {
 
+/// \ingroup mdarray
 template <typename ElementType, typename Extents, typename LayoutPolicy, typename Container>
 struct mdarray {
     using extents_type      = Extents;

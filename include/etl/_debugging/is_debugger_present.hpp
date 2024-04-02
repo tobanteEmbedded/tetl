@@ -7,6 +7,8 @@
 
 namespace etl {
 
+/// Attempts to determine if the program is being executed with debugger present.
+/// \ingroup debugging
 [[nodiscard]] inline auto is_debugger_present() noexcept -> bool { return false; }
 
 } // namespace etl

@@ -23,6 +23,7 @@
 
 namespace etl {
 
+/// \headerfile etl/bitset.hpp
 /// \ingroup bitset
 template <etl::size_t Bits, etl::unsigned_integral WordType = etl::size_t>
 struct basic_bitset {
@@ -71,7 +72,7 @@ struct basic_bitset {
     /// M bit positions to the corresponding bit values of val.
     ///
     /// \todo Replace with `unsigned long long` when AVR numeric_limits are fixed
-    constexpr basic_bitset(unsigned long val)
+    constexpr basic_bitset(unsigned long val) noexcept
     {
         auto const digits = static_cast<size_t>(etl::numeric_limits<unsigned long>::digits);
         auto const m      = etl::min(digits, size());
@@ -80,15 +81,21 @@ struct basic_bitset {
         }
     }
 
+    /// Returns the number of bits that the bitset holds.
     [[nodiscard]] constexpr auto size() const noexcept -> etl::size_t { return Bits; }
 
+    /// Returns true if the bit at position \p pos is set.
+    /// \pre `pos < size()`
     [[nodiscard]] constexpr auto operator[](etl::size_t pos) const -> bool { return unchecked_test(pos); }
 
+    /// Returns a reference to the bit at position \p pos
+    /// \pre `pos < size()`
     [[nodiscard]] constexpr auto operator[](etl::size_t pos) -> reference
     {
         return reference{_words[word_index(pos)], offset_in_word(pos)};
     }
 
+    /// Checks if all bits are set to true.
     [[nodiscard]] constexpr auto all() const noexcept -> bool
     {
         if constexpr (not has_padding) {
@@ -98,13 +105,16 @@ struct basic_bitset {
         }
     }
 
+    /// Checks if any bits are set to true.
     [[nodiscard]] constexpr auto any() const noexcept -> bool { return not none(); }
 
+    /// Checks if none of the bits are set to true.
     [[nodiscard]] constexpr auto none() const noexcept -> bool
     {
         return etl::all_of(_words.cbegin(), _words.cend(), [](auto word) { return word == WordType(0); });
     }
 
+    /// Returns the number of bits that are set to true.
     [[nodiscard]] constexpr auto count() const noexcept -> etl::size_t
     {
         return etl::transform_reduce(_words.cbegin(), _words.cend(), etl::size_t(0), etl::plus(), [](auto word) {
@@ -112,11 +122,14 @@ struct basic_bitset {
         });
     }
 
+    /// Returns true if the bit at position \p pos is set.
+    /// \pre `pos < size()`
     [[nodiscard]] constexpr auto unchecked_test(etl::size_t pos) const -> bool
     {
         return etl::test_bit(_words[word_index(pos)], offset_in_word(pos));
     }
 
+    /// Sets all bits to true.
     constexpr auto set() noexcept -> basic_bitset&
     {
         if constexpr (not has_padding) {
@@ -131,22 +144,28 @@ struct basic_bitset {
         return *this;
     }
 
+    /// Set bit at position \p pos to \p value
+    /// \pre `pos < size()`
     constexpr auto unchecked_set(etl::size_t pos, bool value = true) -> basic_bitset&
     {
         return transform_bit(pos, [value](auto word, auto bit) { return etl::set_bit(word, bit, value); });
     }
 
+    /// Sets all bits to false.
     constexpr auto reset() noexcept -> basic_bitset&
     {
         etl::fill(_words.begin(), _words.end(), WordType(0));
         return *this;
     }
 
+    /// Sets the bit at position \p pos to false.
+    /// \pre `pos < size()`
     constexpr auto unchecked_reset(etl::size_t pos) -> basic_bitset&
     {
         return transform_bit(pos, [](auto word, auto bit) { return etl::reset_bit(word, bit); });
     }
 
+    /// Flips all bits.
     constexpr auto flip() noexcept -> basic_bitset&
     {
         if constexpr (not has_padding) {
@@ -163,11 +182,14 @@ struct basic_bitset {
         return *this;
     }
 
+    /// Flip bit at position \p pos
+    /// \pre `pos < size()`
     constexpr auto unchecked_flip(etl::size_t pos) -> basic_bitset&
     {
         return transform_bit(pos, [](auto word, auto bit) { return etl::flip_bit(word, bit); });
     }
 
+    /// Sets the bits to the result of binary AND on corresponding pairs of bits of `*this` and `other`
     constexpr auto operator&=(basic_bitset const& other) noexcept -> basic_bitset&
     {
         etl::transform(_words.begin(), _words.end(), other._words.begin(), _words.begin(), [](auto lhs, auto rhs) {
@@ -176,6 +198,7 @@ struct basic_bitset {
         return *this;
     }
 
+    /// Sets the bits to the result of binary OR on corresponding pairs of bits of `*this` and `other`
     constexpr auto operator|=(basic_bitset const& other) noexcept -> basic_bitset&
     {
         etl::transform(_words.begin(), _words.end(), other._words.begin(), _words.begin(), [](auto lhs, auto rhs) {
@@ -184,6 +207,7 @@ struct basic_bitset {
         return *this;
     }
 
+    /// Sets the bits to the result of binary XOR on corresponding pairs of bits of `*this` and `other`
     constexpr auto operator^=(basic_bitset const& other) noexcept -> basic_bitset&
     {
         etl::transform(_words.begin(), _words.end(), other._words.begin(), _words.begin(), [](auto lhs, auto rhs) {
@@ -192,21 +216,25 @@ struct basic_bitset {
         return *this;
     }
 
+    /// Returns a basic_bitset containing the result of binary AND on corresponding pairs of bits of \p lhs and \p rhs.
     friend constexpr auto operator&(basic_bitset const& lhs, basic_bitset const& rhs) noexcept -> basic_bitset
     {
         return basic_bitset(lhs) &= rhs;
     }
 
+    /// Returns a basic_bitset containing the result of binary OR on corresponding pairs of bits of \p lhs and \p rhs.
     friend constexpr auto operator|(basic_bitset const& lhs, basic_bitset const& rhs) noexcept -> basic_bitset
     {
         return basic_bitset(lhs) |= rhs;
     }
 
+    /// Returns a basic_bitset containing the result of binary XOR on corresponding pairs of bits of \p lhs and \p rhs.
     friend constexpr auto operator^(basic_bitset const& lhs, basic_bitset const& rhs) noexcept -> basic_bitset
     {
         return basic_bitset(lhs) ^= rhs;
     }
 
+    /// Returns true if all of the bits in \p lhs and \p rhs are equal.
     friend constexpr auto operator==(basic_bitset const& lhs, basic_bitset const& rhs) -> bool = default;
 
 private:

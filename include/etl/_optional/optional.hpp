@@ -330,7 +330,7 @@ using optional_sfinae_assign_base_t = sfinae_assign_base<
 /// must meet the requirements of Destructible (in particular, array types are
 /// not allowed).
 ///
-/// \headerfile etl/optional
+/// \headerfile etl/optional.hpp
 /// \include optional.cpp
 template <typename T>
 struct optional

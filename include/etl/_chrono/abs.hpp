@@ -10,10 +10,10 @@
 
 namespace etl::chrono {
 
-/// \brief Returns the absolute value of the duration d. Specifically, if d >=
-/// d.zero(), return d, otherwise return -d. The function does not participate
-/// in the overload resolution unless etl::numeric_limits<R>::is_signed is
-/// true.
+/// Returns the absolute value of the duration d. Specifically, if d >= d.zero(),
+/// return d, otherwise return -d. The function does not participate in the
+/// overload resolution unless etl::numeric_limits<R>::is_signed is true.
+/// \ingroup chrono
 template <typename R, typename P>
     requires(numeric_limits<R>::is_signed)
 constexpr auto abs(duration<R, P> d) noexcept(is_arithmetic_v<R>) -> duration<R, P>

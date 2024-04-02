@@ -5,6 +5,7 @@
 
 namespace etl::meta {
 
+/// \ingroup meta
 template <typename... Ts>
 struct list { };
 

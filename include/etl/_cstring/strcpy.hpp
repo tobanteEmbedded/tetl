@@ -9,14 +9,15 @@
 
 namespace etl {
 
-/// \brief Copies the character string pointed to by src, including the null
+/// Copies the character string pointed to by src, including the null
 /// terminator, to the character array whose first element is pointed to by
 /// dest.
 ///
-/// \details The behavior is undefined if the dest array is not large enough.
+/// The behavior is undefined if the dest array is not large enough.
 /// The behavior is undefined if the strings overlap.
 ///
 /// \returns dest
+/// \ingroup cstring
 constexpr auto strcpy(char* dest, char const* src) -> char*
 {
     TETL_ASSERT(dest != nullptr);

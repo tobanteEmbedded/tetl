@@ -14,10 +14,14 @@ namespace etl::chrono {
 /// last Sunday of February 2018, i.e., 2018-02-25).
 ///
 /// https://en.cppreference.com/w/cpp/chrono/last_spec
+///
+/// \ingroup chrono
 struct last_spec {
     explicit last_spec() = default;
 };
 
+/// \relates last_spec
+/// \ingroup chrono
 inline constexpr auto last = last_spec{};
 
 } // namespace etl::chrono

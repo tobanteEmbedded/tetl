@@ -21,6 +21,7 @@
 
 namespace etl {
 
+/// \ingroup expected
 /// \todo variant index doesn't work if same type is used twice
 template <typename T, typename E>
 struct expected {

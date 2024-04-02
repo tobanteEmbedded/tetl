@@ -8,8 +8,9 @@
 
 namespace etl {
 
-/// \brief Copies the value of c (converted to an unsigned char) into each of
+/// Copies the value of c (converted to an unsigned char) into each of
 /// the ﬁrst n characters of the object pointed to by s.
+/// \ingroup cstring
 constexpr auto memset(void* s, int c, etl::size_t n) -> void*
 {
     return detail::memset_impl(static_cast<unsigned char*>(s), c, n);

@@ -15,6 +15,9 @@
 
 namespace etl::chrono {
 
+/// \ingroup chrono
+/// @{
+
 /// \brief Class template etl::chrono::duration represents a time interval.
 ///
 /// \details It consists of a count of ticks of type Rep and a tick period,
@@ -367,6 +370,8 @@ using months = duration<int_least32_t, ratio<31556952>>;
 
 /// \brief Signed integer type of at least 17 bits.
 using years = duration<int_least32_t, ratio<2629746>>;
+
+/// @}
 
 } // namespace etl::chrono
 

@@ -15,6 +15,7 @@
 
 namespace etl {
 
+/// \ingroup expected
 template <typename E>
 struct unexpected {
     template <typename Err = E>
