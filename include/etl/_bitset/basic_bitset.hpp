@@ -70,14 +70,12 @@ struct basic_bitset {
 
     /// Constructs a bitset, initializing the first (rightmost, least significant)
     /// M bit positions to the corresponding bit values of val.
-    ///
-    /// \todo Replace with `unsigned long long` when AVR numeric_limits are fixed
-    constexpr basic_bitset(unsigned long val) noexcept
+    constexpr basic_bitset(unsigned long long val) noexcept
     {
-        auto const digits = static_cast<size_t>(etl::numeric_limits<unsigned long>::digits);
+        auto const digits = static_cast<size_t>(etl::numeric_limits<unsigned long long>::digits);
         auto const m      = etl::min(digits, size());
         for (auto i = etl::size_t(0); i < m; ++i) {
-            unchecked_set(i, etl::test_bit(val, static_cast<unsigned long>(i)));
+            unchecked_set(i, etl::test_bit(val, static_cast<unsigned long long>(i)));
         }
     }
 
