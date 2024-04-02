@@ -10,7 +10,7 @@
 #include <etl/_tuple/tuple_element.hpp>
 #include <etl/_tuple/tuple_size.hpp>
 #include <etl/_type_traits/declval.hpp>
-#include <etl/_type_traits/integral_constant.hpp>
+#include <etl/_type_traits/index_constant.hpp>
 #include <etl/_type_traits/is_convertible.hpp>
 #include <etl/_type_traits/is_copy_constructible.hpp>
 #include <etl/_type_traits/is_default_constructible.hpp>
@@ -96,7 +96,7 @@ public:
 
     constexpr auto swap(tuple_impl& other) noexcept((is_nothrow_swappable_v<Ts> && ...)) -> void
     {
-        (tuple_leaf<Idx, Ts>::swap_impl(index_c<Idx>, other.get_impl(index_c<Idx>)), ...);
+        (tuple_leaf<Idx, Ts>::swap_impl(etl::index_v<Idx>, other.get_impl(etl::index_v<Idx>)), ...);
     }
 };
 
@@ -184,7 +184,7 @@ public:
 template <etl::size_t I, typename... Ts>
 struct tuple_element<I, tuple<Ts...>> {
     static_assert(I < sizeof...(Ts));
-    using type = decltype(declval<tuple<Ts...>>().get_type(index_c<I>));
+    using type = decltype(declval<tuple<Ts...>>().get_type(etl::index_v<I>));
 };
 
 template <typename... Ts>
@@ -197,28 +197,28 @@ template <etl::size_t I, typename... Ts>
 [[nodiscard]] constexpr auto get(tuple<Ts...>& t) -> auto&
 {
     static_assert(I < sizeof...(Ts));
-    return t.template get_impl<I>(index_c<I>);
+    return t.template get_impl<I>(etl::index_v<I>);
 }
 
 template <etl::size_t I, typename... Ts>
 [[nodiscard]] constexpr auto get(tuple<Ts...> const& t) -> auto const&
 {
     static_assert(I < sizeof...(Ts));
-    return t.template get_impl<I>(index_c<I>);
+    return t.template get_impl<I>(etl::index_v<I>);
 }
 
 template <etl::size_t I, typename... Ts>
 [[nodiscard]] constexpr auto get(tuple<Ts...>&& t) -> auto&&
 {
     static_assert(I < sizeof...(Ts));
-    return TETL_MOVE(t).template get_impl<I>(index_c<I>);
+    return TETL_MOVE(t).template get_impl<I>(etl::index_v<I>);
 }
 
 template <etl::size_t I, typename... Ts>
 [[nodiscard]] constexpr auto get(tuple<Ts...> const&& t) -> auto const&&
 {
     static_assert(I < sizeof...(Ts));
-    return TETL_MOVE(t).template get_impl<I>(index_c<I>);
+    return TETL_MOVE(t).template get_impl<I>(etl::index_v<I>);
 }
 
 template <typename... Ts, typename... Us>

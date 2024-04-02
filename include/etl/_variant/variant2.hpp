@@ -9,7 +9,7 @@
 #include <etl/_memory/addressof.hpp>
 #include <etl/_meta/at.hpp>
 #include <etl/_type_traits/add_pointer.hpp>
-#include <etl/_type_traits/integral_constant.hpp>
+#include <etl/_type_traits/index_constant.hpp>
 #include <etl/_type_traits/is_copy_constructible.hpp>
 #include <etl/_type_traits/is_default_constructible.hpp>
 #include <etl/_type_traits/is_move_constructible.hpp>
@@ -49,7 +49,7 @@ public:
     template <etl::size_t I, typename... Args>
     constexpr explicit variant2(etl::in_place_index_t<I> /*index*/, Args&&... args)
         : _index(static_cast<index_type>(I))
-        , _union(etl::index_c<I>, TETL_FORWARD(args)...)
+        , _union(etl::index_v<I>, TETL_FORWARD(args)...)
     {
         static_assert(I < sizeof...(Ts));
     }
@@ -125,7 +125,7 @@ template <etl::size_t I, typename... Ts>
 constexpr auto unchecked_get(variant2<Ts...>& v) -> auto&
 {
     static_assert(I < sizeof...(Ts));
-    return v[etl::index_c<I>];
+    return v[etl::index_v<I>];
 }
 
 /// \brief Returns a reference to the object stored in the variant.
@@ -135,7 +135,7 @@ template <etl::size_t I, typename... Ts>
 constexpr auto unchecked_get(variant2<Ts...> const& v) -> auto const&
 {
     static_assert(I < sizeof...(Ts));
-    return v[etl::index_c<I>];
+    return v[etl::index_v<I>];
 }
 
 /// \brief Returns a reference to the object stored in the variant.
@@ -145,7 +145,7 @@ template <etl::size_t I, typename... Ts>
 constexpr auto unchecked_get(variant2<Ts...>&& v) -> auto&&
 {
     static_assert(I < sizeof...(Ts));
-    return TETL_MOVE(v)[etl::index_c<I>];
+    return TETL_MOVE(v)[etl::index_v<I>];
 }
 
 /// \brief Returns a reference to the object stored in the variant.
@@ -155,7 +155,7 @@ template <etl::size_t I, typename... Ts>
 constexpr auto unchecked_get(variant2<Ts...> const&& v) -> auto const&&
 {
     static_assert(I < sizeof...(Ts));
-    return TETL_MOVE(v)[etl::index_c<I>];
+    return TETL_MOVE(v)[etl::index_v<I>];
 }
 
 /// \brief If pv is not a null pointer and pv->index() == I, returns a pointer

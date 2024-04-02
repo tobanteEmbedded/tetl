@@ -25,17 +25,17 @@ constexpr auto test() -> bool
 
     CHECK_FALSE(etl::is_trivially_destructible_v<non_trivial_union_t>);
 
-    auto u = trivial_union_t{etl::index_c<0>, 42};
-    CHECK(u[etl::index_c<0>] == 42);
-    CHECK(etl::as_const(u)[etl::index_c<0>] == 42);
+    auto u = trivial_union_t{etl::index_v<0>, 42};
+    CHECK(u[etl::index_v<0>] == 42);
+    CHECK(etl::as_const(u)[etl::index_v<0>] == 42);
 
-    u = trivial_union_t{etl::index_c<1>, 99L};
-    CHECK(u[etl::index_c<1>] == 99L);
-    CHECK(etl::as_const(u)[etl::index_c<1>] == 99L);
+    u = trivial_union_t{etl::index_v<1>, 99L};
+    CHECK(u[etl::index_v<1>] == 99L);
+    CHECK(etl::as_const(u)[etl::index_v<1>] == 99L);
 
-    u = trivial_union_t{etl::index_c<2>, static_cast<char const*>(nullptr)};
-    CHECK(u[etl::index_c<2>] == nullptr);
-    CHECK(etl::as_const(u)[etl::index_c<2>] == nullptr);
+    u = trivial_union_t{etl::index_v<2>, static_cast<char const*>(nullptr)};
+    CHECK(u[etl::index_v<2>] == nullptr);
+    CHECK(etl::as_const(u)[etl::index_v<2>] == nullptr);
 
     return true;
 }

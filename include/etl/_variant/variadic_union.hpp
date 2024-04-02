@@ -6,7 +6,7 @@
 #include <etl/_config/all.hpp>
 
 #include <etl/_cstddef/size_t.hpp>
-#include <etl/_type_traits/integral_constant.hpp>
+#include <etl/_type_traits/index_constant.hpp>
 #include <etl/_type_traits/is_trivially_destructible.hpp>
 #include <etl/_utility/forward.hpp>
 #include <etl/_utility/move.hpp>
@@ -31,7 +31,7 @@ union variadic_union<T, Ts...> {
     template <etl::size_t I, typename... Args>
         requires(I > 0)
     explicit constexpr variadic_union(etl::index_constant<I> /*index*/, Args&&... args)
-        : tail(etl::index_c<I - 1>, TETL_FORWARD(args)...)
+        : tail(etl::index_v<I - 1>, TETL_FORWARD(args)...)
     {
     }
 
@@ -53,7 +53,7 @@ union variadic_union<T, Ts...> {
         if constexpr (I == 0) {
             return head;
         } else {
-            return tail[etl::index_c<I - 1>];
+            return tail[etl::index_v<I - 1>];
         }
     }
 
@@ -63,7 +63,7 @@ union variadic_union<T, Ts...> {
         if constexpr (I == 0) {
             return head;
         } else {
-            return tail[etl::index_c<I - 1>];
+            return tail[etl::index_v<I - 1>];
         }
     }
 
@@ -73,7 +73,7 @@ union variadic_union<T, Ts...> {
         if constexpr (I == 0) {
             return TETL_MOVE(head);
         } else {
-            return TETL_MOVE(tail)[etl::index_c<I - 1>];
+            return TETL_MOVE(tail)[etl::index_v<I - 1>];
         }
     }
 
@@ -83,7 +83,7 @@ union variadic_union<T, Ts...> {
         if constexpr (I == 0) {
             return TETL_MOVE(head);
         } else {
-            return TETL_MOVE(tail)[etl::index_c<I - 1>];
+            return TETL_MOVE(tail)[etl::index_v<I - 1>];
         }
     }
 

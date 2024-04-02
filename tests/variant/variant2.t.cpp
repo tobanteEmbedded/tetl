@@ -22,25 +22,25 @@ constexpr auto test() -> bool
 
     auto v0 = variant{};
     CHECK(v0.index() == 0);
-    CHECK(v0[etl::index_c<0>] == 0);
+    CHECK(v0[etl::index_v<0>] == 0);
     CHECK(etl::unchecked_get<0>(v0) == 0);
-    CHECK(etl::as_const(v0)[etl::index_c<0>] == 0);
+    CHECK(etl::as_const(v0)[etl::index_v<0>] == 0);
 
     auto v1 = variant{etl::in_place_index<1>, 42};
     CHECK(v1.index() == 1);
-    CHECK(v1[etl::index_c<1>] == 42);
+    CHECK(v1[etl::index_v<1>] == 42);
     CHECK(etl::unchecked_get<1>(v1) == 42);
 
     auto const copy = v1;
     CHECK(copy.index() == 1);
-    CHECK(copy[etl::index_c<1>] == 42);
+    CHECK(copy[etl::index_v<1>] == 42);
     CHECK(*etl::get_if<1>(&copy) == 42);
     CHECK(etl::get_if<0>(&copy) == nullptr);
     CHECK(etl::unchecked_get<1>(copy) == 42);
 
     auto move = etl::move(v1);
     CHECK(move.index() == 1);
-    CHECK(move[etl::index_c<1>] == 42);
+    CHECK(move[etl::index_v<1>] == 42);
     CHECK(*etl::get_if<1>(&move) == 42);
     CHECK(etl::get_if<0>(&move) == nullptr);
     CHECK(etl::unchecked_get<1>(move) == 42);
