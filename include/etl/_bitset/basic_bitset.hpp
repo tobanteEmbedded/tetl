@@ -82,10 +82,7 @@ struct basic_bitset {
 
     [[nodiscard]] constexpr auto size() const noexcept -> etl::size_t { return Bits; }
 
-    [[nodiscard]] constexpr auto operator[](etl::size_t pos) const -> bool
-    {
-        return etl::test_bit(_words[word_index(pos)], offset_in_word(pos));
-    }
+    [[nodiscard]] constexpr auto operator[](etl::size_t pos) const -> bool { return unchecked_test(pos); }
 
     [[nodiscard]] constexpr auto operator[](etl::size_t pos) -> reference
     {
@@ -113,6 +110,11 @@ struct basic_bitset {
         return etl::transform_reduce(_words.cbegin(), _words.cend(), etl::size_t(0), etl::plus(), [](auto word) {
             return static_cast<etl::size_t>(etl::popcount(word));
         });
+    }
+
+    [[nodiscard]] constexpr auto unchecked_test(etl::size_t pos) const -> bool
+    {
+        return etl::test_bit(_words[word_index(pos)], offset_in_word(pos));
     }
 
     constexpr auto set() noexcept -> basic_bitset&
