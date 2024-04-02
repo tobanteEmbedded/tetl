@@ -9,6 +9,7 @@
 
 namespace etl {
 
+/// \ingroup compare
 struct weak_ordering {
 
     static weak_ordering const less;

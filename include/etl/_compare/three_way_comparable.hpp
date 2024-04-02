@@ -33,6 +33,7 @@ concept partially_ordered_with = requires(remove_reference_t<T> const& t, remove
 } // namespace detail
 
 // clang-format off
+/// \ingroup compare
 template<typename T, typename Cat = partial_ordering>
 concept three_way_comparable =
     weakly_equality_comparable_with<T, T> &&

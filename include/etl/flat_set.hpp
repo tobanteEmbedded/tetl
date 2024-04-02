@@ -4,7 +4,11 @@
 #define TETL_FLAT_SET_HPP
 
 /// \defgroup flat_set flat_set
+/// etl::flat_set and etl::flat_multiset container adaptors
 /// \ingroup containers-library
+/// \code
+/// #include <etl/flat_set.hpp>
+/// \endcode
 
 #include <etl/_config/all.hpp>
 

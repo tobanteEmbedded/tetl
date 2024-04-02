@@ -4,7 +4,11 @@
 #define TETL_SPAN_HPP
 
 /// \defgroup span span
+/// etl::span view
 /// \ingroup containers-library
+/// \code
+/// #include <etl/span.hpp>
+/// \endcode
 
 #include <etl/_config/all.hpp>
 

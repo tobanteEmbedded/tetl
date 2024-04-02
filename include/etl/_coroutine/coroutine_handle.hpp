@@ -10,9 +10,11 @@
 
 namespace etl {
 
+/// \ingroup coroutine
 template <typename Promise = void>
 struct coroutine_handle;
 
+/// \ingroup coroutine
 template <>
 struct coroutine_handle<void> {
     constexpr coroutine_handle() noexcept = default;
@@ -48,6 +50,8 @@ protected:
     void* _handle{nullptr};
 };
 
+/// \relates coroutine_handle
+/// \ingroup coroutine
 template <typename T>
 struct hash<coroutine_handle<T>> {
     [[nodiscard]] auto operator()(coroutine_handle<T> const& v) const noexcept -> size_t

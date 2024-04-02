@@ -8,6 +8,7 @@
 
 namespace etl {
 
+/// \ingroup compare
 struct partial_ordering {
     static partial_ordering const less;
     static partial_ordering const equivalent;

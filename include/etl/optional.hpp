@@ -4,8 +4,12 @@
 #define TETL_OPTIONAL_HPP
 
 /// \defgroup optional optional
+/// etl::optional class template
 /// \ingroup utilities-library
 /// \example optional.cpp
+/// \code
+/// #include <etl/optional.hpp>
+/// \endcode
 
 #include <etl/_config/all.hpp>
 

@@ -13,6 +13,7 @@
 
 namespace etl::chrono {
 
+/// \ingroup chrono
 struct year_month_day {
 private:
     // https://howardhinnant.github.io/date_algorithms.html#civil_from_days

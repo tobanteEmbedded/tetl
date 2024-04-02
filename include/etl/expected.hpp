@@ -4,7 +4,11 @@
 #define TETL_EXPECTED_HPP
 
 /// \defgroup expected expected
+/// etl::expected class template
 /// \ingroup utilities-library
+/// \code
+/// #include <etl/expected.hpp>
+/// \endcode
 
 #include <etl/_config/all.hpp>
 

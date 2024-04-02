@@ -3,12 +3,13 @@
 #ifndef TETL_COROUTINE_SUSPEND_NEVER_HPP
 #define TETL_COROUTINE_SUSPEND_NEVER_HPP
 
-#include "etl/_coroutine/coroutine_handle.hpp"
+#include <etl/_coroutine/coroutine_handle.hpp>
 
 #if defined(__cpp_coroutines)
 
 namespace etl {
 
+/// \ingroup coroutine
 struct suspend_never {
     [[nodiscard]] constexpr auto await_ready() const noexcept -> bool
     {

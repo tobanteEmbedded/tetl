@@ -4,6 +4,7 @@
 #define TETL_BITSET_HPP
 
 /// \defgroup bitset bitset
+/// etl::bitset & etl::basic_bitset class templates
 /// \ingroup utilities-library
 /// \example bitset.cpp
 /// \code

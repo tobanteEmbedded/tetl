@@ -7,6 +7,7 @@
 
 namespace etl::chrono {
 
+/// \ingroup chrono
 struct weekday_last {
     constexpr explicit weekday_last(chrono::weekday const& wd) noexcept : _wd{wd} { }
 

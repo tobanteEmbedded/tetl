@@ -2378,6 +2378,8 @@ INCLUDE_FILE_PATTERNS  =
 PREDEFINED             = DOXYGEN=1 \
                          __cpp_concepts=1 \
                          __cplusplus=202902L \
+                         __cpp_coroutines=1 \
+                         __cpp_consteval=1 \
                          TETL_CPP_STANDARD=23
 
 # If the MACRO_EXPANSION and EXPAND_ONLY_PREDEF tags are set to YES then this

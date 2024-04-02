@@ -4,7 +4,7 @@
 #define TETL_EXECUTION_HPP
 
 /// \defgroup execution execution
-///	Predefined execution policies for parallel/unsequenced versions of the algorithms
+/// Predefined execution policies for parallel/unsequenced versions of the algorithms
 /// \ingroup algorithms-library
 /// \code
 /// #include <etl/execution.hpp>

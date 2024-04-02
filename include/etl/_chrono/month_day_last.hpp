@@ -7,6 +7,7 @@
 
 namespace etl::chrono {
 
+/// \ingroup chrono
 struct month_day_last {
     constexpr explicit month_day_last(chrono::month const& m) noexcept : _m{m} { }
 

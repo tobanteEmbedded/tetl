@@ -4,8 +4,12 @@
 #define TETL_TUPLE_HPP
 
 /// \defgroup tuple tuple
+/// etl::tuple class template
 /// \ingroup utilities-library
 /// \example tuple.cpp
+/// \code
+/// #include <etl/tuple.hpp>
+/// \endcode
 
 #include <etl/_config/all.hpp>
 

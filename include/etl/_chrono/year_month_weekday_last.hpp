@@ -12,6 +12,7 @@
 
 namespace etl::chrono {
 
+/// \ingroup chrono
 struct year_month_weekday_last {
     constexpr year_month_weekday_last(
         chrono::year const& y,

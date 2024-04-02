@@ -4,6 +4,7 @@
 #define TETL_ARRAY_HPP
 
 /// \defgroup array array
+/// etl::array container
 /// \ingroup containers-library
 /// \example array.cpp
 /// \code

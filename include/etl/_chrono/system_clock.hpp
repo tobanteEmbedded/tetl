@@ -11,6 +11,7 @@
 
 namespace etl::chrono {
 
+/// \ingroup chrono
 struct system_clock {
     using rep                       = int32_t;
     using period                    = micro;

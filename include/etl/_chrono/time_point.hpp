@@ -15,6 +15,8 @@ namespace etl::chrono {
 /// \tparam Clock Must meet the requirements for Clock
 ///
 /// https://en.cppreference.com/w/cpp/named_req/Clock
+///
+/// \ingroup chrono
 template <typename Clock, typename Duration = typename Clock::duration>
 struct time_point {
     /// \brief Clock, the clock on which this time point is measured.

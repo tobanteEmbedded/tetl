@@ -7,6 +7,7 @@
 
 namespace etl::chrono {
 
+/// \ingroup chrono
 struct year_month {
     year_month() = default;
 

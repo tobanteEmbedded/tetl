@@ -12,6 +12,7 @@
 
 namespace etl::chrono {
 
+/// \ingroup chrono
 struct year_month_weekday {
     year_month_weekday() = default;
 

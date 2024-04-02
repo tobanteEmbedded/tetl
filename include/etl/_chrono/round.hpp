@@ -9,6 +9,7 @@
 
 namespace etl::chrono {
 
+/// \ingroup chrono
 template <typename To, typename Rep, typename Period>
     requires(detail::is_duration_v<To>)
 [[nodiscard]] constexpr auto round(duration<Rep, Period> const& dur
@@ -27,6 +28,7 @@ template <typename To, typename Rep, typename Period>
     return low.count() & 1 ? high : low;
 }
 
+/// \ingroup chrono
 template <typename To, typename Clock, typename Duration>
     requires(detail::is_duration_v<To>)
 [[nodiscard]] constexpr auto round(time_point<Clock, Duration> const& tp) -> time_point<Clock, To>

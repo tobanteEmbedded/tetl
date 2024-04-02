@@ -12,6 +12,7 @@ namespace etl::chrono {
 /// \brief Returns the greatest duration t representable in ToDuration that is
 /// less or equal to d. The function does not participate in the overload
 /// resolution unless ToDuration is an instance of etl::chrono::duration.
+/// \ingroup chrono
 template <typename To, typename Rep, typename Period>
     requires(detail::is_duration_v<To>)
 [[nodiscard]] constexpr auto floor(duration<Rep, Period> const& d
@@ -24,6 +25,7 @@ template <typename To, typename Rep, typename Period>
     return t;
 }
 
+/// \ingroup chrono
 template <typename To, typename Clock, typename Duration>
     requires(detail::is_duration_v<To>)
 [[nodiscard]] constexpr auto floor(time_point<Clock, Duration> const& tp) -> time_point<Clock, To>

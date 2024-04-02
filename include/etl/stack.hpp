@@ -4,7 +4,11 @@
 #define TETL_STACK_HPP
 
 /// \defgroup stack stack
+/// etl::stack container adaptor
 /// \ingroup containers-library
+/// \code
+/// #include <etl/stack.hpp>
+/// \endcode
 
 #include <etl/_config/all.hpp>
 

@@ -4,7 +4,11 @@
 #define TETL_VECTOR_HPP
 
 /// \defgroup vector vector
+/// etl::vector & etl::static_vector container
 /// \ingroup containers-library
+/// \code
+/// #include <etl/vector.hpp>
+/// \endcode
 /// \example vector.cpp
 
 #include <etl/_config/all.hpp>

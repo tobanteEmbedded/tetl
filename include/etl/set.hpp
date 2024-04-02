@@ -4,7 +4,11 @@
 #define TETL_SET_HPP
 
 /// \defgroup set set
+/// etl::static_set container
 /// \ingroup containers-library
+/// \code
+/// #include <etl/set.hpp>
+/// \endcode
 /// \example set.cpp
 
 #include <etl/_config/all.hpp>

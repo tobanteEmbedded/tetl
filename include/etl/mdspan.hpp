@@ -4,7 +4,11 @@
 #define TETL_MDSPAN_HPP
 
 /// \defgroup mdspan mdspan
+/// etl::mdspan view
 /// \ingroup containers-library
+/// \code
+/// #include <etl/mdspan.hpp>
+/// \endcode
 
 #include <etl/_config/all.hpp>
 

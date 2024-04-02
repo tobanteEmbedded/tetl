@@ -39,6 +39,7 @@ struct common_cmpcat_base<6U> {
 
 } // namespace detail
 
+/// \ingroup compare
 template <typename... Ts>
 struct common_comparison_category
     :
@@ -51,6 +52,8 @@ struct common_comparison_category
 // clang-format on
 { };
 
+/// \relates common_comparison_category
+/// \ingroup compare
 template <typename... Ts>
 using common_comparison_category_t = typename common_comparison_category<Ts...>::type;
 

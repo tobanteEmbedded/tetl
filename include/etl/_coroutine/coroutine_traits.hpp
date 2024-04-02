@@ -19,6 +19,7 @@ struct coro_traits<R, void_t<typename R::promise_type>> {
 };
 } // namespace detail
 
+/// \ingroup coroutine
 template <typename R, typename... Args>
 struct coroutine_traits : detail::coro_traits<R> { };
 

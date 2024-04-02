@@ -10,6 +10,7 @@
 
 namespace etl {
 
+/// \ingroup compare
 struct strong_ordering {
     static strong_ordering const less;
     static strong_ordering const equal;

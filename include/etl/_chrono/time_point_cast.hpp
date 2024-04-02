@@ -8,6 +8,7 @@
 
 namespace etl::chrono {
 
+/// \ingroup chrono
 template <typename ToDuration, typename Clock, typename Duration>
     requires(detail::is_duration_v<ToDuration>)
 [[nodiscard]] constexpr auto time_point_cast(time_point<Clock, Duration> const& tp) -> ToDuration

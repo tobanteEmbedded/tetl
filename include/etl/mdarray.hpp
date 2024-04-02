@@ -4,7 +4,11 @@
 #define TETL_MDARRAY_HPP
 
 /// \defgroup mdarray mdarray
+/// etl::mdarray container
 /// \ingroup containers-library
+/// \code
+/// #include <etl/mdspan.hpp>
+/// \endcode
 
 #include <etl/_config/all.hpp>
 

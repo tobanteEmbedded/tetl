@@ -7,6 +7,7 @@
 
 namespace etl::chrono {
 
+/// \ingroup chrono
 struct weekday_indexed {
     weekday_indexed() = default;
 

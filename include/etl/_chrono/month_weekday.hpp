@@ -8,6 +8,7 @@
 
 namespace etl::chrono {
 
+/// \ingroup chrono
 struct month_weekday {
     constexpr month_weekday(chrono::month const& m, chrono::weekday_indexed const& wdi) noexcept : _m{m}, _wdi{wdi} { }
 
