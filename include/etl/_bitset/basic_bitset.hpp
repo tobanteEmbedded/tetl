@@ -122,6 +122,45 @@ struct basic_bitset {
         return transform_bit(pos, [](auto word, auto bit) { return etl::flip_bit(word, bit); });
     }
 
+    constexpr auto operator&=(basic_bitset const& other) noexcept -> basic_bitset&
+    {
+        etl::transform(_words.begin(), _words.end(), other._words.begin(), _words.begin(), [](auto lhs, auto rhs) {
+            return static_cast<WordType>(lhs & rhs);
+        });
+        return *this;
+    }
+
+    constexpr auto operator|=(basic_bitset const& other) noexcept -> basic_bitset&
+    {
+        etl::transform(_words.begin(), _words.end(), other._words.begin(), _words.begin(), [](auto lhs, auto rhs) {
+            return static_cast<WordType>(lhs | rhs);
+        });
+        return *this;
+    }
+
+    constexpr auto operator^=(basic_bitset const& other) noexcept -> basic_bitset&
+    {
+        etl::transform(_words.begin(), _words.end(), other._words.begin(), _words.begin(), [](auto lhs, auto rhs) {
+            return static_cast<WordType>(lhs ^ rhs);
+        });
+        return *this;
+    }
+
+    friend constexpr auto operator&(basic_bitset const& lhs, basic_bitset const& rhs) noexcept -> basic_bitset
+    {
+        return basic_bitset(lhs) &= rhs;
+    }
+
+    friend constexpr auto operator|(basic_bitset const& lhs, basic_bitset const& rhs) noexcept -> basic_bitset
+    {
+        return basic_bitset(lhs) |= rhs;
+    }
+
+    friend constexpr auto operator^(basic_bitset const& lhs, basic_bitset const& rhs) noexcept -> basic_bitset
+    {
+        return basic_bitset(lhs) ^= rhs;
+    }
+
     friend constexpr auto operator==(basic_bitset const& lhs, basic_bitset const& rhs) -> bool = default;
 
 private:

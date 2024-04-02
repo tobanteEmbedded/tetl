@@ -50,6 +50,10 @@ constexpr auto test() -> bool
         CHECK(set.any());
         CHECK_FALSE(set.all());
         CHECK_FALSE(set.none());
+
+        CHECK((bitset(0b111) & bitset(0b101)) == bitset(0b101));
+        CHECK((bitset(0b111) | bitset(0b101)) == bitset(0b111));
+        CHECK((bitset(0b111) ^ bitset(0b101)) == bitset(0b010));
     }
 
     return true;
