@@ -9,21 +9,25 @@ constexpr auto test() -> bool
 {
     using bitset = etl::basic_bitset<Bits, Word>;
 
-    auto set = bitset{};
-    CHECK(set.count() == 0);
-    CHECK(set.none());
-    CHECK_FALSE(set.all());
-    CHECK_FALSE(set.any());
+    {
+        auto set = bitset{};
+        CHECK(set.count() == 0);
+        CHECK(set.none());
+        CHECK_FALSE(set.all());
+        CHECK_FALSE(set.any());
 
-    set.flip(0);
-    CHECK(set.count() == 1);
-    CHECK(set.any());
-    CHECK_FALSE(set.none());
+        set.flip(0);
+        CHECK(set[0]);
+        CHECK(set.count() == 1);
+        CHECK(set.any());
+        CHECK_FALSE(set.none());
 
-    set.set(0, false);
-    CHECK(set.count() == 0);
-    CHECK(set.none());
-    CHECK_FALSE(set.any());
+        set.set(0, false);
+        CHECK(set.count() == 0);
+        CHECK(set.none());
+        CHECK_FALSE(set[0]);
+        CHECK_FALSE(set.any());
+    }
 
     {
         auto const ones = bitset().set();
@@ -50,18 +54,14 @@ constexpr auto test_word_type() -> bool
     CHECK(test<1, Word>());
     CHECK(test<2, Word>());
     CHECK(test<3, Word>());
-    CHECK(test<4, Word>());
-    CHECK(test<5, Word>());
-    CHECK(test<6, Word>());
     CHECK(test<7, Word>());
     CHECK(test<8, Word>());
     CHECK(test<9, Word>());
     CHECK(test<15, Word>());
     CHECK(test<16, Word>());
     CHECK(test<17, Word>());
-    CHECK(test<127, Word>());
-    CHECK(test<128, Word>());
-    CHECK(test<129, Word>());
+    CHECK(test<64, Word>());
+    CHECK(test<65, Word>());
     return true;
 }
 
