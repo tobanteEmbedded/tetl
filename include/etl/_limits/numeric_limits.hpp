@@ -543,14 +543,28 @@ struct numeric_limits<unsigned long> {
     static constexpr float_round_style round_style = round_toward_zero;
 };
 
-#if defined(LLONG_MIN) && defined(LLONG_MAX)
+
 template <>
 struct numeric_limits<long long> {
     static constexpr bool is_specialized = true;
 
-    static constexpr auto lowest() noexcept -> long long { return LLONG_MIN; }
-    static constexpr auto min() noexcept -> long long { return LLONG_MIN; }
-    static constexpr auto max() noexcept -> long long { return LLONG_MAX; }
+    static constexpr auto lowest() noexcept -> long long {
+        #if defined(LLONG_MIN)
+            return LLONG_MIN;
+        #else
+            return -__LONG_LONG_MAX__ - 1;
+        #endif
+    }
+
+    static constexpr auto min() noexcept -> long long { return lowest(); }
+
+    static constexpr auto max() noexcept -> long long {
+        #if defined(LLONG_MAX)
+            return LLONG_MAX;
+        #else
+            return __LONG_LONG_MAX__;
+        #endif
+    }
 
     static constexpr bool is_signed  = true;
     static constexpr bool is_integer = true;
@@ -587,16 +601,15 @@ struct numeric_limits<long long> {
     static constexpr bool tinyness_before          = false;
     static constexpr float_round_style round_style = round_toward_zero;
 };
-#endif
 
-#if defined(ULLONG_MAX)
+
 template <>
 struct numeric_limits<unsigned long long> {
     static constexpr bool is_specialized = true;
 
     static constexpr auto lowest() noexcept -> unsigned long long { return 0; }
     static constexpr auto min() noexcept -> unsigned long long { return 0; }
-    static constexpr auto max() noexcept -> unsigned long long { return ULLONG_MAX; }
+    static constexpr auto max() noexcept -> unsigned long long { return static_cast<unsigned long long>(-1); }
 
     static constexpr bool is_signed  = false;
     static constexpr bool is_integer = true;
@@ -633,7 +646,6 @@ struct numeric_limits<unsigned long long> {
     static constexpr bool tinyness_before          = false;
     static constexpr float_round_style round_style = round_toward_zero;
 };
-#endif
 
 template <>
 struct numeric_limits<float> {
