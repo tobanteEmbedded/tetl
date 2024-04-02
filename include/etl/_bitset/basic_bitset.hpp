@@ -30,8 +30,7 @@ struct basic_bitset {
 
     [[nodiscard]] constexpr auto operator[](etl::size_t pos) const -> bool
     {
-        auto& word = _words[word_index(pos)];
-        return etl::test_bit(word, static_cast<WordType>(offset_in_word(pos)));
+        return etl::test_bit(_words[word_index(pos)], offset_in_word(pos));
     }
 
     [[nodiscard]] constexpr auto all() const noexcept -> bool
@@ -127,15 +126,15 @@ private:
 
     [[nodiscard]] static constexpr auto word_index(etl::size_t pos) -> etl::size_t { return pos / bits_per_word; }
 
-    [[nodiscard]] static constexpr auto offset_in_word(etl::size_t pos) -> etl::size_t
+    [[nodiscard]] static constexpr auto offset_in_word(etl::size_t pos) -> WordType
     {
-        return pos & (bits_per_word - 1U);
+        return static_cast<WordType>(pos & (bits_per_word - etl::size_t(1)));
     }
 
     constexpr auto transform_bit(etl::size_t pos, auto op) -> basic_bitset&
     {
         auto& word = _words[word_index(pos)];
-        word       = op(word, static_cast<WordType>(offset_in_word(pos)));
+        word       = op(word, offset_in_word(pos));
         return *this;
     }
 
