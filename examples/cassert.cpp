@@ -10,7 +10,7 @@
 #define TETL_ENABLE_CUSTOM_ASSERT_HANDLER 1
 
 #undef NDEBUG              // force assertions in release build
-#include "etl/cassert.hpp" // for TETL_ASSERT
+#include "etl/cassert.hpp" // for assert
 
 #include <stdio.h>  // for printf
 #include <stdlib.h> // for exit
@@ -31,8 +31,8 @@ template <typename Assertion>
 
 auto main() -> int
 {
-    TETL_ASSERT(2 == 2); // success, nothing is printed
-    TETL_ASSERT(2 == 3); // failure, the assert handler is invoked
+    assert(2 == 2);      // success, nothing is printed
+    assert(2 == 3);      // failure, the assert handler is invoked
     return EXIT_SUCCESS; // unreachable
 }
 

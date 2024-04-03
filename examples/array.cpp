@@ -4,7 +4,7 @@
 
 #include <etl/algorithm.hpp> // for all_of, copy
 #include <etl/array.hpp>     // for array
-#include <etl/cassert.hpp>   // for TETL_ASSERT
+#include <etl/cassert.hpp>   // for assert
 #include <etl/iterator.hpp>  // for begin, end
 
 #include <stdio.h>  // for printf
@@ -12,23 +12,19 @@
 
 auto main() -> int
 {
-    using etl::all_of;
-    using etl::array;
-    using etl::copy;
-
-    auto src = array{1, 2, 3, 4}; // size & type are deduced
+    auto src = etl::array{1, 2, 3, 4}; // size & type are deduced
     for (auto& item : src) {
         printf("%d\n", item);
     }
 
     src.fill(42);
-    TETL_ASSERT(all_of(begin(src), end(src), [](auto v) { return v == 42; }));
+    assert(etl::all_of(src.begin(), src.end(), [](auto v) { return v == 42; }));
 
     decltype(src) dest = {};
-    TETL_ASSERT(all_of(begin(dest), end(dest), [](auto v) { return v == 0; }));
+    assert(etl::all_of(dest.begin(), dest.end(), [](auto v) { return v == 0; }));
 
-    copy(begin(src), end(src), begin(dest));
-    TETL_ASSERT(all_of(begin(dest), end(dest), [](auto v) { return v == 42; }));
+    etl::copy(src.begin(), src.end(), dest.begin());
+    assert(etl::all_of(dest.begin(), dest.end(), [](auto v) { return v == 42; }));
 
     return EXIT_SUCCESS;
 }

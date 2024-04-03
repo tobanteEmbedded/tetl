@@ -23,23 +23,23 @@ auto main() -> int
     // Unlike a std::vector you will have to decide which maximum capacity you
     // need. Apart from that it behaves almost the same as the standard version.
     etl::static_vector<Person, 32> people{};
-    TETL_ASSERT(people.empty());
-    TETL_ASSERT(people.capacity() == 32);
+    assert(people.empty());
+    assert(people.capacity() == 32);
 
     // You can push_back/emplace_back into the vector
     people.push_back(Person{20, 0});
-    TETL_ASSERT(people.size() == 1);
-    TETL_ASSERT(people.back().age == 20);
+    assert(people.size() == 1);
+    assert(people.back().age == 20);
 
     people.emplace_back(90, 100);
-    TETL_ASSERT(people.size() == 2);
-    TETL_ASSERT(people.back().age == 90);
+    assert(people.size() == 2);
+    assert(people.back().age == 90);
 
     // You can make copies.
     auto const copy = people;
 
     // You can compare vectors
-    TETL_ASSERT(copy == people);
+    assert(copy == people);
 
     // You can apply algorithms.
     auto levelUp = [](auto p) {
@@ -48,9 +48,9 @@ auto main() -> int
     };
 
     etl::transform(begin(people), end(people), begin(people), levelUp);
-    TETL_ASSERT(people[0].experience == 1);
-    TETL_ASSERT(people[1].experience == 101);
-    TETL_ASSERT(copy != people);
+    assert(people[0].experience == 1);
+    assert(people[1].experience == 101);
+    assert(copy != people);
 
     return EXIT_SUCCESS;
 }

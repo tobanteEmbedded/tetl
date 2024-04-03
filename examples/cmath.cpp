@@ -62,7 +62,7 @@ constexpr auto test() -> bool
 
 auto main() -> int
 {
-    TETL_ASSERT(test());
+    assert(test());
     static_assert(test());
     return 0;
 }
