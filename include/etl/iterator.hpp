@@ -45,5 +45,9 @@
 
 // Non-standard extensions
 #include <etl/_iterator/full.hpp>
+#include <etl/_iterator/legacy_bidirectional_iterator.hpp>
+#include <etl/_iterator/legacy_forward_iterator.hpp>
+#include <etl/_iterator/legacy_input_iterator.hpp>
+#include <etl/_iterator/legacy_iterator.hpp>
 
 #endif // TETL_ITERATOR_HPP

@@ -1,14 +1,14 @@
 // SPDX-License-Identifier: BSL-1.0
 
-#ifndef TETL_CONCEPTS_LEGACY_INPUT_ITERATOR_HPP
-#define TETL_CONCEPTS_LEGACY_INPUT_ITERATOR_HPP
+#ifndef TETL_ITERATOR_LEGACY_INPUT_ITERATOR_HPP
+#define TETL_ITERATOR_LEGACY_INPUT_ITERATOR_HPP
 
 #include <etl/_concepts/equality_comparable.hpp>
-#include <etl/_concepts/legacy_iterator.hpp>
 #include <etl/_concepts/signed_integral.hpp>
 #include <etl/_iterator/incrementable_traits.hpp>
 #include <etl/_iterator/indirectly_readable_traits.hpp>
 #include <etl/_iterator/iter_reference_t.hpp>
+#include <etl/_iterator/legacy_iterator.hpp>
 #include <etl/_type_traits/common_reference.hpp>
 
 namespace etl {
@@ -16,8 +16,8 @@ namespace etl {
 // clang-format off
 
 /// \note Non-standard extension
-/// \headerfile etl/concepts.hpp
-/// \ingroup concepts
+/// \headerfile etl/iterator.hpp
+/// \ingroup iterator
 template <typename Iter>
 concept legacy_input_iterator = etl::legacy_iterator<Iter> and etl::equality_comparable<Iter> and requires(Iter i) {
     typename etl::incrementable_traits<Iter>::difference_type;
@@ -32,4 +32,4 @@ concept legacy_input_iterator = etl::legacy_iterator<Iter> and etl::equality_com
 
 } // namespace etl
 
-#endif // TETL_CONCEPTS_LEGACY_INPUT_ITERATOR_HPP
+#endif // TETL_ITERATOR_LEGACY_INPUT_ITERATOR_HPP

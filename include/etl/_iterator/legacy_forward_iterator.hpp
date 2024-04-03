@@ -1,14 +1,14 @@
 // SPDX-License-Identifier: BSL-1.0
 
-#ifndef TETL_CONCEPTS_LEGACY_FORWARD_ITERATOR_HPP
-#define TETL_CONCEPTS_LEGACY_FORWARD_ITERATOR_HPP
+#ifndef TETL_ITERATOR_LEGACY_FORWARD_ITERATOR_HPP
+#define TETL_ITERATOR_LEGACY_FORWARD_ITERATOR_HPP
 
 #include <etl/_concepts/constructible_from.hpp>
 #include <etl/_concepts/convertible_to.hpp>
-#include <etl/_concepts/legacy_input_iterator.hpp>
 #include <etl/_concepts/same_as.hpp>
 #include <etl/_iterator/indirectly_readable_traits.hpp>
 #include <etl/_iterator/iter_reference_t.hpp>
+#include <etl/_iterator/legacy_input_iterator.hpp>
 #include <etl/_type_traits/is_reference.hpp>
 #include <etl/_type_traits/remove_cvref.hpp>
 
@@ -17,8 +17,8 @@ namespace etl {
 // clang-format off
 
 /// \note Non-standard extension
-/// \headerfile etl/concepts.hpp
-/// \ingroup concepts
+/// \headerfile etl/iterator.hpp
+/// \ingroup iterator
 template <typename Iter>
 concept legacy_forward_iterator = legacy_input_iterator<Iter>
     and etl::constructible_from<Iter>
@@ -33,4 +33,4 @@ concept legacy_forward_iterator = legacy_input_iterator<Iter>
 
 } // namespace etl
 
-#endif // TETL_CONCEPTS_LEGACY_FORWARD_ITERATOR_HPP
+#endif // TETL_ITERATOR_LEGACY_FORWARD_ITERATOR_HPP
