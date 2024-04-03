@@ -19,9 +19,9 @@ template <typename T>
 
 } // namespace detail
 
-/// \brief Determines if the given floating point number arg is negative.
+/// Determines if the given floating point number arg is negative.
 ///
-/// \details This function detects the sign bit of zeroes, infinities, and NaNs.
+/// This function detects the sign bit of zeroes, infinities, and NaNs.
 /// Along with etl::copysign, etl::signbit is one of the only two portable ways
 /// to examine the sign of a NaN.
 ///
@@ -40,9 +40,9 @@ template <typename T>
 #endif
 }
 
-/// \brief Determines if the given floating point number arg is negative.
+/// Determines if the given floating point number arg is negative.
 ///
-/// \details This function detects the sign bit of zeroes, infinities, and NaNs.
+/// This function detects the sign bit of zeroes, infinities, and NaNs.
 /// Along with etl::copysign, etl::signbit is one of the only two portable ways
 /// to examine the sign of a NaN.
 ///
@@ -61,9 +61,9 @@ template <typename T>
 #endif
 }
 
-/// \brief Determines if the given floating point number arg is negative.
+/// Determines if the given floating point number arg is negative.
 ///
-/// \details This function detects the sign bit of zeroes, infinities, and NaNs.
+/// This function detects the sign bit of zeroes, infinities, and NaNs.
 /// Along with etl::copysign, etl::signbit is one of the only two portable ways
 /// to examine the sign of a NaN.
 ///

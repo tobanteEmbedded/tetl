@@ -37,32 +37,32 @@ template <typename T>
 }
 } // namespace detail
 
-/// \brief Computes the nearest integer not greater in magnitude than arg.
+/// Computes the nearest integer not greater in magnitude than arg.
 /// \details https://en.cppreference.com/w/cpp/numeric/math/trunc
 /// \ingroup cmath
 [[nodiscard]] constexpr auto trunc(float arg) noexcept -> float { return detail::trunc_impl(arg); }
 
-/// \brief Computes the nearest integer not greater in magnitude than arg.
+/// Computes the nearest integer not greater in magnitude than arg.
 /// \details https://en.cppreference.com/w/cpp/numeric/math/trunc
 /// \ingroup cmath
 [[nodiscard]] constexpr auto truncf(float arg) noexcept -> float { return detail::trunc_impl(arg); }
 
-/// \brief Computes the nearest integer not greater in magnitude than arg.
+/// Computes the nearest integer not greater in magnitude than arg.
 /// \details https://en.cppreference.com/w/cpp/numeric/math/trunc
 /// \ingroup cmath
 [[nodiscard]] constexpr auto trunc(double arg) noexcept -> double { return detail::trunc_impl(arg); }
 
-/// \brief Computes the nearest integer not greater in magnitude than arg.
+/// Computes the nearest integer not greater in magnitude than arg.
 /// \details https://en.cppreference.com/w/cpp/numeric/math/trunc
 /// \ingroup cmath
 [[nodiscard]] constexpr auto trunc(long double arg) noexcept -> long double { return detail::trunc_impl(arg); }
 
-/// \brief Computes the nearest integer not greater in magnitude than arg.
+/// Computes the nearest integer not greater in magnitude than arg.
 /// \details https://en.cppreference.com/w/cpp/numeric/math/trunc
 /// \ingroup cmath
 [[nodiscard]] constexpr auto truncl(long double arg) noexcept -> long double { return detail::trunc_impl(arg); }
 
-/// \brief Computes the nearest integer not greater in magnitude than arg.
+/// Computes the nearest integer not greater in magnitude than arg.
 /// \details https://en.cppreference.com/w/cpp/numeric/math/trunc
 /// \ingroup cmath
 template <integral T>

@@ -43,7 +43,7 @@ inline constexpr struct hypot {
 
 } // namespace detail
 
-/// \brief Computes the square root of the sum of the squares of x and y,
+/// Computes the square root of the sum of the squares of x and y,
 /// without undue overflow or underflow at intermediate stages of the
 /// computation.
 ///
@@ -54,7 +54,7 @@ inline constexpr struct hypot {
 /// \ingroup cmath
 [[nodiscard]] constexpr auto hypot(float x, float y) noexcept -> float { return etl::detail::hypot(x, y); }
 
-/// \brief Computes the square root of the sum of the squares of x and y,
+/// Computes the square root of the sum of the squares of x and y,
 /// without undue overflow or underflow at intermediate stages of the
 /// computation.
 ///
@@ -65,7 +65,7 @@ inline constexpr struct hypot {
 /// \ingroup cmath
 [[nodiscard]] constexpr auto hypotf(float x, float y) noexcept -> float { return etl::detail::hypot(x, y); }
 
-/// \brief Computes the square root of the sum of the squares of x and y,
+/// Computes the square root of the sum of the squares of x and y,
 /// without undue overflow or underflow at intermediate stages of the
 /// computation.
 ///
@@ -76,7 +76,7 @@ inline constexpr struct hypot {
 /// \ingroup cmath
 [[nodiscard]] constexpr auto hypot(double x, double y) noexcept -> double { return etl::detail::hypot(x, y); }
 
-/// \brief Computes the square root of the sum of the squares of x and y,
+/// Computes the square root of the sum of the squares of x and y,
 /// without undue overflow or underflow at intermediate stages of the
 /// computation.
 ///
@@ -90,7 +90,7 @@ inline constexpr struct hypot {
     return etl::detail::hypot(x, y);
 }
 
-/// \brief Computes the square root of the sum of the squares of x and y,
+/// Computes the square root of the sum of the squares of x and y,
 /// without undue overflow or underflow at intermediate stages of the
 /// computation.
 ///
@@ -104,7 +104,7 @@ inline constexpr struct hypot {
     return etl::detail::hypot(x, y);
 }
 
-/// \brief Computes the square root of the sum of the squares of x, y, and z,
+/// Computes the square root of the sum of the squares of x, y, and z,
 /// without undue overflow or underflow at intermediate stages of the
 /// computation.
 ///
@@ -115,7 +115,7 @@ inline constexpr struct hypot {
 /// \ingroup cmath
 [[nodiscard]] constexpr auto hypot(float x, float y, float z) noexcept -> float { return etl::detail::hypot(x, y, z); }
 
-/// \brief Computes the square root of the sum of the squares of x, y, and z,
+/// Computes the square root of the sum of the squares of x, y, and z,
 /// without undue overflow or underflow at intermediate stages of the
 /// computation.
 ///
@@ -129,7 +129,7 @@ inline constexpr struct hypot {
     return etl::detail::hypot(x, y, z);
 }
 
-/// \brief Computes the square root of the sum of the squares of x, y, and z,
+/// Computes the square root of the sum of the squares of x, y, and z,
 /// without undue overflow or underflow at intermediate stages of the
 /// computation.
 ///

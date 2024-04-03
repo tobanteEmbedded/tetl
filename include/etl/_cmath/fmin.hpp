@@ -7,7 +7,7 @@
 
 namespace etl {
 
-/// \brief Returns the smaller of two floating point arguments, treating NaNs as
+/// Returns the smaller of two floating point arguments, treating NaNs as
 /// missing data (between a NaN and a numeric value, the numeric value is
 /// chosen)
 ///
@@ -15,7 +15,7 @@ namespace etl {
 /// \ingroup cmath
 [[nodiscard]] constexpr auto fmin(float x, float y) noexcept -> float { return etl::detail::gcem::min(x, y); }
 
-/// \brief Returns the smaller of two floating point arguments, treating NaNs as
+/// Returns the smaller of two floating point arguments, treating NaNs as
 /// missing data (between a NaN and a numeric value, the numeric value is
 /// chosen)
 ///
@@ -23,7 +23,7 @@ namespace etl {
 /// \ingroup cmath
 [[nodiscard]] constexpr auto fminf(float x, float y) noexcept -> float { return etl::detail::gcem::min(x, y); }
 
-/// \brief Returns the smaller of two floating point arguments, treating NaNs as
+/// Returns the smaller of two floating point arguments, treating NaNs as
 /// missing data (between a NaN and a numeric value, the numeric value is
 /// chosen)
 ///
@@ -31,7 +31,7 @@ namespace etl {
 /// \ingroup cmath
 [[nodiscard]] constexpr auto fmin(double x, double y) noexcept -> double { return etl::detail::gcem::min(x, y); }
 
-/// \brief Returns the smaller of two floating point arguments, treating NaNs as
+/// Returns the smaller of two floating point arguments, treating NaNs as
 /// missing data (between a NaN and a numeric value, the numeric value is
 /// chosen)
 ///
@@ -42,7 +42,7 @@ namespace etl {
     return etl::detail::gcem::min(x, y);
 }
 
-/// \brief Returns the smaller of two floating point arguments, treating NaNs as
+/// Returns the smaller of two floating point arguments, treating NaNs as
 /// missing data (between a NaN and a numeric value, the numeric value is
 /// chosen)
 ///

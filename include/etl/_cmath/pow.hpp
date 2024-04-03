@@ -10,7 +10,7 @@
 
 namespace etl {
 
-/// \brief Computes the value of base raised to the power exp
+/// Computes the value of base raised to the power exp
 /// \details https://en.cppreference.com/w/cpp/numeric/math/pow
 /// \ingroup cmath
 [[nodiscard]] constexpr auto pow(float base, float exp) -> float
@@ -29,12 +29,12 @@ namespace etl {
 #endif
 }
 
-/// \brief Computes the value of base raised to the power exp
+/// Computes the value of base raised to the power exp
 /// \details https://en.cppreference.com/w/cpp/numeric/math/pow
 /// \ingroup cmath
 [[nodiscard]] constexpr auto powf(float base, float exp) -> float { return etl::pow(base, exp); }
 
-/// \brief Computes the value of base raised to the power exp
+/// Computes the value of base raised to the power exp
 /// \details https://en.cppreference.com/w/cpp/numeric/math/pow
 /// \ingroup cmath
 [[nodiscard]] constexpr auto pow(double base, double exp) -> double
@@ -53,7 +53,7 @@ namespace etl {
 #endif
 }
 
-/// \brief Computes the value of base raised to the power exp
+/// Computes the value of base raised to the power exp
 /// \details https://en.cppreference.com/w/cpp/numeric/math/pow
 /// \ingroup cmath
 [[nodiscard]] constexpr auto pow(long double base, long double exp) -> long double
@@ -61,22 +61,22 @@ namespace etl {
     return detail::gcem::pow(base, exp);
 }
 
-/// \brief Computes the value of base raised to the power exp
+/// Computes the value of base raised to the power exp
 /// \details https://en.cppreference.com/w/cpp/numeric/math/pow
 /// \ingroup cmath
 [[nodiscard]] constexpr auto powl(long double base, long double exp) -> long double { return etl::pow(base, exp); }
 
-/// \brief Computes the value of base raised to the power exp
+/// Computes the value of base raised to the power exp
 /// \details https://en.cppreference.com/w/cpp/numeric/math/pow
 /// \ingroup cmath
 [[nodiscard]] constexpr auto pow(float base, int iexp) -> float { return etl::pow(base, static_cast<float>(iexp)); }
 
-/// \brief Computes the value of base raised to the power exp
+/// Computes the value of base raised to the power exp
 /// \details https://en.cppreference.com/w/cpp/numeric/math/pow
 /// \ingroup cmath
 [[nodiscard]] constexpr auto pow(double base, int iexp) -> double { return etl::pow(base, static_cast<double>(iexp)); }
 
-/// \brief Computes the value of base raised to the power exp
+/// Computes the value of base raised to the power exp
 /// \details https://en.cppreference.com/w/cpp/numeric/math/pow
 /// \ingroup cmath
 [[nodiscard]] constexpr auto pow(long double base, int iexp) -> long double

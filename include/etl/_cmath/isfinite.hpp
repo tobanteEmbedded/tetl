@@ -8,7 +8,7 @@
 
 namespace etl {
 
-/// \brief Determines if the given floating point number arg has finite value
+/// Determines if the given floating point number arg has finite value
 /// i.e. it is normal, subnormal or zero, but not infinite or NaN.
 /// \details https://en.cppreference.com/w/cpp/numeric/math/isfinite
 /// \ingroup cmath

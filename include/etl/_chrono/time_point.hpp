@@ -8,7 +8,7 @@
 
 namespace etl::chrono {
 
-/// \brief Class template time_point represents a point in time. It is
+/// Class template time_point represents a point in time. It is
 /// implemented as if it stores a value of type Duration indicating the time
 /// interval from the start of the Clock's epoch.
 ///
@@ -19,30 +19,30 @@ namespace etl::chrono {
 /// \ingroup chrono
 template <typename Clock, typename Duration = typename Clock::duration>
 struct time_point {
-    /// \brief Clock, the clock on which this time point is measured.
+    /// Clock, the clock on which this time point is measured.
     using clock = Clock;
 
-    /// \brief Duration, a duration type used to measure the time since epoch.
+    /// Duration, a duration type used to measure the time since epoch.
     using duration = Duration;
 
-    /// \brief Rep, an arithmetic type representing the number of ticks of the
+    /// Rep, an arithmetic type representing the number of ticks of the
     /// duration.
     using rep = typename duration::rep;
 
-    /// \brief Period, a ratio type representing the tick period of the
+    /// Period, a ratio type representing the tick period of the
     /// duration.
     using period = typename duration::period;
 
-    /// \brief Constructs a new time_point from one of several optional data
+    /// Constructs a new time_point from one of several optional data
     /// sources. Default constructor, creates a time_point representing the
     /// Clock's epoch (i.e., time_since_epoch() is zero).
     constexpr time_point() noexcept = default;
 
-    /// \brief Constructs a new time_point from one of several optional data
+    /// Constructs a new time_point from one of several optional data
     /// sources. Constructs a time_point at Clock's epoch plus d.
     constexpr explicit time_point(duration const& d) noexcept : _d{d} { }
 
-    /// \brief Constructs a new time_point from one of several optional data
+    /// Constructs a new time_point from one of several optional data
     /// sources. Constructs a time_point by converting t to duration. This
     /// constructor only participates in overload resolution if Duration2 is
     /// implicitly convertible to duration.
@@ -52,7 +52,7 @@ struct time_point {
     {
     }
 
-    /// \brief Returns a duration representing the amount of time between *this
+    /// Returns a duration representing the amount of time between *this
     /// and the clock's epoch.
     [[nodiscard]] constexpr auto time_since_epoch() const noexcept -> duration { return _d; }
 

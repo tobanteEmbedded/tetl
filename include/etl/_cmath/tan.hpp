@@ -11,7 +11,7 @@
 
 namespace etl {
 
-/// \brief Computes the tangent of arg (measured in radians).
+/// Computes the tangent of arg (measured in radians).
 /// \details https://en.cppreference.com/w/cpp/numeric/math/tan
 /// \ingroup cmath
 [[nodiscard]] constexpr auto tan(float arg) noexcept -> float
@@ -30,12 +30,12 @@ namespace etl {
 #endif
 }
 
-/// \brief Computes the tangent of arg (measured in radians).
+/// Computes the tangent of arg (measured in radians).
 /// \details https://en.cppreference.com/w/cpp/numeric/math/tan
 /// \ingroup cmath
 [[nodiscard]] constexpr auto tanf(float arg) noexcept -> float { return etl::tan(arg); }
 
-/// \brief Computes the tangent of arg (measured in radians).
+/// Computes the tangent of arg (measured in radians).
 /// \details https://en.cppreference.com/w/cpp/numeric/math/tan
 /// \ingroup cmath
 [[nodiscard]] constexpr auto tan(double arg) noexcept -> double
@@ -54,17 +54,17 @@ namespace etl {
 #endif
 }
 
-/// \brief Computes the tangent of arg (measured in radians).
+/// Computes the tangent of arg (measured in radians).
 /// \details https://en.cppreference.com/w/cpp/numeric/math/tan
 /// \ingroup cmath
 [[nodiscard]] constexpr auto tan(long double arg) noexcept -> long double { return etl::detail::gcem::tan(arg); }
 
-/// \brief Computes the tangent of arg (measured in radians).
+/// Computes the tangent of arg (measured in radians).
 /// \details https://en.cppreference.com/w/cpp/numeric/math/tan
 /// \ingroup cmath
 [[nodiscard]] constexpr auto tanl(long double arg) noexcept -> long double { return etl::tan(arg); }
 
-/// \brief Computes the tangent of arg (measured in radians).
+/// Computes the tangent of arg (measured in radians).
 /// \details https://en.cppreference.com/w/cpp/numeric/math/tan
 /// \ingroup cmath
 template <integral T>

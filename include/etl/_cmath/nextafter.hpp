@@ -28,7 +28,7 @@ template <typename T>
 }
 } // namespace detail
 
-/// \brief Returns the next representable value of from in the direction of to.
+/// Returns the next representable value of from in the direction of to.
 /// If from equals to, to is returned.
 /// \details ttps://en.cppreference.com/w/cpp/numeric/math/nextafter
 /// \ingroup cmath
@@ -37,7 +37,7 @@ template <typename T>
     return detail::nextafter_impl(from, to);
 }
 
-/// \brief Returns the next representable value of from in the direction of to.
+/// Returns the next representable value of from in the direction of to.
 /// If from equals to, to is returned.
 /// \details ttps://en.cppreference.com/w/cpp/numeric/math/nextafter
 /// \ingroup cmath
@@ -46,7 +46,7 @@ template <typename T>
     return detail::nextafter_impl(from, to);
 }
 
-/// \brief Returns the next representable value of from in the direction of to.
+/// Returns the next representable value of from in the direction of to.
 /// If from equals to, to is returned.
 /// \details ttps://en.cppreference.com/w/cpp/numeric/math/nextafter
 /// \ingroup cmath

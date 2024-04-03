@@ -31,11 +31,11 @@
 
 namespace etl {
 
-/// \brief Most efficient floating-point type at least as wide as float.
+/// Most efficient floating-point type at least as wide as float.
 /// \ingroup cmath
 using float_t = float;
 
-/// \brief Most efficient floating-point type at least as wide as double.
+/// Most efficient floating-point type at least as wide as double.
 /// \ingroup cmath
 using double_t = double;
 

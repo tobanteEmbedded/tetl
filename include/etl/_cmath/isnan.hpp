@@ -10,7 +10,7 @@
 
 namespace etl {
 
-/// \brief Determines if the given floating point number arg is a not-a-number (NaN) value.
+/// Determines if the given floating point number arg is a not-a-number (NaN) value.
 /// \details https://en.cppreference.com/w/cpp/numeric/math/isnan
 /// \ingroup cmath
 [[nodiscard]] constexpr auto isnan(float arg) -> bool
@@ -42,7 +42,7 @@ namespace etl {
 #endif
 }
 
-/// \brief Determines if the given floating point number arg is a not-a-number (NaN) value.
+/// Determines if the given floating point number arg is a not-a-number (NaN) value.
 /// \details https://en.cppreference.com/w/cpp/numeric/math/isnan
 /// \ingroup cmath
 template <integral Int>

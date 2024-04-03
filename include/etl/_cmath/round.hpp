@@ -37,7 +37,7 @@ template <typename T>
 }
 } // namespace detail
 
-/// \brief Computes the nearest integer value to arg (in floating-point format),
+/// Computes the nearest integer value to arg (in floating-point format),
 /// rounding halfway cases away from zero, regardless of the current rounding
 /// mode.
 ///
@@ -45,7 +45,7 @@ template <typename T>
 /// \ingroup cmath
 [[nodiscard]] constexpr auto round(float arg) noexcept -> float { return detail::round_impl(arg); }
 
-/// \brief Computes the nearest integer value to arg (in floating-point format),
+/// Computes the nearest integer value to arg (in floating-point format),
 /// rounding halfway cases away from zero, regardless of the current rounding
 /// mode.
 ///
@@ -53,7 +53,7 @@ template <typename T>
 /// \ingroup cmath
 [[nodiscard]] constexpr auto roundf(float arg) noexcept -> float { return detail::round_impl(arg); }
 
-/// \brief Computes the nearest integer value to arg (in floating-point format),
+/// Computes the nearest integer value to arg (in floating-point format),
 /// rounding halfway cases away from zero, regardless of the current rounding
 /// mode.
 ///
@@ -61,7 +61,7 @@ template <typename T>
 /// \ingroup cmath
 [[nodiscard]] constexpr auto round(double arg) noexcept -> double { return detail::round_impl(arg); }
 
-/// \brief Computes the nearest integer value to arg (in floating-point format),
+/// Computes the nearest integer value to arg (in floating-point format),
 /// rounding halfway cases away from zero, regardless of the current rounding
 /// mode.
 ///
@@ -69,7 +69,7 @@ template <typename T>
 /// \ingroup cmath
 [[nodiscard]] constexpr auto round(long double arg) noexcept -> long double { return detail::round_impl(arg); }
 
-/// \brief Computes the nearest integer value to arg (in floating-point format),
+/// Computes the nearest integer value to arg (in floating-point format),
 /// rounding halfway cases away from zero, regardless of the current rounding
 /// mode.
 ///
@@ -77,7 +77,7 @@ template <typename T>
 /// \ingroup cmath
 [[nodiscard]] constexpr auto roundl(long double arg) noexcept -> long double { return detail::round_impl(arg); }
 
-/// \brief Computes the nearest integer value to arg (in floating-point format),
+/// Computes the nearest integer value to arg (in floating-point format),
 /// rounding halfway cases away from zero, regardless of the current rounding
 /// mode.
 ///

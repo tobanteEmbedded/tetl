@@ -7,7 +7,7 @@
 
 namespace etl {
 
-/// \brief Converts the implementation-defined character string arg into the
+/// Converts the implementation-defined character string arg into the
 /// corresponding quiet NaN value
 ///
 /// \details Returns the quiet NaN value that corresponds to the identifying
@@ -22,7 +22,7 @@ namespace etl {
     return TETL_BUILTIN_NANF("");
 }
 
-/// \brief Converts the implementation-defined character string arg into the
+/// Converts the implementation-defined character string arg into the
 /// corresponding quiet NaN value
 ///
 /// \details Returns the quiet NaN value that corresponds to the identifying
@@ -37,7 +37,7 @@ namespace etl {
     return TETL_BUILTIN_NAN("");
 }
 
-/// \brief Converts the implementation-defined character string arg into the
+/// Converts the implementation-defined character string arg into the
 /// corresponding quiet NaN value
 ///
 /// \details Returns the quiet NaN value that corresponds to the identifying

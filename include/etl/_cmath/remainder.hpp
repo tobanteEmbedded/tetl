@@ -7,22 +7,22 @@
 
 namespace etl {
 
-/// \brief Computes the remainder of the floating point division operation x/y.
+/// Computes the remainder of the floating point division operation x/y.
 /// \details https://en.cppreference.com/w/cpp/numeric/math/remainder
 /// \ingroup cmath
 [[nodiscard]] constexpr auto remainder(float x, float y) noexcept -> float { return etl::detail::gcem::fmod(x, y); }
 
-/// \brief Computes the remainder of the floating point division operation x/y.
+/// Computes the remainder of the floating point division operation x/y.
 /// \details https://en.cppreference.com/w/cpp/numeric/math/remainder
 /// \ingroup cmath
 [[nodiscard]] constexpr auto remainderf(float x, float y) noexcept -> float { return etl::detail::gcem::fmod(x, y); }
 
-/// \brief Computes the remainder of the floating point division operation x/y.
+/// Computes the remainder of the floating point division operation x/y.
 /// \details https://en.cppreference.com/w/cpp/numeric/math/remainder
 /// \ingroup cmath
 [[nodiscard]] constexpr auto remainder(double x, double y) noexcept -> double { return etl::detail::gcem::fmod(x, y); }
 
-/// \brief Computes the remainder of the floating point division operation x/y.
+/// Computes the remainder of the floating point division operation x/y.
 /// \details https://en.cppreference.com/w/cpp/numeric/math/remainder
 /// \ingroup cmath
 [[nodiscard]] constexpr auto remainder(long double x, long double y) noexcept -> long double
@@ -30,7 +30,7 @@ namespace etl {
     return etl::detail::gcem::fmod(x, y);
 }
 
-/// \brief Computes the remainder of the floating point division operation x/y.
+/// Computes the remainder of the floating point division operation x/y.
 /// \details https://en.cppreference.com/w/cpp/numeric/math/remainder
 /// \ingroup cmath
 [[nodiscard]] constexpr auto remainderl(long double x, long double y) noexcept -> long double

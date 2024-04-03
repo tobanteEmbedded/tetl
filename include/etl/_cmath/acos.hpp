@@ -8,32 +8,32 @@
 
 namespace etl {
 
-/// \brief Computes the principal value of the arc cosine of arg.
+/// Computes the principal value of the arc cosine of arg.
 /// \details https://en.cppreference.com/w/cpp/numeric/math/acos
 /// \ingroup cmath
 [[nodiscard]] constexpr auto acos(float arg) noexcept -> float { return etl::detail::gcem::acos(arg); }
 
-/// \brief Computes the principal value of the arc cosine of arg.
+/// Computes the principal value of the arc cosine of arg.
 /// \details https://en.cppreference.com/w/cpp/numeric/math/acos
 /// \ingroup cmath
 [[nodiscard]] constexpr auto acosf(float arg) noexcept -> float { return etl::detail::gcem::acos(arg); }
 
-/// \brief Computes the principal value of the arc cosine of arg.
+/// Computes the principal value of the arc cosine of arg.
 /// \details https://en.cppreference.com/w/cpp/numeric/math/acos
 /// \ingroup cmath
 [[nodiscard]] constexpr auto acos(double arg) noexcept -> double { return etl::detail::gcem::acos(arg); }
 
-/// \brief Computes the principal value of the arc cosine of arg.
+/// Computes the principal value of the arc cosine of arg.
 /// \details https://en.cppreference.com/w/cpp/numeric/math/acos
 /// \ingroup cmath
 [[nodiscard]] constexpr auto acos(long double arg) noexcept -> long double { return etl::detail::gcem::acos(arg); }
 
-/// \brief Computes the principal value of the arc cosine of arg.
+/// Computes the principal value of the arc cosine of arg.
 /// \details https://en.cppreference.com/w/cpp/numeric/math/acos
 /// \ingroup cmath
 [[nodiscard]] constexpr auto acosl(long double arg) noexcept -> long double { return etl::detail::gcem::acos(arg); }
 
-/// \brief Computes the principal value of the arc cosine of arg.
+/// Computes the principal value of the arc cosine of arg.
 /// \details https://en.cppreference.com/w/cpp/numeric/math/acos
 /// \ingroup cmath
 template <integral T>

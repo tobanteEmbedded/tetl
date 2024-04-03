@@ -7,7 +7,7 @@
 
 namespace etl {
 
-/// \brief Computes a+t(b−a), i.e. the linear interpolation between a and b for
+/// Computes a+t(b−a), i.e. the linear interpolation between a and b for
 /// the parameter t (or extrapolation, when t is outside the range [0,1]).
 /// \details https://en.cppreference.com/w/cpp/numeric/lerp
 /// \ingroup cmath

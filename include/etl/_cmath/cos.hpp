@@ -11,7 +11,7 @@
 
 namespace etl {
 
-/// \brief Computes the cosine of arg (measured in radians).
+/// Computes the cosine of arg (measured in radians).
 /// \details https://en.cppreference.com/w/cpp/numeric/math/cos
 /// \ingroup cmath
 [[nodiscard]] constexpr auto cos(float arg) noexcept -> float
@@ -30,12 +30,12 @@ namespace etl {
 #endif
 }
 
-/// \brief Computes the cosine of arg (measured in radians).
+/// Computes the cosine of arg (measured in radians).
 /// \details https://en.cppreference.com/w/cpp/numeric/math/cos
 /// \ingroup cmath
 [[nodiscard]] constexpr auto cosf(float arg) noexcept -> float { return etl::cos(arg); }
 
-/// \brief Computes the cosine of arg (measured in radians).
+/// Computes the cosine of arg (measured in radians).
 /// \details https://en.cppreference.com/w/cpp/numeric/math/cos
 /// \ingroup cmath
 [[nodiscard]] constexpr auto cos(double arg) noexcept -> double
@@ -54,17 +54,17 @@ namespace etl {
 #endif
 }
 
-/// \brief Computes the cosine of arg (measured in radians).
+/// Computes the cosine of arg (measured in radians).
 /// \details https://en.cppreference.com/w/cpp/numeric/math/cos
 /// \ingroup cmath
 [[nodiscard]] constexpr auto cos(long double arg) noexcept -> long double { return etl::detail::gcem::cos(arg); }
 
-/// \brief Computes the cosine of arg (measured in radians).
+/// Computes the cosine of arg (measured in radians).
 /// \details https://en.cppreference.com/w/cpp/numeric/math/cos
 /// \ingroup cmath
 [[nodiscard]] constexpr auto cosl(long double arg) noexcept -> long double { return etl::cos(arg); }
 
-/// \brief Computes the cosine of arg (measured in radians).
+/// Computes the cosine of arg (measured in radians).
 /// \details https://en.cppreference.com/w/cpp/numeric/math/cos
 /// \ingroup cmath
 template <integral T>

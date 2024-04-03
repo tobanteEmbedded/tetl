@@ -11,7 +11,7 @@
 
 namespace etl {
 
-/// \brief Computes e (Euler's number, 2.7182...) raised to the given power v
+/// Computes e (Euler's number, 2.7182...) raised to the given power v
 /// \details https://en.cppreference.com/w/cpp/numeric/math/exp
 /// \ingroup cmath
 [[nodiscard]] constexpr auto exp(float v) noexcept -> float
@@ -30,12 +30,12 @@ namespace etl {
 #endif
 }
 
-/// \brief Computes e (Euler's number, 2.7182...) raised to the given power v
+/// Computes e (Euler's number, 2.7182...) raised to the given power v
 /// \details https://en.cppreference.com/w/cpp/numeric/math/exp
 /// \ingroup cmath
 [[nodiscard]] constexpr auto expf(float v) noexcept -> float { return etl::exp(v); }
 
-/// \brief Computes e (Euler's number, 2.7182...) raised to the given power v
+/// Computes e (Euler's number, 2.7182...) raised to the given power v
 /// \details https://en.cppreference.com/w/cpp/numeric/math/exp
 /// \ingroup cmath
 [[nodiscard]] constexpr auto exp(double v) noexcept -> double
@@ -54,17 +54,17 @@ namespace etl {
 #endif
 }
 
-/// \brief Computes e (Euler's number, 2.7182...) raised to the given power v
+/// Computes e (Euler's number, 2.7182...) raised to the given power v
 /// \details https://en.cppreference.com/w/cpp/numeric/math/exp
 /// \ingroup cmath
 [[nodiscard]] constexpr auto exp(long double v) noexcept -> long double { return etl::detail::gcem::exp(v); }
 
-/// \brief Computes e (Euler's number, 2.7182...) raised to the given power v
+/// Computes e (Euler's number, 2.7182...) raised to the given power v
 /// \details https://en.cppreference.com/w/cpp/numeric/math/exp
 /// \ingroup cmath
 [[nodiscard]] constexpr auto expl(long double v) noexcept -> long double { return etl::exp(v); }
 
-/// \brief Computes e (Euler's number, 2.7182...) raised to the given power v
+/// Computes e (Euler's number, 2.7182...) raised to the given power v
 /// \details https://en.cppreference.com/w/cpp/numeric/math/exp
 /// \ingroup cmath
 template <integral T>

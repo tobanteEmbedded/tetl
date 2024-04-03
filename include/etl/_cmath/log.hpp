@@ -41,32 +41,32 @@ inline constexpr struct log {
 
 } // namespace detail
 
-/// \brief Computes the natural (base e) logarithm of arg.
+/// Computes the natural (base e) logarithm of arg.
 /// \details https://en.cppreference.com/w/cpp/numeric/math/log
 /// \ingroup cmath
 [[nodiscard]] constexpr auto log(float v) noexcept -> float { return etl::detail::log(v); }
 
-/// \brief Computes the natural (base e) logarithm of arg.
+/// Computes the natural (base e) logarithm of arg.
 /// \details https://en.cppreference.com/w/cpp/numeric/math/log
 /// \ingroup cmath
 [[nodiscard]] constexpr auto logf(float v) noexcept -> float { return etl::detail::log(v); }
 
-/// \brief Computes the natural (base e) logarithm of arg.
+/// Computes the natural (base e) logarithm of arg.
 /// \details https://en.cppreference.com/w/cpp/numeric/math/log
 /// \ingroup cmath
 [[nodiscard]] constexpr auto log(double v) noexcept -> double { return etl::detail::log(v); }
 
-/// \brief Computes the natural (base e) logarithm of arg.
+/// Computes the natural (base e) logarithm of arg.
 /// \details https://en.cppreference.com/w/cpp/numeric/math/log
 /// \ingroup cmath
 [[nodiscard]] constexpr auto log(long double v) noexcept -> long double { return etl::detail::log(v); }
 
-/// \brief Computes the natural (base e) logarithm of arg.
+/// Computes the natural (base e) logarithm of arg.
 /// \details https://en.cppreference.com/w/cpp/numeric/math/log
 /// \ingroup cmath
 [[nodiscard]] constexpr auto logl(long double v) noexcept -> long double { return etl::detail::log(v); }
 
-/// \brief Computes the natural (base e) logarithm of arg.
+/// Computes the natural (base e) logarithm of arg.
 /// \details https://en.cppreference.com/w/cpp/numeric/math/log
 /// \ingroup cmath
 template <integral T>

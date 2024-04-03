@@ -8,32 +8,32 @@
 
 namespace etl {
 
-/// \brief Computes the principal value of the arc tangent of arg.
+/// Computes the principal value of the arc tangent of arg.
 /// \details https://en.cppreference.com/w/cpp/numeric/math/atan
 /// \ingroup cmath
 [[nodiscard]] constexpr auto atan(float arg) noexcept -> float { return etl::detail::gcem::atan(arg); }
 
-/// \brief Computes the principal value of the arc tangent of arg.
+/// Computes the principal value of the arc tangent of arg.
 /// \details https://en.cppreference.com/w/cpp/numeric/math/atan
 /// \ingroup cmath
 [[nodiscard]] constexpr auto atanf(float arg) noexcept -> float { return etl::detail::gcem::atan(arg); }
 
-/// \brief Computes the principal value of the arc tangent of arg.
+/// Computes the principal value of the arc tangent of arg.
 /// \details https://en.cppreference.com/w/cpp/numeric/math/atan
 /// \ingroup cmath
 [[nodiscard]] constexpr auto atan(double arg) noexcept -> double { return etl::detail::gcem::atan(arg); }
 
-/// \brief Computes the principal value of the arc tangent of arg.
+/// Computes the principal value of the arc tangent of arg.
 /// \details https://en.cppreference.com/w/cpp/numeric/math/atan
 /// \ingroup cmath
 [[nodiscard]] constexpr auto atan(long double arg) noexcept -> long double { return etl::detail::gcem::atan(arg); }
 
-/// \brief Computes the principal value of the arc tangent of arg.
+/// Computes the principal value of the arc tangent of arg.
 /// \details https://en.cppreference.com/w/cpp/numeric/math/atan
 /// \ingroup cmath
 [[nodiscard]] constexpr auto atanl(long double arg) noexcept -> long double { return etl::detail::gcem::atan(arg); }
 
-/// \brief Computes the principal value of the arc tangent of arg.
+/// Computes the principal value of the arc tangent of arg.
 /// \details https://en.cppreference.com/w/cpp/numeric/math/atan
 /// \ingroup cmath
 template <integral T>

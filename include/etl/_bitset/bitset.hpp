@@ -30,7 +30,7 @@ struct bitset {
     /// references and pointers) are not built with enough precision to specify
     /// individual bits.
     struct reference {
-        /// \brief Assigns a value to the referenced bit.
+        /// Assigns a value to the referenced bit.
         constexpr auto operator=(bool value) noexcept -> reference&
         {
             if (value) {
@@ -42,7 +42,7 @@ struct bitset {
             return *this;
         }
 
-        /// \brief Assigns a value to the referenced bit.
+        /// Assigns a value to the referenced bit.
         /// \returns *this
         constexpr auto operator=(reference const& x) noexcept -> reference&
         {
@@ -50,13 +50,13 @@ struct bitset {
             return *this;
         }
 
-        /// \brief Returns the value of the referenced bit.
+        /// Returns the value of the referenced bit.
         [[nodiscard]] constexpr operator bool() const noexcept { return (*_data & (1U << _position)) != 0; }
 
-        /// \brief Returns the inverse of the referenced bit.
+        /// Returns the inverse of the referenced bit.
         [[nodiscard]] constexpr auto operator~() const noexcept -> bool { return !static_cast<bool>(*this); }
 
-        /// \brief Inverts the referenced bit.
+        /// Inverts the referenced bit.
         /// \returns *this
         constexpr auto flip() noexcept -> reference&
         {
@@ -72,10 +72,10 @@ struct bitset {
         uint8_t _position;
     };
 
-    /// \brief Constructs a bitset with all bits set to zero.
+    /// Constructs a bitset with all bits set to zero.
     constexpr bitset() noexcept = default;
 
-    /// \brief Constructs a bitset, initializing the first (rightmost, least
+    /// Constructs a bitset, initializing the first (rightmost, least
     /// significant) M bit positions to the corresponding bit values of val,
     /// where M is the smaller of the number of bits in an unsigned long long
     /// and the number of bits N in the bitset being constructed. If M is less
@@ -92,7 +92,7 @@ struct bitset {
         }
     }
 
-    /// \brief Constructs a bitset using the characters in the
+    /// Constructs a bitset using the characters in the
     /// etl::basic_string_view str.
     ///
     /// \details An optional starting position pos and length n can be provided,
@@ -129,7 +129,7 @@ struct bitset {
         }
     }
 
-    /// \brief Constructs a bitset using the characters in the char const* str.
+    /// Constructs a bitset using the characters in the char const* str.
     ///
     /// \param str string used to initialize the bitset
     /// \param n number of characters to use from str
@@ -152,7 +152,7 @@ struct bitset {
     {
     }
 
-    /// \brief Sets all bits to true.
+    /// Sets all bits to true.
     constexpr auto set() noexcept -> bitset<N>&
     {
         for (auto& b : _bits) {
@@ -161,7 +161,7 @@ struct bitset {
         return *this;
     }
 
-    /// \brief Sets the bit at the given position to the given value.
+    /// Sets the bit at the given position to the given value.
     ///
     /// \param pos Index of the bit to be modified.
     /// \param value The new value for the bit.
@@ -179,14 +179,14 @@ struct bitset {
         return *this;
     }
 
-    /// \brief Sets all bits to false.
+    /// Sets all bits to false.
     constexpr auto reset() noexcept -> bitset<N>&
     {
         _bits.fill(0);
         return *this;
     }
 
-    /// \brief Sets the bit at position pos to false.
+    /// Sets the bit at position pos to false.
     ///
     /// \param pos Index of the bit to be reset.
     /// \returns *this
@@ -198,7 +198,7 @@ struct bitset {
         return *this;
     }
 
-    /// \brief Flips all bits (like operator~, but in-place).
+    /// Flips all bits (like operator~, but in-place).
     constexpr auto flip() noexcept -> bitset<N>&
     {
         for (auto& b : _bits) {
@@ -207,7 +207,7 @@ struct bitset {
         return *this;
     }
 
-    /// \brief Flips the bit at the position pos.
+    /// Flips the bit at the position pos.
     ///
     /// \param pos Index of the bit to be reset.
     /// \returns *this
@@ -219,7 +219,7 @@ struct bitset {
         return *this;
     }
 
-    /// \brief Returns a reference like proxy to the bit at the position pos.
+    /// Returns a reference like proxy to the bit at the position pos.
     /// Perfoms no bounds checking.
     ///
     /// \param pos Index of the bit.
@@ -230,13 +230,13 @@ struct bitset {
         return reference(&byte, offset);
     }
 
-    /// \brief Returns the value of the bit at the position pos. Perfoms no
+    /// Returns the value of the bit at the position pos. Perfoms no
     /// bounds checking.
     ///
     /// \param pos Index of the bit.
     [[nodiscard]] constexpr auto operator[](size_t const pos) const -> bool { return test(pos); }
 
-    /// \brief Returns the value of the bit at the position pos. Perfoms no
+    /// Returns the value of the bit at the position pos. Perfoms no
     /// bounds checking.
     ///
     /// \param pos Index of the bit.
@@ -247,16 +247,16 @@ struct bitset {
         return (byte & (1U << offset)) != 0;
     }
 
-    /// \brief Checks if all bits are set to true.
+    /// Checks if all bits are set to true.
     [[nodiscard]] constexpr auto all() const noexcept -> bool { return count() == size(); }
 
-    /// \brief Checks if any bits are set to true.
+    /// Checks if any bits are set to true.
     [[nodiscard]] constexpr auto any() const noexcept -> bool { return count() > 0; }
 
-    /// \brief Checks if none bits are set to true.
+    /// Checks if none bits are set to true.
     [[nodiscard]] constexpr auto none() const noexcept -> bool { return count() == 0; }
 
-    /// \brief Returns the number of bits that are set to true.
+    /// Returns the number of bits that are set to true.
     [[nodiscard]] constexpr auto count() const noexcept -> size_t
     {
         size_t count = 0;
@@ -266,10 +266,10 @@ struct bitset {
         return count;
     }
 
-    /// \brief Returns the number of bits that the bitset holds.
+    /// Returns the number of bits that the bitset holds.
     [[nodiscard]] constexpr auto size() const noexcept -> size_t { return N; }
 
-    /// \brief Returns true if all of the bits in *this and rhs are equal.
+    /// Returns true if all of the bits in *this and rhs are equal.
     [[nodiscard]] constexpr auto operator==(bitset<N> const& rhs) const noexcept -> bool
     {
         for (size_t i = 0; i < size(); ++i) {
@@ -281,10 +281,10 @@ struct bitset {
         return true;
     }
 
-    /// \brief Returns true if all of the bits in *this and rhs are not equal.
+    /// Returns true if all of the bits in *this and rhs are not equal.
     [[nodiscard]] constexpr auto operator!=(bitset<N> const& rhs) const noexcept -> bool { return !(*this == rhs); }
 
-    /// \brief Sets the bits to the result of binary AND on corresponding pairs
+    /// Sets the bits to the result of binary AND on corresponding pairs
     /// of bits of *this and other.
     constexpr auto operator&=(bitset<N> const& other) noexcept -> bitset<N>&
     {
@@ -294,7 +294,7 @@ struct bitset {
         return *this;
     }
 
-    /// \brief Sets the bits to the result of binary OR on corresponding pairs
+    /// Sets the bits to the result of binary OR on corresponding pairs
     /// of bits of *this and other.
     constexpr auto operator|=(bitset<N> const& other) noexcept -> bitset<N>&
     {
@@ -304,7 +304,7 @@ struct bitset {
         return *this;
     }
 
-    /// \brief Sets the bits to the result of binary XOR on corresponding pairs
+    /// Sets the bits to the result of binary XOR on corresponding pairs
     /// of bits of *this and other.
     constexpr auto operator^=(bitset<N> const& other) noexcept -> bitset<N>&
     {
@@ -314,11 +314,10 @@ struct bitset {
         return *this;
     }
 
-    /// \brief Returns a temporary copy of *this with all bits flipped (binary
-    /// NOT).
+    /// Returns a temporary copy of *this with all bits flipped (binary NOT).
     constexpr auto operator~() const noexcept -> bitset<N> { return bitset<N>(*this).flip(); }
 
-    /// \brief Converts the contents of the bitset to a string. Uses zero to
+    /// Converts the contents of the bitset to a string. Uses zero to
     /// represent bits with value of false and one to represent bits with value
     /// of true. The resulting string contains N characters with the first
     /// character corresponds to the last (N-1th) bit and the last character
@@ -336,7 +335,7 @@ struct bitset {
         return str;
     }
 
-    /// \brief Converts the contents of the bitset to an unsigned long integer.
+    /// Converts the contents of the bitset to an unsigned long integer.
     /// The first bit corresponds to the least significant digit of the number
     /// and the last bit corresponds to the most significant digit.
     [[nodiscard]] constexpr auto to_ulong() const noexcept -> unsigned long
@@ -344,7 +343,7 @@ struct bitset {
         return to_unsigned_type<unsigned long>();
     }
 
-    /// \brief Converts the contents of the bitset to an unsigned long long
+    /// Converts the contents of the bitset to an unsigned long long
     /// integer. The first bit corresponds to the least significant digit of the
     /// number and the last bit corresponds to the most significant digit.
     [[nodiscard]] constexpr auto to_ullong() const noexcept -> unsigned long long
@@ -385,21 +384,21 @@ private:
     etl::array<etl::uint8_t, allocated_> _bits = {};
 };
 
-/// \brief Performs binary AND between two bitsets, lhs and rhs.
+/// Performs binary AND between two bitsets, lhs and rhs.
 template <etl::size_t N>
 [[nodiscard]] constexpr auto operator&(bitset<N> const& lhs, bitset<N> const& rhs) noexcept -> bitset<N>
 {
     return bitset<N>(lhs) &= rhs;
 }
 
-/// \brief Performs binary OR between two bitsets, lhs and rhs.
+/// Performs binary OR between two bitsets, lhs and rhs.
 template <etl::size_t N>
 [[nodiscard]] constexpr auto operator|(bitset<N> const& lhs, bitset<N> const& rhs) noexcept -> bitset<N>
 {
     return bitset<N>(lhs) |= rhs;
 }
 
-/// \brief Performs binary XOR between two bitsets, lhs and rhs.
+/// Performs binary XOR between two bitsets, lhs and rhs.
 template <etl::size_t N>
 [[nodiscard]] constexpr auto operator^(bitset<N> const& lhs, bitset<N> const& rhs) noexcept -> bitset<N>
 {

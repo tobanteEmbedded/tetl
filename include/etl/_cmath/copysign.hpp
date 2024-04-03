@@ -45,8 +45,7 @@ template <typename T>
 
 } // namespace detail
 
-/// \brief Composes a floating point value with the magnitude of mag and the
-/// sign of sgn.
+/// Composes a floating point value with the magnitude of mag and the sign of sgn.
 ///
 /// \details etl::copysign is the only portable way to manipulate the sign of a
 /// NaN value (to examine the sign of a NaN, signbit may also be used)
@@ -62,8 +61,7 @@ template <typename T>
 /// \ingroup cmath
 [[nodiscard]] constexpr auto copysign(float mag, float sgn) -> float { return detail::copysign_impl(mag, sgn); }
 
-/// \brief Composes a floating point value with the magnitude of mag and the
-/// sign of sgn.
+/// Composes a floating point value with the magnitude of mag and the sign of sgn.
 ///
 /// \details etl::copysign is the only portable way to manipulate the sign of a
 /// NaN value (to examine the sign of a NaN, signbit may also be used)
@@ -79,8 +77,7 @@ template <typename T>
 /// \ingroup cmath
 [[nodiscard]] constexpr auto copysignf(float mag, float sgn) -> float { return detail::copysign_impl(mag, sgn); }
 
-/// \brief Composes a floating point value with the magnitude of mag and the
-/// sign of sgn.
+/// Composes a floating point value with the magnitude of mag and the sign of sgn.
 ///
 /// \details etl::copysign is the only portable way to manipulate the sign of a
 /// NaN value (to examine the sign of a NaN, signbit may also be used)
@@ -96,8 +93,7 @@ template <typename T>
 /// \ingroup cmath
 [[nodiscard]] constexpr auto copysign(double mag, double sgn) -> double { return detail::copysign_impl(mag, sgn); }
 
-/// \brief Composes a floating point value with the magnitude of mag and the
-/// sign of sgn.
+/// Composes a floating point value with the magnitude of mag and the sign of sgn.
 ///
 /// \details etl::copysign is the only portable way to manipulate the sign of a
 /// NaN value (to examine the sign of a NaN, signbit may also be used)
@@ -116,8 +112,7 @@ template <typename T>
     return detail::copysign_impl(mag, sgn);
 }
 
-/// \brief Composes a floating point value with the magnitude of mag and the
-/// sign of sgn.
+/// Composes a floating point value with the magnitude of mag and the sign of sgn.
 ///
 /// \details etl::copysign is the only portable way to manipulate the sign of a
 /// NaN value (to examine the sign of a NaN, signbit may also be used)

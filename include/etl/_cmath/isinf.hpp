@@ -28,9 +28,7 @@ inline constexpr struct isinf {
 
 } // namespace detail
 
-/// \brief Determines if the given floating point number arg is a positive or
-/// negative infinity.
-/// \returns true if arg is infinite, false otherwise
+/// Determines if the given floating point number arg is a positive or negative infinity.
 /// \details https://en.cppreference.com/w/cpp/numeric/math/isinf
 /// \ingroup cmath
 [[nodiscard]] constexpr auto isinf(float arg) -> bool { return etl::detail::isinf(arg); }

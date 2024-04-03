@@ -11,7 +11,7 @@
 
 namespace etl {
 
-/// \brief Computes the binary (base-10) logarithm of arg.
+/// Computes the binary (base-10) logarithm of arg.
 /// \details https://en.cppreference.com/w/cpp/numeric/math/log10
 /// \ingroup cmath
 [[nodiscard]] constexpr auto log10(float arg) noexcept -> float
@@ -30,12 +30,12 @@ namespace etl {
 #endif
 }
 
-/// \brief Computes the binary (base-10) logarithm of arg.
+/// Computes the binary (base-10) logarithm of arg.
 /// \details https://en.cppreference.com/w/cpp/numeric/math/log10
 /// \ingroup cmath
 [[nodiscard]] constexpr auto log10f(float arg) noexcept -> float { return etl::log10(arg); }
 
-/// \brief Computes the binary (base-10) logarithm of arg.
+/// Computes the binary (base-10) logarithm of arg.
 /// \details https://en.cppreference.com/w/cpp/numeric/math/log10
 /// \ingroup cmath
 [[nodiscard]] constexpr auto log10(double arg) noexcept -> double
@@ -54,7 +54,7 @@ namespace etl {
 #endif
 }
 
-/// \brief Computes the binary (base-10) logarithm of arg.
+/// Computes the binary (base-10) logarithm of arg.
 /// \details https://en.cppreference.com/w/cpp/numeric/math/log10
 /// \ingroup cmath
 [[nodiscard]] constexpr auto log10(long double arg) noexcept -> long double
@@ -62,12 +62,12 @@ namespace etl {
     return etl::detail::gcem::log(arg) / static_cast<long double>(GCEM_LOG_10);
 }
 
-/// \brief Computes the binary (base-10) logarithm of arg.
+/// Computes the binary (base-10) logarithm of arg.
 /// \details https://en.cppreference.com/w/cpp/numeric/math/log10
 /// \ingroup cmath
 [[nodiscard]] constexpr auto log10l(long double arg) noexcept -> long double { return etl::log10(arg); }
 
-/// \brief Computes the binary (base-10) logarithm of arg.
+/// Computes the binary (base-10) logarithm of arg.
 /// \details https://en.cppreference.com/w/cpp/numeric/math/log10
 /// \ingroup cmath
 template <integral T>

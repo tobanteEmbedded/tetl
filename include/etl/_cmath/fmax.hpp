@@ -7,7 +7,7 @@
 
 namespace etl {
 
-/// \brief Returns the larger of two floating point arguments, treating NaNs as
+/// Returns the larger of two floating point arguments, treating NaNs as
 /// missing data (between a NaN and a numeric value, the numeric value is
 /// chosen)
 ///
@@ -15,7 +15,7 @@ namespace etl {
 /// \ingroup cmath
 [[nodiscard]] constexpr auto fmax(float x, float y) noexcept -> float { return etl::detail::gcem::max(x, y); }
 
-/// \brief Returns the larger of two floating point arguments, treating NaNs as
+/// Returns the larger of two floating point arguments, treating NaNs as
 /// missing data (between a NaN and a numeric value, the numeric value is
 /// chosen)
 ///
@@ -23,7 +23,7 @@ namespace etl {
 /// \ingroup cmath
 [[nodiscard]] constexpr auto fmaxf(float x, float y) noexcept -> float { return etl::detail::gcem::max(x, y); }
 
-/// \brief Returns the larger of two floating point arguments, treating NaNs as
+/// Returns the larger of two floating point arguments, treating NaNs as
 /// missing data (between a NaN and a numeric value, the numeric value is
 /// chosen)
 ///
@@ -31,7 +31,7 @@ namespace etl {
 /// \ingroup cmath
 [[nodiscard]] constexpr auto fmax(double x, double y) noexcept -> double { return etl::detail::gcem::max(x, y); }
 
-/// \brief Returns the larger of two floating point arguments, treating NaNs as
+/// Returns the larger of two floating point arguments, treating NaNs as
 /// missing data (between a NaN and a numeric value, the numeric value is
 /// chosen)
 ///
@@ -42,7 +42,7 @@ namespace etl {
     return etl::detail::gcem::max(x, y);
 }
 
-/// \brief Returns the larger of two floating point arguments, treating NaNs as
+/// Returns the larger of two floating point arguments, treating NaNs as
 /// missing data (between a NaN and a numeric value, the numeric value is
 /// chosen)
 ///
