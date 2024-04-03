@@ -4,7 +4,11 @@
 #define TETL_STRING_VIEW_HPP
 
 /// \defgroup string_view string_view
+/// etl::basic_string_view class template
 /// \ingroup strings-library
+/// \code
+/// #include <etl/string_view.hpp>
+/// \endcode
 
 #include <etl/_config/all.hpp>
 

@@ -33,8 +33,9 @@ namespace etl {
 /// \brief basic_static_string class with fixed size capacity.
 /// \tparam CharT Build in type for character size (mostly 'char')
 /// \tparam Capacity Capacity for basic_static_string
-/// \include string.cpp
 /// \headerfile etl/string.hpp
+///
+/// \include string.cpp
 template <typename CharT, etl::size_t Capacity, typename Traits = etl::char_traits<CharT>>
 struct basic_static_string {
     // clang-format off

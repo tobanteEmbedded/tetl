@@ -4,6 +4,7 @@
 #define TETL_CSTDLIB_HPP
 
 /// \defgroup cstdlib cstdlib
+/// General purpose c-style utilities
 /// \ingroup utilities-library
 
 #include <etl/_config/all.hpp>

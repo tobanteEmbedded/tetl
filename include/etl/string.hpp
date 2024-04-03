@@ -4,7 +4,11 @@
 #define TETL_STRING_HPP
 
 /// \defgroup string string
+/// etl::basic_static_string class template
 /// \ingroup strings-library
+/// \code
+/// #include <etl/string.hpp>
+/// \endcode
 /// \example string.cpp
 
 #include <etl/_config/all.hpp>

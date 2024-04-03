@@ -4,6 +4,7 @@
 #define TETL_META_HPP
 
 /// \defgroup meta meta
+/// Meta-programming utilities
 /// \ingroup utilities-library
 
 #include <etl/_config/all.hpp>

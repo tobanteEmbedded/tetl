@@ -323,6 +323,7 @@ using static_vector_storage_type = conditional_t<
 /// Dynamically-resizable fixed-capacity vector.
 /// \headerfile etl/vector.hpp
 /// \ingroup vector
+///
 /// \include vector.cpp
 template <typename T, size_t Capacity>
 struct static_vector : detail::static_vector_storage_type<T, Capacity> {

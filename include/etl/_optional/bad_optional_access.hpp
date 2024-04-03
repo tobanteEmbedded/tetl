@@ -11,6 +11,8 @@ namespace etl {
 /// accessing an optional object that does not contain a value.
 ///
 /// https://en.cppreference.com/w/cpp/utility/optional/bad_optional_access
+///
+/// \ingroup optional
 struct bad_optional_access : etl::exception {
     constexpr bad_optional_access() = default;
 

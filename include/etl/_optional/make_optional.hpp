@@ -11,6 +11,8 @@
 namespace etl {
 
 /// \brief Creates an optional object from value.
+/// \relates optional
+/// \ingroup optional
 template <typename T>
 constexpr auto make_optional(T&& value) -> etl::optional<etl::decay_t<T>>
 {
@@ -18,6 +20,8 @@ constexpr auto make_optional(T&& value) -> etl::optional<etl::decay_t<T>>
 }
 
 /// \brief Creates an optional object constructed in-place from args...
+/// \relates optional
+/// \ingroup optional
 template <typename T, typename... Args>
 constexpr auto make_optional(Args&&... args) -> etl::optional<T>
 {

@@ -4,7 +4,11 @@
 #define TETL_VARIANT_HPP
 
 /// \defgroup variant variant
+/// etl::variant class template
 /// \ingroup utilities-library
+/// \code
+/// #include <etl/variant.hpp>
+/// \endcode
 
 #include <etl/_config/all.hpp>
 

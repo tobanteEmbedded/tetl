@@ -331,6 +331,8 @@ using optional_sfinae_assign_base_t = sfinae_assign_base<
 /// not allowed).
 ///
 /// \headerfile etl/optional.hpp
+/// \ingroup optional
+///
 /// \include optional.cpp
 template <typename T>
 struct optional
@@ -889,6 +891,8 @@ private:
 // One deduction guide is provided for etl::optional to account for the
 // edge cases missed by the implicit deduction guides, in particular,
 // non-copyable arguments and array to pointer conversion.
+/// \relates optional
+/// \ingroup optional
 template <typename T>
 optional(T) -> optional<T>;
 
@@ -896,6 +900,9 @@ optional(T) -> optional<T>;
 /// state of lhs with that of rhs. Effectively calls lhs.swap(rhs).
 ///
 /// https://en.cppreference.com/w/cpp/utility/optional/swap2
+///
+/// \relates optional
+/// \ingroup optional
 template <typename T>
     requires(is_move_constructible_v<T> && is_swappable_v<T>)
 constexpr auto swap(optional<T>& lhs, optional<T>& rhs) noexcept(noexcept(lhs.swap(rhs))) -> void
@@ -904,6 +911,8 @@ constexpr auto swap(optional<T>& lhs, optional<T>& rhs) noexcept(noexcept(lhs.sw
 }
 
 /// \brief Compares two optional objects, lhs and rhs.
+/// \relates optional
+/// \ingroup optional
 template <typename T, typename U>
 [[nodiscard]] constexpr auto operator==(optional<T> const& lhs, optional<U> const& rhs) -> bool
 {
@@ -917,6 +926,8 @@ template <typename T, typename U>
 }
 
 /// \brief Compares two optional objects, lhs and rhs.
+/// \relates optional
+/// \ingroup optional
 template <typename T, typename U>
 [[nodiscard]] constexpr auto operator!=(optional<T> const& lhs, optional<U> const& rhs) -> bool
 {
@@ -930,6 +941,8 @@ template <typename T, typename U>
 }
 
 /// \brief Compares two optional objects, lhs and rhs.
+/// \relates optional
+/// \ingroup optional
 template <typename T, typename U>
 [[nodiscard]] constexpr auto operator<(optional<T> const& lhs, optional<U> const& rhs) -> bool
 {
@@ -943,6 +956,8 @@ template <typename T, typename U>
 }
 
 /// \brief Compares two optional objects, lhs and rhs.
+/// \relates optional
+/// \ingroup optional
 template <typename T, typename U>
 [[nodiscard]] constexpr auto operator>(optional<T> const& lhs, optional<U> const& rhs) -> bool
 {
@@ -956,6 +971,8 @@ template <typename T, typename U>
 }
 
 /// \brief Compares two optional objects, lhs and rhs.
+/// \relates optional
+/// \ingroup optional
 template <typename T, typename U>
 [[nodiscard]] constexpr auto operator<=(optional<T> const& lhs, optional<U> const& rhs) -> bool
 {
@@ -969,6 +986,8 @@ template <typename T, typename U>
 }
 
 /// \brief Compares two optional objects, lhs and rhs.
+/// \relates optional
+/// \ingroup optional
 template <typename T, typename U>
 [[nodiscard]] constexpr auto operator>=(optional<T> const& lhs, optional<U> const& rhs) -> bool
 {
@@ -983,6 +1002,9 @@ template <typename T, typename U>
 
 /// \brief Compares opt with a nullopt. Equivalent to when comparing to an
 /// optional that does not contain a value.
+///
+/// \relates optional
+/// \ingroup optional
 template <typename T>
 [[nodiscard]] constexpr auto operator==(optional<T> const& opt, etl::nullopt_t /*unused*/) noexcept -> bool
 {
@@ -991,6 +1013,9 @@ template <typename T>
 
 /// \brief Compares opt with a nullopt. Equivalent to when comparing to an
 /// optional that does not contain a value.
+///
+/// \relates optional
+/// \ingroup optional
 template <typename T>
 [[nodiscard]] constexpr auto operator==(etl::nullopt_t /*unused*/, optional<T> const& opt) noexcept -> bool
 {
@@ -999,6 +1024,9 @@ template <typename T>
 
 /// \brief Compares opt with a nullopt. Equivalent to when comparing to an
 /// optional that does not contain a value.
+///
+/// \relates optional
+/// \ingroup optional
 template <typename T>
 [[nodiscard]] constexpr auto operator!=(optional<T> const& opt, etl::nullopt_t /*unused*/) noexcept -> bool
 {
@@ -1007,6 +1035,9 @@ template <typename T>
 
 /// \brief Compares opt with a nullopt. Equivalent to when comparing to an
 /// optional that does not contain a value.
+///
+/// \relates optional
+/// \ingroup optional
 template <typename T>
 [[nodiscard]] constexpr auto operator!=(etl::nullopt_t /*unused*/, optional<T> const& opt) noexcept -> bool
 {
@@ -1015,6 +1046,9 @@ template <typename T>
 
 /// \brief Compares opt with a nullopt. Equivalent to when comparing to an
 /// optional that does not contain a value.
+///
+/// \relates optional
+/// \ingroup optional
 template <typename T>
 [[nodiscard]] constexpr auto operator<(optional<T> const& /*opt*/, etl::nullopt_t /*unused*/) noexcept -> bool
 {
@@ -1023,6 +1057,9 @@ template <typename T>
 
 /// \brief Compares opt with a nullopt. Equivalent to when comparing to an
 /// optional that does not contain a value.
+///
+/// \relates optional
+/// \ingroup optional
 template <typename T>
 [[nodiscard]] constexpr auto operator<(etl::nullopt_t /*unused*/, optional<T> const& opt) noexcept -> bool
 {
@@ -1031,6 +1068,9 @@ template <typename T>
 
 /// \brief Compares opt with a nullopt. Equivalent to when comparing to an
 /// optional that does not contain a value.
+///
+/// \relates optional
+/// \ingroup optional
 template <typename T>
 [[nodiscard]] constexpr auto operator<=(optional<T> const& opt, etl::nullopt_t /*unused*/) noexcept -> bool
 {
@@ -1039,6 +1079,9 @@ template <typename T>
 
 /// \brief Compares opt with a nullopt. Equivalent to when comparing to an
 /// optional that does not contain a value.
+///
+/// \relates optional
+/// \ingroup optional
 template <typename T>
 [[nodiscard]] constexpr auto operator<=(etl::nullopt_t /*unused*/, optional<T> const& /*opt*/) noexcept -> bool
 {
@@ -1047,6 +1090,9 @@ template <typename T>
 
 /// \brief Compares opt with a nullopt. Equivalent to when comparing to an
 /// optional that does not contain a value.
+///
+/// \relates optional
+/// \ingroup optional
 template <typename T>
 [[nodiscard]] constexpr auto operator>(optional<T> const& opt, etl::nullopt_t /*unused*/) noexcept -> bool
 {
@@ -1055,6 +1101,9 @@ template <typename T>
 
 /// \brief Compares opt with a nullopt. Equivalent to when comparing to an
 /// optional that does not contain a value.
+///
+/// \relates optional
+/// \ingroup optional
 template <typename T>
 [[nodiscard]] constexpr auto operator>(etl::nullopt_t /*unused*/, optional<T> const& /*opt*/) noexcept -> bool
 {
@@ -1063,6 +1112,9 @@ template <typename T>
 
 /// \brief Compares opt with a nullopt. Equivalent to when comparing to an
 /// optional that does not contain a value.
+///
+/// \relates optional
+/// \ingroup optional
 template <typename T>
 [[nodiscard]] constexpr auto operator>=(optional<T> const& /*opt*/, etl::nullopt_t /*unused*/) noexcept -> bool
 {
@@ -1071,6 +1123,9 @@ template <typename T>
 
 /// \brief Compares opt with a nullopt. Equivalent to when comparing to an
 /// optional that does not contain a value.
+///
+/// \relates optional
+/// \ingroup optional
 template <typename T>
 [[nodiscard]] constexpr auto operator>=(etl::nullopt_t /*unused*/, optional<T> const& opt) noexcept -> bool
 {
@@ -1084,6 +1139,9 @@ template <typename T>
 /// not convertible to bool, the program is ill-formed.
 ///
 /// https://en.cppreference.com/w/cpp/utility/optional/operator_cmp
+///
+/// \relates optional
+/// \ingroup optional
 template <typename T, typename U>
 [[nodiscard]] constexpr auto operator==(optional<T> const& opt, U const& value) -> bool
 {
@@ -1097,6 +1155,9 @@ template <typename T, typename U>
 /// not convertible to bool, the program is ill-formed.
 ///
 /// https://en.cppreference.com/w/cpp/utility/optional/operator_cmp
+///
+/// \relates optional
+/// \ingroup optional
 template <typename T, typename U>
 [[nodiscard]] constexpr auto operator==(T const& value, optional<U> const& opt) -> bool
 {
@@ -1110,6 +1171,9 @@ template <typename T, typename U>
 /// not convertible to bool, the program is ill-formed.
 ///
 /// https://en.cppreference.com/w/cpp/utility/optional/operator_cmp
+///
+/// \relates optional
+/// \ingroup optional
 template <typename T, typename U>
 [[nodiscard]] constexpr auto operator!=(optional<T> const& opt, U const& value) -> bool
 {
@@ -1123,6 +1187,9 @@ template <typename T, typename U>
 /// not convertible to bool, the program is ill-formed.
 ///
 /// https://en.cppreference.com/w/cpp/utility/optional/operator_cmp
+///
+/// \relates optional
+/// \ingroup optional
 template <typename T, typename U>
 [[nodiscard]] constexpr auto operator!=(T const& value, optional<U> const& opt) -> bool
 {
@@ -1136,6 +1203,9 @@ template <typename T, typename U>
 /// not convertible to bool, the program is ill-formed.
 ///
 /// https://en.cppreference.com/w/cpp/utility/optional/operator_cmp
+///
+/// \relates optional
+/// \ingroup optional
 template <typename T, typename U>
 [[nodiscard]] constexpr auto operator<(optional<T> const& opt, U const& value) -> bool
 {
@@ -1149,6 +1219,9 @@ template <typename T, typename U>
 /// not convertible to bool, the program is ill-formed.
 ///
 /// https://en.cppreference.com/w/cpp/utility/optional/operator_cmp
+///
+/// \relates optional
+/// \ingroup optional
 template <typename T, typename U>
 [[nodiscard]] constexpr auto operator<(T const& value, optional<U> const& opt) -> bool
 {
@@ -1162,6 +1235,9 @@ template <typename T, typename U>
 /// not convertible to bool, the program is ill-formed.
 ///
 /// https://en.cppreference.com/w/cpp/utility/optional/operator_cmp
+///
+/// \relates optional
+/// \ingroup optional
 template <typename T, typename U>
 [[nodiscard]] constexpr auto operator>(optional<T> const& opt, U const& value) -> bool
 {
@@ -1175,6 +1251,9 @@ template <typename T, typename U>
 /// not convertible to bool, the program is ill-formed.
 ///
 /// https://en.cppreference.com/w/cpp/utility/optional/operator_cmp
+///
+/// \relates optional
+/// \ingroup optional
 template <typename T, typename U>
 [[nodiscard]] constexpr auto operator>(T const& value, optional<U> const& opt) -> bool
 {
@@ -1188,6 +1267,9 @@ template <typename T, typename U>
 /// not convertible to bool, the program is ill-formed.
 ///
 /// https://en.cppreference.com/w/cpp/utility/optional/operator_cmp
+///
+/// \relates optional
+/// \ingroup optional
 template <typename T, typename U>
 [[nodiscard]] constexpr auto operator<=(optional<T> const& opt, U const& value) -> bool
 {
@@ -1201,6 +1283,9 @@ template <typename T, typename U>
 /// not convertible to bool, the program is ill-formed.
 ///
 /// https://en.cppreference.com/w/cpp/utility/optional/operator_cmp
+///
+/// \relates optional
+/// \ingroup optional
 template <typename T, typename U>
 [[nodiscard]] constexpr auto operator<=(T const& value, optional<U> const& opt) -> bool
 {
@@ -1214,6 +1299,9 @@ template <typename T, typename U>
 /// not convertible to bool, the program is ill-formed.
 ///
 /// https://en.cppreference.com/w/cpp/utility/optional/operator_cmp
+///
+/// \relates optional
+/// \ingroup optional
 template <typename T, typename U>
 [[nodiscard]] constexpr auto operator>=(optional<T> const& opt, U const& value) -> bool
 {
@@ -1227,6 +1315,9 @@ template <typename T, typename U>
 /// not convertible to bool, the program is ill-formed.
 ///
 /// https://en.cppreference.com/w/cpp/utility/optional/operator_cmp
+///
+/// \relates optional
+/// \ingroup optional
 template <typename T, typename U>
 [[nodiscard]] constexpr auto operator>=(T const& value, optional<U> const& opt) -> bool
 {
@@ -1236,9 +1327,8 @@ template <typename T, typename U>
 /// \brief The template specialization of etl::hash for the etl::optional class
 /// allows users to obtain hashes of the values contained in optional objects.
 ///
-/// \details The specialization etl::hash<optional<T>> is enabled (see
-/// etl::hash) if etl::hash<etl::remove_const_t<T>> is enabled, and is disabled
-/// otherwise.
+/// The specialization etl::hash<optional<T>> is enabled (see etl::hash)
+/// if etl::hash<etl::remove_const_t<T>> is enabled, and is disabled otherwise.
 ///
 /// When enabled, for an object opt of type etl::optional<T> that contains a
 /// value, etl::hash<etl::optional<T>>()(opt) evaluates to the same value as
@@ -1251,6 +1341,7 @@ template <typename T, typename U>
 /// https://en.cppreference.com/w/cpp/utility/optional/hash
 ///
 /// \headerfile etl/optional.hpp
+/// \ingroup optional
 template <typename T>
 struct hash<etl::optional<T>> {
     [[nodiscard]] constexpr auto operator()(etl::optional<T> const& opt) const -> etl::size_t

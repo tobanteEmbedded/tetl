@@ -26,6 +26,8 @@ namespace etl {
 /// refer to a constant contiguous sequence of char-like objects with the first
 /// element of the sequence at position zero. A typical implementation holds
 /// only two members: a pointer to constant CharType and a size.
+/// \headerfile etl/string_view.hpp
+/// \ingroup string_view
 template <typename CharType, typename Traits = etl::char_traits<CharType>>
 struct basic_string_view {
     /// The character traits type used

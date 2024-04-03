@@ -14,7 +14,9 @@ namespace etl {
 
 /// A class representing information about the source code, such as file names,
 /// line numbers, and function names
+///
 /// \ingroup source_location
+///
 /// \include source_location.cpp
 struct source_location {
     [[nodiscard]] static consteval auto current(
