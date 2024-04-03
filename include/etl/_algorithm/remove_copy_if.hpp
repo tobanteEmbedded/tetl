@@ -10,6 +10,7 @@ namespace etl {
 /// criteria. Source and destination ranges cannot overlap. Ignores all elements
 /// for which predicate p returns true.
 /// \returns Iterator to the element past the last element copied.
+/// \ingroup algorithm
 template <typename InputIt, typename OutputIt, typename Predicate>
 constexpr auto remove_copy_if(InputIt first, InputIt last, OutputIt destination, Predicate p) -> OutputIt
 {

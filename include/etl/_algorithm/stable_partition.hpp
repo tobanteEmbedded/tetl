@@ -11,6 +11,7 @@ namespace etl {
 /// that all elements for which the predicate p returns true precede the
 /// elements for which predicate p returns false. Relative order of the
 /// elements is preserved.
+/// \ingroup algorithm
 template <typename BidirIt, typename Predicate>
 constexpr auto stable_partition(BidirIt f, BidirIt l, Predicate p) -> BidirIt
 {

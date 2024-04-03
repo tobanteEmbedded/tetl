@@ -10,6 +10,7 @@
 
 namespace etl::ranges {
 
+/// \ingroup algorithm
 template <typename I, typename F>
 struct in_fun_result {
     template <typename I2, typename F2>

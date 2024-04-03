@@ -15,6 +15,7 @@ namespace etl {
 /// range `[first1, last1)` that makes that range equal to the range `[first2,
 /// last2)`, where `last2` denotes `first2 + (last1 - first1)` if it was not
 /// given.
+/// \ingroup algorithm
 template <typename ForwardIt1, typename ForwardIt2>
 [[nodiscard]] constexpr auto is_permutation(ForwardIt1 first, ForwardIt1 last, ForwardIt2 first2) -> bool
 {
@@ -41,6 +42,7 @@ template <typename ForwardIt1, typename ForwardIt2>
     return true;
 }
 
+/// \ingroup algorithm
 template <typename ForwardIt1, typename ForwardIt2>
 [[nodiscard]] constexpr auto
 is_permutation(ForwardIt1 first1, ForwardIt1 last1, ForwardIt2 first2, ForwardIt2 last2) -> bool

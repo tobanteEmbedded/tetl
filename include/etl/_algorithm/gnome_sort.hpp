@@ -9,9 +9,10 @@
 
 namespace etl {
 
-/// \brief Sorts the elements in the range `[first, last)` in non-descending
-/// order.
-/// https://en.wikipedia.org/wiki/Gnome_sort
+/// \brief Sorts the elements in the range `[first, last)` in non-descending order.
+/// \details https://en.wikipedia.org/wiki/Gnome_sort
+/// \note Non-standard extension
+/// \ingroup algorithm
 template <typename BidirIt, typename Compare>
 constexpr auto gnome_sort(BidirIt first, BidirIt last, Compare comp) -> void
 {
@@ -26,6 +27,10 @@ constexpr auto gnome_sort(BidirIt first, BidirIt last, Compare comp) -> void
     }
 }
 
+/// \brief Sorts the elements in the range `[first, last)` in non-descending order.
+/// \details https://en.wikipedia.org/wiki/Gnome_sort
+/// \note Non-standard extension
+/// \ingroup algorithm
 template <typename BidirIt>
 constexpr auto gnome_sort(BidirIt first, BidirIt last) -> void
 {

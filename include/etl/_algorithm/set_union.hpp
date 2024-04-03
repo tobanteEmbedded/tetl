@@ -8,6 +8,9 @@
 
 namespace etl {
 
+/// \ingroup algorithm
+/// @{
+
 /// \brief Constructs a sorted union beginning at destination consisting of the
 /// set of elements present in one or both sorted ranges `[first1, last1)` and
 /// `[first2, last2)`. The resulting range cannot overlap with either of the
@@ -41,6 +44,8 @@ set_union(InputIt1 first1, InputIt1 last1, InputIt2 first2, InputIt2 last2, Outp
 {
     return etl::set_union(first1, last1, first2, last2, destination, etl::less());
 }
+
+/// @}
 
 } // namespace etl
 

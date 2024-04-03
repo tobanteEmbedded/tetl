@@ -10,7 +10,11 @@ namespace etl {
 
 /// \brief Sorts the elements in the range `[first, last)` in non-descending
 /// order. The order of equal elements is guaranteed to be preserved.
+///
 /// https://en.wikipedia.org/wiki/Insertion_sort
+///
+/// \note Non-standard extension
+/// \ingroup algorithm
 template <typename RandomIt, typename Compare>
 constexpr auto insertion_sort(RandomIt first, RandomIt last, Compare comp) -> void
 {
@@ -25,6 +29,8 @@ constexpr auto insertion_sort(RandomIt first, RandomIt last, Compare comp) -> vo
     }
 }
 
+/// \note Non-standard extension
+/// \ingroup algorithm
 template <typename RandomIt>
 constexpr auto insertion_sort(RandomIt first, RandomIt last) -> void
 {

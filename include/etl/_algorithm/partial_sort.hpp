@@ -14,6 +14,8 @@ namespace etl {
 /// the remaining elements in the range `[middle, last)` is unspecified.
 ///
 /// https://en.cppreference.com/w/cpp/algorithm/partial_sort
+///
+/// \ingroup algorithm
 template <typename RandomIt, typename Compare>
 constexpr auto partial_sort(RandomIt first, RandomIt middle, RandomIt last, Compare comp) -> void
 {

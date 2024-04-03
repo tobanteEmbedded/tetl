@@ -9,16 +9,18 @@
 
 namespace etl {
 
-/// \brief Merges two consecutive sorted ranges [first, middle)
-///        and [middle, last) into one sorted range [first, last).
+/// Merges two consecutive sorted ranges [first, middle) and
+/// [middle, last) into one sorted range [first, last).
 ///
-/// \details A sequence [first, last) is said to be sorted with
-///          respect to a comparator comp if for any iterator it pointing
-// to the sequence and any non-negative integer n such that it + n
-// is a valid iterator pointing to an element of the sequence,
-/// comp(*(it + n), *it) evaluates to false.
+/// A sequence [first, last) is said to be sorted with respect to
+/// a comparator comp if for any iterator it pointing to the sequence
+/// and any non-negative integer n such that it + n is a valid
+/// iterator pointing to an element of the sequence, comp(*(it + n), *it)
+/// evaluates to false.
 ///
 /// https://en.cppreference.com/w/cpp/algorithm/inplace_merge
+///
+/// \ingroup algorithm
 template <typename BidirIt, typename Compare>
 constexpr auto inplace_merge(BidirIt begin, BidirIt mid, BidirIt end, Compare comp) -> void
 {
@@ -37,6 +39,7 @@ constexpr auto inplace_merge(BidirIt begin, BidirIt mid, BidirIt end, Compare co
     }
 }
 
+/// \ingroup algorithm
 template <typename BidirIt>
 constexpr auto inplace_merge(BidirIt first, BidirIt mid, BidirIt last) -> void
 {

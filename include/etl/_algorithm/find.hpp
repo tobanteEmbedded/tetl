@@ -5,13 +5,15 @@
 
 namespace etl {
 
-/// \brief Searches for an element equal to value.
+/// Searches for an element equal to value.
 ///
 /// \param first The range of elements to examine.
 /// \param last The range of elements to examine.
 /// \param value Value to compare the elements to.
 ///
 /// https://en.cppreference.com/w/cpp/algorithm/find
+///
+/// \ingroup algorithm
 template <typename InputIt, typename T>
 [[nodiscard]] constexpr auto find(InputIt first, InputIt last, T const& value) noexcept -> InputIt
 {

@@ -11,6 +11,7 @@
 namespace etl {
 
 /// \brief Reverses the order of the elements in the range `[first, last)`.
+/// \ingroup algorithm
 template <typename BidirIt>
 constexpr auto reverse(BidirIt first, BidirIt last) -> void
 {

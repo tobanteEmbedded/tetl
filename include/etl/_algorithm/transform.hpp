@@ -5,16 +5,21 @@
 
 namespace etl {
 
-/// \brief Applies the given function to a range and stores the result in
+/// \ingroup algorithm
+/// @{
+
+/// Applies the given function to a range and stores the result in
 /// another range, beginning at dest. The unary operation op is applied to
 /// the range defined by `[first, last)`.
+///
+/// https://en.cppreference.com/w/cpp/algorithm/transform
 ///
 /// \param first The first range of elements to transform.
 /// \param last The first range of elements to transform.
 /// \param dest The beginning of the destination range, may be equal to first.
 /// \param op Unary operation function object that will be applied.
 ///
-/// https://en.cppreference.com/w/cpp/algorithm/transform
+/// \ingroup algorithm
 template <typename InputIt, typename OutputIt, typename UnaryOp>
 constexpr auto transform(InputIt first, InputIt last, OutputIt dest, UnaryOp op) -> OutputIt
 {
@@ -32,6 +37,8 @@ constexpr auto transform(InputIt1 first1, InputIt1 last1, InputIt2 first2, Outpu
     }
     return dest;
 }
+
+/// @}
 
 } // namespace etl
 

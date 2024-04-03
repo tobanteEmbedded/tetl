@@ -7,6 +7,9 @@
 
 namespace etl {
 
+/// \ingroup algorithm
+/// @{
+
 /// \brief Searches the range `[first, last)` for the first sequence of count
 /// identical elements, each equal to the given value.
 template <typename ForwardIt, typename Size, typename ValueT, typename Predicate>
@@ -43,6 +46,8 @@ template <typename ForwardIt, typename Size, typename ValueT>
 {
     return etl::search_n(first, last, count, value, etl::equal_to());
 }
+
+/// @}
 
 } // namespace etl
 

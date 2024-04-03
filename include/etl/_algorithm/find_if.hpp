@@ -12,6 +12,8 @@ namespace etl {
 /// \param pred Unary predicate which returns ​true for the required element.
 ///
 /// https://en.cppreference.com/w/cpp/algorithm/find
+///
+/// \ingroup algorithm
 template <typename InputIt, typename Predicate>
 [[nodiscard]] constexpr auto find_if(InputIt first, InputIt last, Predicate pred) noexcept -> InputIt
 {

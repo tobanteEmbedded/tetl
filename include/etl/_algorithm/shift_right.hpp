@@ -24,6 +24,8 @@ namespace etl {
 /// \note The standard specifies that this algorithm should also work with
 /// legacy forward iterators. I don't know how to implement that without
 /// dynamic memory, so forward iterators are not supported.
+///
+/// \ingroup algorithm
 template <typename BidiIt>
 constexpr auto
 shift_right(BidiIt first, BidiIt last, typename etl::iterator_traits<BidiIt>::difference_type n) -> BidiIt

@@ -13,6 +13,8 @@ namespace etl {
 /// \param b Iterators to the elements to swap.
 ///
 /// https://en.cppreference.com/w/cpp/algorithm/iter_swap
+///
+/// \ingroup algorithm
 template <typename ForwardIt1, typename ForwardIt2>
 constexpr auto iter_swap(ForwardIt1 a, ForwardIt2 b) -> void
 {

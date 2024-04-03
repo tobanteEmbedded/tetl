@@ -9,6 +9,7 @@ namespace etl {
 
 /// \brief Returns true if the sorted range `[first2, last2)` is a subsequence
 /// of the sorted range `[first1, last1)`. Both ranges must be sorted.
+/// \ingroup algorithm
 template <typename InputIt1, typename InputIt2, typename Compare>
 [[nodiscard]] constexpr auto
 includes(InputIt1 first1, InputIt1 last1, InputIt2 first2, InputIt2 last2, Compare comp) -> bool
@@ -24,6 +25,7 @@ includes(InputIt1 first1, InputIt1 last1, InputIt2 first2, InputIt2 last2, Compa
     return true;
 }
 
+/// \ingroup algorithm
 template <typename InputIt1, typename InputIt2>
 [[nodiscard]] constexpr auto includes(InputIt1 first1, InputIt1 last1, InputIt2 first2, InputIt2 last2) -> bool
 {

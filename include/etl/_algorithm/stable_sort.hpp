@@ -8,11 +8,14 @@
 
 namespace etl {
 
-/// \brief Sorts the elements in the range `[first, last)` in non-descending
+/// \ingroup algorithm
+/// @{
+
+/// Sorts the elements in the range `[first, last)` in non-descending
 /// order. The order of equivalent elements is guaranteed to be preserved.
 /// Elements are compared using the given comparison function comp.
 ///
-/// \details https://en.cppreference.com/w/cpp/algorithm/stable_sort
+/// https://en.cppreference.com/w/cpp/algorithm/stable_sort
 template <typename RandomIt, typename Compare>
 constexpr auto stable_sort(RandomIt first, RandomIt last, Compare comp) -> void
 {
@@ -24,6 +27,8 @@ constexpr auto stable_sort(RandomIt first, RandomIt last) -> void
 {
     etl::stable_sort(first, last, etl::less());
 }
+
+/// @}
 
 } // namespace etl
 

@@ -7,7 +7,7 @@
 
 namespace etl {
 
-/// \brief Searches the range `[first, last)` for any of the elements in the
+/// Searches the range `[first, last)` for any of the elements in the
 /// range [sFirst, sLast). Elements are compared using the given binary
 /// predicate pred.
 ///
@@ -19,6 +19,8 @@ namespace etl {
 /// treated as equal.
 ///
 /// https://en.cppreference.com/w/cpp/algorithm/find_first_of
+///
+/// \ingroup algorithm
 template <typename InputIt, typename ForwardIt, typename Predicate>
 [[nodiscard]] constexpr auto
 find_first_of(InputIt first, InputIt last, ForwardIt sFirst, ForwardIt sLast, Predicate pred) -> InputIt
@@ -43,6 +45,8 @@ find_first_of(InputIt first, InputIt last, ForwardIt sFirst, ForwardIt sLast, Pr
 /// \param sLast The range of elements to search for.
 ///
 /// https://en.cppreference.com/w/cpp/algorithm/find_first_of
+///
+/// \ingroup algorithm
 template <typename InputIt, typename ForwardIt>
 [[nodiscard]] constexpr auto find_first_of(InputIt first, InputIt last, ForwardIt sFirst, ForwardIt sLast) -> InputIt
 {

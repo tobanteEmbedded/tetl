@@ -7,6 +7,9 @@
 
 namespace etl {
 
+/// \ingroup algorithm
+/// @{
+
 /// \brief Constructs a sorted range beginning at `dest` consisting of elements
 /// that are found in both sorted ranges `[first1, last1)` and `[first2,
 /// last2)`. If some element is found `m` times in `[first1, last1)` and n times
@@ -38,6 +41,8 @@ set_intersection(InputIt1 first1, InputIt1 last1, InputIt2 first2, InputIt2 last
 {
     return etl::set_intersection(first1, last1, first2, last2, dest, etl::less());
 }
+
+/// @}
 
 } // namespace etl
 

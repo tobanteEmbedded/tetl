@@ -7,10 +7,7 @@
 
 namespace etl {
 
-/// \ingroup algorithm
-/// @{
-
-/// \brief Returns the number of elements in the range `[first, last)`
+/// Returns the number of elements in the range `[first, last)`
 /// satisfying specific criteria. Counts elements for which predicate p returns
 /// true.
 ///
@@ -19,6 +16,8 @@ namespace etl {
 /// \param p Unary predicate which returns ​true for the required elements.
 ///
 /// https://en.cppreference.com/w/cpp/algorithm/count
+///
+/// \ingroup algorithm
 template <typename InputIt, typename Predicate>
 [[nodiscard]] constexpr auto count_if(InputIt first, InputIt last, Predicate p) ->
     typename iterator_traits<InputIt>::difference_type
@@ -31,8 +30,6 @@ template <typename InputIt, typename Predicate>
     }
     return result;
 }
-
-/// @}
 
 } // namespace etl
 

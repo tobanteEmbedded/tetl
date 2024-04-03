@@ -13,6 +13,8 @@ namespace etl {
 /// \param g Generator function object that will be called.
 ///
 /// https://en.cppreference.com/w/cpp/algorithm/generate
+///
+/// \ingroup algorithm
 template <typename ForwardIt, typename Generator>
 constexpr auto generate(ForwardIt first, ForwardIt last, Generator g) -> void
 {

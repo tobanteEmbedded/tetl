@@ -9,6 +9,7 @@
 namespace etl {
 
 /// \brief Returns the lowest and the greatest of the given values.
+/// \ingroup algorithm
 template <typename T, typename Compare>
 [[nodiscard]] constexpr auto minmax(T const& a, T const& b, Compare comp) -> pair<T const&, T const&>
 {
@@ -17,6 +18,7 @@ template <typename T, typename Compare>
 }
 
 /// \brief Returns the lowest and the greatest of the given values.
+/// \ingroup algorithm
 template <typename T>
 [[nodiscard]] constexpr auto minmax(T const& a, T const& b) -> pair<T const&, T const&>
 {

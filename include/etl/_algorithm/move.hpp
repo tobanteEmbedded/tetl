@@ -7,19 +7,21 @@
 
 namespace etl {
 
-/// \brief Moves the elements in the range `[first, last)`, to another range
+/// Moves the elements in the range `[first, last)`, to another range
 /// beginning at destination, starting from first and proceeding to `last - 1`.
 /// After this operation the elements in the moved-from range will still contain
 /// valid values of the appropriate type, but not necessarily the same values as
 /// before the move.
 ///
+/// https://en.cppreference.com/w/cpp/algorithm/move
+///
+/// \returns Output iterator to the element past the last element moved.
+///
 /// \param first The range of elements to move.
 /// \param last The range of elements to move.
 /// \param destination The beginning of the destination range.
 ///
-/// \returns Output iterator to the element past the last element moved.
-///
-/// https://en.cppreference.com/w/cpp/algorithm/move
+/// \ingroup algorithm
 template <typename InputIt, typename OutputIt>
 constexpr auto move(InputIt first, InputIt last, OutputIt destination) -> OutputIt
 {

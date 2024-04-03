@@ -19,6 +19,8 @@ namespace etl {
 /// treated as equal.
 ///
 /// https://en.cppreference.com/w/cpp/algorithm/mismatch
+///
+/// \ingroup algorithm
 template <typename InputIt1, typename InputIt2, typename Predicate>
 [[nodiscard]] constexpr auto
 mismatch(InputIt1 first1, InputIt1 last1, InputIt2 first2, Predicate pred) -> pair<InputIt1, InputIt2>

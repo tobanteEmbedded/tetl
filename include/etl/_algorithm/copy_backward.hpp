@@ -4,17 +4,16 @@
 #define TETL_ALGORITHM_COPY_BACKWARD_HPP
 
 namespace etl {
-/// \ingroup algorithm
-/// @{
 
-/// \brief Copies the elements from the range, defined by `[first, last)`, to
+/// Copies the elements from the range, defined by `[first, last)`, to
 /// another range ending at `dLast`. The elements are copied in reverse order
 /// (the last element is copied first), but their relative order is preserved.
 ///
-/// \details The behavior is undefined if `dLast` is within `(first, last]`.
+/// The behavior is undefined if `dLast` is within `(first, last]`.
 /// copy must be used instead of copy_backward in that case.
 ///
 /// \returns Iterator to the last element copied.
+/// \ingroup algorithm
 template <typename BidirIt1, typename BidirIt2>
 constexpr auto copy_backward(BidirIt1 first, BidirIt1 last, BidirIt2 dLast) -> BidirIt2
 {
@@ -23,8 +22,6 @@ constexpr auto copy_backward(BidirIt1 first, BidirIt1 last, BidirIt2 dLast) -> B
     }
     return dLast;
 }
-
-/// @}
 
 } // namespace etl
 

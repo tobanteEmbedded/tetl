@@ -16,6 +16,8 @@ namespace etl {
 /// the elements after the new nth element.
 ///
 /// https://en.cppreference.com/w/cpp/algorithm/nth_element
+///
+/// \ingroup algorithm
 template <typename RandomIt, typename Compare>
 constexpr auto nth_element(RandomIt first, RandomIt nth, RandomIt last, Compare comp) -> void
 {

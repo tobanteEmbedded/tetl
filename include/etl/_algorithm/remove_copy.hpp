@@ -12,6 +12,7 @@ namespace etl {
 /// criteria. Source and destination ranges cannot overlap. Ignores all elements
 /// that are equal to value.
 /// \returns Iterator to the element past the last element copied.
+/// \ingroup algorithm
 template <typename InputIt, typename OutputIt, typename T>
 constexpr auto remove_copy(InputIt first, InputIt last, OutputIt destination, T const& value) -> OutputIt
 {

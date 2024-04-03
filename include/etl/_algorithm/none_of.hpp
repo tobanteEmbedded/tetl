@@ -8,6 +8,7 @@
 namespace etl {
 
 /// \brief Checks if unary predicate p returns true for no elements in the range `[first, last)`.
+/// \ingroup algorithm
 template <typename InputIt, typename Predicate>
 [[nodiscard]] constexpr auto none_of(InputIt first, InputIt last, Predicate p) -> bool
 {

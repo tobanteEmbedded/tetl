@@ -8,9 +8,12 @@
 
 namespace etl {
 
-/// \brief Sorts the elements in the range `[first, last)` in non-descending
-/// order.
-/// https://en.wikipedia.org/wiki/Merge_sort
+/// \ingroup algorithm
+/// @{
+
+/// \brief Sorts the elements in the range `[first, last)` in non-descending order.
+/// \details https://en.wikipedia.org/wiki/Merge_sort
+/// \note Non-standard extension
 template <typename BidirIt, typename Compare>
 constexpr auto merge_sort(BidirIt first, BidirIt last, Compare comp) -> void
 {
@@ -27,6 +30,8 @@ constexpr auto merge_sort(BidirIt first, BidirIt last) -> void
 {
     etl::merge_sort(first, last, etl::less());
 }
+
+/// @}
 
 } // namespace etl
 

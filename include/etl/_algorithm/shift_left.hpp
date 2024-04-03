@@ -16,6 +16,8 @@ namespace etl {
 /// undefined. Otherwise, for every integer i in [0, last - first - n), moves
 /// the element originally at position first + n + i to position first + i. The
 /// moves are performed in increasing order of i starting from ​0​.
+///
+/// \ingroup algorithm
 template <typename ForwardIt>
 constexpr auto
 shift_left(ForwardIt first, ForwardIt const last, typename iterator_traits<ForwardIt>::difference_type n) -> ForwardIt

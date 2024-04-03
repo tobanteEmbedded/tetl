@@ -7,7 +7,10 @@
 
 namespace etl {
 
-/// \brief Sorts the elements in the range `[first, last)` in non-descending
+/// \ingroup algorithm
+/// @{
+
+/// Sorts the elements in the range `[first, last)` in non-descending
 /// order. The order of equal elements is not guaranteed to be preserved.
 ///
 /// https://en.cppreference.com/w/cpp/algorithm/sort
@@ -22,6 +25,8 @@ constexpr auto sort(RandomIt first, RandomIt last) -> void
 {
     etl::sort(first, last, etl::less());
 }
+
+/// @}
 
 } // namespace etl
 

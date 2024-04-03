@@ -15,6 +15,8 @@ namespace etl {
 /// \param value The value to search for.
 ///
 /// https://en.cppreference.com/w/cpp/algorithm/count
+///
+/// \ingroup algorithm
 template <typename InputIt, typename T>
 [[nodiscard]] constexpr auto count(InputIt first, InputIt last, T const& value) ->
     typename iterator_traits<InputIt>::difference_type

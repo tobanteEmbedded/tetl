@@ -14,6 +14,8 @@ namespace etl {
 /// iterator in the range.
 ///
 /// https://en.cppreference.com/w/cpp/algorithm/for_each_n
+///
+/// \ingroup algorithm
 template <typename InputIt, typename Size, typename UnaryFunc>
 constexpr auto for_each_n(InputIt first, Size n, UnaryFunc f) noexcept -> InputIt
 {

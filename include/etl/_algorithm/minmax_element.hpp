@@ -10,6 +10,7 @@
 namespace etl {
 
 /// \brief Finds the smallest and greatest element in the range `[first, last)`.
+/// \ingroup algorithm
 template <typename ForwardIt, typename Compare>
 [[nodiscard]] constexpr auto minmax_element(ForwardIt first, ForwardIt last, Compare comp) -> pair<ForwardIt, ForwardIt>
 {
@@ -58,6 +59,7 @@ template <typename ForwardIt, typename Compare>
 }
 
 /// \brief Finds the smallest and greatest element in the range `[first, last)`.
+/// \ingroup algorithm
 template <typename ForwardIt>
 [[nodiscard]] constexpr auto minmax_element(ForwardIt first, ForwardIt last) -> pair<ForwardIt, ForwardIt>
 {

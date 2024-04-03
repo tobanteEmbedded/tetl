@@ -5,11 +5,13 @@
 
 namespace etl {
 
-/// \brief Assigns the given value to the first count elements in the range
+/// Assigns the given value to the first count elements in the range
 /// beginning at `first` if `count > 0`. Does nothing otherwise.
 ///
 /// \returns Iterator one past the last element assigned if `count > 0`, `first`
 /// otherwise.
+///
+/// \ingroup algorithm
 template <typename OutputIt, typename Size, typename T>
 constexpr auto fill_n(OutputIt first, Size count, T const& value) -> OutputIt
 {

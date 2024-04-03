@@ -11,6 +11,8 @@ namespace etl {
 /// less than the second range `[f2, l2)`.
 ///
 /// https://en.cppreference.com/w/cpp/algorithm/lexicographical_compare
+///
+/// \ingroup algorithm
 template <typename InputIt1, typename InputIt2, typename Compare>
 [[nodiscard]] constexpr auto
 lexicographical_compare(InputIt1 f1, InputIt1 l1, InputIt2 f2, InputIt2 l2, Compare comp) -> bool
@@ -26,6 +28,7 @@ lexicographical_compare(InputIt1 f1, InputIt1 l1, InputIt2 f2, InputIt2 l2, Comp
     return (f1 == l1) and (f2 != l2);
 }
 
+/// \ingroup algorithm
 template <typename InputIt1, typename InputIt2>
 [[nodiscard]] constexpr auto lexicographical_compare(InputIt1 f1, InputIt1 l1, InputIt2 f2, InputIt2 l2) -> bool
 {

@@ -8,6 +8,9 @@
 
 namespace etl {
 
+/// \ingroup algorithm
+/// @{
+
 /// \brief Copies the elements from the sorted range `[first1, last1)` which are
 /// not found in the sorted range `[first2, last2)` to the range beginning at
 /// destination. Elements are compared using the given binary comparison
@@ -40,6 +43,8 @@ set_difference(InputIt1 first1, InputIt1 last1, InputIt2 first2, InputIt2 last2,
 {
     return etl::set_difference(first1, last1, first2, last2, destination, etl::less());
 }
+
+/// @}
 
 } // namespace etl
 

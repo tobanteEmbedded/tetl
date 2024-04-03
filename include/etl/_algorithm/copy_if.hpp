@@ -5,16 +5,16 @@
 
 namespace etl {
 
-/// \ingroup algorithm
-/// @{
-
-/// \brief Copies the elements in the range, defined by `[first, last)`, to
+/// Copies the elements in the range, defined by `[first, last)`, to
 /// another range beginning at destination.
-/// \details Only copies the elements for which the predicate pred returns true.
+///
+/// Only copies the elements for which the predicate pred returns true.
 /// The relative order of the elements that are copied is preserved. The
 /// behavior is undefined if the source and the destination ranges overlap.
+///
 /// \returns Output iterator to the element in the destination range, one past
 /// the last element copied.
+/// \ingroup algorithm
 template <typename InIt, typename OutIt, typename Pred>
 constexpr auto copy_if(InIt first, InIt last, OutIt dFirst, Pred pred) -> OutIt
 {
@@ -26,8 +26,6 @@ constexpr auto copy_if(InIt first, InIt last, OutIt dFirst, Pred pred) -> OutIt
     }
     return dFirst;
 }
-
-/// @}
 
 } // namespace etl
 

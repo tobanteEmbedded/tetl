@@ -10,11 +10,13 @@
 
 namespace etl {
 
-/// \brief Returns an iterator pointing to the first element in the range
-/// `[first, last)` that is greater than `value`, or last if no such element is
-/// found.
+/// \ingroup algorithm
+/// @{
+
+/// Returns an iterator pointing to the first element in the range `[first, last)`
+/// that is greater than `value`, or last if no such element is found.
 ///
-/// \details The range `[first, last)` must be partitioned with respect to the
+/// The range `[first, last)` must be partitioned with respect to the
 /// expression `!(value < element)` or `!comp(value, element)`, i.e., all
 /// elements for which the expression is true must precede all elements for
 /// which the expression is false. A fully-sorted range meets this criterion.
@@ -48,6 +50,8 @@ template <typename ForwardIt, typename T>
 {
     return etl::upper_bound(first, last, value, etl::less());
 }
+
+/// @}
 
 } // namespace etl
 
