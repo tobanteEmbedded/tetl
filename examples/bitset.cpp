@@ -1,11 +1,7 @@
 // SPDX-License-Identifier: BSL-1.0
 
-#undef NDEBUG
-
-#include <etl/bitset.hpp>  // for bitset, bitset<>::reference
-#include <etl/cassert.hpp> // for assert
-
-#include <stdlib.h> // for EXIT_SUCCESS
+#include <etl/bitset.hpp>
+#include <etl/cassert.hpp>
 
 auto main() -> int
 {
@@ -41,5 +37,5 @@ auto main() -> int
     assert(ref == false);
     assert(~ref == true);
 
-    return EXIT_SUCCESS;
+    return 0;
 }
