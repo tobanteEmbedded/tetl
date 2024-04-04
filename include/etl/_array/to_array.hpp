@@ -27,7 +27,7 @@ template <typename T, size_t N>
 [[nodiscard]] constexpr auto to_array(T (&&a)[N])
 {
     return [&]<etl::size_t... I>(etl::index_sequence<I...> /*i*/) {
-        return etl::array<etl::remove_cv_t<T>, N>{{TETL_MOVE(a[I])...}};
+        return etl::array<etl::remove_cv_t<T>, N>{{etl::move(a[I])...}};
     }(etl::make_index_sequence<N>{});
 }
 

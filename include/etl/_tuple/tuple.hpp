@@ -43,11 +43,11 @@ struct tuple_leaf {
 
     [[nodiscard]] constexpr auto get_impl(index_constant<I> /*ic*/) const& noexcept -> T const& { return _value; }
 
-    [[nodiscard]] constexpr auto get_impl(index_constant<I> /*ic*/) && noexcept -> T&& { return TETL_MOVE(_value); }
+    [[nodiscard]] constexpr auto get_impl(index_constant<I> /*ic*/) && noexcept -> T&& { return etl::move(_value); }
 
     [[nodiscard]] constexpr auto get_impl(index_constant<I> /*ic*/) const&& noexcept -> T const&&
     {
-        return TETL_MOVE(_value);
+        return etl::move(_value);
     }
 
     constexpr auto swap_impl(index_constant<I> /*ic*/, T& other) noexcept(is_nothrow_swappable_v<T>) -> void
@@ -142,13 +142,13 @@ private:
     template <etl::size_t I>
     [[nodiscard]] constexpr auto get_impl(etl::index_constant<I> ic) && noexcept -> auto&&
     {
-        return TETL_MOVE(_impl).get_impl(ic);
+        return etl::move(_impl).get_impl(ic);
     }
 
     template <etl::size_t I>
     [[nodiscard]] constexpr auto get_impl(etl::index_constant<I> ic) const&& noexcept -> auto const&&
     {
-        return TETL_MOVE(_impl).get_impl(ic);
+        return etl::move(_impl).get_impl(ic);
     }
 
     template <etl::size_t I>
@@ -212,14 +212,14 @@ template <etl::size_t I, typename... Ts>
 [[nodiscard]] constexpr auto get(tuple<Ts...>&& t) -> auto&&
 {
     static_assert(I < sizeof...(Ts));
-    return TETL_MOVE(t).template get_impl<I>(etl::index_v<I>);
+    return etl::move(t).template get_impl<I>(etl::index_v<I>);
 }
 
 template <etl::size_t I, typename... Ts>
 [[nodiscard]] constexpr auto get(tuple<Ts...> const&& t) -> auto const&&
 {
     static_assert(I < sizeof...(Ts));
-    return TETL_MOVE(t).template get_impl<I>(etl::index_v<I>);
+    return etl::move(t).template get_impl<I>(etl::index_v<I>);
 }
 
 template <typename... Ts, typename... Us>

@@ -116,11 +116,11 @@ struct variant_storage<Index, Head> {
 
     [[nodiscard]] constexpr auto get_value(index_constant<Index> /*ic*/) const& -> Head const& { return *to_ptr(); }
 
-    [[nodiscard]] constexpr auto get_value(index_constant<Index> /*ic*/) && -> Head&& { return TETL_MOVE(*to_ptr()); }
+    [[nodiscard]] constexpr auto get_value(index_constant<Index> /*ic*/) && -> Head&& { return etl::move(*to_ptr()); }
 
     [[nodiscard]] constexpr auto get_value(index_constant<Index> /*ic*/) const&& -> Head const&&
     {
-        return TETL_MOVE(*to_ptr());
+        return etl::move(*to_ptr());
     }
 
     [[nodiscard]] constexpr auto to_ptr() noexcept -> Head* { return static_cast<Head*>(static_cast<void*>(&data)); }
@@ -154,7 +154,7 @@ struct variant_storage<Index, Head, Tail...> {
 
     constexpr auto construct(Head&& head, size_t& index) -> void
     {
-        new (&data) Head(TETL_MOVE(head));
+        new (&data) Head(etl::move(head));
         index = 0;
     }
 
@@ -201,11 +201,11 @@ struct variant_storage<Index, Head, Tail...> {
 
     [[nodiscard]] constexpr auto get_value(index_constant<Index> /*ic*/) const& -> Head const& { return *to_ptr(); }
 
-    [[nodiscard]] constexpr auto get_value(index_constant<Index> /*ic*/) && -> Head&& { return TETL_MOVE(*to_ptr()); }
+    [[nodiscard]] constexpr auto get_value(index_constant<Index> /*ic*/) && -> Head&& { return etl::move(*to_ptr()); }
 
     [[nodiscard]] constexpr auto get_value(index_constant<Index> /*ic*/) const&& -> Head const&&
     {
-        return TETL_MOVE(*to_ptr());
+        return etl::move(*to_ptr());
     }
 
     template <size_t N>
@@ -223,13 +223,13 @@ struct variant_storage<Index, Head, Tail...> {
     template <size_t N>
     [[nodiscard]] constexpr auto get_value(index_constant<N> ic) && -> auto&&
     {
-        return TETL_MOVE(tail).get_value(ic);
+        return etl::move(tail).get_value(ic);
     }
 
     template <size_t N>
     [[nodiscard]] constexpr auto get_value(index_constant<N> ic) const&& -> auto const&&
     {
-        return TETL_MOVE(tail).get_value(ic);
+        return etl::move(tail).get_value(ic);
     }
 
     [[nodiscard]] constexpr auto to_ptr() noexcept -> Head* { return static_cast<Head*>(static_cast<void*>(&data)); }
@@ -571,7 +571,7 @@ constexpr auto unchecked_get(variant<Ts...> const& v) -> auto const&
 template <etl::size_t I, typename... Ts>
 constexpr auto unchecked_get(variant<Ts...>&& v) -> auto&&
 {
-    return TETL_MOVE(v.impl()->get_value(etl::index_v<I>));
+    return etl::move(v.impl()->get_value(etl::index_v<I>));
 }
 
 /// \brief Returns a reference to the object stored in the variant.
@@ -579,7 +579,7 @@ constexpr auto unchecked_get(variant<Ts...>&& v) -> auto&&
 template <etl::size_t I, typename... Ts>
 constexpr auto unchecked_get(variant<Ts...> const&& v) -> auto const&&
 {
-    return TETL_MOVE(v.impl()->get_value(etl::index_v<I>));
+    return etl::move(v.impl()->get_value(etl::index_v<I>));
 }
 
 /// \brief Index-based non-throwing accessor: If pv is not a null pointer and
@@ -656,7 +656,7 @@ template <size_t I, typename... Ts>
 {
     static_assert(I < sizeof...(Ts));
     if (v.index() == I) {
-        return etl::unchecked_get<I>(TETL_MOVE(v));
+        return etl::unchecked_get<I>(etl::move(v));
     }
     etl::raise<etl::bad_variant_access>("");
 }
@@ -690,7 +690,7 @@ template <size_t I, typename... Ts>
 {
     static_assert(I < sizeof...(Ts));
     if (v.index() == I) {
-        return etl::unchecked_get<I>(TETL_MOVE(v));
+        return etl::unchecked_get<I>(etl::move(v));
     }
     etl::raise<etl::bad_variant_access>("");
 }
@@ -722,7 +722,7 @@ template <typename T, typename... Ts>
 [[nodiscard]] constexpr auto get(variant<Ts...>&& v) -> T&&
 {
     if (holds_alternative<T>(v)) {
-        return TETL_MOVE(*get_if<T>(&v));
+        return etl::move(*get_if<T>(&v));
     }
     etl::raise<etl::bad_variant_access>("");
 }
@@ -754,7 +754,7 @@ template <typename T, typename... Ts>
 [[nodiscard]] constexpr auto get(variant<Ts...> const&& v) -> T const&&
 {
     if (holds_alternative<T>(v)) {
-        return TETL_MOVE(*get_if<T>(&v));
+        return etl::move(*get_if<T>(&v));
     }
     etl::raise<etl::bad_variant_access>("");
 }

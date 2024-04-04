@@ -135,11 +135,11 @@ struct optional_storage_base : optional_destruct_base<T> {
 
     [[nodiscard]] constexpr auto get() const& noexcept -> value_type const& { return this->internal_value; }
 
-    [[nodiscard]] constexpr auto get() && noexcept -> value_type&& { return TETL_MOVE(this->internal_value); }
+    [[nodiscard]] constexpr auto get() && noexcept -> value_type&& { return etl::move(this->internal_value); }
 
     [[nodiscard]] constexpr auto get() const&& noexcept -> value_type const&&
     {
-        return TETL_MOVE(this->internal_value);
+        return etl::move(this->internal_value);
     }
 
     template <typename... Args>
@@ -213,7 +213,7 @@ struct optional_move_base<T, false> : optional_copy_base<T> {
 
     optional_move_base(optional_move_base&& opt) noexcept(etl::is_nothrow_move_constructible_v<value_type>)
     {
-        this->construct_from(TETL_MOVE(opt));
+        this->construct_from(etl::move(opt));
     }
 
     auto operator=(optional_move_base const&) -> optional_move_base& = default;
@@ -273,7 +273,7 @@ struct optional_move_assign_base<T, false> : optional_copy_assign_base<T> {
     ) noexcept(etl::is_nothrow_move_assignable_v<value_type> && etl::is_nothrow_move_constructible_v<value_type>)
         -> optional_move_assign_base&
     {
-        this->assign_from(TETL_MOVE(opt));
+        this->assign_from(etl::move(opt));
         return *this;
     }
 };
@@ -485,14 +485,14 @@ public:
     /// value, constructs an optional object that does not contain a value.
     /// Otherwise, constructs an optional object that contains a value,
     /// initialized as if direct-initializing (but not direct-list-initializing)
-    /// an object of type T with the expression TETL_MOVE(*other).
+    /// an object of type T with the expression etl::move(*other).
     ///
     /// https://en.cppreference.com/w/cpp/utility/optional/optional
     template <typename U, enable_ctor_5_implicit<U> = 0>
     constexpr optional(optional<U>&& other)
     {
         if (other.has_value()) {
-            this->construct(*TETL_MOVE(other));
+            this->construct(*etl::move(other));
         }
     }
 
@@ -500,14 +500,14 @@ public:
     /// value, constructs an optional object that does not contain a value.
     /// Otherwise, constructs an optional object that contains a value,
     /// initialized as if direct-initializing (but not direct-list-initializing)
-    /// an object of type T with the expression TETL_MOVE(*other).
+    /// an object of type T with the expression etl::move(*other).
     ///
     /// https://en.cppreference.com/w/cpp/utility/optional/optional
     template <typename U, enable_ctor_5_explicit<U> = 0>
     explicit constexpr optional(optional<U>&& other)
     {
         if (other.has_value()) {
-            this->construct(*TETL_MOVE(other));
+            this->construct(*etl::move(other));
         }
     }
 
@@ -597,14 +597,14 @@ public:
     {
         if (this->has_value()) {
             if (other.has_value()) {
-                this->get() = TETL_MOVE(*other);
+                this->get() = etl::move(*other);
                 return *this;
             }
             this->reset();
         }
 
         if (other.has_value()) {
-            this->construct(TETL_MOVE(*other));
+            this->construct(etl::move(*other));
         }
         return *this;
     }
@@ -633,7 +633,7 @@ public:
     template <typename U>
     [[nodiscard]] constexpr auto value_or(U&& defaultValue) && -> value_type
     {
-        return has_value() ? TETL_MOVE((**this)) : static_cast<value_type>(etl::forward<U>(defaultValue));
+        return has_value() ? etl::move((**this)) : static_cast<value_type>(etl::forward<U>(defaultValue));
     }
 
     /// \brief Returns a pointer to the contained value. The pointer is null if
@@ -695,7 +695,7 @@ public:
     [[nodiscard]] constexpr auto operator*() const&& -> T const&&
     {
         TETL_ASSERT(has_value());
-        return TETL_MOVE(this->get());
+        return etl::move(this->get());
     }
 
     /// \brief Returns a reference to the contained value.
@@ -709,7 +709,7 @@ public:
     [[nodiscard]] constexpr auto operator*() && -> T&&
     {
         TETL_ASSERT(has_value());
-        return TETL_MOVE(this->get());
+        return etl::move(this->get());
     }
 
     /// \brief Swaps the contents with those of other.
@@ -731,16 +731,16 @@ public:
 
         // If only one of *this and other contains a value (let's call this
         // object in and the other un), the contained value of un is
-        // direct-initialized from TETL_MOVE(*in), followed by destruction of
+        // direct-initialized from etl::move(*in), followed by destruction of
         // the contained value of in as if by in->T::~T(). After this call, in
         // does not contain a value; un contains a value.
         if (this->has_value()) {
-            other.construct(TETL_MOVE(this->get()));
+            other.construct(etl::move(this->get()));
             reset();
             return;
         }
 
-        this->construct(TETL_MOVE(other.get()));
+        this->construct(etl::move(other.get()));
         other.reset();
     }
 
@@ -777,7 +777,7 @@ public:
     constexpr auto and_then(F&& f) &&
     {
         if (*this) {
-            return etl::invoke(etl::forward<F>(f), TETL_MOVE(**this));
+            return etl::invoke(etl::forward<F>(f), etl::move(**this));
         }
         return etl::remove_cvref_t<etl::invoke_result_t<F, T>>{};
     }
@@ -786,7 +786,7 @@ public:
     constexpr auto and_then(F&& f) const&&
     {
         if (*this) {
-            return etl::invoke(etl::forward<F>(f), TETL_MOVE(**this));
+            return etl::invoke(etl::forward<F>(f), etl::move(**this));
         }
         return etl::remove_cvref_t<etl::invoke_result_t<F, T const>>{};
     }
@@ -802,7 +802,7 @@ public:
         requires(etl::move_constructible<T> and etl::same_as<etl::remove_cvref_t<etl::invoke_result_t<F>>, optional>)
     constexpr auto or_else(F&& f) && -> optional
     {
-        return *this ? TETL_MOVE(*this) : etl::forward<F>(f)();
+        return *this ? etl::move(*this) : etl::forward<F>(f)();
     }
 
     /// \brief Implementation detail. Do not use!

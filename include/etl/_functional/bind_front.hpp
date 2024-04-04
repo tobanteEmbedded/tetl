@@ -57,14 +57,14 @@ public:
     template <typename... CallArgs>
     auto operator()(CallArgs&&... callArgs) && -> invoke_result_t<Func, BoundArgs..., CallArgs...>
     {
-        return bind_front_caller(TETL_MOVE(_func), TETL_MOVE(_boundArgs), etl::forward<CallArgs>(callArgs)...);
+        return bind_front_caller(etl::move(_func), etl::move(_boundArgs), etl::forward<CallArgs>(callArgs)...);
     }
 
     // TODO: noexcept(is_nothrow_invocable_v<Func const, BoundArgs const...,CallArgs...>)
     template <typename... CallArgs>
     auto operator()(CallArgs&&... callArgs) const&& -> invoke_result_t<Func const, BoundArgs const..., CallArgs...>
     {
-        return bind_front_caller(TETL_MOVE(_func), TETL_MOVE(_boundArgs), etl::forward<CallArgs>(callArgs)...);
+        return bind_front_caller(etl::move(_func), etl::move(_boundArgs), etl::forward<CallArgs>(callArgs)...);
     }
 
 private:

@@ -26,7 +26,7 @@ template <typename InputIt, typename OutputIt>
 constexpr auto move(InputIt first, InputIt last, OutputIt destination) -> OutputIt
 {
     for (; first != last; ++first, (void)++destination) {
-        *destination = TETL_MOVE(*first);
+        *destination = etl::move(*first);
     }
     return destination;
 }

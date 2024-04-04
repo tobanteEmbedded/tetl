@@ -32,14 +32,14 @@ struct vector {
 
     constexpr vector() = default;
 
-    explicit constexpr vector(Allocator alloc) : _alloc{TETL_MOVE(alloc)} { }
+    explicit constexpr vector(Allocator alloc) : _alloc{etl::move(alloc)} { }
 
-    constexpr vector(etl::size_t n, T const& value, Allocator alloc = Allocator()) : _alloc{TETL_MOVE(alloc)}
+    constexpr vector(etl::size_t n, T const& value, Allocator alloc = Allocator()) : _alloc{etl::move(alloc)}
     {
         allocate_and_fill(n, value);
     }
 
-    explicit constexpr vector(etl::size_t n, Allocator alloc = Allocator()) : vector{n, T(), TETL_MOVE(alloc)} { }
+    explicit constexpr vector(etl::size_t n, Allocator alloc = Allocator()) : vector{n, T(), etl::move(alloc)} { }
 
     constexpr vector(vector const& o)                    = delete;
     constexpr auto operator=(vector const& o) -> vector& = delete;

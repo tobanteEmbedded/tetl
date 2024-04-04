@@ -213,7 +213,7 @@ public:
     /// Replaces the contents with those of str using move semantics.
     constexpr auto assign(basic_static_string&& str) noexcept -> basic_static_string&
     {
-        *this = TETL_MOVE(str);
+        *this = etl::move(str);
         return *this;
     }
 
@@ -952,9 +952,9 @@ public:
     /// iterators and references may be invalidated.
     constexpr auto swap(basic_static_string& other) noexcept -> void
     {
-        auto temp(TETL_MOVE(other));
-        other = TETL_MOVE(*this);
-        *this = TETL_MOVE(temp);
+        auto temp(etl::move(other));
+        other = etl::move(*this);
+        *this = etl::move(temp);
     }
 
     /// \brief Finds the first substring equal to the given character sequence.

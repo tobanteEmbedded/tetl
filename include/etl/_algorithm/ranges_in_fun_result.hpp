@@ -24,7 +24,7 @@ struct in_fun_result {
         requires etl::convertible_to<I, I2> and etl::convertible_to<F, F2>
     constexpr operator in_fun_result<I2, F2>() &&
     {
-        return {TETL_MOVE(in), TETL_MOVE(fun)};
+        return {etl::move(in), etl::move(fun)};
     }
 
     TETL_NO_UNIQUE_ADDRESS I in;

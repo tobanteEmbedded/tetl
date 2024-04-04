@@ -24,9 +24,9 @@ template <typename T, typename U>
         }
     } else {
         if constexpr (isAddingConst) {
-            return TETL_MOVE(etl::as_const(x));
+            return etl::move(etl::as_const(x));
         } else {
-            return TETL_MOVE(x);
+            return etl::move(x);
         }
     }
 }

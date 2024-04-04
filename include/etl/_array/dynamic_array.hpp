@@ -32,15 +32,15 @@ struct dynamic_array {
         requires(etl::is_default_constructible_v<Allocator>)
     = default;
 
-    explicit dynamic_array(Allocator alloc) : _alloc{TETL_MOVE(alloc)} { }
+    explicit dynamic_array(Allocator alloc) : _alloc{etl::move(alloc)} { }
 
-    dynamic_array(etl::size_t n, T const& value, Allocator alloc = Allocator()) : _size{n}, _alloc{TETL_MOVE(alloc)}
+    dynamic_array(etl::size_t n, T const& value, Allocator alloc = Allocator()) : _size{n}, _alloc{etl::move(alloc)}
     {
         _ptr = etl::allocator_traits<Allocator>::allocate(_alloc, n);
         etl::uninitialized_fill(begin(), end(), value);
     }
 
-    explicit dynamic_array(etl::size_t n, Allocator alloc = Allocator()) : dynamic_array{n, T(), TETL_MOVE(alloc)} { }
+    explicit dynamic_array(etl::size_t n, Allocator alloc = Allocator()) : dynamic_array{n, T(), etl::move(alloc)} { }
 
     dynamic_array(dynamic_array const& other)                    = delete;
     auto operator=(dynamic_array const& other) -> dynamic_array& = delete;

@@ -419,7 +419,7 @@ public:
     template <typename InIt>
         requires(detail::InputIterator<InIt>)
     constexpr auto
-    move_insert(const_iterator position, InIt first, InIt last) noexcept(noexcept(emplace_back(TETL_MOVE(*first)))
+    move_insert(const_iterator position, InIt first, InIt last) noexcept(noexcept(emplace_back(etl::move(*first)))
     ) -> iterator
     {
         assert_iterator_in_range(position);
@@ -431,7 +431,7 @@ public:
 
         // we insert at the end and then just rotate:
         for (; first != last; ++first) {
-            emplace_back(TETL_MOVE(*first));
+            emplace_back(etl::move(*first));
         }
         auto* writablePosition = begin() + (position - begin());
         rotate<iterator>(writablePosition, b, end());
@@ -686,9 +686,9 @@ public:
     constexpr auto swap(static_vector& other) noexcept(is_nothrow_swappable_v<T>) -> void
         requires(is_assignable_v<T&, T &&>)
     {
-        static_vector tmp = TETL_MOVE(other);
-        other             = TETL_MOVE(*this);
-        (*this)           = TETL_MOVE(tmp);
+        static_vector tmp = etl::move(other);
+        other             = etl::move(*this);
+        (*this)           = etl::move(tmp);
     }
 
     /// \brief Resizes the container to contain sz elements. If elements need to

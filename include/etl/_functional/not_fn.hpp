@@ -43,17 +43,17 @@ struct not_fn_t {
     template <typename... Args>
         requires negate_invocable<F, Args...>
     constexpr auto operator()(Args&&... args
-    ) && noexcept(noexcept(not etl::invoke(TETL_MOVE(f), etl::forward<Args>(args)...))) -> decltype(auto)
+    ) && noexcept(noexcept(not etl::invoke(etl::move(f), etl::forward<Args>(args)...))) -> decltype(auto)
     {
-        return not etl::invoke(TETL_MOVE(f), etl::forward<Args>(args)...);
+        return not etl::invoke(etl::move(f), etl::forward<Args>(args)...);
     }
 
     template <typename... Args>
         requires negate_invocable<F const, Args...>
     constexpr auto operator()(Args&&... args
-    ) const&& noexcept(noexcept(not etl::invoke(TETL_MOVE(f), etl::forward<Args>(args)...))) -> decltype(auto)
+    ) const&& noexcept(noexcept(not etl::invoke(etl::move(f), etl::forward<Args>(args)...))) -> decltype(auto)
     {
-        return not etl::invoke(TETL_MOVE(f), etl::forward<Args>(args)...);
+        return not etl::invoke(etl::move(f), etl::forward<Args>(args)...);
     }
 
     template <typename... Args>

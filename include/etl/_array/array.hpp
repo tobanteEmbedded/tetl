@@ -257,7 +257,7 @@ template <size_t Index, typename T, size_t Size>
 [[nodiscard]] constexpr auto get(array<T, Size>&& array) noexcept -> T&&
 {
     static_assert(Index < Size, "array index out of range");
-    return TETL_MOVE(array[Index]);
+    return etl::move(array[Index]);
 }
 
 /// \relates array
@@ -265,7 +265,7 @@ template <size_t Index, typename T, size_t Size>
 [[nodiscard]] constexpr auto get(array<T, Size> const&& array) noexcept -> T const&&
 {
     static_assert(Index < Size, "array index out of range");
-    return TETL_MOVE(array[Index]);
+    return etl::move(array[Index]);
 }
 
 } // namespace etl

@@ -20,7 +20,7 @@ template <typename ForwardIt, typename Predicate>
     if (first != last) {
         for (auto i = first; ++i != last;) {
             if (!pred(*i)) {
-                *first++ = TETL_MOVE(*i);
+                *first++ = etl::move(*i);
             }
         }
     }

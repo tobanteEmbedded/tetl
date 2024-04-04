@@ -17,7 +17,7 @@ template <typename T, typename U = T>
 exchange(T& obj, U&& newValue) noexcept(etl::is_nothrow_move_constructible_v<T> and etl::is_nothrow_assignable_v<T&, U>)
     -> T
 {
-    T oldValue = TETL_MOVE(obj);
+    T oldValue = etl::move(obj);
     obj        = etl::forward<U>(newValue);
     return oldValue;
 }

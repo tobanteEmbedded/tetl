@@ -64,7 +64,7 @@ struct inplace_func_vtable {
             ::new (dstPtr) C{(*static_cast<C*>(srcPtr))};
         }}
         , relocate_ptr{[](storage_ptr_t dstPtr, storage_ptr_t srcPtr) -> void {
-            ::new (dstPtr) C{TETL_MOVE(*static_cast<C*>(srcPtr))};
+            ::new (dstPtr) C{etl::move(*static_cast<C*>(srcPtr))};
             static_cast<C*>(srcPtr)->~C();
         }}
         , destructor_ptr{[](storage_ptr_t srcPtr) -> void { static_cast<C*>(srcPtr)->~C(); }}

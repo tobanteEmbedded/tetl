@@ -77,7 +77,7 @@ struct flat_set {
     }
 
     constexpr flat_set(etl::sorted_unique_t /*tag*/, container_type cont)
-        : _container{TETL_MOVE(cont)}
+        : _container{etl::move(cont)}
         , _compare{Compare()}
     {
     }
@@ -151,7 +151,7 @@ struct flat_set {
         iterator it = lower_bound(key);
 
         if (it == end() || _compare(key, *it)) {
-            it = _container.emplace(it, TETL_MOVE(key));
+            it = _container.emplace(it, etl::move(key));
             return etl::make_pair(it, true);
         }
 
@@ -166,7 +166,7 @@ struct flat_set {
 
     constexpr auto insert(value_type const& x) -> etl::pair<iterator, bool> { return emplace(x); }
 
-    constexpr auto insert(value_type&& x) -> etl::pair<iterator, bool> { return emplace(TETL_MOVE(x)); }
+    constexpr auto insert(value_type&& x) -> etl::pair<iterator, bool> { return emplace(etl::move(x)); }
 
     constexpr auto insert(const_iterator position, value_type const& x) -> iterator
     {
@@ -175,7 +175,7 @@ struct flat_set {
 
     constexpr auto insert(const_iterator position, value_type&& x) -> iterator
     {
-        return emplace_hint(position, TETL_MOVE(x));
+        return emplace_hint(position, etl::move(x));
     }
 
     template <typename InputIt>
@@ -192,12 +192,12 @@ struct flat_set {
 
     constexpr auto extract() && -> container_type
     {
-        auto&& container = TETL_MOVE(_container);
+        auto&& container = etl::move(_container);
         clear();
         return container;
     }
 
-    constexpr auto replace(container_type&& container) -> void { _container = TETL_MOVE(container); }
+    constexpr auto replace(container_type&& container) -> void { _container = etl::move(container); }
 
     constexpr auto erase(iterator position) -> iterator { return _container.erase(position); }
 

@@ -20,7 +20,7 @@ template <typename T>
 [[nodiscard]] constexpr auto move_if_noexcept(T& x) noexcept
     -> etl::conditional_t<!etl::is_nothrow_move_constructible_v<T> and etl::is_copy_constructible_v<T>, T const&, T&&>
 {
-    return TETL_MOVE(x);
+    return etl::move(x);
 }
 
 } // namespace etl

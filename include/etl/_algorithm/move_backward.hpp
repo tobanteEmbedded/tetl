@@ -25,7 +25,7 @@ constexpr auto move_backward(BidirIt1 first, BidirIt1 last, BidirIt2 destination
 {
     for (; first != last;) {
         --last;
-        *(--destination) = TETL_MOVE(*last);
+        *(--destination) = etl::move(*last);
     }
     return destination;
 }

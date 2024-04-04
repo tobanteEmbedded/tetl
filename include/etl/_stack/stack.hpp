@@ -43,7 +43,7 @@ struct stack {
     constexpr explicit stack(Container const& cont) : c{cont} { }
 
     /// \brief Move-constructs the underlying container c with cont .
-    constexpr explicit stack(Container&& cont) : c{TETL_MOVE(cont)} { }
+    constexpr explicit stack(Container&& cont) : c{etl::move(cont)} { }
 
     /// \brief Copy constructor.
     constexpr stack(stack const& other) = default;
@@ -83,9 +83,9 @@ struct stack {
     }
 
     /// \brief Pushes the given element value to the top of the stack.
-    constexpr auto push(value_type&& x) noexcept(noexcept(declval<Container>().push_back(TETL_MOVE(x)))) -> void
+    constexpr auto push(value_type&& x) noexcept(noexcept(declval<Container>().push_back(etl::move(x)))) -> void
     {
-        c.push_back(TETL_MOVE(x));
+        c.push_back(etl::move(x));
     }
 
     /// \brief Pushes a new element on top of the stack. The element is

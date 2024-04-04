@@ -46,7 +46,7 @@ public:
     /// \brief Inserts the given value value to the container.
     constexpr auto operator=(typename Container::value_type&& value) -> front_insert_iterator&
     {
-        container_->push_front(TETL_MOVE(value));
+        container_->push_front(etl::move(value));
         return *this;
     }
 

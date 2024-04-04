@@ -17,7 +17,7 @@ constexpr auto uninitialized_move(InputIt first, InputIt last, NoThrowForwardIt 
     auto current = dest;
     try {
         for (; first != last; ++first, (void)++current) {
-            etl::construct_at(etl::addressof(*current), TETL_MOVE(*first));
+            etl::construct_at(etl::addressof(*current), etl::move(*first));
         }
         return current;
     } catch (...) {
@@ -27,7 +27,7 @@ constexpr auto uninitialized_move(InputIt first, InputIt last, NoThrowForwardIt 
 #else
     auto current = dest;
     for (; first != last; ++first, (void)++current) {
-        etl::construct_at(etl::addressof(*current), TETL_MOVE(*first));
+        etl::construct_at(etl::addressof(*current), etl::move(*first));
     }
     return current;
 #endif

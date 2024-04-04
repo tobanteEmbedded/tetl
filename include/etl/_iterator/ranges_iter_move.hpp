@@ -42,9 +42,9 @@ struct fn {
 
     template <can_move Iter>
     [[nodiscard]] constexpr auto operator()(Iter&& i) const
-        noexcept(noexcept(TETL_MOVE(*etl::forward<Iter>(i)))) -> decltype(TETL_MOVE(*etl::forward<Iter>(i)))
+        noexcept(noexcept(etl::move(*etl::forward<Iter>(i)))) -> decltype(etl::move(*etl::forward<Iter>(i)))
     {
-        return TETL_MOVE(*etl::forward<Iter>(i));
+        return etl::move(*etl::forward<Iter>(i));
     }
 
     template <can_deref Iter>

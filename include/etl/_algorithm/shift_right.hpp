@@ -39,7 +39,7 @@ shift_right(BidiIt first, BidiIt last, typename etl::iterator_traits<BidiIt>::di
     auto dest = etl::prev(last);
     auto src  = etl::prev(dest, n);
     for (; src != first; --dest, (void)--src) {
-        *dest = TETL_MOVE(*src);
+        *dest = etl::move(*src);
     }
 
     // Elements outside the new range should be left in a valid but unspecified state.

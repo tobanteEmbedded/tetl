@@ -24,9 +24,9 @@ template <typename T>
 constexpr auto
 swap(T& a, T& b) noexcept(etl::is_nothrow_move_constructible_v<T> and etl::is_nothrow_move_assignable_v<T>) -> void
 {
-    T temp(TETL_MOVE(a));
-    a = TETL_MOVE(b);
-    b = TETL_MOVE(temp);
+    T temp(etl::move(a));
+    a = etl::move(b);
+    b = etl::move(temp);
 }
 
 template <typename T, etl::size_t N>

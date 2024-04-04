@@ -22,7 +22,4 @@ constexpr auto move(T&& t) noexcept -> etl::remove_reference_t<T>&&
 
 } // namespace etl
 
-// https://www.foonathan.net/2020/09/move-forward
-#define TETL_MOVE(...) static_cast<etl::remove_reference_t<decltype(__VA_ARGS__)>&&>(__VA_ARGS__)
-
 #endif // TETL_UTILITY_MOVE_HPP

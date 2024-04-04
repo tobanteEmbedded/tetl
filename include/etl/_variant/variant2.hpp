@@ -101,7 +101,7 @@ public:
     constexpr auto operator[](etl::index_constant<I> index) && -> auto&&
     {
         static_assert(I < sizeof...(Ts));
-        return TETL_MOVE(_union)[index];
+        return etl::move(_union)[index];
     }
 
     /// \brief Returns a reference to the object stored in the variant.
@@ -110,7 +110,7 @@ public:
     constexpr auto operator[](etl::index_constant<I> index) const&& -> auto const&&
     {
         static_assert(I < sizeof...(Ts));
-        return TETL_MOVE(_union)[index];
+        return etl::move(_union)[index];
     }
 
 private:
@@ -145,7 +145,7 @@ template <etl::size_t I, typename... Ts>
 constexpr auto unchecked_get(variant2<Ts...>&& v) -> auto&&
 {
     static_assert(I < sizeof...(Ts));
-    return TETL_MOVE(v)[etl::index_v<I>];
+    return etl::move(v)[etl::index_v<I>];
 }
 
 /// \brief Returns a reference to the object stored in the variant.
@@ -155,7 +155,7 @@ template <etl::size_t I, typename... Ts>
 constexpr auto unchecked_get(variant2<Ts...> const&& v) -> auto const&&
 {
     static_assert(I < sizeof...(Ts));
-    return TETL_MOVE(v)[etl::index_v<I>];
+    return etl::move(v)[etl::index_v<I>];
 }
 
 /// \brief If pv is not a null pointer and pv->index() == I, returns a pointer

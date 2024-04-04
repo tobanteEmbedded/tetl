@@ -142,7 +142,7 @@ struct inplace_vector {
             return nullptr;
         }
 
-        return etl::addressof(unchecked_push_back(TETL_MOVE(val)));
+        return etl::addressof(unchecked_push_back(etl::move(val)));
     }
 
     template <typename... Args>
@@ -162,7 +162,7 @@ struct inplace_vector {
 
     constexpr auto unchecked_push_back(T&& val) -> T&
     {
-        etl::ranges::construct_at(end(), TETL_MOVE(val));
+        etl::ranges::construct_at(end(), etl::move(val));
         unsafe_set_size(size() + 1U);
         return back();
     }
