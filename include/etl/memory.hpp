@@ -26,7 +26,9 @@
 #include <etl/_memory/ranges_destroy.hpp>
 #include <etl/_memory/ranges_destroy_at.hpp>
 #include <etl/_memory/to_address.hpp>
+#include <etl/_memory/uninitialized_copy.hpp>
 #include <etl/_memory/uninitialized_fill.hpp>
+#include <etl/_memory/uninitialized_move.hpp>
 #include <etl/_memory/uses_allocator.hpp>
 
 // Non-standard extensions

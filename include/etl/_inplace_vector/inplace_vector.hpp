@@ -5,8 +5,6 @@
 
 #include <etl/_config/all.hpp>
 
-#include <etl/_algorithm/copy.hpp>
-#include <etl/_algorithm/move.hpp>
 #include <etl/_array/uninitialized_array.hpp>
 #include <etl/_cstddef/ptrdiff_t.hpp>
 #include <etl/_cstddef/size_t.hpp>
@@ -16,6 +14,8 @@
 #include <etl/_memory/ranges_construct_at.hpp>
 #include <etl/_memory/ranges_destroy.hpp>
 #include <etl/_memory/ranges_destroy_at.hpp>
+#include <etl/_memory/uninitialized_copy.hpp>
+#include <etl/_memory/uninitialized_move.hpp>
 #include <etl/_type_traits/conditional.hpp>
 #include <etl/_type_traits/is_nothrow_copy_constructible.hpp>
 #include <etl/_type_traits/is_nothrow_move_constructible.hpp>
@@ -54,7 +54,7 @@ struct inplace_vector {
 
     constexpr inplace_vector(inplace_vector const& other) noexcept(etl::is_nothrow_copy_constructible_v<T>)
     {
-        etl::copy(other.begin(), other.end(), begin());
+        etl::uninitialized_copy(other.begin(), other.end(), begin());
         _size = other._size; // NOLINT(cppcoreguidelines-prefer-member-initializer)
     }
 
@@ -64,7 +64,7 @@ struct inplace_vector {
 
     constexpr inplace_vector(inplace_vector&& other) noexcept(etl::is_nothrow_move_constructible_v<T>)
     {
-        etl::move(other.begin(), other.end(), begin());
+        etl::uninitialized_move(other.begin(), other.end(), begin());
         _size = etl::exchange(other._size, internal_size_t{}); // NOLINT(cppcoreguidelines-prefer-member-initializer)
     }
 

@@ -10,9 +10,8 @@
 namespace etl {
 
 template <typename ForwardIt, typename T>
-auto uninitialized_fill(ForwardIt first, ForwardIt last, T const& value) -> void
+constexpr auto uninitialized_fill(ForwardIt first, ForwardIt last, T const& value) -> void
 {
-
 #if defined(__cpp_exceptions)
     auto current = first;
     try {
