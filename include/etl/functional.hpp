@@ -42,5 +42,6 @@
 // Non-standard extensions
 #include <etl/_functional/function_ref.hpp>
 #include <etl/_functional/inplace_function.hpp>
+#include <etl/_functional/is_transparent.hpp>
 
 #endif // TETL_FUNCTIONAL_HPP

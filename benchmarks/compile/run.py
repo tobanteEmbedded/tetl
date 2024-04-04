@@ -64,7 +64,6 @@ cxx20_headers = [
 cxx23_headers = [
     'expected',
     'scope',
-    'simd',
 ]
 
 

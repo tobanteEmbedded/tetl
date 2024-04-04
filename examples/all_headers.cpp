@@ -49,7 +49,6 @@
 #include <etl/ratio.hpp>
 #include <etl/scope.hpp>
 #include <etl/set.hpp>
-#include <etl/simd.hpp>
 #include <etl/source_location.hpp>
 #include <etl/span.hpp>
 #include <etl/stack.hpp>
