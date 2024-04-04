@@ -2,8 +2,8 @@
 
 #undef NDEBUG
 
-#include <etl/cassert.hpp>  // for assert
-#include <etl/optional.hpp> // for optional
+#include <etl/cassert.hpp>
+#include <etl/optional.hpp>
 
 auto main() -> int
 {

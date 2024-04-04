@@ -2,14 +2,14 @@
 
 #undef NDEBUG
 
-#include <etl/string.hpp> // for static_string
+#include <etl/string.hpp>
 
-#include <etl/algorithm.hpp> // for transform
-#include <etl/cassert.hpp>   // for assert
-#include <etl/cctype.hpp>    // for toupper
+#include <etl/algorithm.hpp>
+#include <etl/cassert.hpp>
+#include <etl/cctype.hpp>
 
-#include <stdio.h>  // for printf
-#include <stdlib.h> // for EXIT_SUCCESS
+#include <stdio.h>
+#include <stdlib.h>
 
 auto main() -> int
 {
@@ -72,5 +72,5 @@ auto main() -> int
     ::printf("to_string<8>(1): '%s'\n", etl::to_string<8>(1).c_str());
     ::printf("to_string<8>(16384): '%s'\n", etl::to_string<8>(16384).c_str());
 
-    return EXIT_SUCCESS;
+    return 0;
 }

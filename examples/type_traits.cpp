@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: BSL-1.0
 
-#include <etl/cstdint.hpp>     // for uint16_t
-#include <etl/type_traits.hpp> // for enable_if
+#include <etl/cstdint.hpp>
+#include <etl/type_traits.hpp>
 
 namespace {
 

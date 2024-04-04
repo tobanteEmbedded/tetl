@@ -1,5 +1,7 @@
 // SPDX-License-Identifier: BSL-1.0
 
+#undef NDEBUG
+
 #include <etl/bitset.hpp>
 #include <etl/cassert.hpp>
 

@@ -2,12 +2,8 @@
 
 #undef NDEBUG
 
-#include <etl/cassert.hpp> // for assert
-#include <etl/cctype.hpp>  // for toupper
-#include <etl/vector.hpp>  // for static_vector
-
-#include <stdio.h>  // for printf
-#include <stdlib.h> // for EXIT_SUCCESS
+#include <etl/cassert.hpp>
+#include <etl/vector.hpp>
 
 struct Person {
     constexpr Person(int a, int e) noexcept : age{a}, experience{e} { }
@@ -52,5 +48,5 @@ auto main() -> int
     assert(people[1].experience == 101);
     assert(copy != people);
 
-    return EXIT_SUCCESS;
+    return 0;
 }

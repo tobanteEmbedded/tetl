@@ -1,13 +1,14 @@
 // SPDX-License-Identifier: BSL-1.0
 
+#undef NDEBUG
+
+#include <etl/cassert.hpp>
 #include <etl/tuple.hpp>
 
-#include <stdio.h>
-#include <stdlib.h>
-
-auto main(int /*unused*/, char** /*unused*/) -> int
+auto main() -> int
 {
-    etl::tuple<int, int, double> c(3, 5, 1.1);
-    printf("%d\n", etl::get<1>(c));
-    return EXIT_SUCCESS;
+    auto c = etl::tuple<int, int, double>{3, 5, 1.1};
+    assert(etl::get<0>(c) == 3);
+    assert(etl::get<1>(c) == 5);
+    return 0;
 }
