@@ -3,7 +3,7 @@
 #ifndef TETL_ALGORITHM_REMOVE_HPP
 #define TETL_ALGORITHM_REMOVE_HPP
 
-#include "etl/_algorithm/remove_if.hpp"
+#include <etl/_algorithm/remove_if.hpp>
 
 namespace etl {
 

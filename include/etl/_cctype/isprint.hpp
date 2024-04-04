@@ -3,7 +3,7 @@
 #ifndef TETL_CCTYPE_ISPRINT_HPP
 #define TETL_CCTYPE_ISPRINT_HPP
 
-#include "etl/_cctype/isgraph.hpp"
+#include <etl/_cctype/isgraph.hpp>
 
 namespace etl {
 /// \brief Checks if ch is a printable character as classified by the default C

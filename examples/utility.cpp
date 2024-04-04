@@ -2,9 +2,9 @@
 
 #undef NDEBUG
 
-#include "etl/utility.hpp"     // for in_range, pair, cmp_equal, as_const
-#include "etl/cassert.hpp"     // for assert
-#include "etl/type_traits.hpp" // for is_const_v, remove_reference_t
+#include <etl/cassert.hpp>     // for assert
+#include <etl/type_traits.hpp> // for is_const_v, remove_reference_t
+#include <etl/utility.hpp>     // for in_range, pair, cmp_equal, as_const
 
 auto main() -> int
 {

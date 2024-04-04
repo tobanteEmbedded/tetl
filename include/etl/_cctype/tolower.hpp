@@ -3,7 +3,7 @@
 #ifndef TETL_CCTYPE_TOLOWER_HPP
 #define TETL_CCTYPE_TOLOWER_HPP
 
-#include "etl/_cctype/isupper.hpp"
+#include <etl/_cctype/isupper.hpp>
 
 namespace etl {
 

@@ -10,7 +10,7 @@
 #define TETL_ENABLE_CUSTOM_ASSERT_HANDLER 1
 
 #undef NDEBUG              // force assertions in release build
-#include "etl/cassert.hpp" // for assert
+#include <etl/cassert.hpp> // for assert
 
 #include <stdio.h>  // for printf
 #include <stdlib.h> // for exit

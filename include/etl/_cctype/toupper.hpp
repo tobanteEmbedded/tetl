@@ -3,7 +3,7 @@
 #ifndef TETL_CCTYPE_TOUPPER_HPP
 #define TETL_CCTYPE_TOUPPER_HPP
 
-#include "etl/_cctype/islower.hpp"
+#include <etl/_cctype/islower.hpp>
 
 namespace etl {
 
@@ -23,7 +23,7 @@ namespace etl {
 /// https://en.cppreference.com/w/cpp/string/byte/toupper
 [[nodiscard]] constexpr auto toupper(int ch) noexcept -> int
 {
-    if (islower(ch) != 0) {
+    if (etl::islower(ch) != 0) {
         return static_cast<int>(ch - 32);
     }
     return static_cast<int>(ch);

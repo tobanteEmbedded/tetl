@@ -3,7 +3,7 @@
 #ifndef TETL_ALGORITHM_REPLACE_HPP
 #define TETL_ALGORITHM_REPLACE_HPP
 
-#include "etl/_algorithm/replace_if.hpp"
+#include <etl/_algorithm/replace_if.hpp>
 
 namespace etl {
 

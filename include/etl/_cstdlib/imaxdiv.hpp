@@ -3,7 +3,7 @@
 #ifndef TETL_CSTDLIB_IMAXDIV_HPP
 #define TETL_CSTDLIB_IMAXDIV_HPP
 
-#include "etl/_cstdint/intmax_t.hpp"
+#include <etl/_cstdint/intmax_t.hpp>
 
 namespace etl {
 

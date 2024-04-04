@@ -3,7 +3,7 @@
 #ifndef TETL_MUTEX_LOCK_GUARD_HPP
 #define TETL_MUTEX_LOCK_GUARD_HPP
 
-#include "etl/_mutex/tags.hpp"
+#include <etl/_mutex/tags.hpp>
 
 namespace etl {
 

@@ -3,7 +3,7 @@
 #ifndef TETL_COMPARE_NAMED_FUNCTIONS_HPP
 #define TETL_COMPARE_NAMED_FUNCTIONS_HPP
 
-#include "etl/_compare/partial_ordering.hpp"
+#include <etl/_compare/partial_ordering.hpp>
 
 namespace etl {
 

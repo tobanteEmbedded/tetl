@@ -3,7 +3,7 @@
 #ifndef TETL_CSTDLIB_LLABS_HPP
 #define TETL_CSTDLIB_LLABS_HPP
 
-#include "etl/_math/abs.hpp"
+#include <etl/_math/abs.hpp>
 
 namespace etl {
 

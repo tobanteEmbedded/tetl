@@ -3,7 +3,7 @@
 #ifndef TETL_ALGORITHM_ROTATE_COPY_HPP
 #define TETL_ALGORITHM_ROTATE_COPY_HPP
 
-#include "etl/_algorithm/copy.hpp"
+#include <etl/_algorithm/copy.hpp>
 
 namespace etl {
 

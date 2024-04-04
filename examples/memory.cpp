@@ -2,8 +2,8 @@
 
 #undef NDEBUG
 
-#include "etl/memory.hpp"  // for pointer_int_pair
-#include "etl/cassert.hpp" // for assert
+#include <etl/cassert.hpp> // for assert
+#include <etl/memory.hpp>  // for pointer_int_pair
 
 auto main() -> int
 {

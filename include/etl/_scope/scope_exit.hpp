@@ -2,7 +2,7 @@
 #ifndef TETL_SCOPE_SCOPE_EXIT_HPP
 #define TETL_SCOPE_SCOPE_EXIT_HPP
 
-#include "etl/_scope/scope_guard.hpp"
+#include <etl/_scope/scope_guard.hpp>
 
 namespace etl {
 

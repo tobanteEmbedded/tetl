@@ -2,7 +2,7 @@
 #ifndef TETL_STRING_STATIC_STRING_HPP
 #define TETL_STRING_STATIC_STRING_HPP
 
-#include "etl/_string/basic_static_string.hpp"
+#include <etl/_string/basic_static_string.hpp>
 
 namespace etl {
 

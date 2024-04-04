@@ -2,7 +2,7 @@
 #ifndef TETL_NUMERIC_GCD_HPP
 #define TETL_NUMERIC_GCD_HPP
 
-#include "etl/_type_traits/common_type.hpp"
+#include <etl/_type_traits/common_type.hpp>
 
 namespace etl {
 

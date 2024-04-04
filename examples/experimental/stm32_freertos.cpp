@@ -1,10 +1,10 @@
 // SPDX-License-Identifier: BSL-1.0
 
-#include "etl/new.hpp"
+#include <etl/new.hpp>
 
 #define TETL_FREERTOS_USE_STUBS
-#include "etl/experimental/freertos/task.hpp"       // for once, create_task
-#include "etl/experimental/hardware/stm32/gpio.hpp" // for port, pin_number
+#include <etl/experimental/freertos/task.hpp>       // for once, create_task
+#include <etl/experimental/hardware/stm32/gpio.hpp> // for port, pin_number
 
 namespace rtos  = etl::experimental::freertos;
 namespace stm32 = etl::experimental::hardware::stm32;

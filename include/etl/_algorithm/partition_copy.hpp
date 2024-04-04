@@ -3,7 +3,7 @@
 #ifndef TETL_ALGORITHM_PARTITION_COPY_HPP
 #define TETL_ALGORITHM_PARTITION_COPY_HPP
 
-#include "etl/_utility/pair.hpp"
+#include <etl/_utility/pair.hpp>
 
 namespace etl {
 
