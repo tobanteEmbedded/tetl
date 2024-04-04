@@ -13,6 +13,8 @@ namespace etl {
 /// to the value of the macro WEOF, the behavior is undefined.
 ///
 /// https://en.cppreference.com/w/cpp/string/wide/iswxdigit
+///
+/// \ingroup cwctype
 [[nodiscard]] constexpr auto iswxdigit(wint_t ch) noexcept -> int
 {
     auto const isDigit    = ch >= '0' && ch <= '9';

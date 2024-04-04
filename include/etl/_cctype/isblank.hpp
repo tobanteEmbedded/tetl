@@ -15,6 +15,8 @@ namespace etl {
 /// otherwise.
 ///
 /// https://en.cppreference.com/w/cpp/string/byte/isblank
+///
+/// \ingroup cctype
 [[nodiscard]] constexpr auto isblank(int ch) noexcept -> int { return static_cast<int>(ch == ' ' || ch == '\t'); }
 } // namespace etl
 

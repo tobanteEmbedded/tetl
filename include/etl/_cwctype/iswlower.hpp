@@ -15,6 +15,8 @@ namespace etl {
 /// to the value of the macro WEOF, the behavior is undefined.
 ///
 /// https://en.cppreference.com/w/cpp/string/wide/iswlower
+///
+/// \ingroup cwctype
 [[nodiscard]] constexpr auto iswlower(wint_t ch) noexcept -> int { return static_cast<int>(ch >= L'a' && ch <= L'z'); }
 
 } // namespace etl

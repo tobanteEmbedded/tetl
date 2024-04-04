@@ -21,6 +21,8 @@ namespace etl {
 /// current C locale.
 ///
 /// https://en.cppreference.com/w/cpp/string/byte/toupper
+///
+/// \ingroup cctype
 [[nodiscard]] constexpr auto toupper(int ch) noexcept -> int
 {
     if (etl::islower(ch) != 0) {

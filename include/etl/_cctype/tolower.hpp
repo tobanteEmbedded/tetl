@@ -21,6 +21,8 @@ namespace etl {
 /// listed in the current C locale.
 ///
 /// https://en.cppreference.com/w/cpp/string/byte/tolower
+///
+/// \ingroup cctype
 [[nodiscard]] constexpr auto tolower(int ch) noexcept -> int
 {
     if (isupper(ch) != 0) {

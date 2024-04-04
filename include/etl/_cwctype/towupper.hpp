@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: BSL-1.0
 
-#ifndef TETL_CCTYPE_TOUPPER_HPP
-#define TETL_CCTYPE_TOUPPER_HPP
+#ifndef TETL_CWCTYPE_TOWUPPER_HPP
+#define TETL_CWCTYPE_TOWUPPER_HPP
 
 #include <etl/_cwchar/wint_t.hpp>
 #include <etl/_cwctype/iswlower.hpp>
@@ -14,6 +14,8 @@ namespace etl {
 /// to the value of the macro WEOF, the behavior is undefined.
 ///
 /// https://en.cppreference.com/w/cpp/string/wide/towupper
+///
+/// \ingroup cwctype
 [[nodiscard]] constexpr auto towupper(wint_t ch) noexcept -> wint_t
 {
     if (iswlower(ch) != 0) {
@@ -23,4 +25,4 @@ namespace etl {
 }
 } // namespace etl
 
-#endif // TETL_CCTYPE_TOUPPER_HPP
+#endif // TETL_CWCTYPE_TOWUPPER_HPP

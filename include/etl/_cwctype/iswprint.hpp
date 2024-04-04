@@ -17,6 +17,8 @@ namespace etl {
 /// to the value of the macro WEOF, the behavior is undefined.
 ///
 /// https://en.cppreference.com/w/cpp/string/wide/iswprint
+///
+/// \ingroup cwctype
 [[nodiscard]] constexpr auto iswprint(wint_t ch) noexcept -> int
 {
     return static_cast<int>(etl::iswgraph(ch) != 0 || ch == ' ');

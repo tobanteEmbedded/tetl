@@ -14,6 +14,8 @@ namespace etl {
 /// otherwise.
 ///
 /// https://en.cppreference.com/w/cpp/string/byte/isspace
+///
+/// \ingroup cctype
 [[nodiscard]] constexpr auto isspace(int ch) noexcept -> int
 {
     auto const sp       = ch == ' ';

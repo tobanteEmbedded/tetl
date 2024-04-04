@@ -15,6 +15,8 @@ namespace etl {
 /// otherwise.
 ///
 /// https://en.cppreference.com/w/cpp/string/byte/isprint
+///
+/// \ingroup cctype
 [[nodiscard]] constexpr auto isprint(int ch) noexcept -> int
 {
     return static_cast<int>(etl::isgraph(ch) != 0 || ch == ' ');

@@ -17,6 +17,8 @@ namespace etl {
 /// otherwise.
 ///
 /// https://en.cppreference.com/w/cpp/string/byte/ispunct
+///
+/// \ingroup cctype
 [[nodiscard]] constexpr auto ispunct(int ch) noexcept -> int
 {
     auto const sec1 = ch >= '!' and ch <= '/';

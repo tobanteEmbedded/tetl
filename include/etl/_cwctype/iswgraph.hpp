@@ -23,6 +23,8 @@ namespace etl {
 /// to the value of the macro WEOF, the behavior is undefined.
 ///
 /// https://en.cppreference.com/w/cpp/string/wide/iswgraph
+///
+/// \ingroup cwctype
 [[nodiscard]] constexpr auto iswgraph(wint_t ch) noexcept -> int
 {
     auto const isDigit = iswdigit(ch) != 0;

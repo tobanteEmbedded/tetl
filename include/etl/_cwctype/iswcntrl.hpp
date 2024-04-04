@@ -15,6 +15,8 @@ namespace etl {
 /// to the value of the macro WEOF, the behavior is undefined.
 ///
 /// https://en.cppreference.com/w/cpp/string/byte/iscntrl
+///
+/// \ingroup cwctype
 [[nodiscard]] constexpr auto iswcntrl(wint_t ch) noexcept -> int
 {
     return static_cast<int>((ch <= wint_t(0x1F)) || ch == wint_t(0x7F));

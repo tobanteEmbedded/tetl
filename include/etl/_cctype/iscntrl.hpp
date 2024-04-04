@@ -15,6 +15,8 @@ namespace etl {
 /// otherwise.
 ///
 /// https://en.cppreference.com/w/cpp/string/byte/iscntrl
+///
+/// \ingroup cctype
 [[nodiscard]] constexpr auto iscntrl(int ch) noexcept -> int
 {
     return static_cast<int>((ch >= 0x00 and ch <= 0x1f) or ch == 0x7F);

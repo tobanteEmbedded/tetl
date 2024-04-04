@@ -19,6 +19,8 @@ namespace etl {
 /// otherwise.
 ///
 /// https://en.cppreference.com/w/cpp/string/byte/isgraph
+///
+/// \ingroup cctype
 [[nodiscard]] constexpr auto isgraph(int ch) noexcept -> int
 {
     auto const isDigit = etl::isdigit(ch) != 0;

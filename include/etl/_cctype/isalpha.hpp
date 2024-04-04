@@ -13,6 +13,8 @@ namespace etl {
 /// otherwise.
 ///
 /// https://en.cppreference.com/w/cpp/string/byte/isalpha
+///
+/// \ingroup cctype
 [[nodiscard]] constexpr auto isalpha(int ch) noexcept -> int
 {
     auto const isLower = ch >= 'a' and ch <= 'z';

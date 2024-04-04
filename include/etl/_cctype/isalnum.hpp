@@ -13,6 +13,8 @@ namespace etl {
 /// otherwise.
 ///
 /// https://en.cppreference.com/w/cpp/string/byte/isalnum
+///
+/// \ingroup cctype
 [[nodiscard]] constexpr auto isalnum(int ch) noexcept -> int
 {
     auto const isDigit = ch >= '0' and ch <= '9';

@@ -13,6 +13,8 @@ namespace etl {
 /// zero otherwise.
 ///
 /// https://en.cppreference.com/w/cpp/string/byte/isxdigit
+///
+/// \ingroup cctype
 [[nodiscard]] constexpr auto isxdigit(int ch) noexcept -> int
 {
     auto const isDigit    = ch >= '0' and ch <= '9';

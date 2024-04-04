@@ -22,6 +22,8 @@ namespace etl {
 /// to the value of the macro WEOF, the behavior is undefined.
 ///
 /// https://en.cppreference.com/w/cpp/string/wide/iswspace
+///
+/// \ingroup cwctype
 [[nodiscard]] constexpr auto iswspace(wint_t ch) noexcept -> int
 {
     auto const sp       = ch == L' ';
