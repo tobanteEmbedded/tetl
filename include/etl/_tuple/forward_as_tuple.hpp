@@ -14,10 +14,10 @@ namespace etl {
 /// for forwarding as an argument to a function. The tuple has rvalue reference
 /// data members when rvalues are used as arguments, and otherwise has lvalue
 /// reference data members.
-template <typename... Types>
-[[nodiscard]] constexpr auto forward_as_tuple(Types&&... args) noexcept -> etl::tuple<Types&&...>
+template <typename... Args>
+[[nodiscard]] constexpr auto forward_as_tuple(Args&&... args) noexcept -> etl::tuple<Args&&...>
 {
-    return etl::tuple<Types&&...>{TETL_FORWARD(args)...};
+    return etl::tuple<Args&&...>{etl::forward<Args>(args)...};
 }
 
 } // namespace etl

@@ -19,7 +19,7 @@ template <typename T, typename Tuple>
 {
     return [&]<etl::size_t... I>(index_sequence<I...> /*i*/) {
         using etl::get;
-        return T(get<I>(TETL_FORWARD(t))...);
+        return T(get<I>(etl::forward<Tuple>(t))...);
     }(etl::make_index_sequence<etl::tuple_size_v<etl::remove_reference_t<Tuple>>>{});
 }
 

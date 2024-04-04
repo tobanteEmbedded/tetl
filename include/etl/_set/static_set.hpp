@@ -206,7 +206,7 @@ public:
         requires(is_copy_constructible_v<key_type>)
     constexpr auto emplace(Args&&... args) noexcept(noexcept(insert(declval<key_type>()))) -> pair<iterator, bool>
     {
-        return insert(value_type(TETL_FORWARD(args)...));
+        return insert(value_type(etl::forward<Args>(args)...));
     }
 
     /// \brief Removes the element at pos.

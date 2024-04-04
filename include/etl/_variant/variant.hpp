@@ -97,14 +97,14 @@ struct variant_storage<Index, Head> {
     template <typename T>
     constexpr auto construct(T&& head, size_t& index) -> void
     {
-        new (&data) Head(TETL_FORWARD(head));
+        new (&data) Head(etl::forward<T>(head));
         index = 0;
     }
 
     template <typename T, typename... Args>
     constexpr auto construct(in_place_type_t<T> /*tag*/, size_t& index, Args&&... args) -> void
     {
-        new (&data) Head(TETL_FORWARD(args)...);
+        new (&data) Head(etl::forward<Args>(args)...);
         index = 0;
     }
 
@@ -161,21 +161,21 @@ struct variant_storage<Index, Head, Tail...> {
     template <typename... Args>
     constexpr auto construct(in_place_type_t<Head> /*tag*/, size_t& index, Args&&... args) -> void
     {
-        new (&data) Head(TETL_FORWARD(args)...);
+        new (&data) Head(etl::forward<Args>(args)...);
         index = 0;
     }
 
     template <typename T>
     constexpr auto construct(T&& t, size_t& index) -> void
     {
-        tail.construct(TETL_FORWARD(t), index);
+        tail.construct(etl::forward<T>(t), index);
         ++index;
     }
 
     template <typename T, typename... Args>
     constexpr auto construct(in_place_type_t<T> tag, size_t& index, Args&&... args) -> void
     {
-        tail.construct(tag, index, TETL_FORWARD(args)...);
+        tail.construct(tag, index, etl::forward<Args>(args)...);
         ++index;
     }
 
@@ -289,13 +289,13 @@ public:
     explicit variant(T&& t)
     {
         auto tmpIndex = size_t{_index};
-        _data.construct(TETL_FORWARD(t), tmpIndex);
+        _data.construct(etl::forward<T>(t), tmpIndex);
         _index = static_cast<internal_size_t>(tmpIndex);
     }
 
     /// \brief (5) Constructs a variant with the specified alternative T and
     /// initializes the contained value with the arguments
-    /// TETL_FORWARD(args)....
+    /// etl::forward<Args>(args)....
     ///
     /// \details This overload participates in overload resolution only if there
     /// is exactly one occurrence of T in Ts... and
@@ -309,13 +309,13 @@ public:
     constexpr explicit variant(etl::in_place_type_t<T> tag, Args&&... args)
     {
         auto tmpIndex = etl::size_t{_index};
-        _data.construct(tag, tmpIndex, TETL_FORWARD(args)...);
+        _data.construct(tag, tmpIndex, etl::forward<Args>(args)...);
         _index = static_cast<internal_size_t>(tmpIndex);
     }
 
     /// \brief (7) Constructs a variant with the alternative T_i specified by
     /// the index I and initializes the contained value with the arguments
-    /// TETL_FORWARD(args)...
+    /// etl::forward<Args>(args)...
     ///
     /// \details This overload participates in overload resolution only if I <
     /// sizeof...(Ts) and is_constructible_v<T_i, Args...> is true.
@@ -324,7 +324,7 @@ public:
     template <etl::size_t I, typename... Args>
         requires(I < sizeof...(Ts) and etl::is_constructible_v<etl::variant_alternative_t<I, variant>, Args...>)
     constexpr explicit variant(etl::in_place_index_t<I> /*tag*/, Args&&... args)
-        : variant(in_place_type<etl::variant_alternative_t<I, variant>>, TETL_FORWARD(args)...)
+        : variant(in_place_type<etl::variant_alternative_t<I, variant>>, etl::forward<Args>(args)...)
     {
     }
 
@@ -360,7 +360,7 @@ public:
                  and (0 + ... + etl::is_same_v<etl::remove_cvref_t<T>, Ts>) == 1)
     constexpr auto operator=(T&& rhs) -> variant&
     {
-        auto v = variant(etl::in_place_type<T>, TETL_FORWARD(rhs));
+        auto v = variant(etl::in_place_type<T>, etl::forward<T>(rhs));
         v.swap(*this);
         return *this;
     }
@@ -763,7 +763,7 @@ template <typename... Ts>
 template <typename T, typename... Args>
 constexpr auto variant<Ts...>::emplace(Args&&... args) -> T&
 {
-    auto v = variant(etl::in_place_type<T>, TETL_FORWARD(args)...);
+    auto v = variant(etl::in_place_type<T>, etl::forward<Args>(args)...);
     v.swap(*this);
     return *etl::get_if<T>(this);
 }
@@ -772,7 +772,7 @@ template <typename... Ts>
 template <etl::size_t I, typename... Args>
 constexpr auto variant<Ts...>::emplace(Args&&... args) -> etl::variant_alternative_t<I, variant>&
 {
-    auto v = variant(etl::in_place_index<I>, TETL_FORWARD(args)...);
+    auto v = variant(etl::in_place_index<I>, etl::forward<Args>(args)...);
     v.swap(*this);
     return *etl::get_if<I>(this);
 }

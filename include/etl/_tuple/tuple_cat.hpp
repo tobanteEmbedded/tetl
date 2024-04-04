@@ -21,7 +21,7 @@ inline constexpr struct tuple_cat {
     concat(T1&& t1, T2&& t2, etl::index_sequence<I1...> /*i1*/, etl::index_sequence<I2...> /*i2*/) const
     {
         using etl::get;
-        return etl::forward_as_tuple(get<I1>(TETL_FORWARD(t1))..., get<I2>(TETL_FORWARD(t2))...);
+        return etl::forward_as_tuple(get<I1>(etl::forward<T1>(t1))..., get<I2>(etl::forward<T2>(t2))...);
     }
 
     template <etl::tuple_like Result>
@@ -29,7 +29,7 @@ inline constexpr struct tuple_cat {
     {
         return [&]<etl::size_t... Is>(etl::index_sequence<Is...> /*is*/) {
             using etl::get;
-            return etl::tuple{get<Is>(TETL_FORWARD(result))...};
+            return etl::tuple{get<Is>(etl::forward<Result>(result))...};
         }(etl::make_index_sequence<etl::tuple_size_v<etl::remove_reference_t<Result>>>{});
     }
 
@@ -38,7 +38,10 @@ inline constexpr struct tuple_cat {
     {
         constexpr auto idx1 = etl::make_index_sequence<etl::tuple_size_v<etl::remove_reference_t<Result>>>{};
         constexpr auto idx2 = etl::make_index_sequence<etl::tuple_size_v<etl::remove_reference_t<Head>>>{};
-        return (*this)(concat(TETL_FORWARD(result), TETL_FORWARD(head), idx1, idx2), TETL_FORWARD(tail)...);
+        return (*this)(
+            concat(etl::forward<Result>(result), etl::forward<Head>(head), idx1, idx2),
+            etl::forward<Tail>(tail)...
+        );
     }
 } tuple_cat;
 
@@ -47,7 +50,7 @@ inline constexpr struct tuple_cat {
 template <etl::tuple_like... Tuples>
 [[nodiscard]] constexpr auto tuple_cat(Tuples&&... ts)
 {
-    return etl::detail::tuple_cat(TETL_FORWARD(ts)...);
+    return etl::detail::tuple_cat(etl::forward<Tuples>(ts)...);
 }
 
 } // namespace etl

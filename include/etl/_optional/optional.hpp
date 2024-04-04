@@ -73,7 +73,7 @@ struct optional_destruct_base<T, false> {
 
     template <typename... Args>
     constexpr explicit optional_destruct_base(etl::in_place_t /*tag*/, Args&&... args)
-        : internal_value(TETL_FORWARD(args)...)
+        : internal_value(etl::forward<Args>(args)...)
         , internal_has_value(true)
     {
     }
@@ -103,7 +103,7 @@ struct optional_destruct_base<T, true> {
 
     template <typename... Args>
     constexpr explicit optional_destruct_base(etl::in_place_t /*unused*/, Args&&... args)
-        : internal_value(TETL_FORWARD(args)...)
+        : internal_value(etl::forward<Args>(args)...)
         , internal_has_value(true)
     {
     }
@@ -146,7 +146,7 @@ struct optional_storage_base : optional_destruct_base<T> {
 
     void construct(Args&&... args)
     {
-        ::new (static_cast<void*>(etl::addressof(this->internal_value))) value_type(TETL_FORWARD(args)...);
+        ::new (static_cast<void*>(etl::addressof(this->internal_value))) value_type(etl::forward<Args>(args)...);
         this->internal_has_value = true;
     }
 
@@ -154,7 +154,7 @@ struct optional_storage_base : optional_destruct_base<T> {
     void construct_from(U&& opt)
     {
         if (opt.has_value()) {
-            construct(TETL_FORWARD(opt).get());
+            construct(etl::forward<U>(opt).get());
         }
     }
 
@@ -163,13 +163,13 @@ struct optional_storage_base : optional_destruct_base<T> {
     {
         if (this->internal_has_value == opt.has_value()) {
             if (this->internal_has_value) {
-                this->internal_value = TETL_FORWARD(opt).get();
+                this->internal_value = etl::forward<U>(opt).get();
             }
         } else {
             if (this->internal_has_value) {
                 this->reset();
             } else {
-                construct(TETL_FORWARD(opt).get());
+                construct(etl::forward<U>(opt).get());
             }
         }
     }
@@ -516,8 +516,8 @@ public:
     ///
     /// https://en.cppreference.com/w/cpp/utility/optional/optional
     template <typename... Args, enable_ctor_6<Args...> = 0>
-    constexpr explicit optional(in_place_t /*unused*/, Args&&... arguments)
-        : base_type(in_place, TETL_FORWARD(arguments)...)
+    constexpr explicit optional(in_place_t /*unused*/, Args&&... args)
+        : base_type(in_place, etl::forward<Args>(args)...)
     {
     }
 
@@ -526,7 +526,7 @@ public:
     ///
     /// https://en.cppreference.com/w/cpp/utility/optional/optional
     template <typename U = T, enable_ctor_8_implicit<U> = 0>
-    constexpr optional(U&& value) : base_type(in_place, TETL_FORWARD(value))
+    constexpr optional(U&& value) : base_type(in_place, etl::forward<U>(value))
     {
     }
 
@@ -535,7 +535,7 @@ public:
     ///
     /// https://en.cppreference.com/w/cpp/utility/optional/optional
     template <typename U = T, enable_ctor_8_explicit<U> = 0>
-    explicit constexpr optional(U&& value) : base_type(in_place, TETL_FORWARD(value))
+    explicit constexpr optional(U&& value) : base_type(in_place, etl::forward<U>(value))
     {
     }
 
@@ -558,18 +558,18 @@ public:
     ///
     /// \details Depending on whether *this contains a value before the call,
     /// the contained value is either direct-initialized from
-    /// TETL_FORWARD(value) or assigned from TETL_FORWARD(value).
+    /// etl::forward<U>(value) or assigned from etl::forward<U>(value).
     ///
     /// https://en.cppreference.com/w/cpp/utility/optional/operator%3D
     template <typename U = T, enable_assign_forward<U> = 0>
     constexpr auto operator=(U&& value) -> optional&
     {
         if (this->has_value()) {
-            this->get() = TETL_FORWARD(value);
+            this->get() = etl::forward<U>(value);
             return *this;
         }
 
-        this->construct(TETL_FORWARD(value));
+        this->construct(etl::forward<U>(value));
         return *this;
     }
 
@@ -625,7 +625,7 @@ public:
     template <typename U>
     [[nodiscard]] constexpr auto value_or(U&& defaultValue) const& -> value_type
     {
-        return has_value() ? (**this) : static_cast<value_type>(TETL_FORWARD(defaultValue));
+        return has_value() ? (**this) : static_cast<value_type>(etl::forward<U>(defaultValue));
     }
 
     /// \brief Returns the contained value if *this has a value, otherwise
@@ -633,7 +633,7 @@ public:
     template <typename U>
     [[nodiscard]] constexpr auto value_or(U&& defaultValue) && -> value_type
     {
-        return has_value() ? TETL_MOVE((**this)) : static_cast<value_type>(TETL_FORWARD(defaultValue));
+        return has_value() ? TETL_MOVE((**this)) : static_cast<value_type>(etl::forward<U>(defaultValue));
     }
 
     /// \brief Returns a pointer to the contained value. The pointer is null if
@@ -751,7 +751,7 @@ public:
     constexpr auto emplace(Args&&... args) -> value_type&
     {
         this->reset();
-        this->construct(TETL_FORWARD(args)...);
+        this->construct(etl::forward<Args>(args)...);
         return **this;
     }
 
@@ -759,7 +759,7 @@ public:
     constexpr auto and_then(F&& f) &
     {
         if (*this) {
-            return etl::invoke(TETL_FORWARD(f), **this);
+            return etl::invoke(etl::forward<F>(f), **this);
         }
         return etl::remove_cvref_t<etl::invoke_result_t<F, T&>>{};
     }
@@ -768,7 +768,7 @@ public:
     constexpr auto and_then(F&& f) const&
     {
         if (*this) {
-            return etl::invoke(TETL_FORWARD(f), **this);
+            return etl::invoke(etl::forward<F>(f), **this);
         }
         return etl::remove_cvref_t<etl::invoke_result_t<F, T const&>>{};
     }
@@ -777,7 +777,7 @@ public:
     constexpr auto and_then(F&& f) &&
     {
         if (*this) {
-            return etl::invoke(TETL_FORWARD(f), TETL_MOVE(**this));
+            return etl::invoke(etl::forward<F>(f), TETL_MOVE(**this));
         }
         return etl::remove_cvref_t<etl::invoke_result_t<F, T>>{};
     }
@@ -786,7 +786,7 @@ public:
     constexpr auto and_then(F&& f) const&&
     {
         if (*this) {
-            return etl::invoke(TETL_FORWARD(f), TETL_MOVE(**this));
+            return etl::invoke(etl::forward<F>(f), TETL_MOVE(**this));
         }
         return etl::remove_cvref_t<etl::invoke_result_t<F, T const>>{};
     }
@@ -795,14 +795,14 @@ public:
         requires(etl::copy_constructible<T> and etl::same_as<etl::remove_cvref_t<etl::invoke_result_t<F>>, optional>)
     constexpr auto or_else(F&& f) const& -> optional
     {
-        return *this ? *this : TETL_FORWARD(f)();
+        return *this ? *this : etl::forward<F>(f)();
     }
 
     template <typename F>
         requires(etl::move_constructible<T> and etl::same_as<etl::remove_cvref_t<etl::invoke_result_t<F>>, optional>)
     constexpr auto or_else(F&& f) && -> optional
     {
-        return *this ? TETL_MOVE(*this) : TETL_FORWARD(f)();
+        return *this ? TETL_MOVE(*this) : etl::forward<F>(f)();
     }
 
     /// \brief Implementation detail. Do not use!

@@ -10,7 +10,7 @@ namespace etl {
 
 /// \ingroup concepts
 template <typename F, typename... Args>
-concept invocable = requires(F&& f, Args&&... args) { etl::invoke(TETL_FORWARD(f), TETL_FORWARD(args)...); };
+concept invocable = requires(F&& f, Args&&... args) { etl::invoke(etl::forward<F>(f), etl::forward<Args>(args)...); };
 
 } // namespace etl
 

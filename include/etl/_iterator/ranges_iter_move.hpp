@@ -18,7 +18,7 @@ auto iter_move() -> void = delete;
 
 template <typename T>
 concept adl_iter_move = (etl::is_class_v<etl::remove_cvref_t<T>> or etl::is_enum_v<etl::remove_cvref_t<T>>)
-                    and requires(T&& t) { iter_move(TETL_FORWARD(t)); };
+                    and requires(T&& t) { iter_move(etl::forward<T>(t)); };
 
 template <typename T>
 concept can_move = not adl_iter_move<T> and requires(T&& t) {
@@ -35,23 +35,23 @@ concept can_deref = not adl_iter_move<T> and !can_move<T> and requires(T&& t) {
 struct fn {
     template <adl_iter_move Iter>
     [[nodiscard]] constexpr auto operator()(Iter&& i) const
-        noexcept(noexcept(iter_move(TETL_FORWARD(i)))) -> decltype(auto)
+        noexcept(noexcept(iter_move(etl::forward<Iter>(i)))) -> decltype(auto)
     {
-        return iter_move(TETL_FORWARD(i));
+        return iter_move(etl::forward<Iter>(i));
     }
 
     template <can_move Iter>
     [[nodiscard]] constexpr auto operator()(Iter&& i) const
-        noexcept(noexcept(TETL_MOVE(*TETL_FORWARD(i)))) -> decltype(TETL_MOVE(*TETL_FORWARD(i)))
+        noexcept(noexcept(TETL_MOVE(*etl::forward<Iter>(i)))) -> decltype(TETL_MOVE(*etl::forward<Iter>(i)))
     {
-        return TETL_MOVE(*TETL_FORWARD(i));
+        return TETL_MOVE(*etl::forward<Iter>(i));
     }
 
     template <can_deref Iter>
     [[nodiscard]] constexpr auto operator()(Iter&& i) const
-        noexcept(noexcept(*TETL_FORWARD(i))) -> decltype(*TETL_FORWARD(i))
+        noexcept(noexcept(*etl::forward<Iter>(i))) -> decltype(*etl::forward<Iter>(i))
     {
-        return *TETL_FORWARD(i);
+        return *etl::forward<Iter>(i);
     }
 };
 

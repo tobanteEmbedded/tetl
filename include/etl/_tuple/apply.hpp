@@ -16,7 +16,7 @@ template <typename F, typename Tuple>
 constexpr auto apply(F&& f, Tuple&& t) -> decltype(auto)
 {
     return [&]<etl::size_t... I>(etl::index_sequence<I...> /*i*/) -> decltype(auto) {
-        return etl::invoke(TETL_FORWARD(f), etl::get<I>(TETL_FORWARD(t))...);
+        return etl::invoke(etl::forward<F>(f), etl::get<I>(etl::forward<Tuple>(t))...);
     }(etl::make_index_sequence<etl::tuple_size_v<etl::remove_reference_t<Tuple>>>{});
 }
 

@@ -124,7 +124,7 @@ struct inplace_vector {
         if (size() == capacity()) {
             return nullptr;
         }
-        return etl::addressof(unchecked_emplace_back(TETL_FORWARD(args)...));
+        return etl::addressof(unchecked_emplace_back(etl::forward<Args>(args)...));
     }
 
     constexpr auto try_push_back(T const& val) -> T*
@@ -148,7 +148,7 @@ struct inplace_vector {
     template <typename... Args>
     constexpr auto unchecked_emplace_back(Args&&... args) -> T&
     {
-        etl::ranges::construct_at(end(), TETL_FORWARD(args)...);
+        etl::ranges::construct_at(end(), etl::forward<Args>(args)...);
         unsafe_set_size(size() + 1U);
         return back();
     }

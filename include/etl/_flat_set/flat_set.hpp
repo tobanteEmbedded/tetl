@@ -147,7 +147,7 @@ struct flat_set {
     template <typename... Args>
     constexpr auto emplace(Args&&... args) -> etl::pair<iterator, bool>
     {
-        auto key    = Key{TETL_FORWARD(args)...};
+        auto key    = Key{etl::forward<Args>(args)...};
         iterator it = lower_bound(key);
 
         if (it == end() || _compare(key, *it)) {
@@ -161,7 +161,7 @@ struct flat_set {
     template <typename... Args>
     constexpr auto emplace_hint(const_iterator /*position*/, Args&&... args) -> iterator
     {
-        return emplace(TETL_FORWARD(args)...).first;
+        return emplace(etl::forward<Args>(args)...).first;
     }
 
     constexpr auto insert(value_type const& x) -> etl::pair<iterator, bool> { return emplace(x); }

@@ -20,7 +20,7 @@ concept assignable_from =
         etl::is_lvalue_reference_v<LHS>
     // and etl::common_reference_with<etl::remove_reference_t<LHS> const&, etl::remove_reference_t<RHS> const&>
     and requires(LHS lhs, RHS&& rhs) {
-        { lhs = TETL_FORWARD(rhs) } -> etl::same_as<LHS>;
+        { lhs = etl::forward<RHS>(rhs) } -> etl::same_as<LHS>;
     };
 
 // clang-format on

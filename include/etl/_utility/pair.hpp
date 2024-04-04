@@ -59,8 +59,8 @@ struct pair {
     template <typename U1 = T1, typename U2 = T2>
         requires(is_constructible_v<T1, U1 &&> and is_constructible_v<T2, U2 &&>)
     explicit(not is_convertible_v<U1&&, T1> || not is_convertible_v<U2&&, T2>) constexpr pair(U1&& x, U2&& y)
-        : first(TETL_FORWARD(x))
-        , second(TETL_FORWARD(y))
+        : first(etl::forward<U1>(x))
+        , second(etl::forward<U2>(y))
     {
     }
 
@@ -79,8 +79,8 @@ struct pair {
     template <typename U1, typename U2>
         requires(is_constructible_v<T1, U1 &&> and is_constructible_v<T2, U2 &&>)
     explicit(not is_convertible_v<U1&&, T1> || not is_convertible_v<U2&&, T2>) constexpr pair(pair<U1, U2>&& p)
-        : first(TETL_FORWARD(p.first))
-        , second(TETL_FORWARD(p.second))
+        : first(etl::forward<U1>(p.first))
+        , second(etl::forward<U2>(p.second))
     {
     }
 
@@ -169,10 +169,7 @@ constexpr auto swap(pair<T1, T2>& lhs, pair<T1, T2>& rhs) noexcept(noexcept(lhs.
 template <typename T1, typename T2>
 [[nodiscard]] constexpr auto make_pair(T1&& t, T2&& u) -> pair<decay_t<T1>, decay_t<T2>>
 {
-    return {
-        TETL_FORWARD(t),
-        TETL_FORWARD(u),
-    };
+    return {etl::forward<T1>(t), etl::forward<T2>(u)};
 }
 
 /// \brief Tests if both elements of lhs and rhs are equal, that is, compares

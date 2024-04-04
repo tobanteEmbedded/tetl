@@ -10,10 +10,10 @@ namespace etl::ranges {
 
 inline constexpr struct construct_at_fn {
     template <typename T, typename... Args>
-        requires requires(void* ptr, Args&&... args) { ::new (ptr) T(TETL_FORWARD(args)...); }
+        requires requires(void* ptr, Args&&... args) { ::new (ptr) T(etl::forward<Args>(args)...); }
     constexpr auto operator()(T* p, Args&&... args) const -> T*
     {
-        return etl::construct_at(p, TETL_FORWARD(args)...);
+        return etl::construct_at(p, etl::forward<Args>(args)...);
     }
 } construct_at;
 

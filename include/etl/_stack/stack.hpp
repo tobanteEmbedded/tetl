@@ -93,10 +93,10 @@ struct stack {
     /// constructor of the element is called with exactly the same arguments as
     /// supplied to the function.
     template <typename... Args>
-    constexpr auto emplace(Args&&... args) noexcept(noexcept(declval<Container>().emplace_back(TETL_FORWARD(args)...))
-    ) -> decltype(auto)
+    constexpr auto emplace(Args&&... args
+    ) noexcept(noexcept(declval<Container>().emplace_back(etl::forward<Args>(args)...))) -> decltype(auto)
     {
-        return c.emplace_back(TETL_FORWARD(args)...);
+        return c.emplace_back(etl::forward<Args>(args)...);
     }
 
     /// \brief Removes the top element from the stack.

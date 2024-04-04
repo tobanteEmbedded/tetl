@@ -16,9 +16,9 @@ template <typename R, typename F, typename... Args>
 constexpr auto invoke_r(F&& f, Args&&... args) -> R
 {
     if constexpr (etl::is_void_v<R>) {
-        etl::invoke(TETL_FORWARD(f), TETL_FORWARD(args)...);
+        etl::invoke(etl::forward<F>(f), etl::forward<Args>(args)...);
     } else {
-        return etl::invoke(TETL_FORWARD(f), TETL_FORWARD(args)...);
+        return etl::invoke(etl::forward<F>(f), etl::forward<Args>(args)...);
     }
 }
 

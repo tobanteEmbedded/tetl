@@ -18,7 +18,7 @@ exchange(T& obj, U&& newValue) noexcept(etl::is_nothrow_move_constructible_v<T> 
     -> T
 {
     T oldValue = TETL_MOVE(obj);
-    obj        = TETL_FORWARD(newValue);
+    obj        = etl::forward<U>(newValue);
     return oldValue;
 }
 

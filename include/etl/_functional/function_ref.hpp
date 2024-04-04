@@ -30,7 +30,7 @@ struct function_ref<Noexcept, R(Args...)> {
         , _callable{
               +[](void* obj, Args... args) -> R {
                   auto* func = reinterpret_cast<etl::add_pointer_t<F>>(obj);
-                  return etl::invoke_r<R>(*func, TETL_FORWARD(args)...);
+                  return etl::invoke_r<R>(*func, etl::forward<Args>(args)...);
               },
           }
     {
@@ -42,7 +42,7 @@ struct function_ref<Noexcept, R(Args...)> {
     template <typename T>
     auto operator=(T /*t*/) -> function_ref& = delete;
 
-    auto operator()(Args... args) const noexcept(Noexcept) -> R { return _callable(_obj, TETL_FORWARD(args)...); }
+    auto operator()(Args... args) const noexcept(Noexcept) -> R { return _callable(_obj, etl::forward<Args>(args)...); }
 
 private:
     using internal_signature_t = R (*)(void*, Args...) noexcept(Noexcept);

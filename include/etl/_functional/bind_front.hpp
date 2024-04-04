@@ -20,9 +20,13 @@ namespace detail {
 template <typename Func, typename BoundArgsTuple, typename... CallArgs>
 constexpr auto bind_front_caller(Func&& func, BoundArgsTuple&& boundArgsTuple, CallArgs&&... callArgs) -> decltype(auto)
 {
-    return apply([&func, &callArgs...](auto&&... boundArgs) -> decltype(auto) {
-        return invoke(TETL_FORWARD(func), TETL_FORWARD(boundArgs)..., TETL_FORWARD(callArgs)...);
-    }, TETL_FORWARD(boundArgsTuple));
+    return etl::apply([&func, &callArgs...]<typename... BoundArgs>(BoundArgs&&... boundArgs) -> decltype(auto) {
+        return etl::invoke(
+            etl::forward<Func>(func),
+            etl::forward<BoundArgs>(boundArgs)...,
+            etl::forward<CallArgs>(callArgs)...
+        );
+    }, etl::forward<BoundArgsTuple>(boundArgsTuple));
 }
 
 template <typename Func, typename... BoundArgs>
@@ -30,8 +34,8 @@ class bind_front_t {
 public:
     template <typename F, typename... BA>
         requires(!(sizeof...(BA) == 0 && is_base_of_v<bind_front_t, decay_t<F>>))
-    explicit bind_front_t(F&& f, BA&&... ba) : _func(TETL_FORWARD(f))
-                                             , _boundArgs(TETL_FORWARD(ba)...)
+    explicit bind_front_t(F&& f, BA&&... ba) : _func(etl::forward<F>(f))
+                                             , _boundArgs(etl::forward<BA>(ba)...)
     {
     }
 
@@ -39,28 +43,28 @@ public:
     template <typename... CallArgs>
     auto operator()(CallArgs&&... callArgs) & -> invoke_result_t<Func&, BoundArgs&..., CallArgs...>
     {
-        return bind_front_caller(_func, _boundArgs, TETL_FORWARD(callArgs)...);
+        return bind_front_caller(_func, _boundArgs, etl::forward<CallArgs>(callArgs)...);
     }
 
     // TODO: Add noexcept(is_nothrow_invocable_v<Func const&, BoundArgs const&...,CallArgs...>)
     template <typename... CallArgs>
     auto operator()(CallArgs&&... callArgs) const& -> invoke_result_t<Func const&, BoundArgs const&..., CallArgs...>
     {
-        return bind_front_caller(_func, _boundArgs, TETL_FORWARD(callArgs)...);
+        return bind_front_caller(_func, _boundArgs, etl::forward<CallArgs>(callArgs)...);
     }
 
     // TODO: Add  noexcept(is_nothrow_invocable_v<Func, BoundArgs..., CallArgs...>)
     template <typename... CallArgs>
     auto operator()(CallArgs&&... callArgs) && -> invoke_result_t<Func, BoundArgs..., CallArgs...>
     {
-        return bind_front_caller(TETL_MOVE(_func), TETL_MOVE(_boundArgs), TETL_FORWARD(callArgs)...);
+        return bind_front_caller(TETL_MOVE(_func), TETL_MOVE(_boundArgs), etl::forward<CallArgs>(callArgs)...);
     }
 
     // TODO: noexcept(is_nothrow_invocable_v<Func const, BoundArgs const...,CallArgs...>)
     template <typename... CallArgs>
     auto operator()(CallArgs&&... callArgs) const&& -> invoke_result_t<Func const, BoundArgs const..., CallArgs...>
     {
-        return bind_front_caller(TETL_MOVE(_func), TETL_MOVE(_boundArgs), TETL_FORWARD(callArgs)...);
+        return bind_front_caller(TETL_MOVE(_func), TETL_MOVE(_boundArgs), etl::forward<CallArgs>(callArgs)...);
     }
 
 private:
@@ -82,8 +86,8 @@ template <typename Func, typename... BoundArgs>
 constexpr auto bind_front(Func&& func, BoundArgs&&... boundArgs)
 {
     return detail::bind_front_t<decay_t<Func>, unwrap_ref_decay_t<BoundArgs>...>{
-        TETL_FORWARD(func),
-        TETL_FORWARD(boundArgs)...
+        etl::forward<Func>(func),
+        etl::forward<BoundArgs>(boundArgs)...
     };
 }
 

@@ -21,9 +21,9 @@ struct negate<void> {
 
     template <typename T>
     [[nodiscard]] constexpr auto operator()(T&& arg) const
-        noexcept(noexcept(-TETL_FORWARD(arg))) -> decltype(-TETL_FORWARD(arg))
+        noexcept(noexcept(-etl::forward<T>(arg))) -> decltype(-etl::forward<T>(arg))
     {
-        return -TETL_FORWARD(arg);
+        return -etl::forward<T>(arg);
     }
 };
 

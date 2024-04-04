@@ -29,10 +29,10 @@ using unwrap_decay_t = typename unwrap_refwrapper<decay_t<T>>::type;
 
 /// \brief Creates a tuple object, deducing the target type from the types of
 /// arguments.
-template <typename... Types>
-[[nodiscard]] constexpr auto make_tuple(Types&&... args)
+template <typename... Args>
+[[nodiscard]] constexpr auto make_tuple(Args&&... args)
 {
-    return etl::tuple<etl::detail::unwrap_decay_t<Types>...>(TETL_FORWARD(args)...);
+    return etl::tuple<etl::detail::unwrap_decay_t<Args>...>(etl::forward<Args>(args)...);
 }
 } // namespace etl
 

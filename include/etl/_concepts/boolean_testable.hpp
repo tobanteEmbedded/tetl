@@ -18,7 +18,7 @@ concept boolean_testable_impl = convertible_to<T, bool>;
 /// \ingroup concepts
 template <typename T>
 concept boolean_testable = etl::detail::boolean_testable_impl<T> and requires(T&& t) {
-    { not TETL_FORWARD(t) } -> etl::detail::boolean_testable_impl;
+    { not etl::forward<T>(t) } -> etl::detail::boolean_testable_impl;
 };
 
 } // namespace etl

@@ -136,7 +136,7 @@ public:
         static constexpr vtable_t const vt{detail::wrapper<C>{}};
         _vtable = addressof(vt);
 
-        ::new (addressof(_storage)) C{TETL_FORWARD(closure)};
+        ::new (addressof(_storage)) C{etl::forward<T>(closure)};
     }
 
     template <size_t Cap, size_t Align>
@@ -196,7 +196,10 @@ public:
     ~inplace_function() { _vtable->destructor_ptr(addressof(_storage)); }
 
     /// \brief Invokes the stored callable function target with the parameters args.
-    auto operator()(Args... args) const -> R { return _vtable->invoke_ptr(addressof(_storage), TETL_FORWARD(args)...); }
+    auto operator()(Args... args) const -> R
+    {
+        return _vtable->invoke_ptr(addressof(_storage), etl::forward<Args>(args)...);
+    }
 
     /// \brief Checks whether *this stores a callable function target, i.e. is not empty.
     [[nodiscard]] explicit constexpr operator bool() const noexcept

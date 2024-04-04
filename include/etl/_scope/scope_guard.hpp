@@ -10,8 +10,8 @@ namespace etl::detail {
 template <typename FuncT, typename PolicyT>
 struct scope_guard {
 public:
-    template <typename Functor>
-    explicit constexpr scope_guard(Functor&& f) : _func{TETL_FORWARD(f)}
+    template <typename F>
+    explicit constexpr scope_guard(F&& f) : _func{etl::forward<F>(f)}
     {
     }
 

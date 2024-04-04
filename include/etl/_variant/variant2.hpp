@@ -49,7 +49,7 @@ public:
     template <etl::size_t I, typename... Args>
     constexpr explicit variant2(etl::in_place_index_t<I> /*index*/, Args&&... args)
         : _index(static_cast<index_type>(I))
-        , _union(etl::index_v<I>, TETL_FORWARD(args)...)
+        , _union(etl::index_v<I>, etl::forward<Args>(args)...)
     {
         static_assert(I < sizeof...(Ts));
     }

@@ -23,7 +23,7 @@ namespace std {
 template <typename T, typename... Args, typename = decltype(::new(etl::declval<void*>()) T(etl::declval<Args>()...))>
 constexpr auto construct_at(T* p, Args&&... args) -> T*
 {
-    return ::new (static_cast<void*>(p)) T(TETL_FORWARD(args)...);
+    return ::new (static_cast<void*>(p)) T(etl::forward<Args>(args)...);
 }
 
 } // namespace std
@@ -37,7 +37,7 @@ namespace etl {
 template <typename T, typename... Args, typename = decltype(::new(etl::declval<void*>()) T(etl::declval<Args>()...))>
 constexpr auto construct_at(T* p, Args&&... args) -> T*
 {
-    return ::std::construct_at(p, TETL_FORWARD(args)...);
+    return ::std::construct_at(p, etl::forward<Args>(args)...);
 }
 
 } // namespace etl
