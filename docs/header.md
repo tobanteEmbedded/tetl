@@ -52,7 +52,7 @@
 |      ifstream      |       Input/Output       |    _No_    |                                                                                                                        |
 |  initializer_list  |         Utility          |    _No_    |                                                                                                                        |
 |      iomanip       |       Input/Output       |    _No_    |                                                                                                                        |
-|        ios         |       Input/Output       |  **Yes**   |     [ios](https://docs.google.com/spreadsheets/d/1-qwa7tFnjFdgY9XKBy2fAsDozAfG8lXsJXHwA_ITQqM/edit#gid=2084657878)     |
+|        ios         |       Input/Output       |    _No_    |                                                                                                                        |
 |       iosfwd       |       Input/Output       |    _No_    |                                                                                                                        |
 |      iostream      |       Input/Output       |    _No_    |                                                                                                                        |
 |      iterator      |         Iterator         |  **Yes**   |  [iterator](https://docs.google.com/spreadsheets/d/1-qwa7tFnjFdgY9XKBy2fAsDozAfG8lXsJXHwA_ITQqM/edit#gid=2084657878)   |

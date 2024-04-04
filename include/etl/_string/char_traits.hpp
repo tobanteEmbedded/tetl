@@ -11,7 +11,6 @@
 #include <etl/_cwchar/wmemcpy.hpp>
 #include <etl/_cwchar/wmemmove.hpp>
 #include <etl/_cwchar/wmemset.hpp>
-#include <etl/_ios/iosfwd.hpp>
 #include <etl/_ios/typedefs.hpp>
 #include <etl/_strings/cstr_algorithm.hpp>
 
