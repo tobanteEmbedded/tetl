@@ -13,7 +13,9 @@
 
 #include <etl/_config/all.hpp>
 
-#include <etl/_bitset/basic_bitset.hpp>
 #include <etl/_bitset/bitset.hpp>
+
+// Non-standard extensions
+#include <etl/_bitset/basic_bitset.hpp>
 
 #endif // TETL_BITSET_HPP

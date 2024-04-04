@@ -23,7 +23,6 @@
 #include <etl/_functional/identity.hpp>
 #include <etl/_functional/invoke.hpp>
 #include <etl/_functional/invoke_r.hpp>
-#include <etl/_functional/is_transparent.hpp>
 #include <etl/_functional/less.hpp>
 #include <etl/_functional/less_equal.hpp>
 #include <etl/_functional/logical_and.hpp>

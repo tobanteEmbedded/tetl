@@ -10,6 +10,8 @@
 #include <etl/_config/all.hpp>
 
 #include <etl/_exception/exception.hpp>
+
+// Non-standard extensions
 #include <etl/_exception/raise.hpp>
 
 #endif // TETL_EXCEPTION_HPP
