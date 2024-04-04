@@ -4,7 +4,7 @@
 #define TETL_BIT_HPP
 
 /// \defgroup bit bit
-///	Bit manipulation functions
+/// Bit manipulation functions
 /// \ingroup numerics-library
 /// \code{.cpp}
 /// #include <etl/bit.hpp>
