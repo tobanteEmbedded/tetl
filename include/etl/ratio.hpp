@@ -6,7 +6,7 @@
 /// \defgroup ratio ratio
 /// Compile-time rational arithmetic
 /// \ingroup numerics-library
-/// \code
+/// \code{.cpp}
 /// #include <etl/ratio.hpp>
 /// \endcode
 

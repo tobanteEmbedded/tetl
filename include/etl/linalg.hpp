@@ -6,7 +6,7 @@
 /// \defgroup linalg linalg
 /// Basic linear algebra algorithms
 /// \ingroup numerics-library
-/// \code
+/// \code{.cpp}
 /// #include <etl/linalg.hpp>
 /// \endcode
 

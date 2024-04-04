@@ -6,7 +6,7 @@
 /// \defgroup string_view string_view
 /// etl::basic_string_view class template
 /// \ingroup strings-library
-/// \code
+/// \code{.cpp}
 /// #include <etl/string_view.hpp>
 /// \endcode
 

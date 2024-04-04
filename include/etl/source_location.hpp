@@ -7,7 +7,7 @@
 /// Supplies means to obtain source code location
 /// \ingroup utilities-library
 /// \example source_location.cpp
-/// \code
+/// \code{.cpp}
 /// #include <etl/source_location.hpp>
 /// \endcode
 

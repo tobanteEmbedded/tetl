@@ -7,7 +7,7 @@
 /// etl::tuple class template
 /// \ingroup utilities-library
 /// \example tuple.cpp
-/// \code
+/// \code{.cpp}
 /// #include <etl/tuple.hpp>
 /// \endcode
 

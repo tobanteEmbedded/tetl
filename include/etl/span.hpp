@@ -6,7 +6,7 @@
 /// \defgroup span span
 /// etl::span view
 /// \ingroup containers-library
-/// \code
+/// \code{.cpp}
 /// #include <etl/span.hpp>
 /// \endcode
 

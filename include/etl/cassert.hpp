@@ -7,7 +7,7 @@
 /// Conditionally compiled macro that compares its argument to zero
 /// \ingroup errors-library
 /// \example cassert.cpp
-/// \code
+/// \code{.cpp}
 /// #include <etl/cassert.hpp>
 /// \endcode
 

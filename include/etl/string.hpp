@@ -6,7 +6,7 @@
 /// \defgroup string string
 /// etl::basic_static_string class template
 /// \ingroup strings-library
-/// \code
+/// \code{.cpp}
 /// #include <etl/string.hpp>
 /// \endcode
 /// \example string.cpp

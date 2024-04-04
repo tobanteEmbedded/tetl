@@ -6,7 +6,7 @@
 /// \defgroup stack stack
 /// etl::stack container adaptor
 /// \ingroup containers-library
-/// \code
+/// \code{.cpp}
 /// #include <etl/stack.hpp>
 /// \endcode
 

@@ -6,7 +6,7 @@
 /// \defgroup complex complex
 /// Complex number type
 /// \ingroup numerics-library
-/// \code
+/// \code{.cpp}
 /// #include <etl/complex.hpp>
 /// \endcode
 

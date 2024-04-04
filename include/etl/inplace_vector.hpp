@@ -6,7 +6,7 @@
 /// \defgroup inplace_vector inplace_vector
 /// etl::inplace_vector container
 /// \ingroup containers-library
-/// \code
+/// \code{.cpp}
 /// #include <etl/inplace_vector.hpp>
 /// \endcode
 

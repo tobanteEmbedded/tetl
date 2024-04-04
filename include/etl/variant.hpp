@@ -6,7 +6,7 @@
 /// \defgroup variant variant
 /// etl::variant class template
 /// \ingroup utilities-library
-/// \code
+/// \code{.cpp}
 /// #include <etl/variant.hpp>
 /// \endcode
 

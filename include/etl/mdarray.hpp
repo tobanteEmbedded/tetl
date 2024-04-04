@@ -6,7 +6,7 @@
 /// \defgroup mdarray mdarray
 /// etl::mdarray container
 /// \ingroup containers-library
-/// \code
+/// \code{.cpp}
 /// #include <etl/mdspan.hpp>
 /// \endcode
 

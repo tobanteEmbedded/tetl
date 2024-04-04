@@ -6,7 +6,7 @@
 namespace etl {
 
 /// \brief Explicitly ignore arguments or variables.
-/// \code
+/// \code{.cpp}
 /// auto main(int argc, char** argv) -> int
 /// {
 ///   etl::ignore_unused(argc, argv);

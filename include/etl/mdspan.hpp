@@ -6,7 +6,7 @@
 /// \defgroup mdspan mdspan
 /// etl::mdspan view
 /// \ingroup containers-library
-/// \code
+/// \code{.cpp}
 /// #include <etl/mdspan.hpp>
 /// \endcode
 

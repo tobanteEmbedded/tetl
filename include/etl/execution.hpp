@@ -6,7 +6,7 @@
 /// \defgroup execution execution
 /// Predefined execution policies for parallel/unsequenced versions of the algorithms
 /// \ingroup algorithms-library
-/// \code
+/// \code{.cpp}
 /// #include <etl/execution.hpp>
 /// \endcode
 

@@ -6,7 +6,7 @@
 /// \defgroup numbers numbers
 /// Math constants
 /// \ingroup numerics-library
-/// \code
+/// \code{.cpp}
 /// #include <etl/numbers.hpp>
 /// \endcode
 

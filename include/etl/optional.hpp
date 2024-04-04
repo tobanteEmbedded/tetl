@@ -7,7 +7,7 @@
 /// etl::optional class template
 /// \ingroup utilities-library
 /// \example optional.cpp
-/// \code
+/// \code{.cpp}
 /// #include <etl/optional.hpp>
 /// \endcode
 

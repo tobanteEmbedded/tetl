@@ -6,7 +6,7 @@
 /// \defgroup set set
 /// etl::static_set container
 /// \ingroup containers-library
-/// \code
+/// \code{.cpp}
 /// #include <etl/set.hpp>
 /// \endcode
 /// \example set.cpp

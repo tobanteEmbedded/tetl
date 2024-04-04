@@ -6,7 +6,7 @@
 /// \defgroup expected expected
 /// etl::expected class template
 /// \ingroup utilities-library
-/// \code
+/// \code{.cpp}
 /// #include <etl/expected.hpp>
 /// \endcode
 

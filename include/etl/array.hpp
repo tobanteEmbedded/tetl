@@ -7,7 +7,7 @@
 /// etl::array container
 /// \ingroup containers-library
 /// \example array.cpp
-/// \code
+/// \code{.cpp}
 /// #include <etl/array.hpp>
 /// \endcode
 

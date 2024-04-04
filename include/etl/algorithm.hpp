@@ -7,7 +7,7 @@
 /// Algorithms that operate on ranges
 /// \ingroup algorithms-library
 /// \example algorithm.cpp
-/// \code
+/// \code{.cpp}
 /// #include <etl/algorithm.hpp>
 /// \endcode
 

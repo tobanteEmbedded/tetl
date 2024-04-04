@@ -7,7 +7,7 @@
 /// etl::bitset & etl::basic_bitset class templates
 /// \ingroup utilities-library
 /// \example bitset.cpp
-/// \code
+/// \code{.cpp}
 /// #include <etl/bitset.hpp>
 /// \endcode
 

@@ -6,7 +6,7 @@
 /// \defgroup vector vector
 /// etl::vector & etl::static_vector container
 /// \ingroup containers-library
-/// \code
+/// \code{.cpp}
 /// #include <etl/vector.hpp>
 /// \endcode
 /// \example vector.cpp

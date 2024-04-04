@@ -6,7 +6,7 @@
 /// \defgroup cmath cmath
 /// Common mathematics functions
 /// \ingroup numerics-library
-/// \code
+/// \code{.cpp}
 /// #include <etl/cmath.hpp>
 /// \endcode
 

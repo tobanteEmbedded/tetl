@@ -6,7 +6,7 @@
 /// \defgroup climits climits
 /// Limits of integral types
 /// \ingroup limits-library
-/// \code
+/// \code{.cpp}
 /// #include <etl/climits.hpp>
 /// \endcode
 

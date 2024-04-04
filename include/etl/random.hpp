@@ -6,7 +6,7 @@
 /// \defgroup random random
 /// Random number generators and distributions
 /// \ingroup numerics-library
-/// \code
+/// \code{.cpp}
 /// #include <etl/random.hpp>
 /// \endcode
 
