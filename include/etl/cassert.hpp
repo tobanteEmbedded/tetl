@@ -13,7 +13,7 @@
 
 #include <etl/_config/all.hpp>
 
-#include <etl/_cassert/macro.hpp>
+#include <etl/_cassert/assert.hpp>
 
 #ifndef assert
     #define assert(...) TETL_ASSERT(__VA_ARGS__)

@@ -3,7 +3,7 @@
 #ifndef TETL_CSTRING_STRCPY_HPP
 #define TETL_CSTRING_STRCPY_HPP
 
-#include <etl/_cassert/macro.hpp>
+#include <etl/_cassert/assert.hpp>
 #include <etl/_cstddef/size_t.hpp>
 #include <etl/_strings/cstr_algorithm.hpp>
 

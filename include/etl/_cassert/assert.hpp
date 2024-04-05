@@ -1,0 +1,83 @@
+// SPDX-License-Identifier: BSL-1.0
+
+#ifndef TETL_CASSERT_ASSERT_HPP
+#define TETL_CASSERT_ASSERT_HPP
+
+#include <etl/_config/all.hpp>
+
+#include <etl/_utility/ignore_unused.hpp>
+#include <etl/_version/implementation.hpp>
+
+#if __has_include(<stdlib.h>)
+    #include <stdlib.h>
+
+    #include <etl/_config/_workarounds/001_avr_macros.hpp> // For AVR macros
+#else
+inline auto exit(int /*ignore*/) -> void { }
+#endif
+
+namespace etl {
+/// \brief Payload for an assertion.
+struct assert_msg {
+    int line{};
+    char const* file{nullptr};
+    char const* func{nullptr};
+    char const* expression{nullptr};
+};
+
+} // namespace etl
+
+namespace etl {
+#if defined(TETL_ENABLE_CUSTOM_ASSERT_HANDLER)
+
+/// \brief This functions needs to be implemented if you enabled the
+/// `TETL_ENABLE_CUSTOM_ASSERT_HANDLER` macro. Rebooting the chip is probably
+/// the best idea, because you can not recover from any of the exceptional cases
+/// in the library.
+[[noreturn]] auto tetl_assert_handler(assert_msg const& msg) -> void; // NOLINT
+#else
+
+#endif
+
+/// \brief The default assert handler. This will be called, if an assertion
+/// is triggered at runtime.
+[[noreturn]] inline auto default_assert_handler(assert_msg const& msg) -> void
+{
+    etl::ignore_unused(msg);
+    ::exit(1); // NOLINT
+}
+
+namespace detail {
+[[noreturn]] inline auto call_assert_handler(assert_msg const& msg) -> void
+{
+#if defined(TETL_ENABLE_CUSTOM_ASSERT_HANDLER)
+    etl::tetl_assert_handler(msg);
+#else
+    etl::default_assert_handler(msg);
+#endif
+}
+
+} // namespace detail
+
+} // namespace etl
+
+#define TETL_ASSERT_IMPL(...)                                                                                          \
+    do {                                                                                                               \
+        if (not(__VA_ARGS__)) [[unlikely]] {                                                                           \
+            /* TETL_DEBUG_TRAP(); */                                                                                   \
+            etl::detail::call_assert_handler(etl::assert_msg{                                                          \
+                __LINE__,                                                                                              \
+                __FILE__,                                                                                              \
+                etl::is_hosted() ? TETL_BUILTIN_FUNCTION() : nullptr,                                                  \
+                etl::is_hosted() ? TETL_STRINGIFY((__VA_ARGS__)) : nullptr,                                            \
+            });                                                                                                        \
+        }                                                                                                              \
+    } while (false)
+
+#if not defined(TETL_NDEBUG) or (TETL_NDEBUG == 0) or defined(TETL_ENABLE_ASSERTIONS)
+    #define TETL_ASSERT(...) TETL_ASSERT_IMPL(__VA_ARGS__)
+#else
+    #define TETL_ASSERT(...)
+#endif
+
+#endif // TETL_CASSERT_ASSERT_HPP

@@ -3,7 +3,6 @@
 #ifndef TETL_CSTDLIB_STRTOL_HPP
 #define TETL_CSTDLIB_STRTOL_HPP
 
-#include <etl/_cassert/macro.hpp>
 #include <etl/_cstring/strlen.hpp>
 #include <etl/_strings/conversion.hpp>
 

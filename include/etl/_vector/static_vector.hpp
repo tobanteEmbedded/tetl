@@ -12,7 +12,7 @@
 #include <etl/_algorithm/transform.hpp>
 #include <etl/_array/array.hpp>
 #include <etl/_array/c_array.hpp>
-#include <etl/_cassert/macro.hpp>
+#include <etl/_cassert/assert.hpp>
 #include <etl/_concepts/same_as.hpp>
 #include <etl/_container/index.hpp>
 #include <etl/_cstdint/uint_t.hpp>

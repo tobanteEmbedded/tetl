@@ -3,7 +3,6 @@
 #ifndef TETL_CWCHAR_WCSNCMP_HPP
 #define TETL_CWCHAR_WCSNCMP_HPP
 
-#include <etl/_cassert/macro.hpp>
 #include <etl/_cstddef/size_t.hpp>
 #include <etl/_strings/cstr_algorithm.hpp>
 
