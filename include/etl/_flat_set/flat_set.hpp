@@ -6,13 +6,16 @@
 #include <etl/_config/all.hpp>
 
 #include <etl/_algorithm/equal.hpp>
+#include <etl/_algorithm/equal_range.hpp>
 #include <etl/_algorithm/lexicographical_compare.hpp>
-#include <etl/_algorithm/partition_point.hpp>
+#include <etl/_algorithm/lower_bound.hpp>
+#include <etl/_algorithm/upper_bound.hpp>
 #include <etl/_concepts/emulation.hpp>
 #include <etl/_cstddef/size_t.hpp>
 #include <etl/_flat_set/sorted_unique.hpp>
 #include <etl/_functional/is_transparent.hpp>
 #include <etl/_functional/less.hpp>
+#include <etl/_functional/reference_wrapper.hpp>
 #include <etl/_iterator/begin.hpp>
 #include <etl/_iterator/data.hpp>
 #include <etl/_iterator/end.hpp>
@@ -288,45 +291,75 @@ struct flat_set {
 
     [[nodiscard]] constexpr auto lower_bound(key_type const& key) -> iterator
     {
-        auto cmp = [&](auto const& k) -> bool { return _compare(k, key); };
-        return etl::partition_point(begin(), end(), cmp);
+        return etl::lower_bound(begin(), end(), key, etl::ref(_compare));
     }
 
     [[nodiscard]] constexpr auto lower_bound(key_type const& key) const -> const_iterator
     {
-        auto cmp = [&](auto const& k) -> bool { return _compare(k, key); };
-        return etl::partition_point(begin(), end(), cmp);
+        return etl::lower_bound(begin(), end(), key, etl::ref(_compare));
     }
 
     template <typename K>
         requires etl::detail::is_transparent_v<Compare>
     [[nodiscard]] constexpr auto lower_bound(K const& key) -> iterator
     {
-        auto cmp = [&](auto const& k) -> bool { return _compare(k, key); };
-        return etl::partition_point(begin(), end(), cmp);
+        return etl::lower_bound(begin(), end(), key, etl::ref(_compare));
     }
 
     template <typename K>
         requires etl::detail::is_transparent_v<Compare>
     [[nodiscard]] constexpr auto lower_bound(K const& key) const -> const_iterator
     {
-        auto cmp = [&](auto const& k) -> bool { return _compare(k, key); };
-        return etl::partition_point(begin(), end(), cmp);
+        return etl::lower_bound(begin(), end(), key, etl::ref(_compare));
     }
 
-    [[nodiscard]] constexpr auto upper_bound(key_type const& key) -> iterator;
-    [[nodiscard]] constexpr auto upper_bound(key_type const& key) const -> const_iterator;
-    template <typename K>
-    [[nodiscard]] constexpr auto upper_bound(K const& key) -> iterator;
-    template <typename K>
-    [[nodiscard]] constexpr auto upper_bound(K const& key) const -> const_iterator;
+    [[nodiscard]] constexpr auto upper_bound(key_type const& key) -> iterator
+    {
+        return etl::upper_bound(begin(), end(), key, etl::ref(_compare));
+    }
 
-    [[nodiscard]] constexpr auto equal_range(key_type const& key) -> etl::pair<iterator, iterator>;
-    [[nodiscard]] constexpr auto equal_range(key_type const& key) const -> etl::pair<const_iterator, const_iterator>;
+    [[nodiscard]] constexpr auto upper_bound(key_type const& key) const -> const_iterator
+    {
+        return etl::upper_bound(begin(), end(), key, etl::ref(_compare));
+    }
+
     template <typename K>
-    [[nodiscard]] constexpr auto equal_range(K const& key) -> etl::pair<iterator, iterator>;
+        requires etl::detail::is_transparent_v<Compare>
+    [[nodiscard]] constexpr auto upper_bound(K const& key) -> iterator
+    {
+        return etl::upper_bound(begin(), end(), key, etl::ref(_compare));
+    }
+
     template <typename K>
-    [[nodiscard]] constexpr auto equal_range(K const& key) const -> etl::pair<const_iterator, const_iterator>;
+        requires etl::detail::is_transparent_v<Compare>
+    [[nodiscard]] constexpr auto upper_bound(K const& key) const -> const_iterator
+    {
+        return etl::upper_bound(begin(), end(), key, etl::ref(_compare));
+    }
+
+    [[nodiscard]] constexpr auto equal_range(key_type const& key) -> etl::pair<iterator, iterator>
+    {
+        return etl::equal_range(begin(), end(), key, etl::ref(_compare));
+    }
+
+    [[nodiscard]] constexpr auto equal_range(key_type const& key) const -> etl::pair<const_iterator, const_iterator>
+    {
+        return etl::equal_range(begin(), end(), key, etl::ref(_compare));
+    }
+
+    template <typename K>
+        requires etl::detail::is_transparent_v<Compare>
+    [[nodiscard]] constexpr auto equal_range(K const& key) -> etl::pair<iterator, iterator>
+    {
+        return etl::equal_range(begin(), end(), key, etl::ref(_compare));
+    }
+
+    template <typename K>
+        requires etl::detail::is_transparent_v<Compare>
+    [[nodiscard]] constexpr auto equal_range(K const& key) const -> etl::pair<const_iterator, const_iterator>
+    {
+        return etl::equal_range(begin(), end(), key, etl::ref(_compare));
+    }
 
     friend constexpr auto operator==(flat_set const& lhs, flat_set const& rhs) -> bool
     {

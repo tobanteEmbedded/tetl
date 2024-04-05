@@ -3,6 +3,7 @@
 #ifndef TETL_FUNCTIONAL_REFERENCE_WRAPPER_HPP
 #define TETL_FUNCTIONAL_REFERENCE_WRAPPER_HPP
 
+#include <etl/_functional/invoke.hpp>
 #include <etl/_memory/addressof.hpp>
 #include <etl/_type_traits/declval.hpp>
 #include <etl/_type_traits/enable_if.hpp>

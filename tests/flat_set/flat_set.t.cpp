@@ -63,6 +63,14 @@ constexpr auto test() -> bool
     auto v = etl::array<T, 3>{T(1), T(2), T(3)};
     s2.insert(v.begin(), v.end());
     CHECK(s2.size() == 4);
+    CHECK(s2.upper_bound(T(0)) == s2.begin());
+    CHECK(s2.upper_bound(wrapper{T(0)}) == s2.begin());
+
+    auto const& cs2 = s2;
+    CHECK(cs2.upper_bound(T(1)) == etl::next(cs2.begin()));
+    CHECK(cs2.upper_bound(wrapper{T(1)}) == etl::next(cs2.begin()));
+    CHECK(cs2 == s2);
+    CHECK(cs2 != s1);
 
     return true;
 }
