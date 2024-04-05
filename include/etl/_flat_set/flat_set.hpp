@@ -3,6 +3,8 @@
 #ifndef TETL_FLAT_SET_FLAT_SET_HPP
 #define TETL_FLAT_SET_FLAT_SET_HPP
 
+#include <etl/_config/all.hpp>
+
 #include <etl/_algorithm/equal.hpp>
 #include <etl/_algorithm/lexicographical_compare.hpp>
 #include <etl/_algorithm/partition_point.hpp>
@@ -41,8 +43,8 @@ namespace etl {
 /// members that respectively insert, emplace or erase a single element from the
 /// set is linear, including the ones that take an insertion position iterator.
 ///
-/// https://isocpp.org/files/papers/P1222R1.pdf
-/// https://youtu.be/b9ZYM0d6htg
+/// - https://isocpp.org/files/papers/P1222R1.pdf
+/// - https://youtu.be/b9ZYM0d6htg
 ///
 /// \headerfile etl/flat_set.hpp
 /// \ingroup flat_set
@@ -86,15 +88,15 @@ struct flat_set {
 
     template <typename InputIt>
     constexpr flat_set(InputIt first, InputIt last, Compare const& comp = Compare()) : _container{}
-                                                                                     , _compare{comp}
+                                                                                     , _compare(comp)
     {
         insert(first, last);
     }
 
     template <typename InputIt>
     constexpr flat_set(etl::sorted_unique_t /*tag*/, InputIt first, InputIt last, Compare const& comp = Compare())
-        : _container{first, last}
-        , _compare{comp}
+        : _container(first, last)
+        , _compare(comp)
     {
     }
 
@@ -150,7 +152,7 @@ struct flat_set {
         auto key    = Key{etl::forward<Args>(args)...};
         iterator it = lower_bound(key);
 
-        if (it == end() || _compare(key, *it)) {
+        if (it == end() or _compare(key, *it)) {
             it = _container.emplace(it, etl::move(key));
             return etl::make_pair(it, true);
         }
@@ -228,8 +230,8 @@ struct flat_set {
     // set operations
     [[nodiscard]] constexpr auto find(key_type const& key) -> iterator
     {
-        iterator it = lower_bound(key);
-        if (it == end() || _compare(key, *it)) {
+        auto const it = lower_bound(key);
+        if (it == end() or _compare(key, *it)) {
             return end();
         }
         return it;
@@ -237,42 +239,52 @@ struct flat_set {
 
     [[nodiscard]] constexpr auto find(key_type const& key) const -> const_iterator
     {
-        const_iterator it = lower_bound(key);
-        if (it == end() || _compare(key, *it)) {
+        auto const it = lower_bound(key);
+        if (it == end() or _compare(key, *it)) {
             return end();
         }
         return it;
     }
 
     template <typename K>
-        requires(detail::is_transparent_v<Compare>)
+        requires etl::detail::is_transparent_v<Compare>
     [[nodiscard]] constexpr auto find(K const& key) -> iterator
     {
-        iterator it = lower_bound(key);
-        if (it == end() || _compare(key, *it)) {
+        auto const it = lower_bound(key);
+        if (it == end() or _compare(key, *it)) {
             return end();
         }
         return it;
     }
 
     template <typename K>
-        requires(detail::is_transparent_v<Compare>)
+        requires etl::detail::is_transparent_v<Compare>
     [[nodiscard]] constexpr auto find(K const& key) const -> const_iterator
     {
-        const_iterator it = lower_bound(key);
-        if (it == end() || _compare(key, *it)) {
+        auto const it = lower_bound(key);
+        if (it == end() or _compare(key, *it)) {
             return end();
         }
         return it;
     }
 
-    [[nodiscard]] constexpr auto count(key_type const& x) const -> size_type;
-    template <typename K>
-    [[nodiscard]] constexpr auto count(K const& x) const -> size_type;
+    [[nodiscard]] constexpr auto count(key_type const& key) const -> size_type { return find(key) == end() ? 0 : 1; }
 
-    [[nodiscard]] constexpr auto contains(key_type const& x) const -> bool;
     template <typename K>
-    [[nodiscard]] constexpr auto contains(K const& x) const -> bool;
+        requires etl::detail::is_transparent_v<Compare>
+    [[nodiscard]] constexpr auto count(K const& key) const -> size_type
+    {
+        return find(key) == end() ? 0 : 1;
+    }
+
+    [[nodiscard]] constexpr auto contains(key_type const& key) const -> bool { return count(key) == 1; }
+
+    template <typename K>
+        requires etl::detail::is_transparent_v<Compare>
+    [[nodiscard]] constexpr auto contains(K const& key) const -> bool
+    {
+        return count(key) == 1;
+    }
 
     [[nodiscard]] constexpr auto lower_bound(key_type const& key) -> iterator
     {
@@ -287,34 +299,43 @@ struct flat_set {
     }
 
     template <typename K>
-    [[nodiscard]] constexpr auto lower_bound(K const& x) -> iterator;
-    template <typename K>
-    [[nodiscard]] constexpr auto lower_bound(K const& x) const -> const_iterator;
-
-    [[nodiscard]] constexpr auto upper_bound(key_type const& x) -> iterator;
-    [[nodiscard]] constexpr auto upper_bound(key_type const& x) const -> const_iterator;
-    template <typename K>
-    [[nodiscard]] constexpr auto upper_bound(K const& x) -> iterator;
-    template <typename K>
-    [[nodiscard]] constexpr auto upper_bound(K const& x) const -> const_iterator;
-
-    [[nodiscard]] constexpr auto equal_range(key_type const& x) -> etl::pair<iterator, iterator>;
-    [[nodiscard]] constexpr auto equal_range(key_type const& x) const -> etl::pair<const_iterator, const_iterator>;
-    template <typename K>
-    [[nodiscard]] constexpr auto equal_range(K const& x) -> etl::pair<iterator, iterator>;
-    template <typename K>
-    [[nodiscard]] constexpr auto equal_range(K const& x) const -> etl::pair<const_iterator, const_iterator>;
-
-    friend constexpr auto operator==(flat_set const& x, flat_set const& y) -> bool
+        requires etl::detail::is_transparent_v<Compare>
+    [[nodiscard]] constexpr auto lower_bound(K const& key) -> iterator
     {
-        return etl::equal(x.begin(), x.end(), y.begin(), y.end());
+        auto cmp = [&](auto const& k) -> bool { return _compare(k, key); };
+        return etl::partition_point(begin(), end(), cmp);
     }
 
-    friend constexpr auto operator!=(flat_set const& x, flat_set const& y) -> bool { return !(x == y); }
-
-    friend constexpr auto operator<(flat_set const& x, flat_set const& y) -> bool
+    template <typename K>
+        requires etl::detail::is_transparent_v<Compare>
+    [[nodiscard]] constexpr auto lower_bound(K const& key) const -> const_iterator
     {
-        return etl::lexicographical_compare(x.begin(), x.end(), y.begin(), y.end());
+        auto cmp = [&](auto const& k) -> bool { return _compare(k, key); };
+        return etl::partition_point(begin(), end(), cmp);
+    }
+
+    [[nodiscard]] constexpr auto upper_bound(key_type const& key) -> iterator;
+    [[nodiscard]] constexpr auto upper_bound(key_type const& key) const -> const_iterator;
+    template <typename K>
+    [[nodiscard]] constexpr auto upper_bound(K const& key) -> iterator;
+    template <typename K>
+    [[nodiscard]] constexpr auto upper_bound(K const& key) const -> const_iterator;
+
+    [[nodiscard]] constexpr auto equal_range(key_type const& key) -> etl::pair<iterator, iterator>;
+    [[nodiscard]] constexpr auto equal_range(key_type const& key) const -> etl::pair<const_iterator, const_iterator>;
+    template <typename K>
+    [[nodiscard]] constexpr auto equal_range(K const& key) -> etl::pair<iterator, iterator>;
+    template <typename K>
+    [[nodiscard]] constexpr auto equal_range(K const& key) const -> etl::pair<const_iterator, const_iterator>;
+
+    friend constexpr auto operator==(flat_set const& lhs, flat_set const& rhs) -> bool
+    {
+        return etl::equal(lhs.begin(), lhs.end(), rhs.begin(), rhs.end());
+    }
+
+    friend constexpr auto operator<(flat_set const& lhs, flat_set const& rhs) -> bool
+    {
+        return etl::lexicographical_compare(lhs.begin(), lhs.end(), rhs.begin(), rhs.end());
     }
 
     friend constexpr auto operator>(flat_set const& x, flat_set const& y) -> bool { return y < x; }
@@ -326,8 +347,8 @@ struct flat_set {
     friend constexpr auto swap(flat_set& x, flat_set& y) noexcept(noexcept(x.swap(y))) -> void { return x.swap(y); }
 
 private:
-    container_type _container;
-    key_compare _compare;
+    TETL_NO_UNIQUE_ADDRESS container_type _container;
+    TETL_NO_UNIQUE_ADDRESS key_compare _compare;
 };
 
 } // namespace etl
