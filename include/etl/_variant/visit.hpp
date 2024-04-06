@@ -74,7 +74,7 @@ consteval auto next_seq(etl::index_sequence<I, Is...> /*i*/, etl::index_sequence
 }
 
 template <etl::size_t I, typename T>
-constexpr auto variant_get(T&& t) -> decltype(auto)
+constexpr auto get(T&& t) -> decltype(auto)
 {
     if constexpr (is_variant_v<T>) {
         return etl::unchecked_get<I>(etl::forward<T>(t));
@@ -104,15 +104,43 @@ constexpr auto index(V const& v) -> etl::size_t
     }
 }
 
+template <typename T, etl::size_t I>
+struct indexed_value {
+    static constexpr auto index = etl::index_v<I>;
+
+    constexpr explicit indexed_value(T value) : _value(etl::forward<T>(value)) { }
+
+    [[nodiscard]] constexpr auto value() const& -> auto& { return _value; }
+
+    [[nodiscard]] constexpr auto value() && -> auto&& { return etl::forward<T>(_value); }
+
+private:
+    T _value;
+};
+
+template <etl::size_t... Is, etl::size_t... Ms, typename F, typename... Vs>
+constexpr auto visit_with_index(etl::index_sequence<Is...> i, etl::index_sequence<Ms...> m, F&& f, Vs&&... vs)
+{
+    constexpr auto n = next_seq(i, m);
+    if constexpr (sum(n) == 0) {
+        return f(indexed_value<decltype(get<Is>(etl::forward<Vs>(vs))), Is>{get<Is>(etl::forward<Vs>(vs))}...);
+    } else {
+        if (etl::tuple(index(vs)...) == etl::tuple(Is...)) {
+            return f(indexed_value<decltype(get<Is>(etl::forward<Vs>(vs))), Is>{get<Is>(etl::forward<Vs>(vs))}...);
+        }
+        return visit_with_index(n, m, etl::forward<F>(f), etl::forward<Vs>(vs)...);
+    }
+}
+
 template <etl::size_t... Is, etl::size_t... Ms, typename F, typename... Vs>
 constexpr auto visit(etl::index_sequence<Is...> i, etl::index_sequence<Ms...> m, F&& f, Vs&&... vs)
 {
     constexpr auto n = next_seq(i, m);
-    if constexpr (etl::detail::sum(n) == 0) {
-        return f(etl::detail::variant_get<Is>(etl::forward<Vs>(vs))...);
+    if constexpr (sum(n) == 0) {
+        return f(get<Is>(etl::forward<Vs>(vs))...);
     } else {
-        if (etl::tuple(etl::detail::index(vs)...) == etl::tuple(Is...)) {
-            return f(etl::detail::variant_get<Is>(etl::forward<Vs>(vs))...);
+        if (etl::tuple(index(vs)...) == etl::tuple(Is...)) {
+            return f(get<Is>(etl::forward<Vs>(vs))...);
         }
         return visit(n, m, etl::forward<F>(f), etl::forward<Vs>(vs)...);
     }
@@ -127,9 +155,7 @@ inline constexpr etl::size_t zero = 0;
 /// combination of types from variants) to the variants vars.
 ///
 /// Every type in etl::remove_reference_t<Variants>... may be a
-/// (possibly const-qualified) specialization of etl::variant. It is unspecified
-/// whether other argument types, e.g. a class derived from a etl::variant, are
-/// supported.
+/// (possibly const-qualified) specialization of etl::variant.
 ///
 /// - Copied from https://github.com/rollbear/visit
 /// - https://github.com/rollbear/visit/blob/master/LICENSE.txt
@@ -141,9 +167,38 @@ template <typename F, typename... Vs>
 constexpr auto visit(F&& f, Vs&&... vs)
 {
     if constexpr (((etl::detail::variant_size<Vs>() == 1) and ...)) {
-        return f(etl::detail::variant_get<0>(etl::forward<Vs>(vs))...);
+        return f(etl::detail::get<0>(etl::forward<Vs>(vs))...);
     } else {
         return etl::detail::visit(
+            etl::index_sequence<etl::detail::zero<Vs>...>{},
+            etl::index_sequence<etl::detail::variant_size<Vs>()...>{},
+            etl::forward<F>(f),
+            etl::forward<Vs>(vs)...
+        );
+    }
+}
+
+/// Applies the visitor vis (Callable that can be called with any
+/// combination of types from variants) to the variants vars.
+///
+/// Every type in etl::remove_reference_t<Variants>... may be a
+/// (possibly const-qualified) specialization of etl::variant.
+///
+/// - Access index as `v.index`
+/// - Access value as `v.value()`
+///
+/// \ingroup variant
+/// \relatesalso variant
+/// \relatesalso variant2
+template <typename F, typename... Vs>
+constexpr auto visit_with_index(F&& f, Vs&&... vs)
+{
+    if constexpr (((etl::detail::variant_size<Vs>() == 1) and ...)) {
+        return f(etl::detail::indexed_value<decltype(etl::detail::get<0>(etl::forward<Vs>(vs))), 0>(
+            etl::detail::get<0>(etl::forward<Vs>(vs))
+        )...);
+    } else {
+        return etl::detail::visit_with_index(
             etl::index_sequence<etl::detail::zero<Vs>...>{},
             etl::index_sequence<etl::detail::variant_size<Vs>()...>{},
             etl::forward<F>(f),
