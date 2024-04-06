@@ -359,7 +359,7 @@ public:
                     swap(l, r);
                 } else {
                     etl::unreachable();
-                };
+                }
             }, *this, rhs);
         }
 
