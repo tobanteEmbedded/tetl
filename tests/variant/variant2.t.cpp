@@ -61,6 +61,20 @@ constexpr auto test() -> bool
     CHECK_FALSE(move == variant{etl::in_place_type<int>, 13});
     CHECK(move != variant{etl::in_place_type<int>, 13});
 
+    struct non_trivial {
+        constexpr explicit non_trivial(int v) : value{v} { }
+
+        constexpr ~non_trivial() { } // NOLINT
+
+        int value;
+    };
+
+    {
+        using var_t = etl::variant2<int, float, non_trivial>;
+        auto var    = var_t{etl::in_place_type<non_trivial>, 42};
+        CHECK(var.index() == 2);
+    }
+
     return true;
 }
 

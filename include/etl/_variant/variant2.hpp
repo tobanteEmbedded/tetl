@@ -37,10 +37,6 @@ private:
     // Avoid valueless_by_exception
     static_assert((etl::is_nothrow_move_constructible_v<Ts> and ...));
 
-    // TODO
-    static_assert((etl::is_trivially_copy_constructible_v<Ts> and ...));
-    static_assert((etl::is_trivially_move_constructible_v<Ts> and ...));
-
     using index_type = etl::smallest_size_t<sizeof...(Ts)>;
     using first_type = etl::meta::at_t<0, etl::meta::list<Ts...>>;
 
@@ -71,17 +67,17 @@ public:
 
     constexpr variant2(variant2 const&) = default;
 
+    // TODO
     constexpr variant2(variant2 const& /*other*/) noexcept((... and etl::is_nothrow_copy_constructible_v<Ts>))
         requires((... and etl::is_copy_constructible_v<Ts>) and !(... and etl::is_trivially_copy_constructible_v<Ts>))
-    {
-    }
+    = delete;
 
     constexpr variant2(variant2&&) = default;
 
+    // TODO
     constexpr variant2(variant2&& /*other*/) noexcept((... and etl::is_nothrow_move_constructible_v<Ts>))
         requires((... and etl::is_move_constructible_v<Ts>) and not(... and etl::is_trivially_move_constructible_v<Ts>))
-    {
-    }
+    = delete;
 
     ~variant2()
         requires(... and etl::is_trivially_destructible_v<Ts>)
