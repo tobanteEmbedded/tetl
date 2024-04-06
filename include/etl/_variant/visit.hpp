@@ -157,39 +157,10 @@ inline constexpr etl::size_t zero = 0;
 /// Every type in etl::remove_reference_t<Variants>... may be a
 /// (possibly const-qualified) specialization of etl::variant.
 ///
-/// - Copied from https://github.com/rollbear/visit
-/// - https://github.com/rollbear/visit/blob/master/LICENSE.txt
-///
-/// \ingroup variant
-/// \relatesalso variant
-/// \relatesalso variant2
-template <typename F, typename... Vs>
-constexpr auto visit(F&& f, Vs&&... vs)
-{
-    if constexpr (((etl::detail::variant_size<Vs>() == 1) and ...)) {
-        return f(etl::detail::get<0>(etl::forward<Vs>(vs))...);
-    } else {
-        return etl::detail::visit(
-            etl::index_sequence<etl::detail::zero<Vs>...>{},
-            etl::index_sequence<etl::detail::variant_size<Vs>()...>{},
-            etl::forward<F>(f),
-            etl::forward<Vs>(vs)...
-        );
-    }
-}
-
-/// Applies the visitor vis (Callable that can be called with any
-/// combination of types from variants) to the variants vars.
-///
-/// Every type in etl::remove_reference_t<Variants>... may be a
-/// (possibly const-qualified) specialization of etl::variant.
-///
 /// - Access index as `v.index`
 /// - Access value as `v.value()`
 ///
 /// \ingroup variant
-/// \relatesalso variant
-/// \relatesalso variant2
 template <typename F, typename... Vs>
 constexpr auto visit_with_index(F&& f, Vs&&... vs)
 {
@@ -205,6 +176,24 @@ constexpr auto visit_with_index(F&& f, Vs&&... vs)
             etl::forward<Vs>(vs)...
         );
     }
+}
+
+/// Applies the visitor vis (Callable that can be called with any
+/// combination of types from variants) to the variants vars.
+///
+/// Every type in etl::remove_reference_t<Variants>... may be a
+/// (possibly const-qualified) specialization of etl::variant.
+///
+/// - Copied from https://github.com/rollbear/visit
+/// - https://github.com/rollbear/visit/blob/master/LICENSE.txt
+///
+/// \ingroup variant
+template <typename F, typename... Vs>
+constexpr auto visit(F&& f, Vs&&... vs)
+{
+    return etl::visit_with_index([&](auto... parameter) {
+        return etl::forward<F>(f)(etl::move(parameter).value()...);
+    }, etl::forward<Vs>(vs)...);
 }
 
 } // namespace etl
