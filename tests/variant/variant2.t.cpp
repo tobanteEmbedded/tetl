@@ -46,6 +46,21 @@ constexpr auto test() -> bool
     CHECK(etl::unchecked_get<1>(move) == 42);
     CHECK(etl::unchecked_get<1>(etl::move(move)) == 42);
 
+    auto visitor = [](auto v) {
+        if constexpr (etl::is_same_v<decltype(v), long>) {
+            return long(v);
+        } else {
+            return 99L;
+        }
+    };
+    CHECK(etl::visit(visitor, move) == 42);
+
+    CHECK(move == copy);
+    CHECK_FALSE(move != copy);
+
+    CHECK_FALSE(move == variant{});
+    CHECK(move != variant{});
+
     return true;
 }
 

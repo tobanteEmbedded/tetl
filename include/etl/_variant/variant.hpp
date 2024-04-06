@@ -37,7 +37,6 @@
 #include <etl/_utility/index_sequence.hpp>
 #include <etl/_utility/move.hpp>
 #include <etl/_utility/swap.hpp>
-#include <etl/_utility/unreachable.hpp>
 #include <etl/_variant/bad_variant_access.hpp>
 #include <etl/_variant/monostate.hpp>
 #include <etl/_variant/overload.hpp>
@@ -49,17 +48,6 @@
 namespace etl {
 
 namespace detail {
-
-constexpr auto make_variant_compare_op(auto op)
-{
-    return [op](auto const& l, auto const& r) -> bool {
-        if constexpr (etl::is_same_v<decltype(l), decltype(r)>) {
-            return op(l, r);
-        } else {
-            etl::unreachable();
-        }
-    };
-}
 
 template <size_t Index, typename...>
 struct variant_storage;

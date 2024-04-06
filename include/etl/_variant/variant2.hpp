@@ -6,8 +6,11 @@
 #include <etl/_config/all.hpp>
 
 #include <etl/_cstddef/size_t.hpp>
+#include <etl/_functional/equal_to.hpp>
 #include <etl/_memory/addressof.hpp>
+#include <etl/_memory/destroy_at.hpp>
 #include <etl/_meta/at.hpp>
+#include <etl/_meta/index_of.hpp>
 #include <etl/_type_traits/add_pointer.hpp>
 #include <etl/_type_traits/index_constant.hpp>
 #include <etl/_type_traits/is_copy_constructible.hpp>
@@ -72,7 +75,10 @@ public:
         requires(... and etl::is_trivially_destructible_v<Ts>)
     = default;
 
-    constexpr ~variant2() { /* visit(*this, bounded::destroy);*/ }
+    constexpr ~variant2()
+    {
+        etl::visit([](auto& v) { etl::destroy_at(etl::addressof(v)); }, *this);
+    }
 
     /// \brief Returns the zero-based index of the alternative that is currently held by the variant.
     [[nodiscard]] constexpr auto index() const noexcept -> etl::size_t { return static_cast<etl::size_t>(_index); }
@@ -111,6 +117,18 @@ public:
     {
         static_assert(I < sizeof...(Ts));
         return etl::move(_union)[index];
+    }
+
+    /// Equality operator for variants:
+    ///
+    /// - If lhs.index() != rhs.index(), returns false;
+    /// - Otherwise returns get<lhs.index()>(lhs) == get<lhs.index()>(rhs)
+    friend constexpr auto operator==(variant2 const& lhs, variant2 const& rhs) -> bool
+    {
+        if (lhs.index() != rhs.index()) {
+            return false;
+        }
+        return etl::visit(etl::detail::make_variant_compare_op(etl::equal_to()), lhs, rhs);
     }
 
 private:
@@ -186,6 +204,22 @@ constexpr auto get_if(variant2<Ts...> const* pv
         return nullptr;
     }
     return etl::addressof(etl::unchecked_get<I>(*pv));
+}
+
+/// Type-based non-throwing accessor: The call is ill-formed if T is not a unique element of Ts....
+/// \relates variant2
+template <typename T, typename... Ts>
+constexpr auto get_if(variant2<Ts...>* pv) noexcept -> add_pointer_t<T>
+{
+    return etl::get_if<etl::meta::index_of_v<T, etl::meta::list<Ts...>>>(pv);
+}
+
+/// Type-based non-throwing accessor: The call is ill-formed if T is not a unique element of Ts....
+/// \relates variant2
+template <typename T, typename... Ts>
+constexpr auto get_if(variant2<Ts...> const* pv) noexcept -> add_pointer_t<T const>
+{
+    return etl::get_if<etl::meta::index_of_v<T, etl::meta::list<Ts...>>>(pv);
 }
 
 } // namespace etl
