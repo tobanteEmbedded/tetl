@@ -135,20 +135,6 @@ constexpr auto visit_with_index(etl::index_sequence<Is...> i, etl::index_sequenc
     }
 }
 
-template <etl::size_t... Is, etl::size_t... Ms, typename F, typename... Vs>
-constexpr auto visit(etl::index_sequence<Is...> i, etl::index_sequence<Ms...> m, F&& f, Vs&&... vs)
-{
-    constexpr auto n = next_seq(i, m);
-    if constexpr (sum(n) == 0) {
-        return f(get<Is>(etl::forward<Vs>(vs))...);
-    } else {
-        if (etl::tuple(index(vs)...) == etl::tuple(Is...)) {
-            return f(get<Is>(etl::forward<Vs>(vs))...);
-        }
-        return visit(n, m, etl::forward<F>(f), etl::forward<Vs>(vs)...);
-    }
-}
-
 template <typename>
 inline constexpr etl::size_t zero = 0;
 
