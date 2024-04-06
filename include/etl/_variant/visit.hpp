@@ -15,7 +15,6 @@
 #include <etl/_type_traits/remove_reference.hpp>
 #include <etl/_type_traits/void_t.hpp>
 #include <etl/_utility/forward.hpp>
-#include <etl/_utility/forward_like.hpp>
 #include <etl/_utility/index_sequence.hpp>
 #include <etl/_variant/variant_fwd.hpp>
 
@@ -75,24 +74,13 @@ consteval auto next_seq(etl::index_sequence<I, Is...> /*i*/, etl::index_sequence
 }
 
 template <etl::size_t I, typename T>
-constexpr auto unchecked_get(T&& t) -> decltype(auto)
+constexpr auto variant_get(T&& t) -> decltype(auto)
 {
     if constexpr (is_variant_v<T>) {
         return etl::unchecked_get<I>(etl::forward<T>(t));
     } else {
         static_assert(I == 0);
         return etl::forward<T>(t);
-    }
-}
-
-template <etl::size_t I, typename T>
-constexpr auto get_if(T* t)
-{
-    if constexpr (is_variant_v<T>) {
-        return etl::get_if<I>(t);
-    } else {
-        static_assert(I == 0);
-        return t;
     }
 }
 
@@ -121,10 +109,10 @@ constexpr auto visit(etl::index_sequence<Is...> i, etl::index_sequence<Ms...> m,
 {
     constexpr auto n = next_seq(i, m);
     if constexpr (etl::detail::sum(n) == 0) {
-        return f(etl::detail::unchecked_get<Is>(etl::forward<Vs>(vs))...);
+        return f(etl::detail::variant_get<Is>(etl::forward<Vs>(vs))...);
     } else {
         if (etl::tuple(etl::detail::index(vs)...) == etl::tuple(Is...)) {
-            return f(etl::forward_like<Vs>(*etl::detail::get_if<Is>(&vs))...);
+            return f(etl::detail::variant_get<Is>(etl::forward<Vs>(vs))...);
         }
         return visit(n, m, etl::forward<F>(f), etl::forward<Vs>(vs)...);
     }
@@ -135,21 +123,25 @@ inline constexpr etl::size_t zero = 0;
 
 } // namespace detail
 
-/// \brief Applies the visitor vis (Callable that can be called with any
+/// Applies the visitor vis (Callable that can be called with any
 /// combination of types from variants) to the variants vars.
 ///
-/// \details Every type in etl::remove_reference_t<Variants>... may be a
+/// Every type in etl::remove_reference_t<Variants>... may be a
 /// (possibly const-qualified) specialization of etl::variant. It is unspecified
 /// whether other argument types, e.g. a class derived from a etl::variant, are
 /// supported.
 ///
-/// Copied from https://github.com/rollbear/visit
-/// https://github.com/rollbear/visit/blob/master/LICENSE.txt
+/// - Copied from https://github.com/rollbear/visit
+/// - https://github.com/rollbear/visit/blob/master/LICENSE.txt
+///
+/// \ingroup variant
+/// \relatesalso variant
+/// \relatesalso variant2
 template <typename F, typename... Vs>
 constexpr auto visit(F&& f, Vs&&... vs)
 {
     if constexpr (((etl::detail::variant_size<Vs>() == 1) and ...)) {
-        return f(etl::forward_like<Vs>(*etl::detail::get_if<0>(&vs))...);
+        return f(etl::detail::variant_get<0>(etl::forward<Vs>(vs))...);
     } else {
         return etl::detail::visit(
             etl::index_sequence<etl::detail::zero<Vs>...>{},

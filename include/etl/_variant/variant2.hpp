@@ -31,6 +31,7 @@
 
 namespace etl {
 
+/// \ingroup variant
 template <typename... Ts>
 struct variant2 {
 private:

@@ -223,6 +223,8 @@ inline constexpr auto variant_npos = etl::numeric_limits<etl::size_t>::max();
 ///
 /// \warning All types need to be nothrow move constructible. This avoids the
 /// need for valueless_by_exception.
+///
+/// \ingroup variant
 template <typename... Ts>
 struct variant {
 private:
