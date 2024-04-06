@@ -66,15 +66,28 @@ constexpr auto test() -> bool
     CHECK(s2.upper_bound(T(0)) == s2.begin());
     CHECK(s2.upper_bound(wrapper{T(0)}) == s2.begin());
 
-    CHECK(etl::erase_if(s2, [](auto x) { return x > T(100); }) == 0);
-    CHECK(etl::erase_if(s2, [](auto x) { return x == T(3); }) == 1);
-    CHECK(s2.size() == 3);
-
     auto const& cs2 = s2;
     CHECK(cs2.upper_bound(T(1)) == etl::next(cs2.begin()));
     CHECK(cs2.upper_bound(wrapper{T(1)}) == etl::next(cs2.begin()));
     CHECK(cs2 == s2);
     CHECK(cs2 != s1);
+
+    CHECK(etl::erase_if(s2, [](auto x) { return x > T(100); }) == 0);
+    CHECK(etl::erase_if(s2, [](auto x) { return x == T(3); }) == 1);
+    CHECK(s2.size() == 3);
+
+    CHECK(s2.erase(T(100)) == 0);
+    CHECK(s2.erase(T(2)) == 1);
+    CHECK(s2.size() == 2);
+
+    auto other = set_t{};
+    swap(other, s2);
+    CHECK(s2.empty());
+    CHECK(other.size() == 2);
+
+    CHECK(*other.rbegin() == T(42));
+    CHECK(*etl::next(other.rbegin()) == T(1));
+    CHECK(etl::next(other.rbegin(), 2) == other.rend());
 
     return true;
 }

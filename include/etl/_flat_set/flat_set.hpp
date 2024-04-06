@@ -9,6 +9,7 @@
 #include <etl/_algorithm/equal_range.hpp>
 #include <etl/_algorithm/lexicographical_compare.hpp>
 #include <etl/_algorithm/lower_bound.hpp>
+#include <etl/_algorithm/remove.hpp>
 #include <etl/_algorithm/remove_if.hpp>
 #include <etl/_algorithm/upper_bound.hpp>
 #include <etl/_concepts/emulation.hpp>
@@ -210,7 +211,13 @@ struct flat_set {
 
     constexpr auto erase(const_iterator position) -> iterator { return _container.erase(position); }
 
-    constexpr auto erase(key_type const& x) -> size_type;
+    constexpr auto erase(key_type const& key) -> size_type
+    {
+        auto const it = etl::remove(begin(), end(), key);
+        auto const r  = static_cast<size_type>(etl::distance(it, end()));
+        erase(it, end());
+        return r;
+    }
 
     constexpr auto erase(const_iterator first, const_iterator last) -> iterator
     {
@@ -390,8 +397,8 @@ template <typename Key, typename Container, typename Compare, typename Pred>
 constexpr auto erase_if(etl::flat_set<Key, Container, Compare>& c, Pred pred) ->
     typename etl::flat_set<Key, Container, Compare>::size_type
 {
-    auto it = etl::remove_if(c.begin(), c.end(), pred);
-    auto r  = etl::distance(it, c.end());
+    auto const it = etl::remove_if(c.begin(), c.end(), pred);
+    auto const r  = etl::distance(it, c.end());
     c.erase(it, c.end());
     return static_cast<typename etl::flat_set<Key, Container, Compare>::size_type>(r);
 }
