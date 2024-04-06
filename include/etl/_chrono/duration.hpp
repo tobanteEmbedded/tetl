@@ -58,7 +58,8 @@ struct duration {
     /// count can be constructed from an integer value
     template <typename Rep2>
         requires(is_convertible_v<Rep2, rep> and (treat_as_floating_point_v<rep> or !treat_as_floating_point_v<Rep2>))
-    constexpr explicit duration(Rep2 const& r) noexcept : _rep(r)
+    constexpr explicit duration(Rep2 const& r) noexcept
+        : _rep(r)
     {
     }
 

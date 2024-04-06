@@ -14,7 +14,11 @@ struct mutable_buffer {
     mutable_buffer() noexcept = default;
 
     /// \brief Construct a buffer to represent a given memory range.
-    mutable_buffer(void* data, etl::size_t size) : _data{data}, _size{size} { }
+    mutable_buffer(void* data, etl::size_t size)
+        : _data{data}
+        , _size{size}
+    {
+    }
 
     /// \brief Get a pointer to the beginning of the memory range.
     [[nodiscard]] auto data() const noexcept -> void* { return _data; }

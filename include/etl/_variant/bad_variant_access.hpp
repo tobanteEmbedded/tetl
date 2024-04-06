@@ -14,7 +14,10 @@ namespace etl {
 struct bad_variant_access : exception {
     constexpr bad_variant_access() = default;
 
-    constexpr explicit bad_variant_access(char const* what) : exception{what} { }
+    constexpr explicit bad_variant_access(char const* what)
+        : exception{what}
+    {
+    }
 };
 
 } // namespace etl

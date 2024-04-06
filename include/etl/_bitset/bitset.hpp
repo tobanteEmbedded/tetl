@@ -65,7 +65,11 @@ struct bitset {
         }
 
     private:
-        constexpr explicit reference(uint8_t* data, uint8_t position) : _data{data}, _position{position} { }
+        constexpr explicit reference(uint8_t* data, uint8_t position)
+            : _data{data}
+            , _position{position}
+        {
+        }
 
         friend bitset;
         uint8_t* _data;

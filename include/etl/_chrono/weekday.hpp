@@ -14,7 +14,10 @@ namespace etl::chrono {
 struct weekday {
     weekday() = default;
 
-    constexpr explicit weekday(uint32_t wd) noexcept : _wd{static_cast<etl::uint8_t>(wd == 7 ? 0 : wd)} { }
+    constexpr explicit weekday(uint32_t wd) noexcept
+        : _wd{static_cast<etl::uint8_t>(wd == 7 ? 0 : wd)}
+    {
+    }
 
     constexpr weekday(sys_days const& dp) noexcept
         : _wd{static_cast<uint8_t>(weekday_from_days(dp.time_since_epoch().count()))}

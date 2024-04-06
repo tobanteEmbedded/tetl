@@ -22,7 +22,10 @@ namespace etl {
 struct bad_function_call : exception {
     constexpr bad_function_call() = default;
 
-    constexpr explicit bad_function_call(char const* what) : exception{what} { }
+    constexpr explicit bad_function_call(char const* what)
+        : exception{what}
+    {
+    }
 };
 
 namespace detail {
@@ -117,7 +120,10 @@ public:
     using alignment = integral_constant<size_t, Alignment>;
 
     /// \brief Creates an empty function.
-    inplace_function() noexcept : _vtable{addressof(detail::empty_vtable<R, Args...>)} { }
+    inplace_function() noexcept
+        : _vtable{addressof(detail::empty_vtable<R, Args...>)}
+    {
+    }
 
     template <typename T, typename C = decay_t<T>>
         requires(!detail::is_inplace_function<C>::value && is_invocable_r_v<R, C&, Args...>)
@@ -161,9 +167,13 @@ public:
     }
 
     /// \brief Creates an empty function.
-    inplace_function(nullptr_t /*ignore*/) noexcept : _vtable{addressof(detail::empty_vtable<R, Args...>)} { }
+    inplace_function(nullptr_t /*ignore*/) noexcept
+        : _vtable{addressof(detail::empty_vtable<R, Args...>)}
+    {
+    }
 
-    inplace_function(inplace_function const& other) : _vtable{other._vtable}
+    inplace_function(inplace_function const& other)
+        : _vtable{other._vtable}
     {
         _vtable->copy_ptr(addressof(_storage), addressof(other._storage));
     }

@@ -35,7 +35,8 @@ struct tuple_leaf {
     auto get_type(index_constant<I> ic) -> T;
 
     template <typename... Args>
-    constexpr tuple_leaf(Args&&... args) : _value{etl::forward<Args>(args)...}
+    constexpr tuple_leaf(Args&&... args)
+        : _value{etl::forward<Args>(args)...}
     {
     }
 

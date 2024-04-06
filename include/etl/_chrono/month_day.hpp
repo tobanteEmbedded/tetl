@@ -13,7 +13,11 @@ namespace etl::chrono {
 struct month_day {
     month_day() = default;
 
-    constexpr month_day(chrono::month const& m, chrono::day const& d) noexcept : _m{m}, _d{d} { }
+    constexpr month_day(chrono::month const& m, chrono::day const& d) noexcept
+        : _m{m}
+        , _d{d}
+    {
+    }
 
     [[nodiscard]] constexpr auto month() const noexcept -> chrono::month { return _m; }
 

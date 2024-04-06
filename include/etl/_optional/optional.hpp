@@ -186,7 +186,8 @@ struct optional_copy_base<T, false> : optional_storage_base<T> {
 
     optional_copy_base() = default;
 
-    optional_copy_base(optional_copy_base const& opt) : optional_storage_base<T>::optional_storage_base{}
+    optional_copy_base(optional_copy_base const& opt)
+        : optional_storage_base<T>::optional_storage_base{}
     {
         this->construct_from(opt);
     }
@@ -526,7 +527,8 @@ public:
     ///
     /// https://en.cppreference.com/w/cpp/utility/optional/optional
     template <typename U = T, enable_ctor_8_implicit<U> = 0>
-    constexpr optional(U&& value) : base_type(in_place, etl::forward<U>(value))
+    constexpr optional(U&& value)
+        : base_type(in_place, etl::forward<U>(value))
     {
     }
 
@@ -535,7 +537,8 @@ public:
     ///
     /// https://en.cppreference.com/w/cpp/utility/optional/optional
     template <typename U = T, enable_ctor_8_explicit<U> = 0>
-    explicit constexpr optional(U&& value) : base_type(in_place, etl::forward<U>(value))
+    explicit constexpr optional(U&& value)
+        : base_type(in_place, etl::forward<U>(value))
     {
     }
 
@@ -816,11 +819,15 @@ struct optional<T&> {
 
     constexpr optional() noexcept = default;
 
-    constexpr optional(etl::nullopt_t /*tag*/) noexcept : _ptr{nullptr} { }
+    constexpr optional(etl::nullopt_t /*tag*/) noexcept
+        : _ptr{nullptr}
+    {
+    }
 
     template <typename U = T>
         requires(not etl::is_same_v<etl::remove_cvref_t<U>, optional>)
-    constexpr explicit(not etl::is_convertible_v<U, T>) optional(U&& v) : _ptr(etl::addressof(v))
+    constexpr explicit(not etl::is_convertible_v<U, T>) optional(U&& v)
+        : _ptr(etl::addressof(v))
     {
         static_assert(etl::is_constructible_v<etl::add_lvalue_reference_t<T>, U>, "Must be able to bind U to T&");
         static_assert(etl::is_lvalue_reference_v<U>, "U must be an lvalue");
@@ -828,7 +835,8 @@ struct optional<T&> {
 
     template <typename U>
         requires(not etl::is_same_v<etl::remove_cvref_t<U>, optional>)
-    constexpr explicit(not etl::is_convertible_v<U, T>) optional(optional<U> const& rhs) : _ptr(etl::addressof(*rhs))
+    constexpr explicit(not etl::is_convertible_v<U, T>) optional(optional<U> const& rhs)
+        : _ptr(etl::addressof(*rhs))
     {
     }
 

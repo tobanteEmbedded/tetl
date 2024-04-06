@@ -63,7 +63,8 @@ private:
 };
 
 template <typename T, etl::uint32_t Size>
-inline queue<T, Size>::queue() : _handle{[]() { return xQueueCreate(Size, sizeof(T)); }()}
+inline queue<T, Size>::queue()
+    : _handle{[]() { return xQueueCreate(Size, sizeof(T)); }()}
 {
 }
 

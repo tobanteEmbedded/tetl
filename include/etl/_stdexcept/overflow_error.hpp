@@ -10,7 +10,10 @@ namespace etl {
 struct overflow_error : runtime_error {
     constexpr overflow_error() = default;
 
-    constexpr explicit overflow_error(char const* what) : runtime_error{what} { }
+    constexpr explicit overflow_error(char const* what)
+        : runtime_error{what}
+    {
+    }
 };
 
 } // namespace etl

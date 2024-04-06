@@ -91,7 +91,10 @@ public:
     /// \brief Character pointer constructor. Calls traits_type::length.
     ///
     /// \details Fails silently if input length is greater then capacity.
-    constexpr basic_static_string(const_pointer str) noexcept : basic_static_string(str, traits_type::length(str)) { }
+    constexpr basic_static_string(const_pointer str) noexcept
+        : basic_static_string(str, traits_type::length(str))
+    {
+    }
 
     constexpr basic_static_string(nullptr_t /*null*/) = delete;
 

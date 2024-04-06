@@ -27,7 +27,10 @@ struct layout_right::mapping {
     constexpr mapping() noexcept               = default;
     constexpr mapping(mapping const&) noexcept = default;
 
-    constexpr mapping(extents_type const& ext) noexcept : _extents{ext} { }
+    constexpr mapping(extents_type const& ext) noexcept
+        : _extents{ext}
+    {
+    }
 
     template <typename OtherExtents>
         requires is_constructible_v<extents_type, OtherExtents>

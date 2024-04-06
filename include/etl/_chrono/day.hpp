@@ -12,7 +12,10 @@ namespace etl::chrono {
 struct day {
     day() = default;
 
-    constexpr explicit day(uint32_t d) noexcept : _count{static_cast<uint8_t>(d)} { }
+    constexpr explicit day(uint32_t d) noexcept
+        : _count{static_cast<uint8_t>(d)}
+    {
+    }
 
     constexpr auto operator++() noexcept -> day& { return *this += days{1}; }
 

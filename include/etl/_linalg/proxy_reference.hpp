@@ -16,7 +16,10 @@ struct proxy_reference : proxy_reference_base {
     using value_type     = Value;
     using derived_type   = Derived;
 
-    constexpr explicit proxy_reference(Reference reference) : _reference(reference) { }
+    constexpr explicit proxy_reference(Reference reference)
+        : _reference(reference)
+    {
+    }
 
     constexpr operator value_type() const // NOLINT(readability-const-return-type)
     {

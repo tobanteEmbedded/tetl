@@ -83,7 +83,10 @@ struct TriviallyConstructable {
 };
 
 struct NonTriviallyConstructable {
-    NonTriviallyConstructable(int& n) : ref{n} { }
+    NonTriviallyConstructable(int& n)
+        : ref{n}
+    {
+    }
 
     int& ref; // NOLINT(cppcoreguidelines-avoid-const-or-ref-data-members)
 };

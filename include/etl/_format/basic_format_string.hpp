@@ -13,7 +13,8 @@ template <typename CharT, typename... Args>
 struct basic_format_string {
     template <typename T>
         requires convertible_to<T const&, basic_string_view<CharT>>
-    consteval basic_format_string(T const& s) : _str(s)
+    consteval basic_format_string(T const& s)
+        : _str(s)
     {
     }
 

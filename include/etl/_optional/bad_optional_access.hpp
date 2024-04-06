@@ -16,7 +16,10 @@ namespace etl {
 struct bad_optional_access : etl::exception {
     constexpr bad_optional_access() = default;
 
-    constexpr explicit bad_optional_access(char const* what) : exception{what} { }
+    constexpr explicit bad_optional_access(char const* what)
+        : exception{what}
+    {
+    }
 };
 
 } // namespace etl

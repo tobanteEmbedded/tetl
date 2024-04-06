@@ -18,7 +18,9 @@ struct uniform_real_distribution {
 
         constexpr param_type() noexcept = default;
 
-        explicit constexpr param_type(result_type min, result_type max = result_type(1)) noexcept : _min{min}, _max{max}
+        explicit constexpr param_type(result_type min, result_type max = result_type(1)) noexcept
+            : _min{min}
+            , _max{max}
         {
         }
 
@@ -36,9 +38,15 @@ struct uniform_real_distribution {
         result_type _max{1};
     };
 
-    constexpr uniform_real_distribution() : uniform_real_distribution{static_cast<RealType>(0)} { }
+    constexpr uniform_real_distribution()
+        : uniform_real_distribution{static_cast<RealType>(0)}
+    {
+    }
 
-    explicit constexpr uniform_real_distribution(param_type const& parm) : _param{parm} { }
+    explicit constexpr uniform_real_distribution(param_type const& parm)
+        : _param{parm}
+    {
+    }
 
     explicit constexpr uniform_real_distribution(RealType a, RealType b = RealType(1))
         : uniform_real_distribution(param_type{a, b})

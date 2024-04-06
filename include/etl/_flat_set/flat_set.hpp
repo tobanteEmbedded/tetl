@@ -70,7 +70,10 @@ struct flat_set {
     using const_reverse_iterator = etl::reverse_iterator<const_iterator>;
     using container_type         = Container;
 
-    constexpr flat_set() : flat_set{Compare{}} { }
+    constexpr flat_set()
+        : flat_set{Compare{}}
+    {
+    }
 
     /// \brief Initializes c with etl::move(cont), value-initializes compare,
     /// sorts the range [begin(),end()) with respect to compare, and finally
@@ -90,11 +93,16 @@ struct flat_set {
     {
     }
 
-    explicit constexpr flat_set(Compare const& comp) : _container{}, _compare(comp) { }
+    explicit constexpr flat_set(Compare const& comp)
+        : _container{}
+        , _compare(comp)
+    {
+    }
 
     template <typename InputIt>
-    constexpr flat_set(InputIt first, InputIt last, Compare const& comp = Compare()) : _container{}
-                                                                                     , _compare(comp)
+    constexpr flat_set(InputIt first, InputIt last, Compare const& comp = Compare())
+        : _container{}
+        , _compare(comp)
     {
         insert(first, last);
     }

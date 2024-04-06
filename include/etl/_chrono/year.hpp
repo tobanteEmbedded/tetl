@@ -13,7 +13,10 @@ namespace etl::chrono {
 struct year {
     year() = default;
 
-    constexpr explicit year(int32_t y) noexcept : _count{static_cast<int16_t>(y)} { }
+    constexpr explicit year(int32_t y) noexcept
+        : _count{static_cast<int16_t>(y)}
+    {
+    }
 
     constexpr auto operator++() noexcept -> year&
     {

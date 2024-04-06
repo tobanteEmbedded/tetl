@@ -161,13 +161,22 @@ constexpr auto test_cx() -> bool
 struct non_trivial {
     constexpr non_trivial() = default;
 
-    explicit constexpr non_trivial(int val) : value{val} { }
+    explicit constexpr non_trivial(int val)
+        : value{val}
+    {
+    }
 
     constexpr ~non_trivial() { } // NOLINT
 
-    constexpr non_trivial(non_trivial const& other) : value{other.value} { }
+    constexpr non_trivial(non_trivial const& other)
+        : value{other.value}
+    {
+    }
 
-    constexpr non_trivial(non_trivial&& other) : value{other.value} { }
+    constexpr non_trivial(non_trivial&& other)
+        : value{other.value}
+    {
+    }
 
     constexpr auto operator=(non_trivial const& other) -> non_trivial&
     {

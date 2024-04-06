@@ -4,7 +4,10 @@
 #define TETL_TEST_MUTEX_TEST_MUTEX_HPP
 
 struct test_mutex {
-    constexpr test_mutex(bool failOnTryLock = false) noexcept : _failOnTryLock{failOnTryLock} { }
+    constexpr test_mutex(bool failOnTryLock = false) noexcept
+        : _failOnTryLock{failOnTryLock}
+    {
+    }
 
     ~test_mutex() noexcept = default;
 

@@ -28,7 +28,10 @@ struct accessor_conjugate {
            typename Accessor::offset_policy,
            accessor_conjugate<typename Accessor::offset_policy>>;
 
-    constexpr accessor_conjugate(Accessor a) : _nestedAccessor(a) { }
+    constexpr accessor_conjugate(Accessor a)
+        : _nestedAccessor(a)
+    {
+    }
 
     [[nodiscard]] constexpr auto access(data_handle_type p, size_t i) const
         noexcept(noexcept(reference(_nestedAccessor.access(p, i)))) -> reference

@@ -115,7 +115,10 @@ static auto test_opional_4() -> bool
         struct SX {
             int data;
 
-            SX(int c) : data{c} { }
+            SX(int c)
+                : data{c}
+            {
+            }
 
             ~SX() { }
 

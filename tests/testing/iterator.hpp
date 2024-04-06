@@ -17,7 +17,10 @@ struct input_iter {
 
     constexpr input_iter() = default;
 
-    explicit constexpr input_iter(It it) : _base(it) { }
+    explicit constexpr input_iter(It it)
+        : _base(it)
+    {
+    }
 
     constexpr auto operator*() const -> reference { return *_base; }
 
@@ -54,7 +57,10 @@ struct forward_iter {
 
     constexpr forward_iter() = default;
 
-    explicit constexpr forward_iter(Iter it) : _base{it} { }
+    explicit constexpr forward_iter(Iter it)
+        : _base{it}
+    {
+    }
 
     [[nodiscard]] constexpr auto operator*() const -> reference { return *_base; }
 

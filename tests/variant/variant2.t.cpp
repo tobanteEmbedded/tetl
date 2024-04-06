@@ -62,11 +62,20 @@ constexpr auto test() -> bool
     CHECK(move != variant{etl::in_place_type<int>, 13});
 
     struct non_trivial {
-        constexpr explicit non_trivial(int v) : value{v} { }
+        constexpr explicit non_trivial(int v)
+            : value{v}
+        {
+        }
 
-        constexpr non_trivial(non_trivial const& other) noexcept : value{other.value} { }
+        constexpr non_trivial(non_trivial const& other) noexcept
+            : value{other.value}
+        {
+        }
 
-        constexpr non_trivial(non_trivial&& other) noexcept : value{other.value} { }
+        constexpr non_trivial(non_trivial&& other) noexcept
+            : value{other.value}
+        {
+        }
 
         constexpr auto operator=(non_trivial const& other) noexcept -> non_trivial&
         {

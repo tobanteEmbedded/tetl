@@ -88,8 +88,9 @@ struct span {
     /// and the conversion from etl::iter_reference_t<It> to element_type is at
     /// most a qualification conversion.
     template <typename It>
-    explicit(extent != dynamic_extent) constexpr span(It first, size_type count) : _data{first}
-                                                                                 , _size{count}
+    explicit(extent != dynamic_extent) constexpr span(It first, size_type count)
+        : _data{first}
+        , _size{count}
     {
     }
 
@@ -99,29 +100,33 @@ struct span {
 
     /// \brief Constructs a span. From a c style array.
     template <size_t N>
-    constexpr span(element_type (&arr)[N]) noexcept : _data{&arr[0]}
-                                                    , _size{N}
+    constexpr span(element_type (&arr)[N]) noexcept
+        : _data{&arr[0]}
+        , _size{N}
     {
     }
 
     /// \brief Constructs a span. From a array<Type,Size>.
     template <typename U, size_t N>
-    constexpr span(array<U, N>& arr) noexcept : _data{arr.data()}
-                                              , _size{arr.size()}
+    constexpr span(array<U, N>& arr) noexcept
+        : _data{arr.data()}
+        , _size{arr.size()}
     {
     }
 
     /// \brief Constructs a span. From a array<Type,Size> const.
     template <typename U, size_t N>
-    constexpr span(array<U, N> const& arr) noexcept : _data{arr.data()}
-                                                    , _size{arr.size()}
+    constexpr span(array<U, N> const& arr) noexcept
+        : _data{arr.data()}
+        , _size{arr.size()}
     {
     }
 
     /// \brief Constructs a span.
     template <typename R>
-    explicit(extent != dynamic_extent) constexpr span(R&& r) : _data{r.data()}
-                                                             , _size{r.size()}
+    explicit(extent != dynamic_extent) constexpr span(R&& r)
+        : _data{r.data()}
+        , _size{r.size()}
     {
     }
 

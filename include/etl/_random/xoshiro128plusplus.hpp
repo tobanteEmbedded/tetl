@@ -20,7 +20,10 @@ struct xoshiro128plusplus {
 
     constexpr xoshiro128plusplus() = default;
 
-    explicit constexpr xoshiro128plusplus(result_type seed) noexcept : _state{seed} { }
+    explicit constexpr xoshiro128plusplus(result_type seed) noexcept
+        : _state{seed}
+    {
+    }
 
     [[nodiscard]] static constexpr auto min() noexcept -> result_type { return numeric_limits<uint32_t>::min(); }
 

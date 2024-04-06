@@ -33,18 +33,25 @@ struct reverse_iterator {
     /// value-initialized. Operations on the resulting iterator have defined
     /// behavior if and only if the corresponding operations on a
     /// value-initialized Iterator also have defined behavior.
-    constexpr reverse_iterator() : _current() { }
+    constexpr reverse_iterator()
+        : _current()
+    {
+    }
 
     /// Constructs a new iterator adaptor.
     ///
     /// The underlying iterator is initialized with x.
-    constexpr explicit reverse_iterator(Iter x) : _current(x) { }
+    constexpr explicit reverse_iterator(Iter x)
+        : _current(x)
+    {
+    }
 
     /// Constructs a new iterator adaptor.
     ///
     /// The underlying iterator is initialized with that of other.
     template <typename Other>
-    constexpr reverse_iterator(reverse_iterator<Other> const& other) : _current(other.base())
+    constexpr reverse_iterator(reverse_iterator<Other> const& other)
+        : _current(other.base())
     {
     }
 

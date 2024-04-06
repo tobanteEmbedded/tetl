@@ -11,7 +11,10 @@ namespace {
 struct error_class {
     constexpr error_class() = default;
 
-    constexpr explicit error_class(int v) : value(v) { }
+    constexpr explicit error_class(int v)
+        : value(v)
+    {
+    }
 
     int value{0};
 

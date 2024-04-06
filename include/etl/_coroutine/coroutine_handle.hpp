@@ -19,7 +19,10 @@ template <>
 struct coroutine_handle<void> {
     constexpr coroutine_handle() noexcept = default;
 
-    constexpr coroutine_handle(nullptr_t handle) noexcept : _handle(handle) { }
+    constexpr coroutine_handle(nullptr_t handle) noexcept
+        : _handle(handle)
+    {
+    }
 
     constexpr auto operator=(nullptr_t) noexcept -> coroutine_handle&
     {

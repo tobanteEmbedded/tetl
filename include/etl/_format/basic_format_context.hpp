@@ -22,7 +22,10 @@ struct basic_format_context {
     using iterator  = OutputIt;
     using char_type = CharT;
 
-    explicit constexpr basic_format_context(OutputIt pos) noexcept : _pos{pos} { }
+    explicit constexpr basic_format_context(OutputIt pos) noexcept
+        : _pos{pos}
+    {
+    }
 
     template <typename T>
     using formatter_type = formatter<T, CharT>;

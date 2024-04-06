@@ -10,7 +10,10 @@ namespace etl {
 struct range_error : runtime_error {
     constexpr range_error() = default;
 
-    constexpr explicit range_error(char const* what) : runtime_error{what} { }
+    constexpr explicit range_error(char const* what)
+        : runtime_error{what}
+    {
+    }
 };
 
 } // namespace etl

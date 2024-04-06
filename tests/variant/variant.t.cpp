@@ -33,7 +33,10 @@
     // default
     {
         struct S {
-            constexpr S() : x{42} { }
+            constexpr S()
+                : x{42}
+            {
+            }
 
             int x; // NOLINT
         };
@@ -87,7 +90,11 @@
     // in_place_type_t
     {
         struct Point {
-            explicit constexpr Point(float initX, float initY) : x{initX}, y{initY} { }
+            explicit constexpr Point(float initX, float initY)
+                : x{initX}
+                , y{initY}
+            {
+            }
 
             float x{0.0F};
             float y{0.0F};
@@ -329,7 +336,11 @@
 [[maybe_unused]] [[nodiscard]] static auto test_non_trivial() -> bool
 {
     struct non_trivial_alternative {
-        explicit non_trivial_alternative(int& v) : value{&v} { *value = 143; }
+        explicit non_trivial_alternative(int& v)
+            : value{&v}
+        {
+            *value = 143;
+        }
 
         ~non_trivial_alternative() noexcept { *value = 42; }
 

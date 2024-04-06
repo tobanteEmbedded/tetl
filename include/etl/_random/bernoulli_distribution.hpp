@@ -16,9 +16,15 @@ struct bernoulli_distribution {
     struct param_type {
         using distribution_type = bernoulli_distribution;
 
-        constexpr param_type() noexcept : param_type{0.5} { }
+        constexpr param_type() noexcept
+            : param_type{0.5}
+        {
+        }
 
-        explicit constexpr param_type(double p) noexcept : probability{p} { }
+        explicit constexpr param_type(double p) noexcept
+            : probability{p}
+        {
+        }
 
         [[nodiscard]] constexpr auto p() const noexcept -> double { return probability; }
 
@@ -30,11 +36,20 @@ struct bernoulli_distribution {
         double probability;
     };
 
-    constexpr bernoulli_distribution() noexcept : bernoulli_distribution{0.5} { }
+    constexpr bernoulli_distribution() noexcept
+        : bernoulli_distribution{0.5}
+    {
+    }
 
-    explicit constexpr bernoulli_distribution(double p) noexcept : bernoulli_distribution{param_type{p}} { }
+    explicit constexpr bernoulli_distribution(double p) noexcept
+        : bernoulli_distribution{param_type{p}}
+    {
+    }
 
-    explicit constexpr bernoulli_distribution(param_type const& parm) noexcept : _param{parm} { }
+    explicit constexpr bernoulli_distribution(param_type const& parm) noexcept
+        : _param{parm}
+    {
+    }
 
     [[nodiscard]] constexpr auto p() const noexcept -> double { return _param.p(); }
 

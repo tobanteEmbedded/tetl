@@ -52,7 +52,10 @@ struct layout_transpose {
         using size_type    = typename extents_type::size_type;
         using layout_type  = layout_transpose;
 
-        constexpr explicit mapping(nested_mapping_t const& map) : _nestedMapping{map} { }
+        constexpr explicit mapping(nested_mapping_t const& map)
+            : _nestedMapping{map}
+        {
+        }
 
         [[nodiscard]] constexpr auto extents() const noexcept(noexcept(_nestedMapping.extents())) -> extents_type
         {

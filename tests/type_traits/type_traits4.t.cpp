@@ -123,9 +123,17 @@ constexpr auto test() -> bool
         double v2; // NOLINT
 
     public:
-        Foo(T n) : v1(n), v2() { }
+        Foo(T n)
+            : v1(n)
+            , v2()
+        {
+        }
 
-        Foo(T n, double f) noexcept : v1(n), v2(f) { }
+        Foo(T n, double f) noexcept
+            : v1(n)
+            , v2(f)
+        {
+        }
     };
 
     CHECK_FALSE(etl::is_trivially_constructible_v<Foo, T, double>);

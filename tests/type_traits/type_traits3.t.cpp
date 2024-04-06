@@ -16,9 +16,17 @@ class Foo {
     double v2; // NOLINT
 
 public:
-    Foo(T n) : v1(n), v2() { }
+    Foo(T n)
+        : v1(n)
+        , v2()
+    {
+    }
 
-    Foo(T n, double f) noexcept : v1(n), v2(f) { }
+    Foo(T n, double f) noexcept
+        : v1(n)
+        , v2(f)
+    {
+    }
 };
 
 } // namespace
@@ -96,7 +104,10 @@ constexpr auto test() -> bool
         struct TCD { // NOLINT
             TCD(TCD const& /*ignore*/) = default;
 
-            TCD(int x) : m(x + 1) { }
+            TCD(int x)
+                : m(x + 1)
+            {
+            }
 
             int m;
         };

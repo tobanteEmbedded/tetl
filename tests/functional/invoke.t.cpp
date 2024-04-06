@@ -11,7 +11,10 @@ namespace {
 
 template <typename T>
 struct Class {
-    constexpr Class(T n) : num(n) { }
+    constexpr Class(T n)
+        : num(n)
+    {
+    }
 
     [[nodiscard]] constexpr auto get_num(T i) const -> T { return num + i; }
 

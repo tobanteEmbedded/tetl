@@ -19,7 +19,10 @@ template <typename Reference, conjugatable ReferenceValue>
 struct conjugated_scalar : proxy_reference<Reference, ReferenceValue, conjugated_scalar<Reference, ReferenceValue>> {
     using value_type = decltype(conj_if_needed(ReferenceValue(declval<Reference>())));
 
-    constexpr explicit conjugated_scalar(Reference reference) : base_type(reference) { }
+    constexpr explicit conjugated_scalar(Reference reference)
+        : base_type(reference)
+    {
+    }
 
     [[nodiscard]] static constexpr auto to_value(Reference reference)
     {

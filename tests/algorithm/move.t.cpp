@@ -9,11 +9,22 @@
 
 template <typename T>
 struct S {
-    constexpr S(T d = T(0)) : data{d} { }
+    constexpr S(T d = T(0))
+        : data{d}
+    {
+    }
 
-    constexpr S(S const& s) : data{s.data}, copy{true} { }
+    constexpr S(S const& s)
+        : data{s.data}
+        , copy{true}
+    {
+    }
 
-    constexpr S(S&& s) noexcept : data{s.data}, move{true} { }
+    constexpr S(S&& s) noexcept
+        : data{s.data}
+        , move{true}
+    {
+    }
 
     constexpr auto operator=(S const& s) noexcept -> S&
     {

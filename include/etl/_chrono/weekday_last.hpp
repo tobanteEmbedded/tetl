@@ -9,7 +9,10 @@ namespace etl::chrono {
 
 /// \ingroup chrono
 struct weekday_last {
-    constexpr explicit weekday_last(chrono::weekday const& wd) noexcept : _wd{wd} { }
+    constexpr explicit weekday_last(chrono::weekday const& wd) noexcept
+        : _wd{wd}
+    {
+    }
 
     [[nodiscard]] constexpr auto weekday() const noexcept -> chrono::weekday { return _wd; }
 

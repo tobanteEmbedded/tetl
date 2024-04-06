@@ -8,7 +8,10 @@ namespace etl {
 struct exception {
     constexpr exception() = default;
 
-    constexpr explicit exception(char const* what) : _what{what} { }
+    constexpr explicit exception(char const* what)
+        : _what{what}
+    {
+    }
 
     [[nodiscard]] constexpr auto what() const noexcept -> char const* { return _what; }
 

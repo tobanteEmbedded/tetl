@@ -51,7 +51,6 @@ BreakInheritanceList: BeforeComma
 BreakStringLiterals: true
 ColumnLimit: 120
 CompactNamespaces: false
-ConstructorInitializerAllOnOneLineOrOnePerLine: true
 Cpp11BracedListStyle: true
 DisableFormat: false
 FixNamespaceComments: true
@@ -64,7 +63,7 @@ Language: Cpp
 LambdaBodyIndentation: OuterScope
 MaxEmptyLinesToKeep: 1
 NamespaceIndentation: None
-PackConstructorInitializers: CurrentLine
+PackConstructorInitializers: Never
 PointerAlignment: Left
 ReferenceAlignment: Left
 ReflowComments: true

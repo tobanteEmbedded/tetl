@@ -207,7 +207,10 @@ constexpr auto test() -> bool
         struct S {
             int& counter; // NOLINT(cppcoreguidelines-avoid-const-or-ref-data-members)
 
-            S(int& c) : counter{c} { }
+            S(int& c)
+                : counter{c}
+            {
+            }
 
             ~S() { counter++; }
 
@@ -227,7 +230,11 @@ constexpr auto test() -> bool
     }
 
     struct SCTOR {
-        SCTOR(T xInit, T yInit) : x{xInit}, y{yInit} { }
+        SCTOR(T xInit, T yInit)
+            : x{xInit}
+            , y{yInit}
+        {
+        }
 
         T x;
         T y;
@@ -440,7 +447,11 @@ constexpr auto test() -> bool
         T data_1;
         int data_2;
 
-        constexpr SMO(T d1, int d2) : data_1{d1}, data_2{d2} { }
+        constexpr SMO(T d1, int d2)
+            : data_1{d1}
+            , data_2{d2}
+        {
+        }
     };
 
     auto const opt143 = etl::make_optional<SMO>(T{42}, 1);

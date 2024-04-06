@@ -28,7 +28,8 @@ struct unexpected {
 
     template <typename... Args>
         requires etl::is_constructible_v<E, Args...>
-    constexpr explicit unexpected(etl::in_place_t /*tag*/, Args&&... args) : _unex(etl::forward<Args>(args)...)
+    constexpr explicit unexpected(etl::in_place_t /*tag*/, Args&&... args)
+        : _unex(etl::forward<Args>(args)...)
     {
     }
 

@@ -217,8 +217,9 @@ private:
     struct copy_move_tag { };
 
     template <typename Other>
-    constexpr variant2(Other&& other, [[maybe_unused]] copy_move_tag tag) : _index()
-                                                                          , _union(etl::uninitialized_union())
+    constexpr variant2(Other&& other, [[maybe_unused]] copy_move_tag tag)
+        : _index()
+        , _union(etl::uninitialized_union())
     {
         etl::visit_with_index([&](auto param) {
             replace(param.index, etl::move(param).value());

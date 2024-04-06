@@ -40,21 +40,36 @@ public:
     /// Additionally: Locks the associated mutex by calling m.lock(). The
     /// behavior is undefined if the current thread already owns the mutex
     /// except when the mutex is recursive.
-    explicit unique_lock(mutex_type& m) : _mutex{&m} { lock(); }
+    explicit unique_lock(mutex_type& m)
+        : _mutex{&m}
+    {
+        lock();
+    }
 
     /// \brief Constructs a unique_lock with m as the associated mutex.
     /// Additionally: Does not lock the associated mutex.
-    unique_lock(mutex_type& m, defer_lock_t /*tag*/) noexcept : _mutex{&m} { }
+    unique_lock(mutex_type& m, defer_lock_t /*tag*/) noexcept
+        : _mutex{&m}
+    {
+    }
 
     /// \brief Constructs a unique_lock with m as the associated mutex.
     /// Additionally: Tries to lock the associated mutex without blocking by
     /// calling m.try_lock(). The behavior is undefined if the current thread
     /// already owns the mutex except when the mutex is recursive.
-    unique_lock(mutex_type& m, try_to_lock_t /*tag*/) noexcept : _mutex{&m} { try_lock(); }
+    unique_lock(mutex_type& m, try_to_lock_t /*tag*/) noexcept
+        : _mutex{&m}
+    {
+        try_lock();
+    }
 
     /// \brief Constructs a unique_lock with m as the associated mutex.
     /// Additionally: Assumes the calling thread already owns m.
-    unique_lock(mutex_type& m, adopt_lock_t /*tag*/) : _mutex{&m}, _owns{true} { }
+    unique_lock(mutex_type& m, adopt_lock_t /*tag*/)
+        : _mutex{&m}
+        , _owns{true}
+    {
+    }
 
     /// \brief Constructs a unique_lock with m as the associated mutex.
     /// Additionally: Tries to lock the associated mutex by calling
@@ -62,7 +77,8 @@ public:
     /// been reached or the lock is acquired, whichever comes first. May block
     /// for longer than until timeout_time has been reached.
     template <typename Clock, typename Duration>
-    unique_lock(mutex_type& m, chrono::time_point<Clock, Duration> const& absTime) noexcept : _mutex{&m}
+    unique_lock(mutex_type& m, chrono::time_point<Clock, Duration> const& absTime) noexcept
+        : _mutex{&m}
     {
         try_lock_until(absTime);
     }
@@ -73,7 +89,8 @@ public:
     /// timeout_duration has elapsed or the lock is acquired, whichever comes
     /// first. May block for longer than timeout_duration.
     template <typename Rep, typename Period>
-    unique_lock(mutex_type& m, chrono::duration<Rep, Period> const& relTime) noexcept : _mutex{&m}
+    unique_lock(mutex_type& m, chrono::duration<Rep, Period> const& relTime) noexcept
+        : _mutex{&m}
     {
         try_lock_for(relTime);
     }
@@ -86,7 +103,11 @@ public:
 
     /// \brief Move constructor. Initializes the unique_lock with the contents
     /// of other. Leaves other with no associated mutex.
-    unique_lock(unique_lock&& u) noexcept : _mutex{exchange(u._mutex, nullptr)}, _owns{exchange(u._owns, false)} { }
+    unique_lock(unique_lock&& u) noexcept
+        : _mutex{exchange(u._mutex, nullptr)}
+        , _owns{exchange(u._owns, false)}
+    {
+    }
 
     /// \brief Move assignment operator. Replaces the contents with those of
     /// other using move semantics. If prior to the call *this has an associated

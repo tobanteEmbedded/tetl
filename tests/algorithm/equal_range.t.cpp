@@ -14,7 +14,11 @@ constexpr auto test() -> bool
     // cppreference.com example
 
     struct S {
-        constexpr S(T n, char na) : number{n}, name{na} { }
+        constexpr S(T n, char na)
+            : number{n}
+            , name{na}
+        {
+        }
 
         constexpr auto operator<(S const& s) const -> bool { return number < s.number; }
 

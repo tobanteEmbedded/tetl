@@ -20,7 +20,10 @@ struct xorshift {
 
     constexpr xorshift() = default;
 
-    explicit constexpr xorshift(result_type seed) noexcept : _state{seed} { }
+    explicit constexpr xorshift(result_type seed) noexcept
+        : _state{seed}
+    {
+    }
 
     [[nodiscard]] static constexpr auto min() noexcept -> result_type { return numeric_limits<result_type>::min(); }
 

@@ -10,7 +10,10 @@ namespace etl {
 struct underflow_error : runtime_error {
     constexpr underflow_error() = default;
 
-    constexpr explicit underflow_error(char const* what) : runtime_error{what} { }
+    constexpr explicit underflow_error(char const* what)
+        : runtime_error{what}
+    {
+    }
 };
 
 } // namespace etl

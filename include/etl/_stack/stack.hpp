@@ -36,14 +36,23 @@ struct stack {
     using container_type  = Container;
 
     /// \brief Default constructor. Value-initializes the container.
-    constexpr stack() : stack{Container{}} { }
+    constexpr stack()
+        : stack{Container{}}
+    {
+    }
 
     /// \brief Copy-constructs the underlying container c with the contents of
     /// cont.
-    constexpr explicit stack(Container const& cont) : c{cont} { }
+    constexpr explicit stack(Container const& cont)
+        : c{cont}
+    {
+    }
 
     /// \brief Move-constructs the underlying container c with cont .
-    constexpr explicit stack(Container&& cont) : c{etl::move(cont)} { }
+    constexpr explicit stack(Container&& cont)
+        : c{etl::move(cont)}
+    {
+    }
 
     /// \brief Copy constructor.
     constexpr stack(stack const& other) = default;

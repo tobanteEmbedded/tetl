@@ -11,7 +11,10 @@ namespace {
 
 template <typename T>
 struct wrapper {
-    explicit constexpr wrapper(T val) noexcept : value{val} { }
+    explicit constexpr wrapper(T val) noexcept
+        : value{val}
+    {
+    }
 
     friend constexpr auto operator<(wrapper lhs, T rhs) -> bool { return lhs.value < rhs; }
 

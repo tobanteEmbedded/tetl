@@ -14,7 +14,10 @@ enum struct message : int {
 struct person {
     constexpr person() = default;
 
-    constexpr explicit person(int a) noexcept : age{a} { }
+    constexpr explicit person(int a) noexcept
+        : age{a}
+    {
+    }
 
     friend constexpr auto operator==(person lhs, person rhs) -> bool = default;
 

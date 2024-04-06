@@ -11,7 +11,11 @@ namespace etl::chrono {
 struct year_month {
     year_month() = default;
 
-    constexpr year_month(chrono::year const& y, chrono::month const& m) noexcept : _y{y}, _m{m} { }
+    constexpr year_month(chrono::year const& y, chrono::month const& m) noexcept
+        : _y{y}
+        , _m{m}
+    {
+    }
 
     [[nodiscard]] constexpr auto year() const noexcept -> chrono::year { return _y; }
 

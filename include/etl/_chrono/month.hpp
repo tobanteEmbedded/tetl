@@ -12,7 +12,10 @@ namespace etl::chrono {
 struct month {
     month() = default;
 
-    constexpr explicit month(uint32_t d) noexcept : _count{static_cast<uint8_t>(d)} { }
+    constexpr explicit month(uint32_t d) noexcept
+        : _count{static_cast<uint8_t>(d)}
+    {
+    }
 
     constexpr auto operator++() noexcept -> month&
     {

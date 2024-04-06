@@ -10,7 +10,10 @@ namespace etl {
 struct logic_error : exception {
     constexpr logic_error() = default;
 
-    constexpr explicit logic_error(char const* what) : exception{what} { }
+    constexpr explicit logic_error(char const* what)
+        : exception{what}
+    {
+    }
 };
 
 } // namespace etl

@@ -18,9 +18,16 @@ template <typename MutexT>
 struct lock_guard {
     using mutex_type = MutexT;
 
-    explicit lock_guard(mutex_type& m) : _mutex{m} { _mutex.lock(); }
+    explicit lock_guard(mutex_type& m)
+        : _mutex{m}
+    {
+        _mutex.lock();
+    }
 
-    lock_guard(mutex_type& m, adopt_lock_t /*tag*/) : _mutex{m} { }
+    lock_guard(mutex_type& m, adopt_lock_t /*tag*/)
+        : _mutex{m}
+    {
+    }
 
     ~lock_guard() { _mutex.unlock(); }
 

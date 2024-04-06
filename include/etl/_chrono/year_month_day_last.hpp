@@ -39,7 +39,9 @@ namespace detail {
 
 /// \ingroup chrono
 struct year_month_day_last {
-    constexpr year_month_day_last(chrono::year const& y, chrono::month_day_last const& mdl) noexcept : _y{y}, _mdl{mdl}
+    constexpr year_month_day_last(chrono::year const& y, chrono::month_day_last const& mdl) noexcept
+        : _y{y}
+        , _mdl{mdl}
     {
     }
 

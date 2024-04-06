@@ -34,7 +34,10 @@ public:
 
     /// \brief Initializes the underlying pointer to the container to
     /// addressof(c).
-    constexpr explicit front_insert_iterator(Container& container) : container_{addressof(container)} { }
+    constexpr explicit front_insert_iterator(Container& container)
+        : container_{addressof(container)}
+    {
+    }
 
     /// \brief Inserts the given value value to the container.
     constexpr auto operator=(typename Container::value_type const& value) -> front_insert_iterator&

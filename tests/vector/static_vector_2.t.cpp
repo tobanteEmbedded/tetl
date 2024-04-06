@@ -14,7 +14,12 @@ template <typename T>
 struct Vertex {
     constexpr Vertex() = default;
 
-    constexpr Vertex(T xInit, T yInit, T zInit) : x{xInit}, y{yInit}, z{zInit} { }
+    constexpr Vertex(T xInit, T yInit, T zInit)
+        : x{xInit}
+        , y{yInit}
+        , z{zInit}
+    {
+    }
 
     friend constexpr auto operator==(Vertex const& lhs, Vertex const& rhs) -> bool = default;
 

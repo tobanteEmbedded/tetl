@@ -108,7 +108,10 @@ template <typename T, etl::size_t I>
 struct indexed_value {
     static constexpr auto index = etl::index_v<I>;
 
-    constexpr explicit indexed_value(T value) : _value(etl::forward<T>(value)) { }
+    constexpr explicit indexed_value(T value)
+        : _value(etl::forward<T>(value))
+    {
+    }
 
     [[nodiscard]] constexpr auto value() const& -> auto& { return _value; }
 

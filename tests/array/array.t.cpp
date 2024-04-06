@@ -176,7 +176,10 @@ constexpr auto test_builtin_types() -> bool
         struct non_copy {
             T val;
 
-            constexpr non_copy(T init) : val{init} { }
+            constexpr non_copy(T init)
+                : val{init}
+            {
+            }
 
             non_copy(non_copy&&) noexcept                    = default;
             non_copy(non_copy const&)                        = delete;

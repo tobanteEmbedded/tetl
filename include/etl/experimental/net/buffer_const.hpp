@@ -14,7 +14,11 @@ struct const_buffer {
     const_buffer() noexcept = default;
 
     /// \brief Construct a buffer to represent a given memory range.
-    const_buffer(void const* data, etl::size_t size) : _data{data}, _size{size} { }
+    const_buffer(void const* data, etl::size_t size)
+        : _data{data}
+        , _size{size}
+    {
+    }
 
     /// \brief Get a pointer to the beginning of the memory range.
     [[nodiscard]] auto data() const noexcept -> void const* { return _data; }
