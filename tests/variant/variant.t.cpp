@@ -162,6 +162,11 @@
         auto r = etl::variant<int, float>{143};
         CHECK(*etl::get_if<int>(&l) == 42);
         CHECK(*etl::get_if<int>(&r) == 143);
+        CHECK(l != r);
+        CHECK(l < r);
+        CHECK(l <= r);
+        CHECK_FALSE(l > r);
+        CHECK_FALSE(l >= r);
 
         l.swap(r);
         CHECK(*etl::get_if<int>(&l) == 143);
@@ -171,6 +176,9 @@
         etl::swap(l, other);
         CHECK(etl::holds_alternative<float>(l));
         CHECK(etl::holds_alternative<int>(other));
+        CHECK(l != r);
+        CHECK(l > r);
+        CHECK_FALSE(l < r);
     }
 
     {
