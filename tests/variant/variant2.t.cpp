@@ -64,6 +64,22 @@ constexpr auto test() -> bool
     struct non_trivial {
         constexpr explicit non_trivial(int v) : value{v} { }
 
+        constexpr non_trivial(non_trivial const& other) noexcept : value{other.value} { }
+
+        constexpr non_trivial(non_trivial&& other) noexcept : value{other.value} { }
+
+        constexpr auto operator=(non_trivial const& other) noexcept -> non_trivial&
+        {
+            value = other.value;
+            return *this;
+        }
+
+        constexpr auto operator=(non_trivial&& other) noexcept -> non_trivial&
+        {
+            value = other.value;
+            return *this;
+        }
+
         constexpr ~non_trivial() { } // NOLINT
 
         constexpr operator int() const noexcept { return value; }

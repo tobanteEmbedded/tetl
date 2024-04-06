@@ -72,7 +72,6 @@ public:
 
     constexpr variant2(variant2 const&) = default;
 
-    // TODO
     constexpr variant2(variant2 const& other) noexcept((... and etl::is_nothrow_copy_constructible_v<Ts>))
         requires((... and etl::is_copy_constructible_v<Ts>) and !(... and etl::is_trivially_copy_constructible_v<Ts>))
         : variant2(other, copy_move_tag{})
@@ -81,7 +80,6 @@ public:
 
     constexpr variant2(variant2&&) = default;
 
-    // TODO
     constexpr variant2(variant2&& other) noexcept((... and etl::is_nothrow_move_constructible_v<Ts>))
         requires((... and etl::is_move_constructible_v<Ts>) and not(... and etl::is_trivially_move_constructible_v<Ts>))
         : variant2(etl::move(other), copy_move_tag{})
@@ -97,10 +95,10 @@ public:
         etl::visit([](auto& v) { etl::destroy_at(etl::addressof(v)); }, *this);
     }
 
-    /// \brief Returns the zero-based index of the alternative that is currently held by the variant.
+    /// Returns the zero-based index of the alternative that is currently held by the variant.
     [[nodiscard]] constexpr auto index() const noexcept -> etl::size_t { return static_cast<etl::size_t>(_index); }
 
-    /// \brief Returns a reference to the object stored in the variant.
+    /// Returns a reference to the object stored in the variant.
     /// \pre v.index() == I
     template <etl::size_t I>
     constexpr auto operator[](etl::index_constant<I> index) & -> auto&
@@ -109,7 +107,7 @@ public:
         return _union[index];
     }
 
-    /// \brief Returns a reference to the object stored in the variant.
+    /// Returns a reference to the object stored in the variant.
     /// \pre v.index() == I
     template <etl::size_t I>
     constexpr auto operator[](etl::index_constant<I> index) const& -> auto const&
@@ -118,7 +116,7 @@ public:
         return _union[index];
     }
 
-    /// \brief Returns a reference to the object stored in the variant.
+    /// Returns a reference to the object stored in the variant.
     /// \pre v.index() == I
     template <etl::size_t I>
     constexpr auto operator[](etl::index_constant<I> index) && -> auto&&
@@ -127,7 +125,7 @@ public:
         return etl::move(_union)[index];
     }
 
-    /// \brief Returns a reference to the object stored in the variant.
+    /// Returns a reference to the object stored in the variant.
     /// \pre v.index() == I
     template <etl::size_t I>
     constexpr auto operator[](etl::index_constant<I> index) const&& -> auto const&&
@@ -157,7 +155,7 @@ private:
     {
         etl::visit_with_index([this](auto param) {
             etl::construct_at(etl::addressof(_union), etl::index_v<decltype(param)::index>, etl::move(param).value());
-            _index = decltype(param)::index;
+            _index = static_cast<index_type>(decltype(param)::index);
         }, etl::forward<Other>(other));
     }
 
@@ -165,7 +163,7 @@ private:
     TETL_NO_UNIQUE_ADDRESS etl::variadic_union<Ts...> _union;
 };
 
-/// \brief Returns a reference to the object stored in the variant.
+/// Returns a reference to the object stored in the variant.
 /// \pre v.index() == I
 /// \relates variant2
 template <etl::size_t I, typename... Ts>
@@ -175,7 +173,7 @@ constexpr auto unchecked_get(variant2<Ts...>& v) -> auto&
     return v[etl::index_v<I>];
 }
 
-/// \brief Returns a reference to the object stored in the variant.
+/// Returns a reference to the object stored in the variant.
 /// \pre v.index() == I
 /// \relates variant2
 template <etl::size_t I, typename... Ts>
@@ -185,7 +183,7 @@ constexpr auto unchecked_get(variant2<Ts...> const& v) -> auto const&
     return v[etl::index_v<I>];
 }
 
-/// \brief Returns a reference to the object stored in the variant.
+/// Returns a reference to the object stored in the variant.
 /// \pre v.index() == I
 /// \relates variant2
 template <etl::size_t I, typename... Ts>
@@ -195,7 +193,7 @@ constexpr auto unchecked_get(variant2<Ts...>&& v) -> auto&&
     return etl::move(v)[etl::index_v<I>];
 }
 
-/// \brief Returns a reference to the object stored in the variant.
+/// Returns a reference to the object stored in the variant.
 /// \pre v.index() == I
 /// \relates variant2
 template <etl::size_t I, typename... Ts>
