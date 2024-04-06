@@ -23,8 +23,22 @@ struct wrapper {
 template <typename T>
 constexpr auto test() -> bool
 {
-    using vec_t = etl::static_vector<T, 8>;
-    using set_t = etl::flat_set<T, vec_t, etl::less<>>;
+    using vector_t = etl::static_vector<T, 8>;
+    using set_t    = etl::flat_set<T, vector_t, etl::less<>>;
+
+    CHECK_SAME_TYPE(typename set_t::key_type, T);
+    CHECK_SAME_TYPE(typename set_t::key_compare, etl::less<>);
+    CHECK_SAME_TYPE(typename set_t::value_type, T);
+    CHECK_SAME_TYPE(typename set_t::value_compare, etl::less<>);
+    CHECK_SAME_TYPE(typename set_t::reference, T&);
+    CHECK_SAME_TYPE(typename set_t::const_reference, T const&);
+    CHECK_SAME_TYPE(typename set_t::size_type, typename vector_t::size_type);
+    CHECK_SAME_TYPE(typename set_t::difference_type, typename vector_t::difference_type);
+    CHECK_SAME_TYPE(typename set_t::iterator, typename vector_t::iterator);
+    CHECK_SAME_TYPE(typename set_t::const_iterator, typename vector_t::const_iterator);
+    CHECK_SAME_TYPE(typename set_t::reverse_iterator, etl::reverse_iterator<typename vector_t::iterator>);
+    CHECK_SAME_TYPE(typename set_t::const_reverse_iterator, etl::reverse_iterator<typename vector_t::const_iterator>);
+    CHECK_SAME_TYPE(typename set_t::container_type, vector_t);
 
     auto s1 = set_t{};
     CHECK(s1.size() == 0); // NOLINT
@@ -35,7 +49,7 @@ constexpr auto test() -> bool
     CHECK(s1.max_size() == 8);
     CHECK_FALSE(s1.contains(T(0)));
 
-    auto s2 = set_t{vec_t{}};
+    auto s2 = set_t{vector_t{}};
     CHECK(s2.size() == 0); // NOLINT
     CHECK(s2.begin() == s2.end());
     CHECK(s1.begin() != s2.begin());
@@ -89,6 +103,7 @@ constexpr auto test() -> bool
     CHECK(*etl::next(other.rbegin()) == T(1));
     CHECK(etl::next(other.rbegin(), 2) == other.rend());
     CHECK(etl::distance(other.rbegin(), other.rend()) == 2);
+    CHECK(etl::distance(etl::as_const(other).rbegin(), etl::as_const(other).rend()) == 2);
     CHECK(etl::distance(other.crbegin(), other.crend()) == 2);
     CHECK(etl::distance(other.begin(), other.end()) == 2);
     CHECK(etl::distance(other.cbegin(), other.cend()) == 2);
@@ -96,6 +111,29 @@ constexpr auto test() -> bool
     auto const data = etl::array{T(1), T(2), T(3)};
     auto const s3   = set_t{etl::sorted_unique, data.begin(), data.end()};
     CHECK(s3.size() == 3);
+
+    auto s4 = set_t{etl::sorted_unique, vector_t({T(1), T(2), T(3)})};
+    CHECK(s4.size() == 3);
+    CHECK(s3 == s4);
+    CHECK(s3 >= s4);
+    CHECK(s3 <= s4);
+    CHECK_FALSE(s3 != s4);
+    CHECK_FALSE(s3 < s4);
+    CHECK_FALSE(s3 > s4);
+
+    auto it = s4.insert(s4.end(), T(4));
+    CHECK(*it == T(4));
+    CHECK(s4.size() == 4);
+    CHECK(s3 != s4);
+    CHECK(s3 < s4);
+    CHECK(s3 <= s4);
+    CHECK_FALSE(s3 == s4);
+    CHECK_FALSE(s3 >= s4);
+    CHECK_FALSE(s3 > s4);
+
+    s4.erase(it);
+    CHECK(s4.size() == 3);
+    CHECK(s3 == s4);
 
     return true;
 }
