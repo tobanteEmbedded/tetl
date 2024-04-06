@@ -48,24 +48,24 @@ template <typename T>
 constexpr bool is_variant_v = is_detected_v<variant_access_t, T>;
 
 template <etl::size_t... I>
-[[nodiscard]] constexpr auto sum(etl::index_sequence<I...> /*seq*/) -> etl::size_t
+[[nodiscard]] consteval auto sum(etl::index_sequence<I...> /*seq*/) -> etl::size_t
 {
     return (I + ...);
 }
 
 template <etl::size_t I, etl::size_t... Is>
-[[nodiscard]] constexpr auto prepend(etl::index_sequence<Is...> /*seq*/) -> etl::index_sequence<I, Is...>
+[[nodiscard]] consteval auto prepend(etl::index_sequence<Is...> /*seq*/) -> etl::index_sequence<I, Is...>
 {
     return {};
 }
 
-[[nodiscard]] constexpr auto next_seq(etl::index_sequence<> /*i*/, etl::index_sequence<> /*j*/) -> etl::index_sequence<>
+[[nodiscard]] consteval auto next_seq(etl::index_sequence<> /*i*/, etl::index_sequence<> /*j*/) -> etl::index_sequence<>
 {
     return {};
 }
 
 template <etl::size_t I, etl::size_t... Is, etl::size_t J, etl::size_t... Js>
-constexpr auto next_seq(etl::index_sequence<I, Is...> /*i*/, etl::index_sequence<J, Js...> /*j*/)
+consteval auto next_seq(etl::index_sequence<I, Is...> /*i*/, etl::index_sequence<J, Js...> /*j*/)
 {
     if constexpr (I + 1 == J) {
         return prepend<0>(next_seq(etl::index_sequence<Is...>{}, etl::index_sequence<Js...>{}));
@@ -75,10 +75,10 @@ constexpr auto next_seq(etl::index_sequence<I, Is...> /*i*/, etl::index_sequence
 }
 
 template <etl::size_t I, typename T>
-constexpr auto get(T&& t) -> decltype(auto)
+constexpr auto unchecked_get(T&& t) -> decltype(auto)
 {
     if constexpr (is_variant_v<T>) {
-        return etl::get<I>(etl::forward<T>(t));
+        return etl::unchecked_get<I>(etl::forward<T>(t));
     } else {
         static_assert(I == 0);
         return etl::forward<T>(t);
@@ -121,7 +121,7 @@ constexpr auto visit(etl::index_sequence<Is...> i, etl::index_sequence<Ms...> m,
 {
     constexpr auto n = next_seq(i, m);
     if constexpr (etl::detail::sum(n) == 0) {
-        return f(get<Is>(etl::forward<Vs>(vs))...);
+        return f(etl::detail::unchecked_get<Is>(etl::forward<Vs>(vs))...);
     } else {
         if (etl::tuple(etl::detail::index(vs)...) == etl::tuple(Is...)) {
             return f(etl::forward_like<Vs>(*etl::detail::get_if<Is>(&vs))...);

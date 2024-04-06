@@ -243,12 +243,12 @@
     }
     {
         auto v1 = etl::variant<etl::monostate, int, float, double>{42};
-        CHECK(etl::get<1>(v1) == 42);
-        CHECK(etl::get<int>(v1) == 42);
+        CHECK(etl::unchecked_get<1>(v1) == 42);
+        CHECK(etl::unchecked_get<int>(v1) == 42);
 
         auto const v2 = etl::variant<etl::monostate, int, float, double>{42};
-        CHECK(etl::get<int>(v2) == 42);
-        CHECK(etl::get<1>(v2) == 42);
+        CHECK(etl::unchecked_get<int>(v2) == 42);
+        CHECK(etl::unchecked_get<1>(v2) == 42);
     }
     {
         using t1 = etl::variant<etl::monostate>;

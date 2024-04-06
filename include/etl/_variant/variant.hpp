@@ -530,7 +530,7 @@ constexpr auto holds_alternative(variant<Ts...> const& v) noexcept -> bool
 }
 
 /// Returns a reference to the object stored in the variant.
-/// \pre v.index() == I
+/// \pre `v.index() == I`
 template <etl::size_t I, typename... Ts>
 constexpr auto unchecked_get(variant<Ts...>& v) -> auto&
 {
@@ -538,7 +538,7 @@ constexpr auto unchecked_get(variant<Ts...>& v) -> auto&
 }
 
 /// Returns a reference to the object stored in the variant.
-/// \pre v.index() == I
+/// \pre `v.index() == I`
 template <etl::size_t I, typename... Ts>
 constexpr auto unchecked_get(variant<Ts...> const& v) -> auto const&
 {
@@ -546,7 +546,7 @@ constexpr auto unchecked_get(variant<Ts...> const& v) -> auto const&
 }
 
 /// Returns a reference to the object stored in the variant.
-/// \pre v.index() == I
+/// \pre `v.index() == I`
 template <etl::size_t I, typename... Ts>
 constexpr auto unchecked_get(variant<Ts...>&& v) -> auto&&
 {
@@ -554,11 +554,43 @@ constexpr auto unchecked_get(variant<Ts...>&& v) -> auto&&
 }
 
 /// Returns a reference to the object stored in the variant.
-/// \pre v.index() == I
+/// \pre `v.index() == I`
 template <etl::size_t I, typename... Ts>
 constexpr auto unchecked_get(variant<Ts...> const&& v) -> auto const&&
 {
     return etl::move(v)[etl::index_v<I>];
+}
+
+/// Type-based value accessor. Returns a reference to the object stored in the variant.
+/// \pre `holds_alternative<T>(v) == true`
+template <typename T, typename... Ts>
+[[nodiscard]] constexpr auto unchecked_get(variant<Ts...>& v) -> T&
+{
+    return etl::unchecked_get<etl::meta::index_of_v<T, etl::meta::list<Ts...>>>(v);
+}
+
+/// Type-based value accessor. Returns a reference to the object stored in the variant.
+/// \pre `holds_alternative<T>(v) == true`
+template <typename T, typename... Ts>
+[[nodiscard]] constexpr auto unchecked_get(variant<Ts...>&& v) -> T&&
+{
+    return etl::unchecked_get<etl::meta::index_of_v<T, etl::meta::list<Ts...>>>(etl::move(v));
+}
+
+/// Type-based value accessor. Returns a reference to the object stored in the variant.
+/// \pre `holds_alternative<T>(v) == true`
+template <typename T, typename... Ts>
+[[nodiscard]] constexpr auto unchecked_get(variant<Ts...> const& v) -> T const&
+{
+    return etl::unchecked_get<etl::meta::index_of_v<T, etl::meta::list<Ts...>>>(v);
+}
+
+/// Type-based value accessor. Returns a reference to the object stored in the variant.
+/// \pre `holds_alternative<T>(v) == true`
+template <typename T, typename... Ts>
+[[nodiscard]] constexpr auto unchecked_get(variant<Ts...> const&& v) -> T const&&
+{
+    return etl::unchecked_get<etl::meta::index_of_v<T, etl::meta::list<Ts...>>>(etl::move(v));
 }
 
 /// Index-based non-throwing accessor: If pv is not a null pointer and
@@ -602,138 +634,6 @@ template <typename T, typename... Ts>
 constexpr auto get_if(variant<Ts...> const* pv) noexcept -> add_pointer_t<T const>
 {
     return etl::get_if<etl::meta::index_of_v<T, etl::meta::list<Ts...>>>(pv);
-}
-
-/// Index-based value accessor
-///
-/// If v.index() == I, returns a reference to the value stored in v.
-/// Otherwise, raises a bad_variant_access. The call is ill-formed if I is
-/// not a valid index in the variant.
-///
-/// https://en.cppreference.com/w/cpp/utility/variant/get
-template <size_t I, typename... Ts>
-[[nodiscard]] constexpr auto get(variant<Ts...>& v) -> variant_alternative_t<I, variant<Ts...>>&
-{
-    static_assert(I < sizeof...(Ts));
-    if (v.index() == I) {
-        return etl::unchecked_get<I>(v);
-    }
-    etl::raise<etl::bad_variant_access>("");
-}
-
-/// Index-based value accessor
-///
-/// If v.index() == I, returns a reference to the value stored in v.
-/// Otherwise, raises a bad_variant_access. The call is ill-formed if I is
-/// not a valid index in the variant.
-///
-/// https://en.cppreference.com/w/cpp/utility/variant/get
-template <size_t I, typename... Ts>
-[[nodiscard]] constexpr auto get(variant<Ts...>&& v) -> variant_alternative_t<I, variant<Ts...>>&&
-{
-    static_assert(I < sizeof...(Ts));
-    if (v.index() == I) {
-        return etl::unchecked_get<I>(etl::move(v));
-    }
-    etl::raise<etl::bad_variant_access>("");
-}
-
-/// Index-based value accessor
-///
-/// If v.index() == I, returns a reference to the value stored in v.
-/// Otherwise, raises a bad_variant_access. The call is ill-formed if I is
-/// not a valid index in the variant.
-///
-/// https://en.cppreference.com/w/cpp/utility/variant/get
-template <size_t I, typename... Ts>
-[[nodiscard]] constexpr auto get(variant<Ts...> const& v) -> variant_alternative_t<I, variant<Ts...>> const&
-{
-    static_assert(I < sizeof...(Ts));
-    if (v.index() == I) {
-        return etl::unchecked_get<I>(v);
-    }
-    etl::raise<etl::bad_variant_access>("");
-}
-
-/// Index-based value accessor
-///
-/// If v.index() == I, returns a reference to the value stored in v.
-/// Otherwise, raises a bad_variant_access. The call is ill-formed if I is
-/// not a valid index in the variant.
-///
-/// https://en.cppreference.com/w/cpp/utility/variant/get
-template <size_t I, typename... Ts>
-[[nodiscard]] constexpr auto get(variant<Ts...> const&& v) -> variant_alternative_t<I, variant<Ts...>> const&&
-{
-    static_assert(I < sizeof...(Ts));
-    if (v.index() == I) {
-        return etl::unchecked_get<I>(etl::move(v));
-    }
-    etl::raise<etl::bad_variant_access>("");
-}
-
-/// Type-based value accessor
-///
-/// If v holds the alternative T, returns a reference to the value
-/// stored in v. Otherwise, throws bad_variant_access. The call is
-/// ill-formed if T is not a unique element of Ts....
-///
-/// https://en.cppreference.com/w/cpp/utility/variant/get
-template <typename T, typename... Ts>
-[[nodiscard]] constexpr auto get(variant<Ts...>& v) -> T&
-{
-    if (etl::holds_alternative<T>(v)) {
-        return *get_if<T>(&v);
-    }
-    etl::raise<etl::bad_variant_access>("");
-}
-
-/// Type-based value accessor
-///
-/// If v holds the alternative T, returns a reference to the value
-/// stored in v. Otherwise, throws bad_variant_access. The call is
-/// ill-formed if T is not a unique element of Ts....
-///
-/// https://en.cppreference.com/w/cpp/utility/variant/get
-template <typename T, typename... Ts>
-[[nodiscard]] constexpr auto get(variant<Ts...>&& v) -> T&&
-{
-    if (etl::holds_alternative<T>(v)) {
-        return etl::move(*get_if<T>(&v));
-    }
-    etl::raise<etl::bad_variant_access>("");
-}
-
-/// Type-based value accessor
-///
-/// If v holds the alternative T, returns a reference to the value
-/// stored in v. Otherwise, throws bad_variant_access. The call is
-/// ill-formed if T is not a unique element of Ts....
-///
-/// https://en.cppreference.com/w/cpp/utility/variant/get
-template <typename T, typename... Ts>
-[[nodiscard]] constexpr auto get(variant<Ts...> const& v) -> T const&
-{
-    if (etl::holds_alternative<T>(v)) {
-        return *get_if<T>(&v);
-    }
-    etl::raise<etl::bad_variant_access>("");
-}
-
-/// Type-based value accessor
-///
-/// If v holds the alternative T, returns a reference to the value
-/// stored in v. Otherwise, throws bad_variant_access. The call is
-/// ill-formed if T is not a unique element of Ts....
-///
-/// https://en.cppreference.com/w/cpp/utility/variant/get
-template <typename T, typename... Ts>
-[[nodiscard]] constexpr auto get(variant<Ts...> const&& v) -> T const&&
-{
-    if (etl::holds_alternative<T>(v)) {
-        return etl::move(*get_if<T>(&v));
-    }
-    etl::raise<etl::bad_variant_access>("");
 }
 
 template <typename... Ts>

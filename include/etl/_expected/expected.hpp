@@ -76,13 +76,13 @@ struct expected {
 
     [[nodiscard]] constexpr auto operator*() && noexcept -> T&& { return etl::move(*etl::get_if<0>(&_u)); }
 
-    [[nodiscard]] constexpr auto error() & -> E& { return etl::get<1>(_u); }
+    [[nodiscard]] constexpr auto error() & -> E& { return etl::unchecked_get<1>(_u); }
 
-    [[nodiscard]] constexpr auto error() const& -> E const& { return etl::get<1>(_u); }
+    [[nodiscard]] constexpr auto error() const& -> E const& { return etl::unchecked_get<1>(_u); }
 
-    [[nodiscard]] constexpr auto error() && -> E&& { return etl::get<1>(etl::move(_u)); }
+    [[nodiscard]] constexpr auto error() && -> E&& { return etl::unchecked_get<1>(etl::move(_u)); }
 
-    [[nodiscard]] constexpr auto error() const&& -> E const&& { return etl::get<1>(etl::move(_u)); }
+    [[nodiscard]] constexpr auto error() const&& -> E const&& { return etl::unchecked_get<1>(etl::move(_u)); }
 
     template <typename... Args>
         requires etl::is_nothrow_constructible_v<T, Args...>
