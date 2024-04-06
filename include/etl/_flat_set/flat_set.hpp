@@ -116,7 +116,7 @@ struct flat_set {
 
     [[nodiscard]] constexpr auto end() const noexcept -> const_iterator { return _container.end(); }
 
-    [[nodiscard]] constexpr auto cend() const noexcept -> const_iterator { return _container.begin(); }
+    [[nodiscard]] constexpr auto cend() const noexcept -> const_iterator { return _container.end(); }
 
     [[nodiscard]] constexpr auto rbegin() noexcept -> reverse_iterator { return reverse_iterator(end()); }
 

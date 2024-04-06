@@ -88,6 +88,14 @@ constexpr auto test() -> bool
     CHECK(*other.rbegin() == T(42));
     CHECK(*etl::next(other.rbegin()) == T(1));
     CHECK(etl::next(other.rbegin(), 2) == other.rend());
+    CHECK(etl::distance(other.rbegin(), other.rend()) == 2);
+    CHECK(etl::distance(other.crbegin(), other.crend()) == 2);
+    CHECK(etl::distance(other.begin(), other.end()) == 2);
+    CHECK(etl::distance(other.cbegin(), other.cend()) == 2);
+
+    auto const data = etl::array{T(1), T(2), T(3)};
+    auto const s3   = set_t{etl::sorted_unique, data.begin(), data.end()};
+    CHECK(s3.size() == 3);
 
     return true;
 }
