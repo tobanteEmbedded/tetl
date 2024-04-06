@@ -8,6 +8,7 @@
 #include <etl/_cstddef/size_t.hpp>
 #include <etl/_functional/equal_to.hpp>
 #include <etl/_memory/addressof.hpp>
+#include <etl/_memory/construct_at.hpp>
 #include <etl/_memory/destroy_at.hpp>
 #include <etl/_meta/at.hpp>
 #include <etl/_meta/count.hpp>
@@ -27,6 +28,9 @@
 #include <etl/_utility/forward.hpp>
 #include <etl/_utility/in_place_index.hpp>
 #include <etl/_variant/variadic_union.hpp>
+#include <etl/_variant/variant_alternative.hpp>
+#include <etl/_variant/variant_fwd.hpp>
+#include <etl/_variant/variant_size.hpp>
 #include <etl/_variant/visit.hpp>
 
 namespace etl {
@@ -69,16 +73,20 @@ public:
     constexpr variant2(variant2 const&) = default;
 
     // TODO
-    constexpr variant2(variant2 const& /*other*/) noexcept((... and etl::is_nothrow_copy_constructible_v<Ts>))
+    constexpr variant2(variant2 const& other) noexcept((... and etl::is_nothrow_copy_constructible_v<Ts>))
         requires((... and etl::is_copy_constructible_v<Ts>) and !(... and etl::is_trivially_copy_constructible_v<Ts>))
-    = delete;
+        : variant2(other, copy_move_tag{})
+    {
+    }
 
     constexpr variant2(variant2&&) = default;
 
     // TODO
-    constexpr variant2(variant2&& /*other*/) noexcept((... and etl::is_nothrow_move_constructible_v<Ts>))
+    constexpr variant2(variant2&& other) noexcept((... and etl::is_nothrow_move_constructible_v<Ts>))
         requires((... and etl::is_move_constructible_v<Ts>) and not(... and etl::is_trivially_move_constructible_v<Ts>))
-    = delete;
+        : variant2(etl::move(other), copy_move_tag{})
+    {
+    }
 
     ~variant2()
         requires(... and etl::is_trivially_destructible_v<Ts>)
@@ -141,6 +149,18 @@ public:
     }
 
 private:
+    struct copy_move_tag { };
+
+    template <typename Other>
+    constexpr variant2(Other&& other, [[maybe_unused]] copy_move_tag tag) : _index()
+                                                                          , _union(etl::uninitialized_union())
+    {
+        etl::visit_with_index([this](auto param) {
+            etl::construct_at(etl::addressof(_union), etl::index_v<decltype(param)::index>, etl::move(param).value());
+            _index = decltype(param)::index;
+        }, etl::forward<Other>(other));
+    }
+
     TETL_NO_UNIQUE_ADDRESS index_type _index;
     TETL_NO_UNIQUE_ADDRESS etl::variadic_union<Ts...> _union;
 };

@@ -77,6 +77,10 @@ constexpr auto test() -> bool
         CHECK(var.index() == 2);
         CHECK(etl::visit_with_index([](auto v) { return static_cast<etl::size_t>(v.index); }, var) == 2);
         CHECK(etl::visit_with_index([](auto v) { return static_cast<int>(v.value()); }, var) == 42);
+
+        auto const var2 = var_t(var);
+        auto const var3 = var_t(etl::move(var));
+        CHECK(var2 == var3);
     }
 
     return true;
