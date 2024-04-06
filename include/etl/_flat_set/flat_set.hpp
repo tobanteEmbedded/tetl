@@ -9,6 +9,7 @@
 #include <etl/_algorithm/equal_range.hpp>
 #include <etl/_algorithm/lexicographical_compare.hpp>
 #include <etl/_algorithm/lower_bound.hpp>
+#include <etl/_algorithm/remove_if.hpp>
 #include <etl/_algorithm/upper_bound.hpp>
 #include <etl/_concepts/emulation.hpp>
 #include <etl/_cstddef/size_t.hpp>
@@ -18,6 +19,7 @@
 #include <etl/_functional/reference_wrapper.hpp>
 #include <etl/_iterator/begin.hpp>
 #include <etl/_iterator/data.hpp>
+#include <etl/_iterator/distance.hpp>
 #include <etl/_iterator/end.hpp>
 #include <etl/_iterator/rbegin.hpp>
 #include <etl/_iterator/rend.hpp>
@@ -383,6 +385,16 @@ private:
     TETL_NO_UNIQUE_ADDRESS container_type _container;
     TETL_NO_UNIQUE_ADDRESS key_compare _compare;
 };
+
+template <typename Key, typename Container, typename Compare, typename Pred>
+constexpr auto erase_if(etl::flat_set<Key, Container, Compare>& c, Pred pred) ->
+    typename etl::flat_set<Key, Container, Compare>::size_type
+{
+    auto it = etl::remove_if(c.begin(), c.end(), pred);
+    auto r  = etl::distance(it, c.end());
+    c.erase(it, c.end());
+    return static_cast<typename etl::flat_set<Key, Container, Compare>::size_type>(r);
+}
 
 } // namespace etl
 
