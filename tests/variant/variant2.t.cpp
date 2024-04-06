@@ -58,8 +58,8 @@ constexpr auto test() -> bool
     CHECK(move == copy);
     CHECK_FALSE(move != copy);
 
-    CHECK_FALSE(move == variant{});
-    CHECK(move != variant{});
+    CHECK_FALSE(move == variant{etl::in_place_type<int>, 13});
+    CHECK(move != variant{etl::in_place_type<int>, 13});
 
     return true;
 }

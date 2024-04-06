@@ -10,6 +10,7 @@
 #include <etl/_memory/addressof.hpp>
 #include <etl/_memory/destroy_at.hpp>
 #include <etl/_meta/at.hpp>
+#include <etl/_meta/count.hpp>
 #include <etl/_meta/index_of.hpp>
 #include <etl/_type_traits/add_pointer.hpp>
 #include <etl/_type_traits/index_constant.hpp>
@@ -21,6 +22,7 @@
 #include <etl/_type_traits/is_nothrow_move_constructible.hpp>
 #include <etl/_type_traits/is_trivially_copy_constructible.hpp>
 #include <etl/_type_traits/is_trivially_move_constructible.hpp>
+#include <etl/_type_traits/remove_cvref.hpp>
 #include <etl/_type_traits/smallest_size_t.hpp>
 #include <etl/_utility/forward.hpp>
 #include <etl/_utility/in_place_index.hpp>
@@ -50,11 +52,21 @@ public:
     }
 
     template <etl::size_t I, typename... Args>
-    constexpr explicit variant2(etl::in_place_index_t<I> /*index*/, Args&&... args)
+    explicit constexpr variant2(etl::in_place_index_t<I> /*index*/, Args&&... args)
         : _index(static_cast<index_type>(I))
         , _union(etl::index_v<I>, etl::forward<Args>(args)...)
     {
         static_assert(I < sizeof...(Ts));
+    }
+
+    template <typename T, typename... Args>
+        requires(
+            etl::is_constructible_v<T, Args...>
+            and etl::meta::count_v<etl::remove_cvref_t<T>, etl::meta::list<Ts...>> == 1
+        )
+    explicit constexpr variant2(etl::in_place_type_t<T> /*tag*/, Args&&... args)
+        : variant2(etl::in_place_index<etl::meta::index_of_v<T, etl::meta::list<Ts...>>>, etl::forward<Args>(args)...)
+    {
     }
 
     constexpr variant2(variant2 const&) = default;
