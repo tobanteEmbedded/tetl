@@ -184,6 +184,14 @@ public:
         return etl::move(_union)[index];
     }
 
+    template <typename T, typename... Args>
+        requires(etl::is_constructible_v<T, Args...> and etl::meta::count_v<T, etl::meta::list<Ts...>> == 1)
+    constexpr auto emplace(Args&&... args) -> auto&
+    {
+        destroy();
+        return replace(etl::index_v<etl::meta::index_of_v<T, etl::meta::list<Ts...>>>, etl::forward<Args>(args)...);
+    }
+
     template <etl::size_t I, typename... Args>
         requires etl::is_constructible_v<etl::meta::at_t<I, etl::meta::list<Ts...>>, Args...>
     constexpr auto emplace(Args&&... args) -> auto&
@@ -245,6 +253,16 @@ private:
     TETL_NO_UNIQUE_ADDRESS index_type _index;
     TETL_NO_UNIQUE_ADDRESS etl::variadic_union<Ts...> _union;
 };
+
+/// Checks if the variant v holds the alternative T. The call is
+/// ill-formed if T does not appear exactly once in Ts...
+/// \relates variant2
+template <typename T, typename... Ts>
+constexpr auto holds_alternative(variant2<Ts...> const& v) noexcept -> bool
+{
+    static_assert(etl::meta::count_v<T, etl::meta::list<Ts...>> == 1);
+    return v.index() == etl::meta::index_of_v<T, etl::meta::list<Ts...>>;
+}
 
 /// Returns a reference to the object stored in the variant.
 /// \pre v.index() == I

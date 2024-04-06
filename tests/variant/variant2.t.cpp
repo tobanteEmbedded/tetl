@@ -107,6 +107,10 @@ constexpr auto test() -> bool
         auto var5 = etl::move(var2);
         CHECK(var5.index() == 0);
         CHECK(var5[etl::index_v<0>] == 143);
+
+        var5.emplace<float>(1.43F);
+        CHECK(etl::holds_alternative<float>(var5));
+        CHECK(var5[etl::index_v<1>] == 1.43F);
     }
 
     return true;
