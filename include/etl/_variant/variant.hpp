@@ -370,10 +370,54 @@ public:
     ) noexcept(((is_nothrow_move_constructible_v<Ts> && is_nothrow_swappable_v<Ts>) && ...)) -> void
     {
         if (index() == rhs.index()) {
-            return detail::variant_swap_table<variant, Ts...>[index()](*this, rhs);
+            return etl::visit([](auto& l, auto& r) -> void {
+                if constexpr (etl::is_same_v<decltype(l), decltype(r)>) {
+                    using etl::swap;
+                    swap(l, r);
+                } else {
+                    etl::unreachable();
+                };
+            }, *this, rhs);
         }
+
         etl::swap(_data, rhs._data);
         etl::swap(_index, rhs._index);
+    }
+
+    /// \brief Returns a reference to the object stored in the variant.
+    /// \pre v.index() == I
+    template <etl::size_t I>
+    constexpr auto operator[](etl::index_constant<I> index) & -> auto&
+    {
+        static_assert(I < sizeof...(Ts));
+        return _data.get_value(index);
+    }
+
+    /// \brief Returns a reference to the object stored in the variant.
+    /// \pre v.index() == I
+    template <etl::size_t I>
+    constexpr auto operator[](etl::index_constant<I> index) const& -> auto const&
+    {
+        static_assert(I < sizeof...(Ts));
+        return _data.get_value(index);
+    }
+
+    /// \brief Returns a reference to the object stored in the variant.
+    /// \pre v.index() == I
+    template <etl::size_t I>
+    constexpr auto operator[](etl::index_constant<I> index) && -> auto&&
+    {
+        static_assert(I < sizeof...(Ts));
+        return etl::move(_data).get_value(index);
+    }
+
+    /// \brief Returns a reference to the object stored in the variant.
+    /// \pre v.index() == I
+    template <etl::size_t I>
+    constexpr auto operator[](etl::index_constant<I> index) const&& -> auto const&&
+    {
+        static_assert(I < sizeof...(Ts));
+        return etl::move(_data).get_value(index);
     }
 
     /// \todo Remove & replace with friendship for get_if.
@@ -558,7 +602,7 @@ constexpr auto holds_alternative(variant<Ts...> const& v) noexcept -> bool
 template <etl::size_t I, typename... Ts>
 constexpr auto unchecked_get(variant<Ts...>& v) -> auto&
 {
-    return v.impl()->get_value(etl::index_v<I>);
+    return v[etl::index_v<I>];
 }
 
 /// \brief Returns a reference to the object stored in the variant.
@@ -566,7 +610,7 @@ constexpr auto unchecked_get(variant<Ts...>& v) -> auto&
 template <etl::size_t I, typename... Ts>
 constexpr auto unchecked_get(variant<Ts...> const& v) -> auto const&
 {
-    return v.impl()->get_value(etl::index_v<I>);
+    return v[etl::index_v<I>];
 }
 
 /// \brief Returns a reference to the object stored in the variant.
@@ -574,7 +618,7 @@ constexpr auto unchecked_get(variant<Ts...> const& v) -> auto const&
 template <etl::size_t I, typename... Ts>
 constexpr auto unchecked_get(variant<Ts...>&& v) -> auto&&
 {
-    return etl::move(v.impl()->get_value(etl::index_v<I>));
+    return etl::move(v)[etl::index_v<I>];
 }
 
 /// \brief Returns a reference to the object stored in the variant.
@@ -582,7 +626,7 @@ constexpr auto unchecked_get(variant<Ts...>&& v) -> auto&&
 template <etl::size_t I, typename... Ts>
 constexpr auto unchecked_get(variant<Ts...> const&& v) -> auto const&&
 {
-    return etl::move(v.impl()->get_value(etl::index_v<I>));
+    return etl::move(v)[etl::index_v<I>];
 }
 
 /// \brief Index-based non-throwing accessor: If pv is not a null pointer and
@@ -708,7 +752,7 @@ template <size_t I, typename... Ts>
 template <typename T, typename... Ts>
 [[nodiscard]] constexpr auto get(variant<Ts...>& v) -> T&
 {
-    if (holds_alternative<T>(v)) {
+    if (etl::holds_alternative<T>(v)) {
         return *get_if<T>(&v);
     }
     etl::raise<etl::bad_variant_access>("");
@@ -724,7 +768,7 @@ template <typename T, typename... Ts>
 template <typename T, typename... Ts>
 [[nodiscard]] constexpr auto get(variant<Ts...>&& v) -> T&&
 {
-    if (holds_alternative<T>(v)) {
+    if (etl::holds_alternative<T>(v)) {
         return etl::move(*get_if<T>(&v));
     }
     etl::raise<etl::bad_variant_access>("");
@@ -740,7 +784,7 @@ template <typename T, typename... Ts>
 template <typename T, typename... Ts>
 [[nodiscard]] constexpr auto get(variant<Ts...> const& v) -> T const&
 {
-    if (holds_alternative<T>(v)) {
+    if (etl::holds_alternative<T>(v)) {
         return *get_if<T>(&v);
     }
     etl::raise<etl::bad_variant_access>("");
@@ -756,7 +800,7 @@ template <typename T, typename... Ts>
 template <typename T, typename... Ts>
 [[nodiscard]] constexpr auto get(variant<Ts...> const&& v) -> T const&&
 {
-    if (holds_alternative<T>(v)) {
+    if (etl::holds_alternative<T>(v)) {
         return etl::move(*get_if<T>(&v));
     }
     etl::raise<etl::bad_variant_access>("");
