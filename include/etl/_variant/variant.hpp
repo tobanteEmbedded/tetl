@@ -16,6 +16,7 @@
 #include <etl/_memory/construct_at.hpp>
 #include <etl/_memory/destroy_at.hpp>
 #include <etl/_meta/at.hpp>
+#include <etl/_meta/index_of.hpp>
 #include <etl/_new/operator.hpp>
 #include <etl/_type_traits/add_pointer.hpp>
 #include <etl/_type_traits/aligned_storage.hpp>
@@ -432,11 +433,6 @@ public:
         return etl::move(_data).get_value(index);
     }
 
-    /// \todo Remove & replace with friendship for get_if.
-    [[nodiscard]] auto impl() const noexcept { return &_data; } // NOLINT
-
-    auto impl() noexcept { return &_data; } // NOLINT
-
 private:
     etl::detail::variant_storage_for<Ts...> _data;
     internal_size_t _index{0};
@@ -565,8 +561,7 @@ constexpr auto operator>=(variant<Ts...> const& lhs, variant<Ts...> const& rhs) 
 template <typename T, typename... Ts>
 constexpr auto holds_alternative(variant<Ts...> const& v) noexcept -> bool
 {
-    using index_t = decltype(v.impl()->get_index(declval<T>()));
-    return index_t::value == v.index();
+    return v.index() == etl::meta::index_of_v<T, etl::meta::list<Ts...>>;
 }
 
 /// \brief Returns a reference to the object stored in the variant.
@@ -633,8 +628,7 @@ constexpr auto get_if(variant<Ts...> const* pv
 template <typename T, typename... Ts>
 constexpr auto get_if(variant<Ts...>* pv) noexcept -> add_pointer_t<T>
 {
-    using index = decltype(pv->impl()->get_index(etl::declval<T>()));
-    return etl::get_if<index::value>(pv);
+    return etl::get_if<etl::meta::index_of_v<T, etl::meta::list<Ts...>>>(pv);
 }
 
 /// \brief Type-based non-throwing accessor: The call is ill-formed if T is not
@@ -642,8 +636,7 @@ constexpr auto get_if(variant<Ts...>* pv) noexcept -> add_pointer_t<T>
 template <typename T, typename... Ts>
 constexpr auto get_if(variant<Ts...> const* pv) noexcept -> add_pointer_t<T const>
 {
-    using index = decltype(pv->impl()->get_index(etl::declval<T>()));
-    return etl::get_if<index::value>(pv);
+    return etl::get_if<etl::meta::index_of_v<T, etl::meta::list<Ts...>>>(pv);
 }
 
 /// \brief Index-based value accessor
