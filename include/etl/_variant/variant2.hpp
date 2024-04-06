@@ -34,6 +34,7 @@
 #include <etl/_type_traits/smallest_size_t.hpp>
 #include <etl/_utility/forward.hpp>
 #include <etl/_utility/in_place_index.hpp>
+#include <etl/_utility/in_place_type.hpp>
 #include <etl/_variant/variadic_union.hpp>
 #include <etl/_variant/variant_alternative.hpp>
 #include <etl/_variant/variant_fwd.hpp>

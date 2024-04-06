@@ -20,7 +20,7 @@ struct error_class {
 } // namespace
 
 template <typename T, typename E>
-static auto test() -> bool
+constexpr auto test() -> bool
 {
     using expected_t = etl::expected<T, E>;
 
@@ -75,12 +75,12 @@ static auto test() -> bool
     return true;
 }
 
-static auto test_all() -> bool
+constexpr auto test_all() -> bool
 {
     // E == int
     CHECK(test<signed char, int>());
     CHECK(test<signed short, int>());
-    // CHECK(test<signed int, int>());
+    CHECK(test<signed int, int>());
     CHECK(test<signed long, int>());
     CHECK(test<signed long long, int>());
 
@@ -108,6 +108,6 @@ static auto test_all() -> bool
 
 auto main() -> int
 {
-    CHECK(test_all());
+    STATIC_CHECK(test_all());
     return 0;
 }

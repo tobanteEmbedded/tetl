@@ -17,16 +17,13 @@
 #include <etl/_utility/in_place.hpp>
 #include <etl/_utility/in_place_index.hpp>
 #include <etl/_utility/move.hpp>
-#include <etl/_variant/variant.hpp>
+#include <etl/_variant/variant2.hpp>
 
 namespace etl {
 
 /// \ingroup expected
-/// \todo variant index doesn't work if same type is used twice
 template <typename T, typename E>
 struct expected {
-    static_assert(not etl::same_as<T, E>);
-
     using value_type      = T;
     using error_type      = E;
     using unexpected_type = etl::unexpected<E>;
@@ -68,21 +65,21 @@ struct expected {
 
     [[nodiscard]] constexpr auto operator->() noexcept -> T* { return etl::get_if<0>(&_u); }
 
-    [[nodiscard]] constexpr auto operator*() const& noexcept -> T const& { return *etl::get_if<0>(&_u); }
+    [[nodiscard]] constexpr auto operator*() const& noexcept -> T const& { return _u[etl::index_v<0>]; }
 
-    [[nodiscard]] constexpr auto operator*() & noexcept -> T& { return *etl::get_if<0>(&_u); }
+    [[nodiscard]] constexpr auto operator*() & noexcept -> T& { return _u[etl::index_v<0>]; }
 
-    [[nodiscard]] constexpr auto operator*() const&& noexcept -> T const&& { return etl::move(*etl::get_if<0>(&_u)); }
+    [[nodiscard]] constexpr auto operator*() const&& noexcept -> T const&& { return etl::move(_u[etl::index_v<0>]); }
 
-    [[nodiscard]] constexpr auto operator*() && noexcept -> T&& { return etl::move(*etl::get_if<0>(&_u)); }
+    [[nodiscard]] constexpr auto operator*() && noexcept -> T&& { return etl::move(_u[etl::index_v<0>]); }
 
-    [[nodiscard]] constexpr auto error() & -> E& { return etl::unchecked_get<1>(_u); }
+    [[nodiscard]] constexpr auto error() & -> E& { return _u[etl::index_v<1>]; }
 
-    [[nodiscard]] constexpr auto error() const& -> E const& { return etl::unchecked_get<1>(_u); }
+    [[nodiscard]] constexpr auto error() const& -> E const& { return _u[etl::index_v<1>]; }
 
-    [[nodiscard]] constexpr auto error() && -> E&& { return etl::unchecked_get<1>(etl::move(_u)); }
+    [[nodiscard]] constexpr auto error() && -> E&& { return etl::move(_u[etl::index_v<1>]); }
 
-    [[nodiscard]] constexpr auto error() const&& -> E const&& { return etl::unchecked_get<1>(etl::move(_u)); }
+    [[nodiscard]] constexpr auto error() const&& -> E const&& { return etl::move(_u[etl::index_v<1>]); }
 
     template <typename... Args>
         requires etl::is_nothrow_constructible_v<T, Args...>
@@ -181,7 +178,7 @@ struct expected {
     }
 
 private:
-    etl::variant<T, E> _u;
+    etl::variant2<T, E> _u;
 };
 
 } // namespace etl
