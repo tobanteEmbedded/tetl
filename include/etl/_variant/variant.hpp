@@ -16,6 +16,7 @@
 #include <etl/_memory/construct_at.hpp>
 #include <etl/_memory/destroy_at.hpp>
 #include <etl/_meta/at.hpp>
+#include <etl/_meta/count.hpp>
 #include <etl/_meta/index_of.hpp>
 #include <etl/_new/operator.hpp>
 #include <etl/_type_traits/add_pointer.hpp>
@@ -227,12 +228,19 @@ using variant_ctor_type_selector_t = decltype(variant_ctor_type_selector<Ts...>(
 /// type size_t, used as the return value of index() when valueless_by_exception() is true.
 inline constexpr auto variant_npos = etl::numeric_limits<etl::size_t>::max();
 
-/// The class template variant represents a type-safe union. An
-/// instance of variant at any given time either holds a value of one of
+/// The class template variant represents a type-safe union.
+///
+/// An instance of variant at any given time either holds a value of one of
 /// its alternative types.
+///
+/// \warning All types need to be nothrow move constructible. This avoids the
+/// need for valueless_by_exception.
 template <typename... Ts>
 struct variant {
 private:
+    // Avoid valueless_by_exception
+    static_assert((etl::is_nothrow_move_constructible_v<Ts> and ...));
+
     using internal_size_t = etl::smallest_size_t<sizeof...(Ts)>;
     using first_type      = etl::meta::at_t<0, etl::meta::list<Ts...>>;
 
@@ -322,7 +330,7 @@ public:
 
     template <typename T>
         requires(not etl::is_same_v<etl::remove_cvref_t<T>, variant>
-                 and (0 + ... + etl::is_same_v<etl::remove_cvref_t<T>, Ts>) == 1)
+                 and etl::meta::count_v<etl::remove_cvref_t<T>, etl::meta::list<Ts...>> == 1)
     constexpr auto operator=(T&& rhs) -> variant&
     {
         auto v = variant(etl::in_place_type<T>, etl::forward<T>(rhs));
