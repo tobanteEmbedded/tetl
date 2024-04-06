@@ -7,12 +7,10 @@
 #define TETL_ENABLE_CUSTOM_ASSERT_HANDLER
 #define TETL_ENABLE_CUSTOM_EXCEPTION_HANDLER
 
-#include <etl/cassert.hpp>
-
-#include <etl/_config/_workarounds/001_avr_macros.hpp>
-
 #include <stdio.h>
 #include <stdlib.h>
+
+#include <etl/_config/_workarounds/001_avr_macros.hpp>
 
 namespace etl {
 
@@ -27,7 +25,8 @@ template <typename Exception>
 #endif
 }
 
-[[noreturn]] auto tetl_assert_handler(assert_msg const& msg) -> void
+template <typename Assertion>
+[[noreturn]] auto tetl_assert_handler(Assertion const& msg) -> void
 {
     ::printf("ASSERTION: %s:%d - %s\n", msg.file, msg.line, msg.func);
     ::exit(1); // NOLINT

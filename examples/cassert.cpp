@@ -20,7 +20,8 @@
 #endif
 
 namespace etl {
-[[noreturn]] auto tetl_assert_handler(assert_msg const& msg) -> void
+template <typename Assertion>
+[[noreturn]] auto tetl_assert_handler(Assertion const& msg) -> void
 {
     ::printf("EXCEPTION: %s:%d\n", msg.file, msg.line);
     ::exit(1); // NOLINT
