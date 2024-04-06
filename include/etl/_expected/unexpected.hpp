@@ -22,7 +22,8 @@ struct unexpected {
         requires(not etl::is_same_v<etl::remove_cvref_t<Err>, unexpected>          //
                  and not etl::is_same_v<etl::remove_cvref_t<Err>, etl::in_place_t> //
                  and etl::is_constructible_v<E, Err>)
-    constexpr explicit unexpected(Err&& e) : _unex(etl::forward<Err>(e))
+    constexpr explicit unexpected(Err&& e)
+        : _unex(etl::forward<Err>(e))
     {
     }
 

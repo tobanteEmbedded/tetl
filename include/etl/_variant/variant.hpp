@@ -347,8 +347,8 @@ public:
     [[nodiscard]] constexpr auto valueless_by_exception() const noexcept -> bool { return false; }
 
     /// Swaps two variant objects.
-    constexpr auto swap(variant& rhs
-    ) noexcept(((is_nothrow_move_constructible_v<Ts> && is_nothrow_swappable_v<Ts>) && ...)) -> void
+    constexpr auto swap(variant& rhs)
+        noexcept(((is_nothrow_move_constructible_v<Ts> && is_nothrow_swappable_v<Ts>) && ...)) -> void
     {
         if (index() == rhs.index()) {
             return etl::visit([](auto& l, auto& r) -> void {

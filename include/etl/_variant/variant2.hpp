@@ -114,9 +114,9 @@ public:
 
     constexpr auto operator=(variant2 const&) -> variant2& = default;
 
-    constexpr auto operator=(variant2 const& other
-    ) noexcept((... and etl::is_nothrow_copy_assignable_v<Ts>) and (... and etl::is_nothrow_copy_constructible_v<Ts>))
-        -> variant2&
+    constexpr auto operator=(variant2 const& other)
+        noexcept((... and etl::is_nothrow_copy_assignable_v<Ts>) and (... and etl::is_nothrow_copy_constructible_v<Ts>))
+            -> variant2&
         requires(
             (... and etl::detail::variant_copy_assignable<Ts>)
             and not(... and etl::detail::variant_trivially_copy_assignable<Ts>)

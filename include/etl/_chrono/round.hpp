@@ -12,8 +12,8 @@ namespace etl::chrono {
 /// \ingroup chrono
 template <typename To, typename Rep, typename Period>
     requires(detail::is_duration_v<To>)
-[[nodiscard]] constexpr auto round(duration<Rep, Period> const& dur
-) noexcept(is_arithmetic_v<Rep> and is_arithmetic_v<typename To::rep>) -> To
+[[nodiscard]] constexpr auto round(duration<Rep, Period> const& dur)
+    noexcept(is_arithmetic_v<Rep> and is_arithmetic_v<typename To::rep>) -> To
 {
     auto const low      = floor<To>(dur);
     auto const high     = low + To{1};

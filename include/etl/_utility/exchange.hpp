@@ -13,9 +13,8 @@ namespace etl {
 /// \brief Replaces the value of obj with new_value and returns the old value of obj.
 /// \returns The old value of obj.
 template <typename T, typename U = T>
-[[nodiscard]] constexpr auto
-exchange(T& obj, U&& newValue) noexcept(etl::is_nothrow_move_constructible_v<T> and etl::is_nothrow_assignable_v<T&, U>)
-    -> T
+[[nodiscard]] constexpr auto exchange(T& obj, U&& newValue)
+    noexcept(etl::is_nothrow_move_constructible_v<T> and etl::is_nothrow_assignable_v<T&, U>) -> T
 {
     T oldValue = etl::move(obj);
     obj        = etl::forward<U>(newValue);

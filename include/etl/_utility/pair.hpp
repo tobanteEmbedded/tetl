@@ -129,8 +129,8 @@ struct pair {
         return *this;
     }
 
-    constexpr void swap(pair& other
-    ) noexcept((is_nothrow_swappable_v<first_type> and is_nothrow_swappable_v<second_type>))
+    constexpr void swap(pair& other)
+        noexcept((is_nothrow_swappable_v<first_type> and is_nothrow_swappable_v<second_type>))
     {
         using etl::swap;
         swap(first, other.first);

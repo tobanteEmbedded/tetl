@@ -39,20 +39,16 @@ struct expected {
 
     template <typename... Args>
         requires etl::is_constructible_v<T, Args...>
-    constexpr explicit expected(
-        etl::in_place_t /*tag*/,
-        Args&&... args
-    ) noexcept(etl::is_nothrow_constructible_v<T, Args...>)
+    constexpr explicit expected(etl::in_place_t /*tag*/, Args&&... args)
+        noexcept(etl::is_nothrow_constructible_v<T, Args...>)
         : _u(etl::in_place_index<0>, etl::forward<Args>(args)...)
     {
     }
 
     template <typename... Args>
         requires etl::is_constructible_v<E, Args...>
-    constexpr explicit expected(
-        etl::unexpect_t /*tag*/,
-        Args&&... args
-    ) noexcept(etl::is_nothrow_constructible_v<E, Args...>)
+    constexpr explicit expected(etl::unexpect_t /*tag*/, Args&&... args)
+        noexcept(etl::is_nothrow_constructible_v<E, Args...>)
         : _u(etl::in_place_index<1>, etl::forward<Args>(args)...)
     {
     }

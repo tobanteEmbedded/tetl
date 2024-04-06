@@ -232,8 +232,8 @@ struct flat_set {
         return _container.erase(first, last);
     }
 
-    constexpr auto swap(flat_set& other
-    ) noexcept(etl::is_nothrow_swappable_v<Container> && etl::is_nothrow_swappable_v<Compare>) -> void
+    constexpr auto swap(flat_set& other)
+        noexcept(etl::is_nothrow_swappable_v<Container> && etl::is_nothrow_swappable_v<Compare>) -> void
     {
         using etl::swap;
         swap(_compare, other._compare);

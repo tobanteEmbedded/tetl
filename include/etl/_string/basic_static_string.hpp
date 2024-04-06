@@ -1677,10 +1677,9 @@ operator>=(CharT const* lhs, etl::basic_static_string<CharT, Capacity, Traits> c
 /// \brief Specializes the etl::swap algorithm for etl::basic_static_string.
 /// Swaps the contents of lhs and rhs. Equivalent to lhs.swap(rhs).
 template <typename CharT, typename Traits, etl::size_t Capacity>
-constexpr auto swap(
-    etl::basic_static_string<CharT, Capacity, Traits>& lhs,
-    etl::basic_static_string<CharT, Capacity, Traits>& rhs
-) noexcept(noexcept(lhs.swap(rhs))) -> void
+constexpr auto
+swap(etl::basic_static_string<CharT, Capacity, Traits>& lhs, etl::basic_static_string<CharT, Capacity, Traits>& rhs)
+    noexcept(noexcept(lhs.swap(rhs))) -> void
 {
     lhs.swap(rhs);
 }
