@@ -46,6 +46,10 @@ constexpr auto test_all() -> bool
     CHECK(etl::meta::count_v<int, list<char, int, double>> == 1);
     CHECK(etl::meta::count_v<int, list<int, long, double, int>> == 2);
 
+    CHECK(etl::meta::index_of_v<int, list<int>> == 0);
+    CHECK(etl::meta::index_of_v<int, list<float, int>> == 1);
+    CHECK(etl::meta::index_of_v<float, list<float, int>> == 0);
+
     return true;
 }
 } // namespace

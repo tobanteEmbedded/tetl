@@ -14,6 +14,7 @@
 #include <etl/_meta/contains.hpp>
 #include <etl/_meta/count.hpp>
 #include <etl/_meta/head.hpp>
+#include <etl/_meta/index_of.hpp>
 #include <etl/_meta/list.hpp>
 #include <etl/_meta/push_back.hpp>
 #include <etl/_meta/push_front.hpp>
