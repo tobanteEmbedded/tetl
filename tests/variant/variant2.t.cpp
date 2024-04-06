@@ -105,7 +105,7 @@ constexpr auto test() -> bool
 
         auto var2 = var_t(var);
 
-        auto const var3 = var_t(etl::move(var));
+        auto var3       = var_t(etl::move(var));
         auto const var4 = var3;
         CHECK(var2 == var3);
         CHECK(var2 == var4);
@@ -113,13 +113,16 @@ constexpr auto test() -> bool
         var2.emplace<0>(143);
         CHECK(var2.index() == 0);
 
-        auto var5 = etl::move(var2);
-        CHECK(var5.index() == 0);
-        CHECK(var5[etl::index_v<0>] == 143);
+        var3 = etl::move(var2);
+        CHECK(var3.index() == 0);
+        CHECK(var3[etl::index_v<0>] == 143);
 
-        var5.emplace<float>(1.43F);
-        CHECK(etl::holds_alternative<float>(var5));
-        CHECK(var5[etl::index_v<1>] == 1.43F);
+        var3.emplace<float>(1.43F);
+        CHECK(etl::holds_alternative<float>(var3));
+        CHECK(var3[etl::index_v<1>] == 1.43F);
+
+        var = var3;
+        CHECK(var == var3);
     }
 
     return true;

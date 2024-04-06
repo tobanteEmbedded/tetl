@@ -126,11 +126,11 @@ public:
         return *this;
     }
 
-    constexpr auto operator=(variant2&&) & -> variant2& = default;
+    constexpr auto operator=(variant2&&) -> variant2& = default;
 
-    constexpr auto operator=(variant2&& other
-    ) & noexcept((... and etl::is_nothrow_move_assignable_v<Ts>) and (... and etl::is_nothrow_move_constructible_v<Ts>))
-        -> variant2&
+    constexpr auto operator=(variant2&& other)
+        noexcept((... and etl::is_nothrow_move_assignable_v<Ts>) and (... and etl::is_nothrow_move_constructible_v<Ts>))
+            -> variant2&
         requires(
             (... and etl::detail::variant_move_assignable<Ts>)
             and !(... and etl::detail::variant_trivially_move_assignable<Ts>)
@@ -229,14 +229,14 @@ private:
     template <typename Other>
     constexpr auto assign(Other&& other) -> void
     {
-        etl::visit_with_index(*this, etl::forward<Other>(other), [&](auto lhs, auto rhs) {
+        etl::visit_with_index([&](auto lhs, auto rhs) {
             if constexpr (lhs.index == rhs.index) {
                 lhs.value() = etl::move(rhs.value());
             } else {
                 destroy();
                 replace(rhs.index, etl::move(rhs.value()));
             }
-        });
+        }, *this, etl::forward<Other>(other));
     }
 
     template <typename... Args>
