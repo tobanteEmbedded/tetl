@@ -94,9 +94,19 @@ constexpr auto test() -> bool
         CHECK(etl::visit_with_index([](auto v) { return static_cast<etl::size_t>(v.index); }, var) == 2);
         CHECK(etl::visit_with_index([](auto v) { return static_cast<int>(v.value()); }, var) == 42);
 
-        auto const var2 = var_t(var);
+        auto var2 = var_t(var);
+
         auto const var3 = var_t(etl::move(var));
+        auto const var4 = var3;
         CHECK(var2 == var3);
+        CHECK(var2 == var4);
+
+        var2.emplace<0>(143);
+        CHECK(var2.index() == 0);
+
+        auto var5 = etl::move(var2);
+        CHECK(var5.index() == 0);
+        CHECK(var5[etl::index_v<0>] == 143);
     }
 
     return true;

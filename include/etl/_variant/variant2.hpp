@@ -15,13 +15,20 @@
 #include <etl/_meta/index_of.hpp>
 #include <etl/_type_traits/add_pointer.hpp>
 #include <etl/_type_traits/index_constant.hpp>
+#include <etl/_type_traits/is_constructible.hpp>
+#include <etl/_type_traits/is_copy_assignable.hpp>
 #include <etl/_type_traits/is_copy_constructible.hpp>
 #include <etl/_type_traits/is_default_constructible.hpp>
+#include <etl/_type_traits/is_move_assignable.hpp>
 #include <etl/_type_traits/is_move_constructible.hpp>
+#include <etl/_type_traits/is_nothrow_copy_assignable.hpp>
 #include <etl/_type_traits/is_nothrow_copy_constructible.hpp>
 #include <etl/_type_traits/is_nothrow_default_constructible.hpp>
+#include <etl/_type_traits/is_nothrow_move_assignable.hpp>
 #include <etl/_type_traits/is_nothrow_move_constructible.hpp>
+#include <etl/_type_traits/is_trivially_copy_assignable.hpp>
 #include <etl/_type_traits/is_trivially_copy_constructible.hpp>
+#include <etl/_type_traits/is_trivially_move_assignable.hpp>
 #include <etl/_type_traits/is_trivially_move_constructible.hpp>
 #include <etl/_type_traits/remove_cvref.hpp>
 #include <etl/_type_traits/smallest_size_t.hpp>
@@ -34,6 +41,24 @@
 #include <etl/_variant/visit.hpp>
 
 namespace etl {
+
+namespace detail {
+
+template <typename T>
+concept variant_copy_assignable = etl::is_copy_constructible_v<T> and etl::is_copy_assignable_v<T>;
+
+template <typename T>
+concept variant_trivially_copy_assignable
+    = etl::is_trivially_copy_constructible_v<T> and etl::is_trivially_copy_assignable_v<T>;
+
+template <typename T>
+concept variant_move_assignable = etl::is_move_constructible_v<T> and etl::is_move_assignable_v<T>;
+
+template <typename T>
+concept variant_trivially_move_assignable
+    = etl::is_trivially_move_constructible_v<T> and etl::is_trivially_move_assignable_v<T>;
+
+} // namespace detail
 
 /// \ingroup variant
 template <typename... Ts>
@@ -86,14 +111,39 @@ public:
     {
     }
 
+    constexpr auto operator=(variant2 const&) -> variant2& = default;
+
+    constexpr auto operator=(variant2 const& other
+    ) noexcept((... and etl::is_nothrow_copy_assignable_v<Ts>) and (... and etl::is_nothrow_copy_constructible_v<Ts>))
+        -> variant2&
+        requires(
+            (... and etl::detail::variant_copy_assignable<Ts>)
+            and not(... and etl::detail::variant_trivially_copy_assignable<Ts>)
+        )
+    {
+        assign(other);
+        return *this;
+    }
+
+    constexpr auto operator=(variant2&&) & -> variant2& = default;
+
+    constexpr auto operator=(variant2&& other
+    ) & noexcept((... and etl::is_nothrow_move_assignable_v<Ts>) and (... and etl::is_nothrow_move_constructible_v<Ts>))
+        -> variant2&
+        requires(
+            (... and etl::detail::variant_move_assignable<Ts>)
+            and !(... and etl::detail::variant_trivially_move_assignable<Ts>)
+        )
+    {
+        assign(etl::move(other));
+        return *this;
+    }
+
     ~variant2()
         requires(... and etl::is_trivially_destructible_v<Ts>)
     = default;
 
-    constexpr ~variant2()
-    {
-        etl::visit([](auto& v) { etl::destroy_at(etl::addressof(v)); }, *this);
-    }
+    constexpr ~variant2() { destroy(); }
 
     /// Returns the zero-based index of the alternative that is currently held by the variant.
     [[nodiscard]] constexpr auto index() const noexcept -> etl::size_t { return static_cast<etl::size_t>(_index); }
@@ -134,6 +184,14 @@ public:
         return etl::move(_union)[index];
     }
 
+    template <etl::size_t I, typename... Args>
+        requires etl::is_constructible_v<etl::meta::at_t<I, etl::meta::list<Ts...>>, Args...>
+    constexpr auto emplace(Args&&... args) -> auto&
+    {
+        destroy();
+        return replace(etl::index_v<I>, etl::forward<Args>(args)...);
+    }
+
     /// Equality operator for variants:
     ///
     /// - If lhs.index() != rhs.index(), returns false;
@@ -153,10 +211,35 @@ private:
     constexpr variant2(Other&& other, [[maybe_unused]] copy_move_tag tag) : _index()
                                                                           , _union(etl::uninitialized_union())
     {
-        etl::visit_with_index([this](auto param) {
-            etl::construct_at(etl::addressof(_union), etl::index_v<decltype(param)::index>, etl::move(param).value());
-            _index = static_cast<index_type>(decltype(param)::index);
+        etl::visit_with_index([&](auto param) {
+            replace(param.index, etl::move(param).value());
         }, etl::forward<Other>(other));
+    }
+
+    template <typename Other>
+    constexpr auto assign(Other&& other) -> void
+    {
+        etl::visit_with_index(*this, etl::forward<Other>(other), [&](auto lhs, auto rhs) {
+            if constexpr (lhs.index == rhs.index) {
+                lhs.value() = etl::move(rhs.value());
+            } else {
+                destroy();
+                replace(rhs.index, etl::move(rhs.value()));
+            }
+        });
+    }
+
+    template <typename... Args>
+    constexpr auto replace(auto index, Args&&... args) -> auto&
+    {
+        etl::construct_at(etl::addressof(_union), index, etl::forward<Args>(args)...);
+        _index = static_cast<index_type>(index.value);
+        return (*this)[index];
+    }
+
+    constexpr auto destroy() -> void
+    {
+        etl::visit([](auto& v) { etl::destroy_at(etl::addressof(v)); }, *this);
     }
 
     TETL_NO_UNIQUE_ADDRESS index_type _index;
