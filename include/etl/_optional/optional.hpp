@@ -45,6 +45,7 @@
 #include <etl/_type_traits/is_trivially_move_constructible.hpp>
 #include <etl/_type_traits/negation.hpp>
 #include <etl/_type_traits/remove_const.hpp>
+#include <etl/_type_traits/remove_cv.hpp>
 #include <etl/_type_traits/remove_cvref.hpp>
 #include <etl/_utility/forward.hpp>
 #include <etl/_utility/in_place.hpp>
@@ -103,210 +104,118 @@ namespace etl {
 /// \include optional.cpp
 template <typename T>
 struct optional {
-
-    // clang-format off
-    static_assert(!is_same_v<remove_cvref_t<T>, in_place_t>, "instantiation of optional with in_place_t is ill-formed");
-    static_assert(!is_same_v<remove_cvref_t<T>, nullopt_t>, "instantiation of optional with nullopt_t is ill-formed");
-    static_assert(!is_reference_v<T>, "instantiation of optional with a reference type is ill-formed");
-    static_assert(!is_array_v<T>, "instantiation of optional with an array type is ill-formed");
-
-    template<typename U>
-    static constexpr bool not_in_place_t = !etl::is_same_v<etl::remove_cvref_t<U>, etl::in_place_t>;
-    template<typename U>
-    static constexpr bool not_self = !etl::is_same_v<etl::remove_cvref_t<U>, etl::optional<T>>;
-
-    template<typename U>
-    static constexpr bool enable_ctor_4_5_base =
-            (!etl::is_constructible_v<T, etl::optional<U>&>)
-        and  (!etl::is_constructible_v<T, etl::optional<U> const&>)
-        and  (!etl::is_constructible_v<T, etl::optional<U>&&>)
-        and  (!etl::is_constructible_v<T, etl::optional<U> const&&>)
-        and  (!etl::is_convertible_v<etl::optional<U>&, T>)
-        and  (!etl::is_convertible_v<etl::optional<U> const&, T>)
-        and  (!etl::is_convertible_v<etl::optional<U>&&, T>)
-        and  (!etl::is_convertible_v<etl::optional<U> const&&, T>);
-
-    template<typename U>
-    using enable_ctor_4_implicit = etl::enable_if_t<
-        etl::is_constructible_v<T, U const&>
-        and enable_ctor_4_5_base<U>
-        and etl::is_convertible_v<U const&, T>, int>;
-
-    template<typename U>
-    using enable_ctor_4_explicit = etl::enable_if_t<
-        etl::is_constructible_v<T, U const&>
-        and enable_ctor_4_5_base<U>
-        and (!etl::is_convertible_v<U const&, T>), int>;
-
-    template<typename U>
-    using enable_ctor_5_implicit = etl::enable_if_t<
-        etl::is_constructible_v<T, U&&>
-        and enable_ctor_4_5_base<U>
-        and etl::is_convertible_v<U&&, T>, int>;
-
-    template<typename U>
-    using enable_ctor_5_explicit = etl::enable_if_t<
-        etl::is_constructible_v<T, U&&>
-        and enable_ctor_4_5_base<U>
-        and (!etl::is_convertible_v<U&&, T>), int>;
-
-
-    template<typename ...Args>
-    using enable_ctor_6 = etl::enable_if_t<etl::is_constructible_v<T, Args...>, int>;
-
-    template<typename U>
-    static constexpr bool enable_ctor_8 = etl::is_constructible_v<T, U&&> and not_in_place_t<U> and not_self<U>;
-    template<typename U>
-    using enable_ctor_8_implicit = etl::enable_if_t<enable_ctor_8<U> and etl::is_convertible_v<U&&, T>, int>;
-    template<typename U>
-    using enable_ctor_8_explicit = etl::enable_if_t<enable_ctor_8<U> and (!etl::is_convertible_v<U&&, T>), int>;
-
-    template <typename U>
-    using enable_assign_forward = etl::enable_if_t<
-            (!etl::is_same_v<optional<T>, etl::decay_t<U>>)
-        and  (!etl::is_scalar_v<T>)
-        and  (!etl::is_same_v<T, etl::decay_t<U>>)
-        and    etl::is_constructible_v<T, U>
-        and    etl::is_assignable_v<T&, U>, int>;
-
-    template <typename U>
-    static constexpr bool enable_assign_other =
-            etl::is_constructible_v<T, etl::optional<U>&>
-        and  etl::is_constructible_v<T, etl::optional<U> const&>
-        and  etl::is_constructible_v<T, etl::optional<U>&&>
-        and  etl::is_constructible_v<T, etl::optional<U> const&&>
-        and  etl::is_convertible_v<etl::optional<U>&, T>
-        and  etl::is_convertible_v<etl::optional<U> const&, T>
-        and  etl::is_convertible_v<etl::optional<U>&&, T>
-        and  etl::is_convertible_v<etl::optional<U> const&&, T>
-        and  etl::is_assignable_v<T&, etl::optional<U>&>
-        and  etl::is_assignable_v<T&, etl::optional<U> const&>
-        and  etl::is_assignable_v<T&, etl::optional<U>&&>
-        and  etl::is_assignable_v<T&, etl::optional<U> const&&>;
-
-    template <typename U>
-    using enable_assign_other_copy = etl::enable_if_t<
-            enable_assign_other<U>
-        and  etl::is_constructible_v<T, U const&>
-        and  etl::is_assignable_v<T&, U const&>, int>;
-
-    template <typename U>
-    using enable_assign_other_move = etl::enable_if_t<
-            enable_assign_other<U>
-        and  etl::is_constructible_v<T, U>
-        and  etl::is_assignable_v<T&, U>, int>;
-
-    // clang-format on
-
-public:
     using value_type = T;
 
-    /// \brief Constructs an object that does not contain a value.
+    static_assert(!is_array_v<T>, "instantiation of optional with an array type is ill-formed");
+    static_assert(!is_same_v<remove_cvref_t<T>, nullopt_t>, "instantiation of optional with nullopt_t is ill-formed");
+    static_assert(!is_same_v<remove_cvref_t<T>, in_place_t>, "instantiation of optional with in_place_t is ill-formed");
+
+    /// Constructs an object that does not contain a value.
     constexpr optional() noexcept = default;
 
-    /// \brief Constructs an object that does not contain a value.
-    constexpr optional(etl::nullopt_t null) noexcept
-        : _var(null)
-    {
-    }
+    /// Constructs an object that does not contain a value.
+    constexpr optional(etl::nullopt_t /*null*/) noexcept { }
 
-    /// \brief Copy constructor.
+    /// Copy constructor.
     constexpr optional(optional const&) = default;
 
-    /// \brief Move constructor.
+    /// Move constructor.
     constexpr optional(optional&&) noexcept(etl::is_nothrow_move_constructible_v<value_type>) = default;
 
-    /// \brief (4) Converting copy constructor: If other doesn't contain a
-    /// value, constructs an optional object that does not contain a value.
-    /// Otherwise, constructs an optional object that contains a value,
-    /// initialized as if direct-initializing (but not direct-list-initializing)
-    /// an object of type T with the expression *other.
+    /// Converting copy constructor
+    ///
+    /// If other doesn't contain a value, constructs an optional object
+    /// that does not contain a value. Otherwise, constructs an optional
+    /// object that contains a value, initialized as if direct-initializing
+    /// (but not direct-list-initializing) an object of type T with the
+    /// expression *other.
     ///
     /// https://en.cppreference.com/w/cpp/utility/optional/optional
-    template <typename U, enable_ctor_4_implicit<U> = 0>
-    constexpr optional(optional<U> const& other)
+    template <typename U>
+    // clang-format off
+        requires(
+                    is_constructible_v<T, U const&>
+            and not is_same_v<remove_cv_t<U>, bool>
+            and (
+                    not is_constructible_v<T, optional<U>&>
+                and not is_constructible_v<T, optional<U> const&>
+                and not is_constructible_v<T, optional<U> &&>
+                and not is_constructible_v<T, optional<U> const&&>
+                and not is_convertible_v<optional<U>&, T>
+                and not is_convertible_v<optional<U> const&, T>
+                and not is_convertible_v<optional<U>&&, T>
+                and not is_convertible_v<optional<U> const&&, T>
+            )
+        )
+    // clang-format on
+    explicit(not is_convertible_v<U const&, T>) constexpr optional(optional<U> const& other)
     {
         if (other.has_value()) {
             emplace(*other);
         }
     }
 
-    /// \brief (4) Converting copy constructor: If other doesn't contain a
-    /// value, constructs an optional object that does not contain a value.
-    /// Otherwise, constructs an optional object that contains a value,
-    /// initialized as if direct-initializing (but not direct-list-initializing)
-    /// an object of type T with the expression *other.
+    /// Converting move constructor
     ///
-    /// https://en.cppreference.com/w/cpp/utility/optional/optional
-    template <typename U, enable_ctor_4_explicit<U> = 0>
-    explicit constexpr optional(optional<U> const& other)
-    {
-        if (other.has_value()) {
-            emplace(*other);
-        }
-    }
-
-    /// \brief (5) Converting move constructor: If other doesn't contain a
-    /// value, constructs an optional object that does not contain a value.
-    /// Otherwise, constructs an optional object that contains a value,
+    /// If other doesn't contain a value, constructs an optional object that does
+    /// not contain a value. Otherwise, constructs an optional object that contains a value,
     /// initialized as if direct-initializing (but not direct-list-initializing)
     /// an object of type T with the expression etl::move(*other).
     ///
     /// https://en.cppreference.com/w/cpp/utility/optional/optional
-    template <typename U, enable_ctor_5_implicit<U> = 0>
-    constexpr optional(optional<U>&& other)
+    template <typename U>
+    // clang-format off
+        requires(
+                    is_constructible_v<T, U&&>
+            and not is_same_v<remove_cv_t<U>, bool>
+            and (
+                    not is_constructible_v<T, optional<U>&>
+                and not is_constructible_v<T, optional<U> const&>
+                and not is_constructible_v<T, optional<U> &&>
+                and not is_constructible_v<T, optional<U> const&&>
+                and not is_convertible_v<optional<U>&, T>
+                and not is_convertible_v<optional<U> const&, T>
+                and not is_convertible_v<optional<U>&&, T>
+                and not is_convertible_v<optional<U> const&&, T>
+            )
+        )
+    // clang-format on
+    explicit(not is_convertible_v<U&&, T>) constexpr optional(optional<U>&& other)
     {
         if (other.has_value()) {
             emplace(*etl::move(other));
         }
     }
 
-    /// \brief (5) Converting move constructor: If other doesn't contain a
-    /// value, constructs an optional object that does not contain a value.
-    /// Otherwise, constructs an optional object that contains a value,
-    /// initialized as if direct-initializing (but not direct-list-initializing)
-    /// an object of type T with the expression etl::move(*other).
-    ///
-    /// https://en.cppreference.com/w/cpp/utility/optional/optional
-    template <typename U, enable_ctor_5_explicit<U> = 0>
-    explicit constexpr optional(optional<U>&& other)
-    {
-        if (other.has_value()) {
-            emplace(*etl::move(other));
-        }
-    }
-
-    /// \brief (6) Constructs an optional object that contains a value,
+    /// Constructs an optional object that contains a value,
     /// initialized as if direct-initializing.
     ///
     /// https://en.cppreference.com/w/cpp/utility/optional/optional
-    template <typename... Args, enable_ctor_6<Args...> = 0>
-    constexpr explicit optional(in_place_t /*unused*/, Args&&... args)
+    template <typename... Args>
+        requires is_constructible_v<T, Args...>
+    constexpr explicit optional(in_place_t /*tag*/, Args&&... args)
         : _var(etl::in_place_index<1>, etl::forward<Args>(args)...)
     {
     }
 
-    /// \brief (8) Constructs an optional object that contains a value,
+    /// Constructs an optional object that contains a value,
     /// initialized as if direct-initializing.
     ///
     /// https://en.cppreference.com/w/cpp/utility/optional/optional
-    template <typename U = T, enable_ctor_8_implicit<U> = 0>
-    constexpr optional(U&& value)
+    template <typename U = T>
+    // clang-format off
+        requires (
+            is_constructible_v<T, U &&>
+            and not is_same_v<remove_cvref_t<U>, in_place_t>
+            and not is_same_v<remove_cvref_t<U>, optional>
+        )
+    // clang-format on
+    explicit(not is_convertible_v<U&&, T>) constexpr optional(U&& value)
         : _var(etl::in_place_index<1>, etl::forward<U>(value))
     {
     }
 
-    /// \brief (8) Constructs an optional object that contains a value,
-    /// initialized as if direct-initializing.
-    ///
-    /// https://en.cppreference.com/w/cpp/utility/optional/optional
-    template <typename U = T, enable_ctor_8_explicit<U> = 0>
-    explicit constexpr optional(U&& value)
-        : _var(etl::in_place_index<1>, etl::forward<U>(value))
-    {
-    }
-
-    /// \brief If *this contains a value before the call, the contained value is
+    /// If *this contains a value before the call, the contained value is
     /// destroyed by calling its destructor as if by value().T::~T(). *this does
     /// not contain a value after this call.
     constexpr auto operator=(etl::nullopt_t /*unused*/) noexcept -> optional&
@@ -315,28 +224,55 @@ public:
         return *this;
     }
 
-    /// \brief Assigns the state of other.
+    /// Assigns the state of other.
     constexpr auto operator=(optional const& other) -> optional& = default;
 
-    /// \brief Assigns the state of other.
+    /// Assigns the state of other.
     constexpr auto operator=(optional&& other) noexcept -> optional& = default;
 
-    /// \brief Perfect-forwarded assignment.
+    /// Perfect-forwarded assignment.
     ///
-    /// \details Depending on whether *this contains a value before the call,
+    /// Depending on whether *this contains a value before the call,
     /// the contained value is either direct-initialized from
     /// etl::forward<U>(value) or assigned from etl::forward<U>(value).
     ///
     /// https://en.cppreference.com/w/cpp/utility/optional/operator%3D
-    template <typename U = T, enable_assign_forward<U> = 0>
+    template <typename U = T>
+    // clang-format off
+        requires (
+                    is_assignable_v<T&, U>
+            and     is_constructible_v<T, U>
+            and not is_same_v<optional<T>, decay_t<U>>
+            and not is_scalar_v<T>
+            and not is_same_v<T, decay_t<U>>
+        )
+    // clang-format on
     constexpr auto operator=(U&& value) -> optional&
     {
         emplace(etl::forward<U>(value));
         return *this;
     }
 
-    /// \brief Assigns the state of other.
-    template <typename U = T, enable_assign_other_copy<U> = 0>
+    /// Assigns the state of other.
+    template <typename U = T>
+    // clang-format off
+        requires (
+                    is_constructible_v<T, U const&>
+                and is_assignable_v<T&, U const&>
+            and not is_constructible_v<T, optional<U>&>
+            and not is_constructible_v<T, optional<U> const&>
+            and not is_constructible_v<T, optional<U>&&>
+            and not is_constructible_v<T, optional<U> const&&>
+            and not is_convertible_v<optional<U>&, T>
+            and not is_convertible_v<optional<U> const&, T>
+            and not is_convertible_v<optional<U>&&, T>
+            and not is_convertible_v<optional<U> const&&, T>
+            and not is_assignable_v<T&, optional<U>&>
+            and not is_assignable_v<T&, optional<U> const&>
+            and not is_assignable_v<T&, optional<U>&&>
+            and not is_assignable_v<T&, optional<U> const&&>
+        )
+    // clang-format on
     constexpr auto operator=(optional<U> const& other) -> optional&
     {
         if (has_value()) {
@@ -354,8 +290,26 @@ public:
         return *this;
     }
 
-    /// \brief Assigns the state of other.
-    template <typename U = T, enable_assign_other_move<U> = 0>
+    /// Assigns the state of other.
+    template <typename U = T>
+    // clang-format off
+        requires (
+                    is_constructible_v<T, U>
+                and is_assignable_v<T&, U>
+            and not is_constructible_v<T, optional<U>&>
+            and not is_constructible_v<T, optional<U> const&>
+            and not is_constructible_v<T, optional<U>&&>
+            and not is_constructible_v<T, optional<U> const&&>
+            and not is_convertible_v<optional<U>&, T>
+            and not is_convertible_v<optional<U> const&, T>
+            and not is_convertible_v<optional<U>&&, T>
+            and not is_convertible_v<optional<U> const&&, T>
+            and not is_assignable_v<T&, optional<U>&>
+            and not is_assignable_v<T&, optional<U> const&>
+            and not is_assignable_v<T&, optional<U>&&>
+            and not is_assignable_v<T&, optional<U> const&&>
+        )
+    // clang-format on
     constexpr auto operator=(optional<U>&& other) -> optional&
     {
         if (has_value()) {
@@ -373,18 +327,18 @@ public:
         return *this;
     }
 
-    /// \brief Checks whether *this contains a value.
+    /// Checks whether *this contains a value.
     [[nodiscard]] constexpr auto has_value() const noexcept -> bool { return _var.index() == 1; }
 
-    /// \brief Checks whether *this contains a value.
+    /// Checks whether *this contains a value.
     [[nodiscard]] constexpr explicit operator bool() const noexcept { return has_value(); }
 
-    /// \brief If *this contains a value, destroy that value as if by
+    /// If *this contains a value, destroy that value as if by
     /// value().~value_type(). Otherwise, there are no effects. *this does not
     /// contain a value after this call.
     constexpr auto reset() noexcept -> void { _var.template emplace<0>(etl::nullopt); }
 
-    /// \brief Returns the contained value if *this has a value, otherwise
+    /// Returns the contained value if *this has a value, otherwise
     /// returns default_value.
     template <typename U>
     [[nodiscard]] constexpr auto value_or(U&& defaultValue) const& -> value_type
@@ -392,7 +346,7 @@ public:
         return has_value() ? (**this) : static_cast<value_type>(etl::forward<U>(defaultValue));
     }
 
-    /// \brief Returns the contained value if *this has a value, otherwise
+    /// Returns the contained value if *this has a value, otherwise
     /// returns default_value.
     template <typename U>
     [[nodiscard]] constexpr auto value_or(U&& defaultValue) && -> value_type
@@ -400,15 +354,15 @@ public:
         return has_value() ? etl::move((**this)) : static_cast<value_type>(etl::forward<U>(defaultValue));
     }
 
-    /// \brief Returns a pointer to the contained value. The pointer is null if
+    /// Returns a pointer to the contained value. The pointer is null if
     /// the optional is empty.
     [[nodiscard]] constexpr auto operator->() const -> value_type const* { return etl::get_if<1>(&_var); }
 
-    /// \brief Returns a pointer to the contained value. The pointer is null if
+    /// Returns a pointer to the contained value. The pointer is null if
     /// the optional is empty.
     [[nodiscard]] constexpr auto operator->() -> value_type* { return etl::get_if<1>(&_var); }
 
-    /// \brief Returns a reference to the contained value.
+    /// Returns a reference to the contained value.
     ///
     /// \details This operator only checks whether the optional contains a
     /// value in debug builds! You can do so manually by using has_value() or
@@ -422,7 +376,7 @@ public:
         return etl::unchecked_get<1>(_var);
     }
 
-    /// \brief Returns a reference to the contained value.
+    /// Returns a reference to the contained value.
     ///
     /// \details This operator only checks whether the optional contains a
     /// value in debug builds! You can do so manually by using has_value() or
@@ -436,7 +390,7 @@ public:
         return etl::unchecked_get<1>(_var);
     }
 
-    /// \brief Returns a reference to the contained value.
+    /// Returns a reference to the contained value.
     ///
     /// \details This operator only checks whether the optional contains a
     /// value in debug builds! You can do so manually by using has_value() or
@@ -450,7 +404,7 @@ public:
         return etl::move(etl::unchecked_get<1>(_var));
     }
 
-    /// \brief Returns a reference to the contained value.
+    /// Returns a reference to the contained value.
     ///
     /// \details This operator only checks whether the optional contains a
     /// value in debug builds! You can do so manually by using has_value() or
@@ -464,14 +418,14 @@ public:
         return etl::move(etl::unchecked_get<1>(_var));
     }
 
-    /// \brief Swaps the contents with those of other.
+    /// Swaps the contents with those of other.
     constexpr auto swap(optional& other)
         noexcept(etl::is_nothrow_move_constructible_v<value_type> && etl::is_nothrow_swappable_v<value_type>) -> void
     {
         etl::swap(*this, other);
     }
 
-    /// \brief Constructs the contained value in-place. If *this already
+    /// Constructs the contained value in-place. If *this already
     /// contains a value before the call, the contained value is destroyed by
     /// calling its destructor.
     template <typename... Args>
@@ -635,7 +589,7 @@ template <typename T, typename U>
     if (static_cast<bool>(lhs) != static_cast<bool>(rhs)) {
         return false;
     }
-    if (!static_cast<bool>(lhs) && !static_cast<bool>(rhs)) {
+    if (not static_cast<bool>(lhs) and not static_cast<bool>(rhs)) {
         return true;
     }
     return (*lhs) == (*rhs);
@@ -650,7 +604,7 @@ template <typename T, typename U>
     if (static_cast<bool>(lhs) != static_cast<bool>(rhs)) {
         return true;
     }
-    if (!static_cast<bool>(lhs) && !static_cast<bool>(rhs)) {
+    if (not static_cast<bool>(lhs) and not static_cast<bool>(rhs)) {
         return false;
     }
     return (*lhs) != (*rhs);
@@ -662,10 +616,10 @@ template <typename T, typename U>
 template <typename T, typename U>
 [[nodiscard]] constexpr auto operator<(optional<T> const& lhs, optional<U> const& rhs) -> bool
 {
-    if (!static_cast<bool>(rhs)) {
+    if (not static_cast<bool>(rhs)) {
         return false;
     }
-    if (!static_cast<bool>(lhs)) {
+    if (not static_cast<bool>(lhs)) {
         return true;
     }
     return (*lhs) < (*rhs);
@@ -677,10 +631,10 @@ template <typename T, typename U>
 template <typename T, typename U>
 [[nodiscard]] constexpr auto operator>(optional<T> const& lhs, optional<U> const& rhs) -> bool
 {
-    if (!static_cast<bool>(lhs)) {
+    if (not static_cast<bool>(lhs)) {
         return false;
     }
-    if (!static_cast<bool>(rhs)) {
+    if (not static_cast<bool>(rhs)) {
         return true;
     }
     return (*lhs) > (*rhs);
@@ -692,10 +646,10 @@ template <typename T, typename U>
 template <typename T, typename U>
 [[nodiscard]] constexpr auto operator<=(optional<T> const& lhs, optional<U> const& rhs) -> bool
 {
-    if (!static_cast<bool>(lhs)) {
+    if (not static_cast<bool>(lhs)) {
         return true;
     }
-    if (!static_cast<bool>(rhs)) {
+    if (not static_cast<bool>(rhs)) {
         return false;
     }
     return (*lhs) <= (*rhs);
@@ -707,10 +661,10 @@ template <typename T, typename U>
 template <typename T, typename U>
 [[nodiscard]] constexpr auto operator>=(optional<T> const& lhs, optional<U> const& rhs) -> bool
 {
-    if (!static_cast<bool>(rhs)) {
+    if (not static_cast<bool>(rhs)) {
         return true;
     }
-    if (!static_cast<bool>(lhs)) {
+    if (not static_cast<bool>(lhs)) {
         return false;
     }
     return (*lhs) >= (*rhs);
@@ -724,7 +678,7 @@ template <typename T, typename U>
 template <typename T>
 [[nodiscard]] constexpr auto operator==(optional<T> const& opt, etl::nullopt_t /*unused*/) noexcept -> bool
 {
-    return !opt;
+    return not opt;
 }
 
 /// \brief Compares opt with a nullopt. Equivalent to when comparing to an
@@ -735,7 +689,7 @@ template <typename T>
 template <typename T>
 [[nodiscard]] constexpr auto operator==(etl::nullopt_t /*unused*/, optional<T> const& opt) noexcept -> bool
 {
-    return !opt;
+    return not opt;
 }
 
 /// \brief Compares opt with a nullopt. Equivalent to when comparing to an
@@ -790,7 +744,7 @@ template <typename T>
 template <typename T>
 [[nodiscard]] constexpr auto operator<=(optional<T> const& opt, etl::nullopt_t /*unused*/) noexcept -> bool
 {
-    return !opt;
+    return not opt;
 }
 
 /// \brief Compares opt with a nullopt. Equivalent to when comparing to an
@@ -845,7 +799,7 @@ template <typename T>
 template <typename T>
 [[nodiscard]] constexpr auto operator>=(etl::nullopt_t /*unused*/, optional<T> const& opt) noexcept -> bool
 {
-    return !opt;
+    return not opt;
 }
 
 /// \brief Compares opt with a value. The values are compared (using the

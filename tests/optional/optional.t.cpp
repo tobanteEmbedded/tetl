@@ -557,6 +557,10 @@ constexpr auto test_all() -> bool
 
 auto main() -> int
 {
+#if defined(_MSC_VER) and not defined(__clang__)
+    CHECK(test_all());
+#else
     STATIC_CHECK(test_all());
+#endif
     return 0;
 }
