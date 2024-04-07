@@ -2,6 +2,7 @@
 
 #include <etl/variant.hpp>
 
+#include <etl/concepts.hpp>
 #include <etl/cstdint.hpp>
 #include <etl/type_traits.hpp>
 #include <etl/utility.hpp>
@@ -17,6 +18,13 @@ constexpr auto test() -> bool
     using variant = etl::variant2<int, long, float>;
     CHECK(etl::is_trivially_copyable_v<variant>);
     CHECK(etl::is_trivially_destructible_v<variant>);
+    CHECK(etl::constructible_from<variant>);
+    CHECK(etl::constructible_from<variant, etl::in_place_index_t<0>, int>);
+    CHECK(etl::constructible_from<variant, etl::in_place_index_t<1>, long>);
+    CHECK(etl::constructible_from<variant, etl::in_place_index_t<2>, float>);
+    CHECK(etl::constructible_from<variant, etl::in_place_type_t<int>, int>);
+    CHECK(etl::constructible_from<variant, etl::in_place_type_t<long>, long>);
+    CHECK(etl::constructible_from<variant, etl::in_place_type_t<float>, float>);
     CHECK(etl::get_if<0>(static_cast<variant*>(nullptr)) == nullptr);
     CHECK(etl::get_if<1>(static_cast<variant*>(nullptr)) == nullptr);
 
