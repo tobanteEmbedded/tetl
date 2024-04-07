@@ -12,8 +12,13 @@ jobs:
     strategy:
       matrix:
         cxx: [20, 23, 26]
+        flags:
+          [
+            { cmake: "-D TETL_BUILD_ASAN=ON", name: "ASAN" },
+            { cmake: "-D TETL_BUILD_UBSAN=ON", name: "UBSAN" },
+          ]
       fail-fast: false
-    name: C++${{ matrix.cxx }}
+    name: C++${{ matrix.cxx }} ${{ matrix.flags.name }}
     steps:
       - name: check out code
         uses: actions/checkout@v4
@@ -39,8 +44,7 @@ jobs:
           -D CMAKE_CXX_COMPILER=clang++-18
           -D CMAKE_CXX_STANDARD=${{ matrix.cxx }}
           -D CMAKE_EXPORT_COMPILE_COMMANDS=ON
-          -D TETL_BUILD_ASAN=ON
-          -D TETL_BUILD_UBSAN=ON
+          ${{ matrix.flags.cmake }}
 
       - name: dump config
         run: cat build/compile_commands.json
