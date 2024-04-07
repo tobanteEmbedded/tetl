@@ -13,6 +13,7 @@
 
 #include <etl/_config/all.hpp>
 
+#include <etl/_optional/bad_optional_access.hpp>
 #include <etl/_optional/make_optional.hpp>
 #include <etl/_optional/nullopt.hpp>
 #include <etl/_optional/optional.hpp>

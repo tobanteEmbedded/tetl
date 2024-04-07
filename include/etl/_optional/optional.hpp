@@ -5,50 +5,34 @@
 
 #include <etl/_config/all.hpp>
 
+#include <etl/_cassert/assert.hpp>
 #include <etl/_concepts/copy_constructible.hpp>
 #include <etl/_concepts/move_constructible.hpp>
 #include <etl/_concepts/same_as.hpp>
-#include <etl/_exception/raise.hpp>
 #include <etl/_functional/hash.hpp>
 #include <etl/_functional/invoke.hpp>
 #include <etl/_memory/addressof.hpp>
 #include <etl/_new/operator.hpp>
-#include <etl/_optional/bad_optional_access.hpp>
 #include <etl/_optional/nullopt.hpp>
-#include <etl/_optional/sfinae_base.hpp>
 #include <etl/_type_traits/add_lvalue_reference.hpp>
 #include <etl/_type_traits/conjunction.hpp>
 #include <etl/_type_traits/decay.hpp>
-#include <etl/_type_traits/enable_if.hpp>
 #include <etl/_type_traits/invoke_result.hpp>
 #include <etl/_type_traits/is_assignable.hpp>
 #include <etl/_type_traits/is_constructible.hpp>
 #include <etl/_type_traits/is_convertible.hpp>
-#include <etl/_type_traits/is_copy_assignable.hpp>
-#include <etl/_type_traits/is_copy_constructible.hpp>
 #include <etl/_type_traits/is_lvalue_reference.hpp>
-#include <etl/_type_traits/is_move_assignable.hpp>
-#include <etl/_type_traits/is_move_constructible.hpp>
-#include <etl/_type_traits/is_nothrow_move_assignable.hpp>
 #include <etl/_type_traits/is_nothrow_move_constructible.hpp>
 #include <etl/_type_traits/is_nothrow_swappable.hpp>
-#include <etl/_type_traits/is_object.hpp>
-#include <etl/_type_traits/is_reference.hpp>
 #include <etl/_type_traits/is_same.hpp>
 #include <etl/_type_traits/is_scalar.hpp>
 #include <etl/_type_traits/is_specialized.hpp>
-#include <etl/_type_traits/is_swappable.hpp>
-#include <etl/_type_traits/is_trivially_copy_assignable.hpp>
-#include <etl/_type_traits/is_trivially_copy_constructible.hpp>
-#include <etl/_type_traits/is_trivially_destructible.hpp>
-#include <etl/_type_traits/is_trivially_move_assignable.hpp>
-#include <etl/_type_traits/is_trivially_move_constructible.hpp>
-#include <etl/_type_traits/negation.hpp>
 #include <etl/_type_traits/remove_const.hpp>
 #include <etl/_type_traits/remove_cv.hpp>
 #include <etl/_type_traits/remove_cvref.hpp>
 #include <etl/_utility/forward.hpp>
 #include <etl/_utility/in_place.hpp>
+#include <etl/_utility/in_place_index.hpp>
 #include <etl/_utility/move.hpp>
 #include <etl/_utility/swap.hpp>
 #include <etl/_variant/monostate.hpp>
@@ -114,13 +98,13 @@ struct optional {
     constexpr optional() noexcept = default;
 
     /// Constructs an object that does not contain a value.
-    constexpr optional(etl::nullopt_t /*null*/) noexcept { }
+    constexpr optional(nullopt_t /*null*/) noexcept { }
 
     /// Copy constructor.
     constexpr optional(optional const&) = default;
 
     /// Move constructor.
-    constexpr optional(optional&&) noexcept(etl::is_nothrow_move_constructible_v<value_type>) = default;
+    constexpr optional(optional&&) noexcept(is_nothrow_move_constructible_v<value_type>) = default;
 
     /// Converting copy constructor
     ///
@@ -133,19 +117,18 @@ struct optional {
     /// https://en.cppreference.com/w/cpp/utility/optional/optional
     template <typename U>
     // clang-format off
-        requires(
+        requires (
                     is_constructible_v<T, U const&>
             and not is_same_v<remove_cv_t<U>, bool>
-            and (
-                    not is_constructible_v<T, optional<U>&>
-                and not is_constructible_v<T, optional<U> const&>
-                and not is_constructible_v<T, optional<U> &&>
-                and not is_constructible_v<T, optional<U> const&&>
-                and not is_convertible_v<optional<U>&, T>
-                and not is_convertible_v<optional<U> const&, T>
-                and not is_convertible_v<optional<U>&&, T>
-                and not is_convertible_v<optional<U> const&&, T>
-            )
+            and not is_constructible_v<T, optional<U>&>
+            and not is_constructible_v<T, optional<U> const&>
+            and not is_constructible_v<T, optional<U> &&>
+            and not is_constructible_v<T, optional<U> const&&>
+            and not is_convertible_v<optional<U>&, T>
+            and not is_convertible_v<optional<U> const&, T>
+            and not is_convertible_v<optional<U>&&, T>
+            and not is_convertible_v<optional<U> const&&, T>
+
         )
     // clang-format on
     explicit(not is_convertible_v<U const&, T>) constexpr optional(optional<U> const& other)
@@ -192,7 +175,7 @@ struct optional {
     template <typename... Args>
         requires is_constructible_v<T, Args...>
     constexpr explicit optional(in_place_t /*tag*/, Args&&... args)
-        : _var(etl::in_place_index<1>, etl::forward<Args>(args)...)
+        : _var(in_place_index<1>, etl::forward<Args>(args)...)
     {
     }
 
@@ -209,7 +192,7 @@ struct optional {
         )
     // clang-format on
     explicit(not is_convertible_v<U&&, T>) constexpr optional(U&& value)
-        : _var(etl::in_place_index<1>, etl::forward<U>(value))
+        : _var(in_place_index<1>, etl::forward<U>(value))
     {
     }
 
@@ -240,7 +223,7 @@ struct optional {
         requires (
                     is_assignable_v<T&, U>
             and     is_constructible_v<T, U>
-            and not is_same_v<optional<T>, decay_t<U>>
+            and not is_same_v<optional, decay_t<U>>
             and not is_scalar_v<T>
             and not is_same_v<T, decay_t<U>>
         )
@@ -322,7 +305,7 @@ struct optional {
     /// If *this contains a value, destroy that value as if by
     /// value().~value_type(). Otherwise, there are no effects. *this does not
     /// contain a value after this call.
-    constexpr auto reset() noexcept -> void { _var.template emplace<0>(etl::nullopt); }
+    constexpr auto reset() noexcept -> void { _var.template emplace<0>(nullopt); }
 
     /// Returns the contained value if *this has a value, otherwise
     /// returns default_value.
@@ -406,7 +389,7 @@ struct optional {
 
     /// Swaps the contents with those of other.
     constexpr auto swap(optional& other)
-        noexcept(etl::is_nothrow_move_constructible_v<value_type> && etl::is_nothrow_swappable_v<value_type>) -> void
+        noexcept(is_nothrow_move_constructible_v<value_type> and is_nothrow_swappable_v<value_type>) -> void
     {
         etl::swap(*this, other);
     }
@@ -426,7 +409,7 @@ struct optional {
         if (*this) {
             return etl::invoke(etl::forward<F>(f), **this);
         }
-        return etl::remove_cvref_t<etl::invoke_result_t<F, T&>>{};
+        return remove_cvref_t<invoke_result_t<F, T&>>{};
     }
 
     template <typename F>
@@ -435,7 +418,7 @@ struct optional {
         if (*this) {
             return etl::invoke(etl::forward<F>(f), **this);
         }
-        return etl::remove_cvref_t<etl::invoke_result_t<F, T const&>>{};
+        return remove_cvref_t<invoke_result_t<F, T const&>>{};
     }
 
     template <typename F>
@@ -444,7 +427,7 @@ struct optional {
         if (*this) {
             return etl::invoke(etl::forward<F>(f), etl::move(**this));
         }
-        return etl::remove_cvref_t<etl::invoke_result_t<F, T>>{};
+        return remove_cvref_t<invoke_result_t<F, T>>{};
     }
 
     template <typename F>
@@ -453,25 +436,25 @@ struct optional {
         if (*this) {
             return etl::invoke(etl::forward<F>(f), etl::move(**this));
         }
-        return etl::remove_cvref_t<etl::invoke_result_t<F, T const>>{};
+        return remove_cvref_t<invoke_result_t<F, T const>>{};
     }
 
     template <typename F>
-        requires(etl::copy_constructible<T> and etl::same_as<etl::remove_cvref_t<etl::invoke_result_t<F>>, optional>)
+        requires(copy_constructible<T> and same_as<remove_cvref_t<invoke_result_t<F>>, optional>)
     constexpr auto or_else(F&& f) const& -> optional
     {
         return *this ? *this : etl::forward<F>(f)();
     }
 
     template <typename F>
-        requires(etl::move_constructible<T> and etl::same_as<etl::remove_cvref_t<etl::invoke_result_t<F>>, optional>)
+        requires(move_constructible<T> and same_as<remove_cvref_t<invoke_result_t<F>>, optional>)
     constexpr auto or_else(F&& f) && -> optional
     {
         return *this ? etl::move(*this) : etl::forward<F>(f)();
     }
 
 private:
-    etl::variant<etl::nullopt_t, T> _var{etl::nullopt};
+    variant<nullopt_t, T> _var{nullopt};
 };
 
 // https://www.open-std.org/jtc1/sc22/wg21/docs/papers/2024/p2988r3.pdf
@@ -481,23 +464,23 @@ struct optional<T&> {
 
     constexpr optional() noexcept = default;
 
-    constexpr optional(etl::nullopt_t /*tag*/) noexcept
+    constexpr optional(nullopt_t /*tag*/) noexcept
         : _ptr{nullptr}
     {
     }
 
     template <typename U = T>
-        requires(not etl::is_same_v<etl::remove_cvref_t<U>, optional>)
-    constexpr explicit(not etl::is_convertible_v<U, T>) optional(U&& v)
+        requires(not is_same_v<remove_cvref_t<U>, optional>)
+    constexpr explicit(not is_convertible_v<U, T>) optional(U&& v)
         : _ptr(etl::addressof(v))
     {
-        static_assert(etl::is_constructible_v<etl::add_lvalue_reference_t<T>, U>, "Must be able to bind U to T&");
-        static_assert(etl::is_lvalue_reference_v<U>, "U must be an lvalue");
+        static_assert(is_constructible_v<add_lvalue_reference_t<T>, U>, "Must be able to bind U to T&");
+        static_assert(is_lvalue_reference_v<U>, "U must be an lvalue");
     }
 
     template <typename U>
-        requires(not etl::is_same_v<etl::remove_cvref_t<U>, optional>)
-    constexpr explicit(not etl::is_convertible_v<U, T>) optional(optional<U> const& rhs)
+        requires(not is_same_v<remove_cvref_t<U>, optional>)
+    constexpr explicit(not is_convertible_v<U, T>) optional(optional<U> const& rhs)
         : _ptr(etl::addressof(*rhs))
     {
     }
@@ -509,19 +492,18 @@ struct optional<T&> {
     constexpr auto operator=(optional const&) noexcept -> optional& = default;
     constexpr auto operator=(optional&&) noexcept -> optional&      = default;
 
-    constexpr auto operator=(etl::nullopt_t /*tag*/) noexcept -> optional&
+    constexpr auto operator=(nullopt_t /*tag*/) noexcept -> optional&
     {
         _ptr = nullptr;
         return *this;
     }
 
     template <typename U = T>
-        requires(not etl::is_same_v<etl::remove_cvref_t<U>, optional>
-                 and not etl::conjunction_v<etl::is_scalar<T>, etl::is_same<T, etl::decay_t<U>>>)
+        requires(not is_same_v<remove_cvref_t<U>, optional> and not conjunction_v<is_scalar<T>, is_same<T, decay_t<U>>>)
     constexpr auto operator=(U&& v) -> optional&
     {
-        static_assert(etl::is_constructible_v<etl::add_lvalue_reference_t<T>, U>, "Must be able to bind U to T&");
-        static_assert(etl::is_lvalue_reference_v<U>, "U must be an lvalue");
+        static_assert(is_constructible_v<add_lvalue_reference_t<T>, U>, "Must be able to bind U to T&");
+        static_assert(is_lvalue_reference_v<U>, "U must be an lvalue");
         _ptr = etl::addressof(v);
         return *this;
     }
@@ -529,13 +511,13 @@ struct optional<T&> {
     template <typename U>
     constexpr auto operator=(optional<U> const& rhs) -> optional&
     {
-        static_assert(etl::is_constructible_v<etl::add_lvalue_reference_t<T>, U>, "Must be able to bind U to T&");
+        static_assert(is_constructible_v<add_lvalue_reference_t<T>, U>, "Must be able to bind U to T&");
         _ptr = rhs._ptr;
         return *this;
     }
 
     template <typename U = T>
-        requires(not etl::is_same_v<remove_cvref_t<U>, optional>)
+        requires(not is_same_v<remove_cvref_t<U>, optional>)
     constexpr auto emplace(U&& u) noexcept -> optional&
     {
         *this = etl::forward<U>(u);
