@@ -12,6 +12,12 @@ template <typename T>
 struct wrapper {
     T value;
     [[nodiscard]] explicit(false) constexpr operator T() const noexcept { return value; }
+
+    friend constexpr auto operator==(wrapper lhs, T rhs) noexcept -> bool { return lhs.value == rhs; }
+    friend constexpr auto operator==(T lhs, wrapper rhs) noexcept -> bool { return lhs == rhs.value; }
+
+    friend constexpr auto operator>(wrapper lhs, T rhs) noexcept -> bool { return lhs.value > rhs; }
+    friend constexpr auto operator>(T lhs, wrapper rhs) noexcept -> bool { return lhs > rhs.value; }
 };
 
 template <typename T>
@@ -91,8 +97,9 @@ constexpr auto test() -> bool
 
     // Assign U
     {
-        auto opt = etl::optional<T>{};
-        opt      = wrapper<T>{T(42)};
+        auto opt   = etl::optional<T>{};
+        auto other = wrapper<T>{T(42)};
+        opt        = other;
         CHECK(opt.has_value());
         CHECK(*opt == T(42));
     }
@@ -112,6 +119,41 @@ constexpr auto test() -> bool
         auto other = etl::optional<wrapper<T>>{etl::nullopt};
         opt        = other;
         CHECK_FALSE(opt.has_value());
+    }
+
+    // Compare Equal
+    {
+        CHECK(etl::optional<T>{} == etl::optional<T>{});
+        CHECK(etl::optional<T>{T(42)} == etl::optional<T>{T(42)});
+        CHECK_FALSE(etl::optional<T>{T(42)} == etl::optional<T>{T(99)});
+        CHECK_FALSE(etl::optional<T>{} == etl::optional<T>{T(99)});
+        CHECK_FALSE(etl::optional<T>{T(42)} == etl::optional<T>{});
+
+        CHECK(etl::optional<T>{} == etl::optional<wrapper<T>>{});
+        CHECK(etl::optional<T>{T(42)} == etl::optional<wrapper<T>>{T(42)});
+        CHECK_FALSE(etl::optional<T>{T(42)} == etl::optional<wrapper<T>>{T(99)});
+        CHECK_FALSE(etl::optional<T>{} == etl::optional<wrapper<T>>{T(99)});
+        CHECK_FALSE(etl::optional<T>{T(42)} == etl::optional<wrapper<T>>{});
+    }
+
+    // Compare Less
+    {
+        CHECK(etl::optional{T(42)} < etl::optional{T(99)});
+        CHECK(etl::optional{T(42)} < etl::optional<wrapper<T>>{T(99)});
+        CHECK(etl::optional<wrapper<T>>{T(42)} < etl::optional{T(99)});
+        CHECK(etl::optional<T>{} < etl::optional<T>{T(42)});
+        CHECK(etl::optional<T>{} < etl::optional<wrapper<T>>{T(42)});
+        CHECK_FALSE(etl::optional<T>{T(42)} < etl::optional<T>{});
+        CHECK_FALSE(etl::optional<T>{T(42)} < etl::optional<wrapper<T>>{});
+    }
+
+    // Compare Greater
+    {
+        CHECK(etl::optional{T(99)} > etl::optional{T(42)});
+        CHECK(etl::optional{T(99)} > etl::optional<wrapper<T>>{T(42)});
+        CHECK(etl::optional<wrapper<T>>{T(99)} > etl::optional{T(42)});
+        CHECK(etl::optional<T>{T(99)} > etl::optional<T>{});
+        CHECK(etl::optional<T>{T(99)} > etl::optional<wrapper<T>>{});
     }
 
     return true;
