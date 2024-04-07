@@ -165,19 +165,17 @@ struct optional {
     /// https://en.cppreference.com/w/cpp/utility/optional/optional
     template <typename U>
     // clang-format off
-        requires(
+        requires (
                     is_constructible_v<T, U&&>
             and not is_same_v<remove_cv_t<U>, bool>
-            and (
-                    not is_constructible_v<T, optional<U>&>
-                and not is_constructible_v<T, optional<U> const&>
-                and not is_constructible_v<T, optional<U> &&>
-                and not is_constructible_v<T, optional<U> const&&>
-                and not is_convertible_v<optional<U>&, T>
-                and not is_convertible_v<optional<U> const&, T>
-                and not is_convertible_v<optional<U>&&, T>
-                and not is_convertible_v<optional<U> const&&, T>
-            )
+            and not is_constructible_v<T, optional<U>&>
+            and not is_constructible_v<T, optional<U> const&>
+            and not is_constructible_v<T, optional<U> &&>
+            and not is_constructible_v<T, optional<U> const&&>
+            and not is_convertible_v<optional<U>&, T>
+            and not is_convertible_v<optional<U> const&, T>
+            and not is_convertible_v<optional<U>&&, T>
+            and not is_convertible_v<optional<U> const&&, T>
         )
     // clang-format on
     explicit(not is_convertible_v<U&&, T>) constexpr optional(optional<U>&& other)
@@ -275,16 +273,10 @@ struct optional {
     // clang-format on
     constexpr auto operator=(optional<U> const& other) -> optional&
     {
-        if (has_value()) {
-            if (other.has_value()) {
-                emplace(*other);
-                return *this;
-            }
-            reset();
-        }
-
         if (other.has_value()) {
             emplace(*other);
+        } else {
+            reset();
         }
 
         return *this;
@@ -312,16 +304,10 @@ struct optional {
     // clang-format on
     constexpr auto operator=(optional<U>&& other) -> optional&
     {
-        if (has_value()) {
-            if (other.has_value()) {
-                emplace(etl::move(*other));
-                return *this;
-            }
-            reset();
-        }
-
         if (other.has_value()) {
-            emplace(etl::move(*other));
+            emplace(*etl::move(other));
+        } else {
+            reset();
         }
 
         return *this;

@@ -28,9 +28,17 @@ constexpr auto test_opional_3() -> bool
     CHECK(opt4.has_value());
     CHECK(*opt4 == 42);
 
-    etl::optional<long> opt5{etl::move(opt1)};
+    etl::optional<long> opt5;
+    opt5 = etl::optional{143};
+    CHECK(opt5.has_value());
+    CHECK(*opt5 == 143);
+
+    opt5 = etl::move(opt1);
     CHECK(opt5.has_value());
     CHECK(*opt5 == 42);
+
+    opt5 = etl::optional<int>{};
+    CHECK_FALSE(opt5.has_value());
 
     return true;
 }
