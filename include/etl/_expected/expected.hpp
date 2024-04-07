@@ -17,7 +17,7 @@
 #include <etl/_utility/in_place.hpp>
 #include <etl/_utility/in_place_index.hpp>
 #include <etl/_utility/move.hpp>
-#include <etl/_variant/variant2.hpp>
+#include <etl/_variant/variant.hpp>
 
 namespace etl {
 
@@ -174,7 +174,7 @@ struct expected {
     }
 
 private:
-    etl::variant2<T, E> _u;
+    etl::variant<T, E> _u;
 };
 
 } // namespace etl

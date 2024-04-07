@@ -3,6 +3,7 @@
 #ifndef TETL_VARIANT_VARIANT_ALTERNATIVE_SELECTOR_HPP
 #define TETL_VARIANT_VARIANT_ALTERNATIVE_SELECTOR_HPP
 
+#include <etl/_type_traits/declval.hpp>
 #include <etl/_variant/overload.hpp>
 
 namespace etl::detail {
@@ -16,7 +17,7 @@ template <typename... Ts>
 inline constexpr auto variant_alternative_selector = etl::overload{variant_alternative_selector_single<Ts>{}...};
 
 template <typename T, typename... Ts>
-using variant_alternative_selector_t = decltype(variant_alternative_selector<Ts...>(T()));
+using variant_alternative_selector_t = decltype(variant_alternative_selector<Ts...>(etl::declval<T>()));
 
 } // namespace etl::detail
 

@@ -9,8 +9,8 @@
 #include <etl/_string/basic_static_string.hpp>
 #include <etl/_string_view/basic_string_view.hpp>
 #include <etl/_utility/forward.hpp>
+#include <etl/_variant/monostate.hpp>
 #include <etl/_variant/variant.hpp>
-
 namespace etl {
 
 template <typename Context>
@@ -65,8 +65,7 @@ public:
     template <typename T>
     explicit basic_format_arg(T* p) noexcept;
 
-    variant<                          //
-        monostate,                    //
+    variant<                          // variant<                         //        monostate,                    //
         bool,                         //
         char_type,                    //
         int,                          //

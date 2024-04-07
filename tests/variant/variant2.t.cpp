@@ -13,9 +13,9 @@ namespace {
 
 constexpr auto test() -> bool
 {
-    CHECK(sizeof(etl::variant2<etl::int8_t, etl::uint8_t, char8_t>) == sizeof(etl::int8_t) * 2);
+    CHECK(sizeof(etl::variant<etl::int8_t, etl::uint8_t, char8_t>) == sizeof(etl::int8_t) * 2);
 
-    using variant = etl::variant2<int, long, float>;
+    using variant = etl::variant<int, long, float>;
     CHECK(etl::is_trivially_copyable_v<variant>);
     CHECK(etl::is_trivially_destructible_v<variant>);
     CHECK(etl::constructible_from<variant>);
@@ -108,7 +108,7 @@ constexpr auto test() -> bool
     };
 
     {
-        using var_t = etl::variant2<int, float, non_trivial>;
+        using var_t = etl::variant<int, float, non_trivial>;
         auto var    = var_t{etl::in_place_type<non_trivial>, 42};
         CHECK(var.index() == 2);
         CHECK(etl::visit_with_index([](auto v) { return static_cast<etl::size_t>(v.index); }, var) == 2);
@@ -140,7 +140,7 @@ constexpr auto test() -> bool
         CHECK(var5.index() == 1);
     }
     {
-        using var_t    = etl::variant2<int, long, float>;
+        using var_t    = etl::variant<int, long, float>;
         auto const i7  = var_t{etl::in_place_type<int>, 7};
         auto const i16 = var_t{etl::in_place_type<int>, 16};
         auto const l7  = var_t{etl::in_place_type<long>, 7};

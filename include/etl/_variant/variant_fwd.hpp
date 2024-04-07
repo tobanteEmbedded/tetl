@@ -17,7 +17,7 @@ template <typename... Types>
 struct variant;
 
 template <typename... Types>
-struct variant2;
+struct variant;
 
 template <typename T>
 struct variant_size;
@@ -40,18 +40,6 @@ constexpr auto unchecked_get(variant<Ts...>&& v) -> auto&&;
 template <etl::size_t I, typename... Ts>
 constexpr auto unchecked_get(variant<Ts...> const&& v) -> auto const&&;
 
-template <etl::size_t I, typename... Ts>
-constexpr auto unchecked_get(variant2<Ts...>& v) -> auto&;
-
-template <etl::size_t I, typename... Ts>
-constexpr auto unchecked_get(variant2<Ts...> const& v) -> auto const&;
-
-template <etl::size_t I, typename... Ts>
-constexpr auto unchecked_get(variant2<Ts...>&& v) -> auto&&;
-
-template <etl::size_t I, typename... Ts>
-constexpr auto unchecked_get(variant2<Ts...> const&& v) -> auto const&&;
-
 template <typename T, typename... Types>
 constexpr auto get_if(variant<Types...>* pv) noexcept -> add_pointer_t<T>; // NOLINT
 
@@ -67,22 +55,6 @@ template <size_t I, typename... Types>
 constexpr auto get_if(variant<Types...> const* pv) noexcept -> add_pointer_t<typename variant_alternative<
                                                                 I,
                                                                 variant<Types...>>::type const>; // NOLINT
-
-template <typename T, typename... Types>
-constexpr auto get_if(variant2<Types...>* pv) noexcept -> add_pointer_t<T>; // NOLINT
-
-template <typename T, typename... Types>
-constexpr auto get_if(variant2<Types...> const* pv) noexcept -> add_pointer_t<T const>; // NOLINT
-
-template <size_t I, typename... Types>
-constexpr auto get_if(variant2<Types...>* pv) noexcept -> add_pointer_t<typename variant_alternative<
-                                                           I,
-                                                           variant2<Types...>>::type>; // NOLINT
-
-template <size_t I, typename... Types>
-constexpr auto get_if(variant2<Types...> const* pv) noexcept -> add_pointer_t<typename variant_alternative<
-                                                                 I,
-                                                                 variant2<Types...>>::type const>; // NOLINT
 
 namespace detail {
 constexpr auto make_variant_compare_op(auto op)

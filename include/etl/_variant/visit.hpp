@@ -25,9 +25,6 @@ namespace detail {
 template <typename... Ts>
 auto variant_access(etl::variant<Ts...> const* v) -> etl::variant<Ts...>;
 
-template <typename... Ts>
-auto variant_access(etl::variant2<Ts...> const* v) -> etl::variant2<Ts...>;
-
 template <typename T>
 using variant_access_t = decltype(variant_access(static_cast<etl::decay_t<T>*>(nullptr)));
 

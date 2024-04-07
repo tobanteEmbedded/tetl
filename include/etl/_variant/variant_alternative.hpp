@@ -17,12 +17,6 @@ struct variant_alternative<Idx, etl::variant<Ts...>> {
     using type = etl::meta::at_t<Idx, etl::meta::list<Ts...>>;
 };
 
-template <etl::size_t Idx, typename... Ts>
-struct variant_alternative<Idx, etl::variant2<Ts...>> {
-    static_assert(Idx < sizeof...(Ts));
-    using type = etl::meta::at_t<Idx, etl::meta::list<Ts...>>;
-};
-
 template <etl::size_t I, typename T>
 using variant_alternative_t = typename variant_alternative<I, T>::type;
 

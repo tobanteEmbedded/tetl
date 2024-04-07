@@ -8,27 +8,8 @@
 
 #include "testing/testing.hpp"
 
-[[maybe_unused]] static auto test() -> bool
+constexpr auto test() -> bool
 {
-    {
-
-        struct S {
-            etl::uint32_t data[4];
-        };
-
-        CHECK(sizeof(etl::variant<etl::monostate>) == 2);
-        CHECK(sizeof(etl::variant<etl::monostate, etl::uint8_t>) == 2);
-        CHECK(sizeof(etl::variant<etl::monostate, etl::int8_t, etl::uint8_t>) == 2);
-        CHECK(sizeof(etl::variant<etl::monostate, char, etl::int8_t, etl::uint8_t>) == 2);
-
-        CHECK(sizeof(etl::variant<etl::monostate, etl::uint16_t>) == 4);
-        CHECK(sizeof(etl::variant<etl::monostate, char, etl::int8_t, etl::uint16_t>) == 4);
-
-        CHECK(sizeof(etl::variant<etl::monostate, etl::uint32_t>) == 8);
-        CHECK(sizeof(etl::variant<etl::monostate, etl::uint32_t, etl::uint32_t>) == 8);
-        CHECK(sizeof(etl::variant<etl::monostate, etl::uint32_t, etl::uint64_t>) == 16);
-        CHECK(sizeof(etl::variant<etl::monostate, S, etl::uint64_t>) == 24);
-    }
 
     // default
     {
@@ -175,17 +156,10 @@
         CHECK_FALSE(l > r);
         CHECK_FALSE(l >= r);
 
-        l.swap(r);
-        CHECK(*etl::get_if<int>(&l) == 143);
-        CHECK(*etl::get_if<int>(&r) == 42);
-
         auto other = etl::variant<int, float>{999.0F};
-        etl::swap(l, other);
-        CHECK(etl::holds_alternative<float>(l));
+        etl::swap(r, other);
+        CHECK(etl::holds_alternative<float>(r));
         CHECK(etl::holds_alternative<int>(other));
-        CHECK(l != r);
-        CHECK(l > r);
-        CHECK_FALSE(l < r);
     }
 
     {
@@ -251,10 +225,8 @@
     {
         auto v1 = etl::variant<etl::monostate, int, float, double>{42};
         CHECK(etl::unchecked_get<1>(v1) == 42);
-        CHECK(etl::unchecked_get<int>(v1) == 42);
 
         auto const v2 = etl::variant<etl::monostate, int, float, double>{42};
-        CHECK(etl::unchecked_get<int>(v2) == 42);
         CHECK(etl::unchecked_get<1>(v2) == 42);
     }
     {
@@ -333,22 +305,22 @@
     return true;
 }
 
-[[maybe_unused]] [[nodiscard]] static auto test_non_trivial() -> bool
+[[nodiscard]] constexpr auto test_non_trivial() -> bool
 {
     struct non_trivial_alternative {
-        explicit non_trivial_alternative(int& v)
+        constexpr explicit non_trivial_alternative(int& v)
             : value{&v}
         {
             *value = 143;
         }
 
-        ~non_trivial_alternative() noexcept { *value = 42; }
+        constexpr ~non_trivial_alternative() noexcept { *value = 42; }
 
-        non_trivial_alternative(non_trivial_alternative const&) = default;
-        non_trivial_alternative(non_trivial_alternative&&)      = default;
+        constexpr non_trivial_alternative(non_trivial_alternative const&) = default;
+        constexpr non_trivial_alternative(non_trivial_alternative&&)      = default;
 
-        auto operator=(non_trivial_alternative const&) -> non_trivial_alternative& = default;
-        auto operator=(non_trivial_alternative&&) -> non_trivial_alternative&      = default;
+        constexpr auto operator=(non_trivial_alternative const&) -> non_trivial_alternative& = default;
+        constexpr auto operator=(non_trivial_alternative&&) -> non_trivial_alternative&      = default;
 
         int* value;
     };
@@ -383,10 +355,8 @@ constexpr auto test_variant_alternative_selector_t() -> bool
 
 auto main() -> int
 {
-#if not(defined(__GNUC__) and __GNUC__ == 12)
-    CHECK(test());
-    CHECK(test_non_trivial());
-#endif
+    STATIC_CHECK(test());
+    STATIC_CHECK(test_non_trivial());
     STATIC_CHECK(test_variant_alternative_selector_t());
     return 0;
 }

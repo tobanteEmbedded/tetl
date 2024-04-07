@@ -17,7 +17,6 @@
 #include <etl/_variant/overload.hpp>
 #include <etl/_variant/variadic_union.hpp>
 #include <etl/_variant/variant.hpp>
-#include <etl/_variant/variant2.hpp>
 #include <etl/_variant/variant_alternative.hpp>
 #include <etl/_variant/variant_fwd.hpp>
 #include <etl/_variant/variant_size.hpp>

@@ -12,9 +12,6 @@ namespace etl {
 template <typename... Ts>
 struct variant_size<variant<Ts...>> : integral_constant<etl::size_t, sizeof...(Ts)> { };
 
-template <typename... Ts>
-struct variant_size<variant2<Ts...>> : integral_constant<etl::size_t, sizeof...(Ts)> { };
-
 template <typename T>
 struct variant_size<T const> : variant_size<T>::type { };
 
