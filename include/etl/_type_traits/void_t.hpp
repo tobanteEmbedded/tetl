@@ -5,6 +5,7 @@
 
 namespace etl {
 
+/// \ingroup type_traits
 template <typename...>
 using void_t = void;
 

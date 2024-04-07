@@ -5,10 +5,13 @@
 
 namespace etl {
 
-/// \brief Provides the member typedef type which is the same as T, except that
+/// Provides the member typedef type which is the same as T, except that
 /// its topmost cv-qualifiers are removed. Removes the topmost volatile.
-/// \details The behavior of a program that adds specializations for any of the
+///
+/// The behavior of a program that adds specializations for any of the
 /// templates described on this page is undefined.
+///
+/// \ingroup type_traits
 template <typename Type>
 struct remove_volatile {
     using type = Type;
@@ -19,6 +22,7 @@ struct remove_volatile<Type volatile> {
     using type = Type;
 };
 
+/// \ingroup type_traits
 template <typename T>
 using remove_volatile_t = typename etl::remove_volatile<T>::type;
 

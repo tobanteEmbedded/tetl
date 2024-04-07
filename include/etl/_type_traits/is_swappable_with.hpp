@@ -32,12 +32,10 @@ requires(etl::is_swappable<T>::value)
 constexpr auto swap(T (&a)[N], T (&b)[N]) noexcept(etl::is_nothrow_swappable<T>::value) -> void;
 
 // swap(declval<T>(), declval<U>()) is not valid
-/// \internal
 template <typename T, typename U, typename = void>
 struct _swappable_with_helper : false_type { }; // NOLINT
 
 // swap(declval<T>(), declval<U>()) is valid
-/// \internal
 template <typename T, typename U>
 struct _swappable_with_helper<T, U, void_t<decltype(swap(declval<T>(), declval<U>()))>> : true_type { }; // NOLINT
 

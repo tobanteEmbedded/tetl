@@ -6,8 +6,8 @@
 #include <etl/_type_traits/conditional.hpp>
 
 namespace etl {
-/// \brief Smallest fixed-width unsigned integer type that can represent values
-/// in the range [0, N].
+/// Smallest unsigned integer type that can represent values in the range [0, N].
+/// \ingroup type_traits
 // clang-format off
 template<unsigned long long N>
 using smallest_size_t =

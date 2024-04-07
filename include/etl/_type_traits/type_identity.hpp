@@ -5,11 +5,13 @@
 
 namespace etl {
 
+/// \ingroup type_traits
 template <typename T>
 struct type_identity {
     using type = T;
 };
 
+/// \ingroup type_traits
 template <typename T>
 using type_identity_t = T;
 

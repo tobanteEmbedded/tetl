@@ -12,17 +12,18 @@
 namespace etl {
 
 // clang-format off
-
-/// \internal
 template <typename T, typename U>
 struct _swap_no_throw : bool_constant<noexcept(swap(declval<T>(), declval<U>())) && noexcept(swap(declval<U>(), declval<T>()))> { }; // NOLINT
+// clang-format on
 
+/// \ingroup type_traits
 template <typename T, typename U>
-struct is_nothrow_swappable_with : bool_constant<conjunction_v<is_swappable_with<T, U>, _swap_no_throw<T, U>>> {};
+struct is_nothrow_swappable_with : bool_constant<conjunction_v<is_swappable_with<T, U>, _swap_no_throw<T, U>>> { };
 
+/// \ingroup type_traits
+/// \relates is_nothrow_swappable_with
 template <typename T, typename U>
 inline constexpr bool is_nothrow_swappable_with_v = is_nothrow_swappable_with<T, U>::value;
-// clang-format on
 
 } // namespace etl
 

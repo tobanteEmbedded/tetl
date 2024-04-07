@@ -8,6 +8,7 @@ namespace etl {
 /// \brief Provides the member typedef type which is the type pointed to by T,
 /// or, if T is not a pointer, then type is the same as T. The behavior of a
 /// program that adds specializations for remove_pointer is undefined.
+/// \ingroup type_traits
 template <typename T>
 struct remove_pointer {
     using type = T;

@@ -21,10 +21,12 @@ struct underlying_type<T> {
 
 } // namespace detail
 
-/// \brief The underlying type of an enum.
+/// The underlying type of an enum.
+/// \ingroup type_traits
 template <typename T>
 struct underlying_type : etl::detail::underlying_type<T> { };
 
+/// \ingroup type_traits
 template <typename T>
 using underlying_type_t = typename etl::underlying_type<T>::type;
 
