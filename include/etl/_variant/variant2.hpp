@@ -19,12 +19,15 @@
 #include <etl/_meta/index_of.hpp>
 #include <etl/_type_traits/add_pointer.hpp>
 #include <etl/_type_traits/index_constant.hpp>
+#include <etl/_type_traits/is_assignable.hpp>
 #include <etl/_type_traits/is_constructible.hpp>
 #include <etl/_type_traits/is_copy_assignable.hpp>
 #include <etl/_type_traits/is_copy_constructible.hpp>
 #include <etl/_type_traits/is_default_constructible.hpp>
 #include <etl/_type_traits/is_move_assignable.hpp>
 #include <etl/_type_traits/is_move_constructible.hpp>
+#include <etl/_type_traits/is_nothrow_assignable.hpp>
+#include <etl/_type_traits/is_nothrow_constructible.hpp>
 #include <etl/_type_traits/is_nothrow_copy_assignable.hpp>
 #include <etl/_type_traits/is_nothrow_copy_constructible.hpp>
 #include <etl/_type_traits/is_nothrow_default_constructible.hpp>
@@ -171,6 +174,19 @@ public:
         )
     {
         assign(etl::move(other));
+        return *this;
+    }
+
+    template <typename T>
+        requires(not etl::is_same_v<etl::remove_cvref_t<T>, variant2>
+                 and etl::is_assignable_v<etl::detail::variant_alternative_selector_t<T, Ts...>&, T>
+                 and etl::is_assignable_v<etl::detail::variant_alternative_selector_t<T, Ts...>, T>)
+    constexpr auto operator=(T&& t) noexcept(
+        (etl::is_nothrow_assignable_v<etl::detail::variant_alternative_selector_t<T, Ts...>&, T>
+         and etl::is_nothrow_constructible_v<etl::detail::variant_alternative_selector_t<T, Ts...>, T>)
+    ) -> variant2&
+    {
+        emplace<etl::detail::variant_alternative_selector_t<T, Ts...>>(etl::forward<T>(t));
         return *this;
     }
 

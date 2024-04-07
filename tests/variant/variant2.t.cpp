@@ -132,9 +132,12 @@ constexpr auto test() -> bool
         CHECK(etl::holds_alternative<float>(var3));
         CHECK(var3[etl::index_v<1>] == 1.43F);
 
-        var_t const var5 = 42;
+        var_t var5 = 42;
         CHECK(var5.index() == 0);
         CHECK(var5 != var_t{143.0F});
+
+        var5 = 143.0F;
+        CHECK(var5.index() == 1);
     }
     {
         using var_t    = etl::variant2<int, long, float>;
