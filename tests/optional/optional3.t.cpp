@@ -70,14 +70,14 @@ constexpr auto test() -> bool
 
     // From U implicit
     {
-        etl::optional<T> const opt = wrapper<T>(T(99));
+        etl::optional<T> const opt = wrapper<T>{T(99)};
         CHECK(opt.has_value());
         CHECK(*opt == T(99));
     }
 
     // From U explicit
     {
-        auto const opt = etl::optional<T>{wrapper<T>(T(99))};
+        auto const opt = etl::optional<T>{wrapper<T>{T(99)}};
         CHECK(opt.has_value());
         CHECK(*opt == T(99));
     }
@@ -92,7 +92,7 @@ constexpr auto test() -> bool
     // Assign U
     {
         auto opt = etl::optional<T>{};
-        opt      = wrapper<T>(T(42));
+        opt      = wrapper<T>{T(42)};
         CHECK(opt.has_value());
         CHECK(*opt == T(42));
     }
@@ -100,7 +100,7 @@ constexpr auto test() -> bool
     // Assign optional<U>
     {
         auto opt   = etl::optional<T>{};
-        auto other = etl::optional{wrapper<T>(T(42))};
+        auto other = etl::optional{wrapper<T>{T(42)}};
         opt        = other;
         CHECK(opt.has_value());
         CHECK(*opt == T(42));
