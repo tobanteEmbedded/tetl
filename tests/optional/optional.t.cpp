@@ -205,14 +205,14 @@ constexpr auto test() -> bool
 
     {
         struct S {
-            int& counter; // NOLINT(cppcoreguidelines-avoid-const-or-ref-data-members)
+            int* counter; // NOLINT(cppcoreguidelines-avoid-const-or-ref-data-members)
 
             constexpr S(int& c)
-                : counter{c}
+                : counter{&c}
             {
             }
 
-            constexpr ~S() { counter++; }
+            constexpr ~S() { (*counter)++; }
 
             constexpr S(S const& /*other*/)                        = default;
             constexpr S(S&& /*other*/) noexcept                    = default;

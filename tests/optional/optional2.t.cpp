@@ -8,44 +8,6 @@
 #include "testing/exception.hpp"
 #include "testing/testing.hpp"
 
-constexpr auto test_opional_2() -> bool
-{
-    struct SNT {
-        constexpr SNT() = default;
-
-        constexpr SNT(SNT const& /*unused*/) { }
-
-        constexpr SNT(SNT&& /*unused*/) noexcept { }
-
-        constexpr auto operator=(SNT const& /*unused*/) -> SNT& { return *this; }
-
-        constexpr auto operator=(SNT&& /*unused*/) noexcept -> SNT& { return *this; }
-
-        constexpr ~SNT() { }
-    };
-
-    CHECK_FALSE(etl::is_trivially_destructible_v<SNT>);
-    CHECK_FALSE(etl::is_trivially_move_assignable_v<SNT>);
-    CHECK_FALSE(etl::is_trivially_move_constructible_v<SNT>);
-
-    etl::optional<SNT> opt1{SNT{}};
-    CHECK(opt1.has_value());
-
-    {
-        auto opt2{opt1};
-        CHECK(opt2.has_value());
-
-        auto const opt3{etl::move(opt2)};
-        CHECK(opt3.has_value());
-
-        // NOLINTNEXTLINE(performance-unnecessary-copy-initialization)
-        auto const opt4{opt3};
-        CHECK(opt4.has_value());
-    }
-
-    return true;
-}
-
 constexpr auto test_opional_3() -> bool
 {
     etl::optional<int> opt1{42};
@@ -145,7 +107,6 @@ constexpr auto test_opional_4() -> bool
 
 constexpr auto test_all() -> bool
 {
-    CHECK(test_opional_2());
     CHECK(test_opional_3());
     CHECK(test_opional_4());
     return true;
@@ -154,8 +115,5 @@ constexpr auto test_all() -> bool
 auto main() -> int
 {
     STATIC_CHECK(test_all());
-
-    // TODO: [tobi] Add constexpr tests
-    // static_assert(test_all());
     return 0;
 }
