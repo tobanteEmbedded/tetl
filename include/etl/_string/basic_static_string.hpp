@@ -636,9 +636,8 @@ public:
     /// [index_str, index_str+count) of sv.
     template <typename T>
         requires(view_and_not_char_ptr<T>)
-    constexpr auto
-    insert(size_type const index, T const& t, size_type const indexStr, size_type const count = npos) noexcept
-        -> basic_static_string&
+    constexpr auto insert(size_type const index, T const& t, size_type const indexStr, size_type const count = npos)
+        noexcept -> basic_static_string&
     {
         basic_string_view<value_type, traits_type> sv = t;
 
@@ -1415,9 +1414,8 @@ template <typename CharT, typename Traits, size_t Capacity1, size_t Capacity2>
 /// \brief Returns a string containing characters from lhs followed by the
 /// characters from rhs.
 template <typename CharT, typename Traits, size_t Capacity>
-[[nodiscard]] constexpr auto
-operator+(basic_static_string<CharT, Capacity, Traits> const& lhs, CharT const* rhs) noexcept
-    -> basic_static_string<CharT, Capacity, Traits>
+[[nodiscard]] constexpr auto operator+(basic_static_string<CharT, Capacity, Traits> const& lhs, CharT const* rhs)
+    noexcept -> basic_static_string<CharT, Capacity, Traits>
 {
     auto str = basic_static_string<CharT, Capacity, Traits>{lhs};
     str.append(rhs);
@@ -1438,9 +1436,8 @@ template <typename CharT, typename Traits, size_t Capacity>
 /// \brief Returns a string containing characters from lhs followed by the
 /// characters from rhs.
 template <typename CharT, typename Traits, size_t Capacity>
-[[nodiscard]] constexpr auto
-operator+(CharT const* lhs, basic_static_string<CharT, Capacity, Traits> const& rhs) noexcept
-    -> basic_static_string<CharT, Capacity, Traits>
+[[nodiscard]] constexpr auto operator+(CharT const* lhs, basic_static_string<CharT, Capacity, Traits> const& rhs)
+    noexcept -> basic_static_string<CharT, Capacity, Traits>
 {
     auto str = basic_static_string<CharT, Capacity, Traits>{lhs};
     str.append(rhs);

@@ -16,11 +16,8 @@ namespace etl::chrono {
 struct year_month_weekday {
     year_month_weekday() = default;
 
-    constexpr year_month_weekday(
-        chrono::year const& y,
-        chrono::month const& m,
-        chrono::weekday_indexed const& wdi
-    ) noexcept
+    constexpr year_month_weekday(chrono::year const& y, chrono::month const& m, chrono::weekday_indexed const& wdi)
+        noexcept
         : _y{y}
         , _m{m}
         , _wdi{wdi}
