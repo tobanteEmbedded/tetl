@@ -12,9 +12,9 @@
 #include <etl/_algorithm/transform.hpp>
 #include <etl/_array/array.hpp>
 #include <etl/_array/c_array.hpp>
-#include <etl/_cassert/assert.hpp>
 #include <etl/_concepts/same_as.hpp>
 #include <etl/_container/index.hpp>
+#include <etl/_contracts/check.hpp>
 #include <etl/_cstdint/uint_t.hpp>
 #include <etl/_functional/is_transparent.hpp>
 #include <etl/_iterator/begin.hpp>
@@ -89,18 +89,18 @@ struct static_vector_zero_storage {
         requires(is_constructible_v<T, Args...>)
     static constexpr auto emplace_back(Args&&... /*unused*/) noexcept -> void
     {
-        TETL_ASSERT(false);
+        TETL_PRECONDITION(false);
     }
 
     /// \brief Removes the last element of the storage. Always fails for
     /// empty storage.
-    static constexpr void pop_back() noexcept { TETL_ASSERT(false); }
+    static constexpr void pop_back() noexcept { TETL_PRECONDITION(false); }
 
 protected:
     /// \brief Changes the size of the storage without adding or removing
     /// elements (unsafe). The size of an empty storage can only be changed
     /// to 0.
-    static constexpr void unsafe_set_size([[maybe_unused]] size_t newSize) noexcept { TETL_ASSERT(newSize == 0); }
+    static constexpr void unsafe_set_size([[maybe_unused]] size_t newSize) noexcept { TETL_PRECONDITION(newSize == 0); }
 
     /// \brief Destroys all elements of the storage in range [begin, end)
     /// without changings its size (unsafe). Nothing to destroy since the
@@ -161,7 +161,7 @@ struct static_vector_trivial_storage {
         requires(is_constructible_v<T, Args...> and is_assignable_v<value_type&, T>)
     constexpr auto emplace_back(Args&&... args) noexcept -> void
     {
-        TETL_ASSERT(!full());
+        TETL_PRECONDITION(!full());
         index(_data, size()) = T(etl::forward<Args>(args)...);
         unsafe_set_size(static_cast<size_type>(size()) + 1U);
     }
@@ -169,7 +169,7 @@ struct static_vector_trivial_storage {
     /// \brief Remove the last element from the container.
     constexpr auto pop_back() noexcept -> void
     {
-        TETL_ASSERT(!empty());
+        TETL_PRECONDITION(!empty());
         unsafe_set_size(static_cast<size_type>(size() - 1));
     }
 
@@ -179,7 +179,7 @@ protected:
     /// \warning No elements are constructed or destroyed.
     constexpr auto unsafe_set_size(size_t newSize) noexcept -> void
     {
-        TETL_ASSERT(newSize <= Capacity);
+        TETL_PRECONDITION(newSize <= Capacity);
         _size = size_type(newSize);
     }
 
@@ -257,7 +257,7 @@ struct static_vector_non_trivial_storage {
     template <typename... Args>
     auto emplace_back(Args&&... args) noexcept(noexcept(new(end()) T(etl::forward<Args>(args)...))) -> void
     {
-        TETL_ASSERT(!full());
+        TETL_PRECONDITION(!full());
         new (end()) T(etl::forward<Args>(args)...);
         unsafe_set_size(static_cast<size_type>(size() + 1));
     }
@@ -265,7 +265,7 @@ struct static_vector_non_trivial_storage {
     /// \brief Remove the last element from the container.
     auto pop_back() noexcept(is_nothrow_destructible_v<T>) -> void
     {
-        TETL_ASSERT(!empty());
+        TETL_PRECONDITION(!empty());
         auto* ptr = end() - 1;
         ptr->~T();
         unsafe_set_size(static_cast<size_type>(size() - 1));
@@ -277,7 +277,7 @@ protected:
     /// \warning No elements are constructed or destroyed.
     auto unsafe_set_size(size_t newSize) noexcept -> void
     {
-        TETL_ASSERT(newSize <= Capacity);
+        TETL_PRECONDITION(newSize <= Capacity);
         _size = size_type(newSize);
     }
 
@@ -287,8 +287,8 @@ protected:
     template <typename InputIt>
     auto unsafe_destroy(InputIt first, InputIt last) noexcept(is_nothrow_destructible_v<T>) -> void
     {
-        TETL_ASSERT(first >= data() and first <= end());
-        TETL_ASSERT(last >= data() and last <= end());
+        TETL_PRECONDITION(first >= data() and first <= end());
+        TETL_PRECONDITION(last >= data() and last <= end());
         for (; first != last; ++first) {
             first->~T();
         }
@@ -366,7 +366,7 @@ private:
         || (is_copy_constructible_v<T> and is_nothrow_copy_constructible_v<T>)
     ) -> void
     {
-        TETL_ASSERT(n <= capacity());
+        TETL_PRECONDITION(n <= capacity());
         while (n != size()) {
             emplace_back(T{});
         }
@@ -412,7 +412,7 @@ public:
         requires(is_constructible_v<T, U> and is_assignable_v<reference, U &&>)
     constexpr auto push_back(U&& value) noexcept(noexcept(emplace_back(etl::forward<U>(value)))) -> void
     {
-        TETL_ASSERT(!full());
+        TETL_PRECONDITION(!full());
         emplace_back(etl::forward<U>(value));
     }
 
@@ -424,7 +424,7 @@ public:
         assert_iterator_in_range(position);
         assert_valid_iterator_pair(first, last);
         if constexpr (detail::RandomAccessIterator<InIt>) {
-            TETL_ASSERT(size() + static_cast<size_type>(last - first) <= capacity());
+            TETL_PRECONDITION(size() + static_cast<size_type>(last - first) <= capacity());
         }
         iterator b = end();
 
@@ -442,7 +442,7 @@ public:
     constexpr auto emplace(const_iterator position, Args&&... args)
         noexcept(noexcept(move_insert(position, declval<value_type*>(), declval<value_type*>()))) -> iterator
     {
-        TETL_ASSERT(!full());
+        TETL_PRECONDITION(!full());
         assert_iterator_in_range(position);
         value_type a(etl::forward<Args>(args)...);
         return move_insert(position, &a, &a + 1);
@@ -455,7 +455,7 @@ public:
         noexcept(noexcept(move_insert(position, &x, &x + 1))) -> iterator
         requires(is_move_constructible_v<T>)
     {
-        TETL_ASSERT(!full());
+        TETL_PRECONDITION(!full());
         assert_iterator_in_range(position);
         return move_insert(position, &x, &x + 1);
     }
@@ -464,7 +464,7 @@ public:
         requires(is_copy_constructible_v<T>)
     {
         assert_iterator_in_range(position);
-        TETL_ASSERT(size() + n <= capacity());
+        TETL_PRECONDITION(size() + n <= capacity());
         auto* b = end();
         while (n != 0) {
             push_back(x);
@@ -480,7 +480,7 @@ public:
         noexcept(noexcept(insert(position, size_type(1), x))) -> iterator
         requires(is_copy_constructible_v<T>)
     {
-        TETL_ASSERT(!full());
+        TETL_PRECONDITION(!full());
         assert_iterator_in_range(position);
         return insert(position, size_type(1), x);
     }
@@ -493,7 +493,7 @@ public:
         assert_iterator_in_range(position);
         assert_valid_iterator_pair(first, last);
         if constexpr (detail::RandomAccessIterator<InputIt>) {
-            TETL_ASSERT(size() + static_cast<size_type>(last - first) <= capacity());
+            TETL_PRECONDITION(size() + static_cast<size_type>(last - first) <= capacity());
         }
         auto* b = end();
 
@@ -572,7 +572,7 @@ public:
     explicit constexpr static_vector(size_type n) noexcept(noexcept(emplace_n(n)))
         requires(is_copy_constructible_v<T> || is_move_constructible_v<T>)
     {
-        TETL_ASSERT(n <= capacity());
+        TETL_PRECONDITION(n <= capacity());
         emplace_n(n);
     }
 
@@ -580,7 +580,7 @@ public:
     constexpr static_vector(size_type n, T const& value) noexcept(noexcept(insert(begin(), n, value)))
         requires(is_copy_constructible_v<T>)
     {
-        TETL_ASSERT(n <= capacity());
+        TETL_PRECONDITION(n <= capacity());
         insert(begin(), n, value);
     }
 
@@ -590,8 +590,8 @@ public:
     constexpr static_vector(InputIter first, InputIter last)
     {
         if constexpr (detail::RandomAccessIterator<InputIter>) {
-            TETL_ASSERT(last - first >= 0);
-            TETL_ASSERT(static_cast<size_type>(last - first) <= capacity());
+            TETL_PRECONDITION(last - first >= 0);
+            TETL_PRECONDITION(static_cast<size_type>(last - first) <= capacity());
         }
         insert(begin(), first, last);
     }
@@ -616,8 +616,8 @@ public:
         noexcept(noexcept(clear()) and noexcept(insert(begin(), first, last))) -> void
     {
         if constexpr (detail::RandomAccessIterator<InputIter>) {
-            TETL_ASSERT(last - first >= 0);
-            TETL_ASSERT(static_cast<size_type>(last - first) <= capacity());
+            TETL_PRECONDITION(last - first >= 0);
+            TETL_PRECONDITION(static_cast<size_type>(last - first) <= capacity());
         }
         clear();
         insert(begin(), first, last);
@@ -626,7 +626,7 @@ public:
     constexpr auto assign(size_type n, T const& u) -> void
         requires(is_copy_constructible_v<T>)
     {
-        TETL_ASSERT(n <= capacity());
+        TETL_PRECONDITION(n <= capacity());
         clear();
         insert(begin(), n, u);
     }
@@ -648,13 +648,13 @@ public:
     /// \brief back
     [[nodiscard]] constexpr auto back() noexcept -> reference
     {
-        TETL_ASSERT(!empty());
+        TETL_PRECONDITION(!empty());
         return detail::index(*this, static_cast<size_type>(size() - 1));
     }
 
     [[nodiscard]] constexpr auto back() const noexcept -> const_reference
     {
-        TETL_ASSERT(!empty());
+        TETL_PRECONDITION(!empty());
         return detail::index(*this, static_cast<size_type>(size() - 1));
     }
 
@@ -715,7 +715,7 @@ public:
             return;
         }
         if (sz > size()) {
-            TETL_ASSERT(sz <= capacity());
+            TETL_PRECONDITION(sz <= capacity());
             insert(end(), sz - size(), value);
         } else {
             erase(end() - (size() - sz), end());
@@ -727,8 +727,8 @@ private:
     constexpr void assert_iterator_in_range([[maybe_unused]] It it) noexcept
     {
         static_assert(is_pointer_v<It>);
-        TETL_ASSERT(begin() <= it);
-        TETL_ASSERT(it <= end());
+        TETL_PRECONDITION(begin() <= it);
+        TETL_PRECONDITION(it <= end());
     }
 
     template <typename It0, typename It1>
@@ -736,7 +736,7 @@ private:
     {
         static_assert(is_pointer_v<It0>);
         static_assert(is_pointer_v<It1>);
-        TETL_ASSERT(first <= last);
+        TETL_PRECONDITION(first <= last);
     }
 
     template <typename It0, typename It1>

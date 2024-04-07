@@ -1,8 +1,8 @@
 // SPDX-License-Identifier: BSL-1.0
+
 #ifndef TETL_STRING_TO_STRING_HPP
 #define TETL_STRING_TO_STRING_HPP
 
-#include <etl/_cassert/assert.hpp>
 #include <etl/_string/static_string.hpp>
 #include <etl/_strings/conversion.hpp>
 
@@ -64,33 +64,6 @@ template <etl::size_t Capacity>
 [[nodiscard]] constexpr auto to_string(unsigned long long value) noexcept -> etl::static_string<Capacity>
 {
     return etl::detail::to_string<Capacity, unsigned long long>(value);
-}
-
-/// \brief Converts a numeric value to etl::static_string.
-template <etl::size_t Capacity>
-[[nodiscard]] constexpr auto to_string(float value) noexcept -> etl::static_string<Capacity>
-{
-    TETL_ASSERT(false);
-    etl::ignore_unused(value);
-    return {};
-}
-
-/// \brief Converts a numeric value to etl::static_string.
-template <etl::size_t Capacity>
-[[nodiscard]] constexpr auto to_string(double value) noexcept -> etl::static_string<Capacity>
-{
-    TETL_ASSERT(false);
-    etl::ignore_unused(value);
-    return {};
-}
-
-/// \brief Converts a numeric value to etl::static_string.
-template <etl::size_t Capacity>
-[[nodiscard]] constexpr auto to_string(long double value) noexcept -> etl::static_string<Capacity>
-{
-    TETL_ASSERT(false);
-    etl::ignore_unused(value);
-    return {};
 }
 
 } // namespace etl

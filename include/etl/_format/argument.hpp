@@ -4,7 +4,7 @@
 #define TETL_FORMAT_ARGUMENT_HPP
 
 #include <etl/_algorithm/find.hpp>
-#include <etl/_cassert/assert.hpp>
+#include <etl/_contracts/check.hpp>
 #include <etl/_format/formatter.hpp>
 #include <etl/_utility/pair.hpp>
 
@@ -65,7 +65,7 @@ auto format_escaped_sequences(etl::string_view str, FormatContext& ctx) -> void
                 first = closeFirst + 2;
             } else {
                 // No closing "}}" found
-                TETL_ASSERT(false);
+                TETL_PRECONDITION(false);
                 return;
             }
         } else {

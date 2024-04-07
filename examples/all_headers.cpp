@@ -14,6 +14,7 @@
 #include <etl/compare.hpp>
 #include <etl/complex.hpp>
 #include <etl/concepts.hpp>
+#include <etl/contracts.hpp>
 #include <etl/coroutine.hpp>
 #include <etl/cstddef.hpp>
 #include <etl/cstdint.hpp>

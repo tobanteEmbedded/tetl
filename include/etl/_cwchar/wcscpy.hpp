@@ -3,7 +3,7 @@
 #ifndef TETL_CWCHAR_WCSCPY_HPP
 #define TETL_CWCHAR_WCSCPY_HPP
 
-#include <etl/_cassert/assert.hpp>
+#include <etl/_contracts/check.hpp>
 #include <etl/_cstddef/size_t.hpp>
 #include <etl/_strings/cstr_algorithm.hpp>
 
@@ -18,8 +18,8 @@ namespace etl {
 /// \returns dest
 constexpr auto wcscpy(wchar_t* dest, wchar_t const* src) -> wchar_t*
 {
-    TETL_ASSERT(dest != nullptr);
-    TETL_ASSERT(src != nullptr);
+    TETL_PRECONDITION(dest != nullptr);
+    TETL_PRECONDITION(src != nullptr);
     return detail::strcpy_impl(dest, src);
 }
 

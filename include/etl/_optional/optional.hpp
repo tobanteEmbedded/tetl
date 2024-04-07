@@ -5,10 +5,10 @@
 
 #include <etl/_config/all.hpp>
 
-#include <etl/_cassert/assert.hpp>
 #include <etl/_concepts/copy_constructible.hpp>
 #include <etl/_concepts/move_constructible.hpp>
 #include <etl/_concepts/same_as.hpp>
+#include <etl/_contracts/check.hpp>
 #include <etl/_functional/hash.hpp>
 #include <etl/_functional/invoke.hpp>
 #include <etl/_memory/addressof.hpp>
@@ -341,7 +341,7 @@ struct optional {
     /// https://en.cppreference.com/w/cpp/utility/optional/operator*
     [[nodiscard]] constexpr auto operator*() const& -> T const&
     {
-        TETL_ASSERT(has_value());
+        TETL_PRECONDITION(has_value());
         return etl::unchecked_get<1>(_var);
     }
 
@@ -355,7 +355,7 @@ struct optional {
     /// https://en.cppreference.com/w/cpp/utility/optional/operator*
     [[nodiscard]] constexpr auto operator*() & -> T&
     {
-        TETL_ASSERT(has_value());
+        TETL_PRECONDITION(has_value());
         return etl::unchecked_get<1>(_var);
     }
 
@@ -369,7 +369,7 @@ struct optional {
     /// https://en.cppreference.com/w/cpp/utility/optional/operator*
     [[nodiscard]] constexpr auto operator*() const&& -> T const&&
     {
-        TETL_ASSERT(has_value());
+        TETL_PRECONDITION(has_value());
         return etl::move(etl::unchecked_get<1>(_var));
     }
 
@@ -383,7 +383,7 @@ struct optional {
     /// https://en.cppreference.com/w/cpp/utility/optional/operator*
     [[nodiscard]] constexpr auto operator*() && -> T&&
     {
-        TETL_ASSERT(has_value());
+        TETL_PRECONDITION(has_value());
         return etl::move(etl::unchecked_get<1>(_var));
     }
 

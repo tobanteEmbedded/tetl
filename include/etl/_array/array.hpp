@@ -5,7 +5,7 @@
 
 #include <etl/_algorithm/equal.hpp>
 #include <etl/_algorithm/lexicographical_compare.hpp>
-#include <etl/_cassert/assert.hpp>
+#include <etl/_contracts/check.hpp>
 #include <etl/_cstddef/size_t.hpp>
 #include <etl/_iterator/begin.hpp>
 #include <etl/_iterator/data.hpp>
@@ -52,14 +52,14 @@ struct array {
     /// Accesses the specified item with range checking.
     [[nodiscard]] constexpr auto operator[](size_type const pos) noexcept -> reference
     {
-        TETL_ASSERT(pos < Size);
+        TETL_PRECONDITION(pos < Size);
         return _internal_data[pos];
     }
 
     /// Accesses the specified item with range checking.
     [[nodiscard]] constexpr auto operator[](size_type const pos) const noexcept -> const_reference
     {
-        TETL_ASSERT(pos < Size);
+        TETL_PRECONDITION(pos < Size);
         return _internal_data[pos];
     }
 

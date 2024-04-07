@@ -3,6 +3,7 @@
 #ifndef TETL_LINALG_BLAS1_SWAP_ELEMENTS_HPP
 #define TETL_LINALG_BLAS1_SWAP_ELEMENTS_HPP
 
+#include <etl/_contracts/check.hpp>
 #include <etl/_linalg/concepts.hpp>
 #include <etl/_utility/cmp_less.hpp>
 #include <etl/_utility/swap.hpp>
@@ -14,7 +15,7 @@ template <inout_object InOutObj1, inout_object InOutObj2>
     requires(InOutObj1::rank() == InOutObj1::rank())
 constexpr auto swap_elements(InOutObj1 x, InOutObj2 y) -> void
 {
-    // PRECONDITION(x.extents() == y.extents());
+    TETL_PRECONDITION(x.extents() == y.extents());
 
     using size_type = detail::common_size_type_t<InOutObj1, InOutObj2>;
 

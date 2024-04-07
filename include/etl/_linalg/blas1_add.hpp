@@ -3,6 +3,7 @@
 #ifndef TETL_LINALG_BLAS1_ADD_HPP
 #define TETL_LINALG_BLAS1_ADD_HPP
 
+#include <etl/_contracts/check.hpp>
 #include <etl/_linalg/concepts.hpp>
 #include <etl/_utility/cmp_less.hpp>
 
@@ -13,7 +14,7 @@ template <in_object InObj1, in_object InObj2, out_object OutObj>
     requires(InObj1::rank() == OutObj::rank() and InObj2::rank() == OutObj::rank())
 constexpr auto add(InObj1 x, InObj2 y, OutObj z) -> void
 {
-    // PRECONDITION(x.extents() == y.extents());
+    TETL_PRECONDITION(x.extents() == y.extents());
 
     using size_type = detail::common_size_type_t<InObj1, InObj2, OutObj>;
 

@@ -3,6 +3,7 @@
 #ifndef TETL_LINALG_BLAS1_COPY_HPP
 #define TETL_LINALG_BLAS1_COPY_HPP
 
+#include <etl/_contracts/check.hpp>
 #include <etl/_linalg/concepts.hpp>
 #include <etl/_utility/cmp_less.hpp>
 
@@ -13,7 +14,7 @@ template <in_object InObj, out_object OutObj>
     requires(InObj::rank() == OutObj::rank())
 constexpr auto copy(InObj x, OutObj y) -> void
 {
-    // PRECONDITION(x.extents() == y.extents());
+    TETL_PRECONDITION(x.extents() == y.extents());
 
     using size_type = detail::common_size_type_t<InObj, OutObj>;
 

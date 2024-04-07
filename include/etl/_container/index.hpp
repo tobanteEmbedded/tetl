@@ -3,8 +3,8 @@
 #ifndef TETL_CONTAINER_INDEX_HPP
 #define TETL_CONTAINER_INDEX_HPP
 
-#include <etl/_cassert/assert.hpp>
 #include <etl/_concepts/emulation.hpp>
+#include <etl/_contracts/check.hpp>
 #include <etl/_cstddef/ptrdiff_t.hpp>
 #include <etl/_iterator/begin.hpp>
 #include <etl/_iterator/end.hpp>
@@ -21,7 +21,7 @@ constexpr auto index(Range&& rng, Index&& i) noexcept -> decltype(auto)
     using etl::begin;
     using etl::end;
 
-    TETL_ASSERT(static_cast<etl::ptrdiff_t>(i) < (end(rng) - begin(rng)));
+    TETL_PRECONDITION(static_cast<etl::ptrdiff_t>(i) < (end(rng) - begin(rng)));
     return begin(etl::forward<Range>(rng))[etl::forward<Index>(i)];
 }
 } // namespace etl::detail
