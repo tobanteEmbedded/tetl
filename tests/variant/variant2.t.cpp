@@ -25,6 +25,9 @@ constexpr auto test() -> bool
     CHECK(etl::constructible_from<variant, etl::in_place_type_t<int>, int>);
     CHECK(etl::constructible_from<variant, etl::in_place_type_t<long>, long>);
     CHECK(etl::constructible_from<variant, etl::in_place_type_t<float>, float>);
+    CHECK(etl::constructible_from<variant, int>);
+    CHECK(etl::constructible_from<variant, long>);
+    CHECK(etl::constructible_from<variant, float>);
     CHECK(etl::get_if<0>(static_cast<variant*>(nullptr)) == nullptr);
     CHECK(etl::get_if<1>(static_cast<variant*>(nullptr)) == nullptr);
 
@@ -128,6 +131,10 @@ constexpr auto test() -> bool
         var3.emplace<float>(1.43F);
         CHECK(etl::holds_alternative<float>(var3));
         CHECK(var3[etl::index_v<1>] == 1.43F);
+
+        var_t const var5 = 42;
+        CHECK(var5.index() == 0);
+        CHECK(var5 != var_t{143.0F});
     }
     {
         using var_t    = etl::variant2<int, long, float>;
@@ -135,6 +142,7 @@ constexpr auto test() -> bool
         auto const i16 = var_t{etl::in_place_type<int>, 16};
         auto const l7  = var_t{etl::in_place_type<long>, 7};
         auto const l16 = var_t{etl::in_place_type<long>, 16};
+        auto const f16 = var_t{etl::in_place_type<float>, 16.0F};
 
         CHECK(i7 == i7);
         CHECK_FALSE(i7 == i16);
@@ -157,10 +165,12 @@ constexpr auto test() -> bool
         CHECK_FALSE(i16 <= i7); // larger value
         CHECK_FALSE(l7 <= i7);  // larger index
 
-        CHECK(i16 > i7);   // larger value
-        CHECK(i16 >= i7);  // larger value
-        CHECK(l16 > i16);  // larger index
-        CHECK(l16 >= i16); // larger index
+        CHECK(i16 > i7);         // larger value
+        CHECK(l16 > i16);        // larger index
+        CHECK(i16 >= i7);        // larger value
+        CHECK(l16 >= i16);       // larger index
+        CHECK_FALSE(l16 >= f16); // smaller index
+        CHECK_FALSE(l7 >= l16);  // smaller index
     }
 
     return true;

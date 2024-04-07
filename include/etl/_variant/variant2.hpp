@@ -30,6 +30,7 @@
 #include <etl/_type_traits/is_nothrow_default_constructible.hpp>
 #include <etl/_type_traits/is_nothrow_move_assignable.hpp>
 #include <etl/_type_traits/is_nothrow_move_constructible.hpp>
+#include <etl/_type_traits/is_same.hpp>
 #include <etl/_type_traits/is_trivially_copy_assignable.hpp>
 #include <etl/_type_traits/is_trivially_copy_constructible.hpp>
 #include <etl/_type_traits/is_trivially_move_assignable.hpp>
@@ -41,6 +42,7 @@
 #include <etl/_utility/in_place_type.hpp>
 #include <etl/_variant/variadic_union.hpp>
 #include <etl/_variant/variant_alternative.hpp>
+#include <etl/_variant/variant_alternative_selector.hpp>
 #include <etl/_variant/variant_fwd.hpp>
 #include <etl/_variant/variant_size.hpp>
 #include <etl/_variant/visit.hpp>
@@ -63,6 +65,18 @@ template <typename T>
 concept variant_trivially_move_assignable
     = etl::is_trivially_move_constructible_v<T> and etl::is_trivially_move_assignable_v<T>;
 
+template <typename T>
+inline constexpr auto is_in_place_index = false;
+
+template <size_t I>
+inline constexpr auto is_in_place_index<etl::in_place_index_t<I>> = true;
+
+template <typename T>
+inline constexpr auto is_in_place_type = false;
+
+template <typename T>
+inline constexpr auto is_in_place_type<etl::in_place_type_t<T>> = true;
+
 } // namespace detail
 
 /// \ingroup variant
@@ -82,12 +96,28 @@ public:
     {
     }
 
+    // clang-format off
+    template <typename T>
+        requires (
+                (sizeof...(Ts) > 0)
+            and not etl::is_same_v<etl::remove_cvref_t<T>, variant2>
+            and not etl::detail::is_in_place_index<etl::remove_cvref_t<T>>
+            and not etl::detail::is_in_place_type<etl::remove_cvref_t<T>>
+            and etl::is_constructible_v<etl::detail::variant_alternative_selector_t<T, Ts...>, T>
+        )
+    // clang-format on
+    constexpr variant2(T&& t)
+        noexcept(etl::is_nothrow_constructible_v<etl::detail::variant_alternative_selector_t<T, Ts...>, T>)
+        : variant2(etl::in_place_type<etl::detail::variant_alternative_selector_t<T, Ts...>>, etl::forward<T>(t))
+    {
+    }
+
     template <etl::size_t I, typename... Args>
+        requires((I < sizeof...(Ts)) and etl::is_constructible_v<etl::variant_alternative_t<I, variant2>, Args...>)
     explicit constexpr variant2(etl::in_place_index_t<I> /*index*/, Args&&... args)
         : _index(static_cast<index_type>(I))
         , _union(etl::index_v<I>, etl::forward<Args>(args)...)
     {
-        static_assert(I < sizeof...(Ts));
     }
 
     template <typename T, typename... Args>

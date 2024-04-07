@@ -369,14 +369,14 @@
     return true;
 }
 
-constexpr auto test_variant_ctor_type_selector_t() -> bool
+constexpr auto test_variant_alternative_selector_t() -> bool
 {
     using string_t = etl::static_string<15>;
 
-    CHECK_SAME_TYPE(etl::detail::variant_ctor_type_selector_t<int, int, float>, int);
-    CHECK_SAME_TYPE(etl::detail::variant_ctor_type_selector_t<float, int, float>, float);
-    CHECK_SAME_TYPE(etl::detail::variant_ctor_type_selector_t<string_t, int, string_t>, string_t);
-    CHECK_SAME_TYPE(etl::detail::variant_ctor_type_selector_t<char const*, int, string_t>, string_t);
+    CHECK_SAME_TYPE(etl::detail::variant_alternative_selector_t<int, int, float>, int);
+    CHECK_SAME_TYPE(etl::detail::variant_alternative_selector_t<float, int, float>, float);
+    CHECK_SAME_TYPE(etl::detail::variant_alternative_selector_t<string_t, int, string_t>, string_t);
+    CHECK_SAME_TYPE(etl::detail::variant_alternative_selector_t<char const*, int, string_t>, string_t);
 
     return true;
 }
@@ -387,6 +387,6 @@ auto main() -> int
     CHECK(test());
     CHECK(test_non_trivial());
 #endif
-    STATIC_CHECK(test_variant_ctor_type_selector_t());
+    STATIC_CHECK(test_variant_alternative_selector_t());
     return 0;
 }
