@@ -128,9 +128,39 @@ constexpr auto test() -> bool
         var3.emplace<float>(1.43F);
         CHECK(etl::holds_alternative<float>(var3));
         CHECK(var3[etl::index_v<1>] == 1.43F);
+    }
+    {
+        using var_t    = etl::variant2<int, long, float>;
+        auto const i7  = var_t{etl::in_place_type<int>, 7};
+        auto const i16 = var_t{etl::in_place_type<int>, 16};
+        auto const l7  = var_t{etl::in_place_type<long>, 7};
+        auto const l16 = var_t{etl::in_place_type<long>, 16};
 
-        var = var3;
-        CHECK(var == var3);
+        CHECK(i7 == i7);
+        CHECK_FALSE(i7 == i16);
+        CHECK_FALSE(i7 == l7);
+        CHECK_FALSE(i7 == l16);
+
+        CHECK(i16 == i16);
+        CHECK_FALSE(i16 == i7);
+        CHECK_FALSE(i16 == l7);
+        CHECK_FALSE(i16 == l16);
+
+        CHECK(i7 < i16);       // smaller value
+        CHECK(i7 < l7);        // smaller index
+        CHECK_FALSE(i16 < i7); // larger value
+        CHECK_FALSE(l7 < i7);  // larger index
+
+        CHECK(i7 <= i7);        // equal
+        CHECK(i7 <= i16);       // smaller value
+        CHECK(i7 <= l7);        // smaller index
+        CHECK_FALSE(i16 <= i7); // larger value
+        CHECK_FALSE(l7 <= i7);  // larger index
+
+        CHECK(i16 > i7);   // larger value
+        CHECK(i16 >= i7);  // larger value
+        CHECK(l16 > i16);  // larger index
+        CHECK(l16 >= i16); // larger index
     }
 
     return true;

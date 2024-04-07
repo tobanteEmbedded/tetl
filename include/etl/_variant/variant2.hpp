@@ -7,6 +7,10 @@
 
 #include <etl/_cstddef/size_t.hpp>
 #include <etl/_functional/equal_to.hpp>
+#include <etl/_functional/greater.hpp>
+#include <etl/_functional/greater_equal.hpp>
+#include <etl/_functional/less.hpp>
+#include <etl/_functional/less_equal.hpp>
 #include <etl/_memory/addressof.hpp>
 #include <etl/_memory/construct_at.hpp>
 #include <etl/_memory/destroy_at.hpp>
@@ -211,6 +215,74 @@ public:
             return false;
         }
         return etl::visit(etl::detail::make_variant_compare_op(etl::equal_to()), lhs, rhs);
+    }
+
+    /// Less-than operator for variants:
+    ///
+    /// - If `lhs.index() < rhs.index()`, `returns true`;
+    /// - If `lhs.index() > rhs.index()`, `returns false`;
+    /// - Otherwise `returns get<lhs.index()>(v) < get<lhs.index()>(w)`
+    friend constexpr auto operator<(variant2 const& lhs, variant2 const& rhs) -> bool
+    {
+        if (lhs.index() < rhs.index()) {
+            return true;
+        }
+        if (lhs.index() > rhs.index()) {
+            return false;
+        }
+
+        return etl::visit(etl::detail::make_variant_compare_op(etl::less()), lhs, rhs);
+    }
+
+    /// Less-equal operator for variants:
+    ///
+    /// - If lhs.index() < rhs.index(), returns true;
+    /// - If lhs.index() > rhs.index(), returns false;
+    /// - Otherwise returns get<lhs.index()>(v) <= get<lhs.index()>(w)
+    friend constexpr auto operator<=(variant2 const& lhs, variant2 const& rhs) -> bool
+    {
+        if (lhs.index() < rhs.index()) {
+            return true;
+        }
+        if (lhs.index() > rhs.index()) {
+            return false;
+        }
+
+        return etl::visit(etl::detail::make_variant_compare_op(etl::less_equal()), lhs, rhs);
+    }
+
+    /// Greater-than operator for variants:
+    ///
+    /// - If lhs.index() > rhs.index(), returns true;
+    /// - If lhs.index() < rhs.index(), returns false;
+    /// - Otherwise returns get<lhs.index()>(v) > get<lhs.index()>(w)
+    friend constexpr auto operator>(variant2 const& lhs, variant2 const& rhs) -> bool
+    {
+        if (lhs.index() > rhs.index()) {
+            return true;
+        }
+        if (lhs.index() < rhs.index()) {
+            return false;
+        }
+
+        return etl::visit(etl::detail::make_variant_compare_op(etl::greater()), lhs, rhs);
+    }
+
+    /// Greater-equal operator for variants:
+    ///
+    /// - If lhs.index() > rhs.index(), returns true;
+    /// - If lhs.index() < rhs.index(), returns false;
+    /// - Otherwise returns get<lhs.index()>(v) >= get<lhs.index()>(w)
+    friend constexpr auto operator>=(variant2 const& lhs, variant2 const& rhs) -> bool
+    {
+        if (lhs.index() > rhs.index()) {
+            return true;
+        }
+        if (lhs.index() < rhs.index()) {
+            return false;
+        }
+
+        return etl::visit(etl::detail::make_variant_compare_op(etl::greater_equal()), lhs, rhs);
     }
 
 private:
