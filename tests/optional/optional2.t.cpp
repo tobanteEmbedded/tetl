@@ -8,20 +8,20 @@
 #include "testing/exception.hpp"
 #include "testing/testing.hpp"
 
-static auto test_opional_2() -> bool
+constexpr auto test_opional_2() -> bool
 {
     struct SNT {
-        SNT() = default;
+        constexpr SNT() = default;
 
-        SNT(SNT const& /*unused*/) { }
+        constexpr SNT(SNT const& /*unused*/) { }
 
-        SNT(SNT&& /*unused*/) noexcept { }
+        constexpr SNT(SNT&& /*unused*/) noexcept { }
 
-        auto operator=(SNT const& /*unused*/) -> SNT& { return *this; }
+        constexpr auto operator=(SNT const& /*unused*/) -> SNT& { return *this; }
 
-        auto operator=(SNT&& /*unused*/) noexcept -> SNT& { return *this; }
+        constexpr auto operator=(SNT&& /*unused*/) noexcept -> SNT& { return *this; }
 
-        ~SNT() { }
+        constexpr ~SNT() { }
     };
 
     CHECK_FALSE(etl::is_trivially_destructible_v<SNT>);
@@ -46,7 +46,7 @@ static auto test_opional_2() -> bool
     return true;
 }
 
-static auto test_opional_3() -> bool
+constexpr auto test_opional_3() -> bool
 {
     etl::optional<int> opt1{42};
 
@@ -73,20 +73,20 @@ static auto test_opional_3() -> bool
     return true;
 }
 
-static auto test_opional_4() -> bool
+constexpr auto test_opional_4() -> bool
 {
     struct S {
-        S() = default;
+        constexpr S() = default;
 
-        S(S const& /*s*/) { } // NOLINT(modernize-use-equals-default)
+        constexpr S(S const& /*s*/) { } // NOLINT(modernize-use-equals-default)
 
-        S(S&& /*unused*/) noexcept { } // NOLINT(modernize-use-equals-default)
+        constexpr S(S&& /*unused*/) noexcept { } // NOLINT(modernize-use-equals-default)
 
-        ~S() { } // NOLINT(modernize-use-equals-default)
+        constexpr ~S() { } // NOLINT(modernize-use-equals-default)
 
-        auto operator=(S const& /*s*/) -> S& { return *this; }
+        constexpr auto operator=(S const& /*s*/) -> S& { return *this; }
 
-        auto operator=(S&& /*s*/) noexcept -> S& { return *this; }
+        constexpr auto operator=(S&& /*s*/) noexcept -> S& { return *this; }
     };
 
     CHECK_FALSE(etl::is_trivially_destructible_v<S>);
@@ -115,17 +115,17 @@ static auto test_opional_4() -> bool
         struct SX {
             int data;
 
-            SX(int c)
+            constexpr SX(int c)
                 : data{c}
             {
             }
 
-            ~SX() { }
+            constexpr ~SX() { }
 
-            SX(SX const& /*other*/)                        = default;
-            SX(SX&& /*other*/) noexcept                    = default;
-            auto operator=(SX const& /*other*/) -> SX&     = default;
-            auto operator=(SX&& /*other*/) noexcept -> SX& = default;
+            constexpr SX(SX const& /*other*/)                        = default;
+            constexpr SX(SX&& /*other*/) noexcept                    = default;
+            constexpr auto operator=(SX const& /*other*/) -> SX&     = default;
+            constexpr auto operator=(SX&& /*other*/) noexcept -> SX& = default;
         };
 
         etl::optional<SX> l{1};
@@ -143,7 +143,7 @@ static auto test_opional_4() -> bool
     return true;
 }
 
-static auto test_all() -> bool
+constexpr auto test_all() -> bool
 {
     CHECK(test_opional_2());
     CHECK(test_opional_3());
@@ -153,7 +153,7 @@ static auto test_all() -> bool
 
 auto main() -> int
 {
-    CHECK(test_all());
+    STATIC_CHECK(test_all());
 
     // TODO: [tobi] Add constexpr tests
     // static_assert(test_all());

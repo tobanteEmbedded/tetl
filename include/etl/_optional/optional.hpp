@@ -50,244 +50,10 @@
 #include <etl/_utility/in_place.hpp>
 #include <etl/_utility/move.hpp>
 #include <etl/_utility/swap.hpp>
+#include <etl/_variant/monostate.hpp>
+#include <etl/_variant/variant.hpp>
 
 namespace etl {
-
-namespace detail {
-template <typename T, bool = etl::is_trivially_destructible_v<T>>
-struct optional_destruct_base;
-
-template <typename T>
-struct optional_destruct_base<T, false> {
-    using value_type = T;
-    static_assert(etl::is_object_v<value_type>, "undefined behavior");
-
-    ~optional_destruct_base()
-    {
-        if (internal_has_value) {
-            internal_value.~value_type();
-        }
-    }
-
-    constexpr optional_destruct_base() noexcept { }
-
-    template <typename... Args>
-    constexpr explicit optional_destruct_base(etl::in_place_t /*tag*/, Args&&... args)
-        : internal_value(etl::forward<Args>(args)...)
-        , internal_has_value(true)
-    {
-    }
-
-    auto reset() noexcept -> void
-    {
-        if (internal_has_value) {
-            internal_value.~value_type();
-            internal_has_value = false;
-        }
-    }
-
-    union {
-        char internal_null_state{};
-        value_type internal_value;
-    };
-
-    bool internal_has_value = false;
-};
-
-template <typename T>
-struct optional_destruct_base<T, true> {
-    using value_type = T;
-    static_assert(etl::is_object_v<value_type>, "undefined behavior");
-
-    constexpr optional_destruct_base() noexcept { }
-
-    template <typename... Args>
-    constexpr explicit optional_destruct_base(etl::in_place_t /*unused*/, Args&&... args)
-        : internal_value(etl::forward<Args>(args)...)
-        , internal_has_value(true)
-    {
-    }
-
-    void reset() noexcept
-    {
-        if (internal_has_value) {
-            internal_has_value = false;
-        }
-    }
-
-    union {
-        char internal_null_state{};
-        value_type internal_value;
-    };
-
-    bool internal_has_value{false};
-};
-
-template <typename T, bool = etl::is_reference_v<T>>
-struct optional_storage_base : optional_destruct_base<T> {
-    using base_t     = optional_destruct_base<T>;
-    using value_type = T;
-    using base_t::base_t;
-
-    [[nodiscard]] constexpr auto has_value() const noexcept -> bool { return this->internal_has_value; }
-
-    [[nodiscard]] constexpr auto get() & noexcept -> value_type& { return this->internal_value; }
-
-    [[nodiscard]] constexpr auto get() const& noexcept -> value_type const& { return this->internal_value; }
-
-    [[nodiscard]] constexpr auto get() && noexcept -> value_type&& { return etl::move(this->internal_value); }
-
-    [[nodiscard]] constexpr auto get() const&& noexcept -> value_type const&&
-    {
-        return etl::move(this->internal_value);
-    }
-
-    template <typename... Args>
-
-    void construct(Args&&... args)
-    {
-        ::new (static_cast<void*>(etl::addressof(this->internal_value))) value_type(etl::forward<Args>(args)...);
-        this->internal_has_value = true;
-    }
-
-    template <typename U>
-    void construct_from(U&& opt)
-    {
-        if (opt.has_value()) {
-            construct(etl::forward<U>(opt).get());
-        }
-    }
-
-    template <typename U>
-    void assign_from(U&& opt)
-    {
-        if (this->internal_has_value == opt.has_value()) {
-            if (this->internal_has_value) {
-                this->internal_value = etl::forward<U>(opt).get();
-            }
-        } else {
-            if (this->internal_has_value) {
-                this->reset();
-            } else {
-                construct(etl::forward<U>(opt).get());
-            }
-        }
-    }
-};
-
-template <typename T, bool = etl::is_trivially_copy_constructible_v<T>>
-struct optional_copy_base : optional_storage_base<T> {
-    using optional_storage_base<T>::optional_storage_base;
-};
-
-template <typename T>
-struct optional_copy_base<T, false> : optional_storage_base<T> {
-    using optional_storage_base<T>::optional_storage_base;
-
-    optional_copy_base() = default;
-
-    optional_copy_base(optional_copy_base const& opt)
-        : optional_storage_base<T>::optional_storage_base{}
-    {
-        this->construct_from(opt);
-    }
-
-    optional_copy_base(optional_copy_base&&) noexcept = default;
-
-    auto operator=(optional_copy_base const&) -> optional_copy_base&     = default;
-    auto operator=(optional_copy_base&&) noexcept -> optional_copy_base& = default;
-};
-
-template <typename T, bool = etl::is_trivially_move_constructible_v<T>>
-struct optional_move_base : optional_copy_base<T> {
-    using optional_copy_base<T>::optional_copy_base;
-};
-
-template <typename T>
-struct optional_move_base<T, false> : optional_copy_base<T> {
-    using value_type = T;
-    using optional_copy_base<T>::optional_copy_base;
-
-    optional_move_base() = default;
-
-    optional_move_base(optional_move_base const&) = default;
-
-    optional_move_base(optional_move_base&& opt) noexcept(etl::is_nothrow_move_constructible_v<value_type>)
-    {
-        this->construct_from(etl::move(opt));
-    }
-
-    auto operator=(optional_move_base const&) -> optional_move_base& = default;
-
-    auto operator=(optional_move_base&&) noexcept -> optional_move_base& = default;
-};
-
-template <
-    typename T,
-    bool = etl::is_trivially_destructible_v<T> && etl::is_trivially_copy_constructible_v<T>
-        && etl::is_trivially_copy_assignable_v<T>>
-struct optional_copy_assign_base : optional_move_base<T> {
-    using optional_move_base<T>::optional_move_base;
-};
-
-template <typename T>
-struct optional_copy_assign_base<T, false> : optional_move_base<T> {
-    using optional_move_base<T>::optional_move_base;
-
-    optional_copy_assign_base() = default;
-
-    optional_copy_assign_base(optional_copy_assign_base const&) = default;
-
-    optional_copy_assign_base(optional_copy_assign_base&&) noexcept = default;
-
-    [[nodiscard]] auto operator=(optional_copy_assign_base const& opt) -> optional_copy_assign_base&
-    {
-        this->assign_from(opt);
-        return *this;
-    }
-
-    auto operator=(optional_copy_assign_base&&) noexcept -> optional_copy_assign_base& = default;
-};
-
-template <
-    typename T,
-    bool = etl::is_trivially_destructible_v<T> && etl::is_trivially_move_constructible_v<T>
-        && etl::is_trivially_move_assignable_v<T>>
-struct optional_move_assign_base : optional_copy_assign_base<T> {
-    using optional_copy_assign_base<T>::optional_copy_assign_base;
-};
-
-template <typename T>
-struct optional_move_assign_base<T, false> : optional_copy_assign_base<T> {
-    using value_type = T;
-    using optional_copy_assign_base<T>::optional_copy_assign_base;
-
-    optional_move_assign_base() = default;
-
-    optional_move_assign_base(optional_move_assign_base const& opt) = default;
-
-    optional_move_assign_base(optional_move_assign_base&&) noexcept = default;
-
-    auto operator=(optional_move_assign_base const&) -> optional_move_assign_base& = default;
-
-    auto operator=(optional_move_assign_base&& opt)
-        noexcept(etl::is_nothrow_move_assignable_v<value_type> && etl::is_nothrow_move_constructible_v<value_type>)
-            -> optional_move_assign_base&
-    {
-        this->assign_from(etl::move(opt));
-        return *this;
-    }
-};
-
-template <typename T>
-using optional_sfinae_ctor_base_t = sfinae_ctor_base<etl::is_copy_constructible_v<T>, etl::is_move_constructible_v<T>>;
-
-template <typename T>
-using optional_sfinae_assign_base_t = sfinae_assign_base<
-    (etl::is_copy_constructible_v<T> && etl::is_copy_assignable_v<T>),
-    (etl::is_move_constructible_v<T> && etl::is_move_assignable_v<T>)>;
-
-} // namespace detail
 
 /// \brief The class template optional manages an optional contained value,
 /// i.e. a value that may or may not be present.
@@ -336,12 +102,7 @@ using optional_sfinae_assign_base_t = sfinae_assign_base<
 ///
 /// \include optional.cpp
 template <typename T>
-struct optional
-    : private detail::optional_move_assign_base<T>
-    , private detail::optional_sfinae_ctor_base_t<T>
-    , private detail::optional_sfinae_assign_base_t<T> {
-private:
-    using base_type = detail::optional_move_assign_base<T>;
+struct optional {
 
     // clang-format off
     static_assert(!is_same_v<remove_cvref_t<T>, in_place_t>, "instantiation of optional with in_place_t is ill-formed");
@@ -444,7 +205,10 @@ public:
     constexpr optional() noexcept = default;
 
     /// \brief Constructs an object that does not contain a value.
-    constexpr optional(etl::nullopt_t /*unused*/) noexcept { }
+    constexpr optional(etl::nullopt_t null) noexcept
+        : _var(null)
+    {
+    }
 
     /// \brief Copy constructor.
     constexpr optional(optional const&) = default;
@@ -463,7 +227,7 @@ public:
     constexpr optional(optional<U> const& other)
     {
         if (other.has_value()) {
-            this->construct(*other);
+            emplace(*other);
         }
     }
 
@@ -478,7 +242,7 @@ public:
     explicit constexpr optional(optional<U> const& other)
     {
         if (other.has_value()) {
-            this->construct(*other);
+            emplace(*other);
         }
     }
 
@@ -493,7 +257,7 @@ public:
     constexpr optional(optional<U>&& other)
     {
         if (other.has_value()) {
-            this->construct(*etl::move(other));
+            emplace(*etl::move(other));
         }
     }
 
@@ -508,7 +272,7 @@ public:
     explicit constexpr optional(optional<U>&& other)
     {
         if (other.has_value()) {
-            this->construct(*etl::move(other));
+            emplace(*etl::move(other));
         }
     }
 
@@ -518,7 +282,7 @@ public:
     /// https://en.cppreference.com/w/cpp/utility/optional/optional
     template <typename... Args, enable_ctor_6<Args...> = 0>
     constexpr explicit optional(in_place_t /*unused*/, Args&&... args)
-        : base_type(in_place, etl::forward<Args>(args)...)
+        : _var(etl::in_place_index<1>, etl::forward<Args>(args)...)
     {
     }
 
@@ -528,7 +292,7 @@ public:
     /// https://en.cppreference.com/w/cpp/utility/optional/optional
     template <typename U = T, enable_ctor_8_implicit<U> = 0>
     constexpr optional(U&& value)
-        : base_type(in_place, etl::forward<U>(value))
+        : _var(etl::in_place_index<1>, etl::forward<U>(value))
     {
     }
 
@@ -538,7 +302,7 @@ public:
     /// https://en.cppreference.com/w/cpp/utility/optional/optional
     template <typename U = T, enable_ctor_8_explicit<U> = 0>
     explicit constexpr optional(U&& value)
-        : base_type(in_place, etl::forward<U>(value))
+        : _var(etl::in_place_index<1>, etl::forward<U>(value))
     {
     }
 
@@ -567,12 +331,7 @@ public:
     template <typename U = T, enable_assign_forward<U> = 0>
     constexpr auto operator=(U&& value) -> optional&
     {
-        if (this->has_value()) {
-            this->get() = etl::forward<U>(value);
-            return *this;
-        }
-
-        this->construct(etl::forward<U>(value));
+        emplace(etl::forward<U>(value));
         return *this;
     }
 
@@ -580,17 +339,18 @@ public:
     template <typename U = T, enable_assign_other_copy<U> = 0>
     constexpr auto operator=(optional<U> const& other) -> optional&
     {
-        if (this->has_value()) {
+        if (has_value()) {
             if (other.has_value()) {
-                this->get() = *other;
+                emplace(*other);
                 return *this;
             }
-            this->reset();
+            reset();
         }
 
         if (other.has_value()) {
-            this->construct(*other);
+            emplace(*other);
         }
+
         return *this;
     }
 
@@ -598,22 +358,23 @@ public:
     template <typename U = T, enable_assign_other_move<U> = 0>
     constexpr auto operator=(optional<U>&& other) -> optional&
     {
-        if (this->has_value()) {
+        if (has_value()) {
             if (other.has_value()) {
-                this->get() = etl::move(*other);
+                emplace(etl::move(*other));
                 return *this;
             }
-            this->reset();
+            reset();
         }
 
         if (other.has_value()) {
-            this->construct(etl::move(*other));
+            emplace(etl::move(*other));
         }
+
         return *this;
     }
 
     /// \brief Checks whether *this contains a value.
-    using base_type::has_value;
+    [[nodiscard]] constexpr auto has_value() const noexcept -> bool { return _var.index() == 1; }
 
     /// \brief Checks whether *this contains a value.
     [[nodiscard]] constexpr explicit operator bool() const noexcept { return has_value(); }
@@ -621,7 +382,7 @@ public:
     /// \brief If *this contains a value, destroy that value as if by
     /// value().~value_type(). Otherwise, there are no effects. *this does not
     /// contain a value after this call.
-    using base_type::reset;
+    constexpr auto reset() noexcept -> void { _var.template emplace<0>(etl::nullopt); }
 
     /// \brief Returns the contained value if *this has a value, otherwise
     /// returns default_value.
@@ -641,23 +402,11 @@ public:
 
     /// \brief Returns a pointer to the contained value. The pointer is null if
     /// the optional is empty.
-    [[nodiscard]] constexpr auto operator->() const -> value_type const*
-    {
-        if (has_value()) {
-            return &(**this);
-        }
-        return nullptr;
-    }
+    [[nodiscard]] constexpr auto operator->() const -> value_type const* { return etl::get_if<1>(&_var); }
 
     /// \brief Returns a pointer to the contained value. The pointer is null if
     /// the optional is empty.
-    [[nodiscard]] constexpr auto operator->() -> value_type*
-    {
-        if (has_value()) {
-            return &(**this);
-        }
-        return nullptr;
-    }
+    [[nodiscard]] constexpr auto operator->() -> value_type* { return etl::get_if<1>(&_var); }
 
     /// \brief Returns a reference to the contained value.
     ///
@@ -670,7 +419,7 @@ public:
     [[nodiscard]] constexpr auto operator*() const& -> T const&
     {
         TETL_ASSERT(has_value());
-        return this->get();
+        return etl::unchecked_get<1>(_var);
     }
 
     /// \brief Returns a reference to the contained value.
@@ -684,7 +433,7 @@ public:
     [[nodiscard]] constexpr auto operator*() & -> T&
     {
         TETL_ASSERT(has_value());
-        return this->get();
+        return etl::unchecked_get<1>(_var);
     }
 
     /// \brief Returns a reference to the contained value.
@@ -698,7 +447,7 @@ public:
     [[nodiscard]] constexpr auto operator*() const&& -> T const&&
     {
         TETL_ASSERT(has_value());
-        return etl::move(this->get());
+        return etl::move(etl::unchecked_get<1>(_var));
     }
 
     /// \brief Returns a reference to the contained value.
@@ -712,39 +461,14 @@ public:
     [[nodiscard]] constexpr auto operator*() && -> T&&
     {
         TETL_ASSERT(has_value());
-        return etl::move(this->get());
+        return etl::move(etl::unchecked_get<1>(_var));
     }
 
     /// \brief Swaps the contents with those of other.
     constexpr auto swap(optional& other)
         noexcept(etl::is_nothrow_move_constructible_v<value_type> && etl::is_nothrow_swappable_v<value_type>) -> void
     {
-        // If neither *this nor other contain a value, the function has no
-        // effect.
-
-        // If both *this and other contain values, the contained values are
-        // exchanged
-        if (this->has_value() == other.has_value()) {
-            using etl::swap;
-            if (this->has_value()) {
-                swap(this->get(), other.get());
-            }
-            return;
-        }
-
-        // If only one of *this and other contains a value (let's call this
-        // object in and the other un), the contained value of un is
-        // direct-initialized from etl::move(*in), followed by destruction of
-        // the contained value of in as if by in->T::~T(). After this call, in
-        // does not contain a value; un contains a value.
-        if (this->has_value()) {
-            other.construct(etl::move(this->get()));
-            reset();
-            return;
-        }
-
-        this->construct(etl::move(other.get()));
-        other.reset();
+        etl::swap(*this, other);
     }
 
     /// \brief Constructs the contained value in-place. If *this already
@@ -753,9 +477,7 @@ public:
     template <typename... Args>
     constexpr auto emplace(Args&&... args) -> value_type&
     {
-        this->reset();
-        this->construct(etl::forward<Args>(args)...);
-        return **this;
+        return _var.template emplace<1>(etl::forward<Args>(args)...);
     }
 
     template <typename F>
@@ -808,8 +530,8 @@ public:
         return *this ? etl::move(*this) : etl::forward<F>(f)();
     }
 
-    /// \brief Implementation detail. Do not use!
-    using base_type::get;
+private:
+    etl::variant<etl::nullopt_t, T> _var{etl::nullopt};
 };
 
 // https://www.open-std.org/jtc1/sc22/wg21/docs/papers/2024/p2988r3.pdf
@@ -903,20 +625,6 @@ private:
 /// \ingroup optional
 template <typename T>
 optional(T) -> optional<T>;
-
-/// \brief Overloads the etl::swap algorithm for etl::optional. Exchanges the
-/// state of lhs with that of rhs. Effectively calls lhs.swap(rhs).
-///
-/// https://en.cppreference.com/w/cpp/utility/optional/swap2
-///
-/// \relates optional
-/// \ingroup optional
-template <typename T>
-    requires(is_move_constructible_v<T> && is_swappable_v<T>)
-constexpr auto swap(optional<T>& lhs, optional<T>& rhs) noexcept(noexcept(lhs.swap(rhs))) -> void
-{
-    lhs.swap(rhs);
-}
 
 /// \brief Compares two optional objects, lhs and rhs.
 /// \relates optional

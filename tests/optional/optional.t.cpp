@@ -207,17 +207,17 @@ constexpr auto test() -> bool
         struct S {
             int& counter; // NOLINT(cppcoreguidelines-avoid-const-or-ref-data-members)
 
-            S(int& c)
+            constexpr S(int& c)
                 : counter{c}
             {
             }
 
-            ~S() { counter++; }
+            constexpr ~S() { counter++; }
 
-            S(S const& /*other*/)                        = default;
-            S(S&& /*other*/) noexcept                    = default;
-            auto operator=(S const& /*other*/) -> S&     = default;
-            auto operator=(S&& /*other*/) noexcept -> S& = default;
+            constexpr S(S const& /*other*/)                        = default;
+            constexpr S(S&& /*other*/) noexcept                    = default;
+            constexpr auto operator=(S const& /*other*/) -> S&     = default;
+            constexpr auto operator=(S&& /*other*/) noexcept -> S& = default;
         };
 
         auto counter = 0;
@@ -230,7 +230,7 @@ constexpr auto test() -> bool
     }
 
     struct SCTOR {
-        SCTOR(T xInit, T yInit)
+        constexpr SCTOR(T xInit, T yInit)
             : x{xInit}
             , y{yInit}
         {
@@ -524,7 +524,7 @@ constexpr auto test() -> bool
     return true;
 }
 
-static auto test_all() -> bool
+constexpr auto test_all() -> bool
 {
     CHECK(test<signed char>());
     CHECK(test<signed short>());
@@ -557,7 +557,6 @@ static auto test_all() -> bool
 
 auto main() -> int
 {
-    // TODO: [tobi] Add constexpr tests
-    CHECK(test_all());
+    STATIC_CHECK(test_all());
     return 0;
 }
