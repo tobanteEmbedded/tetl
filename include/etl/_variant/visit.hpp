@@ -146,6 +146,7 @@ inline constexpr etl::size_t zero = 0;
 /// - Access index as `v.index`
 /// - Access value as `v.value()`
 ///
+/// \relates variant
 /// \ingroup variant
 template <typename F, typename... Vs>
 constexpr auto visit_with_index(F&& f, Vs&&... vs)
@@ -173,6 +174,7 @@ constexpr auto visit_with_index(F&& f, Vs&&... vs)
 /// - Copied from https://github.com/rollbear/visit
 /// - https://github.com/rollbear/visit/blob/master/LICENSE.txt
 ///
+/// \relates variant
 /// \ingroup variant
 template <typename F, typename... Vs>
 constexpr auto visit(F&& f, Vs&&... vs)

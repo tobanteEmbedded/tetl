@@ -200,7 +200,7 @@ public:
     [[nodiscard]] constexpr auto index() const noexcept -> etl::size_t { return static_cast<etl::size_t>(_index); }
 
     /// Returns a reference to the object stored in the variant.
-    /// \pre v.index() == I
+    /// \pre I == index()
     template <etl::size_t I>
     constexpr auto operator[](etl::index_constant<I> index) & -> auto&
     {
@@ -209,7 +209,7 @@ public:
     }
 
     /// Returns a reference to the object stored in the variant.
-    /// \pre v.index() == I
+    /// \pre I == index()
     template <etl::size_t I>
     constexpr auto operator[](etl::index_constant<I> index) const& -> auto const&
     {
@@ -218,7 +218,7 @@ public:
     }
 
     /// Returns a reference to the object stored in the variant.
-    /// \pre v.index() == I
+    /// \pre I == index()
     template <etl::size_t I>
     constexpr auto operator[](etl::index_constant<I> index) && -> auto&&
     {
@@ -227,7 +227,7 @@ public:
     }
 
     /// Returns a reference to the object stored in the variant.
-    /// \pre v.index() == I
+    /// \pre I == index()
     template <etl::size_t I>
     constexpr auto operator[](etl::index_constant<I> index) const&& -> auto const&&
     {
@@ -251,7 +251,7 @@ public:
         return replace(etl::index_v<I>, etl::forward<Args>(args)...);
     }
 
-    /// Equality operator for variants:
+    /// Equality operator
     ///
     /// - If lhs.index() != rhs.index(), returns false;
     /// - Otherwise returns get<lhs.index()>(lhs) == get<lhs.index()>(rhs)
@@ -263,11 +263,11 @@ public:
         return etl::visit(etl::detail::make_variant_compare_op(etl::equal_to()), lhs, rhs);
     }
 
-    /// Less-than operator for variants:
+    /// Less-than operator
     ///
-    /// - If `lhs.index() < rhs.index()`, `returns true`;
-    /// - If `lhs.index() > rhs.index()`, `returns false`;
-    /// - Otherwise `returns get<lhs.index()>(v) < get<lhs.index()>(w)`
+    /// - If lhs.index() < rhs.index(), returns true;
+    /// - If lhs.index() > rhs.index(), returns false;
+    /// - Otherwise returns get<lhs.index()>(v) < get<lhs.index()>(w)
     friend constexpr auto operator<(variant const& lhs, variant const& rhs) -> bool
     {
         if (lhs.index() < rhs.index()) {
@@ -280,7 +280,7 @@ public:
         return etl::visit(etl::detail::make_variant_compare_op(etl::less()), lhs, rhs);
     }
 
-    /// Less-equal operator for variants:
+    /// Less-equal operator
     ///
     /// - If lhs.index() < rhs.index(), returns true;
     /// - If lhs.index() > rhs.index(), returns false;
@@ -297,7 +297,7 @@ public:
         return etl::visit(etl::detail::make_variant_compare_op(etl::less_equal()), lhs, rhs);
     }
 
-    /// Greater-than operator for variants:
+    /// Greater-than operator
     ///
     /// - If lhs.index() > rhs.index(), returns true;
     /// - If lhs.index() < rhs.index(), returns false;
@@ -314,7 +314,7 @@ public:
         return etl::visit(etl::detail::make_variant_compare_op(etl::greater()), lhs, rhs);
     }
 
-    /// Greater-equal operator for variants:
+    /// Greater-equal operator
     ///
     /// - If lhs.index() > rhs.index(), returns true;
     /// - If lhs.index() < rhs.index(), returns false;
