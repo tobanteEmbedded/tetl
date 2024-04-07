@@ -119,13 +119,13 @@ constexpr auto test() -> bool
 
     {
         struct S {
-            S()                                          = default;
-            S(S const& /*other*/)                        = default;
-            S(S&& /*other*/) noexcept                    = default;
-            auto operator=(S const& /*other*/) -> S&     = default;
-            auto operator=(S&& /*other*/) noexcept -> S& = default;
+            constexpr S()                                          = default;
+            constexpr S(S const& /*other*/)                        = default;
+            constexpr S(S&& /*other*/) noexcept                    = default;
+            constexpr auto operator=(S const& /*other*/) -> S&     = default;
+            constexpr auto operator=(S&& /*other*/) noexcept -> S& = default;
 
-            ~S() { }
+            constexpr ~S() { }
 
             T data{};
         };
