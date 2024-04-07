@@ -12,7 +12,6 @@
 #include <etl/_functional/hash.hpp>
 #include <etl/_functional/invoke.hpp>
 #include <etl/_memory/addressof.hpp>
-#include <etl/_new/operator.hpp>
 #include <etl/_optional/nullopt.hpp>
 #include <etl/_type_traits/add_lvalue_reference.hpp>
 #include <etl/_type_traits/conjunction.hpp>
@@ -638,8 +637,9 @@ template <typename T, typename U>
     return (*lhs) >= (*rhs);
 }
 
-/// \brief Compares opt with a nullopt. Equivalent to when comparing to an
-/// optional that does not contain a value.
+/// Compares opt with a nullopt.
+///
+/// Equivalent to when comparing to an optional that does not contain a value.
 ///
 /// \relates optional
 /// \ingroup optional
@@ -649,8 +649,9 @@ template <typename T>
     return not opt;
 }
 
-/// \brief Compares opt with a nullopt. Equivalent to when comparing to an
-/// optional that does not contain a value.
+/// Compares opt with a nullopt.
+///
+/// Equivalent to when comparing to an optional that does not contain a value.
 ///
 /// \relates optional
 /// \ingroup optional
@@ -660,30 +661,9 @@ template <typename T>
     return not opt;
 }
 
-/// \brief Compares opt with a nullopt. Equivalent to when comparing to an
-/// optional that does not contain a value.
+/// Compares opt with a nullopt.
 ///
-/// \relates optional
-/// \ingroup optional
-template <typename T>
-[[nodiscard]] constexpr auto operator!=(optional<T> const& opt, etl::nullopt_t /*unused*/) noexcept -> bool
-{
-    return static_cast<bool>(opt);
-}
-
-/// \brief Compares opt with a nullopt. Equivalent to when comparing to an
-/// optional that does not contain a value.
-///
-/// \relates optional
-/// \ingroup optional
-template <typename T>
-[[nodiscard]] constexpr auto operator!=(etl::nullopt_t /*unused*/, optional<T> const& opt) noexcept -> bool
-{
-    return static_cast<bool>(opt);
-}
-
-/// \brief Compares opt with a nullopt. Equivalent to when comparing to an
-/// optional that does not contain a value.
+/// Equivalent to when comparing to an optional that does not contain a value.
 ///
 /// \relates optional
 /// \ingroup optional
@@ -693,8 +673,9 @@ template <typename T>
     return false;
 }
 
-/// \brief Compares opt with a nullopt. Equivalent to when comparing to an
-/// optional that does not contain a value.
+/// Compares opt with a nullopt.
+///
+/// Equivalent to when comparing to an optional that does not contain a value.
 ///
 /// \relates optional
 /// \ingroup optional
@@ -702,72 +683,6 @@ template <typename T>
 [[nodiscard]] constexpr auto operator<(etl::nullopt_t /*unused*/, optional<T> const& opt) noexcept -> bool
 {
     return static_cast<bool>(opt);
-}
-
-/// \brief Compares opt with a nullopt. Equivalent to when comparing to an
-/// optional that does not contain a value.
-///
-/// \relates optional
-/// \ingroup optional
-template <typename T>
-[[nodiscard]] constexpr auto operator<=(optional<T> const& opt, etl::nullopt_t /*unused*/) noexcept -> bool
-{
-    return not opt;
-}
-
-/// \brief Compares opt with a nullopt. Equivalent to when comparing to an
-/// optional that does not contain a value.
-///
-/// \relates optional
-/// \ingroup optional
-template <typename T>
-[[nodiscard]] constexpr auto operator<=(etl::nullopt_t /*unused*/, optional<T> const& /*opt*/) noexcept -> bool
-{
-    return true;
-}
-
-/// \brief Compares opt with a nullopt. Equivalent to when comparing to an
-/// optional that does not contain a value.
-///
-/// \relates optional
-/// \ingroup optional
-template <typename T>
-[[nodiscard]] constexpr auto operator>(optional<T> const& opt, etl::nullopt_t /*unused*/) noexcept -> bool
-{
-    return static_cast<bool>(opt);
-}
-
-/// \brief Compares opt with a nullopt. Equivalent to when comparing to an
-/// optional that does not contain a value.
-///
-/// \relates optional
-/// \ingroup optional
-template <typename T>
-[[nodiscard]] constexpr auto operator>(etl::nullopt_t /*unused*/, optional<T> const& /*opt*/) noexcept -> bool
-{
-    return false;
-}
-
-/// \brief Compares opt with a nullopt. Equivalent to when comparing to an
-/// optional that does not contain a value.
-///
-/// \relates optional
-/// \ingroup optional
-template <typename T>
-[[nodiscard]] constexpr auto operator>=(optional<T> const& /*opt*/, etl::nullopt_t /*unused*/) noexcept -> bool
-{
-    return true;
-}
-
-/// \brief Compares opt with a nullopt. Equivalent to when comparing to an
-/// optional that does not contain a value.
-///
-/// \relates optional
-/// \ingroup optional
-template <typename T>
-[[nodiscard]] constexpr auto operator>=(etl::nullopt_t /*unused*/, optional<T> const& opt) noexcept -> bool
-{
-    return not opt;
 }
 
 /// \brief Compares opt with a value. The values are compared (using the
