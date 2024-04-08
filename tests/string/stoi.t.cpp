@@ -105,14 +105,14 @@ constexpr auto test() -> bool
 
 constexpr auto test_all() -> bool
 {
-    CHECK(test<etl::static_string<16>>());
-    CHECK(test<etl::static_string<17>>());
-    CHECK(test<etl::static_string<18>>());
-    CHECK(test<etl::static_string<24>>());
-    CHECK(test<etl::static_string<32>>());
-    CHECK(test<etl::static_string<64>>());
-    CHECK(test<etl::static_string<128>>());
-    CHECK(test<etl::static_string<256>>());
+    CHECK(test<etl::inplace_string<16>>());
+    CHECK(test<etl::inplace_string<17>>());
+    CHECK(test<etl::inplace_string<18>>());
+    CHECK(test<etl::inplace_string<24>>());
+    CHECK(test<etl::inplace_string<32>>());
+    CHECK(test<etl::inplace_string<64>>());
+    CHECK(test<etl::inplace_string<128>>());
+    CHECK(test<etl::inplace_string<256>>());
     return true;
 }
 

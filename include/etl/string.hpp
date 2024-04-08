@@ -4,7 +4,7 @@
 #define TETL_STRING_HPP
 
 /// \defgroup string string
-/// etl::basic_static_string class template
+/// etl::basic_inplace_string class template
 /// \ingroup strings-library
 /// \code{.cpp}
 /// #include <etl/string.hpp>
@@ -18,9 +18,9 @@
 #include <etl/_string/to_string.hpp>
 
 // Non-standard extensions
-#include <etl/_string/basic_static_string.hpp>
-#include <etl/_string/static_string.hpp>
-#include <etl/_string/static_wstring.hpp>
+#include <etl/_string/basic_inplace_string.hpp>
+#include <etl/_string/inplace_string.hpp>
+#include <etl/_string/inplace_wstring.hpp>
 #include <etl/_string/string_constant.hpp>
 
 #endif // TETL_STRING_HPP

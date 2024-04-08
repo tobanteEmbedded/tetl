@@ -2,13 +2,13 @@
 #ifndef TETL_STRING_STATIC_STRING_HPP
 #define TETL_STRING_STATIC_STRING_HPP
 
-#include <etl/_string/basic_static_string.hpp>
+#include <etl/_string/basic_inplace_string.hpp>
 
 namespace etl {
 
-/// Typedef for a basic_static_string using 'char'
+/// Typedef for a basic_inplace_string using 'char'
 template <etl::size_t Capacity>
-using static_string = basic_static_string<char, Capacity>;
+using inplace_string = basic_inplace_string<char, Capacity>;
 
 } // namespace etl
 

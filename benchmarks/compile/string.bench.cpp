@@ -8,7 +8,7 @@ using std::string_view;
     #include <etl/string.hpp>
     #include <etl/string_view.hpp>
 
-using string = etl::static_string<128>;
+using string = etl::inplace_string<128>;
 using etl::size_t;
 using etl::string_view;
 #endif

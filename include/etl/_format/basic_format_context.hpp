@@ -45,7 +45,7 @@ private:
 /// arguments and the output iterator.
 ///
 /// \details The first template argument is an output iterator that appends to
-/// etl::static_string, such as etl::back_insert_iterator<etl::static_string>.
+/// etl::inplace_string, such as etl::back_insert_iterator<etl::inplace_string>.
 /// Implementations are encouraged to use an iterator to type-erased buffer type
 /// that supports appending to any contiguous and resizable container.
 ///

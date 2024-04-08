@@ -155,7 +155,7 @@ auto test() -> bool // NOLINT(readability-function-size)
 
     {
         using namespace etl::literals::string_view_literals;
-        using str_t = etl::static_string<32>;
+        using str_t = etl::inplace_string<32>;
 
         auto data = etl::array{str_t{"test"}, str_t{"test"}, str_t{"test"}};
         auto set  = etl::static_set<str_t, 4>{data.begin(), data.end()};

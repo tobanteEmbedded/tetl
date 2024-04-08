@@ -14,7 +14,7 @@ template <typename T>
 auto test_ints() -> bool
 {
     // auto test = [](T in, auto expected) -> bool {
-    //     using string_t = etl::static_string<32>;
+    //     using string_t = etl::inplace_string<32>;
     //     auto str       = string_t();
     //     auto ctx       = etl::format_context<string_t> { etl::back_inserter(str) };
     //     auto formatter = etl::formatter<T, char> {};
@@ -56,7 +56,7 @@ static auto test_all() -> bool
 
     // // no arg
     // {
-    //     auto str    = etl::static_string<32> {};
+    //     auto str    = etl::inplace_string<32> {};
     //     auto target = string_view("test");
     //     etl::format_to(etl::back_inserter(str), "test");
     //     CHECK(string_view(str) == target);
@@ -64,18 +64,18 @@ static auto test_all() -> bool
 
     // // no arg escaped
     // {
-    //     auto str1 = etl::static_string<32> {};
+    //     auto str1 = etl::inplace_string<32> {};
     //     etl::format_to(etl::back_inserter(str1), "{{test}}");
     //     CHECK(string_view(str1) == string_view("{test}"));
 
-    // auto str2 = etl::static_string<32> {};
+    // auto str2 = etl::inplace_string<32> {};
     // etl::format_to(etl::back_inserter(str2), "{{abc}} {{def}}");
     // CHECK(string_view(str2) == string_view("{abc} {def}"));
     // }
 
     // // single arg
     // {
-    //     auto str    = etl::static_string<32> {};
+    //     auto str    = etl::inplace_string<32> {};
     //     auto target = string_view("test");
     //     etl::format_to(etl::back_inserter(str), "tes{}", 't');
     //     CHECK(string_view(str) == target);
@@ -83,22 +83,22 @@ static auto test_all() -> bool
 
     // // escape single arg
     // {
-    //     auto str1 = etl::static_string<32> {};
+    //     auto str1 = etl::inplace_string<32> {};
     //     etl::format_to(etl::back_inserter(str1), "{} {{test}}", 'a');
     //     CHECK(string_view(str1) == string_view("a {test}"));
 
-    // // auto str2 = etl::static_string<32> {};
+    // // auto str2 = etl::inplace_string<32> {};
     // // etl::format_to(etl::back_inserter(str2), "{{test}} {}", 'b');
     // // CHECK(string_view(str2.data()) == string_view("{test} b"));
     // }
 
     // // replace multiple args
     // {
-    //     auto str1 = etl::static_string<32> {};
+    //     auto str1 = etl::inplace_string<32> {};
     //     etl::format_to(etl::back_inserter(str1), "{} {} {}", 'a', 'b', 'c');
     //     CHECK(string_view(str1) == string_view("a b c"));
 
-    // auto str2 = etl::static_string<32> {};
+    // auto str2 = etl::inplace_string<32> {};
     // auto fmt2 = string_view("some {} text {} mixed {}");
     // etl::format_to(etl::back_inserter(str2), fmt2, 'a', 'b', 'c');
     // CHECK(string_view(str2) == string_view("some a text b mixed c"));
@@ -106,7 +106,7 @@ static auto test_all() -> bool
 
     // // single arg
     // {
-    //     auto str    = etl::static_string<32> {};
+    //     auto str    = etl::inplace_string<32> {};
     //     auto target = string_view("testtt");
     //     etl::format_to(etl::back_inserter(str), "tes{}", "ttt");
     //     CHECK(string_view(str.begin()) == target);
@@ -114,18 +114,18 @@ static auto test_all() -> bool
 
     // // // escape single arg
     // // {
-    // //     auto str1 = etl::static_string<32> {};
+    // //     auto str1 = etl::inplace_string<32> {};
     // //     etl::format_to(etl::back_inserter(str1), "{} {{test}}", "abc");
     // //     CHECK(string_view(str1.begin()) == string_view("abc {test}"));
 
-    // //     auto str2 = etl::static_string<32> {};
+    // //     auto str2 = etl::inplace_string<32> {};
     // //     etl::format_to(etl::back_inserter(str2), "{{test}} {}", "abc");
     // //     CHECK(string_view(str2.begin()) == string_view("{test} abc"));
     // // }
 
     // // escape
     // {
-    //     auto b        = etl::static_string<32> {};
+    //     auto b        = etl::inplace_string<32> {};
     //     auto target   = string_view("{abc}");
     //     auto const sz = static_cast<etl::ptrdiff_t>(b.size());
     //     auto r        = etl::format_to_n(b.data(), sz, "{{abc}}");
@@ -136,7 +136,7 @@ static auto test_all() -> bool
 
     // // replace single arg
     // {
-    //     auto b        = etl::static_string<32> {};
+    //     auto b        = etl::inplace_string<32> {};
     //     auto target   = string_view("test");
     //     auto const sz = static_cast<etl::ptrdiff_t>(b.size());
     //     auto r        = etl::format_to_n(data(b), sz, "tes{}", 't');
@@ -147,7 +147,7 @@ static auto test_all() -> bool
 
     // // replace multiple args
     // // {
-    // //     auto b      = etl::static_string<32> {};
+    // //     auto b      = etl::inplace_string<32> {};
     // //     auto fmt    = string_view("{} {}");
     // //     auto target = string_view("a b");
     // //     auto r      = etl::format_to_n(data(b), size(b), fmt, 'a', 'b');
@@ -191,7 +191,7 @@ static auto test_all() -> bool
     //     CHECK(slices.second == ""_sv);
     // }
 
-    // using string_t = etl::static_string<32>;
+    // using string_t = etl::inplace_string<32>;
 
     // // none
     // {

@@ -256,7 +256,7 @@ template <typename T>
         CHECK(dest.size() == 1);
         CHECK(dest == "b"_sv);
 
-        auto const src = etl::static_string<8>{"abc"};
+        auto const src = etl::inplace_string<8>{"abc"};
         dest.assign(src);
         CHECK(dest.size() == 3);
         CHECK(dest == "abc"_sv);
@@ -484,7 +484,7 @@ template <typename T>
 
     {
         auto lhs = string();
-        auto rhs = etl::static_string<2>{};
+        auto rhs = etl::inplace_string<2>{};
 
         CHECK(lhs == "");
         CHECK(rhs == "");
@@ -498,8 +498,8 @@ template <typename T>
     {
         CHECK_FALSE(string{} < "");
         CHECK_FALSE(string{} < string{});
-        CHECK_FALSE(string{} < etl::static_string<2>{});
-        CHECK_FALSE(etl::static_string<4>{} < string{});
+        CHECK_FALSE(string{} < etl::inplace_string<2>{});
+        CHECK_FALSE(etl::inplace_string<4>{} < string{});
     }
 
     {
@@ -510,15 +510,15 @@ template <typename T>
 
     {
         CHECK_FALSE(string{"def"} < "a");
-        CHECK_FALSE(string{"def"} < etl::static_string<2>{"a"});
-        CHECK(etl::static_string<2>{"a"} < string("test"));
+        CHECK_FALSE(string{"def"} < etl::inplace_string<2>{"a"});
+        CHECK(etl::inplace_string<2>{"a"} < string("test"));
     }
 
     {
         CHECK(string{} <= "");
         CHECK(string{} <= string{});
-        CHECK(string{} <= etl::static_string<2>{});
-        CHECK(etl::static_string<4>{} <= string{});
+        CHECK(string{} <= etl::inplace_string<2>{});
+        CHECK(etl::inplace_string<4>{} <= string{});
     }
 
     {
@@ -530,15 +530,15 @@ template <typename T>
 
     {
         CHECK_FALSE(string{"def"} <= "a");
-        CHECK_FALSE(string{"def"} <= etl::static_string<2>{"a"});
-        CHECK(etl::static_string<2>{"a"} <= string("test"));
+        CHECK_FALSE(string{"def"} <= etl::inplace_string<2>{"a"});
+        CHECK(etl::inplace_string<2>{"a"} <= string("test"));
     }
 
     {
         CHECK_FALSE(string{} > "");
         CHECK_FALSE(string{} > string{});
-        CHECK_FALSE(string{} > etl::static_string<2>{});
-        CHECK_FALSE(etl::static_string<4>{} > string{});
+        CHECK_FALSE(string{} > etl::inplace_string<2>{});
+        CHECK_FALSE(etl::inplace_string<4>{} > string{});
     }
 
     {
@@ -549,15 +549,15 @@ template <typename T>
     }
 
     {
-        CHECK(string{"def"} > etl::static_string<2>{"a"});
-        CHECK_FALSE(etl::static_string<2>{"a"} > string("test"));
+        CHECK(string{"def"} > etl::inplace_string<2>{"a"});
+        CHECK_FALSE(etl::inplace_string<2>{"a"} > string("test"));
     }
 
     {
         CHECK(string{} >= "");
         CHECK(string{} >= string{});
-        CHECK(string{} >= etl::static_string<2>{});
-        CHECK(etl::static_string<4>{} >= string{});
+        CHECK(string{} >= etl::inplace_string<2>{});
+        CHECK(etl::inplace_string<4>{} >= string{});
     }
 
     {
@@ -568,8 +568,8 @@ template <typename T>
     }
 
     {
-        CHECK(string{"def"} >= etl::static_string<2>{"a"});
-        CHECK_FALSE(etl::static_string<2>{"a"} >= string("test"));
+        CHECK(string{"def"} >= etl::inplace_string<2>{"a"});
+        CHECK_FALSE(etl::inplace_string<2>{"a"} >= string("test"));
     }
 
     {
@@ -664,7 +664,7 @@ template <typename T>
 
     {
         auto lhs = string();
-        auto rhs = etl::static_string<2>{};
+        auto rhs = etl::inplace_string<2>{};
 
         CHECK(lhs.compare(rhs) == 0);
         CHECK(rhs.compare(lhs) == 0);
@@ -1069,7 +1069,7 @@ template <typename T>
         CHECK(lhs.compare(rhs) > 0);
         CHECK(rhs.compare("test"_sv) < 0);
 
-        auto other = etl::static_string<9>{"te"};
+        auto other = etl::inplace_string<9>{"te"};
         CHECK(lhs.compare(other) > 0);
         CHECK(other.compare(etl::string_view("te")) == 0);
     }
@@ -1273,15 +1273,15 @@ template <typename T>
 
 [[nodiscard]] constexpr auto test_all() -> bool
 {
-    CHECK(sizeof(etl::static_string<6>) == 7);   // tiny storage, size_type = uint8
-    CHECK(sizeof(etl::static_string<7>) == 8);   // tiny storage, size_type = uint8
-    CHECK(sizeof(etl::static_string<16>) == 18); // normal storage, size_type = uint8
+    CHECK(sizeof(etl::inplace_string<6>) == 7);   // tiny storage, size_type = uint8
+    CHECK(sizeof(etl::inplace_string<7>) == 8);   // tiny storage, size_type = uint8
+    CHECK(sizeof(etl::inplace_string<16>) == 18); // normal storage, size_type = uint8
 
-    CHECK(test_1<etl::static_string<24>>());
-    CHECK(test_1<etl::static_string<55>>());
+    CHECK(test_1<etl::inplace_string<24>>());
+    CHECK(test_1<etl::inplace_string<55>>());
 
-    CHECK(test_2<etl::static_string<24>>());
-    CHECK(test_2<etl::static_string<55>>());
+    CHECK(test_2<etl::inplace_string<24>>());
+    CHECK(test_2<etl::inplace_string<55>>());
 
     return true;
 }

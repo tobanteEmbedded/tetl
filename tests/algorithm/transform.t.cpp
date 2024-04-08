@@ -18,7 +18,7 @@ constexpr auto test() -> bool
     etl::transform(a.begin(), a.end(), a.begin(), func);
     CHECK(etl::all_of(a.begin(), a.end(), [](auto v) { return v == 4; }));
 
-    etl::static_string<32> str("hello");
+    etl::inplace_string<32> str("hello");
     etl::static_vector<T, 8> vec{};
     auto const identity = [](auto c) -> T { return static_cast<T>(c); };
     etl::transform(begin(str), end(str), etl::back_inserter(vec), identity);

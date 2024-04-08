@@ -32,14 +32,14 @@ constexpr auto test() -> bool
 
 constexpr auto test_all() -> bool
 {
-    CHECK(test<etl::static_wstring<16>>());
-    CHECK(test<etl::static_wstring<17>>());
-    CHECK(test<etl::static_wstring<18>>());
-    CHECK(test<etl::static_wstring<24>>());
-    CHECK(test<etl::static_wstring<32>>());
-    CHECK(test<etl::static_wstring<64>>());
-    CHECK(test<etl::static_wstring<128>>());
-    CHECK(test<etl::static_wstring<256>>());
+    CHECK(test<etl::inplace_wstring<16>>());
+    CHECK(test<etl::inplace_wstring<17>>());
+    CHECK(test<etl::inplace_wstring<18>>());
+    CHECK(test<etl::inplace_wstring<24>>());
+    CHECK(test<etl::inplace_wstring<32>>());
+    CHECK(test<etl::inplace_wstring<64>>());
+    CHECK(test<etl::inplace_wstring<128>>());
+    CHECK(test<etl::inplace_wstring<256>>());
     return true;
 }
 

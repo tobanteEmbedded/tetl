@@ -496,7 +496,7 @@ constexpr auto test() -> bool
 
     {
         auto const sv  = "test"_sv;
-        auto const str = etl::static_string<16>{"test"};
+        auto const str = etl::inplace_string<16>{"test"};
         CHECK_FALSE(sv < sv);
         CHECK(etl::string_view{""} < sv);
         CHECK(sv.substr(0, 1) < sv);
@@ -539,11 +539,11 @@ constexpr auto test() -> bool
         CHECK("foo"_sv == "foo"_sv);
         CHECK("bar"_sv == "bar"_sv);
 
-        CHECK_FALSE("foo"_sv == etl::static_string<16>{"baz"});
-        CHECK("bar"_sv == etl::static_string<16>{"bar"});
+        CHECK_FALSE("foo"_sv == etl::inplace_string<16>{"baz"});
+        CHECK("bar"_sv == etl::inplace_string<16>{"bar"});
 
-        CHECK(etl::static_string<16>{"bar"} == "bar"_sv);
-        CHECK_FALSE(etl::static_string<16>{"baz"} == "foo"_sv);
+        CHECK(etl::inplace_string<16>{"bar"} == "bar"_sv);
+        CHECK_FALSE(etl::inplace_string<16>{"baz"} == "foo"_sv);
 
         CHECK_FALSE("foo"_sv == "test"_sv);
         CHECK_FALSE("test"_sv == "foo"_sv);

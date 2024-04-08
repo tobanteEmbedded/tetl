@@ -77,7 +77,7 @@ constexpr auto test_str() -> bool
         CHECK(etl::strchr(txt, 'o') == etl::next(txt, 4));
         CHECK(etl::strchr(txt, '\0') == etl::next(txt, 5));
 
-        auto str = etl::static_string<16>{"Hello"};
+        auto str = etl::inplace_string<16>{"Hello"};
         CHECK(etl::strchr(str.data(), '0') == nullptr);
         CHECK(etl::strchr(str.data(), 'H') == str.data());
         CHECK(etl::strchr(str.data(), 'e') == etl::next(str.data(), 1));
@@ -98,7 +98,7 @@ constexpr auto test_str() -> bool
         CHECK(etl::strrchr(txt, 'o') == etl::next(txt, 4));
         CHECK(etl::strrchr(txt, '\0') == etl::next(txt, 5));
 
-        auto str = etl::static_string<16>{"Hello"};
+        auto str = etl::inplace_string<16>{"Hello"};
         CHECK(etl::strrchr(str.data(), '0') == nullptr);
         CHECK(etl::strrchr(str.data(), 'H') == str.data());
         CHECK(etl::strrchr(str.data(), 'e') == etl::next(str.data(), 1));
@@ -111,7 +111,7 @@ constexpr auto test_str() -> bool
     // "cstring: strspn"
     {
         auto const* lowAlpha = "qwertyuiopasdfghjklzxcvbnm";
-        auto const str       = etl::static_string<16>{"abcde312$#@"};
+        auto const str       = etl::inplace_string<16>{"abcde312$#@"};
         auto const span      = etl::strspn(str.c_str(), lowAlpha);
         CHECK(str.substr(span) == "312$#@");
     }
@@ -119,7 +119,7 @@ constexpr auto test_str() -> bool
     // "cstring: strcspn"
     {
         auto const* invalid = "*$#";
-        auto const str      = etl::static_string<16>{"abcde312$#@"};
+        auto const str      = etl::inplace_string<16>{"abcde312$#@"};
         CHECK(etl::strcspn(str.c_str(), invalid) == 8);
     }
 

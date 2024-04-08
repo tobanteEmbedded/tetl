@@ -6,7 +6,7 @@
 #include <etl/_algorithm/copy.hpp>
 #include <etl/_cstring/strlen.hpp>
 #include <etl/_format/basic_format_context.hpp>
-#include <etl/_string/static_string.hpp>
+#include <etl/_string/inplace_string.hpp>
 #include <etl/_string_view/string_view.hpp>
 #include <etl/_strings/conversion.hpp>
 
@@ -62,9 +62,9 @@ struct formatter<etl::string_view, char> {
 };
 
 template <etl::size_t Capacity>
-struct formatter<etl::static_string<Capacity>, char> {
+struct formatter<etl::inplace_string<Capacity>, char> {
     template <typename FormatContext>
-    constexpr auto format(etl::static_string<Capacity> const& str, FormatContext& fc) -> decltype(fc.out())
+    constexpr auto format(etl::inplace_string<Capacity> const& str, FormatContext& fc) -> decltype(fc.out())
     {
         return formatter<etl::string_view>().format(str, fc);
     }

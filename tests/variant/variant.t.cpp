@@ -343,7 +343,7 @@ constexpr auto test() -> bool
 
 constexpr auto test_variant_alternative_selector_t() -> bool
 {
-    using string_t = etl::static_string<15>;
+    using string_t = etl::inplace_string<15>;
 
     CHECK_SAME_TYPE(etl::detail::variant_alternative_selector_t<int, int, float>, int);
     CHECK_SAME_TYPE(etl::detail::variant_alternative_selector_t<float, int, float>, float);

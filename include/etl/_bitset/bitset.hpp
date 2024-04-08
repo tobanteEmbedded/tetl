@@ -9,7 +9,7 @@
 #include <etl/_cstddef/size_t.hpp>
 #include <etl/_cstdint/uint_t.hpp>
 #include <etl/_limits/numeric_limits.hpp>
-#include <etl/_string/basic_static_string.hpp>
+#include <etl/_string/basic_inplace_string.hpp>
 #include <etl/_string_view/string_view.hpp>
 
 namespace etl {
@@ -329,9 +329,9 @@ struct bitset {
     /// \todo Currently truncates the low bits, if the string is large enough.
     template <size_t Capacity, typename CharT = char, typename Traits = char_traits<CharT>>
     [[nodiscard]] constexpr auto
-    to_string(CharT zero = CharT('0'), CharT one = CharT('1')) const -> basic_static_string<CharT, Capacity, Traits>
+    to_string(CharT zero = CharT('0'), CharT one = CharT('1')) const -> basic_inplace_string<CharT, Capacity, Traits>
     {
-        auto str = basic_static_string<CharT, Capacity, Traits>{};
+        auto str = basic_inplace_string<CharT, Capacity, Traits>{};
         for (auto i{size() - 1U}; i != 0; --i) {
             str.push_back(test(i) ? one : zero);
         }

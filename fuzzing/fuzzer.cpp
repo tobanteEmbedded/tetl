@@ -132,7 +132,7 @@ template <typename IntType>
 {
     auto const chars = p.ConsumeBytesWithTerminator<char>(127, 0);
 
-    auto etlString = etl::static_string<128>{};
+    auto etlString = etl::inplace_string<128>{};
     etl::copy(chars.begin(), chars.end(), etl::back_inserter(etlString));
 
     auto stdString = std::string{chars.begin(), chars.end()};

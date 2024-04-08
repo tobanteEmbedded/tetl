@@ -2,13 +2,13 @@
 #ifndef TETL_STRING_STATIC_WSTRING_HPP
 #define TETL_STRING_STATIC_WSTRING_HPP
 
-#include <etl/_string/basic_static_string.hpp>
+#include <etl/_string/basic_inplace_string.hpp>
 
 namespace etl {
 
-/// Typedef for a basic_static_string using 'wchar_t'
+/// Typedef for a basic_inplace_string using 'wchar_t'
 template <etl::size_t Capacity>
-using static_wstring = basic_static_string<wchar_t, Capacity>;
+using inplace_wstring = basic_inplace_string<wchar_t, Capacity>;
 
 } // namespace etl
 

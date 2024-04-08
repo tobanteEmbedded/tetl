@@ -97,8 +97,8 @@ constexpr auto test() -> bool
 
 constexpr auto test_all() -> bool
 {
-    CHECK(test<etl::static_string<24>>());
-    CHECK(test<etl::static_string<55>>());
+    CHECK(test<etl::inplace_string<24>>());
+    CHECK(test<etl::inplace_string<55>>());
     return true;
 }
 

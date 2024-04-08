@@ -6,7 +6,7 @@
 #include <etl/_cstddef/nullptr_t.hpp>
 #include <etl/_cstddef/size_t.hpp>
 #include <etl/_format/basic_format_parse_context.hpp>
-#include <etl/_string/basic_static_string.hpp>
+#include <etl/_string/basic_inplace_string.hpp>
 #include <etl/_string_view/basic_string_view.hpp>
 #include <etl/_utility/forward.hpp>
 #include <etl/_variant/monostate.hpp>
@@ -58,7 +58,7 @@ public:
     explicit basic_format_arg(basic_string_view<char_type, Traits> s) noexcept;
 
     template <etl::size_t Capacity, typename Traits>
-    explicit basic_format_arg(basic_static_string<char_type, Capacity, Traits> const& s) noexcept;
+    explicit basic_format_arg(basic_inplace_string<char_type, Capacity, Traits> const& s) noexcept;
 
     explicit basic_format_arg(nullptr_t) noexcept;
 

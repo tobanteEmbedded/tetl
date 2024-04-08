@@ -15,7 +15,7 @@ auto main() -> int
 {
     // Unlike a std::string you will have to decide which maximum capacity you
     // need. Apart from that it behaves almost the same as the standard version.
-    etl::static_string<32> str{};
+    etl::inplace_string<32> str{};
     assert(str.empty());
     static_assert(str.capacity() == 32);
 
@@ -58,11 +58,11 @@ auto main() -> int
     str.insert(7, " foo");
     assert(str == "  HELLO foo WORLD");
 
-    // You can check if a static_string starts or ends with a substring
+    // You can check if a inplace_string starts or ends with a substring
     assert(str.starts_with("  "));
     assert(str.ends_with("WORLD"));
 
-    // You can convert a static_string into a string_view
+    // You can convert a inplace_string into a string_view
     etl::string_view view = str;
     assert(view.size() == str.size());
 
