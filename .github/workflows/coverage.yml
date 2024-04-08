@@ -16,7 +16,7 @@ jobs:
     runs-on: ubuntu-22.04
     strategy:
       matrix:
-        cxx: [20, 23, 26]
+        cxx: [20, 23]
       fail-fast: false
     steps:
       - name: Check out code
@@ -32,8 +32,6 @@ jobs:
           cmake -S .
           -B build
           -G Ninja
-          -D CMAKE_C_COMPILER="gcc-13"
-          -D CMAKE_CXX_COMPILER="g++-13"
           -D CMAKE_CXX_STANDARD="${{ matrix.cxx }}"
           -D CMAKE_BUILD_TYPE=Debug
           -D TETL_BUILD_COVERAGE=ON
@@ -47,7 +45,6 @@ jobs:
       - name: Coverage Report
         run: >
           gcovr --xml-pretty
-          --gcov-executable "gcov-13"
           --exclude-unreachable-branches
           --exclude-throw-branches
           -e ".*_3rd_party*"
