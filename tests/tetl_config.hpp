@@ -15,7 +15,7 @@
 namespace etl {
 
 template <typename Exception>
-[[noreturn]] inline auto tetl_exception_handler(Exception const& e) -> void
+[[noreturn]] inline auto exception_handler(Exception const& e) -> void
 {
     ::puts(e.what());
 #if defined(__cpp_exceptions)
@@ -26,11 +26,12 @@ template <typename Exception>
 }
 
 template <typename Assertion>
-[[noreturn]] auto tetl_assert_handler(Assertion const& msg) -> void
+[[noreturn]] auto assert_handler(Assertion const& msg) -> void
 {
     ::printf("ASSERTION: %s:%d - %s\n", msg.file, msg.line, msg.func);
     ::exit(1); // NOLINT
 }
+
 } // namespace etl
 
 #endif // TETL_CONFIG_FOR_UNIT_TESTS_HPP

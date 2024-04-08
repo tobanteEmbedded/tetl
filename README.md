@@ -105,7 +105,7 @@ The [etl/experimental](./include/etl/experimental) subdirectory includes librari
 
 Since I assume that you might have exceptions disabled, I need a different way of reporting exceptional cases to you which occured deep inside the library. To keep the behavior of my library and actual STL implementations as close as possible, I've chosen to add a global assert/exception handler functions, which can be overriden by enabling the `TETL_ENABLE_CUSTOM_ASSERT_HANDLER` macro.
 
-For more details about the global assertion handler `etl::tetl_assert_handler` & the assertion macro `TETL_ASSERT` see the [examples/cassert.cpp](./examples/cassert.cpp) file.
+For more details about the global assertion handler `etl::assert_handler` & the assertion macro `TETL_ASSERT` see the [examples/cassert.cpp](./examples/cassert.cpp) file.
 
 ## Project Integration
 

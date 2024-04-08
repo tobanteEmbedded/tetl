@@ -30,35 +30,19 @@ struct assert_msg {
 namespace etl {
 #if defined(TETL_ENABLE_CUSTOM_ASSERT_HANDLER)
 
-/// \brief This functions needs to be implemented if you enabled the
-/// `TETL_ENABLE_CUSTOM_ASSERT_HANDLER` macro. Rebooting the chip is probably
-/// the best idea, because you can not recover from any of the exceptional cases
-/// in the library.
 template <typename Assertion>
-[[noreturn]] auto tetl_assert_handler(Assertion const& msg) -> void; // NOLINT
+[[noreturn]] auto assert_handler(Assertion const& msg) -> void; // NOLINT
+
 #else
 
-#endif
-
-/// \brief The default assert handler. This will be called, if an assertion
-/// is triggered at runtime.
-[[noreturn]] inline auto default_assert_handler(assert_msg const& msg) -> void
+template <typename Assertion>
+[[noreturn]] auto assert_handler(Assertion const& msg) -> void // NOLINT
 {
     etl::ignore_unused(msg);
     ::exit(1); // NOLINT
 }
 
-namespace detail {
-[[noreturn]] inline auto call_assert_handler(assert_msg const& msg) -> void
-{
-#if defined(TETL_ENABLE_CUSTOM_ASSERT_HANDLER)
-    etl::tetl_assert_handler(msg);
-#else
-    etl::default_assert_handler(msg);
 #endif
-}
-
-} // namespace detail
 
 } // namespace etl
 
@@ -66,7 +50,7 @@ namespace detail {
     do {                                                                                                               \
         if (not(__VA_ARGS__)) [[unlikely]] {                                                                           \
             /* TETL_DEBUG_TRAP(); */                                                                                   \
-            etl::detail::call_assert_handler(etl::assert_msg{                                                          \
+            etl::assert_handler(etl::assert_msg{                                                                       \
                 __LINE__,                                                                                              \
                 __FILE__,                                                                                              \
                 etl::is_hosted() ? TETL_BUILTIN_FUNCTION() : nullptr,                                                  \

@@ -18,9 +18,9 @@ raise(char const* msg, etl::source_location const loc = etl::source_location::cu
 {
     #if defined(TETL_ENABLE_CUSTOM_EXCEPTION_HANDLER)
     (void)loc;
-    etl::tetl_exception_handler(Exception{msg});
+    etl::exception_handler(Exception{msg});
     #else
-    detail::call_assert_handler(etl::assert_msg{
+    etl::assert_handler(etl::assert_msg{
         static_cast<int>(loc.line()),
         loc.file_name(),
         loc.function_name(),
@@ -35,9 +35,9 @@ template <typename Exception>
 [[noreturn]] TETL_NO_INLINE TETL_COLD auto raise(char const* msg) -> void
 {
     #if defined(TETL_ENABLE_CUSTOM_EXCEPTION_HANDLER)
-    etl::tetl_exception_handler(Exception{msg});
+    etl::exception_handler(Exception{msg});
     #else
-    detail::call_assert_handler(etl::assert_msg{
+    etl::assert_handler(etl::assert_msg{
         0,
         nullptr,
         nullptr,
