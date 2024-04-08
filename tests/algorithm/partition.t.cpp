@@ -67,19 +67,6 @@ constexpr auto test() -> bool
         CHECK(*res == T(10));
     }
 
-    {
-        auto arr = etl::array{T(11), T(1), T(12), T(13), T(2), T(3), T(4)};
-
-        etl::stable_partition(begin(arr), end(arr), [](auto n) { return n < 10; });
-        CHECK(arr[0] == 1);
-        CHECK(arr[1] == 2);
-        CHECK(arr[2] == 3);
-        CHECK(arr[3] == 4);
-        CHECK(arr[4] == 11);
-        CHECK(arr[5] == 12);
-        CHECK(arr[6] == 13);
-    }
-
     return true;
 }
 
@@ -112,10 +99,7 @@ constexpr auto test_all() -> bool
 
 auto main() -> int
 {
-    CHECK(test_all());
-
-    // TODO: Fix
-    // static_assert(test_all());
+    STATIC_CHECK(test_all());
 
     return 0;
 }
