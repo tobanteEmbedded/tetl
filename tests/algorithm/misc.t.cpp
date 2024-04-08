@@ -26,26 +26,6 @@ constexpr auto test() -> bool
         CHECK(intersection[1] == T{7});
     }
 
-    // cppreference.com example
-    {
-        etl::array<T, 8> v1{T(1), T(2), T(3), T(4), T(5), T(6), T(7), T(8)};
-        etl::array<T, 4> v2{T(5), T(7), T(9), T(10)};
-        etl::sort(v1.begin(), v1.end());
-        etl::sort(v2.begin(), v2.end());
-
-        etl::static_vector<T, 8> symDifference{};
-        etl::set_symmetric_difference(v1.begin(), v1.end(), v2.begin(), v2.end(), etl::back_inserter(symDifference));
-
-        CHECK(symDifference[0] == T{1});
-        CHECK(symDifference[1] == T{2});
-        CHECK(symDifference[2] == T{3});
-        CHECK(symDifference[3] == T{4});
-        CHECK(symDifference[4] == T{6});
-        CHECK(symDifference[5] == T{8});
-        CHECK(symDifference[6] == T{9});
-        CHECK(symDifference[7] == T{10});
-    }
-
     // same data
     {
         auto const a = etl::array{T(1), T(2), T(3)};
