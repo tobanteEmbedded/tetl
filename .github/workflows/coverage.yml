@@ -46,12 +46,10 @@ jobs:
         run: >
           gcovr --xml-pretty
           --exclude-unreachable-branches
-          --exclude-throw-branches
-          -e ".*_3rd_party*"
-          -j 2
-          -r .
           -s build
           -o build/coverage.xml
+          -r include
+          -j 2
 
       - uses: codecov/codecov-action@v4
         with:
