@@ -11,12 +11,12 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
-  coverage:
-    name: Coverage
+  build:
+    name: Coverage C++${{ matrix.cxx }}
     runs-on: ubuntu-22.04
     strategy:
       matrix:
-        cxx: [20, 23]
+        cxx: [20, 23, 26]
       fail-fast: false
     steps:
       - name: Check out code
@@ -24,14 +24,46 @@ jobs:
 
       - name: Install dependencies
         run: |
-          sudo apt update
-          sudo apt install -y ninja-build cmake lcov gcovr
+          sudo apt update -y
+          sudo apt install -y ninja-build gcovr
 
-      - name: Run coverage build
-        run: CXX_STD="${{ matrix.cxx }}" make coverage-xml
+      - name: Install LLVM
+        run: |
+          wget https://apt.llvm.org/llvm.sh
+          chmod +x llvm.sh
+          sudo ./llvm.sh 18 all
+
+      - name: CMake configure
+        run: >
+          cmake -S .
+          -B build
+          -G Ninja
+          -D CMAKE_C_COMPILER="clang-18"
+          -D CMAKE_CXX_COMPILER="clang++-18"
+          -D CMAKE_CXX_STANDARD="${{ matrix.cxx }}"
+          -D CMAKE_BUILD_TYPE=Debug
+          -D TETL_BUILD_COVERAGE=ON
+
+      - name: CMake build
+        run: cmake --build build
+
+      - name: CTest
+        run: ctest --test-dir build -C Debug --output-on-failure
+
+      - name: Coverage Report
+        run: >
+          gcovr --xml-pretty
+          --gcov-executable "llvm-cov-18 gcov"
+          --exclude-unreachable-branches
+          --exclude-throw-branches
+          -e ".*_3rd_party*"
+          -j 2
+          -r .
+          -s build
+          -o build/coverage.xml
 
       - uses: codecov/codecov-action@v4
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
-          files: ./cmake-build-coverage/coverage.xml
+          files: ./build/coverage.xml
           fail_ci_if_error: true
