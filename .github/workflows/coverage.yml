@@ -27,19 +27,13 @@ jobs:
           sudo apt update -y
           sudo apt install -y ninja-build gcovr
 
-      - name: Install LLVM
-        run: |
-          wget https://apt.llvm.org/llvm.sh
-          chmod +x llvm.sh
-          sudo ./llvm.sh 18 all
-
       - name: CMake configure
         run: >
           cmake -S .
           -B build
           -G Ninja
-          -D CMAKE_C_COMPILER="clang-18"
-          -D CMAKE_CXX_COMPILER="clang++-18"
+          -D CMAKE_C_COMPILER="gcc-13"
+          -D CMAKE_CXX_COMPILER="g++-13"
           -D CMAKE_CXX_STANDARD="${{ matrix.cxx }}"
           -D CMAKE_BUILD_TYPE=Debug
           -D TETL_BUILD_COVERAGE=ON
@@ -53,7 +47,7 @@ jobs:
       - name: Coverage Report
         run: >
           gcovr --xml-pretty
-          --gcov-executable "llvm-cov-18 gcov"
+          --gcov-executable "gcov-13"
           --exclude-unreachable-branches
           --exclude-throw-branches
           -e ".*_3rd_party*"
