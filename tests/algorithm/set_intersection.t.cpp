@@ -26,29 +26,6 @@ constexpr auto test() -> bool
         CHECK(intersection[1] == T{7});
     }
 
-    // same data
-    {
-        auto const a = etl::array{T(1), T(2), T(3)};
-        auto const b = etl::array{T(1), T(2), T(3)};
-        CHECK(etl::is_permutation(a.begin(), a.end(), begin(b), end(b)));
-    }
-
-    // reverse data
-    {
-        auto const a = etl::array{T(1), T(2), T(3)};
-        auto const b = etl::array{T(3), T(2), T(1)};
-        CHECK(etl::is_permutation(a.begin(), a.end(), begin(b), end(b)));
-    }
-
-    // cppreference.com example
-    {
-        auto const a = etl::array{T(1), T(2), T(3), T(4), T(5)};
-        auto const b = etl::array{T(3), T(5), T(4), T(1), T(2)};
-        auto const c = etl::array{T(3), T(5), T(4), T(1), T(1)};
-        CHECK(etl::is_permutation(a.begin(), a.end(), begin(b), end(b)));
-        CHECK_FALSE(etl::is_permutation(a.begin(), a.end(), begin(c), end(c)));
-    }
-
     return true;
 }
 
