@@ -36,12 +36,8 @@ template <typename Int, skip_whitespace Skip = skip_whitespace::yes>
 [[nodiscard]] constexpr auto
 string_to_integer(char const* str, size_t len, Int base = Int(10)) noexcept -> string_to_integer_result<Int>
 {
-    if (*str == char(0)) {
-        return {
-            .end   = str,
-            .error = string_to_integer_error::invalid_input,
-            .value = Int{},
-        };
+    if (len == 0 or *str == char(0)) {
+        return {.end = str, .error = string_to_integer_error::invalid_input, .value = Int{}};
     }
 
     auto i = size_t{};
