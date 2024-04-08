@@ -1,4 +1,4 @@
-# TETL - Embedded Template Library
+# Embedded Template Library
 
 Tobante's embedded template library. A STL-like C++ template library designed for embedded devices with limited resources. Supports freestanding and hosted environments.
 
