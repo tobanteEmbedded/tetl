@@ -22,9 +22,12 @@ template <typename ForwardIt>
 constexpr auto
 shift_left(ForwardIt first, ForwardIt const last, typename iterator_traits<ForwardIt>::difference_type n) -> ForwardIt
 {
+    // The standard only checks for n == 0. n < 0 would be undefined behavior.
+    // This implementation does nothing if n < 0.
     if (n <= 0) {
         return last;
     }
+
     auto start = first;
     if constexpr (etl::detail::RandomAccessIterator<ForwardIt>) {
         if (n >= last - first) {

@@ -12,25 +12,6 @@
 template <typename T>
 constexpr auto test() -> bool
 {
-
-    {
-        auto d = etl::array{T(1), T(2), T(3), T(4), T(5), T(6)};
-        etl::shift_left(begin(d), end(d), 2);
-        CHECK(d[0] == T(3));
-        CHECK(d[1] == T(4));
-        CHECK(d[2] == T(5));
-        CHECK(d[3] == T(6));
-    }
-
-    {
-        auto d = etl::array{T(1), T(2), T(3), T(4), T(5), T(6)};
-        etl::shift_left(forward_iter(begin(d)), forward_iter(end(d)), 2);
-        CHECK(d[0] == T(3));
-        CHECK(d[1] == T(4));
-        CHECK(d[2] == T(5));
-        CHECK(d[3] == T(6));
-    }
-
     {
         auto const src = etl::array{T(0), T(1), T(2), T(3)};
 
