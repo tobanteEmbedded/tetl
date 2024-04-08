@@ -7,71 +7,60 @@
 
 #include <etl/_3rd_party/gcem/gcem.hpp>
 #include <etl/_concepts/integral.hpp>
+#include <etl/_concepts/same_as.hpp>
 #include <etl/_type_traits/is_constant_evaluated.hpp>
 
 namespace etl {
 
-/// Computes the tangent of arg (measured in radians).
-/// \details https://en.cppreference.com/w/cpp/numeric/math/tan
-/// \ingroup cmath
-[[nodiscard]] constexpr auto tan(float arg) noexcept -> float
-{
-    if (is_constant_evaluated()) {
-#if __has_constexpr_builtin(__builtin_tanf)
-        return __builtin_tanf(arg);
-#else
-        return etl::detail::gcem::tan(arg);
-#endif
-    }
+namespace detail {
+
+inline constexpr struct tan {
+    template <typename Float>
+    [[nodiscard]] constexpr auto operator()(Float arg) const noexcept -> Float
+    {
+        if (not etl::is_constant_evaluated()) {
 #if __has_builtin(__builtin_tanf)
-    return __builtin_tanf(arg);
-#else
-    return etl::detail::gcem::tan(arg);
+            if constexpr (etl::same_as<Float, float>) {
+                return __builtin_tanf(arg);
+            }
+#elif __has_builtin(__builtin_tan)
+            if constexpr (etl::same_as<Float, double>) {
+                return __builtin_tan(arg);
+            }
+#elif __has_builtin(__builtin_tanl)
+            if constexpr (etl::same_as<Float, long double>) {
+                return __builtin_tanl(arg);
+            }
 #endif
-}
-
-/// Computes the tangent of arg (measured in radians).
-/// \details https://en.cppreference.com/w/cpp/numeric/math/tan
-/// \ingroup cmath
-[[nodiscard]] constexpr auto tanf(float arg) noexcept -> float { return etl::tan(arg); }
-
-/// Computes the tangent of arg (measured in radians).
-/// \details https://en.cppreference.com/w/cpp/numeric/math/tan
-/// \ingroup cmath
-[[nodiscard]] constexpr auto tan(double arg) noexcept -> double
-{
-    if (is_constant_evaluated()) {
-#if __has_constexpr_builtin(__builtin_tan)
-        return __builtin_tan(arg);
-#else
+        }
         return etl::detail::gcem::tan(arg);
-#endif
     }
-#if __has_builtin(__builtin_tan)
-    return __builtin_tan(arg);
-#else
-    return etl::detail::gcem::tan(arg);
-#endif
-}
+} tan;
+
+} // namespace detail
+
+/// \ingroup cmath
+/// @{
 
 /// Computes the tangent of arg (measured in radians).
 /// \details https://en.cppreference.com/w/cpp/numeric/math/tan
-/// \ingroup cmath
-[[nodiscard]] constexpr auto tan(long double arg) noexcept -> long double { return etl::detail::gcem::tan(arg); }
+[[nodiscard]] constexpr auto tan(float arg) noexcept -> float { return etl::detail::tan(arg); }
 
-/// Computes the tangent of arg (measured in radians).
-/// \details https://en.cppreference.com/w/cpp/numeric/math/tan
-/// \ingroup cmath
-[[nodiscard]] constexpr auto tanl(long double arg) noexcept -> long double { return etl::tan(arg); }
+[[nodiscard]] constexpr auto tanf(float arg) noexcept -> float { return etl::detail::tan(arg); }
 
-/// Computes the tangent of arg (measured in radians).
-/// \details https://en.cppreference.com/w/cpp/numeric/math/tan
-/// \ingroup cmath
+[[nodiscard]] constexpr auto tan(double arg) noexcept -> double { return etl::detail::tan(arg); }
+
+[[nodiscard]] constexpr auto tan(long double arg) noexcept -> long double { return etl::detail::tan(arg); }
+
+[[nodiscard]] constexpr auto tanl(long double arg) noexcept -> long double { return etl::detail::tan(arg); }
+
 template <integral T>
 [[nodiscard]] constexpr auto tan(T arg) noexcept -> double
 {
-    return etl::tan(static_cast<double>(arg));
+    return etl::detail::tan(static_cast<double>(arg));
 }
+
+/// @}
 
 } // namespace etl
 
