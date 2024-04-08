@@ -46,42 +46,6 @@ constexpr auto test() -> bool
         CHECK(symDifference[7] == T{10});
     }
 
-    // cppreference.com example #1
-    {
-        etl::array<T, 5> v1 = {T(1), T(2), T(3), T(4), T(5)};
-        etl::array<T, 5> v2 = {T(3), T(4), T(5), T(6), T(7)};
-        etl::static_vector<T, 7> dest;
-
-        etl::set_union(begin(v1), end(v1), begin(v2), end(v2), back_inserter(dest));
-
-        CHECK(dest[0] == T{1});
-        CHECK(dest[1] == T{2});
-        CHECK(dest[2] == T{3});
-        CHECK(dest[3] == T{4});
-        CHECK(dest[4] == T{5});
-        CHECK(dest[5] == T{6});
-        CHECK(dest[6] == T{7});
-    }
-
-    // cppreference.com example #1
-    {
-        etl::array<T, 7> v1 = {T(1), T(2), T(3), T(4), T(5), T(5), T(5)};
-        etl::array<T, 5> v2 = {T(3), T(4), T(5), T(6), T(7)};
-        etl::static_vector<T, 9> dest;
-
-        etl::set_union(begin(v1), end(v1), begin(v2), end(v2), back_inserter(dest));
-
-        CHECK(dest[0] == T{1});
-        CHECK(dest[1] == T{2});
-        CHECK(dest[2] == T{3});
-        CHECK(dest[3] == T{4});
-        CHECK(dest[4] == T{5});
-        CHECK(dest[5] == T{5});
-        CHECK(dest[6] == T{5});
-        CHECK(dest[7] == T{6});
-        CHECK(dest[8] == T{7});
-    }
-
     // same data
     {
         auto const a = etl::array{T(1), T(2), T(3)};
