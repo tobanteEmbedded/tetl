@@ -24,11 +24,13 @@ inline constexpr struct acosh {
             if constexpr (etl::same_as<Float, float>) {
                 return __builtin_acoshf(arg);
             }
-    #elif __has_builtin(__builtin_acosh)
+    #endif
+    #if __has_builtin(__builtin_acosh)
             if constexpr (etl::same_as<Float, double>) {
                 return __builtin_acosh(arg);
             }
-    #elif __has_builtin(__builtin_acoshl)
+    #endif
+    #if __has_builtin(__builtin_acoshl)
             if constexpr (etl::same_as<Float, long double>) {
                 return __builtin_acoshl(arg);
             }
@@ -47,20 +49,11 @@ inline constexpr struct acosh {
 /// Computes the inverse hyperbolic cosine of arg.
 /// \details https://en.cppreference.com/w/cpp/numeric/math/acosh
 [[nodiscard]] constexpr auto acosh(float arg) noexcept -> float { return etl::detail::acosh(arg); }
-
 [[nodiscard]] constexpr auto acoshf(float arg) noexcept -> float { return etl::detail::acosh(arg); }
-
 [[nodiscard]] constexpr auto acosh(double arg) noexcept -> double { return etl::detail::acosh(arg); }
-
 [[nodiscard]] constexpr auto acosh(long double arg) noexcept -> long double { return etl::detail::acosh(arg); }
-
 [[nodiscard]] constexpr auto acoshl(long double arg) noexcept -> long double { return etl::detail::acosh(arg); }
-
-template <integral T>
-[[nodiscard]] constexpr auto acosh(T arg) noexcept -> double
-{
-    return etl::detail::acosh(static_cast<double>(arg));
-}
+[[nodiscard]] constexpr auto acosh(integral auto arg) noexcept -> double { return etl::detail::acosh(double(arg)); }
 
 /// @}
 

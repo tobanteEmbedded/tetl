@@ -18,21 +18,25 @@ inline constexpr struct acos {
     template <typename Float>
     [[nodiscard]] constexpr auto operator()(Float arg) const noexcept -> Float
     {
+#if not defined(__AVR__)
         if (not etl::is_constant_evaluated()) {
-#if __has_builtin(__builtin_acosf)
+    #if __has_builtin(__builtin_acosf)
             if constexpr (etl::same_as<Float, float>) {
                 return __builtin_acosf(arg);
             }
-#elif __has_builtin(__builtin_acos)
+    #endif
+    #if __has_builtin(__builtin_acos)
             if constexpr (etl::same_as<Float, double>) {
                 return __builtin_acos(arg);
             }
-#elif __has_builtin(__builtin_acosl)
+    #endif
+    #if __has_builtin(__builtin_acosl)
             if constexpr (etl::same_as<Float, long double>) {
                 return __builtin_acosl(arg);
             }
-#endif
+    #endif
         }
+#endif
         return etl::detail::gcem::acos(arg);
     }
 } acos;
@@ -43,23 +47,13 @@ inline constexpr struct acos {
 /// @{
 
 /// Computes the principal value of the arc cosine of arg.
-///
-/// https://en.cppreference.com/w/cpp/numeric/math/acos
+/// \details https://en.cppreference.com/w/cpp/numeric/math/acos
 [[nodiscard]] constexpr auto acos(float arg) noexcept -> float { return etl::detail::acos(arg); }
-
 [[nodiscard]] constexpr auto acosf(float arg) noexcept -> float { return etl::detail::acos(arg); }
-
 [[nodiscard]] constexpr auto acos(double arg) noexcept -> double { return etl::detail::acos(arg); }
-
 [[nodiscard]] constexpr auto acos(long double arg) noexcept -> long double { return etl::detail::acos(arg); }
-
 [[nodiscard]] constexpr auto acosl(long double arg) noexcept -> long double { return etl::detail::acos(arg); }
-
-template <integral T>
-[[nodiscard]] constexpr auto acos(T arg) noexcept -> double
-{
-    return etl::detail::acos(static_cast<double>(arg));
-}
+[[nodiscard]] constexpr auto acos(integral auto arg) noexcept -> double { return etl::detail::acos(double(arg)); }
 
 /// @}
 

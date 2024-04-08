@@ -18,21 +18,25 @@ inline constexpr struct asin {
     template <typename Float>
     [[nodiscard]] constexpr auto operator()(Float arg) const noexcept -> Float
     {
+#if not defined(__AVR__)
         if (not etl::is_constant_evaluated()) {
-#if __has_builtin(__builtin_asinf)
+    #if __has_builtin(__builtin_asinf)
             if constexpr (etl::same_as<Float, float>) {
                 return __builtin_asinf(arg);
             }
-#elif __has_builtin(__builtin_asin)
+    #endif
+    #if __has_builtin(__builtin_asin)
             if constexpr (etl::same_as<Float, double>) {
                 return __builtin_asin(arg);
             }
-#elif __has_builtin(__builtin_asinl)
+    #endif
+    #if __has_builtin(__builtin_asinl)
             if constexpr (etl::same_as<Float, long double>) {
                 return __builtin_asinl(arg);
             }
-#endif
+    #endif
         }
+#endif
         return etl::detail::gcem::asin(arg);
     }
 } asin;
@@ -45,20 +49,11 @@ inline constexpr struct asin {
 /// Computes the principal value of the arc sine of arg.
 /// \details https://en.cppreference.com/w/cpp/numeric/math/asin
 [[nodiscard]] constexpr auto asin(float arg) noexcept -> float { return etl::detail::asin(arg); }
-
 [[nodiscard]] constexpr auto asinf(float arg) noexcept -> float { return etl::detail::asin(arg); }
-
 [[nodiscard]] constexpr auto asin(double arg) noexcept -> double { return etl::detail::asin(arg); }
-
 [[nodiscard]] constexpr auto asin(long double arg) noexcept -> long double { return etl::detail::asin(arg); }
-
 [[nodiscard]] constexpr auto asinl(long double arg) noexcept -> long double { return etl::detail::asin(arg); }
-
-template <integral T>
-[[nodiscard]] constexpr auto asin(T arg) noexcept -> double
-{
-    return etl::detail::asin(static_cast<double>(arg));
-}
+[[nodiscard]] constexpr auto asin(integral auto arg) noexcept -> double { return etl::detail::asin(double(arg)); }
 
 /// @}
 

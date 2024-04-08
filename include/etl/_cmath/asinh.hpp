@@ -24,11 +24,13 @@ inline constexpr struct asinh {
             if constexpr (etl::same_as<Float, float>) {
                 return __builtin_asinhf(arg);
             }
-    #elif __has_builtin(__builtin_asinh)
+    #endif
+    #if __has_builtin(__builtin_asinh)
             if constexpr (etl::same_as<Float, double>) {
                 return __builtin_asinh(arg);
             }
-    #elif __has_builtin(__builtin_asinhl)
+    #endif
+    #if __has_builtin(__builtin_asinhl)
             if constexpr (etl::same_as<Float, long double>) {
                 return __builtin_asinhl(arg);
             }
@@ -47,20 +49,11 @@ inline constexpr struct asinh {
 /// Computes the inverse hyperbolic sine of arg.
 /// \details https://en.cppreference.com/w/cpp/numeric/math/asinh
 [[nodiscard]] constexpr auto asinh(float arg) noexcept -> float { return etl::detail::asinh(arg); }
-
 [[nodiscard]] constexpr auto asinhf(float arg) noexcept -> float { return etl::detail::asinh(arg); }
-
 [[nodiscard]] constexpr auto asinh(double arg) noexcept -> double { return etl::detail::asinh(arg); }
-
 [[nodiscard]] constexpr auto asinh(long double arg) noexcept -> long double { return etl::detail::asinh(arg); }
-
 [[nodiscard]] constexpr auto asinhl(long double arg) noexcept -> long double { return etl::detail::asinh(arg); }
-
-template <integral T>
-[[nodiscard]] constexpr auto asinh(T arg) noexcept -> double
-{
-    return etl::detail::asinh(static_cast<double>(arg));
-}
+[[nodiscard]] constexpr auto asinh(integral auto arg) noexcept -> double { return etl::detail::asinh(double(arg)); }
 
 /// @}
 
