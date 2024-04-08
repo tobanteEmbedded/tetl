@@ -84,7 +84,7 @@ inline constexpr auto is_in_place_type<etl::in_place_type_t<T>> = true;
 
 /// \ingroup variant
 template <typename... Ts>
-struct variant {
+struct TETL_TRIVIAL_ABI variant {
 private:
     // Avoid valueless_by_exception
     static_assert((etl::is_nothrow_move_constructible_v<Ts> and ...));
@@ -199,6 +199,16 @@ public:
     /// Returns the zero-based index of the alternative that is currently held by the variant.
     [[nodiscard]] constexpr auto index() const noexcept -> etl::size_t { return static_cast<etl::size_t>(_index); }
 
+#if defined(__cpp_explicit_this_parameter)
+    /// Returns a reference to the object stored in the variant.
+    /// \pre I == index()
+    template <typename Self, etl::size_t I>
+    constexpr auto operator[](this Self&& self, etl::index_constant<I> index) & -> auto&
+    {
+        static_assert(I < sizeof...(Ts));
+        return etl::forward<Self>(this)._union[index];
+    }
+#else
     /// Returns a reference to the object stored in the variant.
     /// \pre I == index()
     template <etl::size_t I>
@@ -234,6 +244,7 @@ public:
         static_assert(I < sizeof...(Ts));
         return etl::move(_union)[index];
     }
+#endif
 
     template <typename T, typename... Args>
         requires(etl::is_constructible_v<T, Args...> and etl::meta::count_v<T, etl::meta::list<Ts...>> == 1)

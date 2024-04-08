@@ -33,7 +33,7 @@ namespace etl {
 /// \headerfile etl/inplace_vector.hpp
 /// \ingroup inplace_vector
 template <typename T, etl::size_t Capacity>
-struct inplace_vector {
+struct TETL_TRIVIAL_ABI inplace_vector {
     using value_type             = T;
     using size_type              = etl::size_t;
     using difference_type        = etl::ptrdiff_t;

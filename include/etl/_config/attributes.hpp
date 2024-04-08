@@ -41,4 +41,10 @@
     #define TETL_NO_UNIQUE_ADDRESS [[no_unique_address]]
 #endif
 
+#if defined(__clang__)
+    #define TETL_TRIVIAL_ABI [[clang::trivial_abi]]
+#else
+    #define TETL_TRIVIAL_ABI
+#endif
+
 #endif // TETL_CONFIG_ATTRIBUTES_HPP
