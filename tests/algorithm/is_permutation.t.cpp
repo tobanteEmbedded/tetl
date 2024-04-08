@@ -10,10 +10,27 @@ template <typename T>
 #include "testing/testing.hpp"
 constexpr auto test() -> bool
 {
+    // different size
+    {
+        auto const a = etl::array{T(1), T(2), T(3)};
+        auto const b = etl::array{T(3), T(2)};
+        CHECK_FALSE(etl::is_permutation(a.begin(), a.end(), b.begin(), b.end()));
+    }
+
+    // different data
+    {
+        auto const a = etl::array{T(1), T(2), T(3)};
+        auto const b = etl::array{T(4), T(5), T(6)};
+        CHECK_FALSE(etl::is_permutation(a.begin(), a.end(), b.begin(), b.end()));
+        CHECK_FALSE(etl::is_permutation(forward_iter(a.begin()), forward_iter(a.end()), b.begin(), b.end()));
+        CHECK_FALSE(etl::is_permutation(forward_iter(b.begin()), forward_iter(b.end()), a.begin(), a.end()));
+    }
+
     // same data
     {
         auto const a = etl::array{T(1), T(2), T(3)};
         auto const b = etl::array{T(1), T(2), T(3)};
+        CHECK(etl::is_permutation(a.begin(), a.end(), b.begin(), b.end()));
         CHECK(etl::is_permutation(forward_iter(a.begin()), forward_iter(a.end()), b.begin(), b.end()));
     }
 

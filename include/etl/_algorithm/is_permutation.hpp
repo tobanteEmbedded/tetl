@@ -7,7 +7,10 @@
 #include <etl/_algorithm/find.hpp>
 #include <etl/_algorithm/mismatch.hpp>
 #include <etl/_iterator/distance.hpp>
+#include <etl/_iterator/iterator_traits.hpp>
 #include <etl/_iterator/next.hpp>
+#include <etl/_iterator/tags.hpp>
+#include <etl/_type_traits/is_base_of.hpp>
 
 namespace etl {
 
@@ -47,8 +50,15 @@ template <typename ForwardIt1, typename ForwardIt2>
 [[nodiscard]] constexpr auto
 is_permutation(ForwardIt1 first1, ForwardIt1 last1, ForwardIt2 first2, ForwardIt2 last2) -> bool
 {
-    if (etl::distance(first1, last1) != etl::distance(first2, last2)) {
-        return false;
+    using tag = random_access_iterator_tag;
+
+    constexpr auto lhsIsRandomIt = is_base_of_v<tag, typename iterator_traits<ForwardIt1>::iterator_category>;
+    constexpr auto rhsIsRandomIt = is_base_of_v<tag, typename iterator_traits<ForwardIt2>::iterator_category>;
+
+    if constexpr (lhsIsRandomIt and rhsIsRandomIt) {
+        if (etl::distance(first1, last1) != etl::distance(first2, last2)) {
+            return false;
+        }
     }
     return etl::is_permutation(first1, last1, first2);
 }
