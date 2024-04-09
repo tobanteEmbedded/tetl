@@ -29,11 +29,6 @@ inline constexpr struct tan {
                 return __builtin_tan(arg);
             }
 #endif
-#if __has_builtin(__builtin_tanl)
-            if constexpr (etl::same_as<Float, long double>) {
-                return __builtin_tanl(arg);
-            }
-#endif
         }
         return etl::detail::gcem::tan(arg);
     }

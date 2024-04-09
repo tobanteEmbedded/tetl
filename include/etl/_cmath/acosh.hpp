@@ -30,11 +30,6 @@ inline constexpr struct acosh {
                 return __builtin_acosh(arg);
             }
     #endif
-    #if __has_builtin(__builtin_acoshl)
-            if constexpr (etl::same_as<Float, long double>) {
-                return __builtin_acoshl(arg);
-            }
-    #endif
         }
 #endif
         return etl::detail::gcem::acosh(arg);

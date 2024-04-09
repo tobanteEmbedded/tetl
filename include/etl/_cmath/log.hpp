@@ -28,11 +28,6 @@ inline constexpr struct log {
                 return __builtin_log(v);
             }
 #endif
-#if __has_builtin(__builtin_logl)
-            if constexpr (etl::is_same_v<Float, long double>) {
-                return __builtin_logl(v);
-            }
-#endif
         }
 
         return etl::detail::gcem::log(v);

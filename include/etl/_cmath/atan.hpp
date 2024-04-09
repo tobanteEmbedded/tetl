@@ -29,11 +29,6 @@ inline constexpr struct atan {
                 return __builtin_atan(arg);
             }
 #endif
-#if __has_builtin(__builtin_atanl)
-            if constexpr (etl::same_as<Float, long double>) {
-                return __builtin_atanl(arg);
-            }
-#endif
         }
         return etl::detail::gcem::atan(arg);
     }

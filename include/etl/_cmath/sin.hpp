@@ -29,11 +29,6 @@ inline constexpr struct sin {
                 return __builtin_sin(arg);
             }
 #endif
-#if __has_builtin(__builtin_sinl)
-            if constexpr (etl::same_as<Float, long double>) {
-                return __builtin_sinl(arg);
-            }
-#endif
         }
         return etl::detail::gcem::sin(arg);
     }

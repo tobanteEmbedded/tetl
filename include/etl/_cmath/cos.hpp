@@ -29,11 +29,6 @@ inline constexpr struct cos {
                 return __builtin_cos(arg);
             }
 #endif
-#if __has_builtin(__builtin_cosl)
-            if constexpr (etl::same_as<Float, long double>) {
-                return __builtin_cosl(arg);
-            }
-#endif
         }
         return etl::detail::gcem::cos(arg);
     }

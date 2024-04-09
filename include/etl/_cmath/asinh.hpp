@@ -30,11 +30,6 @@ inline constexpr struct asinh {
                 return __builtin_asinh(arg);
             }
     #endif
-    #if __has_builtin(__builtin_asinhl)
-            if constexpr (etl::same_as<Float, long double>) {
-                return __builtin_asinhl(arg);
-            }
-    #endif
         }
 #endif
         return etl::detail::gcem::asinh(arg);
