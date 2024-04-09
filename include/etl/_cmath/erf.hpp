@@ -8,39 +8,19 @@
 
 namespace etl {
 
+/// \ingroup cmath
+/// @{
+
 /// Computes the error function of arg.
 /// \details https://en.cppreference.com/w/cpp/numeric/math/erf
-/// \ingroup cmath
 [[nodiscard]] constexpr auto erf(float arg) noexcept -> float { return etl::detail::gcem::erf(arg); }
-
-/// Computes the error function of arg.
-/// \details https://en.cppreference.com/w/cpp/numeric/math/erf
-/// \ingroup cmath
 [[nodiscard]] constexpr auto erff(float arg) noexcept -> float { return etl::detail::gcem::erf(arg); }
-
-/// Computes the error function of arg.
-/// \details https://en.cppreference.com/w/cpp/numeric/math/erf
-/// \ingroup cmath
 [[nodiscard]] constexpr auto erf(double arg) noexcept -> double { return etl::detail::gcem::erf(arg); }
-
-/// Computes the error function of arg.
-/// \details https://en.cppreference.com/w/cpp/numeric/math/erf
-/// \ingroup cmath
 [[nodiscard]] constexpr auto erf(long double arg) noexcept -> long double { return etl::detail::gcem::erf(arg); }
-
-/// Computes the error function of arg.
-/// \details https://en.cppreference.com/w/cpp/numeric/math/erf
-/// \ingroup cmath
 [[nodiscard]] constexpr auto erfl(long double arg) noexcept -> long double { return etl::detail::gcem::erf(arg); }
+[[nodiscard]] constexpr auto erf(integral auto arg) noexcept -> double { return etl::detail::gcem::erf(double(arg)); }
 
-/// Computes the error function of arg.
-/// \details https://en.cppreference.com/w/cpp/numeric/math/erf
-/// \ingroup cmath
-template <integral T>
-[[nodiscard]] constexpr auto erf(T arg) noexcept -> double
-{
-    return etl::detail::gcem::erf(static_cast<double>(arg));
-}
+/// @}
 
 } // namespace etl
 

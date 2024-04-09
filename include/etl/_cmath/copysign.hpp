@@ -21,7 +21,7 @@ constexpr auto copysign_fallback(T x, T y) noexcept -> T
 }
 
 template <typename T>
-[[nodiscard]] constexpr auto copysign_impl(T x, T y) noexcept -> T
+[[nodiscard]] constexpr auto copysign(T x, T y) noexcept -> T
 {
     if (!is_constant_evaluated()) {
         if constexpr (is_same_v<T, float>) {
@@ -45,21 +45,8 @@ template <typename T>
 
 } // namespace detail
 
-/// Composes a floating point value with the magnitude of mag and the sign of sgn.
-///
-/// \details etl::copysign is the only portable way to manipulate the sign of a
-/// NaN value (to examine the sign of a NaN, signbit may also be used)
-///
-/// https://en.cppreference.com/w/cpp/numeric/math/copysign
-///
-/// \returns If no errors occur, the floating point value with the magnitude of
-/// mag and the sign of sgn is returned. If mag is NaN, then NaN with the sign
-/// of sgn is returned. If sgn is -0, the result is only negative if the
-/// implementation supports the signed zero consistently in arithmetic
-/// operations.
-///
 /// \ingroup cmath
-[[nodiscard]] constexpr auto copysign(float mag, float sgn) -> float { return detail::copysign_impl(mag, sgn); }
+/// @{
 
 /// Composes a floating point value with the magnitude of mag and the sign of sgn.
 ///
@@ -73,63 +60,20 @@ template <typename T>
 /// of sgn is returned. If sgn is -0, the result is only negative if the
 /// implementation supports the signed zero consistently in arithmetic
 /// operations.
-///
-/// \ingroup cmath
-[[nodiscard]] constexpr auto copysignf(float mag, float sgn) -> float { return detail::copysign_impl(mag, sgn); }
-
-/// Composes a floating point value with the magnitude of mag and the sign of sgn.
-///
-/// \details etl::copysign is the only portable way to manipulate the sign of a
-/// NaN value (to examine the sign of a NaN, signbit may also be used)
-///
-/// https://en.cppreference.com/w/cpp/numeric/math/copysign
-///
-/// \returns If no errors occur, the floating point value with the magnitude of
-/// mag and the sign of sgn is returned. If mag is NaN, then NaN with the sign
-/// of sgn is returned. If sgn is -0, the result is only negative if the
-/// implementation supports the signed zero consistently in arithmetic
-/// operations.
-///
-/// \ingroup cmath
-[[nodiscard]] constexpr auto copysign(double mag, double sgn) -> double { return detail::copysign_impl(mag, sgn); }
-
-/// Composes a floating point value with the magnitude of mag and the sign of sgn.
-///
-/// \details etl::copysign is the only portable way to manipulate the sign of a
-/// NaN value (to examine the sign of a NaN, signbit may also be used)
-///
-/// https://en.cppreference.com/w/cpp/numeric/math/copysign
-///
-/// \returns If no errors occur, the floating point value with the magnitude of
-/// mag and the sign of sgn is returned. If mag is NaN, then NaN with the sign
-/// of sgn is returned. If sgn is -0, the result is only negative if the
-/// implementation supports the signed zero consistently in arithmetic
-/// operations.
-///
-/// \ingroup cmath
+[[nodiscard]] constexpr auto copysign(float mag, float sgn) -> float { return detail::copysign(mag, sgn); }
+[[nodiscard]] constexpr auto copysignf(float mag, float sgn) -> float { return detail::copysign(mag, sgn); }
+[[nodiscard]] constexpr auto copysign(double mag, double sgn) -> double { return detail::copysign(mag, sgn); }
 [[nodiscard]] constexpr auto copysign(long double mag, long double sgn) -> long double
 {
-    return detail::copysign_impl(mag, sgn);
+    return detail::copysign(mag, sgn);
 }
 
-/// Composes a floating point value with the magnitude of mag and the sign of sgn.
-///
-/// \details etl::copysign is the only portable way to manipulate the sign of a
-/// NaN value (to examine the sign of a NaN, signbit may also be used)
-///
-/// https://en.cppreference.com/w/cpp/numeric/math/copysign
-///
-/// \returns If no errors occur, the floating point value with the magnitude of
-/// mag and the sign of sgn is returned. If mag is NaN, then NaN with the sign
-/// of sgn is returned. If sgn is -0, the result is only negative if the
-/// implementation supports the signed zero consistently in arithmetic
-/// operations.
-///
-/// \ingroup cmath
 [[nodiscard]] constexpr auto copysignl(long double mag, long double sgn) -> long double
 {
-    return detail::copysign_impl(mag, sgn);
+    return detail::copysign(mag, sgn);
 }
+
+/// @}
 
 } // namespace etl
 

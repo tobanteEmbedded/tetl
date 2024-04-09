@@ -8,39 +8,19 @@
 
 namespace etl {
 
+/// \ingroup cmath
+/// @{
+
 /// Computes the hyperbolic cosine of arg
 /// \details https://en.cppreference.com/w/cpp/numeric/math/cosh
-/// \ingroup cmath
 [[nodiscard]] constexpr auto cosh(float arg) noexcept -> float { return etl::detail::gcem::cosh(arg); }
-
-/// Computes the hyperbolic cosine of arg
-/// \details https://en.cppreference.com/w/cpp/numeric/math/cosh
-/// \ingroup cmath
 [[nodiscard]] constexpr auto coshf(float arg) noexcept -> float { return etl::detail::gcem::cosh(arg); }
-
-/// Computes the hyperbolic cosine of arg
-/// \details https://en.cppreference.com/w/cpp/numeric/math/cosh
-/// \ingroup cmath
 [[nodiscard]] constexpr auto cosh(double arg) noexcept -> double { return etl::detail::gcem::cosh(arg); }
-
-/// Computes the hyperbolic cosine of arg
-/// \details https://en.cppreference.com/w/cpp/numeric/math/cosh
-/// \ingroup cmath
 [[nodiscard]] constexpr auto cosh(long double arg) noexcept -> long double { return etl::detail::gcem::cosh(arg); }
-
-/// Computes the hyperbolic cosine of arg
-/// \details https://en.cppreference.com/w/cpp/numeric/math/cosh
-/// \ingroup cmath
 [[nodiscard]] constexpr auto coshl(long double arg) noexcept -> long double { return etl::detail::gcem::cosh(arg); }
+[[nodiscard]] constexpr auto cosh(integral auto arg) noexcept -> double { return etl::detail::gcem::cosh(double(arg)); }
 
-/// Computes the hyperbolic cosine of arg
-/// \details https://en.cppreference.com/w/cpp/numeric/math/cosh
-/// \ingroup cmath
-template <integral T>
-[[nodiscard]] constexpr auto cosh(T arg) noexcept -> double
-{
-    return etl::detail::gcem::cosh(static_cast<double>(arg));
-}
+/// @}
 
 } // namespace etl
 

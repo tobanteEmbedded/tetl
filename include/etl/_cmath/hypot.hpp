@@ -43,6 +43,9 @@ inline constexpr struct hypot {
 
 } // namespace detail
 
+/// \ingroup cmath
+/// @{
+
 /// Computes the square root of the sum of the squares of x and y,
 /// without undue overflow or underflow at intermediate stages of the
 /// computation.
@@ -51,97 +54,35 @@ inline constexpr struct hypot {
 /// - hypot(x,y) is NAN if x or y is NAN.
 ///
 /// https://en.cppreference.com/w/cpp/numeric/math/hypot
-/// \ingroup cmath
 [[nodiscard]] constexpr auto hypot(float x, float y) noexcept -> float { return etl::detail::hypot(x, y); }
 
-/// Computes the square root of the sum of the squares of x and y,
-/// without undue overflow or underflow at intermediate stages of the
-/// computation.
-///
-/// - hypot(x,y) is INF if x or y is +INF or -INF; else
-/// - hypot(x,y) is NAN if x or y is NAN.
-///
-/// https://en.cppreference.com/w/cpp/numeric/math/hypot
-/// \ingroup cmath
 [[nodiscard]] constexpr auto hypotf(float x, float y) noexcept -> float { return etl::detail::hypot(x, y); }
 
-/// Computes the square root of the sum of the squares of x and y,
-/// without undue overflow or underflow at intermediate stages of the
-/// computation.
-///
-/// - hypot(x,y) is INF if x or y is +INF or -INF; else
-/// - hypot(x,y) is NAN if x or y is NAN.
-///
-/// https://en.cppreference.com/w/cpp/numeric/math/hypot
-/// \ingroup cmath
 [[nodiscard]] constexpr auto hypot(double x, double y) noexcept -> double { return etl::detail::hypot(x, y); }
 
-/// Computes the square root of the sum of the squares of x and y,
-/// without undue overflow or underflow at intermediate stages of the
-/// computation.
-///
-/// - hypot(x,y) is INF if x or y is +INF or -INF; else
-/// - hypot(x,y) is NAN if x or y is NAN.
-///
-/// https://en.cppreference.com/w/cpp/numeric/math/hypot
-/// \ingroup cmath
 [[nodiscard]] constexpr auto hypot(long double x, long double y) noexcept -> long double
 {
     return etl::detail::hypot(x, y);
 }
 
-/// Computes the square root of the sum of the squares of x and y,
-/// without undue overflow or underflow at intermediate stages of the
-/// computation.
-///
-/// - hypot(x,y) is INF if x or y is +INF or -INF; else
-/// - hypot(x,y) is NAN if x or y is NAN.
-///
-/// https://en.cppreference.com/w/cpp/numeric/math/hypot
-/// \ingroup cmath
 [[nodiscard]] constexpr auto hypotl(long double x, long double y) noexcept -> long double
 {
     return etl::detail::hypot(x, y);
 }
 
-/// Computes the square root of the sum of the squares of x, y, and z,
-/// without undue overflow or underflow at intermediate stages of the
-/// computation.
-///
-/// - hypot(x,y) is INF if x or y is +INF or -INF; else
-/// - hypot(x,y) is NAN if x or y is NAN.
-///
-/// https://en.cppreference.com/w/cpp/numeric/math/hypot
-/// \ingroup cmath
 [[nodiscard]] constexpr auto hypot(float x, float y, float z) noexcept -> float { return etl::detail::hypot(x, y, z); }
 
-/// Computes the square root of the sum of the squares of x, y, and z,
-/// without undue overflow or underflow at intermediate stages of the
-/// computation.
-///
-/// - hypot(x,y) is INF if x or y is +INF or -INF; else
-/// - hypot(x,y) is NAN if x or y is NAN.
-///
-/// https://en.cppreference.com/w/cpp/numeric/math/hypot
-/// \ingroup cmath
 [[nodiscard]] constexpr auto hypot(double x, double y, double z) noexcept -> double
 {
     return etl::detail::hypot(x, y, z);
 }
 
-/// Computes the square root of the sum of the squares of x, y, and z,
-/// without undue overflow or underflow at intermediate stages of the
-/// computation.
-///
-/// - hypot(x,y) is INF if x or y is +INF or -INF; else
-/// - hypot(x,y) is NAN if x or y is NAN.
-///
-/// https://en.cppreference.com/w/cpp/numeric/math/hypot
-/// \ingroup cmath
 [[nodiscard]] constexpr auto hypot(long double x, long double y, long double z) noexcept -> long double
 {
     return etl::detail::hypot(x, y, z);
 }
+
+/// @}
 
 } // namespace etl
 

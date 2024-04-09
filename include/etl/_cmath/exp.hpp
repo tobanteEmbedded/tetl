@@ -11,9 +11,11 @@
 
 namespace etl {
 
+/// \ingroup cmath
+/// @{
+
 /// Computes e (Euler's number, 2.7182...) raised to the given power v
 /// \details https://en.cppreference.com/w/cpp/numeric/math/exp
-/// \ingroup cmath
 [[nodiscard]] constexpr auto exp(float v) noexcept -> float
 {
     if (is_constant_evaluated()) {
@@ -30,14 +32,8 @@ namespace etl {
 #endif
 }
 
-/// Computes e (Euler's number, 2.7182...) raised to the given power v
-/// \details https://en.cppreference.com/w/cpp/numeric/math/exp
-/// \ingroup cmath
 [[nodiscard]] constexpr auto expf(float v) noexcept -> float { return etl::exp(v); }
 
-/// Computes e (Euler's number, 2.7182...) raised to the given power v
-/// \details https://en.cppreference.com/w/cpp/numeric/math/exp
-/// \ingroup cmath
 [[nodiscard]] constexpr auto exp(double v) noexcept -> double
 {
     if (is_constant_evaluated()) {
@@ -54,24 +50,17 @@ namespace etl {
 #endif
 }
 
-/// Computes e (Euler's number, 2.7182...) raised to the given power v
-/// \details https://en.cppreference.com/w/cpp/numeric/math/exp
-/// \ingroup cmath
 [[nodiscard]] constexpr auto exp(long double v) noexcept -> long double { return etl::detail::gcem::exp(v); }
 
-/// Computes e (Euler's number, 2.7182...) raised to the given power v
-/// \details https://en.cppreference.com/w/cpp/numeric/math/exp
-/// \ingroup cmath
 [[nodiscard]] constexpr auto expl(long double v) noexcept -> long double { return etl::exp(v); }
 
-/// Computes e (Euler's number, 2.7182...) raised to the given power v
-/// \details https://en.cppreference.com/w/cpp/numeric/math/exp
-/// \ingroup cmath
 template <integral T>
 [[nodiscard]] constexpr auto exp(T v) noexcept -> double
 {
     return etl::exp(static_cast<double>(v));
 }
+
+/// @}
 
 } // namespace etl
 

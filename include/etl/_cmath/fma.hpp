@@ -40,36 +40,25 @@ inline constexpr struct fma {
 
 } // namespace detail
 
+/// \ingroup cmath
+/// @{
+
 /// Computes (x*y) + z as if to infinite precision and rounded only once to fit the result type.
 /// \details https://en.cppreference.com/w/cpp/numeric/math/fma
 /// \ingroup cmath
 [[nodiscard]] constexpr auto fma(float x, float y, float z) noexcept -> float { return etl::detail::fma(x, y, z); }
-
-/// Computes (x*y) + z as if to infinite precision and rounded only once to fit the result type.
-/// \details https://en.cppreference.com/w/cpp/numeric/math/fma
-/// \ingroup cmath
 [[nodiscard]] constexpr auto fmaf(float x, float y, float z) noexcept -> float { return etl::detail::fma(x, y, z); }
-
-/// Computes (x*y) + z as if to infinite precision and rounded only once to fit the result type.
-/// \details https://en.cppreference.com/w/cpp/numeric/math/fma
-/// \ingroup cmath
 [[nodiscard]] constexpr auto fma(double x, double y, double z) noexcept -> double { return etl::detail::fma(x, y, z); }
-
-/// Computes (x*y) + z as if to infinite precision and rounded only once to fit the result type.
-/// \details https://en.cppreference.com/w/cpp/numeric/math/fma
-/// \ingroup cmath
 [[nodiscard]] constexpr auto fma(long double x, long double y, long double z) noexcept -> long double
 {
     return etl::detail::fma(x, y, z);
 }
-
-/// Computes (x*y) + z as if to infinite precision and rounded only once to fit the result type.
-/// \details https://en.cppreference.com/w/cpp/numeric/math/fma
-/// \ingroup cmath
 [[nodiscard]] constexpr auto fmal(long double x, long double y, long double z) noexcept -> long double
 {
     return etl::detail::fma(x, y, z);
 }
+
+/// @}
 
 } // namespace etl
 
