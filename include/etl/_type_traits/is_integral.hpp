@@ -19,13 +19,14 @@ inline constexpr bool is_integral_v = __is_integral(T);
 
 #else
 
-    #include <etl/_type_traits/is_any_of.hpp>
+    #include <etl/_meta/contains.hpp>
     #include <etl/_type_traits/remove_cv.hpp>
 
 namespace etl {
 // clang-format off
 template <typename T>
-inline constexpr bool is_integral_v = is_any_of_v<remove_cv_t<T>,
+inline constexpr bool is_integral_v = meta::contains_v<remove_cv_t<T>,
+    meta::list<
         bool,
         char,
         signed char,
@@ -42,7 +43,8 @@ inline constexpr bool is_integral_v = is_any_of_v<remove_cv_t<T>,
         unsigned long,
         long long,
         unsigned long long
-    >;
+    >
+>;
 // clang-format on
 
 template <typename T>

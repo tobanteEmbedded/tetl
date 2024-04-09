@@ -3,20 +3,21 @@
 #ifndef TETL_TYPE_TRAITS_IS_BUILTIN_UNSIGNED_INTEGER_HPP
 #define TETL_TYPE_TRAITS_IS_BUILTIN_UNSIGNED_INTEGER_HPP
 
+#include <etl/_meta/contains.hpp>
 #include <etl/_type_traits/bool_constant.hpp>
-#include <etl/_type_traits/is_any_of.hpp>
 #include <etl/_type_traits/remove_cv.hpp>
 
 namespace etl {
 
 /// \relates is_builtin_unsigned_integer
 template <typename T>
-inline constexpr auto is_builtin_unsigned_integer_v
-    = is_any_of_v<remove_cv_t<T>, unsigned char, unsigned short, unsigned int, unsigned long, unsigned long long>;
+inline constexpr auto is_builtin_unsigned_integer_v = meta::contains_v<
+    remove_cv_t<T>,
+    meta::list<unsigned char, unsigned short, unsigned int, unsigned long, unsigned long long>>;
 
 /// True if T is `unsigned char` or `unsigned short` or `unsigned int` or `unsigned long` or `unsigned long long`
 template <typename T>
-struct is_builtin_unsigned_integer : bool_constant<is_builtin_unsigned_integer_v<T> > { };
+struct is_builtin_unsigned_integer : bool_constant<is_builtin_unsigned_integer_v<T>> { };
 
 } // namespace etl
 
