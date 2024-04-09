@@ -21,7 +21,7 @@ struct pointer_like_traits<T*> {
 
     [[nodiscard]] static auto get_from_void_pointer(void* p) -> T* { return static_cast<T*>(p); }
 
-    static constexpr size_t free_bits = detail::log2(alignof(T));
+    static constexpr size_t free_bits = detail::ilog2(alignof(T));
 };
 
 /// Provide pointer_like_traits for const things.

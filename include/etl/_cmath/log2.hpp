@@ -7,71 +7,48 @@
 
 #include <etl/_3rd_party/gcem/gcem.hpp>
 #include <etl/_concepts/integral.hpp>
+#include <etl/_concepts/same_as.hpp>
 #include <etl/_type_traits/is_constant_evaluated.hpp>
 
 namespace etl {
 
-/// Computes the binary (base-2) logarithm of arg.
-/// \details https://en.cppreference.com/w/cpp/numeric/math/log2
-/// \ingroup cmath
-[[nodiscard]] constexpr auto log2(float v) noexcept -> float
-{
-    if (is_constant_evaluated()) {
-#if __has_constexpr_builtin(__builtin_log2f)
-        return __builtin_log2f(v);
-#else
-        return etl::detail::gcem::log2(v);
-#endif
-    }
+namespace detail {
+
+inline constexpr struct log2 {
+    template <typename Float>
+    [[nodiscard]] constexpr auto operator()(Float arg) const noexcept -> Float
+    {
+        if (not etl::is_constant_evaluated()) {
 #if __has_builtin(__builtin_log2f)
-    return __builtin_log2f(v);
-#else
-    return etl::detail::gcem::log2(v);
+            if constexpr (etl::same_as<Float, float>) {
+                return __builtin_log2f(arg);
+            }
 #endif
-}
-
-/// Computes the binary (base-2) logarithm of arg.
-/// \details https://en.cppreference.com/w/cpp/numeric/math/log2
-/// \ingroup cmath
-[[nodiscard]] constexpr auto log2f(float v) noexcept -> float { return etl::log2(v); }
-
-/// Computes the binary (base-2) logarithm of arg.
-/// \details https://en.cppreference.com/w/cpp/numeric/math/log2
-/// \ingroup cmath
-[[nodiscard]] constexpr auto log2(double v) noexcept -> double
-{
-    if (is_constant_evaluated()) {
-#if __has_constexpr_builtin(__builtin_log2)
-        return __builtin_log2(v);
-#else
-        return etl::detail::gcem::log2(v);
-#endif
-    }
 #if __has_builtin(__builtin_log2)
-    return __builtin_log2(v);
-#else
-    return etl::detail::gcem::log2(v);
+            if constexpr (etl::same_as<Float, double>) {
+                return __builtin_log2(arg);
+            }
 #endif
-}
+        }
+        return etl::detail::gcem::log2(arg);
+    }
+} log2;
+
+} // namespace detail
+
+/// \ingroup cmath
+/// @{
 
 /// Computes the binary (base-2) logarithm of arg.
 /// \details https://en.cppreference.com/w/cpp/numeric/math/log2
-/// \ingroup cmath
-[[nodiscard]] constexpr auto log2(long double v) noexcept -> long double { return etl::detail::gcem::log2(v); }
+[[nodiscard]] constexpr auto log2(float arg) noexcept -> float { return etl::detail::log2(arg); }
+[[nodiscard]] constexpr auto log2f(float arg) noexcept -> float { return etl::detail::log2(arg); }
+[[nodiscard]] constexpr auto log2(double arg) noexcept -> double { return etl::detail::log2(arg); }
+[[nodiscard]] constexpr auto log2(long double arg) noexcept -> long double { return etl::detail::log2(arg); }
+[[nodiscard]] constexpr auto log2l(long double arg) noexcept -> long double { return etl::detail::log2(arg); }
+[[nodiscard]] constexpr auto log2(integral auto arg) noexcept -> double { return etl::detail::log2(double(arg)); }
 
-/// Computes the binary (base-2) logarithm of arg.
-/// \details https://en.cppreference.com/w/cpp/numeric/math/log2
-/// \ingroup cmath
-[[nodiscard]] constexpr auto log2l(long double v) noexcept -> long double { return etl::log2(v); }
-
-/// Computes the binary (base-2) logarithm of arg.
-/// \details https://en.cppreference.com/w/cpp/numeric/math/log2
-/// \ingroup cmath
-template <integral T>
-[[nodiscard]] constexpr auto log2(T arg) noexcept -> double
-{
-    return etl::log2(static_cast<double>(arg));
-}
+/// @}
 
 } // namespace etl
 

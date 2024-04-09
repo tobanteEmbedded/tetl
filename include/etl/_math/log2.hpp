@@ -7,9 +7,9 @@ namespace etl::detail {
 
 // Compile time version of log2 that handles 0.
 template <typename IntT>
-[[nodiscard]] static constexpr auto log2(IntT value) -> IntT
+[[nodiscard]] static constexpr auto ilog2(IntT value) -> IntT
 {
-    return (value == 0 || value == 1) ? 0 : 1 + log2(value / 2);
+    return (value == 0 || value == 1) ? 0 : 1 + ilog2(value / 2);
 }
 
 } // namespace etl::detail
