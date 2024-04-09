@@ -34,16 +34,16 @@ template <typename Int, skip_whitespace Skip = skip_whitespace::yes>
 [[nodiscard]] constexpr auto
 to_integer(char const* str, size_t len, Int base = Int(10)) noexcept -> to_integer_result<Int>
 {
-    if (len == 0 or *str == char(0)) {
-        return {.end = str, .error = to_integer_error::invalid_input, .value = Int{}};
-    }
-
     auto i = size_t{};
     if constexpr (Skip == skip_whitespace::yes) {
-        while (isspace(static_cast<int>(str[i])) and (len != 0) and (str[i] != char(0))) {
+        while ((len != 0) and isspace(static_cast<int>(str[i])) and (str[i] != char(0))) {
             ++i;
             --len;
         }
+    }
+
+    if (len == 0 or str[i] == char(0)) {
+        return {.end = str, .error = to_integer_error::invalid_input, .value = Int{}};
     }
 
     // optional minus for signed types
