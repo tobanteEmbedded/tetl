@@ -11,28 +11,28 @@
 
 namespace etl {
 
-template <etl::size_t Idx, typename... Ts>
-struct variant_alternative<Idx, etl::variant<Ts...>> {
+template <size_t Idx, typename... Ts>
+struct variant_alternative<Idx, variant<Ts...>> {
     static_assert(Idx < sizeof...(Ts));
-    using type = etl::meta::at_t<Idx, etl::meta::list<Ts...>>;
+    using type = meta::at_t<Idx, meta::list<Ts...>>;
 };
 
-template <etl::size_t I, typename T>
+template <size_t I, typename T>
 using variant_alternative_t = typename variant_alternative<I, T>::type;
 
-template <etl::size_t Idx, typename T>
+template <size_t Idx, typename T>
 struct variant_alternative<Idx, T const> {
-    using type = etl::add_const_t<variant_alternative_t<Idx, T>>;
+    using type = add_const_t<variant_alternative_t<Idx, T>>;
 };
 
-template <etl::size_t Idx, typename T>
+template <size_t Idx, typename T>
 struct variant_alternative<Idx, T volatile> {
-    using type = etl::add_volatile_t<variant_alternative_t<Idx, T>>;
+    using type = add_volatile_t<variant_alternative_t<Idx, T>>;
 };
 
-template <etl::size_t Idx, typename T>
+template <size_t Idx, typename T>
 struct variant_alternative<Idx, T const volatile> {
-    using type = etl::add_cv_t<variant_alternative_t<Idx, T>>;
+    using type = add_cv_t<variant_alternative_t<Idx, T>>;
 };
 
 } // namespace etl

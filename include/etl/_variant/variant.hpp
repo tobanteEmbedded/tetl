@@ -55,30 +55,28 @@ namespace etl {
 namespace detail {
 
 template <typename T>
-concept variant_copy_assignable = etl::is_copy_constructible_v<T> and etl::is_copy_assignable_v<T>;
+concept variant_copy_assignable = is_copy_constructible_v<T> and is_copy_assignable_v<T>;
 
 template <typename T>
-concept variant_trivially_copy_assignable
-    = etl::is_trivially_copy_constructible_v<T> and etl::is_trivially_copy_assignable_v<T>;
+concept variant_trivially_copy_assignable = is_trivially_copy_constructible_v<T> and is_trivially_copy_assignable_v<T>;
 
 template <typename T>
-concept variant_move_assignable = etl::is_move_constructible_v<T> and etl::is_move_assignable_v<T>;
+concept variant_move_assignable = is_move_constructible_v<T> and is_move_assignable_v<T>;
 
 template <typename T>
-concept variant_trivially_move_assignable
-    = etl::is_trivially_move_constructible_v<T> and etl::is_trivially_move_assignable_v<T>;
+concept variant_trivially_move_assignable = is_trivially_move_constructible_v<T> and is_trivially_move_assignable_v<T>;
 
 template <typename T>
 inline constexpr auto is_in_place_index = false;
 
 template <size_t I>
-inline constexpr auto is_in_place_index<etl::in_place_index_t<I>> = true;
+inline constexpr auto is_in_place_index<in_place_index_t<I>> = true;
 
 template <typename T>
 inline constexpr auto is_in_place_type = false;
 
 template <typename T>
-inline constexpr auto is_in_place_type<etl::in_place_type_t<T>> = true;
+inline constexpr auto is_in_place_type<in_place_type_t<T>> = true;
 
 } // namespace detail
 
@@ -87,15 +85,15 @@ template <typename... Ts>
 struct TETL_TRIVIAL_ABI variant {
 private:
     // Avoid valueless_by_exception
-    static_assert((etl::is_nothrow_move_constructible_v<Ts> and ...));
+    static_assert((is_nothrow_move_constructible_v<Ts> and ...));
 
-    using index_type = etl::smallest_size_t<sizeof...(Ts)>;
-    using first_type = etl::meta::at_t<0, etl::meta::list<Ts...>>;
+    using index_type = smallest_size_t<sizeof...(Ts)>;
+    using first_type = meta::at_t<0, meta::list<Ts...>>;
 
 public:
-    constexpr variant() noexcept(etl::is_nothrow_default_constructible_v<first_type>)
-        requires(etl::is_default_constructible_v<first_type>)
-        : variant(etl::in_place_index<0>)
+    constexpr variant() noexcept(is_nothrow_default_constructible_v<first_type>)
+        requires(is_default_constructible_v<first_type>)
+        : variant(in_place_index<0>)
     {
     }
 
@@ -103,33 +101,29 @@ public:
     template <typename T>
         requires (
                 (sizeof...(Ts) > 0)
-            and not etl::is_same_v<etl::remove_cvref_t<T>, variant>
-            and not etl::detail::is_in_place_index<etl::remove_cvref_t<T>>
-            and not etl::detail::is_in_place_type<etl::remove_cvref_t<T>>
-            and etl::is_constructible_v<etl::detail::variant_alternative_selector_t<T, Ts...>, T>
+            and not is_same_v<remove_cvref_t<T>, variant>
+            and not detail::is_in_place_index<remove_cvref_t<T>>
+            and not detail::is_in_place_type<remove_cvref_t<T>>
+            and is_constructible_v<detail::variant_alternative_selector_t<T, Ts...>, T>
         )
     // clang-format on
-    constexpr variant(T&& t)
-        noexcept(etl::is_nothrow_constructible_v<etl::detail::variant_alternative_selector_t<T, Ts...>, T>)
-        : variant(etl::in_place_type<etl::detail::variant_alternative_selector_t<T, Ts...>>, etl::forward<T>(t))
+    constexpr variant(T&& t) noexcept(is_nothrow_constructible_v<detail::variant_alternative_selector_t<T, Ts...>, T>)
+        : variant(in_place_type<detail::variant_alternative_selector_t<T, Ts...>>, etl::forward<T>(t))
     {
     }
 
-    template <etl::size_t I, typename... Args>
-        requires((I < sizeof...(Ts)) and etl::is_constructible_v<etl::variant_alternative_t<I, variant>, Args...>)
-    explicit constexpr variant(etl::in_place_index_t<I> /*index*/, Args&&... args)
+    template <size_t I, typename... Args>
+        requires((I < sizeof...(Ts)) and is_constructible_v<variant_alternative_t<I, variant>, Args...>)
+    explicit constexpr variant(in_place_index_t<I> /*index*/, Args&&... args)
         : _index(static_cast<index_type>(I))
-        , _union(etl::index_v<I>, etl::forward<Args>(args)...)
+        , _union(index_v<I>, etl::forward<Args>(args)...)
     {
     }
 
     template <typename T, typename... Args>
-        requires(
-            etl::is_constructible_v<T, Args...>
-            and etl::meta::count_v<etl::remove_cvref_t<T>, etl::meta::list<Ts...>> == 1
-        )
-    explicit constexpr variant(etl::in_place_type_t<T> /*tag*/, Args&&... args)
-        : variant(etl::in_place_index<etl::meta::index_of_v<T, etl::meta::list<Ts...>>>, etl::forward<Args>(args)...)
+        requires(is_constructible_v<T, Args...> and meta::count_v<remove_cvref_t<T>, meta::list<Ts...>> == 1)
+    explicit constexpr variant(in_place_type_t<T> /*tag*/, Args&&... args)
+        : variant(in_place_index<meta::index_of_v<T, meta::list<Ts...>>>, etl::forward<Args>(args)...)
     {
     }
 
@@ -143,20 +137,18 @@ public:
 
     constexpr variant(variant&&) = default;
 
-    constexpr variant(variant&& other) noexcept((... and etl::is_nothrow_move_constructible_v<Ts>))
-        requires((... and etl::is_move_constructible_v<Ts>) and not(... and etl::is_trivially_move_constructible_v<Ts>))
+    constexpr variant(variant&& other) noexcept((... and is_nothrow_move_constructible_v<Ts>))
+        requires((... and is_move_constructible_v<Ts>) and not(... and is_trivially_move_constructible_v<Ts>))
         : variant(etl::move(other), copy_move_tag{})
     {
     }
 
     constexpr auto operator=(variant const&) -> variant& = default;
 
-    constexpr auto operator=(variant const& other)
-        noexcept((... and etl::is_nothrow_copy_assignable_v<Ts>) and (... and etl::is_nothrow_copy_constructible_v<Ts>))
-            -> variant&
+    constexpr auto operator=(variant const& other
+    ) noexcept((... and is_nothrow_copy_assignable_v<Ts>) and (... and is_nothrow_copy_constructible_v<Ts>)) -> variant&
         requires(
-            (... and etl::detail::variant_copy_assignable<Ts>)
-            and not(... and etl::detail::variant_trivially_copy_assignable<Ts>)
+            (... and detail::variant_copy_assignable<Ts>) and not(... and detail::variant_trivially_copy_assignable<Ts>)
         )
     {
         assign(other);
@@ -165,12 +157,10 @@ public:
 
     constexpr auto operator=(variant&&) -> variant& = default;
 
-    constexpr auto operator=(variant&& other)
-        noexcept((... and etl::is_nothrow_move_assignable_v<Ts>) and (... and etl::is_nothrow_move_constructible_v<Ts>))
-            -> variant&
+    constexpr auto operator=(variant&& other
+    ) noexcept((... and is_nothrow_move_assignable_v<Ts>) and (... and is_nothrow_move_constructible_v<Ts>)) -> variant&
         requires(
-            (... and etl::detail::variant_move_assignable<Ts>)
-            and !(... and etl::detail::variant_trivially_move_assignable<Ts>)
+            (... and detail::variant_move_assignable<Ts>) and !(... and detail::variant_trivially_move_assignable<Ts>)
         )
     {
         assign(etl::move(other));
@@ -178,31 +168,31 @@ public:
     }
 
     template <typename T>
-        requires(not etl::is_same_v<etl::remove_cvref_t<T>, variant>
-                 and etl::is_assignable_v<etl::detail::variant_alternative_selector_t<T, Ts...>&, T>
-                 and etl::is_assignable_v<etl::detail::variant_alternative_selector_t<T, Ts...>, T>)
+        requires(not is_same_v<remove_cvref_t<T>, variant>
+                 and is_assignable_v<detail::variant_alternative_selector_t<T, Ts...>&, T>
+                 and is_assignable_v<detail::variant_alternative_selector_t<T, Ts...>, T>)
     constexpr auto operator=(T&& t) noexcept(
-        (etl::is_nothrow_assignable_v<etl::detail::variant_alternative_selector_t<T, Ts...>&, T>
-         and etl::is_nothrow_constructible_v<etl::detail::variant_alternative_selector_t<T, Ts...>, T>)
+        (is_nothrow_assignable_v<detail::variant_alternative_selector_t<T, Ts...>&, T>
+         and is_nothrow_constructible_v<detail::variant_alternative_selector_t<T, Ts...>, T>)
     ) -> variant&
     {
-        emplace<etl::detail::variant_alternative_selector_t<T, Ts...>>(etl::forward<T>(t));
+        emplace<detail::variant_alternative_selector_t<T, Ts...>>(etl::forward<T>(t));
         return *this;
     }
 
     ~variant()
-        requires(... and etl::is_trivially_destructible_v<Ts>)
+        requires(... and is_trivially_destructible_v<Ts>)
     = default;
 
     constexpr ~variant() { destroy(); }
 
     /// Returns the zero-based index of the alternative that is currently held by the variant.
-    [[nodiscard]] constexpr auto index() const noexcept -> etl::size_t { return static_cast<etl::size_t>(_index); }
+    [[nodiscard]] constexpr auto index() const noexcept -> size_t { return static_cast<size_t>(_index); }
 
     /// Returns a reference to the object stored in the variant.
     /// \pre I == index()
-    template <etl::size_t I>
-    constexpr auto operator[](etl::index_constant<I> index) & -> auto&
+    template <size_t I>
+    constexpr auto operator[](index_constant<I> index) & -> auto&
     {
         static_assert(I < sizeof...(Ts));
         return _union[index];
@@ -210,8 +200,8 @@ public:
 
     /// Returns a reference to the object stored in the variant.
     /// \pre I == index()
-    template <etl::size_t I>
-    constexpr auto operator[](etl::index_constant<I> index) const& -> auto const&
+    template <size_t I>
+    constexpr auto operator[](index_constant<I> index) const& -> auto const&
     {
         static_assert(I < sizeof...(Ts));
         return _union[index];
@@ -219,8 +209,8 @@ public:
 
     /// Returns a reference to the object stored in the variant.
     /// \pre I == index()
-    template <etl::size_t I>
-    constexpr auto operator[](etl::index_constant<I> index) && -> auto&&
+    template <size_t I>
+    constexpr auto operator[](index_constant<I> index) && -> auto&&
     {
         static_assert(I < sizeof...(Ts));
         return etl::move(_union)[index];
@@ -228,27 +218,27 @@ public:
 
     /// Returns a reference to the object stored in the variant.
     /// \pre I == index()
-    template <etl::size_t I>
-    constexpr auto operator[](etl::index_constant<I> index) const&& -> auto const&&
+    template <size_t I>
+    constexpr auto operator[](index_constant<I> index) const&& -> auto const&&
     {
         static_assert(I < sizeof...(Ts));
         return etl::move(_union)[index];
     }
 
     template <typename T, typename... Args>
-        requires(etl::is_constructible_v<T, Args...> and etl::meta::count_v<T, etl::meta::list<Ts...>> == 1)
+        requires(is_constructible_v<T, Args...> and meta::count_v<T, meta::list<Ts...>> == 1)
     constexpr auto emplace(Args&&... args) -> auto&
     {
         destroy();
-        return replace(etl::index_v<etl::meta::index_of_v<T, etl::meta::list<Ts...>>>, etl::forward<Args>(args)...);
+        return replace(index_v<meta::index_of_v<T, meta::list<Ts...>>>, etl::forward<Args>(args)...);
     }
 
-    template <etl::size_t I, typename... Args>
-        requires etl::is_constructible_v<etl::meta::at_t<I, etl::meta::list<Ts...>>, Args...>
+    template <size_t I, typename... Args>
+        requires is_constructible_v<meta::at_t<I, meta::list<Ts...>>, Args...>
     constexpr auto emplace(Args&&... args) -> auto&
     {
         destroy();
-        return replace(etl::index_v<I>, etl::forward<Args>(args)...);
+        return replace(index_v<I>, etl::forward<Args>(args)...);
     }
 
     /// Equality operator
@@ -260,7 +250,7 @@ public:
         if (lhs.index() != rhs.index()) {
             return false;
         }
-        return etl::visit(etl::detail::make_variant_compare_op(etl::equal_to()), lhs, rhs);
+        return etl::visit(detail::make_variant_compare_op(etl::equal_to()), lhs, rhs);
     }
 
     /// Less-than operator
@@ -277,7 +267,7 @@ public:
             return false;
         }
 
-        return etl::visit(etl::detail::make_variant_compare_op(etl::less()), lhs, rhs);
+        return etl::visit(detail::make_variant_compare_op(etl::less()), lhs, rhs);
     }
 
     /// Less-equal operator
@@ -294,7 +284,7 @@ public:
             return false;
         }
 
-        return etl::visit(etl::detail::make_variant_compare_op(etl::less_equal()), lhs, rhs);
+        return etl::visit(detail::make_variant_compare_op(etl::less_equal()), lhs, rhs);
     }
 
     /// Greater-than operator
@@ -311,7 +301,7 @@ public:
             return false;
         }
 
-        return etl::visit(etl::detail::make_variant_compare_op(etl::greater()), lhs, rhs);
+        return etl::visit(detail::make_variant_compare_op(etl::greater()), lhs, rhs);
     }
 
     /// Greater-equal operator
@@ -328,7 +318,7 @@ public:
             return false;
         }
 
-        return etl::visit(etl::detail::make_variant_compare_op(etl::greater_equal()), lhs, rhs);
+        return etl::visit(detail::make_variant_compare_op(etl::greater_equal()), lhs, rhs);
     }
 
 private:
@@ -337,7 +327,7 @@ private:
     template <typename Other>
     constexpr variant(Other&& other, [[maybe_unused]] copy_move_tag tag)
         : _index()
-        , _union(etl::uninitialized_union())
+        , _union(uninitialized_union())
     {
         etl::visit_with_index([&](auto param) {
             replace(param.index, etl::move(param).value());
@@ -371,7 +361,7 @@ private:
     }
 
     TETL_NO_UNIQUE_ADDRESS index_type _index;
-    TETL_NO_UNIQUE_ADDRESS etl::variadic_union<Ts...> _union;
+    TETL_NO_UNIQUE_ADDRESS variadic_union<Ts...> _union;
 };
 
 /// Checks if the variant v holds the alternative T. The call is
@@ -380,57 +370,56 @@ private:
 template <typename T, typename... Ts>
 constexpr auto holds_alternative(variant<Ts...> const& v) noexcept -> bool
 {
-    static_assert(etl::meta::count_v<T, etl::meta::list<Ts...>> == 1);
-    return v.index() == etl::meta::index_of_v<T, etl::meta::list<Ts...>>;
+    static_assert(meta::count_v<T, meta::list<Ts...>> == 1);
+    return v.index() == meta::index_of_v<T, meta::list<Ts...>>;
 }
 
 /// Returns a reference to the object stored in the variant.
 /// \pre v.index() == I
 /// \relates variant
-template <etl::size_t I, typename... Ts>
+template <size_t I, typename... Ts>
 constexpr auto unchecked_get(variant<Ts...>& v) -> auto&
 {
     static_assert(I < sizeof...(Ts));
-    return v[etl::index_v<I>];
+    return v[index_v<I>];
 }
 
 /// Returns a reference to the object stored in the variant.
 /// \pre v.index() == I
 /// \relates variant
-template <etl::size_t I, typename... Ts>
+template <size_t I, typename... Ts>
 constexpr auto unchecked_get(variant<Ts...> const& v) -> auto const&
 {
     static_assert(I < sizeof...(Ts));
-    return v[etl::index_v<I>];
+    return v[index_v<I>];
 }
 
 /// Returns a reference to the object stored in the variant.
 /// \pre v.index() == I
 /// \relates variant
-template <etl::size_t I, typename... Ts>
+template <size_t I, typename... Ts>
 constexpr auto unchecked_get(variant<Ts...>&& v) -> auto&&
 {
     static_assert(I < sizeof...(Ts));
-    return etl::move(v)[etl::index_v<I>];
+    return etl::move(v)[index_v<I>];
 }
 
 /// Returns a reference to the object stored in the variant.
 /// \pre v.index() == I
 /// \relates variant
-template <etl::size_t I, typename... Ts>
+template <size_t I, typename... Ts>
 constexpr auto unchecked_get(variant<Ts...> const&& v) -> auto const&&
 {
     static_assert(I < sizeof...(Ts));
-    return etl::move(v)[etl::index_v<I>];
+    return etl::move(v)[index_v<I>];
 }
 
 /// \brief If pv is not a null pointer and pv->index() == I, returns a pointer
 ///        to the value stored in the variant pointed to by pv. Otherwise, returns
 ///        a null pointer value. The call is ill-formed if I is not a valid index in the variant.
 /// \relates variant
-template <etl::size_t I, typename... Ts>
-constexpr auto get_if(variant<Ts...>* pv
-) noexcept -> etl::add_pointer_t<etl::variant_alternative_t<I, etl::variant<Ts...>>>
+template <size_t I, typename... Ts>
+constexpr auto get_if(variant<Ts...>* pv) noexcept -> add_pointer_t<variant_alternative_t<I, variant<Ts...>>>
 {
     static_assert(I < sizeof...(Ts));
     if (pv == nullptr or pv->index() != I) {
@@ -443,9 +432,9 @@ constexpr auto get_if(variant<Ts...>* pv
 ///        to the value stored in the variant pointed to by pv. Otherwise, returns
 ///        a null pointer value. The call is ill-formed if I is not a valid index in the variant.
 /// \relates variant
-template <etl::size_t I, typename... Ts>
+template <size_t I, typename... Ts>
 constexpr auto get_if(variant<Ts...> const* pv
-) noexcept -> etl::add_pointer_t<etl::variant_alternative_t<I, etl::variant<Ts...>> const>
+) noexcept -> add_pointer_t<variant_alternative_t<I, variant<Ts...>> const>
 {
     static_assert(I < sizeof...(Ts));
     if (pv == nullptr or pv->index() != I) {
@@ -459,7 +448,7 @@ constexpr auto get_if(variant<Ts...> const* pv
 template <typename T, typename... Ts>
 constexpr auto get_if(variant<Ts...>* pv) noexcept -> add_pointer_t<T>
 {
-    return etl::get_if<etl::meta::index_of_v<T, etl::meta::list<Ts...>>>(pv);
+    return etl::get_if<meta::index_of_v<T, meta::list<Ts...>>>(pv);
 }
 
 /// Type-based non-throwing accessor: The call is ill-formed if T is not a unique element of Ts....
@@ -467,7 +456,7 @@ constexpr auto get_if(variant<Ts...>* pv) noexcept -> add_pointer_t<T>
 template <typename T, typename... Ts>
 constexpr auto get_if(variant<Ts...> const* pv) noexcept -> add_pointer_t<T const>
 {
-    return etl::get_if<etl::meta::index_of_v<T, etl::meta::list<Ts...>>>(pv);
+    return etl::get_if<meta::index_of_v<T, meta::list<Ts...>>>(pv);
 }
 
 } // namespace etl

@@ -23,16 +23,16 @@ namespace etl {
 namespace detail {
 
 template <typename... Ts>
-auto variant_access(etl::variant<Ts...> const* v) -> etl::variant<Ts...>;
+auto variant_access(variant<Ts...> const* v) -> variant<Ts...>;
 
 template <typename T>
-using variant_access_t = decltype(variant_access(static_cast<etl::decay_t<T>*>(nullptr)));
+using variant_access_t = decltype(variant_access(static_cast<decay_t<T>*>(nullptr)));
 
 template <template <typename...> typename, typename = void, typename...>
-struct is_detected_impl : etl::false_type { };
+struct is_detected_impl : false_type { };
 
 template <template <typename...> typename D, typename... Ts>
-struct is_detected_impl<D, etl::void_t<D<Ts...>>, Ts...> : etl::true_type { };
+struct is_detected_impl<D, void_t<D<Ts...>>, Ts...> : true_type { };
 
 template <template <typename...> typename D, typename... Ts>
 using is_detected = typename is_detected_impl<D, void, Ts...>::type;
@@ -43,34 +43,31 @@ constexpr bool is_detected_v = is_detected<D, Ts...>::value;
 template <typename T>
 constexpr bool is_variant_v = is_detected_v<variant_access_t, T>;
 
-template <etl::size_t... I>
-[[nodiscard]] consteval auto sum(etl::index_sequence<I...> /*seq*/) -> etl::size_t
+template <size_t... I>
+[[nodiscard]] consteval auto sum(index_sequence<I...> /*seq*/) -> size_t
 {
     return (I + ...);
 }
 
-template <etl::size_t I, etl::size_t... Is>
-[[nodiscard]] consteval auto prepend(etl::index_sequence<Is...> /*seq*/) -> etl::index_sequence<I, Is...>
+template <size_t I, size_t... Is>
+[[nodiscard]] consteval auto prepend(index_sequence<Is...> /*seq*/) -> index_sequence<I, Is...>
 {
     return {};
 }
 
-[[nodiscard]] consteval auto next_seq(etl::index_sequence<> /*i*/, etl::index_sequence<> /*j*/) -> etl::index_sequence<>
-{
-    return {};
-}
+[[nodiscard]] consteval auto next_seq(index_sequence<> /*i*/, index_sequence<> /*j*/) -> index_sequence<> { return {}; }
 
-template <etl::size_t I, etl::size_t... Is, etl::size_t J, etl::size_t... Js>
-consteval auto next_seq(etl::index_sequence<I, Is...> /*i*/, etl::index_sequence<J, Js...> /*j*/)
+template <size_t I, size_t... Is, size_t J, size_t... Js>
+consteval auto next_seq(index_sequence<I, Is...> /*i*/, index_sequence<J, Js...> /*j*/)
 {
     if constexpr (I + 1 == J) {
-        return prepend<0>(next_seq(etl::index_sequence<Is...>{}, etl::index_sequence<Js...>{}));
+        return prepend<0>(next_seq(index_sequence<Is...>{}, index_sequence<Js...>{}));
     } else {
-        return etl::index_sequence<I + 1, Is...>{};
+        return index_sequence<I + 1, Is...>{};
     }
 }
 
-template <etl::size_t I, typename T>
+template <size_t I, typename T>
 constexpr auto get(T&& t) -> decltype(auto)
 {
     if constexpr (is_variant_v<T>) {
@@ -82,17 +79,17 @@ constexpr auto get(T&& t) -> decltype(auto)
 }
 
 template <typename V>
-constexpr auto variant_size() -> etl::size_t
+constexpr auto variant_size() -> size_t
 {
     if constexpr (is_variant_v<V>) {
-        return etl::variant_size_v<variant_access_t<V>>;
+        return variant_size_v<variant_access_t<V>>;
     } else {
         return 1;
     }
 }
 
 template <typename V>
-constexpr auto index(V const& v) -> etl::size_t
+constexpr auto index(V const& v) -> size_t
 {
     if constexpr (is_variant_v<V>) {
         return v.index();
@@ -101,9 +98,9 @@ constexpr auto index(V const& v) -> etl::size_t
     }
 }
 
-template <typename T, etl::size_t I>
+template <typename T, size_t I>
 struct indexed_value {
-    static constexpr auto index = etl::index_v<I>;
+    static constexpr auto index = index_v<I>;
 
     constexpr explicit indexed_value(T value)
         : _value(etl::forward<T>(value))
@@ -118,8 +115,8 @@ private:
     T _value;
 };
 
-template <etl::size_t... Is, etl::size_t... Ms, typename F, typename... Vs>
-constexpr auto visit_with_index(etl::index_sequence<Is...> i, etl::index_sequence<Ms...> m, F&& f, Vs&&... vs)
+template <size_t... Is, size_t... Ms, typename F, typename... Vs>
+constexpr auto visit_with_index(index_sequence<Is...> i, index_sequence<Ms...> m, F&& f, Vs&&... vs)
 {
     constexpr auto n = next_seq(i, m);
     if constexpr (sum(n) == 0) {
@@ -133,7 +130,7 @@ constexpr auto visit_with_index(etl::index_sequence<Is...> i, etl::index_sequenc
 }
 
 template <typename>
-inline constexpr etl::size_t zero = 0;
+inline constexpr size_t zero = 0;
 
 } // namespace detail
 
@@ -151,14 +148,14 @@ inline constexpr etl::size_t zero = 0;
 template <typename F, typename... Vs>
 constexpr auto visit_with_index(F&& f, Vs&&... vs)
 {
-    if constexpr (((etl::detail::variant_size<Vs>() == 1) and ...)) {
-        return f(etl::detail::indexed_value<decltype(etl::detail::get<0>(etl::forward<Vs>(vs))), 0>(
-            etl::detail::get<0>(etl::forward<Vs>(vs))
+    if constexpr (((detail::variant_size<Vs>() == 1) and ...)) {
+        return f(detail::indexed_value<decltype(detail::get<0>(etl::forward<Vs>(vs))), 0>(
+            detail::get<0>(etl::forward<Vs>(vs))
         )...);
     } else {
-        return etl::detail::visit_with_index(
-            etl::index_sequence<etl::detail::zero<Vs>...>{},
-            etl::index_sequence<etl::detail::variant_size<Vs>()...>{},
+        return detail::visit_with_index(
+            index_sequence<detail::zero<Vs>...>{},
+            index_sequence<detail::variant_size<Vs>()...>{},
             etl::forward<F>(f),
             etl::forward<Vs>(vs)...
         );
