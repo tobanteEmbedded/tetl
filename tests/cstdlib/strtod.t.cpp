@@ -7,14 +7,21 @@
 template <typename T, typename F>
 constexpr auto test(F func) -> bool
 {
-    CHECK_APPROX(func("0", nullptr), T(0));
-    CHECK_APPROX(func("10", nullptr), T(10));
-    CHECK_APPROX(func("100.0", nullptr), T(100));
-    CHECK_APPROX(func("143.0", nullptr), T(143));
-    CHECK_APPROX(func("1000.000", nullptr), T(1000));
-    CHECK_APPROX(func("10000", nullptr), T(10000));
-    CHECK_APPROX(func("999999.0", nullptr), T(999999));
-    CHECK_APPROX(func("9999999", nullptr), T(9999999));
+    auto check = [&](auto const* str, auto expected) -> bool {
+        char const* end = nullptr;
+        CHECK_APPROX(func(str, &end), expected);
+        CHECK(end != str);
+        return true;
+    };
+
+    CHECK(check("0", T(0)));
+    CHECK(check("10", T(10)));
+    CHECK(check("100.0", T(100)));
+    CHECK(check("143.0", T(143)));
+    CHECK(check("1000.000", T(1000)));
+    CHECK(check("10000", T(10000)));
+    CHECK(check("999999.0", T(999999)));
+    CHECK(check("9999999", T(9999999)));
 
     return true;
 }
