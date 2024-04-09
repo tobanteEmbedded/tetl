@@ -5,6 +5,7 @@
 
 #include <etl/_cctype/isdigit.hpp>
 #include <etl/_cctype/isspace.hpp>
+#include <etl/_string_view/string_view.hpp>
 #include <etl/_type_traits/is_signed.hpp>
 
 namespace etl::strings {
@@ -23,14 +24,14 @@ struct to_floating_point_result {
 };
 
 template <typename Float>
-[[nodiscard]] constexpr auto to_floating_point(char const* str) noexcept -> to_floating_point_result<Float>
+[[nodiscard]] constexpr auto to_floating_point(etl::string_view str) noexcept -> to_floating_point_result<Float>
 {
     auto res               = Float{0};
     auto div               = Float{1};
     auto afterDecimalPoint = false;
     auto leadingSpaces     = true;
 
-    auto const* ptr = str;
+    auto const* ptr = str.data();
     for (; *ptr != '\0'; ++ptr) {
         if (etl::isspace(*ptr) && leadingSpaces) {
             continue;
@@ -48,7 +49,7 @@ template <typename Float>
         } else if (*ptr == '.') {
             afterDecimalPoint = true;
         } else {
-            return {.end = str, .error = to_floating_point_error::invalid_input, .value = {}};
+            return {.end = str.data(), .error = to_floating_point_error::invalid_input, .value = {}};
         }
     }
 

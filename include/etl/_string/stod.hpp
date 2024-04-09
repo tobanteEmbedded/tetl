@@ -17,7 +17,7 @@ namespace etl {
 template <size_t Capacity>
 [[nodiscard]] constexpr auto stof(inplace_string<Capacity> const& str, size_t* pos = nullptr) -> float
 {
-    auto const result = etl::strings::to_floating_point<float>(str.data());
+    auto const result = etl::strings::to_floating_point<float>({str.data(), str.size()});
     if (pos != nullptr) {
         *pos = static_cast<size_t>(etl::distance(str.data(), result.end));
     }
@@ -32,7 +32,7 @@ template <size_t Capacity>
 template <size_t Capacity>
 [[nodiscard]] constexpr auto stod(inplace_string<Capacity> const& str, size_t* pos = nullptr) -> double
 {
-    auto const result = etl::strings::to_floating_point<double>(str.data());
+    auto const result = etl::strings::to_floating_point<double>({str.data(), str.size()});
     if (pos != nullptr) {
         *pos = static_cast<size_t>(etl::distance(str.data(), result.end));
     }
@@ -47,7 +47,7 @@ template <size_t Capacity>
 template <size_t Capacity>
 [[nodiscard]] constexpr auto stold(inplace_string<Capacity> const& str, size_t* pos = nullptr) -> long double
 {
-    auto const result = etl::strings::to_floating_point<long double>(str.data());
+    auto const result = etl::strings::to_floating_point<long double>({str.data(), str.size()});
     if (pos != nullptr) {
         *pos = static_cast<size_t>(etl::distance(str.data(), result.end));
     }
