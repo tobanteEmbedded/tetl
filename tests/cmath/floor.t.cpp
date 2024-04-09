@@ -30,6 +30,19 @@ constexpr auto test() -> bool
     CHECK_APPROX(etl::floor(T(-0.1)), T(-1));
     CHECK_APPROX(etl::floor(T(-0.2)), T(-1));
 
+    CHECK_APPROX(etl::floorf(0.1F), 0.0F);
+    CHECK_APPROX(etl::floorf(0.2F), 0.0F);
+    CHECK_APPROX(etl::floorf(0.3F), 0.0F);
+    CHECK_APPROX(etl::floorf(1.3F), 1.0F);
+
+    CHECK_APPROX(etl::floorl(0.1L), 0.0L);
+    CHECK_APPROX(etl::floorl(0.2L), 0.0L);
+    CHECK_APPROX(etl::floorl(0.3L), 0.0L);
+    CHECK_APPROX(etl::floorl(1.3L), 1.0L);
+
+    CHECK_APPROX(etl::floor(0U), 0.0);
+    CHECK_APPROX(etl::floor(1U), 1.0);
+
     return true;
 }
 

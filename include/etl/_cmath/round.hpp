@@ -13,10 +13,11 @@
 namespace etl {
 
 namespace detail {
+
 template <typename T>
-[[nodiscard]] constexpr auto round_impl(T arg) noexcept -> T
+[[nodiscard]] constexpr auto round(T arg) noexcept -> T
 {
-    if (!is_constant_evaluated()) {
+    if (not is_constant_evaluated()) {
         if constexpr (is_same_v<T, float>) {
 #if __has_builtin(__builtin_roundf)
             return __builtin_roundf(arg);
@@ -27,67 +28,28 @@ template <typename T>
             return __builtin_round(arg);
 #endif
         }
-        if constexpr (is_same_v<T, long double>) {
-#if __has_builtin(__builtin_roundl)
-            return __builtin_roundl(arg);
-#endif
-        }
     }
     return detail::gcem::round(arg);
 }
+
 } // namespace detail
 
-/// Computes the nearest integer value to arg (in floating-point format),
-/// rounding halfway cases away from zero, regardless of the current rounding
-/// mode.
-///
-/// \details https://en.cppreference.com/w/cpp/numeric/math/round
 /// \ingroup cmath
-[[nodiscard]] constexpr auto round(float arg) noexcept -> float { return detail::round_impl(arg); }
+/// @{
 
 /// Computes the nearest integer value to arg (in floating-point format),
 /// rounding halfway cases away from zero, regardless of the current rounding
 /// mode.
 ///
-/// \details https://en.cppreference.com/w/cpp/numeric/math/round
-/// \ingroup cmath
-[[nodiscard]] constexpr auto roundf(float arg) noexcept -> float { return detail::round_impl(arg); }
+/// https://en.cppreference.com/w/cpp/numeric/math/round
+[[nodiscard]] constexpr auto round(float arg) noexcept -> float { return etl::detail::round(arg); }
+[[nodiscard]] constexpr auto roundf(float arg) noexcept -> float { return etl::detail::round(arg); }
+[[nodiscard]] constexpr auto round(double arg) noexcept -> double { return etl::detail::round(arg); }
+[[nodiscard]] constexpr auto round(long double arg) noexcept -> long double { return etl::detail::round(arg); }
+[[nodiscard]] constexpr auto roundl(long double arg) noexcept -> long double { return etl::detail::round(arg); }
+[[nodiscard]] constexpr auto round(integral auto arg) noexcept -> double { return etl::detail::round(double(arg)); }
 
-/// Computes the nearest integer value to arg (in floating-point format),
-/// rounding halfway cases away from zero, regardless of the current rounding
-/// mode.
-///
-/// \details https://en.cppreference.com/w/cpp/numeric/math/round
-/// \ingroup cmath
-[[nodiscard]] constexpr auto round(double arg) noexcept -> double { return detail::round_impl(arg); }
-
-/// Computes the nearest integer value to arg (in floating-point format),
-/// rounding halfway cases away from zero, regardless of the current rounding
-/// mode.
-///
-/// \details https://en.cppreference.com/w/cpp/numeric/math/round
-/// \ingroup cmath
-[[nodiscard]] constexpr auto round(long double arg) noexcept -> long double { return detail::round_impl(arg); }
-
-/// Computes the nearest integer value to arg (in floating-point format),
-/// rounding halfway cases away from zero, regardless of the current rounding
-/// mode.
-///
-/// \details https://en.cppreference.com/w/cpp/numeric/math/round
-/// \ingroup cmath
-[[nodiscard]] constexpr auto roundl(long double arg) noexcept -> long double { return detail::round_impl(arg); }
-
-/// Computes the nearest integer value to arg (in floating-point format),
-/// rounding halfway cases away from zero, regardless of the current rounding
-/// mode.
-///
-/// \details https://en.cppreference.com/w/cpp/numeric/math/round
-/// \ingroup cmath
-template <integral T>
-[[nodiscard]] constexpr auto round(T arg) noexcept -> double
-{
-    return detail::round_impl(static_cast<double>(arg));
-}
+/// @}
 
 } // namespace etl
 
