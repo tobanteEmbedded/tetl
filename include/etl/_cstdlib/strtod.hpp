@@ -3,7 +3,7 @@
 #ifndef TETL_CSTDLIB_STRTOD_HPP
 #define TETL_CSTDLIB_STRTOD_HPP
 
-#include <etl/_strings/conversion.hpp>
+#include <etl/_strings/to_floating_point.hpp>
 
 namespace etl {
 
@@ -16,7 +16,7 @@ namespace etl {
 /// If no conversion can be performed, `0` is returned and *last is set to str.
 [[nodiscard]] constexpr auto strtod(char const* str, char const** last = nullptr) noexcept -> double
 {
-    return detail::string_to_floating_point<double>(str, last);
+    return strings::to_floating_point<double>(str, last);
 }
 
 } // namespace etl

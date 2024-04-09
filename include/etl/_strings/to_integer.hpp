@@ -12,12 +12,12 @@
 
 namespace etl::strings {
 
-enum struct skip_whitespace : etl::uint8_t {
+enum struct skip_whitespace : unsigned char {
     no,
     yes,
 };
 
-enum struct to_integer_error : etl::uint8_t {
+enum struct to_integer_error : unsigned char {
     none,
     invalid_input,
     overflow,

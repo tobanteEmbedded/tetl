@@ -3,7 +3,6 @@
 #include <etl/strings.hpp>
 
 #include <etl/array.hpp>
-#include <etl/iterator.hpp>
 #include <etl/string_view.hpp>
 #include <etl/type_traits.hpp>
 
@@ -11,8 +10,9 @@
 #include "testing/testing.hpp"
 
 namespace {
+
 template <typename Int>
-constexpr auto test_string_to_integer() -> bool
+constexpr auto test() -> bool
 {
     using namespace etl::string_view_literals;
     using namespace etl::strings;
@@ -60,17 +60,17 @@ constexpr auto test_string_to_integer() -> bool
 
 constexpr auto test_all() -> bool
 {
-    CHECK(test_string_to_integer<signed char>());
-    CHECK(test_string_to_integer<signed short>());
-    CHECK(test_string_to_integer<signed int>());
-    CHECK(test_string_to_integer<signed long>());
-    CHECK(test_string_to_integer<signed long long>());
+    CHECK(test<signed char>());
+    CHECK(test<signed short>());
+    CHECK(test<signed int>());
+    CHECK(test<signed long>());
+    CHECK(test<signed long long>());
 
-    CHECK(test_string_to_integer<unsigned char>());
-    CHECK(test_string_to_integer<unsigned short>());
-    CHECK(test_string_to_integer<unsigned int>());
-    CHECK(test_string_to_integer<unsigned long>());
-    CHECK(test_string_to_integer<unsigned long long>());
+    CHECK(test<unsigned char>());
+    CHECK(test<unsigned short>());
+    CHECK(test<unsigned int>());
+    CHECK(test<unsigned long>());
+    CHECK(test<unsigned long long>());
 
     return true;
 }

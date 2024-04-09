@@ -14,6 +14,7 @@
 #include <etl/_config/all.hpp>
 
 #include <etl/_strings/conversion.hpp>
+#include <etl/_strings/to_floating_point.hpp>
 #include <etl/_strings/to_integer.hpp>
 
 #endif // TETL_STRINGS_HPP

@@ -3,14 +3,14 @@
 #ifndef TETL_CSTDLIB_ATOF_HPP
 #define TETL_CSTDLIB_ATOF_HPP
 
-#include <etl/_strings/conversion.hpp>
+#include <etl/_strings/to_floating_point.hpp>
 
 namespace etl {
 
 /// \brief Interprets a floating point value in a byte string pointed to by str.
 [[nodiscard]] constexpr auto atof(char const* str) noexcept -> double
 {
-    return detail::string_to_floating_point<double>(str);
+    return strings::to_floating_point<double>(str);
 }
 
 } // namespace etl
