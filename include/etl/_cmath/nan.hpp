@@ -17,9 +17,21 @@ namespace etl {
 /// string arg or zero if the implementation does not support quiet NaNs.
 ///
 /// https://en.cppreference.com/w/cpp/numeric/math/nan
-[[nodiscard]] constexpr auto nanf(char const* arg) noexcept -> float { return TETL_BUILTIN_NANF(arg); }
-[[nodiscard]] constexpr auto nan(char const* arg) noexcept -> double { return TETL_BUILTIN_NAN(arg); }
-[[nodiscard]] constexpr auto nanl(char const* arg) noexcept -> long double { return TETL_BUILTIN_NANL(arg); }
+[[nodiscard]] constexpr auto nanf(char const* arg) noexcept -> float
+{
+    (void)arg;
+    return TETL_BUILTIN_NANF("");
+}
+[[nodiscard]] constexpr auto nan(char const* arg) noexcept -> double
+{
+    (void)arg;
+    return TETL_BUILTIN_NAN("");
+}
+[[nodiscard]] constexpr auto nanl(char const* arg) noexcept -> long double
+{
+    (void)arg;
+    return TETL_BUILTIN_NANL("");
+}
 
 /// @}
 
