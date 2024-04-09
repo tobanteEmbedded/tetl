@@ -33,9 +33,12 @@ template <integral Int>
 [[nodiscard]] constexpr auto
 from_chars(char const* first, char const* last, Int& value, int base = 10) -> from_chars_result
 {
-    constexpr auto skip        = strings::skip_whitespace::no;
-    auto const length          = static_cast<etl::size_t>(etl::distance(first, last));
-    auto const [end, err, val] = strings::to_integer<Int, skip>(first, length, static_cast<Int>(base));
+    constexpr auto options     = strings::to_integer_options{.skip_whitespace = false, .check_overflow = true};
+    auto const [end, err, val] = strings::to_integer<Int, options>(
+        first,
+        static_cast<etl::size_t>(etl::distance(first, last)),
+        static_cast<Int>(base)
+    );
 
     if (err == strings::to_integer_error::overflow) {
         return from_chars_result{.ptr = first, .ec = errc::result_out_of_range};

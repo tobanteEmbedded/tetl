@@ -17,6 +17,11 @@ enum struct skip_whitespace : unsigned char {
     yes,
 };
 
+struct to_integer_options {
+    bool skip_whitespace = true;
+    bool check_overflow  = true;
+};
+
 enum struct to_integer_error : unsigned char {
     none,
     invalid_input,
@@ -30,12 +35,12 @@ struct to_integer_result {
     Int value;
 };
 
-template <typename Int, skip_whitespace Skip = skip_whitespace::yes>
+template <typename Int, to_integer_options Options = to_integer_options{}>
 [[nodiscard]] constexpr auto
 to_integer(char const* str, size_t len, Int base = Int(10)) noexcept -> to_integer_result<Int>
 {
     auto i = size_t{};
-    if constexpr (Skip == skip_whitespace::yes) {
+    if constexpr (Options.skip_whitespace) {
         while ((len != 0) and isspace(static_cast<int>(str[i])) and (str[i] != char(0))) {
             ++i;
             --len;

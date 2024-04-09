@@ -14,7 +14,7 @@ namespace etl {
 /// number representation and converts them to an integer value.
 [[nodiscard]] constexpr auto atoll(char const* str) noexcept -> long long
 {
-    auto const result = strings::to_integer<long long, strings::skip_whitespace::yes>(str, strlen(str));
+    auto const result = strings::to_integer<long long>(str, strlen(str));
     return result.value;
 }
 
