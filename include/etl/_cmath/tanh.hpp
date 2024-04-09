@@ -11,6 +11,9 @@
 
 namespace etl {
 
+/// \ingroup cmath
+/// @{
+
 /// Computes the hyperbolic tangent of arg
 /// \details https://en.cppreference.com/w/cpp/numeric/math/tanh
 /// \ingroup cmath
@@ -30,14 +33,8 @@ namespace etl {
 #endif
 }
 
-/// Computes the hyperbolic tangent of arg
-/// \details https://en.cppreference.com/w/cpp/numeric/math/tanh
-/// \ingroup cmath
 [[nodiscard]] constexpr auto tanhf(float arg) noexcept -> float { return etl::tanh(arg); }
 
-/// Computes the hyperbolic tangent of arg
-/// \details https://en.cppreference.com/w/cpp/numeric/math/tanh
-/// \ingroup cmath
 [[nodiscard]] constexpr auto tanh(double arg) noexcept -> double
 {
     if (is_constant_evaluated()) {
@@ -54,24 +51,17 @@ namespace etl {
 #endif
 }
 
-/// Computes the hyperbolic tangent of arg
-/// \details https://en.cppreference.com/w/cpp/numeric/math/tanh
-/// \ingroup cmath
 [[nodiscard]] constexpr auto tanh(long double arg) noexcept -> long double { return etl::detail::gcem::tanh(arg); }
 
-/// Computes the hyperbolic tangent of arg
-/// \details https://en.cppreference.com/w/cpp/numeric/math/tanh
-/// \ingroup cmath
 [[nodiscard]] constexpr auto tanhl(long double arg) noexcept -> long double { return etl::tanh(arg); }
 
-/// Computes the hyperbolic tangent of arg
-/// \details https://en.cppreference.com/w/cpp/numeric/math/tanh
-/// \ingroup cmath
 template <integral T>
 [[nodiscard]] constexpr auto tanh(T arg) noexcept -> double
 {
     return etl::tanh(static_cast<double>(arg));
 }
+
+/// @}
 
 } // namespace etl
 

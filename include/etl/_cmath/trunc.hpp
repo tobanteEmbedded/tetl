@@ -14,7 +14,7 @@ namespace etl {
 
 namespace detail {
 template <typename T>
-[[nodiscard]] constexpr auto trunc_impl(T arg) noexcept -> T
+[[nodiscard]] constexpr auto trunc(T arg) noexcept -> T
 {
     if (!is_constant_evaluated()) {
         if constexpr (is_same_v<T, float>) {
@@ -37,39 +37,20 @@ template <typename T>
 }
 } // namespace detail
 
-/// Computes the nearest integer not greater in magnitude than arg.
-/// \details https://en.cppreference.com/w/cpp/numeric/math/trunc
 /// \ingroup cmath
-[[nodiscard]] constexpr auto trunc(float arg) noexcept -> float { return detail::trunc_impl(arg); }
+/// @{
 
 /// Computes the nearest integer not greater in magnitude than arg.
 /// \details https://en.cppreference.com/w/cpp/numeric/math/trunc
 /// \ingroup cmath
-[[nodiscard]] constexpr auto truncf(float arg) noexcept -> float { return detail::trunc_impl(arg); }
+[[nodiscard]] constexpr auto trunc(float arg) noexcept -> float { return detail::trunc(arg); }
+[[nodiscard]] constexpr auto truncf(float arg) noexcept -> float { return detail::trunc(arg); }
+[[nodiscard]] constexpr auto trunc(double arg) noexcept -> double { return detail::trunc(arg); }
+[[nodiscard]] constexpr auto trunc(long double arg) noexcept -> long double { return detail::trunc(arg); }
+[[nodiscard]] constexpr auto truncl(long double arg) noexcept -> long double { return detail::trunc(arg); }
+[[nodiscard]] constexpr auto trunc(integral auto arg) noexcept -> double { return detail::trunc(double(arg)); }
 
-/// Computes the nearest integer not greater in magnitude than arg.
-/// \details https://en.cppreference.com/w/cpp/numeric/math/trunc
-/// \ingroup cmath
-[[nodiscard]] constexpr auto trunc(double arg) noexcept -> double { return detail::trunc_impl(arg); }
-
-/// Computes the nearest integer not greater in magnitude than arg.
-/// \details https://en.cppreference.com/w/cpp/numeric/math/trunc
-/// \ingroup cmath
-[[nodiscard]] constexpr auto trunc(long double arg) noexcept -> long double { return detail::trunc_impl(arg); }
-
-/// Computes the nearest integer not greater in magnitude than arg.
-/// \details https://en.cppreference.com/w/cpp/numeric/math/trunc
-/// \ingroup cmath
-[[nodiscard]] constexpr auto truncl(long double arg) noexcept -> long double { return detail::trunc_impl(arg); }
-
-/// Computes the nearest integer not greater in magnitude than arg.
-/// \details https://en.cppreference.com/w/cpp/numeric/math/trunc
-/// \ingroup cmath
-template <integral T>
-[[nodiscard]] constexpr auto trunc(T arg) noexcept -> double
-{
-    return detail::trunc_impl(static_cast<double>(arg));
-}
+/// @}
 
 } // namespace etl
 

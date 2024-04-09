@@ -13,7 +13,7 @@ namespace etl {
 namespace detail {
 
 template <typename T>
-[[nodiscard]] constexpr auto nextafter_impl(T from, T to) -> T
+[[nodiscard]] constexpr auto nextafter(T from, T to) -> T
 {
     using U             = etl::conditional_t<sizeof(T) == 4U, etl::uint32_t, etl::uint64_t>;
     auto const fromBits = etl::bit_cast<U>(from);
@@ -28,32 +28,20 @@ template <typename T>
 }
 } // namespace detail
 
-/// Returns the next representable value of from in the direction of to.
-/// If from equals to, to is returned.
-/// \details ttps://en.cppreference.com/w/cpp/numeric/math/nextafter
 /// \ingroup cmath
-[[nodiscard]] constexpr auto nextafter(float from, float to) noexcept -> float
-{
-    return detail::nextafter_impl(from, to);
-}
+/// @{
 
 /// Returns the next representable value of from in the direction of to.
 /// If from equals to, to is returned.
 /// \details ttps://en.cppreference.com/w/cpp/numeric/math/nextafter
-/// \ingroup cmath
-[[nodiscard]] constexpr auto nextafterf(float from, float to) noexcept -> float
-{
-    return detail::nextafter_impl(from, to);
-}
-
-/// Returns the next representable value of from in the direction of to.
-/// If from equals to, to is returned.
-/// \details ttps://en.cppreference.com/w/cpp/numeric/math/nextafter
-/// \ingroup cmath
+[[nodiscard]] constexpr auto nextafter(float from, float to) noexcept -> float { return detail::nextafter(from, to); }
+[[nodiscard]] constexpr auto nextafterf(float from, float to) noexcept -> float { return detail::nextafter(from, to); }
 [[nodiscard]] constexpr auto nextafter(double from, double to) noexcept -> double
 {
-    return detail::nextafter_impl(from, to);
+    return detail::nextafter(from, to);
 }
+
+/// @}
 
 } // namespace etl
 
