@@ -88,17 +88,8 @@ constexpr auto test() -> bool
         {
         }
 
-        constexpr auto operator=(non_trivial const& other) noexcept -> non_trivial&
-        {
-            value = other.value;
-            return *this;
-        }
-
-        constexpr auto operator=(non_trivial&& other) noexcept -> non_trivial&
-        {
-            value = other.value;
-            return *this;
-        }
+        constexpr auto operator=(non_trivial const& other) noexcept -> non_trivial& = default;
+        constexpr auto operator=(non_trivial&& other) noexcept -> non_trivial&      = default;
 
         constexpr ~non_trivial() { } // NOLINT
 

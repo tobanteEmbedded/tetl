@@ -81,22 +81,12 @@ constexpr auto test() -> bool
             float y{0.0F};
         };
 
-        auto v1 = etl::variant<etl::monostate, int, Point>{
-            etl::in_place_type<Point>,
-            143.0F,
-            42.0F,
-        };
-
+        auto const v1 = etl::variant<etl::monostate, int, Point>{etl::in_place_type<Point>, 143.0F, 42.0F};
         CHECK(etl::holds_alternative<Point>(v1));
         CHECK(etl::get_if<Point>(&v1)->x == 143.0F);
         CHECK(etl::get_if<Point>(&v1)->y == 42.0F);
 
-        auto v2 = etl::variant<etl::monostate, int, Point>{
-            etl::in_place_index<2>,
-            143.0F,
-            42.0F,
-        };
-
+        auto const v2 = etl::variant<etl::monostate, int, Point>{etl::in_place_index<2>, 143.0F, 42.0F};
         CHECK(etl::holds_alternative<Point>(v2));
         CHECK(etl::get_if<Point>(&v2)->x == 143.0F);
         CHECK(etl::get_if<Point>(&v2)->y == 42.0F);
@@ -277,29 +267,35 @@ constexpr auto test() -> bool
     }
 
     {
-        using T         = int;
-        using variant_t = etl::variant<T, float>;
-        auto v1         = variant_t{143.0F};
-        auto check1     = etl::overload{
-            [](float val) { CHECK(val == 143.0F); },
-            [](T /*val*/) { CHECK(false); },
-        };
-        etl::visit(check1, v1);
+        using variant_t = etl::variant<int, float>;
 
-        auto v2 = variant_t{T{42}};
-        etl::visit([](auto const& val) { CHECK(val == T{42}); }, v2);
+        auto const v1     = variant_t{143.0F};
+        auto const check1 = [](auto val) { return etl::is_same_v<decltype(val), float>; };
+        CHECK(etl::visit(check1, v1));
 
-        auto calledT     = false;
+        auto const check2 = [](auto const& val) { return val == 42; };
+        CHECK(etl::visit(check2, variant_t{42}));
+        CHECK_FALSE(etl::visit(check2, variant_t{99}));
+
+        auto calledInt   = false;
         auto calledFloat = false;
         auto funcs       = etl::overload{
             [&calledFloat](float /*val*/) -> void { calledFloat = true; },
-            [&calledT](T /*val*/) -> void { calledT = true; },
+            [&calledInt](int /*val*/) -> void { calledInt = true; },
         };
 
-        auto v3 = variant_t{T{1}};
+        auto v3 = variant_t{1};
         etl::visit(funcs, v3);
-        CHECK(calledT);
+        CHECK(calledInt);
         CHECK_FALSE(calledFloat);
+
+        calledInt   = false;
+        calledFloat = false;
+
+        v3.emplace<float>(1.43F);
+        etl::visit(funcs, v3);
+        CHECK(calledFloat);
+        CHECK_FALSE(calledInt);
     }
 
     return true;
