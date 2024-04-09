@@ -13,6 +13,7 @@
 
 #include <etl/_config/all.hpp>
 
+/// Non-standard extensions
 #include <etl/_strings/from_integer.hpp>
 #include <etl/_strings/to_floating_point.hpp>
 #include <etl/_strings/to_integer.hpp>
