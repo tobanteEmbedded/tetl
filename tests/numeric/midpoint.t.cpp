@@ -7,52 +7,74 @@
 
 #include "testing/testing.hpp"
 
-template <typename T>
+template <typename Int>
 constexpr auto test_integer() -> bool
 {
-    if constexpr (etl::is_signed_v<T>) {
-        CHECK(etl::midpoint<T>(-3, -4) == -3);
-        CHECK(etl::midpoint<T>(-4, -3) == -4);
-        CHECK(etl::midpoint<T>(-3, -4) == -3);
-        CHECK(etl::midpoint<T>(-4, -3) == -4);
+    if constexpr (etl::is_signed_v<Int>) {
+        CHECK(etl::midpoint<Int>(-3, -4) == -3);
+        CHECK(etl::midpoint<Int>(-4, -3) == -4);
+        CHECK(etl::midpoint<Int>(-3, -4) == -3);
+        CHECK(etl::midpoint<Int>(-4, -3) == -4);
     }
 
-    CHECK(etl::midpoint(T(0), T(2)) == T(1));
-    CHECK(etl::midpoint(T(0), T(4)) == T(2));
-    CHECK(etl::midpoint(T(0), T(8)) == T(4));
+    CHECK(etl::midpoint(Int(0), Int(2)) == Int(1));
+    CHECK(etl::midpoint(Int(0), Int(4)) == Int(2));
+    CHECK(etl::midpoint(Int(0), Int(8)) == Int(4));
+
+    auto const large = etl::numeric_limits<Int>::max();
+    CHECK(etl::midpoint(large, large) == large);
+    CHECK(etl::midpoint(Int(large - Int(2)), large) == large - Int(1));
+    CHECK(etl::midpoint(large, Int(large - Int(2))) == large - Int(1));
+
     return true;
 }
 
-template <typename T>
-constexpr auto test_floats() -> bool
+template <typename Float>
+constexpr auto test_float() -> bool
 {
 
     {
-        auto const a = T(-3.0);
-        auto const b = T(-4.0);
-        CHECK(etl::midpoint(a, b) == T(-3.5));
-        CHECK(etl::midpoint(b, a) == T(-3.5));
-        CHECK(etl::midpoint(a, b) == T(-3.5));
-        CHECK(etl::midpoint(b, a) == T(-3.5));
+        auto const a = Float(-3.0);
+        auto const b = Float(-4.0);
+        CHECK(etl::midpoint(a, b) == Float(-3.5));
+        CHECK(etl::midpoint(b, a) == Float(-3.5));
+        CHECK(etl::midpoint(a, b) == Float(-3.5));
+        CHECK(etl::midpoint(b, a) == Float(-3.5));
     }
 
     {
-        auto const small = etl::numeric_limits<T>::min();
+        auto const small = etl::numeric_limits<Float>::min();
         CHECK(etl::midpoint(small, small) == small);
     }
 
     {
-        auto const halfMax = etl::numeric_limits<T>::max() / T(2.0);
-        auto const x       = halfMax + T(4.0);
-        auto const y       = halfMax + T(8.0);
-        CHECK(etl::midpoint(x, y) == halfMax + T(6.0));
+        auto const large = etl::numeric_limits<Float>::max();
+        CHECK(etl::midpoint(large, large) == large);
     }
 
     {
-        auto const halfMax = etl::numeric_limits<T>::max() / T(2.0);
-        auto const x       = -halfMax + T(4.0);
-        auto const y       = -halfMax + T(8.0);
-        CHECK(etl::midpoint(x, y) == -halfMax + T(6.0));
+        auto const large = etl::numeric_limits<Float>::max();
+        CHECK(etl::midpoint(large, large * Float(0.5)) == large * Float(0.75));
+    }
+
+    {
+        auto const small = etl::numeric_limits<Float>::min();
+        CHECK(etl::midpoint(small, small * Float(3)) == small * Float(2));
+        CHECK(etl::midpoint(small * Float(3), small) == small * Float(2));
+    }
+
+    {
+        auto const halfMax = etl::numeric_limits<Float>::max() / Float(2.0);
+        auto const x       = halfMax + Float(4.0);
+        auto const y       = halfMax + Float(8.0);
+        CHECK(etl::midpoint(x, y) == halfMax + Float(6.0));
+    }
+
+    {
+        auto const halfMax = etl::numeric_limits<Float>::max() / Float(2.0);
+        auto const x       = -halfMax + Float(4.0);
+        auto const y       = -halfMax + Float(8.0);
+        CHECK(etl::midpoint(x, y) == -halfMax + Float(6.0));
     }
 
     return true;
@@ -83,6 +105,13 @@ constexpr auto test_pointer() -> bool
 
 constexpr auto test_all() -> bool
 {
+    CHECK(test_pointer<char>());
+    CHECK(test_pointer<short>());
+    CHECK(test_pointer<int>());
+    CHECK(test_pointer<long>());
+    CHECK(test_pointer<float>());
+    CHECK(test_pointer<double>());
+
     CHECK(test_integer<unsigned char>());
     CHECK(test_integer<unsigned short>());
     CHECK(test_integer<unsigned int>());
@@ -92,15 +121,9 @@ constexpr auto test_all() -> bool
     CHECK(test_integer<signed int>());
     CHECK(test_integer<signed long>());
 
-    CHECK(test_floats<float>());
-    CHECK(test_floats<double>());
-
-    CHECK(test_pointer<char>());
-    CHECK(test_pointer<short>());
-    CHECK(test_pointer<int>());
-    CHECK(test_pointer<long>());
-    CHECK(test_pointer<float>());
-    CHECK(test_pointer<double>());
+    CHECK(test_float<float>());
+    CHECK(test_float<double>());
+    CHECK(test_float<long double>());
 
     return true;
 }
