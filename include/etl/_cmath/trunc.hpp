@@ -16,7 +16,7 @@ namespace detail {
 template <typename T>
 [[nodiscard]] constexpr auto trunc(T arg) noexcept -> T
 {
-    if (!is_constant_evaluated()) {
+    if (not is_constant_evaluated()) {
         if constexpr (is_same_v<T, float>) {
 #if __has_builtin(__builtin_truncf)
             return __builtin_truncf(arg);
@@ -27,12 +27,8 @@ template <typename T>
             return __builtin_trunc(arg);
 #endif
         }
-        if constexpr (is_same_v<T, long double>) {
-#if __has_builtin(__builtin_truncl)
-            return __builtin_truncl(arg);
-#endif
-        }
     }
+
     return detail::gcem::trunc(arg);
 }
 } // namespace detail

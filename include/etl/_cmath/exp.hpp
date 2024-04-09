@@ -7,58 +7,46 @@
 
 #include <etl/_3rd_party/gcem/gcem.hpp>
 #include <etl/_concepts/integral.hpp>
+#include <etl/_concepts/same_as.hpp>
 #include <etl/_type_traits/is_constant_evaluated.hpp>
 
 namespace etl {
 
+namespace detail {
+
+inline constexpr struct exp {
+    template <typename Float>
+    [[nodiscard]] constexpr auto operator()(Float arg) const noexcept -> Float
+    {
+        if (not is_constant_evaluated()) {
+#if __has_builtin(__builtin_expf)
+            if constexpr (etl::same_as<Float, float>) {
+                return __builtin_expf(arg);
+            }
+#endif
+#if __has_builtin(__builtin_exp)
+            if constexpr (etl::same_as<Float, double>) {
+                return __builtin_exp(arg);
+            }
+#endif
+        }
+        return etl::detail::gcem::exp(arg);
+    }
+} exp;
+
+} // namespace detail
+
 /// \ingroup cmath
 /// @{
 
-/// Computes e (Euler's number, 2.7182...) raised to the given power v
+/// Computes e (Euler's number, 2.7182...) raised to the given power arg
 /// \details https://en.cppreference.com/w/cpp/numeric/math/exp
-[[nodiscard]] constexpr auto exp(float v) noexcept -> float
-{
-    if (is_constant_evaluated()) {
-#if __has_constexpr_builtin(__builtin_expf)
-        return __builtin_expf(v);
-#else
-        return etl::detail::gcem::exp(v);
-#endif
-    }
-#if __has_builtin(__builtin_expf)
-    return __builtin_expf(v);
-#else
-    return etl::detail::gcem::exp(v);
-#endif
-}
-
-[[nodiscard]] constexpr auto expf(float v) noexcept -> float { return etl::exp(v); }
-
-[[nodiscard]] constexpr auto exp(double v) noexcept -> double
-{
-    if (is_constant_evaluated()) {
-#if __has_constexpr_builtin(__builtin_exp)
-        return __builtin_exp(v);
-#else
-        return etl::detail::gcem::exp(v);
-#endif
-    }
-#if __has_builtin(__builtin_exp)
-    return __builtin_exp(v);
-#else
-    return etl::detail::gcem::exp(v);
-#endif
-}
-
-[[nodiscard]] constexpr auto exp(long double v) noexcept -> long double { return etl::detail::gcem::exp(v); }
-
-[[nodiscard]] constexpr auto expl(long double v) noexcept -> long double { return etl::exp(v); }
-
-template <integral T>
-[[nodiscard]] constexpr auto exp(T v) noexcept -> double
-{
-    return etl::exp(static_cast<double>(v));
-}
+[[nodiscard]] constexpr auto exp(float arg) noexcept -> float { return etl::detail::exp(arg); }
+[[nodiscard]] constexpr auto expf(float arg) noexcept -> float { return etl::detail::exp(arg); }
+[[nodiscard]] constexpr auto exp(double arg) noexcept -> double { return etl::detail::exp(arg); }
+[[nodiscard]] constexpr auto exp(long double arg) noexcept -> long double { return etl::detail::exp(arg); }
+[[nodiscard]] constexpr auto expl(long double arg) noexcept -> long double { return etl::detail::exp(arg); }
+[[nodiscard]] constexpr auto exp(integral auto arg) noexcept -> double { return etl::detail::exp(double(arg)); }
 
 /// @}
 
