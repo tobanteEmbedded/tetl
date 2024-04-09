@@ -184,7 +184,7 @@ integer_to_string(Int num, char* str, int base = 10, size_t length = etl::numeri
     }
 
     bool isNegative = false;
-    if constexpr (etl::is_signed_v<Int>) {
+    if constexpr (is_signed_v<Int>) {
         if (num < 0 && base == 10) {
             isNegative = true;
             num        = -num;
@@ -201,7 +201,7 @@ integer_to_string(Int num, char* str, int base = 10, size_t length = etl::numeri
         }
     }
 
-    if constexpr (etl::is_signed_v<Int>) {
+    if constexpr (is_signed_v<Int>) {
         if (isNegative) {
             str[i++] = '-';
         }

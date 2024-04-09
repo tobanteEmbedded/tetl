@@ -28,7 +28,7 @@ template <etl::size_t N, typename T>
     static_assert(detail::is_power2(N));
     static_assert(alignof(T) <= N);
 
-    if (etl::is_constant_evaluated()) {
+    if (is_constant_evaluated()) {
         return ptr;
     }
 

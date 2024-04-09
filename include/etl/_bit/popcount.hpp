@@ -37,7 +37,7 @@ template <etl::builtin_unsigned_integer UInt>
 template <etl::builtin_unsigned_integer UInt>
 [[nodiscard]] constexpr auto popcount(UInt val) noexcept -> int
 {
-    if (not etl::is_constant_evaluated()) {
+    if (not is_constant_evaluated()) {
 #if __has_builtin(__builtin_popcount)
         if constexpr (sizeof(UInt) == sizeof(unsigned long long)) {
             return static_cast<int>(__builtin_popcountll(val));

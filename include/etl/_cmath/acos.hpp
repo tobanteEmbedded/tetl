@@ -19,7 +19,7 @@ inline constexpr struct acos {
     [[nodiscard]] constexpr auto operator()(Float arg) const noexcept -> Float
     {
 #if not defined(__AVR__)
-        if (not etl::is_constant_evaluated()) {
+        if (not is_constant_evaluated()) {
     #if __has_builtin(__builtin_acosf)
             if constexpr (etl::same_as<Float, float>) {
                 return __builtin_acosf(arg);

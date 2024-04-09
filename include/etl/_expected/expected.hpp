@@ -31,25 +31,23 @@ struct expected {
     template <typename U>
     using rebind = etl::expected<U, error_type>;
 
-    constexpr explicit expected() noexcept(etl::is_nothrow_default_constructible_v<T>)
-        requires(etl::is_default_constructible_v<T>)
+    constexpr explicit expected() noexcept(is_nothrow_default_constructible_v<T>)
+        requires(is_default_constructible_v<T>)
         : _u()
     {
     }
 
     template <typename... Args>
-        requires etl::is_constructible_v<T, Args...>
-    constexpr explicit expected(etl::in_place_t /*tag*/, Args&&... args)
-        noexcept(etl::is_nothrow_constructible_v<T, Args...>)
-        : _u(etl::in_place_index<0>, etl::forward<Args>(args)...)
+        requires is_constructible_v<T, Args...>
+    constexpr explicit expected(in_place_t /*tag*/, Args&&... args) noexcept(is_nothrow_constructible_v<T, Args...>)
+        : _u(in_place_index<0>, etl::forward<Args>(args)...)
     {
     }
 
     template <typename... Args>
-        requires etl::is_constructible_v<E, Args...>
-    constexpr explicit expected(etl::unexpect_t /*tag*/, Args&&... args)
-        noexcept(etl::is_nothrow_constructible_v<E, Args...>)
-        : _u(etl::in_place_index<1>, etl::forward<Args>(args)...)
+        requires is_constructible_v<E, Args...>
+    constexpr explicit expected(unexpect_t /*tag*/, Args&&... args) noexcept(is_nothrow_constructible_v<E, Args...>)
+        : _u(in_place_index<1>, etl::forward<Args>(args)...)
     {
     }
 
@@ -61,24 +59,24 @@ struct expected {
 
     [[nodiscard]] constexpr auto operator->() noexcept -> T* { return etl::get_if<0>(&_u); }
 
-    [[nodiscard]] constexpr auto operator*() const& noexcept -> T const& { return _u[etl::index_v<0>]; }
+    [[nodiscard]] constexpr auto operator*() const& noexcept -> T const& { return _u[index_v<0>]; }
 
-    [[nodiscard]] constexpr auto operator*() & noexcept -> T& { return _u[etl::index_v<0>]; }
+    [[nodiscard]] constexpr auto operator*() & noexcept -> T& { return _u[index_v<0>]; }
 
-    [[nodiscard]] constexpr auto operator*() const&& noexcept -> T const&& { return etl::move(_u[etl::index_v<0>]); }
+    [[nodiscard]] constexpr auto operator*() const&& noexcept -> T const&& { return etl::move(_u[index_v<0>]); }
 
-    [[nodiscard]] constexpr auto operator*() && noexcept -> T&& { return etl::move(_u[etl::index_v<0>]); }
+    [[nodiscard]] constexpr auto operator*() && noexcept -> T&& { return etl::move(_u[index_v<0>]); }
 
-    [[nodiscard]] constexpr auto error() & -> E& { return _u[etl::index_v<1>]; }
+    [[nodiscard]] constexpr auto error() & -> E& { return _u[index_v<1>]; }
 
-    [[nodiscard]] constexpr auto error() const& -> E const& { return _u[etl::index_v<1>]; }
+    [[nodiscard]] constexpr auto error() const& -> E const& { return _u[index_v<1>]; }
 
-    [[nodiscard]] constexpr auto error() && -> E&& { return etl::move(_u[etl::index_v<1>]); }
+    [[nodiscard]] constexpr auto error() && -> E&& { return etl::move(_u[index_v<1>]); }
 
-    [[nodiscard]] constexpr auto error() const&& -> E const&& { return etl::move(_u[etl::index_v<1>]); }
+    [[nodiscard]] constexpr auto error() const&& -> E const&& { return etl::move(_u[index_v<1>]); }
 
     template <typename... Args>
-        requires etl::is_nothrow_constructible_v<T, Args...>
+        requires is_nothrow_constructible_v<T, Args...>
     constexpr auto emplace(Args&&... args) noexcept -> T&
     {
         _u.template emplace<0>(etl::forward<Args>(args)...);
@@ -98,64 +96,64 @@ struct expected {
     }
 
     template <typename F>
-    [[nodiscard]] constexpr auto and_then(F&& f) & requires(etl::is_constructible_v<E, decltype(error())>)
+    [[nodiscard]] constexpr auto and_then(F&& f) & requires(is_constructible_v<E, decltype(error())>)
     {
         if (has_value()) { return etl::invoke(etl::forward<F>(f), **this); }
-        using U = etl::remove_cvref_t<etl::invoke_result_t<F, decltype(**this)>>;
-        return U(etl::unexpect, error());
+        using U = remove_cvref_t<invoke_result_t<F, decltype(**this)>>;
+        return U(unexpect, error());
     }
 
     template <typename F>
-    [[nodiscard]] constexpr auto and_then(F&& f) && requires(etl::is_constructible_v<E, decltype(error())>)
+    [[nodiscard]] constexpr auto and_then(F&& f) && requires(is_constructible_v<E, decltype(error())>)
     {
         if (has_value()) { return etl::invoke(etl::forward<F>(f), **this); }
-        using U = etl::remove_cvref_t<etl::invoke_result_t<F, decltype(**this)>>;
-        return U(etl::unexpect, error());
+        using U = remove_cvref_t<invoke_result_t<F, decltype(**this)>>;
+        return U(unexpect, error());
     }
 
     template <typename F>
     [[nodiscard]] constexpr auto and_then(F&& f) const&
-        requires(etl::is_constructible_v<E, decltype(etl::move(error()))>)
+        requires(is_constructible_v<E, decltype(etl::move(error()))>)
     {
         if (has_value()) {
             return etl::invoke(etl::forward<F>(f), etl::move(**this));
         }
-        using U = etl::remove_cvref_t<etl::invoke_result_t<F, decltype(etl::move(**this))>>;
-        return U(etl::unexpect, etl::move(error()));
+        using U = remove_cvref_t<invoke_result_t<F, decltype(etl::move(**this))>>;
+        return U(unexpect, etl::move(error()));
     }
 
     template <typename F>
     [[nodiscard]] constexpr auto and_then(F&& f) const&&
-        requires(etl::is_constructible_v<E, decltype(etl::move(error()))>)
+        requires(is_constructible_v<E, decltype(etl::move(error()))>)
     {
         if (has_value()) {
             return etl::invoke(etl::forward<F>(f), etl::move(**this));
         }
-        using U = etl::remove_cvref_t<etl::invoke_result_t<F, decltype(etl::move(**this))>>;
-        return U(etl::unexpect, etl::move(error()));
+        using U = remove_cvref_t<invoke_result_t<F, decltype(etl::move(**this))>>;
+        return U(unexpect, etl::move(error()));
     }
 
     template <typename F>
-    [[nodiscard]] constexpr auto or_else(F&& f) & requires(etl::is_constructible_v<T, decltype(**this)>)
+    [[nodiscard]] constexpr auto or_else(F&& f) & requires(is_constructible_v<T, decltype(**this)>)
     {
-        using G = etl::remove_cvref_t<etl::invoke_result_t<F, decltype(error())>>;
+        using G = remove_cvref_t<invoke_result_t<F, decltype(error())>>;
         if (has_value()) { return G(etl::in_place, **this); }
         return etl::invoke(etl::forward<F>(f), error());
     }
 
     template <typename F>
-    [[nodiscard]] constexpr auto or_else(F&& f) && requires(etl::is_constructible_v<T, decltype(**this)>)
+    [[nodiscard]] constexpr auto or_else(F&& f) && requires(is_constructible_v<T, decltype(**this)>)
     {
-        using G = etl::remove_cvref_t<etl::invoke_result_t<F, decltype(error())>>;
+        using G = remove_cvref_t<invoke_result_t<F, decltype(error())>>;
         if (has_value()) { return G(etl::in_place, **this); }
         return etl::invoke(etl::forward<F>(f), error());
     }
 
     template <typename F>
     [[nodiscard]] constexpr auto or_else(F&& f) const&
-        requires(etl::is_constructible_v<T, decltype(etl::move(**this))>)
+        requires(is_constructible_v<T, decltype(etl::move(**this))>)
     {
-        using G = etl::remove_cvref_t<etl::invoke_result_t<F, decltype(etl::move(error()))>>;
+        using G = remove_cvref_t<invoke_result_t<F, decltype(etl::move(error()))>>;
         if (has_value()) {
             return G(etl::in_place, etl::move(**this));
         }
@@ -164,9 +162,9 @@ struct expected {
 
     template <typename F>
     [[nodiscard]] constexpr auto or_else(F&& f) const&&
-        requires(etl::is_constructible_v<T, decltype(etl::move(**this))>)
+        requires(is_constructible_v<T, decltype(etl::move(**this))>)
     {
-        using G = etl::remove_cvref_t<etl::invoke_result_t<F, decltype(etl::move(error()))>>;
+        using G = remove_cvref_t<invoke_result_t<F, decltype(etl::move(error()))>>;
         if (has_value()) {
             return G(etl::in_place, etl::move(**this));
         }

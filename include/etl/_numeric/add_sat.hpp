@@ -27,13 +27,13 @@ template <etl::builtin_integer Int>
         return Int(etl::clamp(x + y, int(min), int(max)));
     } else if constexpr (sizeof(Int) < sizeof(unsigned) and etl::same_as<decltype(x + y), unsigned>) {
         return Int(etl::clamp(x + y, unsigned(min), unsigned(max)));
-    } else if constexpr (sizeof(Int) == 2 and etl::is_signed_v<Int>) {
+    } else if constexpr (sizeof(Int) == 2 and is_signed_v<Int>) {
         return Int(etl::clamp(etl::int32_t(x) + etl::int32_t(y), etl::int32_t(min), etl::int32_t(max)));
-    } else if constexpr (sizeof(Int) == 2 and etl::is_unsigned_v<Int>) {
+    } else if constexpr (sizeof(Int) == 2 and is_unsigned_v<Int>) {
         return Int(etl::clamp(etl::uint32_t(x) + etl::uint32_t(y), etl::uint32_t(min), etl::uint32_t(max)));
-    } else if constexpr (sizeof(Int) == 4 and etl::is_signed_v<Int>) {
+    } else if constexpr (sizeof(Int) == 4 and is_signed_v<Int>) {
         return Int(etl::clamp(etl::int64_t(x) + etl::int64_t(y), etl::int64_t(min), etl::int64_t(max)));
-    } else if constexpr (sizeof(Int) == 4 and etl::is_unsigned_v<Int>) {
+    } else if constexpr (sizeof(Int) == 4 and is_unsigned_v<Int>) {
         return Int(etl::clamp(etl::uint64_t(x) + etl::uint64_t(y), etl::uint64_t(min), etl::uint64_t(max)));
     } else {
         if (x >= 0) {
@@ -62,7 +62,7 @@ template <etl::builtin_integer Int>
     if (Int sum{0}; not __builtin_add_overflow(x, y, &sum)) {
         return sum;
     }
-    if constexpr (etl::is_unsigned_v<Int>) {
+    if constexpr (is_unsigned_v<Int>) {
         return max;
     } else {
         if (x > Int(0)) {

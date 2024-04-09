@@ -16,19 +16,19 @@ inline constexpr struct fma {
     template <typename Float>
     [[nodiscard]] constexpr auto operator()(Float x, Float y, Float z) const noexcept -> Float
     {
-        if (not etl::is_constant_evaluated()) {
+        if (not is_constant_evaluated()) {
 #if __has_builtin(__builtin_fmaf)
-            if constexpr (etl::is_same_v<Float, float>) {
+            if constexpr (is_same_v<Float, float>) {
                 return __builtin_fmaf(x, y, z);
             }
 #endif
 #if __has_builtin(__builtin_fma)
-            if constexpr (etl::is_same_v<Float, double>) {
+            if constexpr (is_same_v<Float, double>) {
                 return __builtin_fma(x, y, z);
             }
 #endif
 #if __has_builtin(__builtin_fmal)
-            if constexpr (etl::is_same_v<Float, long double>) {
+            if constexpr (is_same_v<Float, long double>) {
                 return __builtin_fmal(x, y, z);
             }
 #endif

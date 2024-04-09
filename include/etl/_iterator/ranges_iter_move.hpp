@@ -17,19 +17,19 @@ namespace iter_move_cpo {
 auto iter_move() -> void = delete;
 
 template <typename T>
-concept adl_iter_move = (etl::is_class_v<etl::remove_cvref_t<T>> or etl::is_enum_v<etl::remove_cvref_t<T>>)
+concept adl_iter_move = (is_class_v<remove_cvref_t<T>> or is_enum_v<remove_cvref_t<T>>)
                     and requires(T&& t) { iter_move(etl::forward<T>(t)); };
 
 template <typename T>
 concept can_move = not adl_iter_move<T> and requires(T&& t) {
     *t;
-    requires etl::is_lvalue_reference_v<decltype(*t)>;
+    requires is_lvalue_reference_v<decltype(*t)>;
 };
 
 template <typename T>
 concept can_deref = not adl_iter_move<T> and !can_move<T> and requires(T&& t) {
     *t;
-    requires(!etl::is_lvalue_reference_v<decltype(*t)>);
+    requires(!is_lvalue_reference_v<decltype(*t)>);
 };
 
 struct fn {

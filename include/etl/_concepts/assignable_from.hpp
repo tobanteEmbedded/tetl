@@ -17,10 +17,10 @@ namespace etl {
 /// \ingroup concepts
 template<typename LHS, typename RHS>
 concept assignable_from =
-        etl::is_lvalue_reference_v<LHS>
-    // and etl::common_reference_with<etl::remove_reference_t<LHS> const&, etl::remove_reference_t<RHS> const&>
+        is_lvalue_reference_v<LHS>
+    // and common_reference_with<remove_reference_t<LHS> const&, remove_reference_t<RHS> const&>
     and requires(LHS lhs, RHS&& rhs) {
-        { lhs = etl::forward<RHS>(rhs) } -> etl::same_as<LHS>;
+        { lhs = etl::forward<RHS>(rhs) } -> same_as<LHS>;
     };
 
 // clang-format on

@@ -19,7 +19,7 @@ inline constexpr struct floor {
     template <typename Float>
     [[nodiscard]] constexpr auto operator()(Float arg) const noexcept -> Float
     {
-        if (not etl::is_constant_evaluated()) {
+        if (not is_constant_evaluated()) {
 #if __has_builtin(__builtin_floorf)
             if constexpr (etl::same_as<Float, float>) {
                 return __builtin_floorf(arg);

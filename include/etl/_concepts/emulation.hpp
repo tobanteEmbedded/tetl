@@ -20,37 +20,32 @@ namespace etl::detail {
 // Concepts (poor-man emulation using type traits)
 /// Copied from https://github.com/gnzlbg/static_vector
 
-// clang-format off
-
 template <typename T>
 inline constexpr bool is_movable_v
-        = etl::is_object_v<T>
-        and etl::is_assignable_v<T&, T>
-        and etl::is_move_constructible_v<T>
-        and etl::is_swappable_v<T&>;
+    = is_object_v<T> and is_assignable_v<T&, T> and is_move_constructible_v<T> and is_swappable_v<T&>;
 
 template <typename Rng>
 using range_iterator_t = decltype(etl::begin(etl::declval<Rng>()));
 
 template <typename T>
-using iterator_reference_t = typename etl::iterator_traits<T>::reference;
+using iterator_reference_t = typename iterator_traits<T>::reference;
 
 template <typename T>
-using iterator_category_t = typename etl::iterator_traits<T>::iterator_category;
+using iterator_category_t = typename iterator_traits<T>::iterator_category;
 
 template <typename T, typename Category, typename = void>
-struct IteratorConcept : etl::false_type { };
+struct IteratorConcept : false_type { };
 
 template <typename T, typename Category>
-struct IteratorConcept<T, Category, etl::void_t<iterator_category_t<T>>>
-    : etl::bool_constant<etl::is_convertible_v<iterator_category_t<T>, Category>> {
-};
+struct IteratorConcept<T, Category, void_t<iterator_category_t<T>>>
+    : bool_constant<is_convertible_v<iterator_category_t<T>, Category>> { };
 
-template <typename T> inline constexpr bool InputIterator           = IteratorConcept<T, etl::input_iterator_tag> {};
-template <typename T> inline constexpr bool ForwardIterator         = IteratorConcept<T, etl::forward_iterator_tag> {};
-template <typename T> inline constexpr bool OutputIterator          = IteratorConcept<T, etl::output_iterator_tag> {} || ForwardIterator<T>;
-template <typename T> inline constexpr bool BidirectionalIterator   = IteratorConcept<T, etl::bidirectional_iterator_tag> {};
-template <typename T> inline constexpr bool RandomAccessIterator    = IteratorConcept<T, etl::random_access_iterator_tag> {};
+// clang-format off
+template <typename T> inline constexpr bool InputIterator           = IteratorConcept<T, input_iterator_tag> {};
+template <typename T> inline constexpr bool ForwardIterator         = IteratorConcept<T, forward_iterator_tag> {};
+template <typename T> inline constexpr bool OutputIterator          = IteratorConcept<T, output_iterator_tag> {} || ForwardIterator<T>;
+template <typename T> inline constexpr bool BidirectionalIterator   = IteratorConcept<T, bidirectional_iterator_tag> {};
+template <typename T> inline constexpr bool RandomAccessIterator    = IteratorConcept<T, random_access_iterator_tag> {};
 template <typename T> inline constexpr bool RandomAccessRange       = RandomAccessIterator<range_iterator_t<T>>;
 // clang-format on
 
