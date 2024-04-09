@@ -15,7 +15,7 @@ constexpr auto to_string(Int val) -> etl::inplace_string<Capacity>
 {
     char buffer[Capacity]{};
     auto* first    = etl::begin(buffer);
-    auto const res = etl::strings::from_integer<Int>(val, first, 10, Capacity);
+    auto const res = etl::strings::from_integer<Int>(val, first, Capacity, 10);
     if (res.error == etl::strings::from_integer_error::none) {
         return etl::inplace_string<Capacity>{first, res.end};
     }

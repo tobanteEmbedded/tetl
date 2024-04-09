@@ -4,7 +4,6 @@
 #define TETL_STRINGS_CONVERSION_HPP
 
 #include <etl/_cstddef/size_t.hpp>
-#include <etl/_limits/numeric_limits.hpp>
 #include <etl/_type_traits/is_signed.hpp>
 
 namespace etl::strings {
@@ -20,9 +19,7 @@ struct from_integer_result {
 };
 
 template <typename Int, bool TerminateWithNull = true>
-[[nodiscard]] constexpr auto
-from_integer(Int num, char* str, int base = 10, size_t length = etl::numeric_limits<size_t>::max())
-    -> from_integer_result
+[[nodiscard]] constexpr auto from_integer(Int num, char* str, size_t length, int base) -> from_integer_result
 {
     auto reverseString = [](char* string, etl::size_t len) {
         etl::size_t f = 0;

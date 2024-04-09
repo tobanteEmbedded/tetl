@@ -36,7 +36,7 @@ template <integral T>
 [[nodiscard]] constexpr auto to_chars(char* first, char* last, T val, int base = 10) -> to_chars_result
 {
     auto const len = static_cast<etl::size_t>(etl::distance(first, last));
-    auto const res = strings::from_integer<T>(val, first, base, len);
+    auto const res = strings::from_integer<T>(val, first, len, base);
     if (res.error == strings::from_integer_error::none) {
         return to_chars_result{res.end, {}};
     }

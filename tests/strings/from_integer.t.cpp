@@ -16,7 +16,7 @@ constexpr auto test() -> bool
 
     auto test = [](int in, auto out) -> bool {
         char buf[12] = {};
-        auto res     = from_integer(in, etl::begin(buf), 10, sizeof(buf));
+        auto res     = from_integer(in, etl::begin(buf), sizeof(buf), 10);
         CHECK(res.error == from_integer_error::none);
         CHECK(etl::string_view{buf} == out);
         return true;
@@ -37,7 +37,10 @@ constexpr auto test() -> bool
         CHECK(test(-123456789, "-123456789"_sv));
     }
 
-    CHECK(from_integer(0, nullptr, 10, 0).error == from_integer_error::overflow);
+    CHECK(from_integer(0, nullptr, 0, 10).error == from_integer_error::overflow);
+
+    auto buf = etl::array<char, 1>{};
+    CHECK(from_integer(123, buf.data(), buf.size(), 10).error == from_integer_error::overflow);
 
     return true;
 }
