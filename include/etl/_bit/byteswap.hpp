@@ -36,38 +36,32 @@ inline constexpr struct byteswap_fallback {
 inline constexpr struct byteswap {
     [[nodiscard]] constexpr auto operator()(etl::uint16_t val) const noexcept -> etl::uint16_t
     {
-        if (is_constant_evaluated()) {
-            return etl::detail::byteswap_fallback(val);
-        }
+        if (not is_constant_evaluated()) {
 #if __has_builtin(__builtin_bswap16)
-        return __builtin_bswap16(val);
-#else
-        return etl::detail::byteswap_fallback(val);
+            return __builtin_bswap16(val);
 #endif
+        }
+        return etl::detail::byteswap_fallback(val);
     }
 
     [[nodiscard]] constexpr auto operator()(etl::uint32_t val) const noexcept -> etl::uint32_t
     {
-        if (is_constant_evaluated()) {
-            return etl::detail::byteswap_fallback(val);
-        }
+        if (not is_constant_evaluated()) {
 #if __has_builtin(__builtin_bswap32)
-        return __builtin_bswap32(val);
-#else
-        return etl::detail::byteswap_fallback(val);
+            return __builtin_bswap32(val);
 #endif
+        }
+        return etl::detail::byteswap_fallback(val);
     }
 
     [[nodiscard]] constexpr auto operator()(etl::uint64_t val) const noexcept -> etl::uint64_t
     {
-        if (is_constant_evaluated()) {
-            return etl::detail::byteswap_fallback(val);
-        }
+        if (not is_constant_evaluated()) {
 #if __has_builtin(__builtin_bswap64)
-        return __builtin_bswap64(val);
-#else
-        return etl::detail::byteswap_fallback(val);
+            return __builtin_bswap64(val);
 #endif
+        }
+        return etl::detail::byteswap_fallback(val);
     }
 
 } byteswap;
@@ -76,26 +70,26 @@ inline constexpr struct byteswap {
 
 /// \brief Reverses the bytes in the given integer value n.
 ///
-/// \details etl::byteswap participates in overload resolution only if T
-/// satisfies integral, i.e., T is an integer type. The program is ill-formed if
-/// T has padding bits.
+/// \details etl::byteswap participates in overload resolution only if Int
+/// satisfies integral, i.e., Int is an integer type. The program is ill-formed if
+/// Int has padding bits.
 ///
 /// https://en.cppreference.com/w/cpp/numeric/byteswap
 ///
 /// \ingroup bit
-template <integral T>
-[[nodiscard]] constexpr auto byteswap(T val) noexcept -> T
+template <integral Int>
+[[nodiscard]] constexpr auto byteswap(Int val) noexcept -> Int
 {
-    if constexpr (sizeof(T) == 1) {
+    if constexpr (sizeof(Int) == 1) {
         return val;
-    } else if constexpr (sizeof(T) == 2) {
-        return static_cast<T>(etl::detail::byteswap(static_cast<etl::uint16_t>(val)));
-    } else if constexpr (sizeof(T) == 4) {
-        return static_cast<T>(etl::detail::byteswap(static_cast<etl::uint32_t>(val)));
-    } else if constexpr (sizeof(T) == 8) {
-        return static_cast<T>(etl::detail::byteswap(static_cast<etl::uint64_t>(val)));
+    } else if constexpr (sizeof(Int) == 2) {
+        return static_cast<Int>(detail::byteswap(static_cast<etl::uint16_t>(val)));
+    } else if constexpr (sizeof(Int) == 4) {
+        return static_cast<Int>(detail::byteswap(static_cast<etl::uint32_t>(val)));
+    } else if constexpr (sizeof(Int) == 8) {
+        return static_cast<Int>(detail::byteswap(static_cast<etl::uint64_t>(val)));
     } else {
-        static_assert(etl::always_false<T>, "byteswap requires sizeof(T) <= 8");
+        static_assert(always_false<Int>, "byteswap requires sizeof(Int) <= 8");
     }
 }
 
