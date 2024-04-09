@@ -65,10 +65,15 @@ constexpr auto test_str() -> bool
         CHECK(etl::strncmp("Hello, world!", "Hello, everybody!", 13) > 0);
         CHECK(etl::strncmp("Hello, everybody!", "Hello, world!", 13) < 0);
         CHECK(etl::strncmp("Hello, everybody!", "Hello, world!", 7) == 0);
+        CHECK(etl::strncmp("Hello, wo", "Hello, world!", 8) == 0);
+        CHECK(etl::strncmp("Hello, wo", "Hello, world!", 9) == 0);
     }
 
     // "cstring: strchr"
     {
+        CHECK(etl::strchr(static_cast<char*>(nullptr), '0') == nullptr);
+        CHECK(etl::strchr(static_cast<char const*>(nullptr), '0') == nullptr);
+
         auto const* txt = "Hello";
         CHECK(etl::strchr(txt, '0') == nullptr);
         CHECK(etl::strchr(txt, 'H') == txt);
