@@ -17,8 +17,8 @@ constexpr auto test() -> bool
     using namespace etl::string_view_literals;
     using namespace etl::strings;
 
-    CHECK(to_integer({static_cast<char const*>(nullptr), 0}, 10).end == nullptr);
-    CHECK(to_integer({static_cast<char const*>(nullptr), 0}, 10).error == to_integer_error::invalid_input);
+    CHECK(to_integer({static_cast<char const*>(nullptr), 0}, 10).end == nullptr);                           // NOLINT
+    CHECK(to_integer({static_cast<char const*>(nullptr), 0}, 10).error == to_integer_error::invalid_input); // NOLINT
 
     auto null = etl::array{'\0'};
     CHECK(to_integer({null.begin(), null.end()}, 10).end == null.begin());
