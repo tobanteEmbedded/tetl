@@ -5,7 +5,6 @@
 
 #include <etl/_cctype/isdigit.hpp>
 #include <etl/_cctype/isspace.hpp>
-#include <etl/_cstddef/size_t.hpp>
 #include <etl/_type_traits/is_signed.hpp>
 
 namespace etl::strings {
