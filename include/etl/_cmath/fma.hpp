@@ -27,14 +27,9 @@ inline constexpr struct fma {
                 return __builtin_fma(x, y, z);
             }
 #endif
-#if __has_builtin(__builtin_fmal)
-            if constexpr (is_same_v<Float, long double>) {
-                return __builtin_fmal(x, y, z);
-            }
-#endif
         }
 
-        return (x * y) + z;
+        return x * y + z;
     }
 } fma;
 
