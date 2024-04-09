@@ -13,8 +13,7 @@ namespace etl {
 /// https://en.cppreference.com/w/cpp/string/byte/strtoul
 [[nodiscard]] constexpr auto strtoul(char const* str, char const** last, int base) noexcept -> unsigned long
 {
-    auto const len = etl::strlen(str);
-    auto const res = strings::to_integer<unsigned long>(str, len, static_cast<unsigned long>(base));
+    auto const res = strings::to_integer<unsigned long>(str, static_cast<unsigned long>(base));
     if (last != nullptr) {
         *last = res.end;
     }
@@ -26,8 +25,7 @@ namespace etl {
 /// https://en.cppreference.com/w/cpp/string/byte/strtoul
 [[nodiscard]] constexpr auto strtoull(char const* str, char const** last, int base) noexcept -> unsigned long long
 {
-    auto const len = etl::strlen(str);
-    auto const res = strings::to_integer<unsigned long long>(str, len, static_cast<unsigned long long>(base));
+    auto const res = strings::to_integer<unsigned long long>(str, static_cast<unsigned long long>(base));
     if (last != nullptr) {
         *last = res.end;
     }

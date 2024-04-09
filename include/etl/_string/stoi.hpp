@@ -13,7 +13,7 @@ namespace detail {
 template <etl::integral Int>
 [[nodiscard]] constexpr auto sto_impl(etl::string_view str, etl::size_t* pos, int base) -> Int
 {
-    auto const res = strings::to_integer<Int>(str.data(), str.size(), static_cast<Int>(base));
+    auto const res = strings::to_integer<Int>(str, static_cast<Int>(base));
     if (pos != nullptr) {
         *pos = static_cast<etl::size_t>(etl::distance(str.data(), res.end));
     }

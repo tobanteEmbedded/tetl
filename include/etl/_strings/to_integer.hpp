@@ -8,6 +8,8 @@
 #include <etl/_cctype/isspace.hpp>
 #include <etl/_cctype/tolower.hpp>
 #include <etl/_cstddef/size_t.hpp>
+#include <etl/_memory/addressof.hpp>
+#include <etl/_string_view/string_view.hpp>
 #include <etl/_type_traits/is_signed.hpp>
 
 namespace etl::strings {
@@ -36,9 +38,10 @@ struct to_integer_result {
 };
 
 template <typename Int, to_integer_options Options = to_integer_options{}>
-[[nodiscard]] constexpr auto
-to_integer(char const* str, size_t len, Int base = Int(10)) noexcept -> to_integer_result<Int>
+[[nodiscard]] constexpr auto to_integer(etl::string_view str, Int base = Int(10)) noexcept -> to_integer_result<Int>
 {
+    auto len = str.size();
+
     auto i = size_t{};
     if constexpr (Options.skip_whitespace) {
         while ((len != 0) and etl::isspace(static_cast<int>(str[i])) and (str[i] != char(0))) {
@@ -48,7 +51,7 @@ to_integer(char const* str, size_t len, Int base = Int(10)) noexcept -> to_integ
     }
 
     if (len == 0 or str[i] == char(0)) {
-        return {.end = str, .error = to_integer_error::invalid_input, .value = Int{}};
+        return {.end = str.data(), .error = to_integer_error::invalid_input, .value = Int{}};
     }
 
     // optional minus for signed types
@@ -81,7 +84,7 @@ to_integer(char const* str, size_t len, Int base = Int(10)) noexcept -> to_integ
             if (i != firstDigit) {
                 break;
             }
-            return {.end = str, .error = to_integer_error::invalid_input, .value = Int{}};
+            return {.end = str.data(), .error = to_integer_error::invalid_input, .value = Int{}};
         }
 
         // TODO(tobi): Check overflow
@@ -92,7 +95,7 @@ to_integer(char const* str, size_t len, Int base = Int(10)) noexcept -> to_integ
         value *= sign;
     }
 
-    return {.end = &str[i], .error = to_integer_error::none, .value = value};
+    return {.end = etl::addressof(str[i]), .error = to_integer_error::none, .value = value};
 }
 
 } // namespace etl::strings
