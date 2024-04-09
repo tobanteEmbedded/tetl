@@ -38,6 +38,8 @@ constexpr auto test() -> bool
         CHECK(test(-123456789, "-123456789"_sv));
     }
 
+    CHECK(integer_to_string(0, nullptr, 10, 0).error == integer_to_string_error::overflow);
+
     return true;
 }
 
