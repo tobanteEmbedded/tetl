@@ -8,7 +8,7 @@
 #include <etl/_format/basic_format_context.hpp>
 #include <etl/_string/inplace_string.hpp>
 #include <etl/_string_view/string_view.hpp>
-#include <etl/_strings/conversion.hpp>
+#include <etl/_strings/from_integer.hpp>
 
 namespace etl {
 /// \brief The enabled specializations of formatter define formatting rules for
@@ -75,8 +75,8 @@ template <typename Integer, typename FormatContext>
 constexpr auto integer_format(Integer v, FormatContext& fc) -> decltype(fc.out())
 {
     char buf[32]{};
-    auto res = detail::integer_to_string(v, begin(buf), 10, sizeof(buf));
-    if (res.error == detail::integer_to_string_error::none) {
+    auto res = strings::from_integer(v, begin(buf), 10, sizeof(buf));
+    if (res.error == strings::from_integer_error::none) {
         auto str = string_view{begin(buf)};
         return formatter<string_view>().format(str, fc);
     }

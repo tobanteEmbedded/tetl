@@ -11,14 +11,13 @@
 
 constexpr auto test() -> bool
 {
-    using namespace etl::detail;
     using namespace etl::literals;
     using namespace etl::strings;
 
     auto test = [](int in, auto out) -> bool {
         char buf[12] = {};
-        auto res     = integer_to_string(in, etl::begin(buf), 10, sizeof(buf));
-        CHECK(res.error == integer_to_string_error::none);
+        auto res     = from_integer(in, etl::begin(buf), 10, sizeof(buf));
+        CHECK(res.error == from_integer_error::none);
         CHECK(etl::string_view{buf} == out);
         return true;
     };
@@ -38,7 +37,7 @@ constexpr auto test() -> bool
         CHECK(test(-123456789, "-123456789"_sv));
     }
 
-    CHECK(integer_to_string(0, nullptr, 10, 0).error == integer_to_string_error::overflow);
+    CHECK(from_integer(0, nullptr, 10, 0).error == from_integer_error::overflow);
 
     return true;
 }

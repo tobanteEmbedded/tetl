@@ -7,22 +7,22 @@
 #include <etl/_limits/numeric_limits.hpp>
 #include <etl/_type_traits/is_signed.hpp>
 
-namespace etl::detail {
+namespace etl::strings {
 
-enum struct integer_to_string_error : unsigned char {
+enum struct from_integer_error : unsigned char {
     none,
     overflow,
 };
 
-struct integer_to_string_result {
+struct from_integer_result {
     char* end{nullptr};
-    integer_to_string_error error{integer_to_string_error::none};
+    from_integer_error error{from_integer_error::none};
 };
 
 template <typename Int, bool TerminateWithNull = true>
 [[nodiscard]] constexpr auto
-integer_to_string(Int num, char* str, int base = 10, size_t length = etl::numeric_limits<size_t>::max())
-    -> integer_to_string_result
+from_integer(Int num, char* str, int base = 10, size_t length = etl::numeric_limits<size_t>::max())
+    -> from_integer_result
 {
     auto reverseString = [](char* string, etl::size_t len) {
         etl::size_t f = 0;
@@ -40,7 +40,7 @@ integer_to_string(Int num, char* str, int base = 10, size_t length = etl::numeri
     etl::size_t i = 0;
     if (num == 0) {
         if (length < (1 + static_cast<size_t>(TerminateWithNull))) {
-            return {str + length, integer_to_string_error::overflow};
+            return {str + length, from_integer_error::overflow};
         }
         str[i++] = '0';
         if constexpr (TerminateWithNull) {
@@ -63,7 +63,7 @@ integer_to_string(Int num, char* str, int base = 10, size_t length = etl::numeri
         num            = num / static_cast<Int>(base);
 
         if (length <= i) {
-            return {nullptr, integer_to_string_error::overflow};
+            return {nullptr, from_integer_error::overflow};
         }
     }
 
@@ -81,6 +81,6 @@ integer_to_string(Int num, char* str, int base = 10, size_t length = etl::numeri
     return {&str[i]};
 }
 
-} // namespace etl::detail
+} // namespace etl::strings
 
 #endif // TETL_STRINGS_CONVERSION_HPP

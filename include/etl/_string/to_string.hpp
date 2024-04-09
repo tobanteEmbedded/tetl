@@ -4,7 +4,7 @@
 #define TETL_STRING_TO_STRING_HPP
 
 #include <etl/_string/inplace_string.hpp>
-#include <etl/_strings/conversion.hpp>
+#include <etl/_strings/from_integer.hpp>
 
 namespace etl {
 
@@ -15,8 +15,8 @@ constexpr auto to_string(Int val) -> etl::inplace_string<Capacity>
 {
     char buffer[Capacity]{};
     auto* first    = etl::begin(buffer);
-    auto const res = etl::detail::integer_to_string<Int>(val, first, 10, Capacity);
-    if (res.error == etl::detail::integer_to_string_error::none) {
+    auto const res = etl::strings::from_integer<Int>(val, first, 10, Capacity);
+    if (res.error == etl::strings::from_integer_error::none) {
         return etl::inplace_string<Capacity>{first, res.end};
     }
     return {};
