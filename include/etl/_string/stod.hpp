@@ -2,6 +2,8 @@
 #ifndef TETL_STRING_STOD_HPP
 #define TETL_STRING_STOD_HPP
 
+#include <etl/_cstddef/size_t.hpp>
+#include <etl/_iterator/distance.hpp>
 #include <etl/_string/inplace_string.hpp>
 #include <etl/_strings/to_floating_point.hpp>
 
@@ -11,33 +13,45 @@ namespace etl {
 /// \param str The string to convert.
 /// \param pos Pointer to integer to store the number of characters used.
 /// \returns The string converted to the specified floating point type.
+/// \ingroup string
 template <size_t Capacity>
 [[nodiscard]] constexpr auto stof(inplace_string<Capacity> const& str, size_t* pos = nullptr) -> float
 {
-    (void)pos;
-    return strings::to_floating_point<float>(str).value;
+    auto const result = etl::strings::to_floating_point<float>(str.data());
+    if (pos != nullptr) {
+        *pos = static_cast<size_t>(etl::distance(str.data(), result.end));
+    }
+    return result.value;
 }
 
 /// \brief Interprets a floating point value in a string str.
 /// \param str The string to convert.
 /// \param pos Pointer to integer to store the number of characters used.
 /// \returns The string converted to the specified floating point type.
+/// \ingroup string
 template <size_t Capacity>
 [[nodiscard]] constexpr auto stod(inplace_string<Capacity> const& str, size_t* pos = nullptr) -> double
 {
-    (void)pos;
-    return strings::to_floating_point<double>(str).value;
+    auto const result = etl::strings::to_floating_point<double>(str.data());
+    if (pos != nullptr) {
+        *pos = static_cast<size_t>(etl::distance(str.data(), result.end));
+    }
+    return result.value;
 }
 
 /// \brief Interprets a floating point value in a string str.
 /// \param str The string to convert.
 /// \param pos Pointer to integer to store the number of characters used.
 /// \returns The string converted to the specified floating point type.
+/// \ingroup string
 template <size_t Capacity>
 [[nodiscard]] constexpr auto stold(inplace_string<Capacity> const& str, size_t* pos = nullptr) -> long double
 {
-    (void)pos;
-    return strings::to_floating_point<long double>(str).value;
+    auto const result = etl::strings::to_floating_point<long double>(str.data());
+    if (pos != nullptr) {
+        *pos = static_cast<size_t>(etl::distance(str.data(), result.end));
+    }
+    return result.value;
 }
 
 } // namespace etl
