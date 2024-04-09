@@ -10,7 +10,7 @@ namespace etl {
 /// \brief Interprets a floating point value in a byte string pointed to by str.
 [[nodiscard]] constexpr auto atof(char const* str) noexcept -> double
 {
-    return strings::to_floating_point<double>(str);
+    return strings::to_floating_point<double>(str).value;
 }
 
 } // namespace etl

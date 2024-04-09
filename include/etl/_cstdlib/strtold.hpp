@@ -16,7 +16,11 @@ namespace etl {
 /// If no conversion can be performed, `0` is returned and *last is set to str.
 [[nodiscard]] constexpr auto strtold(char const* str, char const** last = nullptr) noexcept -> long double
 {
-    return strings::to_floating_point<long double>(str, last);
+    auto result = strings::to_floating_point<long double>(str);
+    if (last != nullptr) {
+        *last = result.end;
+    }
+    return result.value;
 }
 
 } // namespace etl

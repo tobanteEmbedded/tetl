@@ -10,17 +10,24 @@
 
 namespace etl::strings {
 
-/// \brief Interprets a floating point value in a byte string pointed to by str.
-/// \tparam FloatT The floating point type to convert to.
-/// \param str Pointer to the null-terminated byte string to be interpreted.
-/// \param last Pointer to a pointer to character.
-/// \returns Floating point value corresponding to the contents of str on
-/// success.
-template <typename FloatT>
-[[nodiscard]] constexpr auto to_floating_point(char const* str, char const** last = nullptr) noexcept -> FloatT
+enum struct to_floating_point_error : unsigned char {
+    none,
+    invalid_input,
+    overflow,
+};
+
+template <typename Float>
+struct to_floating_point_result {
+    char const* end{nullptr};
+    to_floating_point_error error{to_floating_point_error::none};
+    Float value;
+};
+
+template <typename Float>
+[[nodiscard]] constexpr auto to_floating_point(char const* str) noexcept -> to_floating_point_result<Float>
 {
-    auto res               = FloatT{0};
-    auto div               = FloatT{1};
+    auto res               = Float{0};
+    auto div               = Float{1};
     auto afterDecimalPoint = false;
     auto leadingSpaces     = true;
 
@@ -37,20 +44,16 @@ template <typename FloatT>
                 res += *ptr - '0'; // Add the new one
             } else {
                 div *= 10;
-                res += static_cast<FloatT>(*ptr - '0') / div;
+                res += static_cast<Float>(*ptr - '0') / div;
             }
         } else if (*ptr == '.') {
             afterDecimalPoint = true;
         } else {
-            break;
+            return {.end = str, .error = to_floating_point_error::invalid_input, .value = {}};
         }
     }
 
-    if (last != nullptr) {
-        *last = ptr;
-    }
-
-    return res;
+    return {.end = ptr, .error = {}, .value = res};
 }
 
 } // namespace etl::strings
