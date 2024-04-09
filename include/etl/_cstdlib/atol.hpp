@@ -4,7 +4,7 @@
 #define TETL_CSTDLIB_ATOL_HPP
 
 #include <etl/_cstring/strlen.hpp>
-#include <etl/_strings/conversion.hpp>
+#include <etl/_strings/to_integer.hpp>
 
 namespace etl {
 
@@ -14,7 +14,7 @@ namespace etl {
 /// number representation and converts them to an integer value.
 [[nodiscard]] constexpr auto atol(char const* str) noexcept -> long
 {
-    auto const result = detail::string_to_integer<long, detail::skip_whitespace::yes>(str, strlen(str));
+    auto const result = strings::to_integer<long, strings::skip_whitespace::yes>(str, strlen(str));
     return result.value;
 }
 

@@ -4,7 +4,7 @@
 #define TETL_CSTDLIB_STRTOL_HPP
 
 #include <etl/_cstring/strlen.hpp>
-#include <etl/_strings/conversion.hpp>
+#include <etl/_strings/to_integer.hpp>
 
 namespace etl {
 
@@ -13,7 +13,7 @@ namespace etl {
 /// https://en.cppreference.com/w/cpp/string/byte/strtol
 [[nodiscard]] constexpr auto strtol(char const* str, char const** last, int base) noexcept -> long
 {
-    auto const res = detail::string_to_integer<long, detail::skip_whitespace::yes>(str, etl::strlen(str), base);
+    auto const res = strings::to_integer<long, strings::skip_whitespace::yes>(str, etl::strlen(str), base);
     if (last != nullptr) {
         *last = res.end;
     }
@@ -25,7 +25,7 @@ namespace etl {
 /// https://en.cppreference.com/w/cpp/string/byte/strtol
 [[nodiscard]] constexpr auto strtoll(char const* str, char const** last, int base) noexcept -> long long
 {
-    auto const res = detail::string_to_integer<long long, detail::skip_whitespace::yes>(str, etl::strlen(str), base);
+    auto const res = strings::to_integer<long long, strings::skip_whitespace::yes>(str, etl::strlen(str), base);
     if (last != nullptr) {
         *last = res.end;
     }

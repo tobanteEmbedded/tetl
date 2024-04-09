@@ -56,6 +56,7 @@
 #include <etl/stdexcept.hpp>
 #include <etl/string.hpp>
 #include <etl/string_view.hpp>
+#include <etl/strings.hpp>
 #include <etl/system_error.hpp>
 #include <etl/tuple.hpp>
 #include <etl/type_traits.hpp>

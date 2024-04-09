@@ -4,7 +4,7 @@
 #define TETL_CSTDLIB_STRTOUL_HPP
 
 #include <etl/_cstring/strlen.hpp>
-#include <etl/_strings/conversion.hpp>
+#include <etl/_strings/to_integer.hpp>
 
 namespace etl {
 
@@ -14,11 +14,8 @@ namespace etl {
 [[nodiscard]] constexpr auto strtoul(char const* str, char const** last, int base) noexcept -> unsigned long
 {
     auto const len = strlen(str);
-    auto const res = detail::string_to_integer<unsigned long, detail::skip_whitespace::yes>(
-        str,
-        len,
-        static_cast<unsigned long>(base)
-    );
+    auto const res
+        = strings::to_integer<unsigned long, strings::skip_whitespace::yes>(str, len, static_cast<unsigned long>(base));
     if (last != nullptr) {
         *last = res.end;
     }
@@ -31,7 +28,7 @@ namespace etl {
 [[nodiscard]] constexpr auto strtoull(char const* str, char const** last, int base) noexcept -> unsigned long long
 {
     auto const len = strlen(str);
-    auto const res = detail::string_to_integer<unsigned long long, detail::skip_whitespace::yes>(
+    auto const res = strings::to_integer<unsigned long long, strings::skip_whitespace::yes>(
         str,
         len,
         static_cast<unsigned long long>(base)

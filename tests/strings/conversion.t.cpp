@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: BSL-1.0
 
-#include <etl/_strings/conversion.hpp>
+#include <etl/strings.hpp>
 
 #include <etl/array.hpp>
 #include <etl/iterator.hpp>
@@ -11,6 +11,7 @@
 #include "testing/testing.hpp"
 
 using namespace etl::literals;
+using namespace etl::strings;
 using namespace etl::detail;
 
 template <typename T>
@@ -58,16 +59,16 @@ constexpr auto test_integer_to_string() -> bool
 template <typename Int>
 constexpr auto test_string_to_integer() -> bool
 {
-    CHECK(string_to_integer(nullptr, 0, 10).end == nullptr);
-    CHECK(string_to_integer(nullptr, 0, 10).error == string_to_integer_error::invalid_input);
+    CHECK(to_integer(nullptr, 0, 10).end == nullptr);
+    CHECK(to_integer(nullptr, 0, 10).error == to_integer_error::invalid_input);
 
     auto null = etl::array{'\0'};
-    CHECK(string_to_integer(null.data(), null.size(), 10).end == null.data());
-    CHECK(string_to_integer(null.data(), null.size(), 10).error == string_to_integer_error::invalid_input);
+    CHECK(to_integer(null.data(), null.size(), 10).end == null.data());
+    CHECK(to_integer(null.data(), null.size(), 10).error == to_integer_error::invalid_input);
 
     auto test = [](auto str, auto expected) -> bool {
-        auto const res = string_to_integer<Int>(str.data(), str.size(), 10);
-        CHECK(res.error == string_to_integer_error::none);
+        auto const res = to_integer<Int>(str.data(), str.size(), 10);
+        CHECK(res.error == to_integer_error::none);
         CHECK(res.value == static_cast<Int>(expected));
         return true;
     };

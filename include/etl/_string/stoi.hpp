@@ -4,7 +4,7 @@
 
 #include <etl/_concepts/integral.hpp>
 #include <etl/_string_view/string_view.hpp>
-#include <etl/_strings/conversion.hpp>
+#include <etl/_strings/to_integer.hpp>
 
 namespace etl {
 
@@ -13,8 +13,8 @@ namespace detail {
 template <etl::integral Int>
 [[nodiscard]] constexpr auto sto_impl(etl::string_view str, etl::size_t* pos, int base) -> Int
 {
-    constexpr auto trim = detail::skip_whitespace::yes;
-    auto const res      = detail::string_to_integer<Int, trim>(str.data(), str.size(), static_cast<Int>(base));
+    constexpr auto trim = strings::skip_whitespace::yes;
+    auto const res      = strings::to_integer<Int, trim>(str.data(), str.size(), static_cast<Int>(base));
     if (pos != nullptr) {
         *pos = static_cast<etl::size_t>(etl::distance(str.data(), res.end));
     }
