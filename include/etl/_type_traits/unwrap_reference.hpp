@@ -16,16 +16,15 @@ template <typename T>
 struct unwrap_reference;
 
 template <typename T>
-struct unwrap_reference<etl::reference_wrapper<T>> {
+struct unwrap_reference<reference_wrapper<T>> {
     using type = T&;
 };
 
 template <typename T>
-struct unwrap_ref_decay
-    : etl::conditional_t<!etl::is_same_v<etl::decay_t<T>, T>, unwrap_reference<etl::decay_t<T>>, etl::decay<T>> { };
+struct unwrap_ref_decay : conditional_t<not is_same_v<decay_t<T>, T>, unwrap_reference<decay_t<T>>, decay<T>> { };
 
 template <typename T>
-using unwrap_ref_decay_t = typename etl::unwrap_ref_decay<T>::type;
+using unwrap_ref_decay_t = typename unwrap_ref_decay<T>::type;
 
 } // namespace etl
 

@@ -18,7 +18,7 @@ struct conditional<false, T, F> {
 };
 
 template <bool B, typename T, typename F>
-using conditional_t = typename etl::conditional<B, T, F>::type;
+using conditional_t = typename conditional<B, T, F>::type;
 
 } // namespace etl
 

@@ -11,11 +11,11 @@ namespace etl {
 
 namespace detail {
 template <typename T>
-struct is_signed : etl::false_type { };
+struct is_signed : false_type { };
 
 template <typename T>
-    requires etl::is_arithmetic_v<T>
-struct is_signed<T> : etl::bool_constant<T(-1) < T(0)> { };
+    requires is_arithmetic_v<T>
+struct is_signed<T> : bool_constant<T(-1) < T(0)> { };
 
 } // namespace detail
 
@@ -24,7 +24,7 @@ struct is_signed<T> : etl::bool_constant<T(-1) < T(0)> { };
 /// and the signed integer types, and in false for the unsigned integer types
 /// and the type bool. For any other type, value is false.
 template <typename T>
-struct is_signed : etl::detail::is_signed<etl::remove_cv_t<T>>::type { };
+struct is_signed : detail::is_signed<remove_cv_t<T>>::type { };
 
 template <typename T>
 inline constexpr bool is_signed_v = is_signed<T>::value;

@@ -16,11 +16,11 @@ namespace etl {
 /// remove_cvref is undefined.
 template <typename T>
 struct remove_cvref {
-    using type = etl::remove_cv_t<etl::remove_reference_t<T>>;
+    using type = remove_cv_t<remove_reference_t<T>>;
 };
 
 template <typename T>
-using remove_cvref_t = etl::remove_cv_t<etl::remove_reference_t<T>>;
+using remove_cvref_t = remove_cv_t<remove_reference_t<T>>;
 
 } // namespace etl
 

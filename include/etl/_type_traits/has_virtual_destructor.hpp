@@ -10,10 +10,12 @@
 namespace etl {
 
 /// https://en.cppreference.com/w/cpp/types/has_virtual_destructor
+/// \ingroup type_traits
 template <typename T>
 struct has_virtual_destructor : bool_constant<__has_virtual_destructor(T)> { };
 
-/// https://en.cppreference.com/w/cpp/types/has_virtual_destructor
+/// \relates has_virtual_destructor
+/// \ingroup type_traits
 template <typename T>
 inline constexpr auto has_virtual_destructor_v = __has_virtual_destructor(T);
 

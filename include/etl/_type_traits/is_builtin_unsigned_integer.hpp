@@ -9,15 +9,16 @@
 
 namespace etl {
 
-/// \relates is_builtin_unsigned_integer
-template <typename T>
-inline constexpr auto is_builtin_unsigned_integer_v = meta::contains_v<
-    remove_cv_t<T>,
-    meta::list<unsigned char, unsigned short, unsigned int, unsigned long, unsigned long long>>;
-
 /// True if T is `unsigned char` or `unsigned short` or `unsigned int` or `unsigned long` or `unsigned long long`
 template <typename T>
-struct is_builtin_unsigned_integer : bool_constant<is_builtin_unsigned_integer_v<T>> { };
+struct is_builtin_unsigned_integer
+    : bool_constant<meta::contains_v<
+          remove_cv_t<T>,
+          meta::list<unsigned char, unsigned short, unsigned int, unsigned long, unsigned long long>>> { };
+
+/// \relates is_builtin_unsigned_integer
+template <typename T>
+inline constexpr auto is_builtin_unsigned_integer_v = is_builtin_unsigned_integer<T>::value;
 
 } // namespace etl
 

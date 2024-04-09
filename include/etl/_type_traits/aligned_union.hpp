@@ -31,17 +31,17 @@ template <typename T0, typename T1, typename... Ts>
 /// implementation-defined whether any extended alignment is supported. The
 /// behavior of a program that adds specializations for aligned_union is
 /// undefined.
-template <etl::size_t Len, typename... Types>
+template <size_t Len, typename... Types>
 struct aligned_union {
-    static constexpr etl::size_t alignment_value = detail::vmax(alignof(Types)...);
+    static constexpr size_t alignment_value = detail::vmax(alignof(Types)...);
 
     struct type {
         alignas(alignment_value) char storage[detail::vmax(Len, sizeof(Types)...)];
     };
 };
 
-template <etl::size_t Len, typename... Types>
-using aligned_union_t = typename etl::aligned_union<Len, Types...>::type;
+template <size_t Len, typename... Types>
+using aligned_union_t = typename aligned_union<Len, Types...>::type;
 
 } // namespace etl
 

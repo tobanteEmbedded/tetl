@@ -20,7 +20,7 @@ struct remove_const<Type const> {
 };
 
 template <typename T>
-using remove_const_t = typename etl::remove_const<T>::type;
+using remove_const_t = typename remove_const<T>::type;
 
 } // namespace etl
 

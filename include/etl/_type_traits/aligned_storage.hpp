@@ -46,15 +46,15 @@ union aligned_storage_impl {
 /// alignment requirement for any object whose size is at most Len. If the
 /// default value is not used, Align must be the value of alignof(T) for some
 /// type T, or the behavior is undefined.
-template <etl::size_t Len, etl::size_t Align = alignof(detail::aligned_storage_impl<Len>)>
+template <size_t Len, size_t Align = alignof(detail::aligned_storage_impl<Len>)>
 struct aligned_storage {
     struct type {
         alignas(Align) unsigned char data[Len];
     };
 };
 
-template <etl::size_t Len, etl::size_t Align = alignof(detail::aligned_storage_impl<Len>)>
-using aligned_storage_t = typename etl::aligned_storage<Len, Align>::type;
+template <size_t Len, size_t Align = alignof(detail::aligned_storage_impl<Len>)>
+using aligned_storage_t = typename aligned_storage<Len, Align>::type;
 
 } // namespace etl
 

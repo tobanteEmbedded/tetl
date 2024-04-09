@@ -11,10 +11,10 @@ namespace etl {
 namespace detail {
 
 template <typename T>
-auto try_add_pointer(int) -> etl::type_identity<etl::remove_reference_t<T>*>;
+auto try_add_pointer(int) -> type_identity<remove_reference_t<T>*>;
 
 template <typename T>
-auto try_add_pointer(...) -> etl::type_identity<T>;
+auto try_add_pointer(...) -> type_identity<T>;
 
 } // namespace detail
 
@@ -28,11 +28,11 @@ auto try_add_pointer(...) -> etl::type_identity<T>;
 ///
 /// \headerfile etl/type_traits.hpp
 template <typename T>
-struct add_pointer : decltype(etl::detail::try_add_pointer<T>(0)) { };
+struct add_pointer : decltype(detail::try_add_pointer<T>(0)) { };
 
 /// \relates add_pointer
 template <typename T>
-using add_pointer_t = typename etl::add_pointer<T>::type;
+using add_pointer_t = typename add_pointer<T>::type;
 
 } // namespace etl
 

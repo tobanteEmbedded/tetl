@@ -8,7 +8,7 @@
 namespace etl {
 
 template <typename T>
-auto declval() noexcept -> etl::add_rvalue_reference_t<T>;
+auto declval() noexcept -> add_rvalue_reference_t<T>;
 
 } // namespace etl
 

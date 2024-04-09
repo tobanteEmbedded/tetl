@@ -8,11 +8,11 @@
 
 namespace etl {
 
-template <etl::size_t I>
-using index_constant = etl::integral_constant<etl::size_t, I>;
+template <size_t I>
+using index_constant = integral_constant<size_t, I>;
 
-template <etl::size_t I>
-inline constexpr auto index_v = etl::index_constant<I>{};
+template <size_t I>
+inline constexpr auto index_v = index_constant<I>{};
 
 } // namespace etl
 

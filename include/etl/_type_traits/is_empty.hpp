@@ -20,11 +20,11 @@ struct is_empty_tester_2 {
 };
 
 template <typename T>
-struct is_empty : etl::false_type { };
+struct is_empty : false_type { };
 
 template <typename T>
-    requires etl::is_class_v<T>
-struct is_empty<T> : etl::bool_constant<sizeof(is_empty_tester_1<T>) == sizeof(is_empty_tester_2)> { };
+    requires is_class_v<T>
+struct is_empty<T> : bool_constant<sizeof(is_empty_tester_1<T>) == sizeof(is_empty_tester_2)> { };
 
 } // namespace detail
 
@@ -33,7 +33,7 @@ struct is_empty<T> : etl::bool_constant<sizeof(is_empty_tester_1<T>) == sizeof(i
 /// functions, no virtual base classes, and no non-empty base classes), provides
 /// the member constant value equal to true. For any other type, value is false.
 template <typename T>
-struct is_empty : etl::detail::is_empty<T> { };
+struct is_empty : detail::is_empty<T> { };
 
 template <typename T>
 inline constexpr bool is_empty_v = is_empty<T>::value;

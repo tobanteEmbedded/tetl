@@ -25,7 +25,7 @@ struct is_member_object_pointer : bool_constant<__is_member_object_pointer(T)> {
 /// member constant value which is equal to true, if T is a non-static member
 /// object pointer type. Otherwise, value is equal to false.
 template <typename T>
-struct is_member_object_pointer : bool_constant<is_member_pointer_v<T> && !is_member_function_pointer_v<T> > { };
+struct is_member_object_pointer : bool_constant<is_member_pointer_v<T> and not is_member_function_pointer_v<T> > { };
 
 template <typename T>
 inline constexpr bool is_member_object_pointer_v = is_member_object_pointer<T>::value;

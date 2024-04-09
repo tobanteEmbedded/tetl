@@ -11,10 +11,10 @@ namespace etl {
 // clang-format off
 template<unsigned long long N>
 using smallest_size_t =
-            etl::conditional_t<(N < static_cast<unsigned char>(-1)),     unsigned char,
-            etl::conditional_t<(N < static_cast<unsigned short>(-1)),    unsigned short,
-            etl::conditional_t<(N < static_cast<unsigned int>(-1)),      unsigned int,
-            etl::conditional_t<(N < static_cast<unsigned long>(-1)),     unsigned long,
+            conditional_t<(N < static_cast<unsigned char>(-1)),     unsigned char,
+            conditional_t<(N < static_cast<unsigned short>(-1)),    unsigned short,
+            conditional_t<(N < static_cast<unsigned int>(-1)),      unsigned int,
+            conditional_t<(N < static_cast<unsigned long>(-1)),     unsigned long,
                                                                     unsigned long long>>>>;
 // clang-format on
 

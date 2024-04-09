@@ -17,14 +17,14 @@ namespace etl {
 #endif
 
 template <typename T>
-struct is_function : etl::bool_constant<not etl::is_const_v<T const> and not etl::is_reference_v<T>> { };
+struct is_function : bool_constant<not is_const_v<T const> and not is_reference_v<T>> { };
 
 #if defined(TETL_COMPILER_MSVC)
     // Qualifier applied to function has no meaning
     #pragma warning(default: 4180)
 #endif
 
-/// \brief Checks whether T is a function type. Types like etl::function,
+/// \brief Checks whether T is a function type. Types like etl::inplace_function,
 /// lambdas, classes with overloaded operator() and pointers to functions don't
 /// count as function types. Provides the member constant value which is equal
 /// to true, if T is a function type. Otherwise, value is equal to false.

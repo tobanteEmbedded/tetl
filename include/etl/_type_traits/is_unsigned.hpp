@@ -5,15 +5,19 @@
 
 #include <etl/_type_traits/bool_constant.hpp>
 #include <etl/_type_traits/is_arithmetic.hpp>
+#include <etl/_type_traits/remove_cv.hpp>
 
 namespace etl {
 
 namespace detail {
-template <typename T, bool = etl::is_arithmetic_v<T>>
-struct is_unsigned : etl::bool_constant<T(0) < T(-1)> { };
 
 template <typename T>
-struct is_unsigned<T, false> : etl::false_type { };
+struct is_unsigned : false_type { };
+
+template <typename T>
+    requires is_arithmetic_v<T>
+struct is_unsigned<T> : bool_constant<T(0) < T(-1)> { };
+
 } // namespace detail
 
 /// \brief If T is an arithmetic type, provides the member constant value equal
@@ -23,19 +27,10 @@ struct is_unsigned<T, false> : etl::false_type { };
 /// program that adds specializations for is_unsigned or is_unsigned_v (since
 /// C++17) is undefined.
 template <typename T>
-struct is_unsigned : detail::is_unsigned<T>::type { };
+struct is_unsigned : detail::is_unsigned<remove_cv_t<T>>::type { };
 
 template <typename T>
-struct is_unsigned<T const> : detail::is_unsigned<T>::type { };
-
-template <typename T>
-struct is_unsigned<T volatile> : detail::is_unsigned<T>::type { };
-
-template <typename T>
-struct is_unsigned<T const volatile> : detail::is_unsigned<T>::type { };
-
-template <typename T>
-inline constexpr bool is_unsigned_v = etl::is_unsigned<T>::value;
+inline constexpr bool is_unsigned_v = is_unsigned<T>::value;
 
 } // namespace etl
 

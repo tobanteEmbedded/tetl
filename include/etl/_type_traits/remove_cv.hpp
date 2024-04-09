@@ -15,11 +15,11 @@ namespace etl {
 /// templates described on this page is undefined.
 template <typename T>
 struct remove_cv {
-    using type = etl::remove_const_t<etl::remove_volatile_t<T>>;
+    using type = remove_const_t<remove_volatile_t<T>>;
 };
 
 template <typename T>
-using remove_cv_t = etl::remove_const_t<etl::remove_volatile_t<T>>;
+using remove_cv_t = remove_const_t<remove_volatile_t<T>>;
 
 } // namespace etl
 

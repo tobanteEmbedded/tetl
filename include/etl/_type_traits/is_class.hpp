@@ -10,7 +10,7 @@
 namespace etl {
 
 template <typename T>
-struct is_class : etl::bool_constant<__is_class(T)> { };
+struct is_class : bool_constant<__is_class(T)> { };
 
 template <typename T>
 inline constexpr bool is_class_v = __is_class(T);

@@ -11,13 +11,13 @@ namespace etl {
 /// member constant value which is equal to true, if T is an array type of
 /// unknown bound. Otherwise, value is equal to false.
 template <typename T>
-struct is_unbounded_array : etl::false_type { };
+struct is_unbounded_array : false_type { };
 
 template <typename T>
-struct is_unbounded_array<T[]> : etl::true_type { };
+struct is_unbounded_array<T[]> : true_type { };
 
 template <typename T>
-inline constexpr bool is_unbounded_array_v = etl::is_unbounded_array<T>::value;
+inline constexpr bool is_unbounded_array_v = is_unbounded_array<T>::value;
 
 } // namespace etl
 
