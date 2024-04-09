@@ -26,9 +26,16 @@ inline constexpr struct byteswap_fallback {
 
     [[nodiscard]] constexpr auto operator()(etl::uint64_t val) const noexcept -> etl::uint64_t
     {
-        return (val << 56) | ((val << 40) & 0x00FF'0000'0000'0000) | ((val << 24) & 0x0000'FF00'0000'0000)
-             | ((val << 8) & 0x0000'00FF'0000'0000) | ((val >> 8) & 0x0000'0000'FF00'0000)
-             | ((val >> 24) & 0x0000'0000'00FF'0000) | ((val >> 40) & 0x0000'0000'0000'FF00) | (val >> 56);
+        // clang-format off
+        return (val << 56)
+             | ((val << 40) & 0x00FF'0000'0000'0000)
+             | ((val << 24) & 0x0000'FF00'0000'0000)
+             | ((val << 8)  & 0x0000'00FF'0000'0000)
+             | ((val >> 8)  & 0x0000'0000'FF00'0000)
+             | ((val >> 24) & 0x0000'0000'00FF'0000)
+             | ((val >> 40) & 0x0000'0000'0000'FF00)
+             | (val >> 56);
+        // clang-format on
     }
 
 } byteswap_fallback;
@@ -36,32 +43,29 @@ inline constexpr struct byteswap_fallback {
 inline constexpr struct byteswap {
     [[nodiscard]] constexpr auto operator()(etl::uint16_t val) const noexcept -> etl::uint16_t
     {
-        if (not is_constant_evaluated()) {
 #if __has_builtin(__builtin_bswap16)
-            return __builtin_bswap16(val);
-#endif
-        }
+        return __builtin_bswap16(val);
+#else
         return etl::detail::byteswap_fallback(val);
+#endif
     }
 
     [[nodiscard]] constexpr auto operator()(etl::uint32_t val) const noexcept -> etl::uint32_t
     {
-        if (not is_constant_evaluated()) {
 #if __has_builtin(__builtin_bswap32)
-            return __builtin_bswap32(val);
-#endif
-        }
+        return __builtin_bswap32(val);
+#else
         return etl::detail::byteswap_fallback(val);
+#endif
     }
 
     [[nodiscard]] constexpr auto operator()(etl::uint64_t val) const noexcept -> etl::uint64_t
     {
-        if (not is_constant_evaluated()) {
 #if __has_builtin(__builtin_bswap64)
-            return __builtin_bswap64(val);
-#endif
-        }
+        return __builtin_bswap64(val);
+#else
         return etl::detail::byteswap_fallback(val);
+#endif
     }
 
 } byteswap;
