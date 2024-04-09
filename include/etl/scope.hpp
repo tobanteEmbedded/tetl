@@ -8,6 +8,7 @@
 
 #include <etl/_config/all.hpp>
 
+// Non-standard extensions
 #include <etl/_scope/scope_exit.hpp>
 
 #endif // TETL_SCOPE_HPP
