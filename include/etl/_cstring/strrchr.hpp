@@ -4,7 +4,7 @@
 #define TETL_CSTRING_STRRCHR_HPP
 
 #include <etl/_cstddef/size_t.hpp>
-#include <etl/_strings/cstr_algorithm.hpp>
+#include <etl/_strings/cstr.hpp>
 
 namespace etl {
 
@@ -19,7 +19,7 @@ namespace etl {
 /// \ingroup cstring
 [[nodiscard]] constexpr auto strrchr(char const* str, int ch) -> char const*
 {
-    return detail::strrchr_impl<char const, etl::size_t>(str, ch);
+    return detail::strrchr<char const, etl::size_t>(str, ch);
 }
 
 /// Finds the last occurrence of the character static_cast<char>(ch) in
@@ -31,10 +31,7 @@ namespace etl {
 /// https://en.cppreference.com/w/cpp/string/byte/strrchr
 ///
 /// \ingroup cstring
-[[nodiscard]] constexpr auto strrchr(char* str, int ch) -> char*
-{
-    return detail::strrchr_impl<char, etl::size_t>(str, ch);
-}
+[[nodiscard]] constexpr auto strrchr(char* str, int ch) -> char* { return detail::strrchr<char, etl::size_t>(str, ch); }
 
 } // namespace etl
 

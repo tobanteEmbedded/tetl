@@ -4,7 +4,7 @@
 #define TETL_CSTRING_STRNCMP_HPP
 
 #include <etl/_cstddef/size_t.hpp>
-#include <etl/_strings/cstr_algorithm.hpp>
+#include <etl/_strings/cstr.hpp>
 
 namespace etl {
 
@@ -19,7 +19,7 @@ namespace etl {
 /// \ingroup cstring
 constexpr auto strncmp(char const* lhs, char const* rhs, etl::size_t const count) -> int
 {
-    return detail::strncmp_impl<char, etl::size_t>(lhs, rhs, count);
+    return detail::strncmp<char, etl::size_t>(lhs, rhs, count);
 }
 
 } // namespace etl

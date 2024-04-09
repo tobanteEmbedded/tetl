@@ -4,7 +4,7 @@
 #define TETL_CWCHAR_WCSNCMP_HPP
 
 #include <etl/_cstddef/size_t.hpp>
-#include <etl/_strings/cstr_algorithm.hpp>
+#include <etl/_strings/cstr.hpp>
 
 namespace etl {
 
@@ -19,7 +19,7 @@ namespace etl {
 /// strings.
 [[nodiscard]] constexpr auto wcsncmp(wchar_t const* lhs, wchar_t const* rhs, etl::size_t count) -> int
 {
-    return detail::strncmp_impl<wchar_t, etl::size_t>(lhs, rhs, count);
+    return detail::strncmp<wchar_t, etl::size_t>(lhs, rhs, count);
 }
 
 } // namespace etl

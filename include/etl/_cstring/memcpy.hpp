@@ -4,7 +4,7 @@
 #define TETL_CSTRING_MEMCPY_HPP
 
 #include <etl/_cstddef/size_t.hpp>
-#include <etl/_strings/cstr_algorithm.hpp>
+#include <etl/_strings/cstr.hpp>
 
 namespace etl {
 
@@ -14,7 +14,7 @@ namespace etl {
 /// \ingroup cstring
 constexpr auto memcpy(void* dest, void const* src, etl::size_t n) -> void*
 {
-    return detail::memcpy_impl<unsigned char, etl::size_t>(dest, src, n);
+    return detail::memcpy<unsigned char, etl::size_t>(dest, src, n);
 }
 
 } // namespace etl

@@ -4,7 +4,7 @@
 #define TETL_CSTRING_MEMMOVE_HPP
 
 #include <etl/_cstddef/size_t.hpp>
-#include <etl/_strings/cstr_algorithm.hpp>
+#include <etl/_strings/cstr.hpp>
 
 namespace etl {
 
@@ -13,7 +13,7 @@ namespace etl {
 /// \ingroup cstring
 constexpr auto memmove(void* dest, void const* src, etl::size_t count) -> void*
 {
-    return detail::memmove_impl<unsigned char>(dest, src, count);
+    return detail::memmove<unsigned char>(dest, src, count);
 }
 
 } // namespace etl

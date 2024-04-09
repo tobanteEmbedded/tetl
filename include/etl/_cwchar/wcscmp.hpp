@@ -3,7 +3,7 @@
 #ifndef TETL_CWCHAR_WCSCMP_HPP
 #define TETL_CWCHAR_WCSCMP_HPP
 
-#include <etl/_strings/cstr_algorithm.hpp>
+#include <etl/_strings/cstr.hpp>
 
 namespace etl {
 /// \brief Compares two null-terminated wide strings lexicographically.
@@ -16,7 +16,7 @@ namespace etl {
 /// wide strings.
 [[nodiscard]] constexpr auto wcscmp(wchar_t const* lhs, wchar_t const* rhs) -> int
 {
-    return detail::strcmp_impl<wchar_t>(lhs, rhs);
+    return detail::strcmp<wchar_t>(lhs, rhs);
 }
 } // namespace etl
 #endif // TETL_CWCHAR_WCSCMP_HPP

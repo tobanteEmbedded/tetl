@@ -4,7 +4,7 @@
 #define TETL_CSTRING_STRNCAT_HPP
 
 #include <etl/_cstddef/size_t.hpp>
-#include <etl/_strings/cstr_algorithm.hpp>
+#include <etl/_strings/cstr.hpp>
 
 namespace etl {
 
@@ -20,7 +20,7 @@ namespace etl {
 /// \ingroup cstring
 constexpr auto strncat(char* dest, char const* src, etl::size_t const count) -> char*
 {
-    return detail::strncat_impl<char, etl::size_t>(dest, src, count);
+    return detail::strncat<char, etl::size_t>(dest, src, count);
 }
 
 } // namespace etl

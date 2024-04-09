@@ -4,7 +4,7 @@
 #define TETL_CWCHAR_WCSCSPN_HPP
 
 #include <etl/_cstddef/size_t.hpp>
-#include <etl/_strings/cstr_algorithm.hpp>
+#include <etl/_strings/cstr.hpp>
 
 namespace etl {
 
@@ -15,7 +15,7 @@ namespace etl {
 /// https://en.cppreference.com/w/cpp/string/wide/wcscspn
 [[nodiscard]] constexpr auto wcscspn(wchar_t const* dest, wchar_t const* src) noexcept -> etl::size_t
 {
-    return detail::str_span_impl<wchar_t, etl::size_t, false>(dest, src);
+    return detail::strspn<wchar_t, etl::size_t, false>(dest, src);
 }
 } // namespace etl
 

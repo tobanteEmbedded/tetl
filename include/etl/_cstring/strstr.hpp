@@ -3,7 +3,7 @@
 #ifndef TETL_CSTRING_STRSTR_HPP
 #define TETL_CSTRING_STRSTR_HPP
 
-#include <etl/_strings/cstr_algorithm.hpp>
+#include <etl/_strings/cstr.hpp>
 
 namespace etl {
 

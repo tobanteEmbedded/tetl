@@ -4,7 +4,7 @@
 #define TETL_CSTRING_MEMCHR_HPP
 
 #include <etl/_cstddef/size_t.hpp>
-#include <etl/_strings/cstr_algorithm.hpp>
+#include <etl/_strings/cstr.hpp>
 
 namespace etl {
 
@@ -25,7 +25,7 @@ namespace etl {
 [[nodiscard]] constexpr auto memchr(void* ptr, int ch, etl::size_t n) -> void*
 {
     auto* p = static_cast<unsigned char*>(ptr);
-    return detail::memchr_impl(p, static_cast<unsigned char>(ch), n);
+    return detail::memchr(p, static_cast<unsigned char>(ch), n);
 }
 
 /// \brief Converts ch to unsigned char and locates the first occurrence of that
@@ -46,7 +46,7 @@ namespace etl {
 {
     auto const* const p = static_cast<unsigned char const*>(ptr);
     auto const c        = static_cast<unsigned char>(ch);
-    return detail::memchr_impl<unsigned char const, etl::size_t>(p, c, n);
+    return detail::memchr<unsigned char const, etl::size_t>(p, c, n);
 }
 
 } // namespace etl

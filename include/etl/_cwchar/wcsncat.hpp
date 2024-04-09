@@ -4,7 +4,7 @@
 #define TETL_CWCHAR_WCSNCAT_HPP
 
 #include <etl/_cstddef/size_t.hpp>
-#include <etl/_strings/cstr_algorithm.hpp>
+#include <etl/_strings/cstr.hpp>
 
 namespace etl {
 
@@ -21,7 +21,7 @@ namespace etl {
 /// overlap.
 constexpr auto wcsncat(wchar_t* dest, wchar_t const* src, etl::size_t const count) -> wchar_t*
 {
-    return detail::strncat_impl<wchar_t, etl::size_t>(dest, src, count);
+    return detail::strncat<wchar_t, etl::size_t>(dest, src, count);
 }
 
 } // namespace etl

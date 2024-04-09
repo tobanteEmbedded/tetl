@@ -4,7 +4,7 @@
 #define TETL_CWCHAR_WMEMSET_HPP
 
 #include <etl/_cstddef/size_t.hpp>
-#include <etl/_strings/cstr_algorithm.hpp>
+#include <etl/_strings/cstr.hpp>
 
 namespace etl {
 
@@ -17,7 +17,7 @@ namespace etl {
 /// https://en.cppreference.com/w/cpp/string/wide/wmemset
 constexpr auto wmemset(wchar_t* dest, wchar_t ch, etl::size_t count) noexcept -> wchar_t*
 {
-    return detail::memset_impl(dest, ch, count);
+    return detail::memset(dest, ch, count);
 }
 } // namespace etl
 

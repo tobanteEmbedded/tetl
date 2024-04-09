@@ -4,7 +4,7 @@
 #define TETL_CSTRING_MEMSET_HPP
 
 #include <etl/_cstddef/size_t.hpp>
-#include <etl/_strings/cstr_algorithm.hpp>
+#include <etl/_strings/cstr.hpp>
 
 namespace etl {
 
@@ -13,7 +13,7 @@ namespace etl {
 /// \ingroup cstring
 constexpr auto memset(void* s, int c, etl::size_t n) -> void*
 {
-    return detail::memset_impl(static_cast<unsigned char*>(s), c, n);
+    return detail::memset(static_cast<unsigned char*>(s), c, n);
 }
 
 } // namespace etl

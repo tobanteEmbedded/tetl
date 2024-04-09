@@ -12,7 +12,7 @@
 #include <etl/_cwchar/wmemmove.hpp>
 #include <etl/_cwchar/wmemset.hpp>
 #include <etl/_ios/typedefs.hpp>
-#include <etl/_strings/cstr_algorithm.hpp>
+#include <etl/_strings/cstr.hpp>
 
 namespace etl {
 /// \brief The char_traits class is a traits class template that abstracts basic
@@ -72,7 +72,7 @@ struct char_traits<char> {
 
     /// \brief Returns the length of the character sequence pointed to by s,
     /// that is, the position of the terminating null character (CharT()).
-    static constexpr auto length(char_type const* str) -> size_t { return detail::strlen_impl<char_type, size_t>(str); }
+    static constexpr auto length(char_type const* str) -> size_t { return detail::strlen<char_type, size_t>(str); }
 
     /// \brief Searches for character ch within the first count characters of
     /// the sequence pointed to by p.

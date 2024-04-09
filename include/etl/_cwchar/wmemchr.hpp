@@ -4,7 +4,7 @@
 #define TETL_CWCHAR_WMEMCHR_HPP
 
 #include <etl/_cstddef/size_t.hpp>
-#include <etl/_strings/cstr_algorithm.hpp>
+#include <etl/_strings/cstr.hpp>
 
 namespace etl {
 
@@ -16,7 +16,7 @@ namespace etl {
 /// https://en.cppreference.com/w/cpp/string/wide/wmemchr
 [[nodiscard]] constexpr auto wmemchr(wchar_t* ptr, wchar_t ch, etl::size_t count) noexcept -> wchar_t*
 {
-    return detail::memchr_impl<wchar_t>(ptr, ch, count);
+    return detail::memchr<wchar_t>(ptr, ch, count);
 }
 
 /// \brief Locates the first occurrence of wide character ch in the initial
@@ -27,7 +27,7 @@ namespace etl {
 /// https://en.cppreference.com/w/cpp/string/wide/wmemchr
 [[nodiscard]] constexpr auto wmemchr(wchar_t const* ptr, wchar_t ch, etl::size_t count) noexcept -> wchar_t const*
 {
-    return detail::memchr_impl<wchar_t const>(ptr, ch, count);
+    return detail::memchr<wchar_t const>(ptr, ch, count);
 }
 } // namespace etl
 

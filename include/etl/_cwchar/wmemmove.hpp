@@ -4,7 +4,7 @@
 #define TETL_CWCHAR_WMEMMOVE_HPP
 
 #include <etl/_cstddef/size_t.hpp>
-#include <etl/_strings/cstr_algorithm.hpp>
+#include <etl/_strings/cstr.hpp>
 
 namespace etl {
 
@@ -22,7 +22,7 @@ namespace etl {
 /// https://en.cppreference.com/w/cpp/string/wide/wmemmove
 constexpr auto wmemmove(wchar_t* dest, wchar_t const* src, etl::size_t count) noexcept -> wchar_t*
 {
-    return detail::memmove_impl<wchar_t, etl::size_t>(dest, src, count);
+    return detail::memmove<wchar_t, etl::size_t>(dest, src, count);
 }
 } // namespace etl
 #endif // TETL_CWCHAR_WMEMMOVE_HPP

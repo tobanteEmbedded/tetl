@@ -4,13 +4,13 @@
 #define TETL_CSTRING_STRLEN_HPP
 
 #include <etl/_cstddef/size_t.hpp>
-#include <etl/_strings/cstr_algorithm.hpp>
+#include <etl/_strings/cstr.hpp>
 
 namespace etl {
 
 /// Returns the length of the C string str.
 /// \ingroup cstring
-constexpr auto strlen(char const* str) -> etl::size_t { return detail::strlen_impl<char, etl::size_t>(str); }
+constexpr auto strlen(char const* str) -> etl::size_t { return detail::strlen<char, etl::size_t>(str); }
 
 } // namespace etl
 

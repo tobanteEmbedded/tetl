@@ -4,7 +4,7 @@
 #define TETL_CSTRING_STRSPN_HPP
 
 #include <etl/_cstddef/size_t.hpp>
-#include <etl/_strings/cstr_algorithm.hpp>
+#include <etl/_strings/cstr.hpp>
 
 namespace etl {
 
@@ -17,7 +17,7 @@ namespace etl {
 /// \ingroup cstring
 [[nodiscard]] constexpr auto strspn(char const* dest, char const* src) noexcept -> etl::size_t
 {
-    return detail::str_span_impl<char, etl::size_t, true>(dest, src);
+    return detail::strspn<char, etl::size_t, true>(dest, src);
 }
 
 } // namespace etl

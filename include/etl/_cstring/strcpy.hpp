@@ -5,7 +5,7 @@
 
 #include <etl/_contracts/check.hpp>
 #include <etl/_cstddef/size_t.hpp>
-#include <etl/_strings/cstr_algorithm.hpp>
+#include <etl/_strings/cstr.hpp>
 
 namespace etl {
 
@@ -22,7 +22,7 @@ constexpr auto strcpy(char* dest, char const* src) -> char*
 {
     TETL_PRECONDITION(dest != nullptr);
     TETL_PRECONDITION(src != nullptr);
-    return detail::strcpy_impl(dest, src);
+    return detail::strcpy(dest, src);
 }
 
 } // namespace etl

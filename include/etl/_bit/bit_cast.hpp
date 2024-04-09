@@ -6,7 +6,7 @@
 #include <etl/_config/all.hpp>
 
 #include <etl/_cstddef/size_t.hpp>
-#include <etl/_strings/cstr_algorithm.hpp>
+#include <etl/_strings/cstr.hpp>
 #include <etl/_type_traits/is_trivially_constructible.hpp>
 #include <etl/_type_traits/is_trivially_copyable.hpp>
 
@@ -49,7 +49,7 @@ constexpr auto bit_cast(From const& src) noexcept -> To
     static_assert(is_trivially_constructible_v<To>);
 
     To dst{};
-    detail::memcpy_impl<char, etl::size_t>(&dst, &src, sizeof(To));
+    detail::memcpy<char, etl::size_t>(&dst, &src, sizeof(To));
     return dst;
 #endif
 }
