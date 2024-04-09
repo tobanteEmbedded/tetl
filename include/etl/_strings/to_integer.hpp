@@ -41,7 +41,7 @@ to_integer(char const* str, size_t len, Int base = Int(10)) noexcept -> to_integ
 {
     auto i = size_t{};
     if constexpr (Options.skip_whitespace) {
-        while ((len != 0) and isspace(static_cast<int>(str[i])) and (str[i] != char(0))) {
+        while ((len != 0) and etl::isspace(static_cast<int>(str[i])) and (str[i] != char(0))) {
             ++i;
             --len;
         }
@@ -68,10 +68,10 @@ to_integer(char const* str, size_t len, Int base = Int(10)) noexcept -> to_integ
     for (; (str[i] != char(0)) and (len != 0); ++i, --len) {
 
         auto digit = Int{};
-        if (isdigit(static_cast<int>(str[i]))) {
+        if (etl::isdigit(static_cast<int>(str[i]))) {
             digit = static_cast<Int>(str[i] - '0');
-        } else if (isalpha(static_cast<int>(str[i]))) {
-            auto const x = static_cast<char>(tolower(static_cast<int>(str[i])));
+        } else if (etl::isalpha(static_cast<int>(str[i]))) {
+            auto const x = static_cast<char>(etl::tolower(static_cast<int>(str[i])));
             digit        = static_cast<Int>(static_cast<Int>(x) - static_cast<Int>('a') + 10);
         } else {
             break;
@@ -81,11 +81,7 @@ to_integer(char const* str, size_t len, Int base = Int(10)) noexcept -> to_integ
             if (i != firstDigit) {
                 break;
             }
-            return {
-                .end   = str,
-                .error = to_integer_error::invalid_input,
-                .value = Int{},
-            };
+            return {.end = str, .error = to_integer_error::invalid_input, .value = Int{}};
         }
 
         // TODO(tobi): Check overflow
@@ -96,11 +92,7 @@ to_integer(char const* str, size_t len, Int base = Int(10)) noexcept -> to_integ
         value *= sign;
     }
 
-    return {
-        .end   = &str[i],
-        .error = to_integer_error::none,
-        .value = value,
-    };
+    return {.end = &str[i], .error = to_integer_error::none, .value = value};
 }
 
 } // namespace etl::strings

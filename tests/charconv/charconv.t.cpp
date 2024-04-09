@@ -71,12 +71,12 @@ constexpr auto test_from_chars() -> bool
 {
     using namespace etl::string_view_literals;
 
-    auto test = [](auto tc, T expected, int base) -> void {
+    auto test = [](auto tc, T expected, int base) -> bool {
         auto val          = T{};
         auto const result = etl::from_chars(tc.begin(), tc.end(), val, base);
         CHECK(static_cast<bool>(result));
-        CHECK(result.ptr == tc.end());
         CHECK(val == expected);
+        return true;
     };
 
     {
@@ -95,32 +95,38 @@ constexpr auto test_from_chars() -> bool
         CHECK(val == T(4));
     }
 
-    test("1"_sv, 1, 2);
-    test("1"_sv, 1, 10);
-    test("1"_sv, 1, 16);
+    CHECK(test("1"_sv, 1, 2));
+    CHECK(test("1"_sv, 1, 10));
+    CHECK(test("1"_sv, 1, 16));
 
-    test("2"_sv, 2, 10);
-    test("10"_sv, 10, 10);
-    test("42"_sv, 42, 10);
-    test("99"_sv, 99, 10);
-    test("126"_sv, 126, 10);
+    CHECK(test("2"_sv, 2, 10));
+    CHECK(test("10"_sv, 10, 10));
+    CHECK(test("42"_sv, 42, 10));
+    CHECK(test("99"_sv, 99, 10));
+    CHECK(test("126"_sv, 126, 10));
+    CHECK(test("126 "_sv, 126, 10));
+    CHECK(test("126A"_sv, 126, 10));
 
     if constexpr (sizeof(T) > 1) {
-        test("1000"_sv, 1000, 10);
-        test("9999"_sv, 9999, 10);
+        CHECK(test("1000"_sv, 1000, 10));
+        CHECK(test("9999"_sv, 9999, 10));
+        CHECK(test("A0"_sv, 160, 16));
+        CHECK(test("a0"_sv, 160, 16));
+        CHECK(test("a0 "_sv, 160, 16));
+        CHECK(test("a0Z"_sv, 160, 16));
     }
 
     if constexpr (etl::is_signed_v<T>) {
-        test("-1"_sv, -1, 10);
-        test("-2"_sv, -2, 10);
-        test("-10"_sv, -10, 10);
-        test("-42"_sv, -42, 10);
-        test("-99"_sv, -99, 10);
-        test("-126"_sv, -126, 10);
+        CHECK(test("-1"_sv, -1, 10));
+        CHECK(test("-2"_sv, -2, 10));
+        CHECK(test("-10"_sv, -10, 10));
+        CHECK(test("-42"_sv, -42, 10));
+        CHECK(test("-99"_sv, -99, 10));
+        CHECK(test("-126"_sv, -126, 10));
 
         if constexpr (sizeof(T) > 1) {
-            test("-1000"_sv, -1000, 10);
-            test("-9999"_sv, -9999, 10);
+            CHECK(test("-1000"_sv, -1000, 10));
+            CHECK(test("-9999"_sv, -9999, 10));
         }
     }
     return true;
@@ -131,37 +137,38 @@ constexpr auto test_to_chars() -> bool
 {
     using namespace etl::string_view_literals;
 
-    auto test = [](T tc, etl::string_view expected) -> void {
+    auto test = [](T tc, etl::string_view expected) {
         auto buf          = etl::array<char, 16>{};
         auto const result = etl::to_chars(buf.begin(), buf.end(), tc, 10);
         CHECK(static_cast<bool>(result));
         CHECK(result.ptr != nullptr);
         CHECK(buf.data() == expected);
+        return true;
     };
 
-    test(1, "1"_sv);
-    test(2, "2"_sv);
-    test(10, "10"_sv);
-    test(42, "42"_sv);
-    test(99, "99"_sv);
-    test(126, "126"_sv);
+    CHECK(test(1, "1"_sv));
+    CHECK(test(2, "2"_sv));
+    CHECK(test(10, "10"_sv));
+    CHECK(test(42, "42"_sv));
+    CHECK(test(99, "99"_sv));
+    CHECK(test(126, "126"_sv));
 
     if constexpr (sizeof(T) > 1) {
-        test(1000, "1000"_sv);
-        test(9999, "9999"_sv);
+        CHECK(test(1000, "1000"_sv));
+        CHECK(test(9999, "9999"_sv));
     }
 
     if constexpr (etl::is_signed_v<T>) {
-        test(-1, "-1"_sv);
-        test(-2, "-2"_sv);
-        test(-10, "-10"_sv);
-        test(-42, "-42"_sv);
-        test(-99, "-99"_sv);
-        test(-126, "-126"_sv);
+        CHECK(test(-1, "-1"_sv));
+        CHECK(test(-2, "-2"_sv));
+        CHECK(test(-10, "-10"_sv));
+        CHECK(test(-42, "-42"_sv));
+        CHECK(test(-99, "-99"_sv));
+        CHECK(test(-126, "-126"_sv));
 
         if constexpr (sizeof(T) > 1) {
-            test(-1000, "-1000"_sv);
-            test(-9999, "-9999"_sv);
+            CHECK(test(-1000, "-1000"_sv));
+            CHECK(test(-9999, "-9999"_sv));
         }
     }
 
@@ -175,36 +182,28 @@ constexpr auto test_all() -> bool
     CHECK(test_from_chars_result());
 
     CHECK(test_from_chars<char>());
-    CHECK(test_from_chars<unsigned char>());
     CHECK(test_from_chars<signed char>());
-
+    CHECK(test_from_chars<signed short>());
+    CHECK(test_from_chars<signed int>());
+    CHECK(test_from_chars<signed long>());
+    CHECK(test_from_chars<signed long long>());
+    CHECK(test_from_chars<unsigned char>());
     CHECK(test_from_chars<unsigned short>());
-    CHECK(test_from_chars<short>());
-
     CHECK(test_from_chars<unsigned int>());
-    CHECK(test_from_chars<int>());
-
     CHECK(test_from_chars<unsigned long>());
-    CHECK(test_from_chars<long>());
-
     CHECK(test_from_chars<unsigned long long>());
-    CHECK(test_from_chars<long long>());
 
     CHECK(test_to_chars<char>());
-    CHECK(test_to_chars<unsigned char>());
     CHECK(test_to_chars<signed char>());
-
+    CHECK(test_to_chars<signed short>());
+    CHECK(test_to_chars<signed int>());
+    CHECK(test_to_chars<signed long>());
+    CHECK(test_to_chars<signed long long>());
+    CHECK(test_to_chars<unsigned char>());
     CHECK(test_to_chars<unsigned short>());
-    CHECK(test_to_chars<short>());
-
     CHECK(test_to_chars<unsigned int>());
-    CHECK(test_to_chars<int>());
-
     CHECK(test_to_chars<unsigned long>());
-    CHECK(test_to_chars<long>());
-
     CHECK(test_to_chars<unsigned long long>());
-    CHECK(test_to_chars<long long>());
 
     return true;
 }
