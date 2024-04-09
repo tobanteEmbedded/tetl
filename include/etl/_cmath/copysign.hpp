@@ -34,11 +34,6 @@ template <typename T>
             return __builtin_copysign(x, y);
 #endif
         }
-        if constexpr (is_same_v<T, long double>) {
-#if __has_builtin(__builtin_copysignl)
-            return __builtin_copysignl(x, y);
-#endif
-        }
     }
     return copysign_fallback(x, y);
 }
