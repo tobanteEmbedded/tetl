@@ -10,10 +10,9 @@
 #include <etl/_type_traits/is_trivially_destructible.hpp>
 #include <etl/_utility/forward.hpp>
 #include <etl/_utility/move.hpp>
+#include <etl/_variant/uninitialized_union.hpp>
 
 namespace etl {
-
-struct uninitialized_union { };
 
 template <typename... Ts>
 union variadic_union {
@@ -48,19 +47,6 @@ union TETL_TRIVIAL_ABI variadic_union<T, Ts...> {
 
     constexpr ~variadic_union() { }
 
-#if defined(__cpp_explicit_this_parameter)
-    /// Returns a reference to the object stored in the variant.
-    /// \pre I == index()
-    template <typename Self, etl::size_t I>
-    constexpr auto operator[](this Self&& self, etl::index_constant<I> /*index*/) & -> auto&
-    {
-        if constexpr (I == 0) {
-            return etl::forward<Self>(self).head;
-        } else {
-            return etl::forward<Self>(self).tail[etl::index_v<I - 1>];
-        }
-    }
-#else
     template <etl::size_t I>
     constexpr auto operator[](etl::index_constant<I> /*index*/) & -> auto&
     {
@@ -100,7 +86,6 @@ union TETL_TRIVIAL_ABI variadic_union<T, Ts...> {
             return etl::move(tail)[etl::index_v<I - 1>];
         }
     }
-#endif
 
     TETL_NO_UNIQUE_ADDRESS T head;
     TETL_NO_UNIQUE_ADDRESS etl::variadic_union<Ts...> tail;
