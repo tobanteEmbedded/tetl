@@ -13,7 +13,7 @@ struct type_identity {
 
 /// \ingroup type_traits
 template <typename T>
-using type_identity_t = T;
+using type_identity_t = typename type_identity<T>::type;
 
 } // namespace etl
 

@@ -17,7 +17,7 @@
 #include <etl/_iterator/reverse_iterator.hpp>
 #include <etl/_iterator/size.hpp>
 #include <etl/_string/char_traits.hpp>
-#include <etl/_type_traits/decay.hpp>
+#include <etl/_type_traits/type_identity.hpp>
 
 namespace etl {
 
@@ -715,59 +715,13 @@ private:
 /// position.
 template <typename CharType, typename Traits>
 [[nodiscard]] constexpr auto
-operator==(basic_string_view<CharType, Traits> lhs, basic_string_view<CharType, Traits> rhs) noexcept -> bool
+operator==(basic_string_view<CharType, Traits> lhs, type_identity_t<basic_string_view<CharType, Traits>> rhs) noexcept
+    -> bool
 {
     if (lhs.size() != rhs.size()) {
         return false;
     }
     return lhs.compare(rhs) == 0;
-}
-
-template <typename CharT, typename Traits, int = 1>
-[[nodiscard]] constexpr auto
-operator==(decay_t<basic_string_view<CharT, Traits>> lhs, basic_string_view<CharT, Traits> rhs) noexcept -> bool
-{
-    if (lhs.size() != rhs.size()) {
-        return false;
-    }
-    return lhs.compare(rhs) == 0;
-}
-
-template <typename CharT, typename Traits, int = 2>
-[[nodiscard]] constexpr auto
-operator==(basic_string_view<CharT, Traits> lhs, decay_t<basic_string_view<CharT, Traits>> rhs) noexcept -> bool
-{
-    if (lhs.size() != rhs.size()) {
-        return false;
-    }
-    return lhs.compare(rhs) == 0;
-}
-
-/// \brief Compares two views. All comparisons are done via the compare() member
-/// function (which itself is defined in terms of Traits::compare()):
-///
-/// \details Two views are equal if both the size of lhs and rhs are equal and
-/// each character in lhs has an equivalent character in rhs at the same
-/// position.
-template <typename CharType, typename Traits>
-[[nodiscard]] constexpr auto
-operator!=(basic_string_view<CharType, Traits> lhs, basic_string_view<CharType, Traits> rhs) noexcept -> bool
-{
-    return !(lhs == rhs);
-}
-
-template <typename CharT, typename Traits, int = 1>
-[[nodiscard]] constexpr auto
-operator!=(decay_t<basic_string_view<CharT, Traits>> lhs, basic_string_view<CharT, Traits> rhs) noexcept -> bool
-{
-    return !(lhs == rhs);
-}
-
-template <typename CharT, typename Traits, int = 2>
-[[nodiscard]] constexpr auto
-operator!=(basic_string_view<CharT, Traits> lhs, decay_t<basic_string_view<CharT, Traits>> rhs) noexcept -> bool
-{
-    return !(lhs == rhs);
 }
 
 /// \brief Compares two views. All comparisons are done via the compare() member
