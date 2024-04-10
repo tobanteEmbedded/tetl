@@ -5,12 +5,11 @@
 
 #include <etl/_cstddef/ptrdiff_t.hpp>
 #include <etl/_memory/addressof.hpp>
-#include <etl/_type_traits/enable_if.hpp>
 #include <etl/_type_traits/is_void.hpp>
 
 namespace etl {
 
-/// \brief The pointer_traits class template provides the standardized way to
+/// The pointer_traits class template provides the standardized way to
 /// access certain properties of pointer-like types.
 ///
 /// https://en.cppreference.com/w/cpp/memory/pointer_traits
@@ -20,7 +19,7 @@ struct pointer_traits {
     using element_type    = typename Ptr::element_type;
     using difference_type = typename Ptr::difference_type;
 
-    /// \brief Constructs a dereferenceable pointer or pointer-like object
+    /// Constructs a dereferenceable pointer or pointer-like object
     /// ("fancy pointer") to its argument.
     ///
     /// \details
@@ -31,9 +30,11 @@ struct pointer_traits {
     [[nodiscard]] static auto pointer_to(element_type& r) -> pointer { return Ptr::pointer_to(r); }
 };
 
-/// \brief The pointer_traits class template provides the standardized way to
+/// The pointer_traits class template provides the standardized way to
 /// access certain properties of pointer-like types.
+///
 /// https://en.cppreference.com/w/cpp/memory/pointer_traits
+///
 /// \tparam T A raw pointer
 template <typename T>
 struct pointer_traits<T*> {
@@ -43,16 +44,15 @@ struct pointer_traits<T*> {
     template <typename U>
     using rebind = U*;
 
-    /// \brief Constructs a dereferenceable pointer or pointer-like object
+    /// Constructs a dereferenceable pointer or pointer-like object
     /// ("fancy pointer") to its argument.
     ///
-    /// \details
     /// https://en.cppreference.com/w/cpp/memory/pointer_traits/pointer_to
     ///
     /// \param r  Reference to an object of type element_type&.
     /// \returns A pointer to r, of the type pointer_traits::pointer.
-    template <bool B = etl::is_void_v<T>>
-    [[nodiscard]] static auto pointer_to(etl::enable_if_t<!B, T>& r) -> pointer
+    [[nodiscard]] static auto pointer_to(T& r) -> pointer
+        requires(not etl::is_void_v<T>)
     {
         return etl::addressof(r);
     }
