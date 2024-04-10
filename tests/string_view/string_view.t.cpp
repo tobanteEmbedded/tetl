@@ -217,6 +217,14 @@ constexpr auto test() -> bool
         CHECK(sub3[1] == 't');
     }
 
+    {
+        auto foo = "foo"_sv;
+        auto bar = "bar"_sv;
+        etl::swap(foo, bar);
+        CHECK(foo == "bar");
+        CHECK(bar == "foo");
+    }
+
     return true;
 }
 
