@@ -55,14 +55,14 @@ For examples look at the [examples](./examples) subdirectory or the test files i
 | **Platform** |                                                                                         **Status**                                                                                          | **Notes** |
 | :----------: | :-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------: | :-------: |
 |   **ARM**    |     [![ARM](https://github.com/tobanteEmbedded/tetl/actions/workflows/freestanding-arm.yml/badge.svg)](https://github.com/tobanteEmbedded/tetl/actions/workflows/freestanding-arm.yml)      |  GCC 13   |
-|   **AVR**    |     [![AVR](https://github.com/tobanteEmbedded/tetl/actions/workflows/freestanding-avr.yml/badge.svg)](https://github.com/tobanteEmbedded/tetl/actions/workflows/freestanding-avr.yml)      |  GCC 13   |
+|   **AVR**    |     [![AVR](https://github.com/tobanteEmbedded/tetl/actions/workflows/freestanding-avr.yml/badge.svg)](https://github.com/tobanteEmbedded/tetl/actions/workflows/freestanding-avr.yml)      |  GCC 12   |
 |  **MSP430**  | [![MSP430](https://github.com/tobanteEmbedded/tetl/actions/workflows/freestanding-msp430.yml/badge.svg)](https://github.com/tobanteEmbedded/tetl/actions/workflows/freestanding-msp430.yml) |  GCC 13   |
 
 ### Analysis
 
 |        **Type**        |                                                                                             **Status**                                                                                              | **Notes** |
 | :--------------------: | :-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------: | :-------: |
-|      **Coverage**      |                          [![codecov](https://codecov.io/gh/tobanteEmbedded/tetl/branch/main/graph/badge.svg?token=f1QAWTtpIo)](https://codecov.io/gh/tobanteEmbedded/tetl)                          |  GCC 11   |
+|      **Coverage**      |                          [![codecov](https://codecov.io/gh/tobanteEmbedded/tetl/branch/main/graph/badge.svg?token=f1QAWTtpIo)](https://codecov.io/gh/tobanteEmbedded/tetl)                          |  GCC 13   |
 |     **Sanitizers**     |            [![ASAN/UBSAN](https://github.com/tobanteEmbedded/tetl/actions/workflows/sanitizers.yml/badge.svg)](https://github.com/tobanteEmbedded/tetl/actions/workflows/sanitizers.yml)            | Clang 18  |
 |     **Clang-Tidy**     |            [![Clang-Tidy](https://github.com/tobanteEmbedded/tetl/actions/workflows/clang-tidy.yml/badge.svg)](https://github.com/tobanteEmbedded/tetl/actions/workflows/clang-tidy.yml)            | Clang 18  |
 | **Clang -Weverything** | [![Clang -Weverything](https://github.com/tobanteEmbedded/tetl/actions/workflows/clang-weverything.yml/badge.svg)](https://github.com/tobanteEmbedded/tetl/actions/workflows/clang-weverything.yml) | Clang 18  |
