@@ -86,6 +86,7 @@ constexpr auto test() -> bool
 
     CHECK("test"_sv.find("xxxxx", 0) == npos);
     CHECK("test"_sv.find("testt", 0) == npos);
+    CHECK("test"_sv.find("tex", 0) == npos);
     CHECK("test"_sv.find("foobarbaz", 0) == npos);
 
     // rfind

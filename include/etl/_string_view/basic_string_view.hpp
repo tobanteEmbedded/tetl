@@ -761,21 +761,21 @@ template <typename CharType, typename Traits>
 [[nodiscard]] constexpr auto
 operator<=(basic_string_view<CharType, Traits> lhs, basic_string_view<CharType, Traits> rhs) noexcept -> bool
 {
-    return (lhs < rhs) || (lhs == rhs);
+    return (lhs < rhs) or (lhs == rhs);
 }
 
 template <typename CharT, typename Traits, int = 1>
 [[nodiscard]] constexpr auto
 operator<=(decay_t<basic_string_view<CharT, Traits>> lhs, basic_string_view<CharT, Traits> rhs) noexcept -> bool
 {
-    return (lhs < rhs) || (lhs == rhs);
+    return (lhs < rhs) or (lhs == rhs);
 }
 
 template <typename CharT, typename Traits, int = 2>
 [[nodiscard]] constexpr auto
 operator<=(basic_string_view<CharT, Traits> lhs, decay_t<basic_string_view<CharT, Traits>> rhs) noexcept -> bool
 {
-    return (lhs < rhs) || (lhs == rhs);
+    return (lhs < rhs) or (lhs == rhs);
 }
 
 /// \brief Compares two views. All comparisons are done via the compare() member
@@ -788,21 +788,21 @@ template <typename CharType, typename Traits>
 [[nodiscard]] constexpr auto
 operator>(basic_string_view<CharType, Traits> lhs, basic_string_view<CharType, Traits> rhs) noexcept -> bool
 {
-    return !(lhs < rhs) && !(lhs == rhs);
+    return !(lhs < rhs) and !(lhs == rhs);
 }
 
 template <typename CharT, typename Traits, int = 1>
 [[nodiscard]] constexpr auto
 operator>(decay_t<basic_string_view<CharT, Traits>> lhs, basic_string_view<CharT, Traits> rhs) noexcept -> bool
 {
-    return !(lhs < rhs) && !(lhs == rhs);
+    return !(lhs < rhs) and !(lhs == rhs);
 }
 
 template <typename CharT, typename Traits, int = 2>
 [[nodiscard]] constexpr auto
 operator>(basic_string_view<CharT, Traits> lhs, decay_t<basic_string_view<CharT, Traits>> rhs) noexcept -> bool
 {
-    return !(lhs < rhs) && !(lhs == rhs);
+    return !(lhs < rhs) and !(lhs == rhs);
 }
 
 /// \brief Compares two views. All comparisons are done via the compare() member
@@ -815,21 +815,21 @@ template <typename CharType, typename Traits>
 [[nodiscard]] constexpr auto
 operator>=(basic_string_view<CharType, Traits> lhs, basic_string_view<CharType, Traits> rhs) noexcept -> bool
 {
-    return (lhs > rhs) || (lhs == rhs);
+    return lhs > rhs or lhs == rhs;
 }
 
 template <typename CharT, typename Traits, int = 1>
 [[nodiscard]] constexpr auto
 operator>=(decay_t<basic_string_view<CharT, Traits>> lhs, basic_string_view<CharT, Traits> rhs) noexcept -> bool
 {
-    return (lhs > rhs) || (lhs == rhs);
+    return lhs > rhs or lhs == rhs;
 }
 
 template <typename CharT, typename Traits, int = 2>
 [[nodiscard]] constexpr auto
 operator>=(basic_string_view<CharT, Traits> lhs, decay_t<basic_string_view<CharT, Traits>> rhs) noexcept -> bool
 {
-    return (lhs > rhs) || (lhs == rhs);
+    return lhs > rhs or lhs == rhs;
 }
 
 } // namespace etl
