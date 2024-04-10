@@ -24,6 +24,8 @@
 #include <etl/_string/str_replace.hpp>
 #include <etl/_string/str_rfind.hpp>
 #include <etl/_string_view/string_view.hpp>
+#include <etl/_strings/find.hpp>
+#include <etl/_strings/rfind.hpp>
 #include <etl/_type_traits/is_convertible.hpp>
 #include <etl/_type_traits/smallest_size_t.hpp>
 #include <etl/_utility/ignore_unused.hpp>
@@ -969,7 +971,8 @@ public:
     /// if no such substring is found.
     [[nodiscard]] constexpr auto find(basic_inplace_string const& str, size_type pos = 0) const noexcept -> size_type
     {
-        return find(str.c_str(), pos, str.size());
+        using view_t = basic_string_view<CharT, Traits>;
+        return strings::find(view_t(*this), view_t(str), pos);
     }
 
     /// \brief Finds the first substring equal to the given character sequence.
@@ -982,17 +985,8 @@ public:
     /// if no such substring is found.
     [[nodiscard]] constexpr auto find(const_pointer s, size_type pos, size_type count) const noexcept -> size_type
     {
-        // an empty substring is found at pos if and only if pos <= size()
-        if (count == 0 && pos <= size()) {
-            return pos;
-        }
-
-        if (pos <= size() - count) {
-            auto view = static_cast<basic_string_view<value_type>>(*this);
-            return view.find(s, pos, count);
-        }
-
-        return npos;
+        using view_t = basic_string_view<CharT, Traits>;
+        return strings::find(view_t(*this), view_t(s, count), pos);
     }
 
     /// \brief Finds the first substring equal to the given character sequence.
@@ -1005,7 +999,8 @@ public:
     /// if no such substring is found.
     [[nodiscard]] constexpr auto find(const_pointer s, size_type pos = 0) const noexcept -> size_type
     {
-        return find(s, pos, traits_type::length(s));
+        using view_t = basic_string_view<CharT, Traits>;
+        return strings::find(view_t(*this), view_t(s), pos);
     }
 
     /// \brief Finds the first substring equal to the given character sequence.
@@ -1018,7 +1013,8 @@ public:
     /// if no such substring is found.
     [[nodiscard]] constexpr auto find(value_type ch, size_type pos = 0) const noexcept -> size_type
     {
-        return find(&ch, pos, 1);
+        using view_t = basic_string_view<CharT, Traits>;
+        return strings::find(view_t(*this), view_t(&ch, 1), pos);
     }
 
     /// \brief Finds the last substring equal to the given character sequence.
@@ -1033,13 +1029,8 @@ public:
     /// start of the string, not the end.
     [[nodiscard]] constexpr auto rfind(basic_inplace_string const& str, size_type pos = 0) const noexcept -> size_type
     {
-        return detail::str_rfind<value_type, size_type, traits_type, npos>(
-            begin(),
-            size(),
-            str.begin(),
-            pos,
-            str.size()
-        );
+        using view_t = basic_string_view<CharT, Traits>;
+        return strings::rfind(view_t(*this), view_t(str), pos);
     }
 
     /// \brief Finds the last substring equal to the given character sequence.
@@ -1056,7 +1047,8 @@ public:
     /// \bug See tests.
     [[nodiscard]] constexpr auto rfind(const_pointer s, size_type pos, size_type count) const noexcept -> size_type
     {
-        return detail::str_rfind<value_type, size_type, traits_type, npos>(begin(), size(), s, pos, count);
+        using view_t = basic_string_view<CharT, Traits>;
+        return strings::rfind(view_t(*this), view_t(s, count), pos);
     }
 
     /// \brief Finds the last substring equal to the given character sequence.
@@ -1071,13 +1063,8 @@ public:
     /// start of the string, not the end.
     [[nodiscard]] constexpr auto rfind(const_pointer s, size_type pos = 0) const noexcept -> size_type
     {
-        return detail::str_rfind<value_type, size_type, traits_type, npos>(
-            begin(),
-            size(),
-            s,
-            pos,
-            traits_type::length(s)
-        );
+        using view_t = basic_string_view<CharT, Traits>;
+        return strings::rfind(view_t(*this), view_t(s), pos);
     }
 
     /// \brief Finds the last substring equal to the given character sequence.
@@ -1092,7 +1079,8 @@ public:
     /// start of the string, not the end.
     [[nodiscard]] constexpr auto rfind(value_type ch, size_type pos = 0) const noexcept -> size_type
     {
-        return detail::str_rfind<value_type, size_type, traits_type, npos>(begin(), size(), ch, pos);
+        using view_t = basic_string_view<CharT, Traits>;
+        return strings::rfind(view_t(*this), ch, pos);
     }
 
     /// \brief Finds the first character equal to one of the characters in the
