@@ -4,9 +4,8 @@
 #define TETL_COMPLEX_CONJ_HPP
 
 #include <etl/_complex/complex.hpp>
-#include <etl/_type_traits/enable_if.hpp>
-#include <etl/_type_traits/is_floating_point.hpp>
-#include <etl/_type_traits/is_integral.hpp>
+#include <etl/_concepts/floating_point.hpp>
+#include <etl/_concepts/integral.hpp>
 
 namespace etl {
 
@@ -18,15 +17,15 @@ template <typename T>
 }
 
 /// \ingroup complex
-template <typename Float>
-[[nodiscard]] constexpr auto conj(Float f) noexcept -> enable_if_t<is_floating_point_v<Float>, complex<Float>>
+template <floating_point Float>
+[[nodiscard]] constexpr auto conj(Float f) noexcept -> complex<Float>
 {
     return complex<Float>(f);
 }
 
 /// \ingroup complex
-template <typename Integer>
-[[nodiscard]] constexpr auto conj(Integer i) noexcept -> enable_if_t<is_integral_v<Integer>, complex<double>>
+template <integral Integer>
+[[nodiscard]] constexpr auto conj(Integer i) noexcept -> complex<double>
 {
     return complex<double>(i);
 }

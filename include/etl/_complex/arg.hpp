@@ -5,9 +5,8 @@
 
 #include <etl/_cmath/atan2.hpp>
 #include <etl/_complex/complex.hpp>
-#include <etl/_type_traits/enable_if.hpp>
-#include <etl/_type_traits/is_floating_point.hpp>
-#include <etl/_type_traits/is_integral.hpp>
+#include <etl/_concepts/floating_point.hpp>
+#include <etl/_concepts/integral.hpp>
 
 namespace etl {
 
@@ -15,21 +14,21 @@ namespace etl {
 template <typename T>
 [[nodiscard]] constexpr auto arg(complex<T> const& z) noexcept -> T
 {
-    return atan2(z.real(), z.imag());
+    return etl::atan2(z.real(), z.imag());
 }
 
 /// \ingroup complex
-template <typename Float>
-[[nodiscard]] constexpr auto arg(Float f) noexcept -> enable_if_t<is_floating_point_v<Float>, complex<Float>>
+template <floating_point Float>
+[[nodiscard]] constexpr auto arg(Float f) noexcept -> complex<Float>
 {
-    return arg(complex<Float>(f));
+    return etl::arg(etl::complex<Float>(f));
 }
 
 /// \ingroup complex
-template <typename Integer>
-[[nodiscard]] constexpr auto arg(Integer i) noexcept -> enable_if_t<is_integral_v<Integer>, complex<double>>
+template <integral Integer>
+[[nodiscard]] constexpr auto arg(Integer i) noexcept -> complex<double>
 {
-    return arg(complex<double>(i));
+    return etl::arg(etl::complex<double>(i));
 }
 
 } // namespace etl
