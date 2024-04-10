@@ -99,11 +99,15 @@ constexpr auto test() -> bool
 
     // operator<=
     {
-        auto const test = "test"_sv;
-        CHECK(test <= test);
-        CHECK("" <= test);
-        CHECK(test.substr(0, 1) <= test);
+        auto const test = etl::inplace_string<16>{"test"};
+        CHECK("test"_sv <= test);
+        CHECK(test <= "test"_sv);
+        CHECK("test"_sv <= "test"_sv);
+        CHECK("" <= "test"_sv);
+        CHECK("test"_sv.substr(0, 1) <= "test"_sv);
+        CHECK("abc"_sv <= "test"_sv);
         CHECK("abc"_sv <= test);
+        CHECK_FALSE("test"_sv <= "abc"_sv);
         CHECK_FALSE(test <= "abc"_sv);
     }
 
