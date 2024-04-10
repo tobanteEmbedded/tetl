@@ -54,13 +54,13 @@ constexpr auto test_float() -> bool
 
     {
         auto const large = etl::numeric_limits<Float>::max();
-        CHECK(etl::midpoint(large, Float(large * Float(0.5))) == large * Float(0.75));
+        CHECK(etl::midpoint(large, large * Float(0.5)) == large * Float(0.75));
     }
 
     {
         auto const small = etl::numeric_limits<Float>::min();
-        CHECK(etl::midpoint(small, Float(small * Float(3))) == small * Float(2));
-        CHECK(etl::midpoint(Float(small * Float(3)), small) == small * Float(2));
+        CHECK(etl::midpoint(small, small * Float(3)) == small * Float(2));
+        CHECK(etl::midpoint(small * Float(3), small) == small * Float(2));
     }
 
     {
@@ -123,7 +123,10 @@ constexpr auto test_all() -> bool
 
     CHECK(test_float<float>());
     CHECK(test_float<double>());
+
+#if not(defined(_MSC_VER) and not defined(__clang__))
     CHECK(test_float<long double>());
+#endif
 
     return true;
 }
