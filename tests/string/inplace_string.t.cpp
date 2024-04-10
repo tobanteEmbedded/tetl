@@ -1268,6 +1268,20 @@ template <typename T>
         CHECK(str.find_first_of('c') == 2);
     }
 
+    {
+        auto const str = string("test");
+        CHECK(str.find_last_not_of(string("est")) == str.npos);
+        CHECK(str.find_last_not_of("est") == str.npos);
+        CHECK(str.find_last_not_of("s", 2) == 1);
+    }
+
+    {
+        auto str = string("abcd");
+        CHECK(str.contains("ab"));
+        CHECK(str.contains('a'));
+        CHECK_FALSE(str.contains('x'));
+    }
+
     return true;
 }
 

@@ -21,10 +21,8 @@
 #include <etl/_iterator/size.hpp>
 #include <etl/_limits/numeric_limits.hpp>
 #include <etl/_string/char_traits.hpp>
-#include <etl/_string/str_find_first_not_of.hpp>
 #include <etl/_string/str_replace.hpp>
-#include <etl/_string/str_rfind.hpp>
-#include <etl/_string_view/string_view.hpp>
+#include <etl/_string_view/basic_string_view.hpp>
 #include <etl/_strings/find.hpp>
 #include <etl/_strings/rfind.hpp>
 #include <etl/_type_traits/is_convertible.hpp>
@@ -43,7 +41,7 @@ template <typename CharT, etl::size_t Capacity, typename Traits = etl::char_trai
 struct basic_inplace_string {
     // clang-format off
     template <typename T>
-    constexpr static bool view_and_not_char_ptr =
+    constexpr static bool string_view_like =
                               is_convertible_v<T const&, basic_string_view<CharT, Traits>>
                           && !is_convertible_v<T const&, CharT const*>;
     // clang-format on
@@ -92,7 +90,7 @@ public:
     /// Constructs the string with count copies of character ch.
     ///
     /// \details Fails silently if input length is greater then capacity.
-    constexpr basic_inplace_string(size_type count, value_type ch) noexcept
+    constexpr basic_inplace_string(size_type count, CharT ch) noexcept
     {
         TETL_PRECONDITION(count <= Capacity);
         if (count <= Capacity) {
@@ -122,23 +120,23 @@ public:
     {
     }
 
-    /// Implicitly converts t to a string view sv, then initializes the
+    /// Implicitly converts view to a string view sv, then initializes the
     /// string with the contents of sv.
-    template <typename T>
-        requires(view_and_not_char_ptr<T>)
-    explicit constexpr basic_inplace_string(T const& t) noexcept
+    template <typename StringView>
+        requires string_view_like<StringView>
+    explicit constexpr basic_inplace_string(StringView const& view) noexcept
 
     {
-        basic_string_view<value_type, traits_type> const sv = t;
+        basic_string_view<CharT, traits_type> const sv = view;
         assign(sv.begin(), sv.end());
     }
 
-    /// Implicitly converts t to a string view sv, then initializes the
+    /// Implicitly converts view to a string view sv, then initializes the
     /// string with the subrange [ pos, pos + n ) of sv.
-    template <typename T>
-        requires(view_and_not_char_ptr<T>)
-    explicit constexpr basic_inplace_string(T const& t, size_type pos, size_type n)
-        : basic_inplace_string{basic_string_view<value_type, traits_type>{t}.substr(pos, n)}
+    template <typename StringView>
+        requires string_view_like<StringView>
+    explicit constexpr basic_inplace_string(StringView const& view, size_type pos, size_type n)
+        : basic_inplace_string{basic_string_view<CharT, traits_type>{view}.substr(pos, n)}
     {
     }
 
@@ -165,24 +163,24 @@ public:
     constexpr auto operator=(nullptr_t /*0*/) -> basic_inplace_string& = delete;
 
     /// Replaces the contents with character ch.
-    constexpr auto operator=(value_type ch) noexcept -> basic_inplace_string&
+    constexpr auto operator=(CharT ch) noexcept -> basic_inplace_string&
     {
         assign(&ch, 1);
         return *this;
     }
 
-    /// Implicitly converts t to a string view sv, then replaces the
+    /// Implicitly converts view to a string view sv, then replaces the
     /// contents with those of the sv.
-    template <typename T>
-        requires(view_and_not_char_ptr<T>)
-    constexpr auto operator=(T const& t) noexcept -> basic_inplace_string&
+    template <typename StringView>
+        requires string_view_like<StringView>
+    constexpr auto operator=(StringView const& view) noexcept -> basic_inplace_string&
     {
-        assign(t);
+        assign(view);
         return *this;
     }
 
     /// Replaces the contents with count copies of character ch.
-    constexpr auto assign(size_type count, value_type ch) noexcept -> basic_inplace_string&
+    constexpr auto assign(size_type count, CharT ch) noexcept -> basic_inplace_string&
     {
         (*this) = basic_inplace_string{count, ch};
         return *this;
@@ -237,26 +235,27 @@ public:
         return *this;
     }
 
-    /// \brief Implicitly converts t to a string view sv, then replaces the
+    /// \brief Implicitly converts view to a string view sv, then replaces the
     /// contents with the characters from sv.
-    template <typename T>
-        requires(view_and_not_char_ptr<T>)
-    constexpr auto assign(T const& t) noexcept -> basic_inplace_string&
+    template <typename StringView>
+        requires string_view_like<StringView>
+    constexpr auto assign(StringView const& view) noexcept -> basic_inplace_string&
     {
-        auto tmp = basic_inplace_string{basic_inplace_string{t}};
+        auto tmp = basic_inplace_string{basic_inplace_string{view}};
         *this    = tmp;
         return *this;
     }
 
-    /// \brief Implicitly converts t to a string view sv, then replaces the
+    /// \brief Implicitly converts view to a string view sv, then replaces the
     /// contents with the characters from the subview [ pos, pos + count ) of
     /// sv.
-    template <typename T>
-        requires(view_and_not_char_ptr<T>)
-    constexpr auto assign(T const& t, size_type pos, size_type count = npos) noexcept -> basic_inplace_string&
+    template <typename StringView>
+        requires string_view_like<StringView>
+    constexpr auto
+    assign(StringView const& view, size_type pos, size_type count = npos) noexcept -> basic_inplace_string&
     {
         auto tmp = basic_inplace_string{
-            basic_inplace_string{t, pos, count}
+            basic_inplace_string{view, pos, count}
         };
         *this = tmp;
         return *this;
@@ -382,16 +381,16 @@ public:
     [[nodiscard]] constexpr auto c_str() const noexcept -> const_pointer { return data(); }
 
     /// \brief Returns a etl::basic_string_view.
-    [[nodiscard]] constexpr operator basic_string_view<value_type, traits_type>() const noexcept
+    [[nodiscard]] constexpr operator basic_string_view<CharT, traits_type>() const noexcept
     {
-        return basic_string_view<value_type, traits_type>(data(), size());
+        return basic_string_view<CharT, traits_type>(data(), size());
     }
 
     /// \brief Removes all characters from the string. Sets size to 0 and
     /// overrides the buffer with zeros.
     constexpr auto clear() noexcept -> void
     {
-        *begin() = value_type(0);
+        *begin() = CharT(0);
         unsafe_set_size(0);
     }
 
@@ -427,7 +426,7 @@ public:
 
     /// \brief Appends the given character ch to the end of the string. Does
     /// nothing if the string is full.
-    constexpr auto push_back(value_type ch) noexcept -> void
+    constexpr auto push_back(CharT ch) noexcept -> void
     {
         TETL_PRECONDITION(size() < capacity());
         if (size() < capacity()) {
@@ -445,7 +444,7 @@ public:
     }
 
     /// \brief Appends count copies of character s.
-    constexpr auto append(size_type const count, value_type const s) noexcept -> basic_inplace_string&
+    constexpr auto append(size_type const count, CharT const s) noexcept -> basic_inplace_string&
     {
         auto const safeCount = etl::min(count, capacity() - size());
         auto const newSize   = size() + safeCount;
@@ -496,23 +495,23 @@ public:
         return append(str.substr(pos, count));
     }
 
-    /// \brief Implicitly converts t to a string_view sv, then appends all
+    /// \brief Implicitly converts view to a string_view sv, then appends all
     /// characters from sv.
-    template <typename T>
-        requires(view_and_not_char_ptr<T>)
-    constexpr auto append(T const& t) -> basic_inplace_string&
+    template <typename StringView>
+        requires string_view_like<StringView>
+    constexpr auto append(StringView const& view) -> basic_inplace_string&
     {
-        etl::basic_string_view<value_type, traits_type> sv = t;
+        etl::basic_string_view<CharT, traits_type> sv = view;
         return append(sv.data(), sv.size());
     }
 
-    /// \brief Implicitly converts t to a string_view sv then appends the
+    /// \brief Implicitly converts view to a string_view sv then appends the
     /// characters from the subview [ pos, pos + count ) of sv.
-    template <typename T>
-        requires(view_and_not_char_ptr<T>)
-    constexpr auto append(T const& t, size_type pos, size_type count = npos) -> basic_inplace_string&
+    template <typename StringView>
+        requires string_view_like<StringView>
+    constexpr auto append(StringView const& view, size_type pos, size_type count = npos) -> basic_inplace_string&
     {
-        etl::basic_string_view<value_type, traits_type> sv = t;
+        etl::basic_string_view<CharT, traits_type> sv = view;
         return append(sv.substr(pos, count));
     }
 
@@ -520,23 +519,23 @@ public:
     constexpr auto operator+=(basic_inplace_string const& str) noexcept -> basic_inplace_string& { return append(str); }
 
     /// \brief Appends character ch.
-    constexpr auto operator+=(value_type ch) noexcept -> basic_inplace_string& { return append(1, ch); }
+    constexpr auto operator+=(CharT ch) noexcept -> basic_inplace_string& { return append(1, ch); }
 
     /// \brief Appends the null-terminated character string pointed to by s.
     constexpr auto operator+=(const_pointer s) noexcept -> basic_inplace_string& { return append(s); }
 
-    /// \brief Implicitly converts t to a string view sv, then appends
+    /// \brief Implicitly converts view to a string view sv, then appends
     /// characters in the string view sv.
-    template <typename T>
-        requires(view_and_not_char_ptr<T>)
-    constexpr auto operator+=(T const& t) noexcept -> basic_inplace_string&
+    template <typename StringView>
+        requires string_view_like<StringView>
+    constexpr auto operator+=(StringView const& view) noexcept -> basic_inplace_string&
     {
-        return append(t);
+        return append(view);
     }
 
     /// \brief Inserts count copies of character ch at the position index.
     constexpr auto
-    insert(size_type const index, size_type const count, value_type const ch) noexcept -> basic_inplace_string&
+    insert(size_type const index, size_type const count, CharT const ch) noexcept -> basic_inplace_string&
     {
         for (size_type i = 0; i < count; ++i) {
             insert_impl(begin() + index, &ch, 1);
@@ -577,7 +576,7 @@ public:
         size_type const count = npos
     ) noexcept -> basic_inplace_string&
     {
-        using view_type = basic_string_view<value_type, traits_type>;
+        using view_type = basic_string_view<CharT, traits_type>;
         auto sv         = view_type(str).substr(indexStr, count);
         insert_impl(begin() + index, sv.data(), sv.size());
         return *this;
@@ -585,7 +584,7 @@ public:
 
     //
     //  * \brief Inserts character ch before the character pointed by pos.
-    // constexpr auto insert(const_iterator pos, value_type const ch) noexcept
+    // constexpr auto insert(const_iterator pos, CharT const ch) noexcept
     // -> iterator
     // {
     // }
@@ -595,7 +594,7 @@ public:
     //  any) pointed by
     //  * pos.
     // constexpr auto insert(const_iterator pos, size_type count,
-    //                       value_type const ch) noexcept -> iterator
+    //                       CharT const ch) noexcept -> iterator
     // {
     // }
 
@@ -611,26 +610,27 @@ public:
     // {
     // }
 
-    /// \brief Implicitly converts t to a string view sv, then inserts the
+    /// \brief Implicitly converts view to a string view sv, then inserts the
     /// elements from sv before the element (if any) pointed by pos.
-    template <typename T>
-        requires(view_and_not_char_ptr<T>)
-    constexpr auto insert(size_type const pos, T const& t) noexcept -> basic_inplace_string&
+    template <typename StringView>
+        requires string_view_like<StringView>
+    constexpr auto insert(size_type const pos, StringView const& view) noexcept -> basic_inplace_string&
     {
-        basic_string_view<value_type, traits_type> sv = t;
+        basic_string_view<CharT, traits_type> sv = view;
         insert_impl(begin() + pos, sv.data(), sv.size());
         return *this;
     }
 
-    /// \brief Implicitly converts t to a string view sv, then inserts, before
+    /// \brief Implicitly converts view to a string view sv, then inserts, before
     /// the element (if any) pointed by pos, the characters from the subview
     /// [index_str, index_str+count) of sv.
-    template <typename T>
-        requires(view_and_not_char_ptr<T>)
-    constexpr auto insert(size_type const index, T const& t, size_type const indexStr, size_type const count = npos)
+    template <typename StringView>
+        requires string_view_like<StringView>
+    constexpr auto
+    insert(size_type const index, StringView const& view, size_type const indexStr, size_type const count = npos)
         noexcept -> basic_inplace_string&
     {
-        basic_string_view<value_type, traits_type> sv = t;
+        basic_string_view<CharT, traits_type> sv = view;
 
         auto sub = sv.substr(indexStr, count);
         insert_impl(begin() + index, sub.data(), sub.size());
@@ -645,7 +645,7 @@ public:
 
     /// \brief Compares this string to str with other capacity.
     template <size_type OtherCapacity>
-    [[nodiscard]] constexpr auto compare(basic_inplace_string<value_type, OtherCapacity, traits_type> const& str
+    [[nodiscard]] constexpr auto compare(basic_inplace_string<CharT, OtherCapacity, traits_type> const& str
     ) const noexcept -> int
     {
         return compare_impl(data(), size(), str.data(), str.size());
@@ -657,7 +657,7 @@ public:
     compare(size_type const pos, size_type const count, basic_inplace_string const& str) const -> int
     {
         auto const sz  = count > size() - pos ? size() : count;
-        auto const sub = string_view(*this).substr(pos, sz);
+        auto const sub = basic_string_view<CharT, Traits>(*this).substr(pos, sz);
         return sub.compare(str);
     }
 
@@ -674,10 +674,10 @@ public:
     ) const -> int
     {
         auto const sz1  = count1 > size() - pos1 ? size() : count1;
-        auto const sub1 = string_view(*this).substr(pos1, sz1);
+        auto const sub1 = basic_string_view<CharT, Traits>(*this).substr(pos1, sz1);
 
         auto const sz2  = count2 > str.size() - pos2 ? size() : count2;
-        auto const sub2 = string_view(str).substr(pos2, sz2);
+        auto const sub2 = basic_string_view<CharT, Traits>(str).substr(pos2, sz2);
 
         return sub1.compare(sub2);
     }
@@ -697,7 +697,7 @@ public:
     [[nodiscard]] constexpr auto compare(size_type const pos, size_type const count, const_pointer s) const -> int
     {
         auto const sz  = count > size() - pos ? size() : count;
-        auto const sub = string_view(*this).substr(pos, sz);
+        auto const sub = basic_string_view<CharT, Traits>(*this).substr(pos, sz);
         return compare_impl(sub.data(), sub.size(), s, traits_type::length(s));
     }
 
@@ -709,42 +709,43 @@ public:
     compare(size_type const pos1, size_type const count1, const_pointer s, size_type const count2) const -> int
     {
         auto const sz  = count1 > size() - pos1 ? size() : count1;
-        auto const sub = string_view(*this).substr(pos1, sz);
+        auto const sub = basic_string_view<CharT, Traits>(*this).substr(pos1, sz);
         return compare_impl(sub.data(), sub.size(), s, count2);
     }
 
-    /// \brief Implicitly converts t to a string view sv, then compares the
+    /// \brief Implicitly converts view to a string view sv, then compares the
     /// content of this string to sv.
-    template <typename T>
-        requires(view_and_not_char_ptr<T>)
-    [[nodiscard]] constexpr auto compare(T const& t) const noexcept -> int
+    template <typename StringView>
+        requires string_view_like<StringView>
+    [[nodiscard]] constexpr auto compare(StringView const& view) const noexcept -> int
     {
         using view_type    = basic_string_view<CharT, Traits>;
-        view_type const sv = t;
+        view_type const sv = view;
         return view_type(*this).compare(sv);
     }
 
-    /// \brief Implicitly converts t to a string view sv, then compares a [pos1,
+    /// \brief Implicitly converts view to a string view sv, then compares a [pos1,
     /// pos1+count1) substring of this string to sv.
-    template <typename T>
-        requires(view_and_not_char_ptr<T>)
-    [[nodiscard]] constexpr auto compare(size_type pos1, size_type count1, T const& t) const noexcept -> int
+    template <typename StringView>
+        requires string_view_like<StringView>
+    [[nodiscard]] constexpr auto compare(size_type pos1, size_type count1, StringView const& view) const noexcept -> int
     {
         using view_type    = basic_string_view<CharT, Traits>;
-        view_type const sv = t;
+        view_type const sv = view;
         return view_type(*this).substr(pos1, count1).compare(sv);
     }
 
-    /// \brief Implicitly converts t to a string view sv, then compares a [pos1,
+    /// \brief Implicitly converts view to a string view sv, then compares a [pos1,
     /// pos1+count1) substring of this string to a substring [pos2, pos2+count2)
     /// of sv.
-    template <typename T>
-        requires(view_and_not_char_ptr<T>)
+    template <typename StringView>
+        requires string_view_like<StringView>
     [[nodiscard]] constexpr auto
-    compare(size_type pos1, size_type count1, T const& t, size_type pos2, size_type count2 = npos) const noexcept -> int
+    compare(size_type pos1, size_type count1, StringView const& view, size_type pos2, size_type count2 = npos)
+        const noexcept -> int
     {
         using view_type    = basic_string_view<CharT, Traits>;
-        view_type const sv = t;
+        view_type const sv = view;
         return view_type(*this).substr(pos1, count1).compare(sv.substr(pos2, count2));
     }
 
@@ -755,7 +756,7 @@ public:
     }
 
     /// \brief Checks if the string begins with the given prefix.
-    [[nodiscard]] constexpr auto starts_with(value_type c) const noexcept -> bool
+    [[nodiscard]] constexpr auto starts_with(CharT c) const noexcept -> bool
     {
         return basic_string_view<CharT, Traits>(data(), size()).starts_with(c);
     }
@@ -773,7 +774,7 @@ public:
     }
 
     /// \brief Checks if the string ends with the given prefix.
-    [[nodiscard]] constexpr auto ends_with(value_type c) const noexcept -> bool
+    [[nodiscard]] constexpr auto ends_with(CharT c) const noexcept -> bool
     {
         return basic_string_view<CharT, Traits>(data(), size()).ends_with(c);
     }
@@ -924,7 +925,7 @@ public:
     /// \details If the current size is less than count, additional characters
     /// are appended, maximum up to it's capacity. If the current size is
     /// greater than count, the string is reduced to its first count elements.
-    constexpr auto resize(size_type count, value_type ch) noexcept -> void
+    constexpr auto resize(size_type count, CharT ch) noexcept -> void
     {
         if (size() > count) {
             unsafe_set_size(count);
@@ -939,7 +940,7 @@ public:
     /// \details If the current size is less than count, additional characters
     /// are appended, maximum up to it's capacity. If the current size is
     /// greater than count, the string is reduced to its first count elements.
-    constexpr auto resize(size_type count) noexcept -> void { resize(count, value_type()); }
+    constexpr auto resize(size_type count) noexcept -> void { resize(count, CharT()); }
 
     /// \brief Exchanges the contents of the string with those of other. All
     /// iterators and references may be invalidated.
@@ -960,8 +961,7 @@ public:
     /// if no such substring is found.
     [[nodiscard]] constexpr auto find(basic_inplace_string const& str, size_type pos = 0) const noexcept -> size_type
     {
-        using view_t = basic_string_view<CharT, Traits>;
-        return strings::find(view_t(*this), view_t(str), pos);
+        return strings::find<CharT, Traits>(*this, str, pos);
     }
 
     /// \brief Finds the first substring equal to the given character sequence.
@@ -974,8 +974,7 @@ public:
     /// if no such substring is found.
     [[nodiscard]] constexpr auto find(const_pointer s, size_type pos, size_type count) const noexcept -> size_type
     {
-        using view_t = basic_string_view<CharT, Traits>;
-        return strings::find(view_t(*this), view_t(s, count), pos);
+        return strings::find<CharT, Traits>(*this, basic_string_view<CharT, Traits>{s, count}, pos);
     }
 
     /// \brief Finds the first substring equal to the given character sequence.
@@ -988,8 +987,7 @@ public:
     /// if no such substring is found.
     [[nodiscard]] constexpr auto find(const_pointer s, size_type pos = 0) const noexcept -> size_type
     {
-        using view_t = basic_string_view<CharT, Traits>;
-        return strings::find(view_t(*this), view_t(s), pos);
+        return strings::find<CharT, Traits>(*this, s, pos);
     }
 
     /// \brief Finds the first substring equal to the given character sequence.
@@ -1000,10 +998,9 @@ public:
     ///
     /// \returns Position of the first character of the found substring or npos
     /// if no such substring is found.
-    [[nodiscard]] constexpr auto find(value_type ch, size_type pos = 0) const noexcept -> size_type
+    [[nodiscard]] constexpr auto find(CharT ch, size_type pos = 0) const noexcept -> size_type
     {
-        using view_t = basic_string_view<CharT, Traits>;
-        return strings::find(view_t(*this), view_t(&ch, 1), pos);
+        return strings::find<CharT, Traits>(*this, basic_string_view<CharT, Traits>{&ch, 1}, pos);
     }
 
     /// \brief Finds the last substring equal to the given character sequence.
@@ -1018,8 +1015,7 @@ public:
     /// start of the string, not the end.
     [[nodiscard]] constexpr auto rfind(basic_inplace_string const& str, size_type pos = 0) const noexcept -> size_type
     {
-        using view_t = basic_string_view<CharT, Traits>;
-        return strings::rfind(view_t(*this), view_t(str), pos);
+        return strings::rfind<CharT, Traits>(*this, str, pos);
     }
 
     /// \brief Finds the last substring equal to the given character sequence.
@@ -1036,8 +1032,7 @@ public:
     /// \bug See tests.
     [[nodiscard]] constexpr auto rfind(const_pointer s, size_type pos, size_type count) const noexcept -> size_type
     {
-        using view_t = basic_string_view<CharT, Traits>;
-        return strings::rfind(view_t(*this), view_t(s, count), pos);
+        return strings::rfind<CharT, Traits>(*this, s, count, pos);
     }
 
     /// \brief Finds the last substring equal to the given character sequence.
@@ -1052,8 +1047,7 @@ public:
     /// start of the string, not the end.
     [[nodiscard]] constexpr auto rfind(const_pointer s, size_type pos = 0) const noexcept -> size_type
     {
-        using view_t = basic_string_view<CharT, Traits>;
-        return strings::rfind(view_t(*this), view_t(s), pos);
+        return strings::rfind<CharT, Traits>(*this, s, pos);
     }
 
     /// \brief Finds the last substring equal to the given character sequence.
@@ -1066,10 +1060,9 @@ public:
     /// \returns Position of the first character of the found substring or npos
     /// if no such substring is found. Note that this is an offset from the
     /// start of the string, not the end.
-    [[nodiscard]] constexpr auto rfind(value_type ch, size_type pos = 0) const noexcept -> size_type
+    [[nodiscard]] constexpr auto rfind(CharT ch, size_type pos = 0) const noexcept -> size_type
     {
-        using view_t = basic_string_view<CharT, Traits>;
-        return strings::rfind(view_t(*this), ch, pos);
+        return strings::rfind<CharT, Traits>(*this, ch, pos);
     }
 
     /// \brief Finds the first character equal to one of the characters in the
@@ -1089,7 +1082,7 @@ public:
     [[nodiscard]] constexpr auto find_first_of(const_pointer s, size_type pos, size_type count) const -> size_type
     {
         if (pos < size()) {
-            auto view = static_cast<basic_string_view<value_type>>(*this);
+            auto view = static_cast<basic_string_view<CharT>>(*this);
             return view.find_first_of(s, pos, count);
         }
 
@@ -1109,7 +1102,7 @@ public:
     /// given character sequence. The search considers only the interval [pos,
     /// size()). If the character is not present in the interval, npos will be
     /// returned.
-    [[nodiscard]] constexpr auto find_first_of(value_type ch, size_type pos = 0) const noexcept -> size_type
+    [[nodiscard]] constexpr auto find_first_of(CharT ch, size_type pos = 0) const noexcept -> size_type
     {
         return find_first_of(&ch, pos, 1);
     }
@@ -1119,7 +1112,7 @@ public:
     /// size()). If the character is not present in the interval, npos will be
     /// returned.
     [[nodiscard]] constexpr auto
-    find_first_of(basic_string_view<value_type, traits_type> str, size_type pos = 0) const noexcept -> size_type
+    find_first_of(basic_string_view<CharT, traits_type> str, size_type pos = 0) const noexcept -> size_type
     {
         return find_first_of(str.data(), pos, str.size());
     }
@@ -1133,13 +1126,7 @@ public:
     find_first_not_of(basic_inplace_string const& str, size_type pos = 0) const noexcept -> size_type
     {
         TETL_PRECONDITION(pos < size());
-        return detail::str_find_first_not_of<value_type, size_type, traits_type, npos>(
-            begin(),
-            size(),
-            str.begin(),
-            pos,
-            str.size()
-        );
+        return basic_string_view<CharT, Traits>{*this}.find_first_not_of(str, pos);
     }
 
     /// \brief Finds the first character not equal to any of the characters in
@@ -1147,10 +1134,10 @@ public:
     ///
     /// \return Position of the first character not equal to any of the
     /// characters in the given string, or npos if no such character is found.
-    [[nodiscard]] constexpr auto find_first_not_of(value_type ch, size_type pos = 0) const noexcept -> size_type
+    [[nodiscard]] constexpr auto find_first_not_of(CharT ch, size_type pos = 0) const noexcept -> size_type
     {
         TETL_PRECONDITION(pos < size());
-        return detail::str_find_first_not_of<value_type, size_type, traits_type, npos>(begin(), size(), ch, pos);
+        return basic_string_view<CharT, Traits>{*this}.find_first_not_of(ch, pos);
     }
 
     /// \brief Finds the first character not equal to any of the characters in
@@ -1158,16 +1145,10 @@ public:
     ///
     /// \return Position of the first character not equal to any of the
     /// characters in the given string, or npos if no such character is found.
-    [[nodiscard]] constexpr auto find_first_not_of(value_type const* s, size_type pos) const -> size_type
+    [[nodiscard]] constexpr auto find_first_not_of(CharT const* s, size_type pos) const -> size_type
     {
         TETL_PRECONDITION(pos < size());
-        return detail::str_find_first_not_of<value_type, size_type, traits_type, npos>(
-            begin(),
-            size(),
-            s,
-            pos,
-            traits_type::length(s)
-        );
+        return basic_string_view<CharT, Traits>{*this}.find_first_not_of(s, pos);
     }
 
     /// \brief Finds the first character not equal to any of the characters in
@@ -1175,11 +1156,10 @@ public:
     ///
     /// \return Position of the first character not equal to any of the
     /// characters in the given string, or npos if no such character is found.
-    [[nodiscard]] constexpr auto
-    find_first_not_of(value_type const* s, size_type pos, size_type count) const -> size_type
+    [[nodiscard]] constexpr auto find_first_not_of(CharT const* s, size_type pos, size_type count) const -> size_type
     {
         TETL_PRECONDITION(pos < size());
-        return detail::str_find_first_not_of<value_type, size_type, traits_type, npos>(begin(), size(), s, pos, count);
+        return basic_string_view<CharT, Traits>{*this}.find_first_not_of(s, pos, count);
     }
 
     /// \brief Finds the last character equal to one of characters in the given
@@ -1189,38 +1169,34 @@ public:
     [[nodiscard]] constexpr auto
     find_last_of(basic_inplace_string const& str, size_type pos = 0) const noexcept -> size_type
     {
-        auto view = basic_string_view<value_type>{*this};
-        return view.find_last_of(str, pos);
+        return basic_string_view<CharT>{*this}.find_last_of(str, pos);
     }
 
     /// \brief Finds the last character equal to one of characters in the given
     /// character sequence. The exact search algorithm is not specified. The
     /// search considers only the interval [0, pos]. If the character is not
     /// present in the interval, npos will be returned.
-    [[nodiscard]] constexpr auto find_last_of(value_type c, size_type pos = 0) const noexcept -> size_type
+    [[nodiscard]] constexpr auto find_last_of(CharT c, size_type pos = 0) const noexcept -> size_type
     {
-        auto view = basic_string_view<value_type>{*this};
-        return view.find_last_of(c, pos);
+        return basic_string_view<CharT>{*this}.find_last_of(c, pos);
     }
 
     /// \brief Finds the last character equal to one of characters in the given
     /// character sequence. The exact search algorithm is not specified. The
     /// search considers only the interval [0, pos]. If the character is not
     /// present in the interval, npos will be returned.
-    [[nodiscard]] constexpr auto find_last_of(value_type const* s, size_type pos, size_type count) const -> size_type
+    [[nodiscard]] constexpr auto find_last_of(CharT const* s, size_type pos, size_type count) const -> size_type
     {
-        auto view = basic_string_view<value_type>{*this};
-        return view.find_last_of(s, pos, count);
+        return basic_string_view<CharT>{*this}.find_last_of(s, pos, count);
     }
 
     /// \brief Finds the last character equal to one of characters in the given
     /// character sequence. The exact search algorithm is not specified. The
     /// search considers only the interval [0, pos]. If the character is not
     /// present in the interval, npos will be returned.
-    [[nodiscard]] constexpr auto find_last_of(value_type const* s, size_type pos = 0) const -> size_type
+    [[nodiscard]] constexpr auto find_last_of(CharT const* s, size_type pos = 0) const -> size_type
     {
-        auto view = basic_string_view<value_type>{*this};
-        return view.find_last_of(s, pos);
+        return basic_string_view<CharT>{*this}.find_last_of(s, pos);
     }
 
     /// \brief Finds the last character equal to none of the characters in the
@@ -1230,60 +1206,52 @@ public:
     [[nodiscard]] constexpr auto
     find_last_not_of(basic_inplace_string const& str, size_type pos = 0) const noexcept -> size_type
     {
-        auto view = basic_string_view<value_type>{*this};
-        return view.find_last_not_of(str, pos);
+        return basic_string_view<CharT>{*this}.find_last_not_of(str, pos);
     }
 
     /// \brief Finds the last character equal to none of the characters in the
     /// given character sequence. The search considers only the interval [0,
     /// pos]. If the character is not present in the interval, npos will be
     /// returned.
-    [[nodiscard]] constexpr auto find_last_not_of(value_type c, size_type pos = 0) const noexcept -> size_type
+    [[nodiscard]] constexpr auto find_last_not_of(CharT c, size_type pos = 0) const noexcept -> size_type
     {
-        auto view = basic_string_view<value_type>{*this};
-        return view.find_last_not_of(c, pos);
+        return basic_string_view<CharT>{*this}.find_last_not_of(c, pos);
     }
 
     /// \brief Finds the last character equal to none of the characters in the
     /// given character sequence. The search considers only the interval [0,
     /// pos]. If the character is not present in the interval, npos will be
     /// returned.
-    [[nodiscard]] constexpr auto
-    find_last_not_of(value_type const* s, size_type pos, size_type count) const -> size_type
+    [[nodiscard]] constexpr auto find_last_not_of(CharT const* s, size_type pos, size_type count) const -> size_type
     {
-        auto view = basic_string_view<value_type>{*this};
-        return view.find_last_not_of(s, pos, count);
+        return basic_string_view<CharT>{*this}.find_last_not_of(s, pos, count);
     }
 
     /// \brief Finds the last character equal to none of the characters in the
     /// given character sequence. The search considers only the interval [0,
     /// pos]. If the character is not present in the interval, npos will be
     /// returned.
-    [[nodiscard]] constexpr auto find_last_not_of(value_type const* s, size_type pos = 0) const -> size_type
+    [[nodiscard]] constexpr auto find_last_not_of(CharT const* s, size_type pos = 0) const -> size_type
     {
-        auto view = basic_string_view<value_type>{*this};
-        return view.find_last_not_of(s, pos);
+        return basic_string_view<CharT>{*this}.find_last_not_of(s, pos);
     }
 
     /// \brief Checks if the string contains the given substring.
     [[nodiscard]] constexpr auto contains(etl::basic_string_view<CharT, Traits> sv) const noexcept -> bool
     {
-        auto view = basic_string_view<value_type>{*this};
-        return view.find_last_not_of(sv);
+        return basic_string_view<CharT>{*this}.contains(sv);
     }
 
     /// \brief Checks if the string contains the given substring.
     [[nodiscard]] constexpr auto contains(CharT c) const noexcept -> bool
     {
-        auto view = basic_string_view<value_type>{*this};
-        return view.find_last_not_of(c);
+        return basic_string_view<CharT>{*this}.contains(c);
     }
 
     /// \brief Checks if the string contains the given substring.
     [[nodiscard]] constexpr auto contains(CharT const* s) const -> bool
     {
-        auto view = basic_string_view<value_type>{*this};
-        return view.find_last_not_of(s);
+        return basic_string_view<CharT>{*this}.contains(s);
     }
 
     /// \brief This is a special value equal to the maximum value representable
@@ -1349,10 +1317,10 @@ private:
 
         [[nodiscard]] constexpr auto get_size() const noexcept { return Capacity - size_type(_buffer[Capacity]); }
 
-        constexpr auto set_size(size_t size) noexcept { return _buffer[Capacity] = value_type(Capacity - size); }
+        constexpr auto set_size(size_t size) noexcept { return _buffer[Capacity] = CharT(Capacity - size); }
 
     private:
-        etl::array<value_type, Capacity + 1> _buffer{};
+        etl::array<CharT, Capacity + 1> _buffer{};
     };
 
     struct normal_layout {
@@ -1368,7 +1336,7 @@ private:
 
     private:
         internal_size_t _size{};
-        etl::array<value_type, Capacity + 1> _buffer{};
+        etl::array<CharT, Capacity + 1> _buffer{};
     };
 
     using layout_type = etl::conditional_t<(Capacity < 16), tiny_layout, normal_layout>;
