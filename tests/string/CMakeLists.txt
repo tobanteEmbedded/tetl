@@ -2,6 +2,7 @@ project("string")
 
 tetl_add_test(${PROJECT_NAME} inplace_string.access)
 tetl_add_test(${PROJECT_NAME} inplace_string.algorithm)
+tetl_add_test(${PROJECT_NAME} inplace_string.compare)
 tetl_add_test(${PROJECT_NAME} inplace_string.construct)
 tetl_add_test(${PROJECT_NAME} inplace_string.modify)
 tetl_add_test(${PROJECT_NAME} inplace_wstring)

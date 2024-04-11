@@ -373,51 +373,6 @@ template <typename String>
     }
 
     {
-        auto lhs = string();
-        auto rhs = string();
-
-        CHECK(lhs.compare(rhs) == 0);
-        CHECK(rhs.compare(lhs) == 0);
-    }
-
-    {
-        auto lhs = string();
-        auto rhs = etl::inplace_string<2>{};
-
-        CHECK(lhs.compare(rhs) == 0);
-        CHECK(rhs.compare(lhs) == 0);
-    }
-
-    {
-        auto const lhs = string("test");
-        auto const rhs = string("test");
-
-        CHECK(lhs.compare("test") == 0);
-        CHECK(lhs.compare("test"_sv) == 0);
-        CHECK(lhs.compare("test1"_sv) == -1);
-        CHECK(lhs.compare("tes"_sv) == +1);
-        CHECK(lhs.compare(rhs) == 0);
-        CHECK(rhs.compare(lhs) == 0);
-
-        CHECK(lhs.compare(1, 1, "test") < 0);
-        CHECK(lhs.compare(1, 1, "test"_sv) < 0);
-        CHECK(lhs.compare(1, 1, rhs) < 0);
-        CHECK(rhs.compare(1, 1, lhs) < 0);
-
-        CHECK(lhs.compare(1, 1, rhs, 1, 1) == 0);
-        CHECK(rhs.compare(1, 1, lhs, 1, 1) == 0);
-
-        CHECK(string("te").compare(0, 2, "test"_sv, 0, 2) == 0);
-        CHECK(string("abcabc").compare(3, 3, "abc"_sv, 0, 3) == 0);
-        CHECK(string("abcabc").compare(3, 1, "abc"_sv, 0, 3) < 0);
-        CHECK(string("abcabc").compare(3, 3, "abc"_sv, 0, 1) > 0);
-
-        CHECK(string("abcabc").compare(3, 3, "abc", 3) == 0);
-        CHECK(string("abcabc").compare(3, 1, "abc", 0, 3) < 0);
-        CHECK(string("abcabc").compare(3, 3, "abc", 0, 1) > 0);
-    }
-
-    {
         string emptySrc{""};
 
         string empty{};
@@ -581,18 +536,6 @@ template <typename String>
         CHECK(str.empty() == false);
         CHECK(str.size() == 1);
         CHECK(str[0] == 'a');
-    }
-
-    {
-        auto const lhs = string("test");
-        auto const rhs = string("te");
-
-        CHECK(lhs.compare(rhs) > 0);
-        CHECK(rhs.compare("test"_sv) < 0);
-
-        auto other = etl::inplace_string<9>{"te"};
-        CHECK(lhs.compare(other) > 0);
-        CHECK(other.compare(etl::string_view("te")) == 0);
     }
 
     return true;
