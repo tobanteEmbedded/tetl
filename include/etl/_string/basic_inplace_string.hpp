@@ -7,6 +7,7 @@
 #include <etl/_algorithm/max.hpp>
 #include <etl/_algorithm/remove.hpp>
 #include <etl/_algorithm/rotate.hpp>
+#include <etl/_algorithm/swap_ranges.hpp>
 #include <etl/_array/array.hpp>
 #include <etl/_contracts/check.hpp>
 #include <etl/_cstring/memset.hpp>
@@ -640,7 +641,7 @@ public:
     /// \brief Compares this string to str.
     [[nodiscard]] constexpr auto compare(basic_inplace_string const& str) const noexcept -> int
     {
-        return compare_impl(data(), size(), str.data(), str.size());
+        return basic_string_view<CharT, Traits>{*this}.compare({str.data(), str.size()});
     }
 
     /// \brief Compares this string to str with other capacity.
@@ -648,7 +649,7 @@ public:
     [[nodiscard]] constexpr auto compare(basic_inplace_string<CharT, OtherCapacity, traits_type> const& str
     ) const noexcept -> int
     {
-        return compare_impl(data(), size(), str.data(), str.size());
+        return basic_string_view<CharT, Traits>{*this}.compare({str.data(), str.size()});
     }
 
     /// \brief Compares a [pos, pos+count) substring of this string to str. If
@@ -687,7 +688,7 @@ public:
     /// traits_type::length(s).
     [[nodiscard]] constexpr auto compare(const_pointer s) const -> int
     {
-        return compare_impl(data(), size(), s, traits_type::length(s));
+        return basic_string_view<CharT, Traits>{*this}.compare({s, traits_type::length(s)});
     }
 
     /// \brief Compares a [pos1, pos1+count1) substring of this string to the
@@ -698,7 +699,7 @@ public:
     {
         auto const sz  = count > size() - pos ? size() : count;
         auto const sub = basic_string_view<CharT, Traits>(*this).substr(pos, sz);
-        return compare_impl(sub.data(), sub.size(), s, traits_type::length(s));
+        return sub.compare({s, traits_type::length(s)});
     }
 
     /// \brief  Compares a [pos1, pos1+count1) substring of this string to the
@@ -710,7 +711,7 @@ public:
     {
         auto const sz  = count1 > size() - pos1 ? size() : count1;
         auto const sub = basic_string_view<CharT, Traits>(*this).substr(pos1, sz);
-        return compare_impl(sub.data(), sub.size(), s, count2);
+        return sub.compare({s, count2});
     }
 
     /// \brief Implicitly converts view to a string view sv, then compares the
@@ -946,9 +947,12 @@ public:
     /// iterators and references may be invalidated.
     constexpr auto swap(basic_inplace_string& other) noexcept -> void
     {
-        auto temp(etl::move(other));
-        other = etl::move(*this);
-        *this = etl::move(temp);
+        auto const thisSize = size();
+        auto const maxSize  = static_cast<etl::ptrdiff_t>(etl::max(thisSize, other.size()));
+
+        etl::swap_ranges(begin(), etl::next(begin(), maxSize + 1), other.begin()); // includes null-terminator
+        unsafe_set_size(other.size());
+        other.unsafe_set_size(thisSize);
     }
 
     /// \brief Finds the first substring equal to the given character sequence.
@@ -1289,23 +1293,6 @@ private:
 
         // Rotate to correct position
         etl::rotate(pos, currentEnd, end());
-    }
-
-    [[nodiscard]] constexpr auto
-    compare_impl(const_pointer lhs, size_type lhsSize, const_pointer rhs, size_type rhsSize) const noexcept -> int
-    {
-        auto const minSize = etl::min(lhsSize, rhsSize);
-        auto const result  = traits_type::compare(lhs, rhs, minSize);
-        if (result != 0) {
-            return result;
-        }
-        if (lhsSize < rhsSize) {
-            return -1;
-        }
-        if (lhsSize > rhsSize) {
-            return 1;
-        }
-        return 0;
     }
 
     struct tiny_layout {
