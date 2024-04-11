@@ -37,6 +37,7 @@ constexpr auto test() -> bool
 
     // searcher
     {
+
         auto src = etl::array{T(0), T(0), T(0), T(1), T(2), T(3)};
 
         auto t1 = etl::array{T(1), T(2), T(3)};
@@ -46,6 +47,8 @@ constexpr auto test() -> bool
         auto t2 = etl::static_vector<T, 0>{};
         auto s2 = etl::default_searcher(t2.begin(), t2.end());
         CHECK(etl::search(src.begin(), src.end(), s2) == begin(src));
+
+        CHECK(etl::search(static_cast<T*>(nullptr), static_cast<T*>(nullptr), s2) == static_cast<T*>(nullptr));
     }
 
     // empty range
