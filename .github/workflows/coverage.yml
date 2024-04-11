@@ -33,8 +33,6 @@ jobs:
           -B build
           -G Ninja
           -D CMAKE_CXX_STANDARD="${{ matrix.cxx }}"
-          -D CMAKE_C_COMPILER="gcc-13"
-          -D CMAKE_CXX_COMPILER="g++-13"
           -D CMAKE_BUILD_TYPE=Debug
           -D TETL_BUILD_COVERAGE=ON
 
@@ -47,7 +45,6 @@ jobs:
       - name: Coverage Report
         run: >
           gcovr --xml-pretty
-          --gcov-executable "gcov-13"
           --exclude-unreachable-branches
           -s build
           -o build/coverage.xml
