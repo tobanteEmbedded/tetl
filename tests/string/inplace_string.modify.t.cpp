@@ -3,6 +3,7 @@
 #include <etl/string.hpp>
 
 #include <etl/algorithm.hpp>
+#include <etl/cctype.hpp>
 #include <etl/string_view.hpp>
 #include <etl/utility.hpp>
 
@@ -174,6 +175,28 @@ template <typename String>
         auto s = String("0123456");
         CHECK(s.replace(0, 2, String("xx"), 0) == "xx23456"_sv);
         CHECK(s.replace(2, 1, String("xx"), 0) == "xxx3456"_sv);
+    }
+
+    // erase
+    {
+        auto abcABC = String("abcABC");
+        CHECK(etl::erase(abcABC, 'a') == 1);
+        CHECK(abcABC == "bcABC");
+
+        auto abcabc = String("abcabc");
+        CHECK(etl::erase(abcabc, 'a') == 2);
+        CHECK(abcabc == "bcbc");
+    }
+
+    // erase_if
+    {
+        auto abcABC = String("abcABC");
+        CHECK(etl::erase_if(abcABC, [](auto ch) { return etl::islower(ch) != 0; }) == 3);
+        CHECK(abcABC == "ABC");
+
+        auto abcabc = String("abcabc");
+        CHECK(etl::erase_if(abcabc, [](auto ch) { return etl::isupper(ch) != 0; }) == 0);
+        CHECK(abcabc == "abcabc");
     }
 
     return true;
