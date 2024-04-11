@@ -27,8 +27,7 @@ jobs:
       - name: Install dependencies
         run: |
           apk add git --no-cache
-          apk add build-base cmake ninja py3-pip
-          pip3 install gcovr colorlog
+          apk add build-base cmake gcovr ninja py3-colorlog
 
       - name: CMake configure
         run: >
