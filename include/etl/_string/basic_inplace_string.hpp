@@ -819,10 +819,10 @@ public:
         TETL_PRECONDITION(pos2 < str.size());
         TETL_PRECONDITION(pos2 + count2 < str.size());
 
-        auto* f        = data() + min(pos, size());
-        auto* l        = data() + min(pos + count, size());
-        auto const* sf = next(begin(str), min(pos2, str.size()));
-        auto const* sl = next(begin(str), min(pos2 + count2, str.size()));
+        auto* f        = data() + etl::min(pos, size());
+        auto* l        = data() + etl::min(pos + count, size());
+        auto const* sf = etl::next(str.begin(), static_cast<etl::ptrdiff_t>(etl::min(pos2, str.size())));
+        auto const* sl = etl::next(str.begin(), static_cast<etl::ptrdiff_t>(etl::min(pos2 + count2, str.size())));
         detail::str_replace(f, l, sf, sl);
         return *this;
     }

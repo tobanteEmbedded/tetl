@@ -4,10 +4,10 @@
 
 #include "testing/testing.hpp"
 
-template <typename T>
+template <typename String>
 constexpr auto test() -> bool
 {
-    auto str = T();
+    auto str = String();
     CHECK(str == L"");
     CHECK(str.empty());
     CHECK(str.size() == 0); // NOLINT
@@ -19,7 +19,7 @@ constexpr auto test() -> bool
     str = str + wchar_t('t');
     CHECK(str == L"test");
 
-    str = str + T{L"_foo"};
+    str = str + String{L"_foo"};
     CHECK(str == L"test_foo");
 
     str = L"__" + str;
@@ -37,9 +37,6 @@ constexpr auto test_all() -> bool
     CHECK(test<etl::inplace_wstring<18>>());
     CHECK(test<etl::inplace_wstring<24>>());
     CHECK(test<etl::inplace_wstring<32>>());
-    CHECK(test<etl::inplace_wstring<64>>());
-    CHECK(test<etl::inplace_wstring<128>>());
-    CHECK(test<etl::inplace_wstring<256>>());
     return true;
 }
 

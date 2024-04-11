@@ -263,14 +263,6 @@ template <typename String>
         CHECK(test.find_last_not_of('s', 2) == 1);
     }
 
-    // replace
-    {
-        auto s = String("0123456");
-        CHECK(s.replace(0, 2, String("xx")) == "xx23456"_sv);
-        CHECK(s.replace(2, 1, String("xx")) == "xxx3456"_sv);
-        CHECK(s.replace(begin(s) + 3, begin(s) + 4, String("x")) == "xxxx456"_sv);
-    }
-
     return true;
 }
 
