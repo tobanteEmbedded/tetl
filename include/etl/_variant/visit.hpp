@@ -67,6 +67,16 @@ consteval auto next_seq(index_sequence<I, Is...> /*i*/, index_sequence<J, Js...>
     }
 }
 
+template <typename V>
+consteval auto variant_size() -> size_t
+{
+    if constexpr (is_variant_v<V>) {
+        return variant_size_v<variant_access_t<V>>;
+    } else {
+        return 1;
+    }
+}
+
 template <size_t I, typename T>
 constexpr auto get(T&& t) -> decltype(auto)
 {
@@ -75,16 +85,6 @@ constexpr auto get(T&& t) -> decltype(auto)
     } else {
         static_assert(I == 0);
         return etl::forward<T>(t);
-    }
-}
-
-template <typename V>
-constexpr auto variant_size() -> size_t
-{
-    if constexpr (is_variant_v<V>) {
-        return variant_size_v<variant_access_t<V>>;
-    } else {
-        return 1;
     }
 }
 

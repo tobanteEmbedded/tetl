@@ -13,6 +13,9 @@ template <typename T>
 constexpr auto test() -> bool
 {
     {
+        auto empty = etl::static_vector<T, 5>{};
+        CHECK(etl::partition(empty.begin(), empty.end(), [](auto n) { return n < 10; }) == empty.begin());
+
         auto arr = etl::array{T(11), T(1), T(12), T(13), T(2), T(3), T(4)};
         etl::partition(begin(arr), end(arr), [](auto n) { return n < 10; });
         CHECK(arr[0] == 1);
