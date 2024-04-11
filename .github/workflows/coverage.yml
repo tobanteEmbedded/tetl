@@ -26,8 +26,8 @@ jobs:
 
       - name: Install dependencies
         run: |
-          sudo apt update -y
-          sudo apt install -y build-essential cmake ninja-build gcovr
+          apt update -y
+          apt install -y build-essential cmake ninja-build gcovr
 
       - name: CMake configure
         run: >
