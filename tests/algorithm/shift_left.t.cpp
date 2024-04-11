@@ -23,7 +23,10 @@ constexpr auto test() -> bool
         etl::shift_left(data.begin(), data.end(), 0);
         CHECK(data == original);
 
-        etl::shift_left(data.begin(), data.end(), static_cast<etl::ptrdiff_t>(data.size() + 1));
+        etl::shift_left(data.begin(), data.end(), etl::ptrdiff_t(data.size() + 1));
+        CHECK(data == original);
+
+        CHECK(etl::shift_left(data.begin(), data.end(), etl::ptrdiff_t(data.size() + 1)) == data.begin());
         CHECK(data == original);
 
         etl::shift_left(data.begin(), data.end(), 2);
@@ -41,6 +44,15 @@ constexpr auto test() -> bool
         CHECK(data == original);
 
         etl::shift_left(forward_iter(data.begin()), forward_iter(data.end()), 0);
+        CHECK(data == original);
+
+        etl::shift_left(forward_iter(data.begin()), forward_iter(data.end()), etl::ptrdiff_t(data.size() + 1));
+        CHECK(data == original);
+
+        CHECK(
+            etl::shift_left(forward_iter(data.begin()), forward_iter(data.end()), etl::ptrdiff_t(data.size() + 1))
+            == forward_iter(data.begin())
+        );
         CHECK(data == original);
 
         etl::shift_left(forward_iter(data.begin()), forward_iter(data.end()), 2);
