@@ -14,8 +14,6 @@ jobs:
   build:
     name: Coverage C++${{ matrix.cxx }}
     runs-on: ubuntu-22.04
-    container:
-      image: alpine:edge
     strategy:
       matrix:
         cxx: [20, 23]
@@ -26,8 +24,8 @@ jobs:
 
       - name: Install dependencies
         run: |
-          apk add git --no-cache
-          apk add build-base cmake gcovr ninja py3-colorlog gnupg
+          sudo apt update -y
+          sudo apt install -y ninja-build gcovr
 
       - name: CMake configure
         run: >
@@ -55,7 +53,6 @@ jobs:
 
       - uses: codecov/codecov-action@v4
         with:
-          os: alpine
           token: ${{ secrets.CODECOV_TOKEN }}
           files: ./build/coverage.xml
           fail_ci_if_error: true
