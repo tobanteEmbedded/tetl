@@ -30,6 +30,8 @@ namespace etl {
 /// destructor of pair is trivial.
 ///
 /// https://en.cppreference.com/w/cpp/utility/pair
+///
+/// \ingroup utility
 template <typename T1, typename T2>
 struct pair {
     using first_type  = T1;
@@ -95,26 +97,18 @@ struct pair {
     /// \brief Defaulted destructor.
     ~pair() noexcept = default;
 
-    constexpr auto operator=(pair const& p) -> pair&
-    {
-        if (&p == this) {
-            return *this;
-        }
-        first  = p.first;
-        second = p.second;
-        return *this;
-    }
+    constexpr auto operator=(pair const& p) -> pair& = default;
 
     template <typename U1, typename U2>
     constexpr auto operator=(pair<U1, U2> const& p
-    ) -> pair& requires(is_assignable_v<first_type&, U1 const&>and is_assignable_v<second_type&, U2 const&>) {
+    ) -> pair& requires((is_assignable_v<first_type&, U1 const&> and is_assignable_v<second_type&, U2 const&>)) {
         first  = p.first;
         second = p.second;
         return *this;
     }
 
     constexpr auto operator=(pair&& p
-    ) noexcept -> pair& requires(is_move_assignable_v<first_type>and is_move_assignable_v<second_type>) {
+    ) noexcept -> pair& requires((is_move_assignable_v<first_type> and is_move_assignable_v<second_type>)) {
         first  = etl::move(p.first);
         second = etl::move(p.second);
         return *this;
@@ -129,8 +123,8 @@ struct pair {
         return *this;
     }
 
-    constexpr void swap(pair& other)
-        noexcept((is_nothrow_swappable_v<first_type> and is_nothrow_swappable_v<second_type>))
+    constexpr auto swap(pair& other)
+        noexcept(is_nothrow_swappable_v<first_type> and is_nothrow_swappable_v<second_type>) -> void
     {
         using etl::swap;
         swap(first, other.first);

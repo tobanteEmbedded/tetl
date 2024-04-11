@@ -239,12 +239,15 @@ constexpr auto test() -> bool
         auto const p1 = etl::make_pair(T{42}, 143.0F);
         auto const p2 = etl::make_pair(T{42}, 143.0F);
         auto const p3 = etl::make_pair(T{123}, 143.0F);
+        auto const p4 = etl::make_pair(T{123}, 42.0F);
 
         CHECK_FALSE(p1 < p2);
         CHECK_FALSE(p2 < p1);
 
         CHECK(p2 < p3);
         CHECK(p1 < p3);
+        CHECK(p1 < p4);
+        CHECK(p4 < p3);
     }
 
     {
@@ -329,8 +332,10 @@ constexpr auto test() -> bool
 
         // mutable rvalue ref
         {
-            CHECK_SAME_TYPE(decltype(etl::get<0>(etl::pair{T{42}, 143.0F})), T&&);
-            CHECK_SAME_TYPE(decltype(etl::get<1>(etl::pair{T{42}, 143.0F})), float&&);
+            CHECK_SAME_TYPE(decltype(etl::get<0>(etl::pair{T{42}, 1.25F})), T&&);
+            CHECK_SAME_TYPE(decltype(etl::get<1>(etl::pair{T{42}, 1.25F})), float&&);
+            CHECK(etl::get<0>(etl::pair{T(42), 1.25F}) == T(42));
+            CHECK(etl::get<1>(etl::pair{T(42), 1.25F}) == 1.25F);
         }
     }
 
