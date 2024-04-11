@@ -55,6 +55,7 @@ jobs:
 
       - uses: codecov/codecov-action@v4
         with:
+          os: alpine
           token: ${{ secrets.CODECOV_TOKEN }}
           files: ./build/coverage.xml
           fail_ci_if_error: true
