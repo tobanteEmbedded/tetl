@@ -5,6 +5,7 @@
 #include <etl/limits.hpp>
 #include <etl/type_traits.hpp>
 
+#include "testing/approx.hpp"
 #include "testing/testing.hpp"
 
 template <typename Int>
@@ -32,6 +33,39 @@ constexpr auto test_integer() -> bool
 template <typename Float>
 constexpr auto test_float() -> bool
 {
+    constexpr auto min     = etl::numeric_limits<Float>::min();
+    constexpr auto max     = etl::numeric_limits<Float>::max();
+    constexpr auto halfMax = max / Float(2.0);
+
+    CHECK(etl::midpoint(Float(0), Float(0)) == Float(0));
+    CHECK(etl::midpoint(Float(1), Float(1)) == Float(1));
+
+    CHECK(etl::midpoint(min, min) == min);
+    CHECK(etl::midpoint(max, max) == max);
+
+    CHECK_APPROX(etl::midpoint(Float(0), min), min / Float(2));
+    CHECK_APPROX(etl::midpoint(min, Float(0)), min / Float(2));
+    CHECK_APPROX(etl::midpoint(Float(0), min), min / Float(2));
+
+    CHECK_APPROX(etl::midpoint(Float(0), max), max / Float(2));
+    CHECK_APPROX(etl::midpoint(max, Float(0)), max / Float(2));
+    CHECK_APPROX(etl::midpoint(Float(0), max), max / Float(2));
+
+    CHECK(etl::midpoint(max, max * Float(0.5)) == max * Float(0.75));
+    CHECK(etl::midpoint(min, min * Float(3)) == min * Float(2));
+    CHECK(etl::midpoint(min * Float(3), min) == min * Float(2));
+
+    {
+        auto const x = halfMax + Float(4.0);
+        auto const y = halfMax + Float(8.0);
+        CHECK(etl::midpoint(x, y) == halfMax + Float(6.0));
+    }
+
+    {
+        auto const x = -halfMax + Float(4.0);
+        auto const y = -halfMax + Float(8.0);
+        CHECK(etl::midpoint(x, y) == -halfMax + Float(6.0));
+    }
 
     {
         auto const a = Float(-3.0);
@@ -40,41 +74,6 @@ constexpr auto test_float() -> bool
         CHECK(etl::midpoint(b, a) == Float(-3.5));
         CHECK(etl::midpoint(a, b) == Float(-3.5));
         CHECK(etl::midpoint(b, a) == Float(-3.5));
-    }
-
-    {
-        auto const small = etl::numeric_limits<Float>::min();
-        CHECK(etl::midpoint(small, small) == small);
-    }
-
-    {
-        auto const large = etl::numeric_limits<Float>::max();
-        CHECK(etl::midpoint(large, large) == large);
-    }
-
-    {
-        auto const large = etl::numeric_limits<Float>::max();
-        CHECK(etl::midpoint(large, large * Float(0.5)) == large * Float(0.75));
-    }
-
-    {
-        auto const small = etl::numeric_limits<Float>::min();
-        CHECK(etl::midpoint(small, small * Float(3)) == small * Float(2));
-        CHECK(etl::midpoint(small * Float(3), small) == small * Float(2));
-    }
-
-    {
-        auto const halfMax = etl::numeric_limits<Float>::max() / Float(2.0);
-        auto const x       = halfMax + Float(4.0);
-        auto const y       = halfMax + Float(8.0);
-        CHECK(etl::midpoint(x, y) == halfMax + Float(6.0));
-    }
-
-    {
-        auto const halfMax = etl::numeric_limits<Float>::max() / Float(2.0);
-        auto const x       = -halfMax + Float(4.0);
-        auto const y       = -halfMax + Float(8.0);
-        CHECK(etl::midpoint(x, y) == -halfMax + Float(6.0));
     }
 
     return true;
