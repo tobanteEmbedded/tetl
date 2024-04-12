@@ -3,6 +3,7 @@
 #include <etl/memory.hpp>
 
 #include <etl/array.hpp>
+#include <etl/cmath.hpp>
 #include <etl/cstddef.hpp>
 #include <etl/new.hpp>
 
@@ -24,8 +25,6 @@ struct Counter {
 
 } // namespace
 
-auto some_function() -> void;
-
 template <typename T>
 auto test() -> bool
 {
@@ -46,7 +45,7 @@ auto test() -> bool
     {
         auto val = T(14.3);
         CHECK(etl::addressof(val) == &val);
-        CHECK(etl::addressof(some_function) == &some_function);
+        CHECK(etl::addressof(etl::log2f) == &etl::log2f);
     }
     {
         alignas(Counter) etl::byte buffer[sizeof(Counter) * 8];
