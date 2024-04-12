@@ -2,6 +2,7 @@
 #ifndef TETL_NUMERIC_ADJACENT_DIFFERENCE_HPP
 #define TETL_NUMERIC_ADJACENT_DIFFERENCE_HPP
 
+#include <etl/_functional/minus.hpp>
 #include <etl/_iterator/iterator_traits.hpp>
 #include <etl/_utility/move.hpp>
 
@@ -15,17 +16,15 @@ namespace etl {
 template <typename InputIt, typename OutputIt, typename BinaryOperation>
 constexpr auto adjacent_difference(InputIt first, InputIt last, OutputIt destination, BinaryOperation op) -> OutputIt
 {
-    using value_t = typename etl::iterator_traits<InputIt>::value_type;
-
     if (first == last) {
         return destination;
     }
 
-    value_t acc  = *first;
+    auto acc     = *first;
     *destination = acc;
 
     while (++first != last) {
-        value_t val    = *first;
+        auto val       = *first;
         *++destination = op(val, etl::move(acc));
         acc            = etl::move(val);
     }
@@ -38,21 +37,7 @@ template <typename InputIt, typename OutputIt>
 constexpr auto adjacent_difference(InputIt first, InputIt last, OutputIt destination) -> OutputIt
 {
     using value_t = typename etl::iterator_traits<InputIt>::value_type;
-
-    if (first == last) {
-        return destination;
-    }
-
-    value_t acc  = *first;
-    *destination = acc;
-
-    while (++first != last) {
-        value_t val    = *first;
-        *++destination = val - etl::move(acc);
-        acc            = etl::move(val);
-    }
-
-    return ++destination;
+    return etl::adjacent_difference(first, last, destination, etl::minus<value_t>());
 }
 
 } // namespace etl
