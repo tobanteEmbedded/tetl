@@ -1,5 +1,6 @@
 project(memory)
 
+tetl_add_test(${PROJECT_NAME} align)
 tetl_add_test(${PROJECT_NAME} allocator_traits)
 tetl_add_test(${PROJECT_NAME} memory)
 tetl_add_test(${PROJECT_NAME} pointer_int_pair)
