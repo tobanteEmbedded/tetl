@@ -118,6 +118,14 @@ constexpr auto test_non_empty() -> bool
     vec.clear();
     CHECK(vec.empty());
 
+    auto one = etl::inplace_vector<T, 1>{};
+    CHECK(one.unchecked_push_back(T(0)) == T(0));
+    CHECK(one.try_push_back(T(1)) == nullptr);
+
+    one.clear();
+    CHECK(one.unchecked_emplace_back(T(0)) == T(0));
+    CHECK(one.try_emplace_back(T(1)) == nullptr);
+
     return true;
 }
 
@@ -238,6 +246,9 @@ auto test_non_trivial() -> bool
     CHECK(move.try_push_back(nt99) == nullptr);
     CHECK(move.size() == 3);
 
+    CHECK(move.try_push_back(non_trivial{42}) == nullptr);
+    CHECK(move.size() == 3);
+
     move.pop_back();
     move.pop_back();
     CHECK(move.size() == 1);
@@ -247,6 +258,9 @@ auto test_non_trivial() -> bool
     move.clear();
     CHECK_NOEXCEPT(move.clear());
     CHECK(move.empty());
+
+    auto one = non_trivial{1};
+    CHECK(move.unchecked_push_back(etl::move(one)) == non_trivial{1});
 
     return true;
 }
