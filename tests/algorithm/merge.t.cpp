@@ -17,10 +17,10 @@ constexpr auto test() -> bool
         auto a = etl::array{T(0), T(0), T(0)};
         auto b = etl::array{T(1), T(1), T(1)};
         CHECK(etl::is_sorted(a.begin(), a.end()));
-        CHECK(etl::is_sorted(begin(b), end(b)));
+        CHECK(etl::is_sorted(b.begin(), b.end()));
 
         auto r = etl::static_vector<T, a.size() + b.size()>{};
-        etl::merge(a.begin(), a.end(), begin(b), end(b), etl::back_inserter(r));
+        etl::merge(a.begin(), a.end(), b.begin(), b.end(), etl::back_inserter(r));
         CHECK(r.size() == 6);
         CHECK(etl::is_sorted(begin(r), end(r)));
     }
@@ -30,13 +30,28 @@ constexpr auto test() -> bool
         auto a = etl::array{T(0), T(1), T(2)};
         auto b = etl::array{T(1), T(2), T(3)};
         CHECK(etl::is_sorted(a.begin(), a.end()));
-        CHECK(etl::is_sorted(begin(b), end(b)));
+        CHECK(etl::is_sorted(b.begin(), b.end()));
 
         auto r = etl::static_vector<T, a.size() + b.size()>{};
-        etl::merge(a.begin(), a.end(), begin(b), end(b), etl::back_inserter(r));
+        etl::merge(a.begin(), a.end(), b.begin(), b.end(), etl::back_inserter(r));
         CHECK(r.size() == 6);
         CHECK(etl::is_sorted(begin(r), end(r)));
     }
+
+    // with overlap
+    {
+        auto empty    = etl::static_vector<T, 3>{};
+        auto nonEmpty = etl::array{T(0), T(1), T(2)};
+
+        auto out1 = etl::array<T, 3>{};
+        etl::merge(empty.begin(), empty.end(), nonEmpty.begin(), nonEmpty.end(), out1.begin());
+        CHECK(out1 == etl::array{T(0), T(1), T(2)});
+
+        auto out2 = etl::array<T, 3>{};
+        etl::merge(nonEmpty.begin(), nonEmpty.end(), empty.begin(), empty.end(), out2.begin());
+        CHECK(out2 == etl::array{T(0), T(1), T(2)});
+    }
+
     return true;
 }
 
