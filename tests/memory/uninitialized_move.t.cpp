@@ -22,10 +22,10 @@ struct ThrowOnMove {
     auto operator=(ThrowOnMove&& other) -> ThrowOnMove&      = default;
 
     ThrowOnMove(ThrowOnMove const& other) = default;
-    ThrowOnMove(ThrowOnMove&& /*other*/)
+    ThrowOnMove(ThrowOnMove&& other)
     {
         moveWasCalled = true;
-        if (val == 0) {
+        if (other.val == 0) {
             throw 1; // NOLINT
         }
     }
