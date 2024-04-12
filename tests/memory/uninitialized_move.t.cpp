@@ -12,7 +12,10 @@ namespace {
 bool moveWasCalled = false;
 
 struct ThrowOnMove {
-    ThrowOnMove()  = default;
+    ThrowOnMove(int i = 0)
+        : val{i}
+    {
+    }
     ~ThrowOnMove() = default;
 
     auto operator=(ThrowOnMove const& other) -> ThrowOnMove& = default;
@@ -22,8 +25,12 @@ struct ThrowOnMove {
     ThrowOnMove(ThrowOnMove&& /*other*/)
     {
         moveWasCalled = true;
-        throw 1; // NOLINT
+        if (val == 0) {
+            throw 1; // NOLINT
+        }
     }
+
+    int val;
 };
 
 auto test() -> bool
