@@ -81,7 +81,7 @@ constexpr auto test_opional_4() -> bool
         CHECK(opt1.has_value());
 
         opt3 = etl::move(opt1);
-        CHECK(opt1.has_value());
+        CHECK(opt3.has_value());
     }
 
     {
