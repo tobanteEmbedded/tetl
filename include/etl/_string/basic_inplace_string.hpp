@@ -66,21 +66,17 @@ public:
     /// Default constructor.
     constexpr basic_inplace_string() = default;
 
-    /// \brief Character pointer constructor.
-    ///
-    /// \details Fails silently if input len is greater then capacity.
+    /// Character pointer constructor.
+    /// \pre len <= Capacity
     constexpr basic_inplace_string(const_pointer str, size_type const len) noexcept
     {
         TETL_PRECONDITION(len <= Capacity);
-        if (str != nullptr && len <= Capacity) {
-            unsafe_set_size(len);
-            traits_type::copy(_storage.data(), str, len);
-        }
+        unsafe_set_size(len);
+        traits_type::copy(_storage.data(), str, len);
     }
 
-    /// \brief Character pointer constructor. Calls traits_type::length.
-    ///
-    /// \details Fails silently if input length is greater then capacity.
+    /// Character pointer constructor. Calls traits_type::length.
+    /// \pre Length of \p str must be <= Capacity
     constexpr basic_inplace_string(const_pointer str) noexcept
         : basic_inplace_string(str, traits_type::length(str))
     {
@@ -89,15 +85,12 @@ public:
     constexpr basic_inplace_string(nullptr_t /*null*/) = delete;
 
     /// Constructs the string with count copies of character ch.
-    ///
-    /// \details Fails silently if input length is greater then capacity.
+    /// \pre count <= Capacity
     constexpr basic_inplace_string(size_type count, CharT ch) noexcept
     {
         TETL_PRECONDITION(count <= Capacity);
-        if (count <= Capacity) {
-            fill(begin(), begin() + count, ch);
-            unsafe_set_size(count);
-        }
+        fill(begin(), begin() + count, ch);
+        unsafe_set_size(count);
     }
 
     /// Constructs the string with the contents of the range [ first,
@@ -242,7 +235,7 @@ public:
         requires string_view_like<StringView>
     constexpr auto assign(StringView const& view) noexcept -> basic_inplace_string&
     {
-        auto tmp = basic_inplace_string{basic_inplace_string{view}};
+        auto tmp = basic_inplace_string{view};
         *this    = tmp;
         return *this;
     }
@@ -255,10 +248,8 @@ public:
     constexpr auto
     assign(StringView const& view, size_type pos, size_type count = npos) noexcept -> basic_inplace_string&
     {
-        auto tmp = basic_inplace_string{
-            basic_inplace_string{view, pos, count}
-        };
-        *this = tmp;
+        auto tmp = basic_inplace_string{view, pos, count};
+        *this    = tmp;
         return *this;
     }
 
@@ -425,23 +416,20 @@ public:
         return begin() + start;
     }
 
-    /// \brief Appends the given character ch to the end of the string. Does
-    /// nothing if the string is full.
+    /// \brief Appends the given character ch to the end of the string.
+    /// \pre size() < capacity()
     constexpr auto push_back(CharT ch) noexcept -> void
     {
         TETL_PRECONDITION(size() < capacity());
-        if (size() < capacity()) {
-            append(1, ch);
-        }
+        append(1, ch);
     }
 
-    /// \brief Removes the last character from the string. Does nothing if the
-    /// string is empty.
+    /// \brief Removes the last character from the string.
+    /// \pre size() != 0
     constexpr auto pop_back() noexcept -> void
     {
-        if (!empty()) {
-            unsafe_set_size(size() - 1);
-        }
+        TETL_PRECONDITION(not empty());
+        unsafe_set_size(size() - 1);
     }
 
     /// \brief Appends count copies of character s.
