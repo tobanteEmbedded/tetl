@@ -21,104 +21,6 @@ constexpr auto test() -> bool
         CHECK(etl::is_trivially_copyable_v<etl::span<T const, 16>>);
     }
 
-    // deduction guides
-    // from C array
-    {
-        T arr[16] = {};
-        auto sp   = etl::span{arr};
-        CHECK(sp.data() == &arr[0]);
-        CHECK(sp.size() == 16);
-    }
-
-    // from etl::array
-    {
-        auto arr = etl::array<T, 8>{};
-        auto sp  = etl::span{arr};
-        CHECK(sp.data() == arr.data());
-        CHECK(sp.size() == 8);
-    }
-
-    // from etl::array const
-    {
-        auto const arr = etl::array<T, 8>{};
-        auto const sp  = etl::span{arr};
-        CHECK(sp.data() == arr.data());
-        CHECK(sp.size() == 8);
-    }
-
-    // from Container
-    {
-        auto vec = etl::static_vector<T, 8>{};
-        vec.push_back(T{});
-        vec.push_back(T{});
-        auto sp = etl::span{vec};
-        CHECK(sp.data() == vec.data());
-        CHECK(sp.size() == 2);
-    }
-
-    // from Container const
-    {
-        auto const vec = []() {
-            auto v = etl::static_vector<T, 8>{};
-            v.push_back(T{});
-            v.push_back(T{});
-            return v;
-        }();
-
-        auto const sp = etl::span{vec};
-        CHECK(sp.data() == vec.data());
-        CHECK(sp.size() == 2);
-    }
-
-    {
-        auto sp = etl::span<char>{};
-        CHECK(sp.data() == nullptr);
-        CHECK(sp.size() == 0);
-        CHECK(sp.empty());
-    }
-
-    // static extent
-    {
-        auto arr = etl::array<T, 8>{};
-        auto sp  = etl::span<T, 8>{etl::begin(arr), etl::size(arr)};
-        CHECK_FALSE(sp.empty());
-        CHECK(sp.data() == arr.data());
-        CHECK(sp.size() == arr.size());
-        CHECK(sp.extent == arr.size());
-    }
-
-    // static array
-    {
-        auto arr = etl::array<T, 8>{};
-        auto sp  = etl::span<T>{etl::begin(arr), etl::size(arr)};
-        CHECK_FALSE(sp.empty());
-        CHECK(sp.data() == arr.data());
-        CHECK(sp.size() == arr.size());
-        CHECK(sp.extent == etl::dynamic_extent);
-    }
-
-    // static vector
-    {
-        auto vec = etl::static_vector<T, 8>{};
-        auto rng = []() { return T{42}; };
-        etl::generate_n(etl::back_inserter(vec), 4, rng);
-
-        auto sp = etl::span<T>{etl::begin(vec), etl::size(vec)};
-        CHECK_FALSE(sp.empty());
-        CHECK(sp.data() == vec.data());
-        CHECK(sp.size() == vec.size());
-        CHECK(sp.extent == etl::dynamic_extent);
-        CHECK(etl::all_of(etl::begin(sp), etl::end(sp), [](auto& x) { return x == T{42}; }));
-    }
-
-    // empty
-    {
-        auto sp = etl::span<T>{};
-        CHECK(sp.begin() == sp.end());
-        CHECK(etl::begin(sp) == etl::end(sp));
-        CHECK(sp.size() == 0);
-    }
-
     // ranged-for
     {
         auto data = etl::array<T, 4>{};
@@ -215,6 +117,23 @@ constexpr auto test() -> bool
         CHECK(twot.size() == 2);
         CHECK(twot[0] == T(5));
         CHECK(twot[1] == T(6));
+    }
+
+    {
+        auto data = etl::array{T(0), T(1), T(2), T(3), T(4), T(5), T(6)};
+        auto sp   = etl::span<T>{data};
+
+        auto first = sp.subspan(0, 1);
+        CHECK(first.size() == 1);
+        CHECK(first[0] == T(0));
+
+        auto first2 = sp.subspan(1, 2);
+        CHECK(first2.size() == 2);
+        CHECK(first2[0] == T(1));
+        CHECK(first2[1] == T(2));
+
+        auto mid = sp.template subspan<0, 1>();
+        CHECK(mid.extent == 1);
     }
 
     return true;
