@@ -15,6 +15,7 @@ constexpr auto test() -> bool
     // empty
     {
         auto a = etl::static_vector<T, 1>{};
+        CHECK(a.begin() == a.end());
         CHECK(etl::adjacent_difference(a.begin(), a.end(), a.begin()) == a.begin());
     }
 
