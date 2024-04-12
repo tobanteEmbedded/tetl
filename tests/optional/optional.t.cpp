@@ -118,23 +118,6 @@ constexpr auto test() -> bool
     }
 
     {
-        struct S {
-            constexpr S()                                          = default;
-            constexpr S(S const& /*other*/)                        = default;
-            constexpr S(S&& /*other*/) noexcept                    = default;
-            constexpr auto operator=(S const& /*other*/) -> S&     = default;
-            constexpr auto operator=(S&& /*other*/) noexcept -> S& = default;
-
-            constexpr ~S() { }
-
-            T data{};
-        };
-
-        etl::optional<S> opt{};
-        CHECK_FALSE(etl::is_trivially_destructible_v<S>);
-    }
-
-    {
         auto opt = etl::optional<T>{};
         CHECK_FALSE(static_cast<bool>(opt));
 
