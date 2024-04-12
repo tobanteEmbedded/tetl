@@ -12,12 +12,14 @@
 template <typename T>
 constexpr auto test() -> bool
 {
+    auto predicate = [](auto n) { return n < 10; };
+
     {
         auto empty = etl::static_vector<T, 5>{};
-        CHECK(etl::partition(empty.begin(), empty.end(), [](auto n) { return n < 10; }) == empty.begin());
+        CHECK(etl::partition(empty.begin(), empty.end(), predicate) == empty.begin());
 
         auto arr = etl::array{T(11), T(1), T(12), T(13), T(2), T(3), T(4)};
-        etl::partition(begin(arr), end(arr), [](auto n) { return n < 10; });
+        etl::partition(begin(arr), end(arr), predicate);
         CHECK(arr[0] == 1);
         CHECK(arr[1] == 2);
         CHECK(arr[2] == 3);
@@ -29,19 +31,17 @@ constexpr auto test() -> bool
         auto src    = etl::static_vector<T, 5>{};
         auto dTrue  = etl::array<T, 5>{};
         auto dFalse = etl::array<T, 5>{};
-        auto pred   = [](auto n) { return n < 10; };
 
-        auto res = etl::partition_copy(src.begin(), src.end(), begin(dTrue), begin(dFalse), pred);
+        auto res = etl::partition_copy(src.begin(), src.end(), begin(dTrue), begin(dFalse), predicate);
         CHECK(res.first == begin(dTrue));
         CHECK(res.second == begin(dFalse));
     }
 
     // range
     {
-        auto src       = etl::array{T(11), T(1), T(12), T(13), T(2), T(3), T(4)};
-        auto dTrue     = etl::static_vector<T, 5>{};
-        auto dFalse    = etl::static_vector<T, 5>{};
-        auto predicate = [](auto n) { return n < 10; };
+        auto src    = etl::array{T(11), T(1), T(12), T(13), T(2), T(3), T(4)};
+        auto dTrue  = etl::static_vector<T, 5>{};
+        auto dFalse = etl::static_vector<T, 5>{};
 
         auto falseIt = etl::back_inserter(dFalse);
         auto trueIt  = etl::back_inserter(dTrue);
