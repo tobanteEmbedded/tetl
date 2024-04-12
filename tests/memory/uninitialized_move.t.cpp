@@ -28,10 +28,15 @@ struct ThrowOnMove {
 
 auto test() -> bool
 {
-    auto src  = etl::array<ThrowOnMove, 2>{};
-    auto dest = etl::uninitialized_array<ThrowOnMove, 2>{};
-    CHECK_FALSE(moveWasCalled);
-    etl::uninitialized_move(src.begin(), src.end(), dest.data());
+    try {
+        auto src  = etl::array<ThrowOnMove, 2>{};
+        auto dest = etl::uninitialized_array<ThrowOnMove, 2>{};
+        CHECK_FALSE(moveWasCalled);
+        etl::uninitialized_move(src.begin(), src.end(), dest.data());
+    } catch (int e) { // NOLINT
+        CHECK(e == 1);
+    }
+
     CHECK(moveWasCalled);
     return true;
 }
