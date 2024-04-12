@@ -4,12 +4,19 @@
 
 #include <etl/array.hpp>
 #include <etl/functional.hpp>
+#include <etl/inplace_vector.hpp>
 
 #include "testing/testing.hpp"
 
 template <typename T>
 constexpr auto test() -> bool
 {
+    // empty
+    {
+        auto data = etl::inplace_vector<T, 1>{};
+        CHECK(etl::unique(data.begin(), data.end()) == data.end());
+    }
+
     // equal_to
     {
         auto data = etl::array<T, 5>{T(1), T(1), T(1), T(2), T(3)};
@@ -22,7 +29,7 @@ constexpr auto test() -> bool
     // not_equal_to
     {
         auto data = etl::array<T, 5>{T(1), T(1), T(1), T(2), T(3)};
-        etl::unique(data.begin(), data.end(), etl::not_equal_to{});
+        etl::unique(data.begin(), data.end(), etl::not_equal_to());
         CHECK(data[0] == T(1));
         CHECK(data[1] == T(1));
         CHECK(data[2] == T(1));
@@ -44,8 +51,7 @@ constexpr auto test() -> bool
         auto src = etl::array<T, 5>{T(1), T(1), T(1), T(2), T(3)};
         decltype(src) dest{};
 
-        auto cmp = etl::not_equal_to{};
-        etl::unique_copy(src.begin(), src.end(), begin(dest), cmp);
+        etl::unique_copy(src.begin(), src.end(), begin(dest), etl::not_equal_to());
         CHECK(dest[0] == T(1));
         CHECK(dest[1] == T(1));
         CHECK(dest[2] == T(1));
