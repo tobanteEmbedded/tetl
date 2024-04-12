@@ -75,8 +75,6 @@ auto test() -> bool
         CHECK(false);
     } catch (etl::bad_function_call const& e) {
         CHECK(e.what() == "empty inplace_func_vtable"_sv);
-    } catch (...) { // NOLINT
-        CHECK(false);
     }
 #endif
     return true;

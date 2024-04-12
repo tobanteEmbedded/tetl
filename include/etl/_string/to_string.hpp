@@ -3,6 +3,7 @@
 #ifndef TETL_STRING_TO_STRING_HPP
 #define TETL_STRING_TO_STRING_HPP
 
+#include <etl/_contracts/check.hpp>
 #include <etl/_string/inplace_string.hpp>
 #include <etl/_strings/from_integer.hpp>
 
@@ -16,10 +17,8 @@ constexpr auto to_string(Int val) -> etl::inplace_string<Capacity>
     char buffer[Capacity]{};
     auto* first    = etl::begin(buffer);
     auto const res = etl::strings::from_integer<Int>(val, first, Capacity, 10);
-    if (res.error == etl::strings::from_integer_error::none) {
-        return etl::inplace_string<Capacity>{first, res.end};
-    }
-    return {};
+    TETL_PRECONDITION(res.error == etl::strings::from_integer_error::none);
+    return etl::inplace_string<Capacity>{first, res.end};
 }
 
 } // namespace detail

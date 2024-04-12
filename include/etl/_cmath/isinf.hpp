@@ -17,12 +17,11 @@ inline constexpr struct isinf {
     template <typename Float>
     [[nodiscard]] constexpr auto operator()(Float arg) const -> bool
     {
-        if (not is_constant_evaluated()) {
 #if __has_builtin(__builtin_isinf)
-            return __builtin_isinf(arg) != 0;
-#endif
-        }
+        return __builtin_isinf(arg) != 0;
+#else
         return arg == etl::numeric_limits<Float>::infinity();
+#endif
     }
 } isinf;
 

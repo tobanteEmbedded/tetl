@@ -22,8 +22,9 @@ struct Counter {
     ~Counter() { value++; }
 };
 
-auto some_function() -> void { }
 } // namespace
+
+auto some_function() -> void;
 
 template <typename T>
 auto test() -> bool

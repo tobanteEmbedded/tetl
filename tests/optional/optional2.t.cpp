@@ -73,12 +73,15 @@ constexpr auto test_opional_4() -> bool
         auto opt2 = opt1;
         CHECK(opt2.has_value());
 
-        auto const opt3 = etl::move(opt2);
+        auto opt3 = etl::move(opt2);
         CHECK(opt3.has_value());
 
         // NOLINTNEXTLINE(performance-unnecessary-copy-initialization)
-        auto const opt4 = opt3;
-        CHECK(opt4.has_value());
+        opt1 = opt3;
+        CHECK(opt1.has_value());
+
+        opt3 = etl::move(opt1);
+        CHECK(opt1.has_value());
     }
 
     {
