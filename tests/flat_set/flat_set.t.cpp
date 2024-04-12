@@ -26,24 +26,24 @@ struct wrapper {
 template <typename T>
 constexpr auto test() -> bool
 {
-    using vector_t = etl::static_vector<T, 8>;
-    using set_t    = etl::flat_set<T, vector_t, etl::less<>>;
+    using vector   = etl::static_vector<T, 8>;
+    using flat_set = etl::flat_set<T, vector, etl::less<>>;
 
-    CHECK_SAME_TYPE(typename set_t::key_type, T);
-    CHECK_SAME_TYPE(typename set_t::key_compare, etl::less<>);
-    CHECK_SAME_TYPE(typename set_t::value_type, T);
-    CHECK_SAME_TYPE(typename set_t::value_compare, etl::less<>);
-    CHECK_SAME_TYPE(typename set_t::reference, T&);
-    CHECK_SAME_TYPE(typename set_t::const_reference, T const&);
-    CHECK_SAME_TYPE(typename set_t::size_type, typename vector_t::size_type);
-    CHECK_SAME_TYPE(typename set_t::difference_type, typename vector_t::difference_type);
-    CHECK_SAME_TYPE(typename set_t::iterator, typename vector_t::iterator);
-    CHECK_SAME_TYPE(typename set_t::const_iterator, typename vector_t::const_iterator);
-    CHECK_SAME_TYPE(typename set_t::reverse_iterator, etl::reverse_iterator<typename vector_t::iterator>);
-    CHECK_SAME_TYPE(typename set_t::const_reverse_iterator, etl::reverse_iterator<typename vector_t::const_iterator>);
-    CHECK_SAME_TYPE(typename set_t::container_type, vector_t);
+    CHECK_SAME_TYPE(typename flat_set::key_type, T);
+    CHECK_SAME_TYPE(typename flat_set::key_compare, etl::less<>);
+    CHECK_SAME_TYPE(typename flat_set::value_type, T);
+    CHECK_SAME_TYPE(typename flat_set::value_compare, etl::less<>);
+    CHECK_SAME_TYPE(typename flat_set::reference, T&);
+    CHECK_SAME_TYPE(typename flat_set::const_reference, T const&);
+    CHECK_SAME_TYPE(typename flat_set::size_type, typename vector::size_type);
+    CHECK_SAME_TYPE(typename flat_set::difference_type, typename vector::difference_type);
+    CHECK_SAME_TYPE(typename flat_set::iterator, typename vector::iterator);
+    CHECK_SAME_TYPE(typename flat_set::const_iterator, typename vector::const_iterator);
+    CHECK_SAME_TYPE(typename flat_set::reverse_iterator, etl::reverse_iterator<typename vector::iterator>);
+    CHECK_SAME_TYPE(typename flat_set::const_reverse_iterator, etl::reverse_iterator<typename vector::const_iterator>);
+    CHECK_SAME_TYPE(typename flat_set::container_type, vector);
 
-    auto s1 = set_t{};
+    auto s1 = flat_set{};
     CHECK(s1.size() == 0); // NOLINT
     CHECK(s1.empty());
     CHECK(s1.begin() == s1.end());
@@ -52,7 +52,7 @@ constexpr auto test() -> bool
     CHECK(s1.max_size() == 8);
     CHECK_FALSE(s1.contains(T(0)));
 
-    auto s2 = set_t{vector_t{}};
+    auto s2 = flat_set{vector{}};
     CHECK(s2.size() == 0); // NOLINT
     CHECK(s2.begin() == s2.end());
     CHECK(s1.begin() != s2.begin());
@@ -97,7 +97,7 @@ constexpr auto test() -> bool
     CHECK(s2.erase(T(2)) == 1);
     CHECK(s2.size() == 2);
 
-    auto other = set_t{};
+    auto other = flat_set{};
     swap(other, s2);
     CHECK(s2.empty());
     CHECK(other.size() == 2);
@@ -112,10 +112,10 @@ constexpr auto test() -> bool
     CHECK(etl::distance(other.cbegin(), other.cend()) == 2);
 
     auto const data = etl::array{T(1), T(2), T(3)};
-    auto const s3   = set_t{etl::sorted_unique, data.begin(), data.end()};
+    auto const s3   = flat_set{etl::sorted_unique, data.begin(), data.end()};
     CHECK(s3.size() == 3);
 
-    auto s4 = set_t{etl::sorted_unique, vector_t({T(1), T(2), T(3)})};
+    auto s4 = flat_set{etl::sorted_unique, vector({T(1), T(2), T(3)})};
     CHECK(s4.size() == 3);
     CHECK(s3 == s4);
     CHECK(s3 >= s4);
