@@ -6,6 +6,7 @@
 #include <etl/_algorithm/lexicographical_compare.hpp>
 #include <etl/_algorithm/lower_bound.hpp>
 #include <etl/_algorithm/rotate.hpp>
+#include <etl/_contracts/check.hpp>
 #include <etl/_functional/less.hpp>
 #include <etl/_iterator/begin.hpp>
 #include <etl/_iterator/data.hpp>
@@ -66,8 +67,8 @@ public:
     constexpr static_set(InputIt first, InputIt last)
     {
         if constexpr (detail::RandomAccessIterator<InputIt>) {
-            TETL_ASSERT(last - first >= 0);
-            TETL_ASSERT(static_cast<size_type>(last - first) <= max_size());
+            TETL_PRECONDITION(last - first >= 0);
+            TETL_PRECONDITION(static_cast<size_type>(last - first) <= max_size());
         }
 
         insert(first, last);
