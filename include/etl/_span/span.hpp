@@ -328,8 +328,10 @@ span(etl::array<Type, Size> const&) -> span<Type const, Size>;
 template <etl::ranges::range R>
 span(R&&) -> span<etl::remove_reference_t<etl::ranges::range_reference_t<R>>>;
 
-template <typename T, size_t Extent>
-inline constexpr bool ranges::enable_borrowed_range<span<T, Extent>> = true;
+namespace ranges {
+template <typename T, etl::size_t Extent>
+inline constexpr bool enable_borrowed_range<etl::span<T, Extent>> = true;
+}
 
 } // namespace etl
 
