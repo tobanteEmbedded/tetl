@@ -138,6 +138,9 @@ constexpr auto test() -> bool
     CHECK(s4.size() == 3);
     CHECK(s3 == s4);
 
+    s4.clear();
+    CHECK(s4.empty());
+
     return true;
 }
 
