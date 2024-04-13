@@ -13,7 +13,24 @@
 template <typename T>
 constexpr auto test() -> bool
 {
-    // deduction guides
+    // empty static
+    {
+        auto sp = etl::span<T, 0>{};
+        CHECK(sp.begin() == nullptr);
+        CHECK(sp.begin() == sp.end());
+        CHECK(etl::begin(sp) == etl::end(sp));
+        CHECK(sp.size() == 0);
+    }
+
+    // empty dynamic
+    {
+        auto sp = etl::span<T>{};
+        CHECK(sp.begin() == nullptr);
+        CHECK(sp.begin() == sp.end());
+        CHECK(etl::begin(sp) == etl::end(sp));
+        CHECK(sp.size() == 0);
+    }
+
     // from C array
     {
         T arr[16] = {};
@@ -103,24 +120,30 @@ constexpr auto test() -> bool
         CHECK(etl::all_of(etl::begin(sp), etl::end(sp), [](auto& x) { return x == T{42}; }));
     }
 
-    // empty
-    {
-        auto sp = etl::span<T>{};
-        CHECK(sp.begin() == sp.end());
-        CHECK(etl::begin(sp) == etl::end(sp));
-        CHECK(sp.size() == 0);
-    }
-
     // span<U, OtherExtent>
     {
-        auto arr  = etl::array<T, 8>{};
-        auto fix8 = etl::span<T, 8>{etl::begin(arr), etl::size(arr)};
-        auto dyn  = etl::span<T const>{fix8};
+        using static_span        = etl::span<T, 8>;
+        using const_static_span  = etl::span<T, 8>;
+        using dynamic_span       = etl::span<T>;
+        using const_dynamic_span = etl::span<T const>;
 
-        CHECK(fix8.data() == arr.data());
-        CHECK(fix8.size() == arr.size());
-        CHECK(fix8.data() == dyn.data());
-        CHECK(fix8.size() == dyn.size());
+        auto buffer = etl::array<T, 8>{};
+
+        dynamic_span dyn = static_span{buffer};
+        CHECK(dyn.data() == buffer.data());
+        CHECK(dyn.size() == buffer.size());
+
+        const_dynamic_span cdyn = static_span{buffer};
+        CHECK(cdyn.data() == buffer.data());
+        CHECK(cdyn.size() == buffer.size());
+
+        auto ss = static_span(dynamic_span{buffer});
+        CHECK(ss.data() == buffer.data());
+        CHECK(ss.size() == buffer.size());
+
+        auto css = const_static_span(dynamic_span{buffer});
+        CHECK(css.data() == buffer.data());
+        CHECK(css.size() == buffer.size());
     }
 
     return true;

@@ -50,7 +50,6 @@ namespace etl {
 ///
 /// \ingroup span
 /// \headerfile etl/span.hpp
-/// \todo Remove size member when `Extent != dynamic_extent`
 template <typename T, size_t Extent = etl::dynamic_extent>
 struct span;
 
@@ -314,19 +313,20 @@ private:
 };
 
 // Deduction Guides. From raw array.
-template <typename Type, etl::size_t Extent>
-span(Type (&)[Extent]) -> span<Type, Extent>;
+template <typename Type, size_t Extent>
+span(c_array<Type, Extent>&) -> span<Type, Extent>;
 
-// Deduction Guides. From etl::array<Type, Size>.
-template <typename Type, etl::size_t Size>
-span(etl::array<Type, Size>&) -> span<Type, Size>;
+// Deduction Guides. From array<Type, Size>.
+template <typename Type, size_t Size>
+span(array<Type, Size>&) -> span<Type, Size>;
 
-// Deduction Guides. From etl::array<Type const, Size>.
-template <typename Type, etl::size_t Size>
-span(etl::array<Type, Size> const&) -> span<Type const, Size>;
+// Deduction Guides. From array<Type const, Size>.
+template <typename Type, size_t Size>
+span(array<Type, Size> const&) -> span<Type const, Size>;
 
-template <etl::ranges::range R>
-span(R&&) -> span<etl::remove_reference_t<etl::ranges::range_reference_t<R>>>;
+// Deduction Guides. From a contiguous range
+template <ranges::range /*ranges::contiguous_range*/ R>
+span(R&&) -> span<remove_reference_t<ranges::range_reference_t<R>>>;
 
 namespace ranges {
 template <typename T, etl::size_t Extent>
