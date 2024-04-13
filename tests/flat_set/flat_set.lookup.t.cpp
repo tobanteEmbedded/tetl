@@ -1,0 +1,242 @@
+// SPDX-License-Identifier: BSL-1.0
+
+#include <etl/flat_set.hpp>
+
+#include <etl/functional.hpp>
+#include <etl/iterator.hpp>
+#include <etl/vector.hpp>
+
+#include "testing/testing.hpp"
+
+namespace {
+
+template <typename T>
+struct wrapper {
+    explicit constexpr wrapper(T val) noexcept
+        : value{val}
+    {
+    }
+
+    friend constexpr auto operator<(wrapper lhs, T rhs) -> bool { return lhs.value < rhs; }
+    friend constexpr auto operator<(T lhs, wrapper rhs) -> bool { return lhs < rhs.value; }
+
+    friend constexpr auto operator>(wrapper lhs, T rhs) -> bool { return lhs.value > rhs; }
+    friend constexpr auto operator>(T lhs, wrapper rhs) -> bool { return lhs > rhs.value; }
+
+    T value;
+};
+
+template <typename T, typename Compare>
+constexpr auto test_less() -> bool
+{
+    using vector   = etl::static_vector<T, 4>;
+    using flat_set = etl::flat_set<T, vector, Compare>;
+
+    // find
+    {
+        auto set         = flat_set{};
+        auto const& cset = set;
+
+        CHECK(set.find(T(0)) == set.end());
+        CHECK(cset.find(T(0)) == cset.end());
+
+        if constexpr (etl::detail::is_transparent_v<Compare>) {
+            CHECK(set.find(wrapper{T(0)}) == set.end());
+            CHECK(cset.find(wrapper{T(0)}) == cset.end());
+        }
+    }
+
+    {
+        auto set         = flat_set{vector({T(0), T(1), T(3)})};
+        auto const& cset = set;
+
+        CHECK(set.find(T(0)) == set.begin());
+        CHECK(cset.find(T(0)) == cset.begin());
+        CHECK(set.find(T(1)) == etl::next(set.begin()));
+        CHECK(cset.find(T(1)) == etl::next(cset.begin()));
+        CHECK(set.find(T(2)) == set.end());
+        CHECK(cset.find(T(2)) == cset.end());
+
+        if constexpr (etl::detail::is_transparent_v<Compare>) {
+            CHECK(set.find(wrapper{T(0)}) == set.begin());
+            CHECK(cset.find(wrapper{T(0)}) == cset.begin());
+            CHECK(set.find(wrapper{T(1)}) == etl::next(set.begin()));
+            CHECK(cset.find(wrapper{T(1)}) == etl::next(cset.begin()));
+            CHECK(set.find(wrapper{T(2)}) == set.end());
+            CHECK(cset.find(wrapper{T(2)}) == cset.end());
+        }
+    }
+
+    // count
+    {
+        auto set         = flat_set{};
+        auto const& cset = set;
+
+        CHECK(set.count(T(0)) == 0);
+        CHECK(cset.count(T(0)) == 0);
+
+        if constexpr (etl::detail::is_transparent_v<Compare>) {
+            CHECK(set.count(wrapper{T(0)}) == 0);
+            CHECK(cset.count(wrapper{T(0)}) == 0);
+        }
+    }
+
+    {
+        auto set         = flat_set{vector({T(0), T(1), T(3)})};
+        auto const& cset = set;
+
+        CHECK(set.count(T(0)) == 1);
+        CHECK(cset.count(T(0)) == 1);
+        CHECK(set.count(T(1)) == 1);
+        CHECK(cset.count(T(1)) == 1);
+        CHECK(set.count(T(2)) == 0);
+        CHECK(cset.count(T(2)) == 0);
+
+        if constexpr (etl::detail::is_transparent_v<Compare>) {
+            CHECK(set.count(wrapper{T(0)}) == 1);
+            CHECK(cset.count(wrapper{T(0)}) == 1);
+            CHECK(set.count(wrapper{T(1)}) == 1);
+            CHECK(cset.count(wrapper{T(1)}) == 1);
+            CHECK(set.count(wrapper{T(2)}) == 0);
+            CHECK(cset.count(wrapper{T(2)}) == 0);
+        }
+    }
+
+    return true;
+}
+
+template <typename T, typename Compare>
+constexpr auto test_greater() -> bool
+{
+    using vector   = etl::static_vector<T, 4>;
+    using flat_set = etl::flat_set<T, vector, Compare>;
+
+    // find
+    {
+        auto set         = flat_set{};
+        auto const& cset = set;
+
+        CHECK(set.find(T(0)) == set.end());
+        CHECK(cset.find(T(0)) == cset.end());
+
+        if constexpr (etl::detail::is_transparent_v<Compare>) {
+            CHECK(set.find(wrapper{T(0)}) == set.end());
+            CHECK(cset.find(wrapper{T(0)}) == cset.end());
+        }
+    }
+
+    {
+        auto set         = flat_set{vector({T(0), T(1), T(3)})};
+        auto const& cset = set;
+
+        CHECK(set.find(T(3)) == set.begin());
+        CHECK(cset.find(T(3)) == cset.begin());
+        CHECK(set.find(T(1)) == etl::next(set.begin()));
+        CHECK(cset.find(T(1)) == etl::next(cset.begin()));
+        CHECK(set.find(T(2)) == set.end());
+        CHECK(cset.find(T(2)) == cset.end());
+
+        if constexpr (etl::detail::is_transparent_v<Compare>) {
+            CHECK(set.find(wrapper{T(3)}) == set.begin());
+            CHECK(cset.find(wrapper{T(3)}) == cset.begin());
+            CHECK(set.find(wrapper{T(1)}) == etl::next(set.begin()));
+            CHECK(cset.find(wrapper{T(1)}) == etl::next(cset.begin()));
+            CHECK(set.find(wrapper{T(2)}) == set.end());
+            CHECK(cset.find(wrapper{T(2)}) == cset.end());
+        }
+    }
+
+    // count
+    {
+        auto set         = flat_set{};
+        auto const& cset = set;
+
+        CHECK(set.count(T(0)) == 0);
+        CHECK(cset.count(T(0)) == 0);
+
+        if constexpr (etl::detail::is_transparent_v<Compare>) {
+            CHECK(set.count(wrapper{T(0)}) == 0);
+            CHECK(cset.count(wrapper{T(0)}) == 0);
+        }
+    }
+
+    {
+        auto set         = flat_set{vector({T(0), T(1), T(3)})};
+        auto const& cset = set;
+
+        CHECK(set.count(T(0)) == 1);
+        CHECK(cset.count(T(0)) == 1);
+        CHECK(set.count(T(1)) == 1);
+        CHECK(cset.count(T(1)) == 1);
+        CHECK(set.count(T(2)) == 0);
+        CHECK(cset.count(T(2)) == 0);
+
+        if constexpr (etl::detail::is_transparent_v<Compare>) {
+            CHECK(set.count(wrapper{T(0)}) == 1);
+            CHECK(cset.count(wrapper{T(0)}) == 1);
+            CHECK(set.count(wrapper{T(1)}) == 1);
+            CHECK(cset.count(wrapper{T(1)}) == 1);
+            CHECK(set.count(wrapper{T(2)}) == 0);
+            CHECK(cset.count(wrapper{T(2)}) == 0);
+        }
+    }
+
+    return true;
+}
+
+template <typename T>
+constexpr auto test_type() -> bool
+{
+    struct my_less {
+        [[nodiscard]] constexpr auto operator()(T lhs, T rhs) const -> bool { return lhs < rhs; }
+    };
+
+    struct my_greater {
+        [[nodiscard]] constexpr auto operator()(T lhs, T rhs) const -> bool { return lhs > rhs; }
+    };
+
+    test_less<T, etl::less<T>>();
+    test_less<T, etl::less<>>();
+    test_less<T, my_less>();
+
+    test_greater<T, etl::greater<T>>();
+    test_greater<T, etl::greater<>>();
+    test_greater<T, my_greater>();
+
+    return true;
+}
+
+constexpr auto test_all() -> bool
+{
+    CHECK(test_type<signed char>());
+    CHECK(test_type<signed short>());
+    CHECK(test_type<signed int>());
+    CHECK(test_type<signed long>());
+    CHECK(test_type<signed long long>());
+
+    CHECK(test_type<unsigned char>());
+    CHECK(test_type<unsigned short>());
+    CHECK(test_type<unsigned int>());
+    CHECK(test_type<unsigned long>());
+    CHECK(test_type<unsigned long long>());
+
+    CHECK(test_type<char>());
+    CHECK(test_type<char8_t>());
+    CHECK(test_type<char16_t>());
+    CHECK(test_type<char32_t>());
+    CHECK(test_type<wchar_t>());
+
+    CHECK(test_type<float>());
+    CHECK(test_type<double>());
+    CHECK(test_type<long double>());
+
+    return true;
+}
+
+} // namespace
+
+auto main() -> int
+{
+    STATIC_CHECK(test_all());
+    return 0;
+}
