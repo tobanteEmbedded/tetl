@@ -183,13 +183,13 @@ struct span {
     /// \brief Returns a reverse iterator to the first element of the reversed
     /// span. It corresponds to the last element of the non-reversed span. If
     /// the span is empty, the returned iterator is equal to rend().
-    [[nodiscard]] auto rbegin() const noexcept -> reverse_iterator { return reverse_iterator(end()); }
+    [[nodiscard]] constexpr auto rbegin() const noexcept -> reverse_iterator { return reverse_iterator(end()); }
 
     /// \brief Returns a reverse iterator to the element following the last
     /// element of the reversed span. It corresponds to the element preceding
     /// the first element of the non-reversed span. This element acts as a
     /// placeholder, attempting to access it results in undefined behavior.
-    [[nodiscard]] auto rend() const noexcept -> reverse_iterator { return reverse_iterator(begin()); }
+    [[nodiscard]] constexpr auto rend() const noexcept -> reverse_iterator { return reverse_iterator(begin()); }
 
     /// \brief Returns a reference to the first element in the span. Calling
     /// front on an empty span results in undefined behavior.

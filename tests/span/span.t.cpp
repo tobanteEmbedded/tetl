@@ -33,7 +33,9 @@ constexpr auto test() -> bool
         auto data = etl::array<T, 4>{};
         auto sp   = etl::span<T>{etl::begin(data), etl::size(data)};
         CHECK_FALSE(sp.begin() == sp.end());
+        CHECK_FALSE(sp.rbegin() == sp.rend());
         CHECK_FALSE(etl::begin(sp) == etl::end(sp));
+        CHECK_FALSE(etl::rbegin(sp) == etl::rend(sp));
 
         auto counter = 0;
         for (auto const& x : sp) {
@@ -41,6 +43,8 @@ constexpr auto test() -> bool
             counter++;
         }
         CHECK(counter == 4);
+        CHECK(etl::distance(sp.begin(), sp.end()) == 4);
+        CHECK(etl::distance(sp.rbegin(), sp.rend()) == 4);
     }
 
     // algorithm
@@ -87,11 +91,15 @@ constexpr auto test() -> bool
         auto one = sp.first(1);
         CHECK(one.size() == 1);
         CHECK(one[0] == T(0));
+        CHECK(one.front() == T(0));
+        CHECK(one.back() == T(0));
 
         auto two = sp.first(2);
         CHECK(two.size() == 2);
         CHECK(two[0] == T(0));
         CHECK(two[1] == T(1));
+        CHECK(two.front() == T(0));
+        CHECK(two.back() == T(1));
 
         auto onet = sp.template first<1>();
         CHECK(onet.size() == 1);
@@ -138,6 +146,11 @@ constexpr auto test() -> bool
         CHECK(first2.size() == 2);
         CHECK(first2[0] == T(1));
         CHECK(first2[1] == T(2));
+
+        auto last = sp.subspan(1);
+        CHECK(last.size() == 6);
+        CHECK(last.front() == T(1));
+        CHECK(last.back() == T(6));
 
         auto mid = sp.template subspan<0, 1>();
         CHECK(mid.extent == 1);

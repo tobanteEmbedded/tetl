@@ -113,14 +113,14 @@ constexpr auto test() -> bool
 
     // span<U, OtherExtent>
     {
-        auto arr         = etl::array<T, 8>{};
-        auto fix         = etl::span<T, 8>{etl::begin(arr), etl::size(arr)};
-        etl::span<T> dyn = fix;
+        auto arr  = etl::array<T, 8>{};
+        auto fix8 = etl::span<T, 8>{etl::begin(arr), etl::size(arr)};
+        auto dyn  = etl::span<T const>{fix8};
 
-        CHECK(fix.data() == arr.data());
-        CHECK(fix.size() == arr.size());
-        CHECK(fix.data() == dyn.data());
-        CHECK(fix.size() == dyn.size());
+        CHECK(fix8.data() == arr.data());
+        CHECK(fix8.size() == arr.size());
+        CHECK(fix8.data() == dyn.data());
+        CHECK(fix8.size() == dyn.size());
     }
 
     return true;
