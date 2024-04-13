@@ -403,6 +403,16 @@ public:
 
     [[nodiscard]] constexpr auto cend() const noexcept -> const_iterator { return end(); }
 
+    [[nodiscard]] constexpr auto crbegin() const noexcept -> const_reverse_iterator
+    {
+        return const_reverse_iterator(end());
+    }
+
+    [[nodiscard]] constexpr auto crend() const noexcept -> const_reverse_iterator
+    {
+        return const_reverse_iterator(begin());
+    }
+
     using base_type::emplace_back;
 
     using base_type::pop_back;
