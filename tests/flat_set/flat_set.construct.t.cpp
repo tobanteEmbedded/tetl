@@ -18,7 +18,7 @@ constexpr auto test_less() -> bool
 
     // default
     {
-        auto const empty = flat_set{};
+        auto empty = flat_set{};
         CHECK(empty.empty());
         CHECK(empty.begin() == empty.end());
         CHECK(empty.rbegin() == empty.rend());
@@ -102,7 +102,7 @@ constexpr auto test_greater() -> bool
 
     // default
     {
-        auto const empty = flat_set{};
+        auto empty = flat_set{};
         CHECK(empty.empty());
         CHECK(empty.begin() == empty.end());
         CHECK(empty.rbegin() == empty.rend());
@@ -110,17 +110,17 @@ constexpr auto test_greater() -> bool
 
     // from container
     {
-        auto const empty = flat_set{vector{}};
+        auto empty = flat_set{vector{}};
         CHECK(empty.empty());
         CHECK(empty.begin() == empty.end());
         CHECK(empty.rbegin() == empty.rend());
 
-        auto const noduplicates = flat_set{vector({T(0), T(2), T(3), T(1)})};
+        auto noduplicates = flat_set{vector({T(0), T(2), T(3), T(1)})};
         CHECK(noduplicates.size() == 4);
         CHECK(*noduplicates.begin() == T(3));
         CHECK(*etl::prev(noduplicates.end()) == T(0));
 
-        auto const withduplicates = flat_set{vector({T(0), T(2), T(3), T(2)})};
+        auto withduplicates = flat_set{vector({T(0), T(2), T(3), T(2)})};
         CHECK(withduplicates.size() == 3);
         CHECK(*withduplicates.begin() == T(3));
         CHECK(*etl::prev(withduplicates.end()) == T(0));
@@ -128,12 +128,12 @@ constexpr auto test_greater() -> bool
 
     // from container sorted_unique
     {
-        auto const empty = flat_set{etl::sorted_unique, vector{}};
+        auto empty = flat_set{etl::sorted_unique, vector{}};
         CHECK(empty.empty());
         CHECK(empty.begin() == empty.end());
         CHECK(empty.rbegin() == empty.rend());
 
-        auto const set = flat_set{etl::sorted_unique, vector({T(3), T(2), T(1), T(0)})};
+        auto set = flat_set{etl::sorted_unique, vector({T(3), T(2), T(1), T(0)})};
         CHECK(set.size() == 4);
         CHECK(*set.begin() == T(3));
         CHECK(*etl::prev(set.end()) == T(0));
@@ -141,20 +141,20 @@ constexpr auto test_greater() -> bool
 
     // from iterators
     {
-        auto const emptyVec = vector{};
-        auto const empty    = flat_set{etl::sorted_unique, emptyVec.begin(), emptyVec.end()};
+        auto emptyVec = vector{};
+        auto empty    = flat_set{etl::sorted_unique, emptyVec.begin(), emptyVec.end()};
         CHECK(empty.empty());
         CHECK(empty.begin() == empty.end());
         CHECK(empty.rbegin() == empty.rend());
 
-        auto const vec1         = vector({T(0), T(2), T(3), T(1)});
-        auto const noduplicates = flat_set{vec1.begin(), vec1.end()};
+        auto vec1         = vector({T(0), T(2), T(3), T(1)});
+        auto noduplicates = flat_set{vec1.begin(), vec1.end()};
         CHECK(noduplicates.size() == 4);
         CHECK(*noduplicates.begin() == T(3));
         CHECK(*etl::prev(noduplicates.end()) == T(0));
 
-        auto const vec2           = vector({T(0), T(2), T(3), T(2)});
-        auto const withduplicates = flat_set{vec2.begin(), vec2.end()};
+        auto vec2           = vector({T(0), T(2), T(3), T(2)});
+        auto withduplicates = flat_set{vec2.begin(), vec2.end()};
         CHECK(withduplicates.size() == 3);
         CHECK(*withduplicates.begin() == T(3));
         CHECK(*etl::prev(withduplicates.end()) == T(0));
@@ -162,14 +162,14 @@ constexpr auto test_greater() -> bool
 
     // from iterators sorted_unique
     {
-        auto const emptyVec = vector{};
-        auto const empty    = flat_set{etl::sorted_unique, emptyVec.begin(), emptyVec.end()};
+        auto emptyVec = vector{};
+        auto empty    = flat_set{etl::sorted_unique, emptyVec.begin(), emptyVec.end()};
         CHECK(empty.empty());
         CHECK(empty.begin() == empty.end());
         CHECK(empty.rbegin() == empty.rend());
 
-        auto const vec = vector({T(3), T(2), T(1), T(0)});
-        auto const set = flat_set{etl::sorted_unique, vec.begin(), vec.end()};
+        auto vec = vector({T(3), T(2), T(1), T(0)});
+        auto set = flat_set{etl::sorted_unique, vec.begin(), vec.end()};
         CHECK(set.size() == 4);
         CHECK(*set.begin() == T(3));
         CHECK(*etl::prev(set.end()) == T(0));
