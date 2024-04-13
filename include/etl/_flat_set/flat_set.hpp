@@ -115,40 +115,20 @@ struct flat_set {
     }
 
     [[nodiscard]] constexpr auto begin() noexcept -> iterator { return _container.begin(); }
-
     [[nodiscard]] constexpr auto begin() const noexcept -> const_iterator { return _container.begin(); }
-
     [[nodiscard]] constexpr auto cbegin() const noexcept -> const_iterator { return _container.begin(); }
 
     [[nodiscard]] constexpr auto end() noexcept -> iterator { return _container.end(); }
-
     [[nodiscard]] constexpr auto end() const noexcept -> const_iterator { return _container.end(); }
-
     [[nodiscard]] constexpr auto cend() const noexcept -> const_iterator { return _container.end(); }
 
-    [[nodiscard]] constexpr auto rbegin() noexcept -> reverse_iterator { return reverse_iterator(end()); }
+    [[nodiscard]] constexpr auto rbegin() noexcept -> reverse_iterator { return _container.rbegin(); }
+    [[nodiscard]] constexpr auto rbegin() const noexcept -> const_reverse_iterator { return _container.rbegin(); }
+    [[nodiscard]] constexpr auto crbegin() const noexcept -> const_reverse_iterator { return _container.crbegin(); }
 
-    [[nodiscard]] constexpr auto rbegin() const noexcept -> const_reverse_iterator
-    {
-        return const_reverse_iterator(end());
-    }
-
-    [[nodiscard]] constexpr auto crbegin() const noexcept -> const_reverse_iterator
-    {
-        return const_reverse_iterator(end());
-    }
-
-    [[nodiscard]] constexpr auto rend() noexcept -> reverse_iterator { return reverse_iterator(begin()); }
-
-    [[nodiscard]] constexpr auto rend() const noexcept -> const_reverse_iterator
-    {
-        return const_reverse_iterator(begin());
-    }
-
-    [[nodiscard]] constexpr auto crend() const noexcept -> const_reverse_iterator
-    {
-        return const_reverse_iterator(begin());
-    }
+    [[nodiscard]] constexpr auto rend() noexcept -> reverse_iterator { return _container.rend(); }
+    [[nodiscard]] constexpr auto rend() const noexcept -> const_reverse_iterator { return _container.rend(); }
+    [[nodiscard]] constexpr auto crend() const noexcept -> const_reverse_iterator { return _container.crend(); }
 
     /// \brief Returns true if the underlying container is empty.
     [[nodiscard]] constexpr auto empty() const noexcept -> bool { return _container.empty(); }
