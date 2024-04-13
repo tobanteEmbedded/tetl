@@ -18,6 +18,7 @@
 #include <etl/_iterator/size.hpp>
 #include <etl/_limits/numeric_limits.hpp>
 #include <etl/_ranges/borrowed_range.hpp>
+#include <etl/_ranges/enable_borrowed_range.hpp>
 #include <etl/_ranges/range_reference_t.hpp>
 #include <etl/_ranges/size.hpp>
 #include <etl/_ranges/sized_range.hpp>
@@ -325,6 +326,9 @@ span(etl::array<Type, Size> const&) -> span<Type const, Size>;
 
 template <etl::ranges::range R>
 span(R&&) -> span<etl::remove_reference_t<etl::ranges::range_reference_t<R>>>;
+
+template <typename T, size_t Extent>
+inline constexpr bool ranges::enable_borrowed_range<span<T, Extent>> = true;
 
 } // namespace etl
 

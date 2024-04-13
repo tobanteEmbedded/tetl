@@ -21,6 +21,13 @@ constexpr auto test() -> bool
         CHECK(etl::is_trivially_copyable_v<etl::span<T const, 16>>);
     }
 
+    {
+        CHECK(etl::ranges::borrowed_range<etl::span<T>>);
+        CHECK(etl::ranges::borrowed_range<etl::span<T const>>);
+        CHECK(etl::ranges::borrowed_range<etl::span<T, 16>>);
+        CHECK(etl::ranges::borrowed_range<etl::span<T const, 16>>);
+    }
+
     // ranged-for
     {
         auto data = etl::array<T, 4>{};
