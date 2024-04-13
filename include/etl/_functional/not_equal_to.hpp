@@ -12,7 +12,7 @@ namespace etl {
 /// https://en.cppreference.com/w/cpp/utility/functional/not_equal_to
 template <typename T = void>
 struct not_equal_to {
-    [[nodiscard]] constexpr auto operator()(T const& lhs, T const& rhs) const -> T { return lhs != rhs; }
+    [[nodiscard]] constexpr auto operator()(T const& lhs, T const& rhs) const -> bool { return lhs != rhs; }
 };
 
 template <>
