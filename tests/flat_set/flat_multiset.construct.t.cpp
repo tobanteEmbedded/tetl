@@ -35,6 +35,27 @@ constexpr auto test_less() -> bool
         CHECK(cset.crbegin() == cset.crend());
     }
 
+    // from container
+    {
+        auto empty = flat_multiset{vector({})};
+        CHECK(empty.empty());
+
+        auto set = flat_multiset{vector({T(1), T(0), T(2), T(1)})};
+        CHECK_FALSE(set.empty());
+        CHECK(set.size() == 4);
+        CHECK(*set.begin() == T(0));
+        CHECK(*etl::prev(set.end()) == T(2));
+    }
+
+    // from container sorted_equivalent
+    {
+        auto set = flat_multiset{vector({T(0), T(1), T(1), T(2)})};
+        CHECK_FALSE(set.empty());
+        CHECK(set.size() == 4);
+        CHECK(*set.begin() == T(0));
+        CHECK(*etl::prev(set.end()) == T(2));
+    }
+
     return true;
 }
 
@@ -61,6 +82,27 @@ constexpr auto test_greater() -> bool
         CHECK(cset.cbegin() == cset.cend());
         CHECK(cset.rbegin() == cset.rend());
         CHECK(cset.crbegin() == cset.crend());
+    }
+
+    // from container
+    {
+        auto empty = flat_multiset{vector({})};
+        CHECK(empty.empty());
+
+        auto set = flat_multiset{vector({T(1), T(0), T(2), T(1)})};
+        CHECK_FALSE(set.empty());
+        CHECK(set.size() == 4);
+        CHECK(*set.begin() == T(2));
+        CHECK(*etl::prev(set.end()) == T(0));
+    }
+
+    // from container sorted_equivalent
+    {
+        auto set = flat_multiset{vector({T(2), T(1), T(1), T(0)})};
+        CHECK_FALSE(set.empty());
+        CHECK(set.size() == 4);
+        CHECK(*set.begin() == T(2));
+        CHECK(*etl::prev(set.end()) == T(0));
     }
 
     return true;

@@ -5,9 +5,11 @@
 
 #include <etl/_config/all.hpp>
 
-#include <etl/_flat_set/sorted_unique.hpp>
+#include <etl/_algorithm/sort.hpp>
+#include <etl/_flat_set/sorted_equivalent.hpp>
 #include <etl/_functional/less.hpp>
 #include <etl/_iterator/reverse_iterator.hpp>
+#include <etl/_utility/move.hpp>
 
 namespace etl {
 
@@ -35,6 +37,18 @@ struct flat_multiset {
     explicit constexpr flat_multiset(Compare const& comp)
         : _container()
         , _compare(comp)
+    {
+    }
+
+    explicit constexpr flat_multiset(KeyContainer cont)
+        : flat_multiset(sorted_equivalent, etl::move(cont))
+    {
+        etl::sort(begin(), end(), _compare);
+    }
+
+    constexpr flat_multiset(sorted_equivalent_t /*tag*/, KeyContainer cont)
+        : _container(etl::move(cont))
+        , _compare()
     {
     }
 

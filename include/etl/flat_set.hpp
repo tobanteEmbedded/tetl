@@ -14,6 +14,7 @@
 
 #include <etl/_flat_set/flat_multiset.hpp>
 #include <etl/_flat_set/flat_set.hpp>
+#include <etl/_flat_set/sorted_equivalent.hpp>
 #include <etl/_flat_set/sorted_unique.hpp>
 
 #endif // TETL_FLAT_SET_HPP
