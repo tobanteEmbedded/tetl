@@ -5,9 +5,9 @@
 #include <etl/array.hpp>
 
 #include "testing/iterator.hpp"
+#include "testing/testing.hpp"
 
 template <typename T>
-#include "testing/testing.hpp"
 constexpr auto test() -> bool
 {
     // different size
