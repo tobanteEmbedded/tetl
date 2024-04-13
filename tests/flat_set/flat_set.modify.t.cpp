@@ -29,34 +29,9 @@ constexpr auto test() -> bool
     using vector   = etl::static_vector<T, 8>;
     using flat_set = etl::flat_set<T, vector, etl::less<>>;
 
-    CHECK_SAME_TYPE(typename flat_set::key_type, T);
-    CHECK_SAME_TYPE(typename flat_set::key_compare, etl::less<>);
-    CHECK_SAME_TYPE(typename flat_set::value_type, T);
-    CHECK_SAME_TYPE(typename flat_set::value_compare, etl::less<>);
-    CHECK_SAME_TYPE(typename flat_set::reference, T&);
-    CHECK_SAME_TYPE(typename flat_set::const_reference, T const&);
-    CHECK_SAME_TYPE(typename flat_set::size_type, typename vector::size_type);
-    CHECK_SAME_TYPE(typename flat_set::difference_type, typename vector::difference_type);
-    CHECK_SAME_TYPE(typename flat_set::iterator, typename vector::iterator);
-    CHECK_SAME_TYPE(typename flat_set::const_iterator, typename vector::const_iterator);
-    CHECK_SAME_TYPE(typename flat_set::reverse_iterator, etl::reverse_iterator<typename vector::iterator>);
-    CHECK_SAME_TYPE(typename flat_set::const_reverse_iterator, etl::reverse_iterator<typename vector::const_iterator>);
-    CHECK_SAME_TYPE(typename flat_set::container_type, vector);
-
-    auto s1 = flat_set{};
-    CHECK(s1.size() == 0); // NOLINT
-    CHECK(s1.empty());
-    CHECK(s1.begin() == s1.end());
-    CHECK(etl::as_const(s1).begin() == etl::as_const(s1).end());
-    CHECK(s1.cbegin() == s1.cend());
-    CHECK(s1.max_size() == 8);
-    CHECK_FALSE(s1.contains(T(0)));
-
     auto s2 = flat_set{vector{}};
     CHECK(s2.size() == 0); // NOLINT
     CHECK(s2.begin() == s2.end());
-    CHECK(s1.begin() != s2.begin());
-    CHECK(s1.end() != s2.end());
     CHECK(s2.empty());
     CHECK(s2.max_size() == 8);
     CHECK(s2.find(T(42)) == etl::end(s2));
@@ -87,7 +62,6 @@ constexpr auto test() -> bool
     CHECK(cs2.upper_bound(T(1)) == etl::next(cs2.begin()));
     CHECK(cs2.upper_bound(wrapper{T(1)}) == etl::next(cs2.begin()));
     CHECK(cs2 == s2);
-    CHECK(cs2 != s1);
 
     CHECK(etl::erase_if(s2, [](auto x) { return x > T(100); }) == 0);
     CHECK(etl::erase_if(s2, [](auto x) { return x == T(3); }) == 1);
