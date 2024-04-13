@@ -166,39 +166,39 @@ constexpr auto test_cx() -> bool
     return true;
 }
 
-struct non_trivial {
-    constexpr non_trivial() = default;
+struct NonTrivial {
+    constexpr NonTrivial() = default;
 
-    explicit constexpr non_trivial(int val)
+    explicit constexpr NonTrivial(int val)
         : value{val}
     {
     }
 
-    constexpr ~non_trivial() { } // NOLINT
+    constexpr ~NonTrivial() { } // NOLINT
 
-    constexpr non_trivial(non_trivial const& other)
+    constexpr NonTrivial(NonTrivial const& other)
         : value{other.value}
     {
     }
 
-    constexpr non_trivial(non_trivial&& other)
+    constexpr NonTrivial(NonTrivial&& other)
         : value{other.value}
     {
     }
 
-    constexpr auto operator=(non_trivial const& other) -> non_trivial&
+    constexpr auto operator=(NonTrivial const& other) -> NonTrivial&
     {
         value = other.value;
         return *this;
     }
 
-    constexpr auto operator=(non_trivial&& other) -> non_trivial&
+    constexpr auto operator=(NonTrivial&& other) -> NonTrivial&
     {
         value = other.value;
         return *this;
     }
 
-    friend constexpr auto operator==(non_trivial const& lhs, non_trivial const& rhs) -> bool
+    friend constexpr auto operator==(NonTrivial const& lhs, NonTrivial const& rhs) -> bool
     {
         return lhs.value == rhs.value;
     }
@@ -208,10 +208,10 @@ struct non_trivial {
 
 auto test_non_trivial() -> bool
 {
-    CHECK(test_empty<non_trivial>());
-    CHECK_FALSE(etl::is_trivial_v<non_trivial>);
+    CHECK(test_empty<NonTrivial>());
+    CHECK_FALSE(etl::is_trivial_v<NonTrivial>);
 
-    auto vec        = etl::inplace_vector<non_trivial, 3>{};
+    auto vec        = etl::inplace_vector<NonTrivial, 3>{};
     auto* const p42 = vec.try_emplace_back(42);
     CHECK(p42 != nullptr);
     CHECK(p42->value == 42);
@@ -223,7 +223,7 @@ auto test_non_trivial() -> bool
     CHECK_FALSE(move.empty());
     CHECK(vec.empty()); // NOLINT
 
-    auto* const p143 = move.try_push_back(non_trivial{143});
+    auto* const p143 = move.try_push_back(NonTrivial{143});
     CHECK(p143 != nullptr);
     CHECK(p143->value == 143);
     CHECK(move.size() == 2);
@@ -231,7 +231,7 @@ auto test_non_trivial() -> bool
     CHECK(move[1] == move.back());
     CHECK(move.front() != move.back());
 
-    auto const nt99 = non_trivial{99};
+    auto const nt99 = NonTrivial{99};
     auto* const p99 = move.try_push_back(nt99);
     CHECK(p99 != nullptr);
     CHECK(p99->value == 99);
@@ -246,7 +246,7 @@ auto test_non_trivial() -> bool
     CHECK(move.try_push_back(nt99) == nullptr);
     CHECK(move.size() == 3);
 
-    CHECK(move.try_push_back(non_trivial{42}) == nullptr);
+    CHECK(move.try_push_back(NonTrivial{42}) == nullptr);
     CHECK(move.size() == 3);
 
     move.pop_back();
@@ -259,8 +259,8 @@ auto test_non_trivial() -> bool
     CHECK_NOEXCEPT(move.clear());
     CHECK(move.empty());
 
-    auto one = non_trivial{1};
-    CHECK(move.unchecked_push_back(etl::move(one)) == non_trivial{1});
+    auto one = NonTrivial{1};
+    CHECK(move.unchecked_push_back(etl::move(one)) == NonTrivial{1});
 
     return true;
 }

@@ -10,15 +10,15 @@
 namespace {
 
 template <typename T>
-struct wrapper {
-    explicit constexpr wrapper(T val) noexcept
+struct Wrapper {
+    explicit constexpr Wrapper(T val) noexcept
         : value{val}
     {
     }
 
-    friend constexpr auto operator<(wrapper lhs, T rhs) -> bool { return lhs.value < rhs; }
+    friend constexpr auto operator<(Wrapper lhs, T rhs) -> bool { return lhs.value < rhs; }
 
-    friend constexpr auto operator<(T lhs, wrapper rhs) -> bool { return lhs < rhs.value; }
+    friend constexpr auto operator<(T lhs, Wrapper rhs) -> bool { return lhs < rhs.value; }
 
     T value;
 };
@@ -37,7 +37,7 @@ constexpr auto test() -> bool
     CHECK(s2.find(T(42)) == etl::end(s2));
     CHECK(s2.count(T(42)) == 0);
     CHECK_FALSE(s2.contains(T(42)));
-    CHECK_FALSE(s2.contains(wrapper{T(42)}));
+    CHECK_FALSE(s2.contains(Wrapper{T(42)}));
 
     auto r1 = s2.emplace(T(42));
     CHECK(r1.second);
@@ -45,7 +45,7 @@ constexpr auto test() -> bool
     CHECK(s2.find(T(42)) == etl::begin(s2));
     CHECK(s2.count(T(42)) == 1);
     CHECK(s2.contains(T(42)));
-    CHECK(s2.contains(wrapper{T(42)}));
+    CHECK(s2.contains(Wrapper{T(42)}));
 
     auto r2 = s2.insert(T(42));
     CHECK_FALSE(r2.second);
@@ -56,11 +56,11 @@ constexpr auto test() -> bool
     s2.insert(v.begin(), v.end());
     CHECK(s2.size() == 4);
     CHECK(s2.upper_bound(T(0)) == s2.begin());
-    CHECK(s2.upper_bound(wrapper{T(0)}) == s2.begin());
+    CHECK(s2.upper_bound(Wrapper{T(0)}) == s2.begin());
 
     auto const& cs2 = s2;
     CHECK(cs2.upper_bound(T(1)) == etl::next(cs2.begin()));
-    CHECK(cs2.upper_bound(wrapper{T(1)}) == etl::next(cs2.begin()));
+    CHECK(cs2.upper_bound(Wrapper{T(1)}) == etl::next(cs2.begin()));
     CHECK(cs2 == s2);
 
     CHECK(etl::erase_if(s2, [](auto x) { return x > T(100); }) == 0);

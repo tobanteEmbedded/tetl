@@ -40,22 +40,22 @@ constexpr auto test() -> bool
         auto data           = etl::array{T(1), T(2), T(3), T(4), T(5), T(6)};
         auto const original = data;
 
-        etl::shift_left(forward_iter(data.begin()), forward_iter(data.end()), -1);
+        etl::shift_left(FwdIter(data.begin()), FwdIter(data.end()), -1);
         CHECK(data == original);
 
-        etl::shift_left(forward_iter(data.begin()), forward_iter(data.end()), 0);
+        etl::shift_left(FwdIter(data.begin()), FwdIter(data.end()), 0);
         CHECK(data == original);
 
-        etl::shift_left(forward_iter(data.begin()), forward_iter(data.end()), etl::ptrdiff_t(data.size() + 1));
+        etl::shift_left(FwdIter(data.begin()), FwdIter(data.end()), etl::ptrdiff_t(data.size() + 1));
         CHECK(data == original);
 
         CHECK(
-            etl::shift_left(forward_iter(data.begin()), forward_iter(data.end()), etl::ptrdiff_t(data.size() + 1))
-            == forward_iter(data.begin())
+            etl::shift_left(FwdIter(data.begin()), FwdIter(data.end()), etl::ptrdiff_t(data.size() + 1))
+            == FwdIter(data.begin())
         );
         CHECK(data == original);
 
-        etl::shift_left(forward_iter(data.begin()), forward_iter(data.end()), 2);
+        etl::shift_left(FwdIter(data.begin()), FwdIter(data.end()), 2);
         CHECK(data[0] == T(3));
         CHECK(data[1] == T(4));
         CHECK(data[2] == T(5));

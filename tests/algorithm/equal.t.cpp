@@ -16,11 +16,11 @@ constexpr auto test() -> bool
     auto cmp = etl::not_equal_to{};
 
     CHECK(etl::equal(lhs.begin(), lhs.end(), rhs.begin()));
-    CHECK(etl::equal(input_iter(lhs.begin()), input_iter(lhs.end()), input_iter(rhs.begin())));
-    CHECK(etl::equal(forward_iter(lhs.begin()), forward_iter(lhs.end()), forward_iter(rhs.begin())));
+    CHECK(etl::equal(InIter(lhs.begin()), InIter(lhs.end()), InIter(rhs.begin())));
+    CHECK(etl::equal(FwdIter(lhs.begin()), FwdIter(lhs.end()), FwdIter(rhs.begin())));
 
     CHECK_FALSE(etl::equal(lhs.begin(), lhs.end(), rhs.begin(), cmp));
-    CHECK_FALSE(etl::equal(input_iter(lhs.begin()), input_iter(lhs.end()), input_iter(rhs.begin()), cmp));
+    CHECK_FALSE(etl::equal(InIter(lhs.begin()), InIter(lhs.end()), InIter(rhs.begin()), cmp));
 
     CHECK(etl::equal(lhs.begin(), lhs.end(), rhs.begin(), rhs.end()));
     CHECK_FALSE(etl::equal(lhs.begin(), lhs.end(), rhs.begin(), rhs.end(), cmp));

@@ -181,21 +181,21 @@ constexpr auto test_greater() -> bool
 template <typename T>
 constexpr auto test_type() -> bool
 {
-    struct my_less {
+    struct Less {
         [[nodiscard]] constexpr auto operator()(T lhs, T rhs) const -> bool { return lhs < rhs; }
     };
 
-    struct my_greater {
+    struct Greater {
         [[nodiscard]] constexpr auto operator()(T lhs, T rhs) const -> bool { return lhs > rhs; }
     };
 
     test_less<T, etl::less<T>>();
     test_less<T, etl::less<>>();
-    test_less<T, my_less>();
+    test_less<T, Less>();
 
     test_greater<T, etl::greater<T>>();
     test_greater<T, etl::greater<>>();
-    test_greater<T, my_greater>();
+    test_greater<T, Greater>();
 
     return true;
 }

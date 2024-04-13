@@ -8,11 +8,11 @@
 #include "testing/testing.hpp"
 
 template <typename T>
-struct null_clock {
+struct NullClock {
     using rep                             = T;
     using period                          = etl::ratio<1>;
     using duration                        = etl::chrono::duration<rep, period>;
-    using time_point                      = etl::chrono::time_point<null_clock>;
+    using time_point                      = etl::chrono::time_point<NullClock>;
     static constexpr auto const is_steady = false;
 
     [[nodiscard]] constexpr auto now() noexcept -> time_point { return time_point{}; }
@@ -21,7 +21,7 @@ struct null_clock {
 template <typename T>
 constexpr auto test() -> bool
 {
-    auto null = etl::chrono::time_point<null_clock<T>>{};
+    auto null = etl::chrono::time_point<NullClock<T>>{};
     CHECK(null.time_since_epoch().count() == T{0});
     return true;
 }

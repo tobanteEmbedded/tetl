@@ -10,7 +10,7 @@ static auto test() -> bool
 {
     // "not locked"
     {
-        test_mutex mtx{};
+        Mutex mtx{};
         CHECK_FALSE(mtx.is_locked());
         {
             etl::lock_guard lock{mtx};
@@ -22,7 +22,7 @@ static auto test() -> bool
 
     // "already locked"
     {
-        test_mutex mtx{};
+        Mutex mtx{};
         mtx.lock();
         {
             etl::lock_guard lock{mtx, etl::adopt_lock};

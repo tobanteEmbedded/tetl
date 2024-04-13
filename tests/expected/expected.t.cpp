@@ -8,17 +8,17 @@
 #include "testing/testing.hpp"
 
 namespace {
-struct error_class {
-    constexpr error_class() = default;
+struct Error {
+    constexpr Error() = default;
 
-    constexpr explicit error_class(int v)
+    constexpr explicit Error(int v)
         : value(v)
     {
     }
 
     int value{0};
 
-    friend constexpr auto operator==(error_class ec, int v) { return ec.value == v; }
+    friend constexpr auto operator==(Error ec, int v) { return ec.value == v; }
 };
 } // namespace
 
@@ -94,17 +94,17 @@ constexpr auto test_all() -> bool
     CHECK(test<unsigned long long, int>());
 
     // E == class
-    CHECK(test<signed char, error_class>());
-    CHECK(test<signed short, error_class>());
-    CHECK(test<signed int, error_class>());
-    CHECK(test<signed long, error_class>());
-    CHECK(test<signed long long, error_class>());
+    CHECK(test<signed char, Error>());
+    CHECK(test<signed short, Error>());
+    CHECK(test<signed int, Error>());
+    CHECK(test<signed long, Error>());
+    CHECK(test<signed long long, Error>());
 
-    CHECK(test<unsigned char, error_class>());
-    CHECK(test<unsigned short, error_class>());
-    CHECK(test<unsigned int, error_class>());
-    CHECK(test<unsigned long, error_class>());
-    CHECK(test<unsigned long long, error_class>());
+    CHECK(test<unsigned char, Error>());
+    CHECK(test<unsigned short, Error>());
+    CHECK(test<unsigned int, Error>());
+    CHECK(test<unsigned long, Error>());
+    CHECK(test<unsigned long long, Error>());
 
     return true;
 }

@@ -15,7 +15,7 @@ constexpr auto test() -> bool
     // epmty range
     auto const e = etl::static_vector<T, 4>{};
     CHECK_FALSE(etl::binary_search(begin(e), end(e), T(0)));
-    CHECK_FALSE(etl::binary_search(forward_iter(begin(e)), forward_iter(end(e)), T(0)));
+    CHECK_FALSE(etl::binary_search(FwdIter(begin(e)), FwdIter(end(e)), T(0)));
 
     // range
     auto const data = etl::array{T(0), T(1), T(2)};

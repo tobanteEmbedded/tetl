@@ -40,9 +40,7 @@ constexpr auto test() -> bool
     auto const p     = etl::equal_range(vec.begin(), vec.end(), value);
     CHECK(p.first->name == 'B');
 
-    // clang-format off
-    CHECK(etl::equal_range(forward_iter(begin(vec)), forward_iter(end(vec)), value).first->name == 'B');
-    // clang-format on
+    CHECK(etl::equal_range(FwdIter(begin(vec)), FwdIter(end(vec)), value).first->name == 'B');
 
     return true;
 }

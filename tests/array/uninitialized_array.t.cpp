@@ -10,10 +10,10 @@
 
 namespace {
 
-struct non_trivial {
-    non_trivial() { } // NOLINT
+struct NonTrivial {
+    NonTrivial() { } // NOLINT
 
-    ~non_trivial() { } // NOLINT
+    ~NonTrivial() { } // NOLINT
 };
 
 template <typename T>
@@ -86,21 +86,21 @@ constexpr auto test_cx() -> bool
 
 auto test_non_trivial() -> bool
 {
-    using Array0 = etl::uninitialized_array<non_trivial, 0>;
-    using Array8 = etl::uninitialized_array<non_trivial, 8>;
+    using Array0 = etl::uninitialized_array<NonTrivial, 0>;
+    using Array8 = etl::uninitialized_array<NonTrivial, 8>;
 
     CHECK(etl::is_trivial_v<Array8>);
     CHECK(etl::is_trivial_v<Array0>);
-    CHECK_FALSE(etl::is_trivial_v<non_trivial>);
+    CHECK_FALSE(etl::is_trivial_v<NonTrivial>);
 
     // Size == 0
     auto array0 = Array0{};
     CHECK(etl::is_empty_v<Array0>);
     CHECK(etl::is_trivial_v<Array0>);
-    CHECK_SAME_TYPE(typename Array0::value_type, non_trivial);
+    CHECK_SAME_TYPE(typename Array0::value_type, NonTrivial);
     CHECK_SAME_TYPE(decltype(Array0::size()), etl::size_t);
-    CHECK_SAME_TYPE(decltype(array0.data()), non_trivial*);
-    CHECK_SAME_TYPE(decltype(etl::as_const(array0).data()), non_trivial const*);
+    CHECK_SAME_TYPE(decltype(array0.data()), NonTrivial*);
+    CHECK_SAME_TYPE(decltype(etl::as_const(array0).data()), NonTrivial const*);
     CHECK_NOEXCEPT(Array0::size());
     CHECK_NOEXCEPT(array0.data());
     CHECK_NOEXCEPT(etl::as_const(array0).data());
@@ -113,15 +113,15 @@ auto test_non_trivial() -> bool
     // Size != 0
     auto array8 = Array8{};
     CHECK(etl::is_trivial_v<Array8>);
-    CHECK_SAME_TYPE(typename Array8::value_type, non_trivial);
+    CHECK_SAME_TYPE(typename Array8::value_type, NonTrivial);
     CHECK_SAME_TYPE(decltype(Array8::size()), etl::size_t);
-    CHECK_SAME_TYPE(decltype(array8.data()), non_trivial*);
-    CHECK_SAME_TYPE(decltype(etl::as_const(array8).data()), non_trivial const*);
+    CHECK_SAME_TYPE(decltype(array8.data()), NonTrivial*);
+    CHECK_SAME_TYPE(decltype(etl::as_const(array8).data()), NonTrivial const*);
     CHECK_NOEXCEPT(Array8::size());
     CHECK_NOEXCEPT(array8.data());
     CHECK_NOEXCEPT(etl::as_const(array8).data());
     CHECK(Array8::size() == 8);
-    CHECK(sizeof(Array8) == sizeof(non_trivial) * Array8::size());
+    CHECK(sizeof(Array8) == sizeof(NonTrivial) * Array8::size());
     CHECK(etl::as_const(array8).data() != nullptr);
     CHECK(array8.data() != nullptr);
     CHECK(array8.data() != Array8().data());

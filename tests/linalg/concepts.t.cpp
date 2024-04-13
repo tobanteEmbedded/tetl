@@ -7,16 +7,16 @@
 #include "testing/testing.hpp"
 
 namespace ns {
-struct my_complex {
+struct Complex {
     float real;
     float imag;
 };
 
-[[maybe_unused]] auto real(my_complex const& cplx) -> float;
-[[maybe_unused]] auto imag(my_complex const& cplx) -> float;
-[[maybe_unused]] auto conj(my_complex const& cplx) -> my_complex;
+[[maybe_unused]] auto real(Complex const& cplx) -> float;
+[[maybe_unused]] auto imag(Complex const& cplx) -> float;
+[[maybe_unused]] auto conj(Complex const& cplx) -> Complex;
 
-struct my_string { };
+struct String { };
 
 } // namespace ns
 
@@ -40,12 +40,12 @@ static constexpr auto test_abs() -> bool
     CHECK(detail::has_adl_abs<double>);
     CHECK(detail::has_adl_abs<long double>);
 
-    CHECK_FALSE(detail::has_adl_abs<ns::my_complex>); // no overload defined
+    CHECK_FALSE(detail::has_adl_abs<ns::Complex>); // no overload defined
     CHECK(detail::has_adl_abs<etl::complex<float>>);
     CHECK(detail::has_adl_abs<etl::complex<double>>);
     CHECK(detail::has_adl_abs<etl::complex<long double>>);
 
-    CHECK_FALSE(detail::has_adl_abs<ns::my_string>);
+    CHECK_FALSE(detail::has_adl_abs<ns::String>);
 
     return true;
 }
@@ -69,12 +69,12 @@ static constexpr auto test_real() -> bool
     // CHECK_FALSE(detail::has_adl_real<double>);
     // CHECK_FALSE(detail::has_adl_real<long double>);
 
-    CHECK(detail::has_adl_real<ns::my_complex>);
+    CHECK(detail::has_adl_real<ns::Complex>);
     CHECK(detail::has_adl_real<etl::complex<float>>);
     CHECK(detail::has_adl_real<etl::complex<double>>);
     CHECK(detail::has_adl_real<etl::complex<long double>>);
 
-    CHECK_FALSE(detail::has_adl_real<ns::my_string>);
+    CHECK_FALSE(detail::has_adl_real<ns::String>);
 
     return true;
 }
@@ -98,12 +98,12 @@ static constexpr auto test_imag() -> bool
     // CHECK_FALSE(detail::has_adl_imag<double>);
     // CHECK_FALSE(detail::has_adl_imag<long double>);
 
-    CHECK(detail::has_adl_imag<ns::my_complex>);
+    CHECK(detail::has_adl_imag<ns::Complex>);
     CHECK(detail::has_adl_imag<etl::complex<float>>);
     CHECK(detail::has_adl_imag<etl::complex<double>>);
     CHECK(detail::has_adl_imag<etl::complex<long double>>);
 
-    CHECK_FALSE(detail::has_adl_imag<ns::my_string>);
+    CHECK_FALSE(detail::has_adl_imag<ns::String>);
 
     return true;
 }
@@ -127,12 +127,12 @@ static constexpr auto test_conj() -> bool
     // CHECK_FALSE(detail::has_adl_conj<double>);
     // CHECK_FALSE(detail::has_adl_conj<long double>);
 
-    CHECK(detail::has_adl_conj<ns::my_complex>);
+    CHECK(detail::has_adl_conj<ns::Complex>);
     CHECK(detail::has_adl_conj<etl::complex<float>>);
     CHECK(detail::has_adl_conj<etl::complex<double>>);
     CHECK(detail::has_adl_conj<etl::complex<long double>>);
 
-    CHECK_FALSE(detail::has_adl_imag<ns::my_string>);
+    CHECK_FALSE(detail::has_adl_imag<ns::String>);
 
     return true;
 }

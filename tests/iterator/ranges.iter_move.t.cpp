@@ -8,18 +8,18 @@
 
 namespace {
 
-enum struct message : int {
+enum struct Message : int {
 };
 
-struct person {
-    constexpr person() = default;
+struct Person {
+    constexpr Person() = default;
 
-    constexpr explicit person(int a) noexcept
+    constexpr explicit Person(int a) noexcept
         : age{a}
     {
     }
 
-    friend constexpr auto operator==(person lhs, person rhs) -> bool = default;
+    friend constexpr auto operator==(Person lhs, Person rhs) -> bool = default;
 
     int age{0};
 };
@@ -63,8 +63,8 @@ constexpr auto test_all() -> bool
     CHECK(test<double>());
     CHECK(test<long double>());
 
-    CHECK(test<message>());
-    CHECK(test<person>());
+    CHECK(test<Message>());
+    CHECK(test<Person>());
 
     return true;
 }

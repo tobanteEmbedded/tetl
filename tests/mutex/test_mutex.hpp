@@ -3,19 +3,19 @@
 #ifndef TETL_TEST_MUTEX_TEST_MUTEX_HPP
 #define TETL_TEST_MUTEX_TEST_MUTEX_HPP
 
-struct test_mutex {
-    constexpr test_mutex(bool failOnTryLock = false) noexcept
+struct Mutex {
+    constexpr Mutex(bool failOnTryLock = false) noexcept
         : _failOnTryLock{failOnTryLock}
     {
     }
 
-    ~test_mutex() noexcept = default;
+    ~Mutex() noexcept = default;
 
-    auto operator=(test_mutex const&) -> test_mutex& = delete;
-    test_mutex(test_mutex const&)                    = delete;
+    auto operator=(Mutex const&) -> Mutex& = delete;
+    Mutex(Mutex const&)                    = delete;
 
-    auto operator=(test_mutex&&) -> test_mutex& = default;
-    test_mutex(test_mutex&&)                    = default;
+    auto operator=(Mutex&&) -> Mutex& = default;
+    Mutex(Mutex&&)                    = default;
 
     constexpr auto lock() noexcept
     {

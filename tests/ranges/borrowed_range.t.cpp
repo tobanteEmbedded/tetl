@@ -10,16 +10,16 @@
 #include "testing/testing.hpp"
 
 template <typename T, etl::size_t N>
-struct my_range : etl::array<T, N> { };
+struct MyRange : etl::array<T, N> { };
 
 template <typename T, etl::size_t N>
-inline constexpr bool etl::ranges::enable_borrowed_range<my_range<T, N>> = false;
+inline constexpr bool etl::ranges::enable_borrowed_range<MyRange<T, N>> = false;
 
 template <typename T, etl::size_t N>
-struct my_borrowed_range : etl::span<T, N> { };
+struct MyBorrowedRange : etl::span<T, N> { };
 
 template <typename T, etl::size_t N>
-inline constexpr bool etl::ranges::enable_borrowed_range<my_borrowed_range<T, N>> = true;
+inline constexpr bool etl::ranges::enable_borrowed_range<MyBorrowedRange<T, N>> = true;
 
 namespace {
 
@@ -31,16 +31,13 @@ constexpr auto test() -> bool
     CHECK(etl::constructible_from<etl::ranges::dangling, T*>);
     CHECK(etl::constructible_from<etl::ranges::dangling, T, T>);
 
-    CHECK(etl::ranges::range<my_range<T, 3>>);
-    CHECK(etl::ranges::range<my_borrowed_range<T, 3>>);
-    CHECK(etl::ranges::borrowed_range<my_borrowed_range<T, 3>>);
-    CHECK_FALSE(etl::ranges::borrowed_range<my_range<T, 3>>);
+    CHECK(etl::ranges::range<MyRange<T, 3>>);
+    CHECK(etl::ranges::range<MyBorrowedRange<T, 3>>);
+    CHECK(etl::ranges::borrowed_range<MyBorrowedRange<T, 3>>);
+    CHECK_FALSE(etl::ranges::borrowed_range<MyRange<T, 3>>);
 
-    CHECK_SAME_TYPE(etl::ranges::borrowed_iterator_t<my_range<T, 3>>, etl::ranges::dangling);
-    CHECK_SAME_TYPE(
-        etl::ranges::borrowed_iterator_t<my_borrowed_range<T, 3>>,
-        typename my_borrowed_range<T, 3>::iterator
-    );
+    CHECK_SAME_TYPE(etl::ranges::borrowed_iterator_t<MyRange<T, 3>>, etl::ranges::dangling);
+    CHECK_SAME_TYPE(etl::ranges::borrowed_iterator_t<MyBorrowedRange<T, 3>>, typename MyBorrowedRange<T, 3>::iterator);
 
     return true;
 }

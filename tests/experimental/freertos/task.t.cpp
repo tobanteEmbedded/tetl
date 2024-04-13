@@ -8,7 +8,7 @@
 namespace rtos = etl::experimental::freertos;
 
 template <typename LoopType = rtos::once>
-struct example_task {
+struct SomeTask {
     auto run() -> void
     {
         auto loopControl = LoopType{};
@@ -23,14 +23,14 @@ struct example_task {
 static auto test_all() -> bool
 {
 
-    auto task = example_task<rtos::once>{};
+    auto task = SomeTask<rtos::once>{};
 
     rtos::create_task(task, "test", 255);
     rtos::start_scheduler();
 
     // Run would normally be called by rtos::start_scheduler(). Only used
     // for stubs.
-    rtos::rtos_task<example_task<rtos::once>>(static_cast<void*>(&task));
+    rtos::rtos_task<SomeTask<rtos::once>>(static_cast<void*>(&task));
 
     return true;
 }

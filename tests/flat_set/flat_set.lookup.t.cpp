@@ -11,17 +11,17 @@
 namespace {
 
 template <typename T>
-struct wrapper {
-    explicit constexpr wrapper(T val) noexcept
+struct Wrapper {
+    explicit constexpr Wrapper(T val) noexcept
         : value{val}
     {
     }
 
-    friend constexpr auto operator<(wrapper lhs, T rhs) -> bool { return lhs.value < rhs; }
-    friend constexpr auto operator<(T lhs, wrapper rhs) -> bool { return lhs < rhs.value; }
+    friend constexpr auto operator<(Wrapper lhs, T rhs) -> bool { return lhs.value < rhs; }
+    friend constexpr auto operator<(T lhs, Wrapper rhs) -> bool { return lhs < rhs.value; }
 
-    friend constexpr auto operator>(wrapper lhs, T rhs) -> bool { return lhs.value > rhs; }
-    friend constexpr auto operator>(T lhs, wrapper rhs) -> bool { return lhs > rhs.value; }
+    friend constexpr auto operator>(Wrapper lhs, T rhs) -> bool { return lhs.value > rhs; }
+    friend constexpr auto operator>(T lhs, Wrapper rhs) -> bool { return lhs > rhs.value; }
 
     T value;
 };
@@ -41,8 +41,8 @@ constexpr auto test_less() -> bool
         CHECK(cset.find(T(0)) == cset.end());
 
         if constexpr (etl::detail::is_transparent_v<Compare>) {
-            CHECK(set.find(wrapper{T(0)}) == set.end());
-            CHECK(cset.find(wrapper{T(0)}) == cset.end());
+            CHECK(set.find(Wrapper{T(0)}) == set.end());
+            CHECK(cset.find(Wrapper{T(0)}) == cset.end());
         }
     }
 
@@ -58,12 +58,12 @@ constexpr auto test_less() -> bool
         CHECK(cset.find(T(2)) == cset.end());
 
         if constexpr (etl::detail::is_transparent_v<Compare>) {
-            CHECK(set.find(wrapper{T(0)}) == set.begin());
-            CHECK(cset.find(wrapper{T(0)}) == cset.begin());
-            CHECK(set.find(wrapper{T(1)}) == etl::next(set.begin()));
-            CHECK(cset.find(wrapper{T(1)}) == etl::next(cset.begin()));
-            CHECK(set.find(wrapper{T(2)}) == set.end());
-            CHECK(cset.find(wrapper{T(2)}) == cset.end());
+            CHECK(set.find(Wrapper{T(0)}) == set.begin());
+            CHECK(cset.find(Wrapper{T(0)}) == cset.begin());
+            CHECK(set.find(Wrapper{T(1)}) == etl::next(set.begin()));
+            CHECK(cset.find(Wrapper{T(1)}) == etl::next(cset.begin()));
+            CHECK(set.find(Wrapper{T(2)}) == set.end());
+            CHECK(cset.find(Wrapper{T(2)}) == cset.end());
         }
     }
 
@@ -76,8 +76,8 @@ constexpr auto test_less() -> bool
         CHECK(cset.count(T(0)) == 0);
 
         if constexpr (etl::detail::is_transparent_v<Compare>) {
-            CHECK(set.count(wrapper{T(0)}) == 0);
-            CHECK(cset.count(wrapper{T(0)}) == 0);
+            CHECK(set.count(Wrapper{T(0)}) == 0);
+            CHECK(cset.count(Wrapper{T(0)}) == 0);
         }
     }
 
@@ -93,12 +93,12 @@ constexpr auto test_less() -> bool
         CHECK(cset.count(T(2)) == 0);
 
         if constexpr (etl::detail::is_transparent_v<Compare>) {
-            CHECK(set.count(wrapper{T(0)}) == 1);
-            CHECK(cset.count(wrapper{T(0)}) == 1);
-            CHECK(set.count(wrapper{T(1)}) == 1);
-            CHECK(cset.count(wrapper{T(1)}) == 1);
-            CHECK(set.count(wrapper{T(2)}) == 0);
-            CHECK(cset.count(wrapper{T(2)}) == 0);
+            CHECK(set.count(Wrapper{T(0)}) == 1);
+            CHECK(cset.count(Wrapper{T(0)}) == 1);
+            CHECK(set.count(Wrapper{T(1)}) == 1);
+            CHECK(cset.count(Wrapper{T(1)}) == 1);
+            CHECK(set.count(Wrapper{T(2)}) == 0);
+            CHECK(cset.count(Wrapper{T(2)}) == 0);
         }
     }
 
@@ -120,8 +120,8 @@ constexpr auto test_greater() -> bool
         CHECK(cset.find(T(0)) == cset.end());
 
         if constexpr (etl::detail::is_transparent_v<Compare>) {
-            CHECK(set.find(wrapper{T(0)}) == set.end());
-            CHECK(cset.find(wrapper{T(0)}) == cset.end());
+            CHECK(set.find(Wrapper{T(0)}) == set.end());
+            CHECK(cset.find(Wrapper{T(0)}) == cset.end());
         }
     }
 
@@ -137,12 +137,12 @@ constexpr auto test_greater() -> bool
         CHECK(cset.find(T(2)) == cset.end());
 
         if constexpr (etl::detail::is_transparent_v<Compare>) {
-            CHECK(set.find(wrapper{T(3)}) == set.begin());
-            CHECK(cset.find(wrapper{T(3)}) == cset.begin());
-            CHECK(set.find(wrapper{T(1)}) == etl::next(set.begin()));
-            CHECK(cset.find(wrapper{T(1)}) == etl::next(cset.begin()));
-            CHECK(set.find(wrapper{T(2)}) == set.end());
-            CHECK(cset.find(wrapper{T(2)}) == cset.end());
+            CHECK(set.find(Wrapper{T(3)}) == set.begin());
+            CHECK(cset.find(Wrapper{T(3)}) == cset.begin());
+            CHECK(set.find(Wrapper{T(1)}) == etl::next(set.begin()));
+            CHECK(cset.find(Wrapper{T(1)}) == etl::next(cset.begin()));
+            CHECK(set.find(Wrapper{T(2)}) == set.end());
+            CHECK(cset.find(Wrapper{T(2)}) == cset.end());
         }
     }
 
@@ -155,8 +155,8 @@ constexpr auto test_greater() -> bool
         CHECK(cset.count(T(0)) == 0);
 
         if constexpr (etl::detail::is_transparent_v<Compare>) {
-            CHECK(set.count(wrapper{T(0)}) == 0);
-            CHECK(cset.count(wrapper{T(0)}) == 0);
+            CHECK(set.count(Wrapper{T(0)}) == 0);
+            CHECK(cset.count(Wrapper{T(0)}) == 0);
         }
     }
 
@@ -172,12 +172,12 @@ constexpr auto test_greater() -> bool
         CHECK(cset.count(T(2)) == 0);
 
         if constexpr (etl::detail::is_transparent_v<Compare>) {
-            CHECK(set.count(wrapper{T(0)}) == 1);
-            CHECK(cset.count(wrapper{T(0)}) == 1);
-            CHECK(set.count(wrapper{T(1)}) == 1);
-            CHECK(cset.count(wrapper{T(1)}) == 1);
-            CHECK(set.count(wrapper{T(2)}) == 0);
-            CHECK(cset.count(wrapper{T(2)}) == 0);
+            CHECK(set.count(Wrapper{T(0)}) == 1);
+            CHECK(cset.count(Wrapper{T(0)}) == 1);
+            CHECK(set.count(Wrapper{T(1)}) == 1);
+            CHECK(cset.count(Wrapper{T(1)}) == 1);
+            CHECK(set.count(Wrapper{T(2)}) == 0);
+            CHECK(cset.count(Wrapper{T(2)}) == 0);
         }
     }
 
@@ -187,21 +187,21 @@ constexpr auto test_greater() -> bool
 template <typename T>
 constexpr auto test_type() -> bool
 {
-    struct my_less {
+    struct Less {
         [[nodiscard]] constexpr auto operator()(T lhs, T rhs) const -> bool { return lhs < rhs; }
     };
 
-    struct my_greater {
+    struct Greater {
         [[nodiscard]] constexpr auto operator()(T lhs, T rhs) const -> bool { return lhs > rhs; }
     };
 
     test_less<T, etl::less<T>>();
     test_less<T, etl::less<>>();
-    test_less<T, my_less>();
+    test_less<T, Less>();
 
     test_greater<T, etl::greater<T>>();
     test_greater<T, etl::greater<>>();
-    test_greater<T, my_greater>();
+    test_greater<T, Greater>();
 
     return true;
 }

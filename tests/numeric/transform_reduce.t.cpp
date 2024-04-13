@@ -16,13 +16,10 @@ constexpr auto test() -> bool
 
     CHECK(etl::transform_reduce(vec.begin(), vec.end(), T(0), etl::plus(), nop) == T(10));
     CHECK(etl::transform_reduce(vec.begin(), vec.end(), T(0), etl::minus(), nop) == T(-10));
-    CHECK(etl::transform_reduce(forward_iter(vec.begin()), forward_iter(vec.end()), T(0), etl::minus(), nop) == T(-10));
+    CHECK(etl::transform_reduce(FwdIter(vec.begin()), FwdIter(vec.end()), T(0), etl::minus(), nop) == T(-10));
 
     CHECK(etl::transform_reduce(vec.begin(), vec.end(), vec.begin(), T(0)) == T(30));
-    CHECK(
-        etl::transform_reduce(forward_iter(vec.begin()), forward_iter(vec.end()), forward_iter(vec.begin()), T(0))
-        == T(30)
-    );
+    CHECK(etl::transform_reduce(FwdIter(vec.begin()), FwdIter(vec.end()), FwdIter(vec.begin()), T(0)) == T(30));
     CHECK(etl::transform_reduce(vec.begin(), vec.end(), vec.begin(), T(0), etl::minus(), etl::multiplies()) == T(-30));
 
     return true;

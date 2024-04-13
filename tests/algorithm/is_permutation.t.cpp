@@ -22,8 +22,8 @@ constexpr auto test() -> bool
         auto const a = etl::array{T(1), T(2), T(3)};
         auto const b = etl::array{T(4), T(5), T(6)};
         CHECK_FALSE(etl::is_permutation(a.begin(), a.end(), b.begin(), b.end()));
-        CHECK_FALSE(etl::is_permutation(forward_iter(a.begin()), forward_iter(a.end()), b.begin(), b.end()));
-        CHECK_FALSE(etl::is_permutation(forward_iter(b.begin()), forward_iter(b.end()), a.begin(), a.end()));
+        CHECK_FALSE(etl::is_permutation(FwdIter(a.begin()), FwdIter(a.end()), b.begin(), b.end()));
+        CHECK_FALSE(etl::is_permutation(FwdIter(b.begin()), FwdIter(b.end()), a.begin(), a.end()));
     }
 
     // same data
@@ -31,14 +31,14 @@ constexpr auto test() -> bool
         auto const a = etl::array{T(1), T(2), T(3)};
         auto const b = etl::array{T(1), T(2), T(3)};
         CHECK(etl::is_permutation(a.begin(), a.end(), b.begin(), b.end()));
-        CHECK(etl::is_permutation(forward_iter(a.begin()), forward_iter(a.end()), b.begin(), b.end()));
+        CHECK(etl::is_permutation(FwdIter(a.begin()), FwdIter(a.end()), b.begin(), b.end()));
     }
 
     // reverse data
     {
         auto const a = etl::array{T(1), T(2), T(3)};
         auto const b = etl::array{T(3), T(2), T(1)};
-        CHECK(etl::is_permutation(forward_iter(a.begin()), forward_iter(a.end()), b.begin(), b.end()));
+        CHECK(etl::is_permutation(FwdIter(a.begin()), FwdIter(a.end()), b.begin(), b.end()));
     }
 
     // cppreference.com example

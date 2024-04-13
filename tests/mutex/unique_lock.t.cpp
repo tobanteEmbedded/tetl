@@ -11,10 +11,10 @@ static auto test() -> bool
 
     // "default construction"
     {
-        test_mutex mtx{};
+        Mutex mtx{};
         CHECK_FALSE(mtx.is_locked());
         {
-            etl::unique_lock<test_mutex> lock{};
+            etl::unique_lock<Mutex> lock{};
             CHECK(lock.mutex() == nullptr);
             CHECK_FALSE(mtx.is_locked());
         }
@@ -23,7 +23,7 @@ static auto test() -> bool
 
     // "lock on construction"
     {
-        test_mutex mtx{};
+        Mutex mtx{};
         CHECK_FALSE(mtx.is_locked());
         {
             etl::unique_lock lock{mtx};
@@ -35,7 +35,7 @@ static auto test() -> bool
 
     // "try_lock on construction"
     {
-        test_mutex success{false};
+        Mutex success{false};
         CHECK_FALSE(success.is_locked());
         {
             etl::unique_lock lock{success, etl::try_to_lock};
@@ -43,7 +43,7 @@ static auto test() -> bool
         }
         CHECK_FALSE(success.is_locked());
 
-        test_mutex fail{true};
+        Mutex fail{true};
         CHECK_FALSE(fail.is_locked());
         {
             etl::unique_lock lock{fail, etl::try_to_lock};
@@ -54,7 +54,7 @@ static auto test() -> bool
 
     // "defer lock on construction"
     {
-        test_mutex mtx{};
+        Mutex mtx{};
         CHECK_FALSE(mtx.is_locked());
         {
             etl::unique_lock lock{mtx, etl::defer_lock};
@@ -65,7 +65,7 @@ static auto test() -> bool
 
     // "adopt lock on construction"
     {
-        test_mutex mtx{};
+        Mutex mtx{};
         mtx.lock();
         CHECK(mtx.is_locked());
         {
@@ -77,7 +77,7 @@ static auto test() -> bool
 
     // "move"
     {
-        test_mutex mtx{};
+        Mutex mtx{};
         CHECK_FALSE(mtx.is_locked());
         {
             etl::unique_lock l1{mtx};
@@ -89,7 +89,7 @@ static auto test() -> bool
             CHECK(l2.owns_lock());
             CHECK(mtx.is_locked());
 
-            etl::unique_lock<test_mutex> l3{};
+            etl::unique_lock<Mutex> l3{};
             l3 = etl::move(l2);
             CHECK_FALSE(l2.owns_lock()); // NOLINT(clang-analyzer-cplusplus.Move)
             CHECK(l3.owns_lock());
@@ -100,7 +100,7 @@ static auto test() -> bool
 
     // "swap"
     {
-        test_mutex mtx{};
+        Mutex mtx{};
         CHECK_FALSE(mtx.is_locked());
         {
             etl::unique_lock l1{mtx};
@@ -121,7 +121,7 @@ static auto test() -> bool
 
     // "release"
     {
-        test_mutex mtx{};
+        Mutex mtx{};
         CHECK_FALSE(mtx.is_locked());
         {
             etl::unique_lock lock{mtx};

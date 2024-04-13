@@ -16,13 +16,7 @@ constexpr auto test() -> bool
         auto lhs = etl::static_vector<T, 1>{};
         auto rhs = etl::array{T(1), T(2), T(3), T(4), T(5), T(6), T(7), T(8)};
         auto out = etl::array<T, 8>{};
-        etl::set_symmetric_difference(
-            forward_iter(lhs.begin()),
-            forward_iter(lhs.end()),
-            rhs.begin(),
-            rhs.end(),
-            out.begin()
-        );
+        etl::set_symmetric_difference(FwdIter(lhs.begin()), FwdIter(lhs.end()), rhs.begin(), rhs.end(), out.begin());
         CHECK(out == etl::array{T(1), T(2), T(3), T(4), T(5), T(6), T(7), T(8)});
     }
 
@@ -31,13 +25,7 @@ constexpr auto test() -> bool
         auto lhs = etl::array{T(1), T(2), T(3), T(4), T(5), T(6), T(7), T(8)};
         auto rhs = etl::static_vector<T, 1>{};
         auto out = etl::array<T, 8>{};
-        etl::set_symmetric_difference(
-            forward_iter(lhs.begin()),
-            forward_iter(lhs.end()),
-            rhs.begin(),
-            rhs.end(),
-            out.begin()
-        );
+        etl::set_symmetric_difference(FwdIter(lhs.begin()), FwdIter(lhs.end()), rhs.begin(), rhs.end(), out.begin());
         CHECK(out == etl::array{T(1), T(2), T(3), T(4), T(5), T(6), T(7), T(8)});
     }
 
@@ -46,13 +34,7 @@ constexpr auto test() -> bool
         auto lhs = etl::array{T(5), T(7), T(9), T(10)};
         auto rhs = etl::array{T(1), T(2), T(3), T(4), T(5), T(6), T(7), T(8)};
         auto out = etl::array<T, 8>{};
-        etl::set_symmetric_difference(
-            forward_iter(lhs.begin()),
-            forward_iter(lhs.end()),
-            rhs.begin(),
-            rhs.end(),
-            out.begin()
-        );
+        etl::set_symmetric_difference(FwdIter(lhs.begin()), FwdIter(lhs.end()), rhs.begin(), rhs.end(), out.begin());
         CHECK(out == etl::array{T(1), T(2), T(3), T(4), T(6), T(8), T(9), T(10)});
     }
 
@@ -61,13 +43,7 @@ constexpr auto test() -> bool
         auto lhs = etl::array{T(1), T(2), T(3), T(4), T(5), T(6), T(7), T(8)};
         auto rhs = etl::array{T(5), T(7), T(9), T(10)};
         auto out = etl::array<T, 8>{};
-        etl::set_symmetric_difference(
-            forward_iter(lhs.begin()),
-            forward_iter(lhs.end()),
-            rhs.begin(),
-            rhs.end(),
-            out.begin()
-        );
+        etl::set_symmetric_difference(FwdIter(lhs.begin()), FwdIter(lhs.end()), rhs.begin(), rhs.end(), out.begin());
         CHECK(out == etl::array{T(1), T(2), T(3), T(4), T(6), T(8), T(9), T(10)});
     }
 

@@ -29,7 +29,7 @@ constexpr auto test() -> bool
     // "cppreference.com example"
     {
         etl::array a{T(2), T(4), T(6)};
-        CHECK(etl::adjacent_difference(forward_iter(a.begin()), forward_iter(a.end()), a.begin()) == a.end());
+        CHECK(etl::adjacent_difference(FwdIter(a.begin()), FwdIter(a.end()), a.begin()) == a.end());
         CHECK(a == etl::array{T(2), T(2), T(2)});
     }
 

@@ -9,19 +9,19 @@
 namespace {
 
 template <typename T>
-struct wrapper {
-    explicit constexpr wrapper(T val)
+struct Wrapper {
+    explicit constexpr Wrapper(T val)
         : value{val}
     {
     }
 
     [[nodiscard]] explicit(false) constexpr operator T() const noexcept { return value; }
 
-    friend constexpr auto operator==(wrapper lhs, T rhs) noexcept -> bool { return lhs.value == rhs; }
-    friend constexpr auto operator==(T lhs, wrapper rhs) noexcept -> bool { return lhs == rhs.value; }
+    friend constexpr auto operator==(Wrapper lhs, T rhs) noexcept -> bool { return lhs.value == rhs; }
+    friend constexpr auto operator==(T lhs, Wrapper rhs) noexcept -> bool { return lhs == rhs.value; }
 
-    friend constexpr auto operator<(wrapper lhs, T rhs) noexcept -> bool { return lhs.value < rhs; }
-    friend constexpr auto operator<(T lhs, wrapper rhs) noexcept -> bool { return lhs < rhs.value; }
+    friend constexpr auto operator<(Wrapper lhs, T rhs) noexcept -> bool { return lhs.value < rhs; }
+    friend constexpr auto operator<(T lhs, Wrapper rhs) noexcept -> bool { return lhs < rhs.value; }
 
     T value;
 };
@@ -49,13 +49,13 @@ constexpr auto test() -> bool
 
     // Copy from optional<U>
     {
-        auto other = optional<wrapper<T>>{};
+        auto other = optional<Wrapper<T>>{};
         auto opt   = optional<T>{other};
         CHECK_FALSE(opt.has_value());
     }
 
     {
-        auto other = optional{wrapper<T>{T(42)}};
+        auto other = optional{Wrapper<T>{T(42)}};
         auto opt   = optional<T>{other};
         CHECK(opt.has_value());
         CHECK(*opt == T(42));
@@ -63,13 +63,13 @@ constexpr auto test() -> bool
 
     // Move from optional<U>
     {
-        auto other     = optional<wrapper<T>>{};
+        auto other     = optional<Wrapper<T>>{};
         auto const opt = optional<T>{etl::move(other)};
         CHECK_FALSE(opt.has_value());
     }
 
     {
-        auto other     = optional{wrapper<T>{T(42)}};
+        auto other     = optional{Wrapper<T>{T(42)}};
         auto const opt = optional<T>{etl::move(other)};
         CHECK(opt.has_value());
         CHECK(*opt == T(42));
@@ -84,14 +84,14 @@ constexpr auto test() -> bool
 
     // From U implicit
     {
-        optional<T> const opt = wrapper<T>{T(99)};
+        optional<T> const opt = Wrapper<T>{T(99)};
         CHECK(opt.has_value());
         CHECK(*opt == T(99));
     }
 
     // From U explicit
     {
-        auto const opt = optional<T>{wrapper<T>{T(99)}};
+        auto const opt = optional<T>{Wrapper<T>{T(99)}};
         CHECK(opt.has_value());
         CHECK(*opt == T(99));
     }
@@ -106,7 +106,7 @@ constexpr auto test() -> bool
     // Assign U
     {
         auto opt   = optional<T>{};
-        auto other = wrapper<T>{T(42)};
+        auto other = Wrapper<T>{T(42)};
         opt        = other;
         CHECK(opt.has_value());
         CHECK(*opt == T(42));
@@ -115,7 +115,7 @@ constexpr auto test() -> bool
     // Assign optional<U>
     {
         auto opt   = optional<T>{};
-        auto other = optional{wrapper<T>{T(42)}};
+        auto other = optional{Wrapper<T>{T(42)}};
         opt        = other;
         CHECK(opt.has_value());
         CHECK(*opt == T(42));
@@ -124,7 +124,7 @@ constexpr auto test() -> bool
     // Assign optional<U>
     {
         auto opt   = optional<T>{};
-        auto other = optional<wrapper<T>>{etl::nullopt};
+        auto other = optional<Wrapper<T>>{etl::nullopt};
         opt        = other;
         CHECK_FALSE(opt.has_value());
     }
@@ -139,84 +139,84 @@ constexpr auto test() -> bool
         CHECK_FALSE(T(42) == optional<T>{});
         CHECK_FALSE(optional<T>{} == T(42));
 
-        CHECK(optional<T>{} == optional<wrapper<T>>{});
-        CHECK(optional<T>{T(42)} == optional<wrapper<T>>{T(42)});
-        CHECK(wrapper<T>(42) == optional{T(42)});
-        CHECK_FALSE(optional<T>{T(42)} == optional<wrapper<T>>{T(99)});
-        CHECK_FALSE(optional<T>{} == optional<wrapper<T>>{T(99)});
-        CHECK_FALSE(optional<T>{T(42)} == optional<wrapper<T>>{});
-        CHECK_FALSE(optional<T>{} == wrapper<T>(42));
-        CHECK_FALSE(wrapper<T>(42) == optional<T>{});
+        CHECK(optional<T>{} == optional<Wrapper<T>>{});
+        CHECK(optional<T>{T(42)} == optional<Wrapper<T>>{T(42)});
+        CHECK(Wrapper<T>(42) == optional{T(42)});
+        CHECK_FALSE(optional<T>{T(42)} == optional<Wrapper<T>>{T(99)});
+        CHECK_FALSE(optional<T>{} == optional<Wrapper<T>>{T(99)});
+        CHECK_FALSE(optional<T>{T(42)} == optional<Wrapper<T>>{});
+        CHECK_FALSE(optional<T>{} == Wrapper<T>(42));
+        CHECK_FALSE(Wrapper<T>(42) == optional<T>{});
 
         CHECK(T(42) != optional<T>{});
-        CHECK(wrapper<T>(42) != optional{T(99)});
+        CHECK(Wrapper<T>(42) != optional{T(99)});
         CHECK(optional{T(99)} != T(42));
-        CHECK(optional{T(99)} != wrapper<T>(42));
+        CHECK(optional{T(99)} != Wrapper<T>(42));
     }
 
     // Compare Less
     {
         CHECK(optional{T(42)} < optional{T(99)});
-        CHECK(optional{T(42)} < optional<wrapper<T>>{T(99)});
-        CHECK(optional<wrapper<T>>{T(42)} < optional{T(99)});
+        CHECK(optional{T(42)} < optional<Wrapper<T>>{T(99)});
+        CHECK(optional<Wrapper<T>>{T(42)} < optional{T(99)});
         CHECK(optional<T>{} < optional<T>{T(42)});
-        CHECK(optional<T>{} < optional<wrapper<T>>{T(42)});
+        CHECK(optional<T>{} < optional<Wrapper<T>>{T(42)});
         CHECK_FALSE(optional<T>{T(42)} < optional<T>{});
-        CHECK_FALSE(optional<T>{T(42)} < optional<wrapper<T>>{});
+        CHECK_FALSE(optional<T>{T(42)} < optional<Wrapper<T>>{});
 
         CHECK(optional{T(42)} < T(99));
-        CHECK(optional{T(42)} < wrapper<T>(99));
-        CHECK(optional{T()} < wrapper<T>(99));
-        CHECK_FALSE(optional{T(99)} < wrapper<T>(99));
+        CHECK(optional{T(42)} < Wrapper<T>(99));
+        CHECK(optional{T()} < Wrapper<T>(99));
+        CHECK_FALSE(optional{T(99)} < Wrapper<T>(99));
     }
 
     // Compare Less-Equal
     {
         CHECK(optional{T(42)} <= optional{T(99)});
-        CHECK(optional{T(42)} <= optional<wrapper<T>>{T(99)});
-        CHECK(optional<wrapper<T>>{T(42)} <= optional{T(99)});
+        CHECK(optional{T(42)} <= optional<Wrapper<T>>{T(99)});
+        CHECK(optional<Wrapper<T>>{T(42)} <= optional{T(99)});
         CHECK(optional<T>{} <= optional<T>{T(42)});
-        CHECK(optional<T>{} <= optional<wrapper<T>>{T(42)});
+        CHECK(optional<T>{} <= optional<Wrapper<T>>{T(42)});
         CHECK_FALSE(optional<T>{T(42)} <= optional<T>{});
-        CHECK_FALSE(optional<T>{T(42)} <= optional<wrapper<T>>{});
+        CHECK_FALSE(optional<T>{T(42)} <= optional<Wrapper<T>>{});
 
         CHECK(optional{T(42)} <= T(99));
-        CHECK(optional{T(42)} <= wrapper<T>(99));
-        CHECK(optional{T()} <= wrapper<T>(99));
-        CHECK_FALSE(optional<T>{T(99)} <= wrapper<T>(42));
+        CHECK(optional{T(42)} <= Wrapper<T>(99));
+        CHECK(optional{T()} <= Wrapper<T>(99));
+        CHECK_FALSE(optional<T>{T(99)} <= Wrapper<T>(42));
     }
 
     // Compare Greater
     {
         CHECK(optional{T(99)} > optional{T(42)});
-        CHECK(optional{T(99)} > optional<wrapper<T>>{T(42)});
-        CHECK(optional<wrapper<T>>{T(99)} > optional{T(42)});
+        CHECK(optional{T(99)} > optional<Wrapper<T>>{T(42)});
+        CHECK(optional<Wrapper<T>>{T(99)} > optional{T(42)});
         CHECK(optional<T>{T(99)} > optional<T>{});
-        CHECK(optional<T>{T(99)} > optional<wrapper<T>>{});
+        CHECK(optional<T>{T(99)} > optional<Wrapper<T>>{});
         CHECK_FALSE(optional<T>{} > optional<T>{T(99)});
-        CHECK_FALSE(optional<T>{} > optional<wrapper<T>>{T(99)});
+        CHECK_FALSE(optional<T>{} > optional<Wrapper<T>>{T(99)});
 
-        CHECK(optional<T>{T(99)} > wrapper<T>(42));
+        CHECK(optional<T>{T(99)} > Wrapper<T>(42));
         CHECK_FALSE(optional{T(42)} > T(99));
-        CHECK_FALSE(optional{T(42)} > wrapper<T>(99));
-        CHECK_FALSE(optional{T()} > wrapper<T>(99));
+        CHECK_FALSE(optional{T(42)} > Wrapper<T>(99));
+        CHECK_FALSE(optional{T()} > Wrapper<T>(99));
     }
 
     // Compare Greater-Equal
     {
         CHECK(optional{T(99)} >= optional{T(42)});
-        CHECK(optional{T(99)} >= optional<wrapper<T>>{T(42)});
-        CHECK(optional<wrapper<T>>{T(99)} >= optional{T(42)});
+        CHECK(optional{T(99)} >= optional<Wrapper<T>>{T(42)});
+        CHECK(optional<Wrapper<T>>{T(99)} >= optional{T(42)});
         CHECK(optional<T>{T(99)} >= optional<T>{});
-        CHECK(optional<T>{T(99)} >= optional<wrapper<T>>{});
+        CHECK(optional<T>{T(99)} >= optional<Wrapper<T>>{});
         CHECK_FALSE(optional<T>{} >= optional<T>{T(99)});
-        CHECK_FALSE(optional<T>{} >= optional<wrapper<T>>{T(99)});
+        CHECK_FALSE(optional<T>{} >= optional<Wrapper<T>>{T(99)});
 
-        CHECK(optional<T>{T(99)} >= wrapper<T>(42));
-        CHECK(optional<T>{T(99)} >= wrapper<T>(99));
+        CHECK(optional<T>{T(99)} >= Wrapper<T>(42));
+        CHECK(optional<T>{T(99)} >= Wrapper<T>(99));
         CHECK_FALSE(optional{T(42)} >= T(99));
-        CHECK_FALSE(optional{T(42)} >= wrapper<T>(99));
-        CHECK_FALSE(optional{T()} >= wrapper<T>(99));
+        CHECK_FALSE(optional{T(42)} >= Wrapper<T>(99));
+        CHECK_FALSE(optional{T()} >= Wrapper<T>(99));
     }
 
     return true;
