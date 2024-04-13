@@ -6,6 +6,7 @@
 #include <etl/_config/all.hpp>
 
 #include <etl/_array/array.hpp>
+#include <etl/_array/c_array.hpp>
 #include <etl/_contracts/check.hpp>
 #include <etl/_iterator/begin.hpp>
 #include <etl/_iterator/data.hpp>
@@ -122,7 +123,7 @@ struct span {
     /// Constructs a span. From a c style array.
     template <size_t N>
         requires(extent == dynamic_extent or extent == N)
-    constexpr span(type_identity_t<T> (&arr)[N]) noexcept
+    constexpr span(c_array<type_identity_t<T>, N>& arr) noexcept
         : _storage{&arr[0], N}
     {
     }
