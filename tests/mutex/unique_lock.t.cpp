@@ -6,7 +6,7 @@
 #include "test_mutex.hpp"
 #include "testing/testing.hpp"
 
-static auto test() -> bool
+constexpr auto test() -> bool
 {
 
     // "default construction"
@@ -140,7 +140,7 @@ static auto test() -> bool
 
 auto main() -> int
 {
-    CHECK(test());
+    STATIC_CHECK(test());
     // static_assert(test());
     return 0;
 }

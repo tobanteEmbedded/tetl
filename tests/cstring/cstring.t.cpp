@@ -177,9 +177,7 @@ static auto test_mem() -> bool
 
 auto main() -> int
 {
-    CHECK(test_str());
-    static_assert(test_str());
-
+    STATIC_CHECK(test_str());
     CHECK(test_mem());
     return 0;
 }

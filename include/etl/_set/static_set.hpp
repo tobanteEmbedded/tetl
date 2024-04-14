@@ -441,13 +441,13 @@ public:
     /// value_comp.
     ///
     /// \returns The key comparison function object.
-    [[nodiscard]] auto key_comp() const noexcept -> key_compare { return key_compare(); }
+    [[nodiscard]] constexpr auto key_comp() const noexcept -> key_compare { return key_compare(); }
 
     /// \brief Returns the function object that compares the values. It is the
     /// same as key_comp.
     ///
     /// \returns The value comparison function object.
-    [[nodiscard]] auto value_comp() const noexcept -> value_compare { return value_compare(); }
+    [[nodiscard]] constexpr auto value_comp() const noexcept -> value_compare { return value_compare(); }
 };
 
 /// \brief Compares the contents of two sets.

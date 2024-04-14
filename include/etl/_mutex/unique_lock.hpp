@@ -34,13 +34,13 @@ public:
     using mutex_type = Mutex;
 
     /// \brief Constructs a unique_lock with no associated mutex.
-    unique_lock() noexcept = default;
+    constexpr unique_lock() noexcept = default;
 
     /// \brief Constructs a unique_lock with m as the associated mutex.
     /// Additionally: Locks the associated mutex by calling m.lock(). The
     /// behavior is undefined if the current thread already owns the mutex
     /// except when the mutex is recursive.
-    explicit unique_lock(mutex_type& m)
+    explicit constexpr unique_lock(mutex_type& m)
         : _mutex{&m}
     {
         lock();
@@ -48,7 +48,7 @@ public:
 
     /// \brief Constructs a unique_lock with m as the associated mutex.
     /// Additionally: Does not lock the associated mutex.
-    unique_lock(mutex_type& m, defer_lock_t /*tag*/) noexcept
+    constexpr unique_lock(mutex_type& m, defer_lock_t /*tag*/) noexcept
         : _mutex{&m}
     {
     }
@@ -57,7 +57,7 @@ public:
     /// Additionally: Tries to lock the associated mutex without blocking by
     /// calling m.try_lock(). The behavior is undefined if the current thread
     /// already owns the mutex except when the mutex is recursive.
-    unique_lock(mutex_type& m, try_to_lock_t /*tag*/) noexcept
+    constexpr unique_lock(mutex_type& m, try_to_lock_t /*tag*/) noexcept
         : _mutex{&m}
     {
         try_lock();
@@ -65,7 +65,7 @@ public:
 
     /// \brief Constructs a unique_lock with m as the associated mutex.
     /// Additionally: Assumes the calling thread already owns m.
-    unique_lock(mutex_type& m, adopt_lock_t /*tag*/)
+    constexpr unique_lock(mutex_type& m, adopt_lock_t /*tag*/)
         : _mutex{&m}
         , _owns{true}
     {
@@ -77,7 +77,7 @@ public:
     /// been reached or the lock is acquired, whichever comes first. May block
     /// for longer than until timeout_time has been reached.
     template <typename Clock, typename Duration>
-    unique_lock(mutex_type& m, chrono::time_point<Clock, Duration> const& absTime) noexcept
+    constexpr unique_lock(mutex_type& m, chrono::time_point<Clock, Duration> const& absTime) noexcept
         : _mutex{&m}
     {
         try_lock_until(absTime);
@@ -89,21 +89,21 @@ public:
     /// timeout_duration has elapsed or the lock is acquired, whichever comes
     /// first. May block for longer than timeout_duration.
     template <typename Rep, typename Period>
-    unique_lock(mutex_type& m, chrono::duration<Rep, Period> const& relTime) noexcept
+    constexpr unique_lock(mutex_type& m, chrono::duration<Rep, Period> const& relTime) noexcept
         : _mutex{&m}
     {
         try_lock_for(relTime);
     }
 
     /// \brief Deleted copy constructor. unique_lock is move only.
-    unique_lock(unique_lock const&) = delete;
+    constexpr unique_lock(unique_lock const&) = delete;
 
     /// \brief Deleted copy assignment. unique_lock is move only.
-    auto operator=(unique_lock const&) -> unique_lock& = delete;
+    constexpr auto operator=(unique_lock const&) -> unique_lock& = delete;
 
     /// \brief Move constructor. Initializes the unique_lock with the contents
     /// of other. Leaves other with no associated mutex.
-    unique_lock(unique_lock&& u) noexcept
+    constexpr unique_lock(unique_lock&& u) noexcept
         : _mutex{exchange(u._mutex, nullptr)}
         , _owns{exchange(u._owns, false)}
     {
@@ -112,7 +112,7 @@ public:
     /// \brief Move assignment operator. Replaces the contents with those of
     /// other using move semantics. If prior to the call *this has an associated
     /// mutex and has acquired ownership of it, the mutex is unlocked.
-    auto operator=(unique_lock&& u) noexcept -> unique_lock&
+    constexpr auto operator=(unique_lock&& u) noexcept -> unique_lock&
     {
         if (_mutex != nullptr && _owns) {
             unlock();
@@ -122,10 +122,10 @@ public:
         return *this;
     }
 
-    ~unique_lock() noexcept { unlock(); }
+    constexpr ~unique_lock() noexcept { unlock(); }
 
     /// \brief Locks (i.e., takes ownership of) the associated mutex.
-    auto lock() noexcept(noexcept(_mutex->lock())) -> void
+    constexpr auto lock() noexcept(noexcept(_mutex->lock())) -> void
     {
         if ((_mutex != nullptr) and !_owns) {
             _mutex->lock();
@@ -137,7 +137,7 @@ public:
     /// without blocking.
     /// \returns true if the ownership of the mutex has been acquired
     /// successfully, false otherwise.
-    auto try_lock() noexcept(noexcept(_mutex->try_lock())) -> bool
+    constexpr auto try_lock() noexcept(noexcept(_mutex->try_lock())) -> bool
     {
         if ((_mutex != nullptr) && !_owns) {
             if (auto success = _mutex->try_lock(); success) {
@@ -157,7 +157,8 @@ public:
     /// longer than timeout_duration due to scheduling or resource contention
     /// delays.
     template <typename Rep, typename Period>
-    auto try_lock_for(chrono::duration<Rep, Period> const& dur) noexcept(noexcept(_mutex->try_lock_for(dur))) -> bool
+    constexpr auto try_lock_for(chrono::duration<Rep, Period> const& dur)
+        noexcept(noexcept(_mutex->try_lock_for(dur))) -> bool
     {
         if ((_mutex != nullptr) && !_owns) {
             if (auto success = _mutex->try_lock_for(dur); success) {
@@ -171,7 +172,7 @@ public:
     /// \brief Tries to lock (i.e., takes ownership of) the associated mutex
     /// without blocking.
     template <typename Clock, typename Duration>
-    auto try_lock_until(chrono::time_point<Clock, Duration> const& tp)
+    constexpr auto try_lock_until(chrono::time_point<Clock, Duration> const& tp)
         noexcept(noexcept(_mutex->try_lock_until(tp))) -> bool
     {
         if ((_mutex != nullptr) && !_owns) {
@@ -186,7 +187,7 @@ public:
     /// \brief Unlocks (i.e., releases ownership of) the associated mutex and
     /// releases ownership. Silently does nothing, if there is no associated
     /// mutex or if the mutex is not locked.
-    auto unlock() -> void
+    constexpr auto unlock() -> void
     {
         if ((_mutex != nullptr) and _owns) {
             _mutex->unlock();
@@ -195,7 +196,7 @@ public:
     }
 
     /// \brief Exchanges the internal states of the lock objects.
-    auto swap(unique_lock& other) noexcept -> void
+    constexpr auto swap(unique_lock& other) noexcept -> void
     {
         using etl::swap;
         swap(_mutex, other._mutex);
@@ -209,25 +210,27 @@ public:
     ///
     /// \returns Pointer to the associated mutex or a null pointer if there was
     /// no associated mutex.
-    [[nodiscard]] auto release() noexcept -> mutex_type*
+    [[nodiscard]] constexpr auto release() noexcept -> mutex_type*
     {
         _owns = false;
         return _mutex;
     }
 
     /// \brief Checks whether *this owns a locked mutex or not.
-    [[nodiscard]] auto owns_lock() const noexcept -> bool { return _owns; }
+    [[nodiscard]] constexpr auto owns_lock() const noexcept -> bool { return _owns; }
 
     /// \brief Checks whether *this owns a locked mutex or not.
-    [[nodiscard]] explicit operator bool() const noexcept { return owns_lock(); }
+    [[nodiscard]] explicit constexpr operator bool() const noexcept { return owns_lock(); }
 
     /// \brief Returns a pointer to the associated mutex, or a null pointer if
     /// there is no associated mutex.
-    [[nodiscard]] auto mutex() const noexcept -> mutex_type* { return _mutex; }
+    [[nodiscard]] constexpr auto mutex() const noexcept -> mutex_type* { return _mutex; }
 
-    /// \brief Specializes the swap algorithm for unique_lock. Exchanges the state
-    /// of lhs with that of rhs.
-    friend auto swap(unique_lock& lhs, unique_lock& rhs) noexcept(noexcept(lhs.swap(rhs))) -> void { lhs.swap(rhs); }
+    /// \brief Specializes the swap algorithm for unique_lock. Exchanges the state of lhs with that of rhs.
+    friend constexpr auto swap(unique_lock& lhs, unique_lock& rhs) noexcept(noexcept(lhs.swap(rhs))) -> void
+    {
+        lhs.swap(rhs);
+    }
 };
 
 } // namespace etl

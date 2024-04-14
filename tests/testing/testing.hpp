@@ -14,7 +14,7 @@
 #define CHECK_SAME_TYPE(...) CHECK(etl::is_same_v<__VA_ARGS__>)
 #define STATIC_CHECK(...)                                                                                              \
     do {                                                                                                               \
-        static_assert((__VA_ARGS__));                                                                                  \
+        static_assert(__VA_ARGS__);                                                                                    \
         CHECK(__VA_ARGS__);                                                                                            \
     } while (false)
 

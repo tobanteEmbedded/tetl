@@ -380,7 +380,6 @@ constexpr auto test_all_cx() -> bool
 
 auto main() -> int
 {
-    CHECK(test_all_cx());
-    static_assert(test_all_cx());
+    STATIC_CHECK(test_all_cx());
     return 0;
 }

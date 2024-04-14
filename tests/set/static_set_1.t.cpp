@@ -13,7 +13,7 @@
 #include "testing/testing.hpp"
 
 template <typename T>
-auto test() -> bool // NOLINT(readability-function-size)
+constexpr auto test() -> bool
 {
     {
         using set_t = etl::static_set<T, 16>;
@@ -192,7 +192,7 @@ auto test() -> bool // NOLINT(readability-function-size)
     return true;
 }
 
-static auto test_all() -> bool
+constexpr auto test_all() -> bool
 {
     CHECK(test<etl::int8_t>());
     CHECK(test<etl::int16_t>());
@@ -209,9 +209,6 @@ static auto test_all() -> bool
 
 auto main() -> int
 {
-    CHECK(test_all());
-
-    // TODO: [tobi] Enable constexpr tests
-    // static_assert(test_all());
+    STATIC_CHECK(test_all());
     return 0;
 }

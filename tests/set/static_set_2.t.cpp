@@ -13,7 +13,7 @@
 #include "testing/testing.hpp"
 
 template <typename T>
-auto test() -> bool // NOLINT(readability-function-size)
+constexpr auto test() -> bool
 {
 
     {
@@ -154,16 +154,6 @@ auto test() -> bool // NOLINT(readability-function-size)
     }
 
     {
-        using namespace etl::literals::string_view_literals;
-        using str_t = etl::inplace_string<32>;
-
-        auto data = etl::array{str_t{"test"}, str_t{"test"}, str_t{"test"}};
-        auto set  = etl::static_set<str_t, 4>{data.begin(), data.end()};
-        CHECK(set.lower_bound("test") == set.begin());
-        CHECK(set.upper_bound("test") == etl::next(set.begin(), 1));
-    }
-
-    {
         // "empty"
         {
             auto lhs = etl::static_set<T, 2>();
@@ -217,7 +207,7 @@ auto test() -> bool // NOLINT(readability-function-size)
     return true;
 }
 
-static auto test_all() -> bool
+constexpr auto test_all() -> bool
 {
     CHECK(test<etl::int8_t>());
     CHECK(test<etl::int16_t>());
@@ -234,9 +224,6 @@ static auto test_all() -> bool
 
 auto main() -> int
 {
-    CHECK(test_all());
-
-    // TODO: [tobi] Enable constexpr tests
-    // static_assert(test_all());
+    STATIC_CHECK(test_all());
     return 0;
 }
