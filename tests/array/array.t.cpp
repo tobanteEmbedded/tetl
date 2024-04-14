@@ -3,7 +3,6 @@
 #include <etl/array.hpp>
 
 #include <etl/algorithm.hpp>
-#include <etl/cstdint.hpp>
 #include <etl/numeric.hpp>
 #include <etl/type_traits.hpp>
 #include <etl/utility.hpp>
@@ -11,7 +10,7 @@
 #include "testing/testing.hpp"
 
 template <typename T>
-constexpr auto test_builtin_types() -> bool
+constexpr auto test() -> bool
 {
     {
         etl::array<T, 2> a{};
@@ -82,17 +81,14 @@ constexpr auto test_builtin_types() -> bool
     }
 
     {
-        // TODO: [tobi] Fails in a static_assertion
-        // gcc: error: ‘it.etl::reverse_iterator<unsigned char*>::operator*()’
-        // is not a constant expression
-        // auto arr = etl::array { T(1), T(2), T(3) };
-        // auto it  = arr.rbegin();
+        auto arr = etl::array{T(1), T(2), T(3)};
+        auto it  = arr.rbegin();
 
-        // CHECK(*it == T(3));
-        // ++it;
-        // CHECK(*it == T(2));
-        // it++;
-        // CHECK(*it == T(1));
+        CHECK(*it == T(3));
+        ++it;
+        CHECK(*it == T(2));
+        it++;
+        CHECK(*it == T(1));
     }
 
     { // not eqaul
@@ -190,10 +186,6 @@ constexpr auto test_builtin_types() -> bool
         // creates a non-copyable etl::array
         auto a5 = etl::to_array({non_copy(T{42})});
         CHECK(a5.size() == 1);
-
-        // error: copying multidimensional arrays is not supported
-        //    char s[2][6] = {"nice", "thing"};
-        //    auto a6      = etl::to_array(s);
     }
 
     return true;
@@ -201,17 +193,28 @@ constexpr auto test_builtin_types() -> bool
 
 constexpr auto test_all() -> bool
 {
-    CHECK(test_builtin_types<etl::uint8_t>());
-    CHECK(test_builtin_types<etl::int8_t>());
-    CHECK(test_builtin_types<etl::uint16_t>());
-    CHECK(test_builtin_types<etl::int16_t>());
-    CHECK(test_builtin_types<etl::uint32_t>());
-    CHECK(test_builtin_types<etl::int32_t>());
-    CHECK(test_builtin_types<etl::uint64_t>());
-    CHECK(test_builtin_types<etl::int64_t>());
-    CHECK(test_builtin_types<float>());
-    CHECK(test_builtin_types<double>());
-    CHECK(test_builtin_types<long double>());
+    CHECK(test<signed char>());
+    CHECK(test<signed short>());
+    CHECK(test<signed int>());
+    CHECK(test<signed long>());
+    CHECK(test<signed long long>());
+
+    CHECK(test<unsigned char>());
+    CHECK(test<unsigned short>());
+    CHECK(test<unsigned int>());
+    CHECK(test<unsigned long>());
+    CHECK(test<unsigned long long>());
+
+    CHECK(test<char>());
+    CHECK(test<char8_t>());
+    CHECK(test<char16_t>());
+    CHECK(test<char32_t>());
+    CHECK(test<wchar_t>());
+
+    CHECK(test<float>());
+    CHECK(test<double>());
+    CHECK(test<long double>());
+
     return true;
 }
 
