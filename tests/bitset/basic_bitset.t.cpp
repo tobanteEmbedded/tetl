@@ -70,6 +70,9 @@ constexpr auto test() -> bool
         CHECK_FALSE(bitset(0b111) == bitset());
         CHECK(bitset(0b111) != bitset());
         CHECK(bitset(0b111) != bitset(0b110));
+
+        CHECK(bitset(0b0000'0000).set() == bitset(0b0000'0000).flip());
+        CHECK(bitset(0b0000'0000).set().reset() == bitset(0b0000'0000));
     }
 
     return true;

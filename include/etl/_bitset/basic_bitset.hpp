@@ -173,7 +173,7 @@ struct basic_bitset {
         } else {
             // TODO: Improve
             for (auto i = etl::size_t(0); i < size(); ++i) {
-                flip(i);
+                unchecked_flip(i);
             }
         }
 
