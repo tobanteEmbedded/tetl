@@ -14,7 +14,7 @@ using namespace etl::literals;
 
 constexpr auto test() -> bool
 {
-    // "cstring: strcpy"
+    // strcpy
     {
         char source[32] = {"test"};
         char dest[32]{};
@@ -25,7 +25,7 @@ constexpr auto test() -> bool
         CHECK(etl::strlen(dest) == 4);
     }
 
-    // "cstring: strncpy"
+    // strncpy
     {
         char source[32] = {"test"};
         char dest[32]{};
@@ -34,7 +34,7 @@ constexpr auto test() -> bool
         CHECK(dest[1] == 'e');
     }
 
-    // "cstring: strcat"
+    // strcat
     {
         char str[50]  = "Hello ";
         char str2[50] = "World!";
@@ -48,7 +48,7 @@ constexpr auto test() -> bool
         CHECK(str == "Hello World! Goodbye World!"_sv);
     }
 
-    // "cstring: strncat"
+    // strncat
     {
         char str[50]  = "Hello ";
         char str2[50] = "World!";
@@ -60,7 +60,7 @@ constexpr auto test() -> bool
         CHECK(str == "Hello World! Go"_sv);
     }
 
-    // "cstring: strncmp"
+    // strncmp
     {
         CHECK(etl::strncmp("Hello, world!", "Hello, everybody!", 13) > 0);
         CHECK(etl::strncmp("Hello, everybody!", "Hello, world!", 13) < 0);
@@ -69,7 +69,7 @@ constexpr auto test() -> bool
         CHECK(etl::strncmp("Hello, wo", "Hello, world!", 9) == 0);
     }
 
-    // "cstring: strchr"
+    // strchr
     {
         CHECK(etl::strchr(static_cast<char*>(nullptr), '0') == nullptr);
         CHECK(etl::strchr(static_cast<char const*>(nullptr), '0') == nullptr);
@@ -93,7 +93,7 @@ constexpr auto test() -> bool
         CHECK(etl::strchr(str.data(), '\0') == etl::next(str.data(), 5));
     }
 
-    // "cstring: strrchr"
+    // strrchr
     {
         CHECK(etl::strrchr(static_cast<char*>(nullptr), '0') == nullptr);
         CHECK(etl::strrchr(static_cast<char const*>(nullptr), '0') == nullptr);
@@ -117,7 +117,7 @@ constexpr auto test() -> bool
         CHECK(etl::strrchr(str.data(), '\0') == etl::next(str.data(), 5));
     }
 
-    // "cstring: strspn"
+    // strspn
     {
         auto const* lowAlpha = "qwertyuiopasdfghjklzxcvbnm";
         auto const str       = etl::inplace_string<16>{"abcde312$#@"};
@@ -125,14 +125,33 @@ constexpr auto test() -> bool
         CHECK(str.substr(span) == "312$#@");
     }
 
-    // "cstring: strcspn"
+    // strcspn
     {
         auto const* invalid = "*$#";
         auto const str      = etl::inplace_string<16>{"abcde312$#@"};
         CHECK(etl::strcspn(str.c_str(), invalid) == 8);
     }
 
-    // "cstring: strlen"
+    // strpbrk
+    {
+        auto const* space = " ";
+        auto const* comma = ";,";
+        auto str          = etl::inplace_string<16>{"hello world,"};
+
+        CHECK(etl::strpbrk(str.c_str(), space) == etl::next(str.c_str(), 5));
+        CHECK(etl::strpbrk(str.c_str(), comma) == etl::next(str.c_str(), 11));
+
+        auto const& cstr = str;
+        CHECK(etl::strpbrk(cstr.c_str(), space) == etl::next(cstr.c_str(), 5));
+        CHECK(etl::strpbrk(cstr.c_str(), comma) == etl::next(cstr.c_str(), 11));
+
+        // TODO
+        // auto const* dollar = "$";
+        // CHECK(etl::strpbrk(str.c_str(), dollar) == nullptr);
+        // CHECK(etl::strpbrk(cstr.c_str(), dollar) == nullptr);
+    }
+
+    // strlen
     {
         CHECK(etl::strlen("") == 0);
         CHECK(etl::strlen("a") == 1);
