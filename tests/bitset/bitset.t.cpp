@@ -179,17 +179,21 @@ constexpr auto test_bitset() -> bool
     }
 
     {
-        CHECK(etl::bitset<N>{0U}.to_ulong() == 0UL);
-        CHECK(etl::bitset<N>{0U}.to_ullong() == 0ULL);
+        if constexpr (N <= etl::numeric_limits<unsigned long>::digits) {
+            CHECK(etl::bitset<N>{0U}.to_ulong() == 0UL);
+            CHECK(etl::bitset<N>{1U}.to_ulong() == 1UL);
 
-        CHECK(etl::bitset<N>{1U}.to_ulong() == 1UL);
-        CHECK(etl::bitset<N>{1U}.to_ullong() == 1ULL);
+            CHECK(etl::bitset<N>{0b0000'1111U}.to_ulong() == 15UL);
+            CHECK(etl::bitset<N>{0b1111'1111U}.to_ulong() == 255UL);
+        }
 
-        CHECK(etl::bitset<N>{0b0000'1111U}.to_ulong() == 15UL);
-        CHECK(etl::bitset<N>{0b0000'1111U}.to_ullong() == 15ULL);
+        if constexpr (N <= etl::numeric_limits<unsigned long long>::digits) {
+            CHECK(etl::bitset<N>{0U}.to_ullong() == 0ULL);
+            CHECK(etl::bitset<N>{1U}.to_ullong() == 1ULL);
 
-        CHECK(etl::bitset<N>{0b1111'1111U}.to_ulong() == 255UL);
-        CHECK(etl::bitset<N>{0b1111'1111U}.to_ullong() == 255ULL);
+            CHECK(etl::bitset<N>{0b0000'1111U}.to_ullong() == 15ULL);
+            CHECK(etl::bitset<N>{0b1111'1111U}.to_ullong() == 255ULL);
+        }
     }
 
     {
