@@ -12,13 +12,13 @@ namespace etl {
 
 /// Computes the saturating division x / y.
 /// \ingroup numeric
-template <builtin_integer T>
-[[nodiscard]] constexpr auto div_sat(T x, T y) noexcept -> T
+template <builtin_integer Int>
+[[nodiscard]] constexpr auto div_sat(Int x, Int y) noexcept -> Int
 {
     TETL_PRECONDITION(y != 0);
-    if constexpr (etl::is_signed_v<T>) {
-        if (x == etl::numeric_limits<T>::min() and y == T(-1)) {
-            return etl::numeric_limits<T>::max();
+    if constexpr (etl::is_signed_v<Int>) {
+        if (x == etl::numeric_limits<Int>::min() and y == Int(-1)) {
+            return etl::numeric_limits<Int>::max();
         }
     }
     return x / y;

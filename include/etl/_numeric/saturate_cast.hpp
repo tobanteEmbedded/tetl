@@ -14,16 +14,16 @@ namespace etl {
 /// the minimum and maximum values of type T.
 ///
 /// \ingroup numeric
-template <builtin_integer T, builtin_integer U>
-[[nodiscard]] constexpr auto saturate_cast(U x) noexcept -> T
+template <builtin_integer To, builtin_integer From>
+[[nodiscard]] constexpr auto saturate_cast(From x) noexcept -> To
 {
-    if (etl::cmp_less(x, etl::numeric_limits<T>::min())) {
-        return etl::numeric_limits<T>::min();
+    if (etl::cmp_less(x, etl::numeric_limits<To>::min())) {
+        return etl::numeric_limits<To>::min();
     }
-    if (etl::cmp_greater(x, etl::numeric_limits<T>::max())) {
-        return etl::numeric_limits<T>::max();
+    if (etl::cmp_greater(x, etl::numeric_limits<To>::max())) {
+        return etl::numeric_limits<To>::max();
     }
-    return static_cast<T>(x);
+    return static_cast<To>(x);
 }
 
 } // namespace etl

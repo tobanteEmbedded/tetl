@@ -16,6 +16,8 @@ constexpr auto test() -> bool
     CHECK_NOEXCEPT(etl::saturate_cast<T>(T(0)));
     CHECK_NOEXCEPT(etl::saturate_cast<T>(T(1)));
 
+    CHECK(etl::saturate_cast<T>(T(0)) == T(0));
+    CHECK(etl::saturate_cast<T>(0) == T(0));
     CHECK(etl::saturate_cast<T>(0LL) == T(0));
 
     if constexpr (etl::cmp_less(limits_int::min(), limits_val::min())) {
@@ -39,11 +41,13 @@ constexpr auto test_all() -> bool
     CHECK(test<unsigned short>());
     CHECK(test<unsigned int>());
     CHECK(test<unsigned long>());
+    CHECK(test<unsigned long long>());
 
     CHECK(test<signed char>());
     CHECK(test<signed short>());
     CHECK(test<signed int>());
     CHECK(test<signed long>());
+    CHECK(test<signed long long>());
 
     return true;
 }
