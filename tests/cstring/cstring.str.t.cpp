@@ -50,12 +50,13 @@ constexpr auto test() -> bool
 
     // strncat
     {
-        char str[50]  = "Hello ";
-        char str2[50] = "World!";
-
-        // NOLINTNEXTLINE(clang-analyzer-security.insecureAPI.strcpy)
-        etl::strcat(str, str2);
+        char str[20] = "Hello World!";
+        etl::strncat(str, "", 3);
         CHECK(str == "Hello World!"_sv);
+    }
+
+    {
+        char str[20] = "Hello World!";
         etl::strncat(str, " Goodbye World!", 3);
         CHECK(str == "Hello World! Go"_sv);
     }
