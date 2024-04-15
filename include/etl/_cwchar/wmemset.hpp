@@ -8,10 +8,10 @@
 
 namespace etl {
 
-/// \brief Copies the wide character ch into each of the first count wide
+/// Copies the wide character ch into each of the first count wide
 /// characters of the wide character array pointed to by dest.
 ///
-/// \details If overflow occurs, the behavior is undefined. If count is zero,
+/// If overflow occurs, the behavior is undefined. If count is zero,
 /// the function does nothing.
 ///
 /// https://en.cppreference.com/w/cpp/string/wide/wmemset
