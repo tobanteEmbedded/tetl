@@ -10,7 +10,14 @@ namespace etl {
 
 /// Returns the length of the C string str.
 /// \ingroup cstring
-constexpr auto strlen(char const* str) -> etl::size_t { return detail::strlen<char, etl::size_t>(str); }
+[[nodiscard]] constexpr auto strlen(char const* str) -> etl::size_t
+{
+#if defined(__clang__)
+    return __builtin_strlen(str);
+#else
+    return detail::strlen<char, etl::size_t>(str);
+#endif
+}
 
 } // namespace etl
 

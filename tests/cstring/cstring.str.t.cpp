@@ -72,9 +72,6 @@ constexpr auto test() -> bool
 
     // strchr
     {
-        CHECK(etl::strchr(static_cast<char*>(nullptr), '0') == nullptr);
-        CHECK(etl::strchr(static_cast<char const*>(nullptr), '0') == nullptr);
-
         auto const* txt = "Hello";
         CHECK(etl::strchr(txt, '0') == nullptr);
         CHECK(etl::strchr(txt, 'H') == txt);

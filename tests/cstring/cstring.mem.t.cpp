@@ -81,6 +81,15 @@ static auto test() -> bool
         CHECK(str == "1234456890"_sv);
     }
 
+    // memcmp:
+    {
+        auto lhs = etl::array{'a', 'b', 'c'};
+        auto rhs = etl::array{'d', 'e', 'f'};
+        CHECK(etl::memcmp(lhs.data(), lhs.data(), lhs.size()) == 0);
+        CHECK(etl::memcmp(lhs.data(), rhs.data(), lhs.size()) < 0);
+        CHECK(etl::memcmp(rhs.data(), lhs.data(), lhs.size()) > 0);
+    }
+
     return true;
 }
 

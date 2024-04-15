@@ -10,6 +10,7 @@
 #include <etl/_config/all.hpp>
 
 #include <etl/_cstring/memchr.hpp>
+#include <etl/_cstring/memcmp.hpp>
 #include <etl/_cstring/memcpy.hpp>
 #include <etl/_cstring/memmove.hpp>
 #include <etl/_cstring/memset.hpp>

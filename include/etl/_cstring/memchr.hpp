@@ -27,15 +27,23 @@ namespace etl {
 /// \ingroup cstring
 [[nodiscard]] inline auto memchr(void* ptr, int ch, etl::size_t n) -> void*
 {
+#if defined(__clang__)
+    return __builtin_memchr(ptr, ch, n);
+#else
     auto* p = static_cast<unsigned char*>(ptr);
     return detail::memchr(p, static_cast<unsigned char>(ch), n);
+#endif
 }
 
 [[nodiscard]] inline auto memchr(void const* ptr, int ch, etl::size_t n) -> void const*
 {
+#if defined(__clang__)
+    return __builtin_memchr(ptr, ch, n);
+#else
     auto const* const p = static_cast<unsigned char const*>(ptr);
     auto const c        = static_cast<unsigned char>(ch);
     return detail::memchr<unsigned char const, etl::size_t>(p, c, n);
+#endif
 }
 
 /// @}

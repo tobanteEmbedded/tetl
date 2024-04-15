@@ -16,7 +16,11 @@ inline auto memmove(void* dest, void const* src, etl::size_t count) -> void*
 {
     TETL_PRECONDITION(dest != nullptr);
     TETL_PRECONDITION(src != nullptr);
+#if defined(__clang__)
+    return __builtin_memmove(dest, src, count);
+#else
     return detail::memmove<unsigned char>(dest, src, count);
+#endif
 }
 
 } // namespace etl

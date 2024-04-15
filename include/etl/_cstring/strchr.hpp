@@ -3,6 +3,7 @@
 #ifndef TETL_CSTRING_STRCHR_HPP
 #define TETL_CSTRING_STRCHR_HPP
 
+#include <etl/_contracts/check.hpp>
 #include <etl/_cstddef/size_t.hpp>
 #include <etl/_strings/cstr.hpp>
 
@@ -22,10 +23,23 @@ namespace etl {
 /// \ingroup cstring
 [[nodiscard]] constexpr auto strchr(char const* str, int ch) -> char const*
 {
-    return detail::strchr<char const>(str, ch);
+    TETL_PRECONDITION(str != nullptr);
+#if defined(__clang__)
+    return __builtin_strchr(str, ch);
+#else
+    return etl::detail::strchr<char const>(str, ch);
+#endif
 }
 
-[[nodiscard]] constexpr auto strchr(char* str, int ch) -> char* { return detail::strchr<char>(str, ch); }
+[[nodiscard]] constexpr auto strchr(char* str, int ch) -> char*
+{
+    TETL_PRECONDITION(str != nullptr);
+#if defined(__clang__)
+    return __builtin_strchr(str, ch);
+#else
+    return etl::detail::strchr<char>(str, ch);
+#endif
+}
 
 /// @}
 

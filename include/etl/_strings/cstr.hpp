@@ -95,10 +95,6 @@ template <typename CharT, typename SizeT>
 template <typename CharT>
 [[nodiscard]] constexpr auto strchr(CharT* str, int ch) -> CharT*
 {
-    if (str == nullptr) {
-        return nullptr;
-    }
-
     while (*str != CharT(0)) {
         if (*str == static_cast<CharT>(ch)) {
             return str;

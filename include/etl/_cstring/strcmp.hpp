@@ -15,7 +15,14 @@ namespace etl {
 /// the characters differ or until a terminating null-character is reached.
 ///
 /// \ingroup cstring
-constexpr auto strcmp(char const* lhs, char const* rhs) -> int { return detail::strcmp<char>(lhs, rhs); }
+[[nodiscard]] constexpr auto strcmp(char const* lhs, char const* rhs) -> int
+{
+#if defined(__clang__)
+    return __builtin_strcmp(lhs, rhs);
+#else
+    return detail::strcmp<char>(lhs, rhs);
+#endif
+}
 
 } // namespace etl
 

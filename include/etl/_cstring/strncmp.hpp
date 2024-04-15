@@ -17,9 +17,13 @@ namespace etl {
 /// null pointer.
 ///
 /// \ingroup cstring
-constexpr auto strncmp(char const* lhs, char const* rhs, etl::size_t const count) -> int
+[[nodiscard]] constexpr auto strncmp(char const* lhs, char const* rhs, etl::size_t count) -> int
 {
+#if defined(__clang__)
+    return __builtin_strncmp(lhs, rhs, count);
+#else
     return detail::strncmp<char, etl::size_t>(lhs, rhs, count);
+#endif
 }
 
 } // namespace etl
