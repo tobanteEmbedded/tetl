@@ -13,20 +13,14 @@ namespace etl {
 ///
 /// \ingroup bit
 enum struct endian {
-#if defined(DOXYGEN)
-    little = implementation defined,
-    big    = implementation defined,
-    native = implementation defined,
-#else
-    #ifdef _WIN32
+#if defined(_MSC_VER) and not defined(__clang__)
     little = 0,
     big    = 1,
     native = little
-    #else
+#else
     little = __ORDER_LITTLE_ENDIAN__,
     big    = __ORDER_BIG_ENDIAN__,
     native = __BYTE_ORDER__
-    #endif
 #endif
 };
 
