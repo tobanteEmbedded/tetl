@@ -20,6 +20,11 @@ constexpr auto test() -> bool
         auto data = etl::array{T(1), T(2), T(3), T(4)};
         auto set  = etl::static_set<T, 4>(data.begin(), data.end());
 
+        CHECK_FALSE(set.contains(T(5)));
+        CHECK(set.erase(T(5)) == 0);
+        CHECK(set.size() == 4);
+        CHECK_FALSE(set.contains(T(5)));
+
         CHECK(set.contains(T(3)));
         CHECK(set.erase(T(3)) == 1);
         CHECK(set.size() == 3);
