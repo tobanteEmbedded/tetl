@@ -5,8 +5,8 @@
 
 #include <etl/_config/all.hpp>
 
+#include <etl/_bit/has_single_bit.hpp>
 #include <etl/_cstddef/size_t.hpp>
-#include <etl/_math/pow.hpp>
 #include <etl/_type_traits/is_constant_evaluated.hpp>
 
 namespace etl {
@@ -27,7 +27,7 @@ namespace etl {
 template <etl::size_t N, typename T>
 [[nodiscard]] constexpr auto assume_aligned(T* ptr) -> T*
 {
-    static_assert(detail::is_power2(N));
+    static_assert(etl::has_single_bit(N));
     static_assert(alignof(T) <= N);
 
     if (not is_constant_evaluated()) {
