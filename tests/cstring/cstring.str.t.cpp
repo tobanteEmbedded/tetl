@@ -137,12 +137,15 @@ constexpr auto test() -> bool
     {
         auto const* space = " ";
         auto const* comma = ";,";
-        auto str          = etl::inplace_string<16>{"hello world,"};
+        auto str1         = etl::inplace_string<16>{"hello world,"};
+        auto str2         = etl::inplace_string<16>{" foo"};
 
-        CHECK(etl::strpbrk(str.c_str(), space) == etl::next(str.c_str(), 5));
-        CHECK(etl::strpbrk(str.c_str(), comma) == etl::next(str.c_str(), 11));
+        CHECK(etl::strpbrk(str1.c_str(), space) == etl::next(str1.c_str(), 5));
+        CHECK(etl::strpbrk(str1.c_str(), comma) == etl::next(str1.c_str(), 11));
 
-        auto const& cstr = str;
+        CHECK(etl::strpbrk(str2.c_str(), space) == etl::next(str2.c_str(), 0));
+
+        auto const& cstr = str1;
         CHECK(etl::strpbrk(cstr.c_str(), space) == etl::next(cstr.c_str(), 5));
         CHECK(etl::strpbrk(cstr.c_str(), comma) == etl::next(cstr.c_str(), 11));
 
