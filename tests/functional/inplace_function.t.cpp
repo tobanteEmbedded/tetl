@@ -69,13 +69,15 @@ auto test() -> bool
     CHECK(move(T(1)) == T(3));
 
 #if defined(__cpp_exceptions)
+    auto threw = false;
     try {
         auto empty = func_t{};
         empty(T{});
-        CHECK(false);
     } catch (etl::bad_function_call const& e) {
+        threw = true;
         CHECK(e.what() == "empty inplace_func_vtable"_sv);
     }
+    CHECK(threw);
 #endif
     return true;
 }
