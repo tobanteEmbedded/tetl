@@ -14,10 +14,8 @@
 
 namespace etl {
 
-/// \brief The class template bitset represents a fixed-size sequence of Bits bits.
+/// The class template bitset represents a fixed-size sequence of Bits bits.
 /// Bitsets can be manipulated by standard logic operators.
-/// \bug Add tests for sizes that are not a power of two. Broken at the moment.
-/// \todo What if position index is out of bounds? Return nullptr?
 /// \headerfile etl/bitset.hpp
 /// \ingroup bitset
 template <etl::size_t Bits>

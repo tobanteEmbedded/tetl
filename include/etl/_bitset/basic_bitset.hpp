@@ -17,6 +17,7 @@
 #include <etl/_concepts/unsigned_integral.hpp>
 #include <etl/_cstddef/size_t.hpp>
 #include <etl/_functional/plus.hpp>
+#include <etl/_iterator/prev.hpp>
 #include <etl/_limits/numeric_limits.hpp>
 #include <etl/_memory/addressof.hpp>
 #include <etl/_numeric/transform_reduce.hpp>
@@ -214,6 +215,9 @@ struct basic_bitset {
         return *this;
     }
 
+    /// Returns true if all of the bits in \p lhs and \p rhs are equal.
+    friend constexpr auto operator==(basic_bitset const& lhs, basic_bitset const& rhs) -> bool = default;
+
     /// Returns a basic_bitset containing the result of binary AND on corresponding pairs of bits of \p lhs and \p rhs.
     friend constexpr auto operator&(basic_bitset const& lhs, basic_bitset const& rhs) noexcept -> basic_bitset
     {
@@ -232,14 +236,12 @@ struct basic_bitset {
         return basic_bitset(lhs) ^= rhs;
     }
 
-    /// Returns true if all of the bits in \p lhs and \p rhs are equal.
-    friend constexpr auto operator==(basic_bitset const& lhs, basic_bitset const& rhs) -> bool = default;
-
 private:
     static constexpr auto ones          = etl::numeric_limits<WordType>::max();
     static constexpr auto bits_per_word = static_cast<size_t>(etl::numeric_limits<WordType>::digits);
     static constexpr auto num_words     = (Bits + bits_per_word - 1) / bits_per_word;
-    static constexpr auto has_padding   = (Bits % bits_per_word) != 0;
+    static constexpr auto padding       = Bits % bits_per_word;
+    static constexpr auto has_padding   = padding != 0;
 
     [[nodiscard]] static constexpr auto word_index(etl::size_t pos) -> etl::size_t { return pos / bits_per_word; }
 
