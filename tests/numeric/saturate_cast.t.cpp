@@ -1,0 +1,55 @@
+// SPDX-License-Identifier: BSL-1.0
+
+#include <etl/numeric.hpp>
+
+#include <etl/limits.hpp>
+#include <etl/type_traits.hpp>
+
+#include "testing/testing.hpp"
+
+template <typename T>
+constexpr auto test() -> bool
+{
+    using limits_int = etl::numeric_limits<int>;
+    using limits_val = etl::numeric_limits<T>;
+
+    CHECK_NOEXCEPT(etl::saturate_cast<T>(T(0)));
+    CHECK_NOEXCEPT(etl::saturate_cast<T>(T(1)));
+
+    CHECK(etl::saturate_cast<T>(0LL) == T(0));
+
+    if constexpr (etl::cmp_less(limits_int::min(), limits_val::min())) {
+        CHECK(etl::saturate_cast<T>(limits_int::min()) == limits_val::min());
+    } else {
+        CHECK(etl::saturate_cast<T>(limits_int::min()) == limits_int::min());
+    }
+
+    if constexpr (etl::cmp_greater(limits_int::max(), limits_val::max())) {
+        CHECK(etl::saturate_cast<T>(limits_int::max()) == limits_val::max());
+    } else {
+        CHECK(etl::saturate_cast<T>(limits_int::max()) == limits_int::max());
+    }
+
+    return true;
+}
+
+constexpr auto test_all() -> bool
+{
+    CHECK(test<unsigned char>());
+    CHECK(test<unsigned short>());
+    CHECK(test<unsigned int>());
+    CHECK(test<unsigned long>());
+
+    CHECK(test<signed char>());
+    CHECK(test<signed short>());
+    CHECK(test<signed int>());
+    CHECK(test<signed long>());
+
+    return true;
+}
+
+auto main() -> int
+{
+    STATIC_CHECK(test_all());
+    return 0;
+}

@@ -21,6 +21,7 @@
 #include <etl/_numeric/midpoint.hpp>
 #include <etl/_numeric/partial_sum.hpp>
 #include <etl/_numeric/reduce.hpp>
+#include <etl/_numeric/saturate_cast.hpp>
 #include <etl/_numeric/transform_reduce.hpp>
 
 #endif // TETL_NUMERIC_HPP
