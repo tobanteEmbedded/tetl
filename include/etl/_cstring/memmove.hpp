@@ -3,6 +3,7 @@
 #ifndef TETL_CSTRING_MEMMOVE_HPP
 #define TETL_CSTRING_MEMMOVE_HPP
 
+#include <etl/_contracts/check.hpp>
 #include <etl/_cstddef/size_t.hpp>
 #include <etl/_strings/cstr.hpp>
 
@@ -13,6 +14,8 @@ namespace etl {
 /// \ingroup cstring
 inline auto memmove(void* dest, void const* src, etl::size_t count) -> void*
 {
+    TETL_PRECONDITION(dest != nullptr);
+    TETL_PRECONDITION(src != nullptr);
     return detail::memmove<unsigned char>(dest, src, count);
 }
 
