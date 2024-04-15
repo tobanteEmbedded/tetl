@@ -8,19 +8,8 @@
 
 namespace etl {
 
-/// Finds the last occurrence of the character static_cast<char>(ch) in
-/// the byte string pointed to by str.
-///
-/// The terminating null character is considered to be a part of the
-/// string and can be found if searching for '\0'.
-///
-/// https://en.cppreference.com/w/cpp/string/byte/strrchr
-///
 /// \ingroup cstring
-[[nodiscard]] constexpr auto strrchr(char const* str, int ch) -> char const*
-{
-    return detail::strrchr<char const, etl::size_t>(str, ch);
-}
+/// @{
 
 /// Finds the last occurrence of the character static_cast<char>(ch) in
 /// the byte string pointed to by str.
@@ -31,7 +20,17 @@ namespace etl {
 /// https://en.cppreference.com/w/cpp/string/byte/strrchr
 ///
 /// \ingroup cstring
-[[nodiscard]] constexpr auto strrchr(char* str, int ch) -> char* { return detail::strrchr<char, etl::size_t>(str, ch); }
+[[nodiscard]] constexpr auto strrchr(char const* str, int ch) noexcept -> char const*
+{
+    return detail::strrchr<char const, etl::size_t>(str, ch);
+}
+
+[[nodiscard]] constexpr auto strrchr(char* str, int ch) noexcept -> char*
+{
+    return detail::strrchr<char, etl::size_t>(str, ch);
+}
+
+/// @}
 
 } // namespace etl
 

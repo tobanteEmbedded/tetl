@@ -11,7 +11,7 @@ namespace etl {
 /// Copy the first n bytes pointed to by src to the buffer pointed to by
 /// dest. Source and destination may overlap.
 /// \ingroup cstring
-constexpr auto memmove(void* dest, void const* src, etl::size_t count) -> void*
+inline auto memmove(void* dest, void const* src, etl::size_t count) -> void*
 {
     return detail::memmove<unsigned char>(dest, src, count);
 }

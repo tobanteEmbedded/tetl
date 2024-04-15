@@ -12,7 +12,7 @@ namespace etl {
 /// dest. Source and destination may not overlap. If source and destination
 /// might overlap, memmove() must be used instead.
 /// \ingroup cstring
-constexpr auto memcpy(void* dest, void const* src, etl::size_t n) -> void*
+inline auto memcpy(void* dest, void const* src, etl::size_t n) -> void*
 {
     return detail::memcpy<unsigned char, etl::size_t>(dest, src, n);
 }

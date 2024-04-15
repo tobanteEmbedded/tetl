@@ -8,6 +8,9 @@
 
 namespace etl {
 
+/// \ingroup cstring
+/// @{
+
 /// Finds the first occurrence of the character static_cast<char>(ch) in
 /// the byte string pointed to by str.
 ///
@@ -22,16 +25,9 @@ namespace etl {
     return detail::strchr<char const>(str, ch);
 }
 
-/// Finds the first occurrence of the character static_cast<char>(ch) in
-/// the byte string pointed to by str.
-///
-/// The terminating null character is considered to be a part of the
-/// string and can be found if searching for '\0'.
-///
-/// https://en.cppreference.com/w/cpp/string/byte/strchr
-///
-/// \ingroup cstring
 [[nodiscard]] constexpr auto strchr(char* str, int ch) -> char* { return detail::strchr<char>(str, ch); }
+
+/// @}
 
 } // namespace etl
 
