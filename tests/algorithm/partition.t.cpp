@@ -48,24 +48,22 @@ constexpr auto test() -> bool
         etl::partition_copy(src.begin(), src.end(), trueIt, falseIt, predicate);
 
         CHECK(dTrue.size() == 4);
-        CHECK(etl::all_of(begin(dTrue), end(dTrue), [](auto v) { return v < 10; }));
+        CHECK(etl::all_of(begin(dTrue), end(dTrue), predicate));
         CHECK(dFalse.size() == 3);
-        CHECK(etl::all_of(begin(dFalse), end(dFalse), [](auto v) { return v >= 10; }));
+        CHECK(etl::all_of(begin(dFalse), end(dFalse), etl::not_fn<predicate>()));
     }
 
     // empty range
     {
         auto data = etl::static_vector<T, 5>{};
-        auto pred = [](auto v) { return v < 10; };
-        auto* res = etl::partition_point(data.begin(), data.end(), pred);
+        auto* res = etl::partition_point(data.begin(), data.end(), predicate);
         CHECK(res == end(data));
     }
 
     // range
     {
         auto data = etl::array{T(1), T(2), T(10), T(11)};
-        auto pred = [](auto v) { return v < 10; };
-        auto* res = etl::partition_point(data.begin(), data.end(), pred);
+        auto* res = etl::partition_point(data.begin(), data.end(), predicate);
         CHECK(res != end(data));
         CHECK(*res == T(10));
     }
