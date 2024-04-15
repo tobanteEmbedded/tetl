@@ -68,6 +68,7 @@ constexpr auto test() -> bool
         CHECK(etl::strncmp("Hello, wo", "Hello, world!", 8) == 0);
         CHECK(etl::strncmp("Hello, wo", "Hello, world!", 9) == 0);
         CHECK(etl::strncmp("Hello, world!", "Hello, wo", 9) == 0);
+        CHECK(etl::strncmp("Hello, wo", "Hello, wo", 999) == 0);
     }
 
     // strchr
