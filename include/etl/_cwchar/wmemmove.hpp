@@ -22,7 +22,11 @@ namespace etl {
 /// https://en.cppreference.com/w/cpp/string/wide/wmemmove
 constexpr auto wmemmove(wchar_t* dest, wchar_t const* src, etl::size_t count) noexcept -> wchar_t*
 {
+#if defined(__clang__)
+    return __builtin_wmemmove(dest, src, count);
+#else
     return detail::memmove<wchar_t, etl::size_t>(dest, src, count);
+#endif
 }
 } // namespace etl
 #endif // TETL_CWCHAR_WMEMMOVE_HPP

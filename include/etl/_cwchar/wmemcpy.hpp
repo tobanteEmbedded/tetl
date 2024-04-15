@@ -16,7 +16,11 @@ namespace etl {
 /// https://en.cppreference.com/w/cpp/string/wide/wmemcpy
 constexpr auto wmemcpy(wchar_t* dest, wchar_t const* src, etl::size_t count) noexcept -> wchar_t*
 {
+#if defined(__clang__)
+    return __builtin_wmemcpy(dest, src, count);
+#else
     return detail::strncpy(dest, src, count);
+#endif
 }
 } // namespace etl
 #endif // TETL_CWCHAR_WMEMCPY_HPP
