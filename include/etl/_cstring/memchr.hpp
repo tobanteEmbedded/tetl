@@ -31,7 +31,7 @@ namespace etl {
     return __builtin_memchr(ptr, ch, n);
 #else
     auto* p = static_cast<unsigned char*>(ptr);
-    return etl::cstr::memchr(p, static_cast<unsigned char>(ch), n);
+    return etl::detail::memchr(p, static_cast<unsigned char>(ch), n);
 #endif
 }
 
@@ -42,7 +42,7 @@ namespace etl {
 #else
     auto const* const p = static_cast<unsigned char const*>(ptr);
     auto const c        = static_cast<unsigned char>(ch);
-    return etl::cstr::memchr<unsigned char const, etl::size_t>(p, c, n);
+    return etl::detail::memchr<unsigned char const, etl::size_t>(p, c, n);
 #endif
 }
 

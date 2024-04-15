@@ -25,7 +25,7 @@ constexpr auto wmemmove(wchar_t* dest, wchar_t const* src, etl::size_t count) no
 #if defined(__clang__)
     return __builtin_wmemmove(dest, src, count);
 #else
-    return etl::cstr::memmove<wchar_t, etl::size_t>(dest, src, count);
+    return etl::detail::memmove<wchar_t, etl::size_t>(dest, src, count);
 #endif
 }
 } // namespace etl

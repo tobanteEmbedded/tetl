@@ -21,7 +21,7 @@ namespace etl {
 /// overlap.
 constexpr auto wcsncat(wchar_t* dest, wchar_t const* src, etl::size_t const count) -> wchar_t*
 {
-    return etl::cstr::strncat<wchar_t, etl::size_t>(dest, src, count);
+    return etl::detail::strncat<wchar_t, etl::size_t>(dest, src, count);
 }
 
 } // namespace etl

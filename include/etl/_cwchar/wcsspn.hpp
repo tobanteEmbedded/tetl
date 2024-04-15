@@ -15,7 +15,7 @@ namespace etl {
 /// https://en.cppreference.com/w/cpp/string/wide/wcsspn
 [[nodiscard]] constexpr auto wcsspn(wchar_t const* dest, wchar_t const* src) noexcept -> etl::size_t
 {
-    return etl::cstr::strspn<wchar_t, etl::size_t, true>(dest, src);
+    return etl::detail::strspn<wchar_t, etl::size_t, true>(dest, src);
 }
 } // namespace etl
 

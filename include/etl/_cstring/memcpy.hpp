@@ -17,7 +17,7 @@ inline auto memcpy(void* dest, void const* src, etl::size_t n) -> void*
 #if defined(__clang__)
     return __builtin_memcpy(dest, src, n);
 #else
-    return etl::cstr::memcpy<unsigned char, etl::size_t>(dest, src, n);
+    return etl::detail::memcpy<unsigned char, etl::size_t>(dest, src, n);
 #endif
 }
 

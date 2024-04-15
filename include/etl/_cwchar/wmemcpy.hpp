@@ -22,7 +22,7 @@ constexpr auto wmemcpy(wchar_t* dest, wchar_t const* src, etl::size_t count) noe
     if (count == 0) {
         return dest;
     }
-    return etl::cstr::strncpy(dest, src, count);
+    return etl::detail::strncpy(dest, src, count);
 #endif
 }
 

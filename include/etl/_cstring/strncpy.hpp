@@ -25,7 +25,7 @@ constexpr auto strncpy(char* dest, char const* src, etl::size_t const count) -> 
 {
     TETL_PRECONDITION(dest != nullptr);
     TETL_PRECONDITION(src != nullptr);
-    return etl::cstr::strncpy(dest, src, count);
+    return etl::detail::strncpy(dest, src, count);
 }
 
 } // namespace etl

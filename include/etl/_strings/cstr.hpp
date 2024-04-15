@@ -3,7 +3,7 @@
 #ifndef TETL_CSTRING_ALGORITHM_HPP
 #define TETL_CSTRING_ALGORITHM_HPP
 
-namespace etl::cstr {
+namespace etl::detail {
 
 template <typename CharT>
 [[nodiscard]] constexpr auto strcpy(CharT* dest, CharT const* src) -> CharT*
@@ -233,6 +233,6 @@ constexpr auto memchr(CharT* ptr, CharT ch, SizeT n) -> CharT*
     return nullptr;
 }
 
-} // namespace etl::cstr
+} // namespace etl::detail
 
 #endif // TETL_CSTRING_ALGORITHM_HPP

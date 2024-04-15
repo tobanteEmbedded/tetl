@@ -20,7 +20,7 @@ namespace etl {
 #if defined(__clang__)
     return __builtin_strcmp(lhs, rhs);
 #else
-    return etl::cstr::strcmp<char>(lhs, rhs);
+    return etl::detail::strcmp<char>(lhs, rhs);
 #endif
 }
 

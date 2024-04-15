@@ -20,7 +20,7 @@ constexpr auto wcscpy(wchar_t* dest, wchar_t const* src) -> wchar_t*
 {
     TETL_PRECONDITION(dest != nullptr);
     TETL_PRECONDITION(src != nullptr);
-    return etl::cstr::strcpy(dest, src);
+    return etl::detail::strcpy(dest, src);
 }
 
 } // namespace etl

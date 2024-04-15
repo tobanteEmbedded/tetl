@@ -13,7 +13,7 @@ namespace etl {
 /// \ingroup cstring
 inline auto memset(void* s, int c, etl::size_t n) -> void*
 {
-    return etl::cstr::memset(static_cast<unsigned char*>(s), c, n);
+    return etl::detail::memset(static_cast<unsigned char*>(s), c, n);
 }
 
 } // namespace etl

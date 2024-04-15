@@ -17,7 +17,7 @@ namespace etl {
 /// https://en.cppreference.com/w/cpp/string/wide/wmemset
 constexpr auto wmemset(wchar_t* dest, wchar_t ch, etl::size_t count) noexcept -> wchar_t*
 {
-    return etl::cstr::memset(dest, ch, count);
+    return etl::detail::memset(dest, ch, count);
 }
 } // namespace etl
 

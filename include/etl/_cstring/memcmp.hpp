@@ -22,7 +22,7 @@ namespace etl {
 #else
     auto const* l = static_cast<unsigned char const*>(lhs);
     auto const* r = static_cast<unsigned char const*>(rhs);
-    return etl::cstr::strncmp<unsigned char, etl::size_t>(l, r, count);
+    return etl::detail::strncmp<unsigned char, etl::size_t>(l, r, count);
 #endif
 }
 

@@ -19,7 +19,7 @@ namespace etl {
 /// strings.
 [[nodiscard]] constexpr auto wcsncmp(wchar_t const* lhs, wchar_t const* rhs, etl::size_t count) -> int
 {
-    return etl::cstr::strncmp<wchar_t, etl::size_t>(lhs, rhs, count);
+    return etl::detail::strncmp<wchar_t, etl::size_t>(lhs, rhs, count);
 }
 
 } // namespace etl

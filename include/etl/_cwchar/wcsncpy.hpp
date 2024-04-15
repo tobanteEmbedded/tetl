@@ -24,7 +24,7 @@ constexpr auto wcsncpy(wchar_t* dest, wchar_t const* src, etl::size_t const coun
 {
     TETL_PRECONDITION(dest != nullptr);
     TETL_PRECONDITION(src != nullptr);
-    return etl::cstr::strncpy(dest, src, count);
+    return etl::detail::strncpy(dest, src, count);
 }
 
 } // namespace etl

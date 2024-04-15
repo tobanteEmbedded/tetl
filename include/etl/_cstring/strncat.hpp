@@ -20,7 +20,7 @@ namespace etl {
 /// \ingroup cstring
 constexpr auto strncat(char* dest, char const* src, etl::size_t const count) -> char*
 {
-    return etl::cstr::strncat<char, etl::size_t>(dest, src, count);
+    return etl::detail::strncat<char, etl::size_t>(dest, src, count);
 }
 
 } // namespace etl

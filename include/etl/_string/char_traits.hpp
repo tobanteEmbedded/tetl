@@ -72,7 +72,7 @@ struct char_traits<char> {
 
     /// \brief Returns the length of the character sequence pointed to by s,
     /// that is, the position of the terminating null character (CharT()).
-    static constexpr auto length(char_type const* str) -> size_t { return etl::cstr::strlen<char_type, size_t>(str); }
+    static constexpr auto length(char_type const* str) -> size_t { return etl::detail::strlen<char_type, size_t>(str); }
 
     /// \brief Searches for character ch within the first count characters of
     /// the sequence pointed to by p.

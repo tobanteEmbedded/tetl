@@ -16,7 +16,7 @@ namespace etl {
 /// character. The behavior is undefined if the strings overlap.
 constexpr auto wcscat(wchar_t* dest, wchar_t const* src) -> wchar_t*
 {
-    return etl::cstr::strcat<wchar_t, etl::size_t>(dest, src);
+    return etl::detail::strcat<wchar_t, etl::size_t>(dest, src);
 }
 } // namespace etl
 
