@@ -172,6 +172,12 @@ constexpr auto test_to_chars() -> bool
         }
     }
 
+    // overflow
+    auto buf          = etl::array<char, 3>{};
+    auto const result = etl::to_chars(buf.begin(), buf.end(), 9999, 10);
+    CHECK_FALSE(static_cast<bool>(result));
+    CHECK(result.ec == etl::errc::value_too_large);
+
     return true;
 }
 
