@@ -41,15 +41,11 @@ template <typename To, typename From>
     requires(detail::bit_castable_types<To, From>)
 constexpr auto bit_cast(From const& src) noexcept -> To
 {
-#if __has_builtin(__builtin_bit_cast)
+#if __has_builtin(__builtin_bit_cast) or (defined(_MSC_VER) and not defined(__clang__))
     return __builtin_bit_cast(To, src);
 #else
-    // This implementation additionally requires destination type to be
-    // trivially constructible
-    static_assert(is_trivially_constructible_v<To>);
-
     To dst{};
-    detail::memcpy<char, etl::size_t>(&dst, &src, sizeof(To));
+    etl::detail::memcpy<char, etl::size_t>(&dst, &src, sizeof(To));
     return dst;
 #endif
 }
