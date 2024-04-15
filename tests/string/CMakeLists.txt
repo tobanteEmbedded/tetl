@@ -1,5 +1,6 @@
 project("string")
 
+tetl_add_test(${PROJECT_NAME} char_traits)
 tetl_add_test(${PROJECT_NAME} inplace_string.access)
 tetl_add_test(${PROJECT_NAME} inplace_string.algorithm)
 tetl_add_test(${PROJECT_NAME} inplace_string.compare)

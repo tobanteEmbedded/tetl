@@ -17,7 +17,7 @@ template <typename CharT, typename SizeT>
 [[nodiscard]] constexpr auto strncpy(CharT* dest, CharT const* src, SizeT count) -> CharT*
 {
     auto* temp = dest;
-    for (SizeT counter = 0; *src != CharT(0) && counter != count;) {
+    for (SizeT counter = 0; counter != count and *src != CharT(0);) {
         *dest = *src;
         ++src;
         ++dest;
