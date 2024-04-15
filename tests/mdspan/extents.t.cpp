@@ -40,6 +40,11 @@ constexpr auto test_one() -> bool
         CHECK(other.extent(0) == 42);
 
         CHECK(e == other);
+
+        auto const lhs = etl::extents<IndexType, etl::dynamic_extent>{42};
+        auto const rhs = etl::extents<IndexType, etl::dynamic_extent>{88};
+        CHECK(lhs != rhs);
+        CHECK_FALSE(lhs == rhs);
     }
 
     {
@@ -61,6 +66,11 @@ constexpr auto test_one() -> bool
         CHECK(other.extent(1) == 43);
 
         CHECK(e == other);
+
+        auto const lhs = etl::extents<IndexType, etl::dynamic_extent, etl::dynamic_extent>{42, 43};
+        auto const rhs = etl::extents<IndexType, etl::dynamic_extent, etl::dynamic_extent>{88, 89};
+        CHECK(lhs != rhs);
+        CHECK_FALSE(lhs == rhs);
     }
 
     {
