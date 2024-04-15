@@ -8,7 +8,7 @@
 #include "testing/types.hpp"
 
 namespace {
-[[nodiscard]] auto func2(char /*ignore*/) -> int (*)() { return nullptr; }
+[[nodiscard]] constexpr auto func2(char /*ignore*/) -> int (*)() { return nullptr; }
 
 template <typename T>
 class Foo {
@@ -154,7 +154,7 @@ constexpr auto test() -> bool
     CHECK_FALSE(etl::is_invocable_r_v<void, void(T), void>);
     CHECK(etl::is_invocable_r_v<int (*)(), decltype(func2), char>);
     CHECK_FALSE(etl::is_invocable_r_v<T (*)(), decltype(func2), void>);
-    etl::ignore_unused(func2);
+    etl::ignore_unused(func2('a'));
 
     return true;
 }
