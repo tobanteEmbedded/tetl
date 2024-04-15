@@ -8,7 +8,6 @@
 #include <etl/_cstddef/size_t.hpp>
 #include <etl/_cstdint/uint_t.hpp>
 #include <etl/_limits/numeric_limits.hpp>
-#include <etl/_math/log2.hpp>
 
 namespace etl {
 

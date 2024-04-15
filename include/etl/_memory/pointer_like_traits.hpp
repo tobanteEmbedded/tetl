@@ -5,7 +5,7 @@
 
 #include <etl/_cstddef/size_t.hpp>
 #include <etl/_cstdint/uintptr_t.hpp>
-#include <etl/_math/log2.hpp>
+#include <etl/_math/ilog2.hpp>
 
 namespace etl {
 
@@ -21,7 +21,7 @@ struct pointer_like_traits<T*> {
 
     [[nodiscard]] static auto get_from_void_pointer(void* p) -> T* { return static_cast<T*>(p); }
 
-    static constexpr size_t free_bits = detail::ilog2(alignof(T));
+    static constexpr size_t free_bits = ilog2(alignof(T));
 };
 
 /// Provide pointer_like_traits for const things.
