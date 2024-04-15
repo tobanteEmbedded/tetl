@@ -19,7 +19,7 @@ inline auto memmove(void* dest, void const* src, etl::size_t count) -> void*
 #if defined(__clang__)
     return __builtin_memmove(dest, src, count);
 #else
-    return detail::memmove<unsigned char>(dest, src, count);
+    return etl::cstr::memmove<unsigned char>(dest, src, count);
 #endif
 }
 

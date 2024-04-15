@@ -27,7 +27,7 @@ namespace etl {
 #if defined(__clang__)
     return __builtin_strchr(str, ch);
 #else
-    return etl::detail::strchr<char const>(str, ch);
+    return etl::cstr::strchr<char const>(str, ch);
 #endif
 }
 
@@ -37,7 +37,7 @@ namespace etl {
 #if defined(__clang__)
     return __builtin_strchr(str, ch);
 #else
-    return etl::detail::strchr<char>(str, ch);
+    return etl::cstr::strchr<char>(str, ch);
 #endif
 }
 

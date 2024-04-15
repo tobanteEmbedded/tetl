@@ -14,7 +14,7 @@ namespace etl {
 /// https://en.cppreference.com/w/cpp/string/wide/wcspbrk
 [[nodiscard]] constexpr auto wcsstr(wchar_t* haystack, wchar_t* needle) noexcept -> wchar_t*
 {
-    return detail::strstr_impl<wchar_t>(haystack, needle);
+    return etl::cstr::strstr_impl<wchar_t>(haystack, needle);
 }
 
 /// \brief Finds the first occurrence of the wide string needle in the wide
@@ -24,7 +24,7 @@ namespace etl {
 /// https://en.cppreference.com/w/cpp/string/wide/wcspbrk
 [[nodiscard]] constexpr auto wcsstr(wchar_t const* haystack, wchar_t const* needle) noexcept -> wchar_t const*
 {
-    return detail::strstr_impl<wchar_t const>(haystack, needle);
+    return etl::cstr::strstr_impl<wchar_t const>(haystack, needle);
 }
 } // namespace etl
 #endif // TETL_CWCHAR_WCSSTR_HPP

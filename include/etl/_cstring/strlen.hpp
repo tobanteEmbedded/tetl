@@ -15,7 +15,7 @@ namespace etl {
 #if defined(__clang__)
     return __builtin_strlen(str);
 #else
-    return detail::strlen<char, etl::size_t>(str);
+    return etl::cstr::strlen<char, etl::size_t>(str);
 #endif
 }
 

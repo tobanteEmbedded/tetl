@@ -22,12 +22,12 @@ namespace etl {
 /// \ingroup cstring
 [[nodiscard]] constexpr auto strrchr(char const* str, int ch) noexcept -> char const*
 {
-    return detail::strrchr<char const, etl::size_t>(str, ch);
+    return etl::cstr::strrchr<char const, etl::size_t>(str, ch);
 }
 
 [[nodiscard]] constexpr auto strrchr(char* str, int ch) noexcept -> char*
 {
-    return detail::strrchr<char, etl::size_t>(str, ch);
+    return etl::cstr::strrchr<char, etl::size_t>(str, ch);
 }
 
 /// @}

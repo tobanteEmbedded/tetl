@@ -19,7 +19,7 @@ namespace etl {
 /// \ingroup cstring
 [[nodiscard]] constexpr auto strcspn(char const* dest, char const* src) noexcept -> etl::size_t
 {
-    return detail::strspn<char, etl::size_t, false>(dest, src);
+    return etl::cstr::strspn<char, etl::size_t, false>(dest, src);
 }
 
 } // namespace etl

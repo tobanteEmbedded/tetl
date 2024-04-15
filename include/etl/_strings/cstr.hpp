@@ -3,7 +3,7 @@
 #ifndef TETL_CSTRING_ALGORITHM_HPP
 #define TETL_CSTRING_ALGORITHM_HPP
 
-namespace etl::detail {
+namespace etl::cstr {
 
 template <typename CharT>
 [[nodiscard]] constexpr auto strcpy(CharT* dest, CharT const* src) -> CharT*
@@ -36,7 +36,7 @@ template <typename CharT, typename SizeT>
 }
 
 template <typename CharT, typename SizeT>
-[[nodiscard]] constexpr auto strcat_impl(CharT* dest, CharT const* src) -> CharT*
+[[nodiscard]] constexpr auto strcat(CharT* dest, CharT const* src) -> CharT*
 {
     auto* ptr = dest + strlen<CharT, SizeT>(dest);
     while (*src != CharT(0)) {
@@ -233,6 +233,6 @@ constexpr auto memchr(CharT* ptr, CharT ch, SizeT n) -> CharT*
     return nullptr;
 }
 
-} // namespace etl::detail
+} // namespace etl::cstr
 
 #endif // TETL_CSTRING_ALGORITHM_HPP

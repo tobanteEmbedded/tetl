@@ -14,7 +14,7 @@ namespace etl {
 /// https://en.cppreference.com/w/cpp/string/wide/wcspbrk
 [[nodiscard]] constexpr auto wcspbrk(wchar_t* dest, wchar_t* breakset) noexcept -> wchar_t*
 {
-    return detail::strpbrk_impl<wchar_t, etl::size_t>(dest, breakset);
+    return etl::cstr::strpbrk_impl<wchar_t, etl::size_t>(dest, breakset);
 }
 
 /// \brief Finds the first character in wide string pointed to by dest, that is
@@ -23,7 +23,7 @@ namespace etl {
 /// https://en.cppreference.com/w/cpp/string/wide/wcspbrk
 [[nodiscard]] constexpr auto wcspbrk(wchar_t const* dest, wchar_t const* breakset) noexcept -> wchar_t const*
 {
-    return detail::strpbrk_impl<wchar_t const, etl::size_t>(dest, breakset);
+    return etl::cstr::strpbrk_impl<wchar_t const, etl::size_t>(dest, breakset);
 }
 
 } // namespace etl

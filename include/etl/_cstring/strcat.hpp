@@ -18,9 +18,9 @@ namespace etl {
 /// character. The behavior is undefined if the strings overlap.
 ///
 /// \ingroup cstring
-constexpr auto strcat(char* dest, char const* src) -> char*
+constexpr auto strcat(char* dest, char const* src) noexcept -> char*
 {
-    return detail::strcat_impl<char, etl::size_t>(dest, src);
+    return etl::cstr::strcat<char, etl::size_t>(dest, src);
 }
 
 } // namespace etl

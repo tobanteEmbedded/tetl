@@ -16,7 +16,7 @@ namespace etl {
 /// wide strings.
 [[nodiscard]] constexpr auto wcscmp(wchar_t const* lhs, wchar_t const* rhs) -> int
 {
-    return detail::strcmp<wchar_t>(lhs, rhs);
+    return etl::cstr::strcmp<wchar_t>(lhs, rhs);
 }
 } // namespace etl
 #endif // TETL_CWCHAR_WCSCMP_HPP

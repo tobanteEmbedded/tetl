@@ -16,7 +16,7 @@ namespace etl {
 /// https://en.cppreference.com/w/cpp/string/wide/wmemchr
 [[nodiscard]] constexpr auto wmemchr(wchar_t* ptr, wchar_t ch, etl::size_t count) noexcept -> wchar_t*
 {
-    return detail::memchr<wchar_t>(ptr, ch, count);
+    return etl::cstr::memchr<wchar_t>(ptr, ch, count);
 }
 
 /// \brief Locates the first occurrence of wide character ch in the initial
@@ -27,7 +27,7 @@ namespace etl {
 /// https://en.cppreference.com/w/cpp/string/wide/wmemchr
 [[nodiscard]] constexpr auto wmemchr(wchar_t const* ptr, wchar_t ch, etl::size_t count) noexcept -> wchar_t const*
 {
-    return detail::memchr<wchar_t const>(ptr, ch, count);
+    return etl::cstr::memchr<wchar_t const>(ptr, ch, count);
 }
 } // namespace etl
 

@@ -22,7 +22,7 @@ constexpr auto strcpy(char* dest, char const* src) -> char*
 {
     TETL_PRECONDITION(dest != nullptr);
     TETL_PRECONDITION(src != nullptr);
-    return detail::strcpy(dest, src);
+    return etl::cstr::strcpy(dest, src);
 }
 
 } // namespace etl

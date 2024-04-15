@@ -22,7 +22,7 @@ namespace etl {
 #if defined(__clang__)
     return __builtin_strncmp(lhs, rhs, count);
 #else
-    return detail::strncmp<char, etl::size_t>(lhs, rhs, count);
+    return etl::cstr::strncmp<char, etl::size_t>(lhs, rhs, count);
 #endif
 }
 
