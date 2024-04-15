@@ -12,7 +12,7 @@
 
 using namespace etl::literals;
 
-constexpr auto test_str() -> bool
+constexpr auto test() -> bool
 {
     // "cstring: strcpy"
     {
@@ -41,11 +41,11 @@ constexpr auto test_str() -> bool
 
         // NOLINTNEXTLINE(clang-analyzer-security.insecureAPI.strcpy)
         etl::strcat(str, str2);
-        CHECK(etl::string_view{str} == "Hello World!"_sv);
+        CHECK(str == "Hello World!"_sv);
 
         // NOLINTNEXTLINE(clang-analyzer-security.insecureAPI.strcpy)
         etl::strcat(str, " Goodbye World!");
-        CHECK(etl::string_view{str} == "Hello World! Goodbye World!"_sv);
+        CHECK(str == "Hello World! Goodbye World!"_sv);
     }
 
     // "cstring: strncat"
@@ -55,9 +55,9 @@ constexpr auto test_str() -> bool
 
         // NOLINTNEXTLINE(clang-analyzer-security.insecureAPI.strcpy)
         etl::strcat(str, str2);
-        CHECK(etl::string_view{str} == "Hello World!"_sv);
+        CHECK(str == "Hello World!"_sv);
         etl::strncat(str, " Goodbye World!", 3);
-        CHECK(etl::string_view{str} == "Hello World! Go"_sv);
+        CHECK(str == "Hello World! Go"_sv);
     }
 
     // "cstring: strncmp"
@@ -140,44 +140,8 @@ constexpr auto test_str() -> bool
     return true;
 }
 
-static auto test_mem() -> bool
-{
-    // "cstring: memcpy"
-    {
-        auto source = etl::array<etl::uint8_t, 2>{};
-        source[0]   = 1;
-        source[1]   = 2;
-        CHECK(source[0] == 1);
-        CHECK(source[1] == 2);
-
-        auto destination = etl::array<etl::uint8_t, 2>{};
-        CHECK(destination[0] == 0);
-        CHECK(destination[1] == 0);
-
-        etl::memcpy(destination.data(), source.data(), source.size());
-        CHECK(source[0] == 1);
-        CHECK(source[1] == 2);
-        CHECK(destination[0] == 1);
-        CHECK(destination[1] == 2);
-    }
-
-    // "cstring: memset"
-    {
-        auto buffer = etl::array<etl::uint8_t, 2>{};
-        CHECK(buffer[0] == 0);
-        CHECK(buffer[1] == 0);
-
-        etl::memset(buffer.data(), 1, buffer.size());
-        CHECK(buffer[0] == 1);
-        CHECK(buffer[1] == 1);
-    }
-
-    return true;
-}
-
 auto main() -> int
 {
-    STATIC_CHECK(test_str());
-    CHECK(test_mem());
+    STATIC_CHECK(test());
     return 0;
 }
