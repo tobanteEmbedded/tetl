@@ -28,8 +28,16 @@ constexpr auto test() -> bool
     CHECK(etl::constructible_from<variant, int>);
     CHECK(etl::constructible_from<variant, long>);
     CHECK(etl::constructible_from<variant, float>);
+
     CHECK(etl::get_if<0>(static_cast<variant*>(nullptr)) == nullptr);
     CHECK(etl::get_if<1>(static_cast<variant*>(nullptr)) == nullptr);
+    CHECK(etl::get_if<0>(static_cast<variant const*>(nullptr)) == nullptr);
+    CHECK(etl::get_if<1>(static_cast<variant const*>(nullptr)) == nullptr);
+
+    CHECK(etl::get_if<int>(static_cast<variant*>(nullptr)) == nullptr);
+    CHECK(etl::get_if<long>(static_cast<variant*>(nullptr)) == nullptr);
+    CHECK(etl::get_if<int>(static_cast<variant const*>(nullptr)) == nullptr);
+    CHECK(etl::get_if<long>(static_cast<variant const*>(nullptr)) == nullptr);
 
     auto v0 = variant{};
     CHECK(v0.index() == 0);
@@ -40,6 +48,10 @@ constexpr auto test() -> bool
     CHECK(etl::get_if<1>(&v0) == nullptr);
     CHECK(etl::get_if<0>(&etl::as_const(v0)) != nullptr);
     CHECK(etl::get_if<1>(&etl::as_const(v0)) == nullptr);
+    CHECK(etl::get_if<int>(&v0) != nullptr);
+    CHECK(etl::get_if<long>(&v0) == nullptr);
+    CHECK(etl::get_if<int>(&etl::as_const(v0)) != nullptr);
+    CHECK(etl::get_if<long>(&etl::as_const(v0)) == nullptr);
 
     auto v1 = variant{etl::in_place_index<1>, 42};
     CHECK(v1.index() == 1);
