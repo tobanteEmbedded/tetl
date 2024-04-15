@@ -171,17 +171,16 @@ constexpr auto test_sort() -> bool
         CHECK_FALSE(etl::is_sorted(src.begin(), src.end(), etl::greater{}));
     }
 
+    auto predicate = [](auto const& val) { return val < T(1); };
+
     // empty range always returns true
     {
-        auto data      = etl::static_vector<T, 1>{};
-        auto predicate = [](auto const& val) { return val < T(1); };
+        auto data = etl::static_vector<T, 1>{};
         CHECK(etl::is_partitioned(data.begin(), data.end(), predicate));
     }
 
     // true
     {
-        auto predicate = [](auto const& val) { return val < T(1); };
-
         auto test1 = etl::array{T(2), T(2), T(2)};
         CHECK(etl::is_partitioned(begin(test1), end(test1), predicate));
 
@@ -194,8 +193,6 @@ constexpr auto test_sort() -> bool
 
     // false
     {
-        auto predicate = [](auto const& val) { return val < T(1); };
-
         auto test1 = etl::array{T(2), T(0), T(2)};
         CHECK_FALSE(etl::is_partitioned(begin(test1), end(test1), predicate));
 
