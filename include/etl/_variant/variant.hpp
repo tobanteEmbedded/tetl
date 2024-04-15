@@ -43,6 +43,7 @@
 #include <etl/_utility/forward.hpp>
 #include <etl/_utility/in_place_index.hpp>
 #include <etl/_utility/in_place_type.hpp>
+#include <etl/_utility/unreachable.hpp>
 #include <etl/_variant/variadic_union.hpp>
 #include <etl/_variant/variant_alternative.hpp>
 #include <etl/_variant/variant_alternative_selector.hpp>
@@ -77,6 +78,17 @@ inline constexpr auto is_in_place_type = false;
 
 template <typename T>
 inline constexpr auto is_in_place_type<in_place_type_t<T>> = true;
+
+constexpr auto make_variant_compare_op(auto op)
+{
+    return [op](auto const& l, auto const& r) -> bool {
+        if constexpr (etl::is_same_v<decltype(l), decltype(r)>) {
+            return op(l, r);
+        } else {
+            etl::unreachable();
+        }
+    };
+}
 
 } // namespace detail
 

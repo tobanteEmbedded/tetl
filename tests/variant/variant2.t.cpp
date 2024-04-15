@@ -36,6 +36,10 @@ constexpr auto test() -> bool
     CHECK(v0[etl::index_v<0>] == 0);
     CHECK(etl::unchecked_get<0>(v0) == 0);
     CHECK(etl::as_const(v0)[etl::index_v<0>] == 0);
+    CHECK(etl::get_if<0>(&v0) != nullptr);
+    CHECK(etl::get_if<1>(&v0) == nullptr);
+    CHECK(etl::get_if<0>(&etl::as_const(v0)) != nullptr);
+    CHECK(etl::get_if<1>(&etl::as_const(v0)) == nullptr);
 
     auto v1 = variant{etl::in_place_index<1>, 42};
     CHECK(v1.index() == 1);
@@ -150,8 +154,11 @@ constexpr auto test() -> bool
         CHECK_FALSE(i16 <= i7); // larger value
         CHECK_FALSE(l7 <= i7);  // larger index
 
-        CHECK(i16 > i7);         // larger value
-        CHECK(l16 > i16);        // larger index
+        CHECK(i16 > i7);        // larger value
+        CHECK(l16 > i16);       // larger index
+        CHECK_FALSE(i7 > i16);  // smaller value
+        CHECK_FALSE(i16 > l16); // smaller index
+
         CHECK(i16 >= i7);        // larger value
         CHECK(l16 >= i16);       // larger index
         CHECK_FALSE(l16 >= f16); // smaller index

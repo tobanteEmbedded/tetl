@@ -8,8 +8,6 @@
 #include <etl/_type_traits/add_cv.hpp>
 #include <etl/_type_traits/add_pointer.hpp>
 #include <etl/_type_traits/add_volatile.hpp>
-#include <etl/_type_traits/is_same.hpp>
-#include <etl/_utility/unreachable.hpp>
 
 namespace etl {
 
@@ -55,19 +53,6 @@ template <size_t I, typename... Types>
 constexpr auto get_if(variant<Types...> const* pv) noexcept -> add_pointer_t<typename variant_alternative<
                                                                 I,
                                                                 variant<Types...>>::type const>; // NOLINT
-
-namespace detail {
-constexpr auto make_variant_compare_op(auto op)
-{
-    return [op](auto const& l, auto const& r) -> bool {
-        if constexpr (etl::is_same_v<decltype(l), decltype(r)>) {
-            return op(l, r);
-        } else {
-            etl::unreachable();
-        }
-    };
-}
-} // namespace detail
 
 } // namespace etl
 
