@@ -50,7 +50,7 @@ else ()
             -Wno-c++98-compat-pedantic
             -Wno-c++20-compat
             -Wno-ctad-maybe-unsupported
-            -Wno-double-promotion
+            # -Wno-double-promotion
             -Wno-float-equal
             -Wno-padded
             -Wno-unused-member-function

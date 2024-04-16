@@ -36,11 +36,11 @@ constexpr auto test(auto func) -> bool
 constexpr auto test_all() -> bool
 {
     auto stof = []<typename... Args>(Args&&... args) { return etl::stof(etl::forward<Args>(args)...); };
-    CHECK(test<double, etl::inplace_string<7>>(stof));
-    CHECK(test<double, etl::inplace_string<8>>(stof));
-    CHECK(test<double, etl::inplace_string<9>>(stof));
-    CHECK(test<double, etl::inplace_string<16>>(stof));
-    CHECK(test<double, etl::inplace_string<17>>(stof));
+    CHECK(test<float, etl::inplace_string<7>>(stof));
+    CHECK(test<float, etl::inplace_string<8>>(stof));
+    CHECK(test<float, etl::inplace_string<9>>(stof));
+    CHECK(test<float, etl::inplace_string<16>>(stof));
+    CHECK(test<float, etl::inplace_string<17>>(stof));
 
     auto stod = []<typename... Args>(Args&&... args) { return etl::stod(etl::forward<Args>(args)...); };
     CHECK(test<double, etl::inplace_string<7>>(stod));
@@ -50,11 +50,11 @@ constexpr auto test_all() -> bool
     CHECK(test<double, etl::inplace_string<17>>(stod));
 
     auto stold = []<typename... Args>(Args&&... args) { return etl::stold(etl::forward<Args>(args)...); };
-    CHECK(test<double, etl::inplace_string<7>>(stold));
-    CHECK(test<double, etl::inplace_string<8>>(stold));
-    CHECK(test<double, etl::inplace_string<9>>(stold));
-    CHECK(test<double, etl::inplace_string<16>>(stold));
-    CHECK(test<double, etl::inplace_string<17>>(stold));
+    CHECK(test<long double, etl::inplace_string<7>>(stold));
+    CHECK(test<long double, etl::inplace_string<8>>(stold));
+    CHECK(test<long double, etl::inplace_string<9>>(stold));
+    CHECK(test<long double, etl::inplace_string<16>>(stold));
+    CHECK(test<long double, etl::inplace_string<17>>(stold));
     return true;
 }
 

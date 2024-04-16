@@ -1,5 +1,12 @@
 // SPDX-License-Identifier: BSL-1.0
 
+// TODO: float <-> double conversion are used to test the converting constructors
+// maybe switch to integer types.
+#if defined(__clang__)
+    #pragma clang diagnostic push
+    #pragma clang diagnostic ignored "-Wdouble-promotion"
+#endif
+
 #include <etl/utility.hpp>
 
 #include <etl/type_traits.hpp>
@@ -60,7 +67,7 @@ constexpr auto test() -> bool
         CHECK_SAME_TYPE(T, decltype(p1.first));
         CHECK_SAME_TYPE(float, decltype(p1.second));
         CHECK(p1.first == 0);
-        CHECK(p1.second == 143.0);
+        CHECK(p1.second == 143.0F);
 
         auto p2 = etl::pair{1.2, T{42}};
         CHECK_SAME_TYPE(double, decltype(p2.first));
@@ -162,7 +169,7 @@ constexpr auto test() -> bool
         CHECK_FALSE(etl::is_same_v<decltype(other.second), decltype(p.second)>);
 
         CHECK(other.first == p.first);
-        CHECK(other.second == static_cast<float>(p.second));
+        CHECK(other.second == static_cast<double>(p.second));
     }
 
     {
@@ -180,7 +187,7 @@ constexpr auto test() -> bool
         CHECK_SAME_TYPE(float, decltype(p.second));
 
         CHECK(p.first == 0);
-        CHECK(p.second == 143.0);
+        CHECK(p.second == 143.0F);
     }
 
     using pair_type = etl::pair<T, int>;
@@ -391,3 +398,7 @@ auto main() -> int
     STATIC_CHECK(test_all());
     return 0;
 }
+
+#if defined(__clang__)
+    #pragma clang diagnostic pop
+#endif
