@@ -50,6 +50,15 @@ constexpr auto test() -> bool
         CHECK_FALSE(etl::is_permutation(a.begin(), a.end(), c.begin(), c.end()));
     }
 
+    // shuffled
+    {
+        auto const a = etl::array{T(1), T(3), T(5), T(7), T(8), T(6), T(4), T(2)};
+        auto const b = etl::array{T(2), T(3), T(5), T(8), T(7), T(6), T(4), T(1)};
+        auto const c = etl::array{T(3), T(5), T(4), T(1), T(1), T(1), T(1), T(1)};
+        CHECK(etl::is_permutation(a.begin(), a.end(), b.begin(), b.end()));
+        CHECK_FALSE(etl::is_permutation(a.begin(), a.end(), c.begin(), c.end()));
+    }
+
     return true;
 }
 
