@@ -54,6 +54,7 @@ else ()
             -Wno-float-equal
             -Wno-padded
             -Wno-unused-member-function
+            -Wno-unsafe-buffer-usage
             -Wno-weak-vtables
           >
       >
