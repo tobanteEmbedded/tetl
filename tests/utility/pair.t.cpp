@@ -2,6 +2,11 @@
 
 // TODO: float <-> double conversion are used to test the converting constructors
 // maybe switch to integer types.
+#if defined(__GNUC__)
+    #pragma GCC diagnostic push
+    #pragma GCC diagnostic ignored "-Wdouble-promotion"
+#endif
+
 #if defined(__clang__)
     #pragma clang diagnostic push
     #pragma clang diagnostic ignored "-Wdouble-promotion"
@@ -398,6 +403,10 @@ auto main() -> int
     STATIC_CHECK(test_all());
     return 0;
 }
+
+#if defined(__GNUC__)
+    #pragma GCC diagnostic pop
+#endif
 
 #if defined(__clang__)
     #pragma clang diagnostic pop

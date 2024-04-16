@@ -16,6 +16,7 @@ else ()
       $<$<BOOL:${TETL_BUILD_WERROR}>:-Werror>
 
       -Wcast-align
+      -Wdouble-promotion
       -Wmissing-field-initializers
       -Wnarrowing
       -Woverloaded-virtual
@@ -50,7 +51,6 @@ else ()
             -Wno-c++98-compat-pedantic
             -Wno-c++20-compat
             -Wno-ctad-maybe-unsupported
-            # -Wno-double-promotion
             -Wno-float-equal
             -Wno-padded
             -Wno-unused-member-function
