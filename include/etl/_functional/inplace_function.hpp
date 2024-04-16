@@ -121,7 +121,7 @@ public:
 
     /// \brief Creates an empty function.
     inplace_function() noexcept
-        : _vtable{addressof(detail::empty_vtable<R, Args...>)}
+        : _vtable{etl::addressof(detail::empty_vtable<R, Args...>)}
     {
     }
 
@@ -140,14 +140,14 @@ public:
         );
 
         static constexpr vtable_t const vt{detail::wrapper<C>{}};
-        _vtable = addressof(vt);
+        _vtable = etl::addressof(vt);
 
-        ::new (addressof(_storage)) C{etl::forward<T>(closure)};
+        ::new (etl::addressof(_storage)) C{etl::forward<T>(closure)};
     }
 
     template <size_t Cap, size_t Align>
     inplace_function(inplace_function<R(Args...), Cap, Align> const& other)
-        : inplace_function{other._vtable, other._vtable->copy_ptr, addressof(other._storage)}
+        : inplace_function{other._vtable, other._vtable->copy_ptr, etl::addressof(other._storage)}
     {
         static_assert(
             detail::is_valid_inplace_destination<Capacity, Alignment, Cap, Align>::value,
@@ -157,78 +157,73 @@ public:
 
     template <size_t Cap, size_t Align>
     inplace_function(inplace_function<R(Args...), Cap, Align>&& other) noexcept
-        : inplace_function{other._vtable, other._vtable->relocate_ptr, addressof(other._storage)}
+        : inplace_function{other._vtable, other._vtable->relocate_ptr, etl::addressof(other._storage)}
     {
         static_assert(
             detail::is_valid_inplace_destination<Capacity, Alignment, Cap, Align>::value,
             "conversion not allowed"
         );
-        other._vtable = addressof(detail::empty_vtable<R, Args...>);
+        other._vtable = etl::addressof(detail::empty_vtable<R, Args...>);
     }
 
     /// \brief Creates an empty function.
     inplace_function(nullptr_t /*ignore*/) noexcept
-        : _vtable{addressof(detail::empty_vtable<R, Args...>)}
+        : _vtable{etl::addressof(detail::empty_vtable<R, Args...>)}
     {
     }
 
     inplace_function(inplace_function const& other)
         : _vtable{other._vtable}
     {
-        _vtable->copy_ptr(addressof(_storage), addressof(other._storage));
+        _vtable->copy_ptr(etl::addressof(_storage), etl::addressof(other._storage));
     }
 
     inplace_function(inplace_function&& other) noexcept
-        : _vtable{exchange(other._vtable, addressof(detail::empty_vtable<R, Args...>))}
+        : _vtable{exchange(other._vtable, etl::addressof(detail::empty_vtable<R, Args...>))}
     {
-        _vtable->relocate_ptr(addressof(_storage), addressof(other._storage));
+        _vtable->relocate_ptr(etl::addressof(_storage), etl::addressof(other._storage));
     }
 
     /// \brief Assigns a new target to etl::inplace_function. Drops the current target. *this is empty
     /// after the call.
     auto operator=(nullptr_t) noexcept -> inplace_function&
     {
-        _vtable->destructor_ptr(addressof(_storage));
-        _vtable = addressof(detail::empty_vtable<R, Args...>);
+        _vtable->destructor_ptr(etl::addressof(_storage));
+        _vtable = etl::addressof(detail::empty_vtable<R, Args...>);
         return *this;
     }
 
     auto operator=(inplace_function other) noexcept -> inplace_function&
     {
-        _vtable->destructor_ptr(addressof(_storage));
-        _vtable = exchange(other._vtable, addressof(detail::empty_vtable<R, Args...>));
-        _vtable->relocate_ptr(addressof(_storage), addressof(other._storage));
+        _vtable->destructor_ptr(etl::addressof(_storage));
+        _vtable = exchange(other._vtable, etl::addressof(detail::empty_vtable<R, Args...>));
+        _vtable->relocate_ptr(etl::addressof(_storage), etl::addressof(other._storage));
         return *this;
     }
 
     /// \brief Destroys the etl::inplace_function instance.
     /// If the etl::inplace_function is not empty, its target is destroyed also.
-    ~inplace_function() { _vtable->destructor_ptr(addressof(_storage)); }
+    ~inplace_function() { _vtable->destructor_ptr(etl::addressof(_storage)); }
 
     /// \brief Invokes the stored callable function target with the parameters args.
     auto operator()(Args... args) const -> R
     {
-        return _vtable->invoke_ptr(addressof(_storage), etl::forward<Args>(args)...);
+        return _vtable->invoke_ptr(etl::addressof(_storage), etl::forward<Args>(args)...);
     }
 
     /// \brief Checks whether *this stores a callable function target, i.e. is not empty.
     [[nodiscard]] explicit constexpr operator bool() const noexcept
     {
-        return _vtable != addressof(detail::empty_vtable<R, Args...>);
+        return _vtable != etl::addressof(detail::empty_vtable<R, Args...>);
     }
 
     /// \brief Exchanges the stored callable objects of *this and other.
     auto swap(inplace_function& other) noexcept -> void
     {
-        if (this == addressof(other)) {
-            return;
-        }
-
         auto tmp = storage_t{};
-        _vtable->relocate_ptr(addressof(tmp), addressof(_storage));
-        other._vtable->relocate_ptr(addressof(_storage), addressof(other._storage));
-        _vtable->relocate_ptr(addressof(other._storage), addressof(tmp));
-
+        _vtable->relocate_ptr(etl::addressof(tmp), etl::addressof(_storage));
+        other._vtable->relocate_ptr(etl::addressof(_storage), etl::addressof(other._storage));
+        _vtable->relocate_ptr(etl::addressof(other._storage), etl::addressof(tmp));
         etl::swap(_vtable, other._vtable);
     }
 
@@ -240,7 +235,7 @@ private:
     )
         : _vtable{vtable}
     {
-        process(addressof(_storage), storage);
+        process(etl::addressof(_storage), storage);
     }
 
     vtable_ptr_t _vtable;
