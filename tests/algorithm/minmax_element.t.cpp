@@ -76,7 +76,7 @@ constexpr auto test() -> bool
     }
 
     {
-        auto const in  = etl::array{T(99), T(88), T(77), T(2), T(22), T(1), T(111), T(0), T(112)};
+        auto const in  = etl::array{T(99), T(88), T(77), T(2), T(22), T(1), T(111), T(0), T(112), T(110)};
         auto const out = etl::minmax_element(in.begin(), in.end());
         CHECK(*out.first == T(0));
         CHECK(*out.second == T(112));
