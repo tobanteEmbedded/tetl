@@ -62,17 +62,19 @@ struct make_signed<unsigned long long> {
 
 } // namespace detail
 
-/// \brief If T is an integral (except bool) or enumeration type, provides the
+/// If T is an integral (except bool) or enumeration type, provides the
 /// member typedef type which is the unsigned integer type corresponding to T,
 /// with the same cv-qualifiers. If T is signed or unsigned char, short, int,
 /// long, long long; the unsigned type from this list corresponding to T is
 /// provided. The behavior of a program that adds specializations for
 /// make_signed is undefined.
 ///
-/// ```
+/// \code
 /// // Convert an unsigned int to signed int
 /// static_assert(is_same_v<make_signed_t<unsigned>, int>);
-/// ```
+/// \endcode
+///
+/// \ingroup type_traits
 template <typename Type>
 struct make_signed : etl::detail::make_signed<Type> { };
 
