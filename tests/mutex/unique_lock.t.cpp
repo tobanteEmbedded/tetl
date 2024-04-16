@@ -94,6 +94,14 @@ constexpr auto test() -> bool
             CHECK_FALSE(l2.owns_lock()); // NOLINT(clang-analyzer-cplusplus.Move)
             CHECK(l3.owns_lock());
             CHECK(mtx.is_locked());
+
+            auto mtx2 = Mutex{};
+            auto l4   = etl::unique_lock{mtx2};
+            CHECK(mtx2.is_locked());
+            l4 = etl::move(l3);
+            CHECK(l4.owns_lock());
+            CHECK_FALSE(mtx2.is_locked());
+            CHECK_FALSE(l3.owns_lock()); // NOLINT(clang-analyzer-cplusplus.Move)
         }
         CHECK_FALSE(mtx.is_locked());
     }
@@ -108,7 +116,7 @@ constexpr auto test() -> bool
             CHECK(mtx.is_locked());
 
             decltype(l1) l2{};
-            etl::swap(l1, l2);
+            swap(l1, l2);
 
             CHECK_FALSE(l1.owns_lock());
             CHECK(l2.owns_lock());
@@ -141,6 +149,5 @@ constexpr auto test() -> bool
 auto main() -> int
 {
     STATIC_CHECK(test());
-    // static_assert(test());
     return 0;
 }
