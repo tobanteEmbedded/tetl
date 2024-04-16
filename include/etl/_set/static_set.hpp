@@ -25,7 +25,6 @@ namespace etl {
 ///
 /// \headerfile etl/set.hpp
 /// \ingroup set
-/// \deprecated Replaced by flat_set
 template <typename Key, size_t Capacity, typename Compare = less<Key>>
 struct static_set {
 private:

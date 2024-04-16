@@ -7,19 +7,19 @@
 
 namespace etl {
 
-/// \brief Checks if the given wide character is a wide whitespace character as
-/// classified by the currently installed C locale. In the default locale, the
-/// whitespace characters are the following:
+/// Checks if the given wide character is a wide whitespace character as
+/// classified by the currently installed C locale.
 ///
-///     - space (0x20, ' ')
-///     - form feed (0x0c, '\f')
-///     - line feed (0x0a, '\n')
-///     - carriage return (0x0d, '\r')
-///     - horizontal tab (0x09, '\t')
-///     - vertical tab (0x0b, '\v')
+/// If the value of ch is neither representable as a wchar_t nor equal
+/// to the value of the macro WEOF, the behavior is undefined. In the default
+/// locale, the whitespace characters are the following:
 ///
-/// \details If the value of ch is neither representable as a wchar_t nor equal
-/// to the value of the macro WEOF, the behavior is undefined.
+///     - space (0x20)
+///     - form feed (0x0c)
+///     - line feed (0x0a)
+///     - carriage return (0x0d)
+///     - horizontal tab (0x09)
+///     - vertical tab (0x0b)
 ///
 /// https://en.cppreference.com/w/cpp/string/wide/iswspace
 ///

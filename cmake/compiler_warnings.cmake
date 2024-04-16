@@ -43,39 +43,27 @@ else ()
           -Wshift-sign-overflow
           -Wshorten-64-to-32
           -Wunused-private-field
+          -Wreturn-type
 
-          # Internal testing only
           $<$<BOOL:${TETL_BUILD_WEVERYTHING}>:
             -Weverything
             -Wno-c++98-compat-pedantic
             -Wno-c++20-compat
             -Wno-ctad-maybe-unsupported
-            -Wno-documentation
-            -Wno-documentation-unknown-command
             -Wno-double-promotion
             -Wno-float-equal
-            -Wno-global-constructors
-            -Wno-implicit-int-conversion
             -Wno-padded
             -Wno-unused-member-function
-            -Wno-unsafe-buffer-usage # clang-16
             -Wno-weak-vtables
           >
       >
 
-      $<$<CXX_COMPILER_ID:AppleClang>:
-        -Wno-poison-system-directories
-      >
 
       $<$<CXX_COMPILER_ID:GNU>:
         -Wmisleading-indentation
         -Wlogical-op
         -Wduplicated-branches
         -Wduplicated-cond
-        -Wno-redundant-decls
-        -Wno-parentheses
-        -Wno-sequence-point
-        -Wno-stringop-overflow
       >
   )
 endif (MSVC)

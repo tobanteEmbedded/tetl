@@ -29,6 +29,7 @@
 #if defined(__clang__)
     #pragma clang diagnostic push
     #pragma clang diagnostic ignored "-Wimplicit-int-float-conversion"
+    #pragma clang diagnostic ignored "-Wdocumentation"
 #endif
 
 #include "gcem_incl/gcem_options.hpp"
