@@ -3,6 +3,7 @@
 #ifndef TETL_STRING_CHAR_TRAITS_HPP
 #define TETL_STRING_CHAR_TRAITS_HPP
 
+#include <etl/_compare/strong_ordering.hpp>
 #include <etl/_cstddef/size_t.hpp>
 #include <etl/_cwchar/wcslen.hpp>
 #include <etl/_cwchar/wint_t.hpp>
@@ -32,13 +33,13 @@ struct char_traits;
 /// \brief Specializations of char_traits for type char.
 template <>
 struct char_traits<char> {
-    using char_type = char;
-    using int_type  = int;
-    using off_type  = streamoff;
+    using char_type           = char;
+    using int_type            = int;
+    using off_type            = streamoff;
+    using comparison_category = strong_ordering;
 
     // using pos_type  = streampos;
     // using state_type          = mbstate_t;
-    // using comparison_category = strong_ordering;
 
     /// \brief Assigns character a to character r.
     static constexpr auto assign(char_type& a, char_type const& b) noexcept -> void { a = b; }
@@ -178,9 +179,10 @@ struct char_traits<char> {
 
 template <>
 struct char_traits<wchar_t> {
-    using char_type = wchar_t;
-    using int_type  = wint_t;
-    using off_type  = streamoff;
+    using char_type           = wchar_t;
+    using int_type            = wint_t;
+    using off_type            = streamoff;
+    using comparison_category = strong_ordering;
 
     // using pos_type   = wstreampos;
     // using state_type = mbstate_t;
@@ -242,6 +244,104 @@ struct char_traits<wchar_t> {
     static constexpr auto eof() noexcept -> int_type { return static_cast<int_type>(WEOF); }
 
     static constexpr auto not_eof(int_type const& ch) noexcept -> int_type { return eq_int_type(ch, eof()) ? 0 : ch; }
+};
+
+/// \brief Specializations of char_traits for type char8_t.
+template <>
+struct char_traits<char8_t> {
+    using char_type           = char8_t;
+    using int_type            = unsigned;
+    using off_type            = streamoff;
+    using comparison_category = strong_ordering;
+
+    static constexpr auto assign(char_type& a, char_type const& b) noexcept -> void { a = b; }
+
+    static constexpr auto eq(char_type a, char_type b) noexcept -> bool { return a == b; }
+
+    static constexpr auto lt(char_type a, char_type b) noexcept -> bool { return a < b; }
+
+    static constexpr auto compare(char_type const* lhs, char_type const* rhs, size_t count) -> int
+    {
+        if (count == 0) {
+            return 0;
+        }
+
+        for (size_t i = 0; i < count; ++i) {
+            if (lhs[i] < rhs[i]) {
+                return -1;
+            }
+            if (lhs[i] > rhs[i]) {
+                return 1;
+            }
+        }
+
+        return 0;
+    }
+
+    static constexpr auto length(char_type const* str) -> size_t { return etl::detail::strlen<char_type, size_t>(str); }
+
+    static constexpr auto find(char_type const* str, size_t count, char_type const& token) -> char_type const*
+    {
+        for (size_t i = 0; i < count; ++i) {
+            if (str[i] == token) {
+                return &str[i];
+            }
+        }
+
+        return nullptr;
+    }
+
+    static constexpr auto move(char_type* dest, char_type const* source, size_t count) -> char_type*
+    {
+        for (size_t i = 0; i < count; ++i) {
+            dest[i] = source[i];
+        }
+        return dest;
+    }
+
+    static constexpr auto copy(char_type* dest, char_type const* source, size_t count) -> char_type*
+    {
+        for (size_t i = 0; i < count; ++i) {
+            assign(dest[i], source[i]);
+        }
+        return dest;
+    }
+
+    static constexpr auto assign(char_type* str, size_t count, char_type token) -> char_type*
+    {
+        for (size_t i = 0; i < count; ++i) {
+            assign(str[i], token);
+        }
+        return str;
+    }
+
+    static constexpr auto to_char_type(int_type c) noexcept -> char_type { return static_cast<char_type>(c); }
+
+    static constexpr auto to_int_type(char_type c) noexcept -> int_type { return static_cast<int_type>(c); }
+
+    static constexpr auto eq_int_type(int_type lhs, int_type rhs) noexcept -> bool
+    {
+        if (lhs == rhs) {
+            return true;
+        }
+        if (lhs == eof() and rhs == eof()) {
+            return true;
+        }
+        if (lhs == eof() or rhs == eof()) {
+            return false;
+        }
+        return false;
+    }
+
+    static constexpr auto eof() noexcept -> int_type { return static_cast<int_type>(-1); }
+
+    static constexpr auto not_eof(int_type c) noexcept -> int_type
+    {
+        if (!eq_int_type(c, eof())) {
+            return c;
+        }
+        return 0;
+    }
 };
 
 } // namespace etl
