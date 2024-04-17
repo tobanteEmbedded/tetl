@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: BSL-1.0
-#ifndef TETL_STRING_BASIC_STATIC_STRING_HPP
-#define TETL_STRING_BASIC_STATIC_STRING_HPP
+#ifndef TETL_STRING_BASIC_INPLACE_STRING_HPP
+#define TETL_STRING_BASIC_INPLACE_STRING_HPP
 
 #include <etl/_algorithm/copy.hpp>
 #include <etl/_algorithm/fill.hpp>
@@ -1630,4 +1630,4 @@ constexpr auto erase_if(basic_inplace_string<CharT, Capacity, Traits>& c, Predic
 
 } // namespace etl
 
-#endif // TETL_STRING_BASIC_STATIC_STRING_HPP
+#endif // TETL_STRING_BASIC_INPLACE_STRING_HPP

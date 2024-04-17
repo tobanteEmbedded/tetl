@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: BSL-1.0
-#ifndef TETL_STRING_STATIC_WSTRING_HPP
-#define TETL_STRING_STATIC_WSTRING_HPP
+#ifndef TETL_STRING_INPLACE_WSTRING_HPP
+#define TETL_STRING_INPLACE_WSTRING_HPP
 
 #include <etl/_string/basic_inplace_string.hpp>
 
@@ -12,4 +12,4 @@ using inplace_wstring = basic_inplace_string<wchar_t, Capacity>;
 
 } // namespace etl
 
-#endif // TETL_STRING_STATIC_WSTRING_HPP
+#endif // TETL_STRING_INPLACE_WSTRING_HPP
