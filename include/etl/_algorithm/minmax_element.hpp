@@ -17,7 +17,7 @@ template <typename ForwardIt, typename Compare>
     auto min = first;
     auto max = first;
 
-    if (first == last || ++first == last) {
+    if (first == last or ++first == last) {
         return {min, max};
     }
 
@@ -32,7 +32,7 @@ template <typename ForwardIt, typename Compare>
         if (++first == last) {
             if (comp(*i, *min)) {
                 min = i;
-            } else if (!(comp(*i, *max))) {
+            } else if (not comp(*i, *max)) {
                 max = i;
             }
             break;
@@ -42,14 +42,14 @@ template <typename ForwardIt, typename Compare>
             if (comp(*first, *min)) {
                 min = first;
             }
-            if (!(comp(*i, *max))) {
+            if (not comp(*i, *max)) {
                 max = i;
             }
         } else {
             if (comp(*i, *min)) {
                 min = i;
             }
-            if (!(comp(*first, *max))) {
+            if (not comp(*first, *max)) {
                 max = first;
             }
         }

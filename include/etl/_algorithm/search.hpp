@@ -32,7 +32,7 @@ template <typename FwdIt1, typename FwdIt2, typename Predicate>
             if (it == last) {
                 return last;
             }
-            if (!pred(*it, *sIt)) {
+            if (not pred(*it, *sIt)) {
                 break;
             }
         }

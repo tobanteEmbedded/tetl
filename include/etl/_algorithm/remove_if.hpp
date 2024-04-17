@@ -19,7 +19,7 @@ template <typename ForwardIt, typename Predicate>
 
     if (first != last) {
         for (auto i = first; ++i != last;) {
-            if (!pred(*i)) {
+            if (not pred(*i)) {
                 *first++ = etl::move(*i);
             }
         }

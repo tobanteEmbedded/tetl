@@ -17,24 +17,18 @@ namespace etl {
 /// that is greater than `value`, or last if no such element is found.
 ///
 /// The range `[first, last)` must be partitioned with respect to the
-/// expression `!(value < element)` or `!comp(value, element)`, i.e., all
+/// expression `not (value < element)` or `not comp(value, element)`, i.e., all
 /// elements for which the expression is true must precede all elements for
 /// which the expression is false. A fully-sorted range meets this criterion.
 template <typename ForwardIt, typename T, typename Compare>
 [[nodiscard]] constexpr auto upper_bound(ForwardIt first, ForwardIt last, T const& value, Compare comp) -> ForwardIt
 {
-    using diff_t = typename etl::iterator_traits<ForwardIt>::difference_type;
-
-    ForwardIt it{};
-    diff_t count{};
-    diff_t step{};
-    count = etl::distance(first, last);
-
+    auto count = etl::distance(first, last);
     while (count > 0) {
-        it   = first;
-        step = count / 2;
+        auto it   = first;
+        auto step = count / 2;
         etl::advance(it, step);
-        if (!comp(value, *it)) {
+        if (not comp(value, *it)) {
             first = ++it;
             count -= step + 1;
         } else {

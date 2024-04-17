@@ -15,7 +15,7 @@ template <typename InputIt, typename OutputIt, typename Predicate>
 constexpr auto remove_copy_if(InputIt first, InputIt last, OutputIt destination, Predicate p) -> OutputIt
 {
     for (; first != last; ++first, (void)++destination) {
-        if (!p(*first)) {
+        if (not p(*first)) {
             *destination = *first;
         }
     }

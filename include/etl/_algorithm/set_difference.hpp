@@ -28,7 +28,7 @@ set_difference(InputIt1 first1, InputIt1 last1, InputIt2 first2, InputIt2 last2,
         if (comp(*first1, *first2)) {
             *destination++ = *first1++;
         } else {
-            if (!comp(*first2, *first1)) {
+            if (not comp(*first2, *first1)) {
                 ++first1;
             }
             ++first2;

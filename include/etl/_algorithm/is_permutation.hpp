@@ -36,7 +36,7 @@ template <typename ForwardIt1, typename ForwardIt2>
             }
 
             auto m = etl::count(fDiff2, last2, *i);
-            if (m == 0 || etl::count(i, last, *i) != m) {
+            if (m == 0 or etl::count(i, last, *i) != m) {
                 return false;
             }
         }

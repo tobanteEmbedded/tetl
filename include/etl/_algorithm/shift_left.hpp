@@ -12,7 +12,7 @@ namespace etl {
 /// \brief Shifts the elements in the range [first, last) by n positions.
 ///
 /// \details Shifts the elements towards the beginning of the range. If n == 0
-/// || n >= last - first, there are no effects. If n < 0, the behavior is
+/// or n >= last - first, there are no effects. If n < 0, the behavior is
 /// undefined. Otherwise, for every integer i in [0, last - first - n), moves
 /// the element originally at position first + n + i to position first + i. The
 /// moves are performed in increasing order of i starting from ​0​.

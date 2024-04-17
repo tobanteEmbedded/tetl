@@ -15,7 +15,7 @@ namespace etl {
 /// \brief Shifts the elements in the range [first, last) by n positions.
 ///
 /// \details Shifts the elements towards the end of the range.
-/// If n <= 0 || n >= last - first, there are no effects. Otherwise, for
+/// If n <= 0 or n >= last - first, there are no effects. Otherwise, for
 /// every integer i in [0, last - first - n), moves the element originally
 /// at position first + i to position first + n + i.
 ///

@@ -13,7 +13,7 @@ template <typename ForwardIt, typename Predicate>
 [[nodiscard]] constexpr auto partition_point(ForwardIt first, ForwardIt last, Predicate p) -> ForwardIt
 {
     for (; first != last; ++first) {
-        if (!p(*first)) {
+        if (not p(*first)) {
             break;
         }
     }

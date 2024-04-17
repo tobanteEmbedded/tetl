@@ -15,10 +15,10 @@ template <typename InputIt1, typename InputIt2, typename Compare>
 includes(InputIt1 first1, InputIt1 last1, InputIt2 first2, InputIt2 last2, Compare comp) -> bool
 {
     for (; first2 != last2; ++first1) {
-        if (first1 == last1 || comp(*first2, *first1)) {
+        if (first1 == last1 or comp(*first2, *first1)) {
             return false;
         }
-        if (!comp(*first1, *first2)) {
+        if (not comp(*first1, *first2)) {
             ++first2;
         }
     }

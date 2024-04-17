@@ -16,7 +16,7 @@ template <typename InputIt, typename Predicate>
 [[nodiscard]] constexpr auto is_partitioned(InputIt first, InputIt last, Predicate p) -> bool
 {
     for (; first != last; ++first) {
-        if (!p(*first)) {
+        if (not p(*first)) {
             break;
         }
     }

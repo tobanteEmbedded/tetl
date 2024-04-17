@@ -23,7 +23,7 @@ constexpr auto unique_copy(InputIt first, InputIt last, OutputIt destination, Pr
         *destination = *first;
 
         while (++first != last) {
-            if (!pred(*destination, *first)) {
+            if (not pred(*destination, *first)) {
                 *++destination = *first;
             }
         }
