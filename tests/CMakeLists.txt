@@ -9,6 +9,10 @@ function(tetl_add_test _header _target)
   target_compile_definitions("test_${_header}_${_target}" PRIVATE TETL_DEBUG=1 TETL_ENABLE_USER_CONFIG_HEADER_INCLUDE=1)
   target_link_libraries("test_${_header}_${_target}" PRIVATE tetl::etl tetl::compiler_options tetl::compiler_warnings tetl::code_coverage)
 
+  if(${TETL_BUILD_CONTRACT_CHECKS})
+    target_compile_definitions("test_${_header}_${_target}" PRIVATE TETL_ENABLE_CONTRACT_CHECKS=1)
+  endif()
+
   add_test(NAME "${_header}.hpp: ${_target}" COMMAND "test_${_header}_${_target}")
   set_tests_properties("${_header}.hpp: ${_target}" PROPERTIES WILL_FAIL ${TETL_ADD_TEST_PREFIX_WILL_FAIL})
 endfunction()

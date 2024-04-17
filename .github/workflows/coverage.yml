@@ -34,6 +34,7 @@ jobs:
           -G Ninja
           -D CMAKE_CXX_STANDARD="${{ matrix.cxx }}"
           -D CMAKE_BUILD_TYPE=Debug
+          -D TETL_BUILD_CONTRACT_CHECKS=OFF
           -D TETL_BUILD_COVERAGE=ON
 
       - name: CMake build

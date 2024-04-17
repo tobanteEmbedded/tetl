@@ -13,8 +13,8 @@ namespace etl::linalg {
 template <in_matrix InMat, in_vector InVec, out_vector OutVec>
 constexpr auto matrix_vector_product(InMat a, InVec x, OutVec y) noexcept -> void
 {
-    TETL_PRECONDITION(A.extent(1) == x.extent(0));
-    TETL_PRECONDITION(A.extent(0) == y.extent(0));
+    TETL_PRECONDITION(a.extent(1) == x.extent(0));
+    TETL_PRECONDITION(a.extent(0) == y.extent(0));
 
     using size_type = detail::common_size_type_t<InMat, InVec, OutVec>;
 

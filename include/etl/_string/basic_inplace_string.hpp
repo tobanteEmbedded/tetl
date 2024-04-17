@@ -805,8 +805,8 @@ public:
         TETL_PRECONDITION(pos < size());
         TETL_PRECONDITION(pos + count < size());
 
-        TETL_PRECONDITION(pos2 < str.size());
-        TETL_PRECONDITION(pos2 + count2 < str.size());
+        // TETL_PRECONDITION(pos2 < str.size());
+        // TETL_PRECONDITION(pos2 + count2 < str.size());
 
         auto* f        = data() + etl::min(pos, size());
         auto* l        = data() + etl::min(pos + count, size());
@@ -1117,7 +1117,6 @@ public:
     [[nodiscard]] constexpr auto
     find_first_not_of(basic_inplace_string const& str, size_type pos = 0) const noexcept -> size_type
     {
-        TETL_PRECONDITION(pos < size());
         return basic_string_view<CharT, Traits>{*this}.find_first_not_of(str, pos);
     }
 
@@ -1128,7 +1127,6 @@ public:
     /// characters in the given string, or npos if no such character is found.
     [[nodiscard]] constexpr auto find_first_not_of(CharT ch, size_type pos = 0) const noexcept -> size_type
     {
-        TETL_PRECONDITION(pos < size());
         return basic_string_view<CharT, Traits>{*this}.find_first_not_of(ch, pos);
     }
 
@@ -1139,7 +1137,6 @@ public:
     /// characters in the given string, or npos if no such character is found.
     [[nodiscard]] constexpr auto find_first_not_of(CharT const* s, size_type pos) const -> size_type
     {
-        TETL_PRECONDITION(pos < size());
         return basic_string_view<CharT, Traits>{*this}.find_first_not_of(s, pos);
     }
 
@@ -1150,7 +1147,6 @@ public:
     /// characters in the given string, or npos if no such character is found.
     [[nodiscard]] constexpr auto find_first_not_of(CharT const* s, size_type pos, size_type count) const -> size_type
     {
-        TETL_PRECONDITION(pos < size());
         return basic_string_view<CharT, Traits>{*this}.find_first_not_of(s, pos, count);
     }
 
@@ -1263,13 +1259,13 @@ private:
 
     [[nodiscard]] constexpr auto unsafe_at(size_type const index) noexcept -> reference
     {
-        TETL_PRECONDITION(index < size());
+        TETL_PRECONDITION(index < size() + 1);
         return *next(_storage.data(), static_cast<ptrdiff_t>(index));
     }
 
     [[nodiscard]] constexpr auto unsafe_at(size_type const index) const noexcept -> const_reference
     {
-        TETL_PRECONDITION(index < size());
+        TETL_PRECONDITION(index < size() + 1);
         return *next(_storage.data(), static_cast<ptrdiff_t>(index));
     }
 

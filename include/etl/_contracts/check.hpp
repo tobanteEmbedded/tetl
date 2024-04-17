@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: BSL-1.0
 
-#ifndef TETL_CONTRACT_CHECKS_HPP
-#define TETL_CONTRACT_CHECKS_HPP
+#ifndef TETL_CONTRACTS_CHECK_HPP
+#define TETL_CONTRACTS_CHECK_HPP
 
 #include <etl/_cassert/assert.hpp>
 
@@ -11,4 +11,4 @@
     #define TETL_PRECONDITION(...)
 #endif
 
-#endif // TETL_CONTRACT_CHECKS_HPP
+#endif // TETL_CONTRACTS_CHECK_HPP

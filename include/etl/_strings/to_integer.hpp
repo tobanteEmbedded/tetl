@@ -68,7 +68,7 @@ template <typename Int, to_integer_options Options = to_integer_options{}>
 
     // loop over digits
     auto value = Int{};
-    for (; (str[i] != char(0)) and (len != 0); ++i, --len) {
+    for (; (len != 0) and (str[i] != char(0)); ++i, --len) {
 
         auto digit = Int{};
         if (etl::isdigit(static_cast<int>(str[i]))) {
