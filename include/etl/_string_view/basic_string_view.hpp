@@ -689,8 +689,25 @@ private:
     size_type _size      = 0;
 };
 
-/// \brief Typedefs for common character type
+/// Typedef for common character type `char`
+/// \ingroup string_view
 using string_view = basic_string_view<char, etl::char_traits<char>>;
+
+/// Typedef for common character type `wchar_t`
+/// \ingroup string_view
+using wstring_view = basic_string_view<wchar_t, etl::char_traits<wchar_t>>;
+
+/// Typedef for common character type `char8_t`
+/// \ingroup string_view
+using u8string_view = basic_string_view<char8_t, etl::char_traits<char8_t>>;
+
+/// Typedef for common character type `char16_t`
+/// \ingroup string_view
+using u16string_view = basic_string_view<char16_t, etl::char_traits<char16_t>>;
+
+/// Typedef for common character type `char32_t`
+/// \ingroup string_view
+using u32string_view = basic_string_view<char32_t, etl::char_traits<char32_t>>;
 
 inline namespace literals {
 inline namespace string_view_literals {

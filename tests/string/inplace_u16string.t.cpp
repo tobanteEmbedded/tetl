@@ -27,6 +27,11 @@ constexpr auto test() -> bool
 
     str = char16_t('a') + str;
     CHECK(str == u"a__test_foo");
+
+    auto view = etl::u16string_view{str};
+    CHECK(str == view);
+    CHECK(view == str);
+
     return true;
 }
 

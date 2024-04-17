@@ -27,6 +27,11 @@ constexpr auto test() -> bool
 
     str = wchar_t('a') + str;
     CHECK(str == L"a__test_foo");
+
+    auto view = etl::wstring_view{str};
+    CHECK(str == view);
+    CHECK(view == str);
+
     return true;
 }
 

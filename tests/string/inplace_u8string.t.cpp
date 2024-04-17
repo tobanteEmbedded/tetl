@@ -27,6 +27,11 @@ constexpr auto test() -> bool
 
     str = char8_t('a') + str;
     CHECK(str == u8"a__test_foo");
+
+    auto view = etl::u8string_view{str};
+    CHECK(str == view);
+    CHECK(view == str);
+
     return true;
 }
 
