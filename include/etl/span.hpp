@@ -12,7 +12,6 @@
 
 #include <etl/_config/all.hpp>
 
-#include <etl/_span/as_bytes.hpp>
 #include <etl/_span/dynamic_extent.hpp>
 #include <etl/_span/span.hpp>
 
