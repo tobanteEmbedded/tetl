@@ -72,6 +72,8 @@ template <typename Char>
     CHECK(test<char>());
     CHECK(test<wchar_t>());
     CHECK(test<char8_t>());
+    CHECK(test<char16_t>());
+    CHECK(test<char32_t>());
     return true;
 }
 } // namespace

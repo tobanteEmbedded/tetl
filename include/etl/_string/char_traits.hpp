@@ -5,6 +5,7 @@
 
 #include <etl/_compare/strong_ordering.hpp>
 #include <etl/_cstddef/size_t.hpp>
+#include <etl/_cstdint/uint_least_t.hpp>
 #include <etl/_cwchar/wint_t.hpp>
 #include <etl/_ios/typedefs.hpp>
 #include <etl/_strings/cstr.hpp>
@@ -137,6 +138,16 @@ struct char_traits<wchar_t> : detail::char_traits_base<wchar_t, wint_t, static_c
 /// \ingroup string
 template <>
 struct char_traits<char8_t> : detail::char_traits_base<char8_t, unsigned, static_cast<unsigned>(-1)> { };
+
+/// Specializations of char_traits for type char16_t.
+/// \ingroup string
+template <>
+struct char_traits<char16_t> : detail::char_traits_base<char16_t, uint_least16_t, uint_least16_t(0xFFFF)> { };
+
+/// Specializations of char_traits for type char32_t.
+/// \ingroup string
+template <>
+struct char_traits<char32_t> : detail::char_traits_base<char32_t, uint_least32_t, uint_least32_t(0xFFFFFFFF)> { };
 
 } // namespace etl
 

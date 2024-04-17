@@ -20,6 +20,8 @@
 // Non-standard extensions
 #include <etl/_string/basic_inplace_string.hpp>
 #include <etl/_string/inplace_string.hpp>
+#include <etl/_string/inplace_u16string.hpp>
+#include <etl/_string/inplace_u32string.hpp>
 #include <etl/_string/inplace_u8string.hpp>
 #include <etl/_string/inplace_wstring.hpp>
 #include <etl/_string/string_constant.hpp>
