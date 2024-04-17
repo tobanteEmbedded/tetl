@@ -702,9 +702,32 @@ using u32string_view = basic_string_view<char32_t, etl::char_traits<char32_t>>;
 inline namespace literals {
 inline namespace string_view_literals {
 
-/// \brief Forms a string view of a character literal. Returns
-/// etl::string_view{str, len}
+/// Forms a string view of a character literal. Returns etl::string_view{str, len}
 [[nodiscard]] constexpr auto operator""_sv(char const* str, etl::size_t len) noexcept -> etl::string_view
+{
+    return {str, len};
+}
+
+/// Forms a string view of a character literal. Returns etl::wstring_view{str, len}
+[[nodiscard]] constexpr auto operator""_sv(wchar_t const* str, etl::size_t len) noexcept -> etl::wstring_view
+{
+    return {str, len};
+}
+
+/// Forms a string view of a character literal. Returns etl::u8string_view{str, len}
+[[nodiscard]] constexpr auto operator""_sv(char8_t const* str, etl::size_t len) noexcept -> etl::u8string_view
+{
+    return {str, len};
+}
+
+/// Forms a string view of a character literal. Returns etl::u16string_view{str, len}
+[[nodiscard]] constexpr auto operator""_sv(char16_t const* str, etl::size_t len) noexcept -> etl::u16string_view
+{
+    return {str, len};
+}
+
+/// Forms a string view of a character literal. Returns etl::u32string_view{str, len}
+[[nodiscard]] constexpr auto operator""_sv(char32_t const* str, etl::size_t len) noexcept -> etl::u32string_view
 {
     return {str, len};
 }

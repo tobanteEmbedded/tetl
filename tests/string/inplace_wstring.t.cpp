@@ -7,6 +7,8 @@
 template <typename String>
 constexpr auto test() -> bool
 {
+    using namespace etl::string_view_literals;
+
     auto str = String();
     CHECK(str == L"");
     CHECK(str.empty());
@@ -26,7 +28,7 @@ constexpr auto test() -> bool
     CHECK(str == L"__test_foo");
 
     str = wchar_t('a') + str;
-    CHECK(str == L"a__test_foo");
+    CHECK(str == L"a__test_foo"_sv);
 
     auto view = etl::wstring_view{str};
     CHECK(str == view);
