@@ -2,6 +2,7 @@
 
 #include <etl/string_view.hpp>
 
+#include <etl/ranges.hpp>
 #include <etl/string.hpp>
 #include <etl/type_traits.hpp>
 
@@ -11,10 +12,9 @@ constexpr auto test() -> bool
 {
     using namespace etl::literals;
 
-    {
-        // P2251R1
-        CHECK(etl::is_trivially_copyable_v<etl::string_view>);
-    }
+    // P2251R1
+    CHECK(etl::is_trivially_copyable_v<etl::string_view>);
+    CHECK(etl::ranges::borrowed_range<etl::string_view>);
 
     {
         CHECK(etl::string_view{}.data() == nullptr);

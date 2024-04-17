@@ -16,6 +16,7 @@
 #include <etl/_iterator/rend.hpp>
 #include <etl/_iterator/reverse_iterator.hpp>
 #include <etl/_iterator/size.hpp>
+#include <etl/_ranges/enable_borrowed_range.hpp>
 #include <etl/_string/char_traits.hpp>
 #include <etl/_type_traits/type_identity.hpp>
 #include <etl/_utility/swap.hpp>
@@ -688,6 +689,13 @@ private:
     size_type _size      = 0;
 };
 
+namespace ranges {
+
+template <typename Char, typename Traits>
+inline constexpr bool enable_borrowed_range<etl::basic_string_view<Char, Traits>> = true;
+
+} // namespace ranges
+
 /// \brief Compares two views. All comparisons are done via the compare() member
 /// function (which itself is defined in terms of Traits::compare()):
 ///
@@ -719,14 +727,14 @@ operator<(basic_string_view<Char, Traits> lhs, basic_string_view<Char, Traits> r
 
 template <typename Char, typename Traits, int = 1>
 [[nodiscard]] constexpr auto
-operator<(decay_t<basic_string_view<Char, Traits>> lhs, basic_string_view<Char, Traits> rhs) noexcept -> bool
+operator<(type_identity_t<basic_string_view<Char, Traits>> lhs, basic_string_view<Char, Traits> rhs) noexcept -> bool
 {
     return lexicographical_compare(lhs.begin(), lhs.end(), rhs.begin(), rhs.end());
 }
 
 template <typename Char, typename Traits, int = 2>
 [[nodiscard]] constexpr auto
-operator<(basic_string_view<Char, Traits> lhs, decay_t<basic_string_view<Char, Traits>> rhs) noexcept -> bool
+operator<(basic_string_view<Char, Traits> lhs, type_identity_t<basic_string_view<Char, Traits>> rhs) noexcept -> bool
 {
     return lexicographical_compare(lhs.begin(), lhs.end(), rhs.begin(), rhs.end());
 }
@@ -746,14 +754,14 @@ operator<=(basic_string_view<Char, Traits> lhs, basic_string_view<Char, Traits> 
 
 template <typename Char, typename Traits, int = 1>
 [[nodiscard]] constexpr auto
-operator<=(decay_t<basic_string_view<Char, Traits>> lhs, basic_string_view<Char, Traits> rhs) noexcept -> bool
+operator<=(type_identity_t<basic_string_view<Char, Traits>> lhs, basic_string_view<Char, Traits> rhs) noexcept -> bool
 {
     return (lhs < rhs) or (lhs == rhs);
 }
 
 template <typename Char, typename Traits, int = 2>
 [[nodiscard]] constexpr auto
-operator<=(basic_string_view<Char, Traits> lhs, decay_t<basic_string_view<Char, Traits>> rhs) noexcept -> bool
+operator<=(basic_string_view<Char, Traits> lhs, type_identity_t<basic_string_view<Char, Traits>> rhs) noexcept -> bool
 {
     return (lhs < rhs) or (lhs == rhs);
 }
@@ -773,14 +781,14 @@ operator>(basic_string_view<Char, Traits> lhs, basic_string_view<Char, Traits> r
 
 template <typename Char, typename Traits, int = 1>
 [[nodiscard]] constexpr auto
-operator>(decay_t<basic_string_view<Char, Traits>> lhs, basic_string_view<Char, Traits> rhs) noexcept -> bool
+operator>(type_identity_t<basic_string_view<Char, Traits>> lhs, basic_string_view<Char, Traits> rhs) noexcept -> bool
 {
     return !(lhs < rhs) and !(lhs == rhs);
 }
 
 template <typename Char, typename Traits, int = 2>
 [[nodiscard]] constexpr auto
-operator>(basic_string_view<Char, Traits> lhs, decay_t<basic_string_view<Char, Traits>> rhs) noexcept -> bool
+operator>(basic_string_view<Char, Traits> lhs, type_identity_t<basic_string_view<Char, Traits>> rhs) noexcept -> bool
 {
     return !(lhs < rhs) and !(lhs == rhs);
 }
@@ -800,14 +808,14 @@ operator>=(basic_string_view<Char, Traits> lhs, basic_string_view<Char, Traits> 
 
 template <typename Char, typename Traits, int = 1>
 [[nodiscard]] constexpr auto
-operator>=(decay_t<basic_string_view<Char, Traits>> lhs, basic_string_view<Char, Traits> rhs) noexcept -> bool
+operator>=(type_identity_t<basic_string_view<Char, Traits>> lhs, basic_string_view<Char, Traits> rhs) noexcept -> bool
 {
     return lhs > rhs or lhs == rhs;
 }
 
 template <typename Char, typename Traits, int = 2>
 [[nodiscard]] constexpr auto
-operator>=(basic_string_view<Char, Traits> lhs, decay_t<basic_string_view<Char, Traits>> rhs) noexcept -> bool
+operator>=(basic_string_view<Char, Traits> lhs, type_identity_t<basic_string_view<Char, Traits>> rhs) noexcept -> bool
 {
     return lhs > rhs or lhs == rhs;
 }
