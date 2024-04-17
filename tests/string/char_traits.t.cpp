@@ -7,21 +7,59 @@
 #include "testing/testing.hpp"
 
 namespace {
-[[nodiscard]] constexpr auto test_wchar() -> bool
+
+template <typename Char>
+[[nodiscard]] constexpr auto test() -> bool
 {
+    using traits = etl::char_traits<Char>;
+
+    CHECK_SAME_TYPE(typename traits::char_type, Char);
+    CHECK_SAME_TYPE(typename traits::comparison_category, etl::strong_ordering);
+
+    // assign
+    {
+        auto dest = Char();
+        for (auto ch : etl::array{Char('A'), Char('b'), Char('0')}) {
+            traits::assign(dest, ch);
+            CHECK(dest == ch);
+        }
+    }
+
+    // eq
+    CHECK(traits::eq(Char('A'), Char('A')));
+    CHECK_FALSE(traits::eq(Char('A'), Char('B')));
+    CHECK_FALSE(traits::eq(Char('A'), Char('a')));
+    CHECK_FALSE(traits::eq(Char('A'), Char('0')));
+
+    // lt
+    CHECK(traits::lt(Char('A'), Char('B')));
+    CHECK(traits::lt(Char('A'), Char('a')));
+    CHECK_FALSE(traits::lt(Char('A'), Char('A')));
+    CHECK_FALSE(traits::lt(Char('A'), Char('0')));
+
+    // compare
+    {
+        auto lhs = etl::array{Char('A'), Char('B'), Char('C'), Char('D'), Char(0)};
+        auto rhs = etl::array{Char('A'), Char('B'), Char('C'), Char('E'), Char(0)};
+        CHECK(traits::compare(lhs.data(), lhs.data(), lhs.size()) == 0);
+        CHECK(traits::compare(rhs.data(), rhs.data(), rhs.size()) == 0);
+        CHECK(traits::compare(lhs.data(), rhs.data(), lhs.size()) == -1);
+        CHECK(traits::compare(rhs.data(), lhs.data(), lhs.size()) == +1);
+    }
+
     // copy
     {
-        auto const src = etl::array<wchar_t, 4>{L'A', L'B', L'C', L'D'};
+        auto const src = etl::array<Char, 4>{Char('A'), Char('B'), Char('C'), Char('D')};
 
         {
-            auto dest = etl::array<wchar_t, 4>{};
-            etl::char_traits<wchar_t>::copy(dest.data(), src.data(), 0);
-            CHECK(dest == etl::array<wchar_t, 4>{});
+            auto dest = etl::array<Char, 4>{};
+            traits::copy(dest.data(), src.data(), 0);
+            CHECK(dest == etl::array<Char, 4>{});
         }
 
         {
-            auto dest = etl::array<wchar_t, 4>{};
-            etl::char_traits<wchar_t>::copy(dest.data(), src.data(), src.size());
+            auto dest = etl::array<Char, 4>{};
+            traits::copy(dest.data(), src.data(), src.size());
             CHECK(dest == src);
         }
     }
@@ -31,7 +69,9 @@ namespace {
 
 [[nodiscard]] constexpr auto test_all() -> bool
 {
-    CHECK(test_wchar());
+    CHECK(test<char>());
+    CHECK(test<wchar_t>());
+    CHECK(test<char8_t>());
     return true;
 }
 } // namespace
