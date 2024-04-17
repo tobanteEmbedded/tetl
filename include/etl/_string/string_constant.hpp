@@ -4,7 +4,6 @@
 #define TETL_STRING_STRING_CONSTANT_HPP
 
 #include <etl/_array/array.hpp>
-#include <etl/_array/to_array.hpp>
 #include <etl/_cstddef/size_t.hpp>
 #include <etl/_iterator/size.hpp>
 #include <etl/_string_view/basic_string_view.hpp>
