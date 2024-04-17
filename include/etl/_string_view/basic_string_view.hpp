@@ -8,6 +8,7 @@
 #include <etl/_algorithm/min.hpp>
 #include <etl/_algorithm/none_of.hpp>
 #include <etl/_concepts/emulation.hpp>
+#include <etl/_contracts/check.hpp>
 #include <etl/_iterator/begin.hpp>
 #include <etl/_iterator/data.hpp>
 #include <etl/_iterator/end.hpp>
@@ -142,15 +143,27 @@ struct basic_string_view {
 
     /// Returns a const reference to the character at specified location \p pos
     /// \pre `pos < size()`
-    [[nodiscard]] constexpr auto operator[](size_type pos) const -> const_reference { return unsafe_at(pos); }
+    [[nodiscard]] constexpr auto operator[](size_type pos) const -> const_reference
+    {
+        TETL_PRECONDITION(pos < size());
+        return unsafe_at(pos);
+    }
 
     /// Returns reference to the first character in the view.
     /// \pre `size() > 0`
-    [[nodiscard]] constexpr auto front() const -> const_reference { return unsafe_at(0); }
+    [[nodiscard]] constexpr auto front() const -> const_reference
+    {
+        TETL_PRECONDITION(not empty());
+        return unsafe_at(0);
+    }
 
     /// Returns reference to the last character in the view.
     /// \pre `size() > 0`
-    [[nodiscard]] constexpr auto back() const -> const_reference { return unsafe_at(_size - 1); }
+    [[nodiscard]] constexpr auto back() const -> const_reference
+    {
+        TETL_PRECONDITION(not empty());
+        return unsafe_at(_size - 1);
+    }
 
     /// Returns a pointer to the underlying character array. The pointer
     /// is such that the range [data(); data() + size()) is valid and the values
@@ -174,13 +187,18 @@ struct basic_string_view {
     /// \pre `n < size()`
     constexpr auto remove_prefix(size_type n) -> void
     {
+        TETL_PRECONDITION(n < size());
         _begin += n;
         _size -= n;
     }
 
     /// Moves the end of the view back by n characters.
     /// \pre `n < size()`
-    constexpr auto remove_suffix(size_type n) -> void { _size = _size - n; }
+    constexpr auto remove_suffix(size_type n) -> void
+    {
+        TETL_PRECONDITION(n < size());
+        _size = _size - n;
+    }
 
     /// Exchanges the view with that of v.
     constexpr auto swap(basic_string_view& v) noexcept -> void
@@ -194,6 +212,7 @@ struct basic_string_view {
     /// pos. Equivalent to Traits::copy(dest, data() + pos, rcount).
     [[nodiscard]] constexpr auto copy(Char* dest, size_type count, size_type pos = 0) const -> size_type
     {
+        TETL_PRECONDITION(pos < size());
         auto const rcount = etl::min(count, size() - pos);
         traits_type::copy(dest, data() + pos, rcount);
         return rcount;
@@ -203,6 +222,7 @@ struct basic_string_view {
     /// is the smaller of count and size() - pos.
     [[nodiscard]] constexpr auto substr(size_type pos = 0, size_type count = npos) const -> basic_string_view
     {
+        TETL_PRECONDITION(pos < size());
         auto const rcount = etl::min(count, size() - pos);
         return basic_string_view{_begin + pos, rcount};
     }
