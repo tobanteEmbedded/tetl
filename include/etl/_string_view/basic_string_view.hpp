@@ -140,59 +140,56 @@ struct basic_string_view {
         return const_reverse_iterator(begin());
     }
 
-    /// \brief Returns a const reference to the character at specified location
-    /// pos. No bounds checking is performed: the behavior is undefined if pos
-    /// >= size().
+    /// Returns a const reference to the character at specified location \p pos
+    /// \pre `pos < size()`
     [[nodiscard]] constexpr auto operator[](size_type pos) const -> const_reference { return unsafe_at(pos); }
 
-    /// \brief Returns reference to the first character in the view. The
-    /// behavior is undefined if empty() == true.
+    /// Returns reference to the first character in the view.
+    /// \pre `size() > 0`
     [[nodiscard]] constexpr auto front() const -> const_reference { return unsafe_at(0); }
 
-    /// \brief Returns reference to the last character in the view. The behavior
-    /// is undefined if empty() == true.
+    /// Returns reference to the last character in the view.
+    /// \pre `size() > 0`
     [[nodiscard]] constexpr auto back() const -> const_reference { return unsafe_at(_size - 1); }
 
-    /// \brief Returns a pointer to the underlying character array. The pointer
+    /// Returns a pointer to the underlying character array. The pointer
     /// is such that the range [data(); data() + size()) is valid and the values
     /// in it correspond to the values of the view.
     [[nodiscard]] constexpr auto data() const noexcept -> const_pointer { return _begin; }
 
-    /// \brief Returns the number of Char elements in the view, i.e.
-    /// etl::distance(begin(), end()).
+    /// Returns the number of Char elements in the view, i.e. etl::distance(begin(), end()).
     [[nodiscard]] constexpr auto size() const noexcept -> size_type { return length(); }
 
-    /// \brief Returns the number of Char elements in the view, i.e.
-    /// etl::distance(begin(), end()).
+    /// Returns the number of Char elements in the view, i.e. etl::distance(begin(), end()).
     [[nodiscard]] constexpr auto length() const noexcept -> size_type { return _size; }
 
-    /// \brief The largest possible number of char-like objects that can be
+    /// The largest possible number of char-like objects that can be
     /// referred to by a basic_string_view.
     [[nodiscard]] constexpr auto max_size() const noexcept -> size_type { return size_type(-1); }
 
-    /// \brief Checks if the view has no characters, i.e. whether size() == 0.
+    /// Checks if the view has no characters, i.e. whether size() == 0.
     [[nodiscard]] constexpr auto empty() const noexcept -> bool { return _size == 0; }
 
-    /// \brief Moves the start of the view forward by n characters. The behavior
-    /// is undefined if n > size().
+    /// Moves the start of the view forward by n characters.
+    /// \pre `n < size()`
     constexpr auto remove_prefix(size_type n) -> void
     {
         _begin += n;
         _size -= n;
     }
 
-    /// \brief Moves the end of the view back by n characters. The behavior is
-    /// undefined if n > size().
+    /// Moves the end of the view back by n characters.
+    /// \pre `n < size()`
     constexpr auto remove_suffix(size_type n) -> void { _size = _size - n; }
 
-    /// \brief Exchanges the view with that of v.
+    /// Exchanges the view with that of v.
     constexpr auto swap(basic_string_view& v) noexcept -> void
     {
         etl::swap(_begin, v._begin);
         etl::swap(_size, v._size);
     }
 
-    /// \brief Copies the substring [pos, pos + rcount) to the character array
+    /// Copies the substring [pos, pos + rcount) to the character array
     /// pointed to by dest, where rcount is the smaller of count and size() -
     /// pos. Equivalent to Traits::copy(dest, data() + pos, rcount).
     [[nodiscard]] constexpr auto copy(Char* dest, size_type count, size_type pos = 0) const -> size_type
@@ -202,7 +199,7 @@ struct basic_string_view {
         return rcount;
     }
 
-    /// \brief Returns a view of the substring [pos, pos + rcount), where rcount
+    /// Returns a view of the substring [pos, pos + rcount), where rcount
     /// is the smaller of count and size() - pos.
     [[nodiscard]] constexpr auto substr(size_type pos = 0, size_type count = npos) const -> basic_string_view
     {
@@ -210,7 +207,7 @@ struct basic_string_view {
         return basic_string_view{_begin + pos, rcount};
     }
 
-    /// \brief Compares two character sequences.
+    /// Compares two character sequences.
     ///
     /// https://en.cppreference.com/w/cpp/string/basic_string_view/compare
     [[nodiscard]] constexpr auto compare(basic_string_view v) const noexcept -> int
@@ -235,41 +232,35 @@ struct basic_string_view {
         return 0;
     }
 
-    /// \brief Compares two character sequences. Equivalent to substr(pos1,
-    /// count1).compare(v).
+    /// Compares two character sequences. Equivalent to substr(pos1, count1).compare(v).
     [[nodiscard]] constexpr auto compare(size_type pos1, size_type count1, basic_string_view v) const -> int
     {
         return substr(pos1, count1).compare(v);
     }
 
-    /// \brief Compares two character sequences. Equivalent to substr(pos1,
-    /// count1).compare(v.substr(pos2, count2))
+    /// Compares two character sequences. Equivalent to substr(pos1, count1).compare(v.substr(pos2, count2))
     [[nodiscard]] constexpr auto
     compare(size_type pos1, size_type count1, basic_string_view v, size_type pos2, size_type count2) const -> int
     {
         return substr(pos1, count1).compare(v.substr(pos2, count2));
     }
 
-    /// \brief Compares two character sequences. Equivalent to
-    /// compare(basic_string_view(s)).
+    /// Compares two character sequences. Equivalent to compare(basic_string_view(s)).
     [[nodiscard]] constexpr auto compare(Char const* s) const -> int { return compare(basic_string_view(s)); }
 
-    /// \brief Compares two character sequences. Equivalent to substr(pos1,
-    /// count1).compare(basic_string_view(s)).
+    /// Compares two character sequences. Equivalent to substr(pos1, count1).compare(basic_string_view(s)).
     [[nodiscard]] constexpr auto compare(size_type pos1, size_type count1, Char const* s) const -> int
     {
         return substr(pos1, count1).compare(basic_string_view(s));
     }
 
-    /// \brief Compares two character sequences. Equivalent to substr(pos1,
-    /// count1).compare(basic_string_view(s, count2)).
+    /// Compares two character sequences. Equivalent to substr(pos1, count1).compare(basic_string_view(s, count2)).
     [[nodiscard]] constexpr auto compare(size_type pos1, size_type count1, Char const* s, size_type count2) const -> int
     {
         return substr(pos1, count1).compare(basic_string_view(s, count2));
     }
 
-    /// \brief Checks if the string view begins with the given prefix, where the
-    /// prefix is a string view.
+    /// Checks if the string view begins with the given prefix, where the prefix is a string view.
     ///
     /// \details Effectively returns substr(0, sv.size()) == sv
     [[nodiscard]] constexpr auto starts_with(basic_string_view sv) const noexcept -> bool
@@ -277,8 +268,7 @@ struct basic_string_view {
         return substr(0, sv.size()) == sv;
     }
 
-    /// \brief Checks if the string view begins with the given prefix, where the
-    /// prefix is a single character.
+    /// Checks if the string view begins with the given prefix, where the prefix is a single character.
     ///
     /// \details Effectively returns !empty() && Traits::eq(front(), c)
     [[nodiscard]] constexpr auto starts_with(Char c) const noexcept -> bool
