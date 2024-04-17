@@ -4,7 +4,7 @@
 #define TETL_STRING_TO_STRING_HPP
 
 #include <etl/_contracts/check.hpp>
-#include <etl/_string/inplace_string.hpp>
+#include <etl/_string/basic_inplace_string.hpp>
 #include <etl/_strings/from_integer.hpp>
 
 namespace etl {

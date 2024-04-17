@@ -4,7 +4,7 @@
 
 #include <etl/_cstddef/size_t.hpp>
 #include <etl/_iterator/distance.hpp>
-#include <etl/_string/inplace_string.hpp>
+#include <etl/_string/basic_inplace_string.hpp>
 #include <etl/_strings/to_floating_point.hpp>
 
 namespace etl {

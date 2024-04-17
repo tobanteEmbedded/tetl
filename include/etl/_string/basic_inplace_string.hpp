@@ -1318,6 +1318,26 @@ private:
     layout_type _storage{};
 };
 
+/// Typedef for a basic_inplace_string using 'char'
+template <etl::size_t Capacity>
+using inplace_string = basic_inplace_string<char, Capacity>;
+
+/// Typedef for a basic_inplace_string using 'wchar_t'
+template <etl::size_t Capacity>
+using inplace_wstring = basic_inplace_string<wchar_t, Capacity>;
+
+/// Typedef for a basic_inplace_string using 'char8_t'
+template <etl::size_t Capacity>
+using inplace_u8string = basic_inplace_string<char8_t, Capacity>;
+
+/// Typedef for a basic_inplace_string using 'char16_t'
+template <etl::size_t Capacity>
+using inplace_u16string = basic_inplace_string<char16_t, Capacity>;
+
+/// Typedef for a basic_inplace_string using 'char32_t'
+template <etl::size_t Capacity>
+using inplace_u32string = basic_inplace_string<char32_t, Capacity>;
+
 /// \brief Returns a string containing characters from lhs followed by the
 /// characters from rhs.
 template <typename CharT, typename Traits, size_t Capacity1, size_t Capacity2>
