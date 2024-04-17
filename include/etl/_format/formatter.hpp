@@ -7,7 +7,7 @@
 #include <etl/_cstring/strlen.hpp>
 #include <etl/_format/basic_format_context.hpp>
 #include <etl/_string/basic_inplace_string.hpp>
-#include <etl/_string_view/string_view.hpp>
+#include <etl/_string_view/basic_string_view.hpp>
 #include <etl/_strings/from_integer.hpp>
 
 namespace etl {

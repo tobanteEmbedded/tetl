@@ -10,7 +10,7 @@
 #include <etl/_cstddef/size_t.hpp>
 #include <etl/_limits/numeric_limits.hpp>
 #include <etl/_string/basic_inplace_string.hpp>
-#include <etl/_string_view/string_view.hpp>
+#include <etl/_string_view/basic_string_view.hpp>
 
 namespace etl {
 

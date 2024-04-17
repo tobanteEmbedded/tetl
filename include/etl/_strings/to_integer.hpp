@@ -9,7 +9,7 @@
 #include <etl/_cctype/tolower.hpp>
 #include <etl/_cstddef/size_t.hpp>
 #include <etl/_memory/addressof.hpp>
-#include <etl/_string_view/string_view.hpp>
+#include <etl/_string_view/basic_string_view.hpp>
 #include <etl/_type_traits/is_signed.hpp>
 
 namespace etl::strings {

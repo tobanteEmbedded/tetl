@@ -3,7 +3,7 @@
 #define TETL_STRING_STOI_HPP
 
 #include <etl/_concepts/integral.hpp>
-#include <etl/_string_view/string_view.hpp>
+#include <etl/_string_view/basic_string_view.hpp>
 #include <etl/_strings/to_integer.hpp>
 
 namespace etl {
