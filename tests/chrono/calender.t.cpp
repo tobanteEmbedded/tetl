@@ -324,6 +324,53 @@
     return true;
 }
 
+[[nodiscard]] constexpr auto test_weekday_indexed() -> bool
+{
+    // traits
+    CHECK(etl::is_trivially_default_constructible_v<etl::chrono::weekday_indexed>);
+    CHECK(etl::is_nothrow_constructible_v<etl::chrono::weekday_indexed, etl::chrono::weekday, etl::uint32_t>);
+
+    {
+        auto const wdi = etl::chrono::weekday_indexed{};
+        CHECK_NOEXCEPT(wdi.ok());
+        CHECK_NOEXCEPT(wdi.weekday());
+        CHECK_NOEXCEPT(wdi.index());
+        CHECK_NOEXCEPT(wdi == etl::chrono::weekday_indexed{});
+    }
+
+    // construct
+    {
+        auto const wdi = etl::chrono::weekday_indexed{};
+        CHECK(wdi.weekday() == etl::chrono::weekday());
+        CHECK(wdi.index() == 0);
+        CHECK_FALSE(wdi.ok());
+    }
+    {
+        auto const wdi = etl::chrono::weekday_indexed{etl::chrono::Monday, 1};
+        CHECK(wdi.weekday() == etl::chrono::Monday);
+        CHECK(wdi.index() == 1);
+        CHECK(wdi.ok());
+    }
+
+    // compare
+    auto const empty        = etl::chrono::weekday_indexed{};
+    auto const firstMonday  = etl::chrono::weekday_indexed{etl::chrono::Monday, 1};
+    auto const secondMonday = etl::chrono::weekday_indexed{etl::chrono::Monday, 2};
+
+    CHECK(empty == empty);
+    CHECK(firstMonday == firstMonday);
+    CHECK(secondMonday == secondMonday);
+
+    CHECK(empty != firstMonday);
+    CHECK(empty != secondMonday);
+    CHECK(firstMonday != secondMonday);
+
+    CHECK(firstMonday == etl::chrono::Monday[1]);
+    CHECK(firstMonday != etl::chrono::Monday[2]);
+
+    return true;
+}
+
 [[nodiscard]] constexpr auto test_all() -> bool
 {
     CHECK(test_duration());
@@ -331,6 +378,7 @@
     CHECK(test_month());
     CHECK(test_year());
     CHECK(test_weekday());
+    CHECK(test_weekday_indexed());
     return true;
 }
 

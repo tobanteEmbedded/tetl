@@ -11,30 +11,32 @@ namespace etl::chrono {
 struct weekday_indexed {
     weekday_indexed() = default;
 
-    constexpr weekday_indexed(chrono::weekday const& wd, uint32_t index) noexcept
+    constexpr weekday_indexed(etl::chrono::weekday const& wd, etl::uint32_t index) noexcept
         : _wd{wd}
-        , _index{static_cast<uint8_t>(index)}
+        , _index{static_cast<etl::uint8_t>(index)}
     {
     }
 
-    [[nodiscard]] constexpr auto weekday() const noexcept -> chrono::weekday { return _wd; }
+    [[nodiscard]] constexpr auto weekday() const noexcept -> etl::chrono::weekday { return _wd; }
 
-    [[nodiscard]] constexpr auto index() const noexcept -> uint32_t { return _index; }
+    [[nodiscard]] constexpr auto index() const noexcept -> etl::uint32_t { return _index; }
 
     [[nodiscard]] constexpr auto ok() const noexcept -> bool
     {
         return weekday().ok() and ((_index >= 1) and (_index <= 5));
     }
 
+    friend constexpr auto operator==(weekday_indexed const& lhs, weekday_indexed const& rhs) noexcept -> bool
+    {
+        return lhs.weekday() == rhs.weekday() and lhs.index() == rhs.index();
+    }
+
 private:
-    chrono::weekday _wd;
-    uint8_t _index;
+    etl::chrono::weekday _wd;
+    etl::uint8_t _index;
 };
 
-[[nodiscard]] constexpr auto operator==(weekday_indexed const& lhs, weekday_indexed const& rhs) noexcept -> bool
-{
-    return lhs.weekday() == rhs.weekday() and lhs.index() == rhs.index();
-}
+constexpr auto weekday::operator[](uint32_t index) const noexcept -> weekday_indexed { return {*this, index}; }
 
 } // namespace etl::chrono
 

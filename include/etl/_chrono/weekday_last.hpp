@@ -22,6 +22,11 @@ private:
     chrono::weekday _wd;
 };
 
+constexpr auto weekday::operator[](etl::chrono::last_spec /*tag*/) const noexcept -> weekday_last
+{
+    return weekday_last{*this};
+}
+
 } // namespace etl::chrono
 
 #endif // TETL_CHRONO_WEEKDAY_LAST_HPP
