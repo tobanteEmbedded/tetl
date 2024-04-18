@@ -18,6 +18,11 @@ struct month_day_last {
 
     [[nodiscard]] constexpr auto ok() const noexcept -> bool { return month().ok(); }
 
+    friend constexpr auto operator==(month_day_last const& lhs, month_day_last const& rhs) noexcept -> bool
+    {
+        return lhs.month() == rhs.month();
+    }
+
 private:
     chrono::month _m;
 };

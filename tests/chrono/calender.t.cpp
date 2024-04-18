@@ -459,6 +459,46 @@
     return true;
 }
 
+[[nodiscard]] constexpr auto test_month_day_last() -> bool
+{
+    // traits
+    CHECK(etl::is_nothrow_constructible_v<etl::chrono::month_day_last, etl::chrono::month>);
+
+    {
+        auto const md = etl::chrono::month_day_last{etl::chrono::January};
+        CHECK_NOEXCEPT(md.month());
+        CHECK_NOEXCEPT(md.ok());
+    }
+
+    // construct
+    {
+        auto const md = etl::chrono::month_day_last{etl::chrono::January};
+        CHECK(md.ok());
+        CHECK(md.month() == etl::chrono::January);
+    }
+    {
+        auto const md = etl::chrono::month_day_last{etl::chrono::May};
+        CHECK(md.ok());
+        CHECK(md.month() == etl::chrono::May);
+    }
+    {
+        auto const md = etl::chrono::month_day_last{etl::chrono::month(13)};
+        CHECK_FALSE(md.ok());
+        CHECK(md.month() == etl::chrono::month(13));
+    }
+
+    // compare
+    {
+        auto const birthday  = etl::chrono::month_day_last{etl::chrono::May};
+        auto const christmas = etl::chrono::month_day_last{etl::chrono::December};
+        CHECK(birthday == birthday);
+        CHECK(christmas != birthday);
+        CHECK(birthday != christmas);
+    }
+
+    return true;
+}
+
 [[nodiscard]] constexpr auto test_year_month() -> bool
 {
     // traits
@@ -548,6 +588,8 @@
     CHECK(test_weekday_last());
 
     CHECK(test_month_day());
+    CHECK(test_month_day_last());
+
     CHECK(test_year_month());
 
     return true;
