@@ -173,7 +173,7 @@
         CHECK(y == 0_y);
     }
 
-    // arithemtic
+    // arithmetic
     {
         CHECK(1_y + etl::chrono::years(3) == 4_y);
         CHECK(etl::chrono::years(5) + 1_y == 6_y);
@@ -289,7 +289,7 @@
         CHECK(wd == etl::chrono::weekday(0));
     }
 
-    // arithemtic
+    // arithmetic
     {
         auto wd = etl::chrono::weekday{};
 
@@ -435,7 +435,7 @@
         CHECK(ym.month() == etl::chrono::month(13));
     }
 
-    // inc/dec
+    // arithmetic
     {
         auto ym = etl::chrono::year_month{};
         CHECK(ym.year() == etl::chrono::year(0));
@@ -456,6 +456,14 @@
         ym -= etl::chrono::months(4);
         CHECK(ym.year() == etl::chrono::year(0));
         CHECK(ym.month() == etl::chrono::month(1));
+
+        auto const ymp1 = ym + etl::chrono::years(1);
+        CHECK(ymp1.year() == etl::chrono::year(1));
+        CHECK(ymp1.month() == etl::chrono::month(1));
+
+        auto const ymp2 = etl::chrono::years(2) + ym;
+        CHECK(ymp2.year() == etl::chrono::year(2));
+        CHECK(ymp2.month() == etl::chrono::month(1));
     }
 
     // compare

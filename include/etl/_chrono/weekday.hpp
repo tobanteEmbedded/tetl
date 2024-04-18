@@ -65,7 +65,7 @@ struct weekday {
     [[nodiscard]] constexpr auto operator[](etl::uint32_t index) const noexcept -> weekday_indexed;
 
     // Defined in weekday_last
-    [[nodiscard]] constexpr auto operator[](etl::chrono::last_spec) const noexcept -> weekday_last;
+    [[nodiscard]] constexpr auto operator[](etl::chrono::last_spec /*tag*/) const noexcept -> weekday_last;
 
     friend constexpr auto operator==(weekday const& lhs, weekday const& rhs) noexcept -> bool
     {
