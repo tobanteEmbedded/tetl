@@ -135,23 +135,63 @@
 
 [[nodiscard]] constexpr auto test_year() -> bool
 {
+    using namespace etl::chrono_literals;
+
     // traits
     CHECK(etl::is_trivially_default_constructible_v<etl::chrono::year>);
+    CHECK(etl::is_nothrow_constructible_v<etl::chrono::year, etl::int32_t>);
+    CHECK(static_cast<etl::int32_t>(etl::chrono::year::min()) == -32767);
+    CHECK(static_cast<etl::int32_t>(etl::chrono::year::max()) == +32767);
 
     // construct
-    auto y = etl::chrono::year{};
-    CHECK(y.ok());
-    CHECK(static_cast<etl::int32_t>(y) == 0U);
+    {
+        auto y = etl::chrono::year{};
+        CHECK(y.ok());
+        CHECK(static_cast<etl::int32_t>(y) == 0U);
+    }
+
+    {
+        auto y = etl::chrono::year{2024};
+        CHECK(y.ok());
+        CHECK(static_cast<etl::int32_t>(y) == 2024U);
+    }
 
     // inc/dec
-    ++y;
-    CHECK(y == etl::chrono::year(1));
+    {
+        auto y = etl::chrono::year{};
 
-    ++y;
-    CHECK(y == etl::chrono::year(2));
+        ++y;
+        CHECK(y == 1_y);
 
-    --y;
-    CHECK(y == etl::chrono::year(1));
+        y++;
+        CHECK(y == 2_y);
+
+        --y;
+        CHECK(y == 1_y);
+
+        y--;
+        CHECK(y == 0_y);
+    }
+
+    // arithemtic
+    {
+        CHECK(1_y + etl::chrono::years(3) == 4_y);
+        CHECK(etl::chrono::years(5) + 1_y == 6_y);
+
+        auto y = etl::chrono::year{2024};
+
+        y += etl::chrono::years{1};
+        CHECK(y == 2025_y);
+
+        y -= etl::chrono::years{25};
+        CHECK(y == 2000_y);
+    }
+
+    CHECK(2024_y - etl::chrono::years(24) == 2000_y);
+    CHECK(2024_y - 2000_y == etl::chrono::years(24));
+
+    CHECK(+etl::chrono::year(1) == 1_y);
+    CHECK(-etl::chrono::year(1) == -1_y);
 
     // is_leap
     CHECK(etl::chrono::year(2000).is_leap());
@@ -160,24 +200,24 @@
     CHECK_FALSE(etl::chrono::year(1900).is_leap());
 
     // compare
-    CHECK(etl::chrono::year(1) == etl::chrono::year(1));
-    CHECK(etl::chrono::year(1) != etl::chrono::year(2));
-    CHECK(etl::chrono::year(2) != etl::chrono::year(1));
+    CHECK(1_y == 1_y);
+    CHECK(1_y != 2_y);
+    CHECK(2_y != 1_y);
 
-    CHECK(etl::chrono::year(1) < etl::chrono::year(2));
-    CHECK_FALSE(etl::chrono::year(2) < etl::chrono::year(1));
+    CHECK(1_y < 2_y);
+    CHECK_FALSE(2_y < 1_y);
 
-    CHECK(etl::chrono::year(1) <= etl::chrono::year(1));
-    CHECK(etl::chrono::year(1) <= etl::chrono::year(2));
-    CHECK_FALSE(etl::chrono::year(2) <= etl::chrono::year(1));
+    CHECK(1_y <= 1_y);
+    CHECK(1_y <= 2_y);
+    CHECK_FALSE(2_y <= 1_y);
 
-    CHECK(etl::chrono::year(2) > etl::chrono::year(1));
-    CHECK_FALSE(etl::chrono::year(1) > etl::chrono::year(1));
-    CHECK_FALSE(etl::chrono::year(1) > etl::chrono::year(2));
+    CHECK(2_y > 1_y);
+    CHECK_FALSE(1_y > 1_y);
+    CHECK_FALSE(1_y > 2_y);
 
-    CHECK(etl::chrono::year(2) >= etl::chrono::year(1));
-    CHECK(etl::chrono::year(1) >= etl::chrono::year(1));
-    CHECK_FALSE(etl::chrono::year(1) >= etl::chrono::year(2));
+    CHECK(2_y >= 1_y);
+    CHECK(1_y >= 1_y);
+    CHECK_FALSE(1_y >= 2_y);
 
     return true;
 }

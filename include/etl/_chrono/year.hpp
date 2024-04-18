@@ -109,4 +109,23 @@ private:
 
 } // namespace etl::chrono
 
+// NOLINTNEXTLINE(modernize-concat-nested-namespaces)
+namespace etl {
+inline namespace literals {
+inline namespace chrono_literals {
+
+/// Forms a etl::chrono::year literal representing a year in the proleptic Gregorian calendar.
+[[nodiscard]] constexpr auto operator""_y(unsigned long long y) noexcept -> etl::chrono::year
+{
+    return etl::chrono::year{static_cast<int>(y)};
+}
+
+} // namespace chrono_literals
+} // namespace literals
+} // namespace etl
+
+namespace etl::chrono {
+using namespace etl::literals::chrono_literals;
+} // namespace etl::chrono
+
 #endif // TETL_CHRONO_YEAR_HPP
