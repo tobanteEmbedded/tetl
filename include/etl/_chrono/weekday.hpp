@@ -60,6 +60,11 @@ struct weekday {
     // [[nodiscard]] constexpr auto operator[](uint32_t index) const noexcept -> weekday_indexed { }
     // [[nodiscard]] constexpr auto operator[](last_spec) const noexcept -> weekday_last { }
 
+    friend constexpr auto operator==(weekday const& lhs, weekday const& rhs) noexcept -> bool
+    {
+        return lhs.c_encoding() == rhs.c_encoding();
+    }
+
 private:
     [[nodiscard]] static constexpr auto weekday_from_days(int tp) noexcept -> uint32_t
     {
@@ -68,11 +73,6 @@ private:
 
     etl::uint8_t _wd;
 };
-
-[[nodiscard]] constexpr auto operator==(weekday const& lhs, weekday const& rhs) noexcept -> bool
-{
-    return lhs.c_encoding() == rhs.c_encoding();
-}
 
 [[nodiscard]] constexpr auto operator+(weekday const& lhs, days const& rhs) noexcept -> weekday
 {

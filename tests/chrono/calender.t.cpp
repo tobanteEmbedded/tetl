@@ -222,12 +222,49 @@
     return true;
 }
 
+[[nodiscard]] constexpr auto test_weekday() -> bool
+{
+    using namespace etl::chrono_literals;
+
+    // traits
+    CHECK(etl::is_trivially_default_constructible_v<etl::chrono::weekday>);
+    CHECK(etl::is_nothrow_constructible_v<etl::chrono::weekday, unsigned>);
+
+    // construct
+    {
+        auto wd = etl::chrono::weekday{};
+        CHECK(wd.ok());
+        CHECK(wd.c_encoding() == 0U);
+        CHECK(wd.iso_encoding() == 7U);
+    }
+
+    {
+        auto wd = etl::chrono::weekday{6};
+        CHECK(wd.ok());
+        CHECK(wd.c_encoding() == 6U);
+        CHECK(wd.iso_encoding() == 6U);
+    }
+
+    {
+        auto wd = etl::chrono::weekday{8};
+        CHECK_FALSE(wd.ok());
+    }
+
+    // compare
+    CHECK(etl::chrono::weekday(1) == etl::chrono::weekday(1));
+    CHECK(etl::chrono::weekday(1) != etl::chrono::weekday(2));
+    CHECK(etl::chrono::weekday(2) != etl::chrono::weekday(1));
+
+    return true;
+}
+
 [[nodiscard]] constexpr auto test_all() -> bool
 {
     CHECK(test_duration());
     CHECK(test_day());
     CHECK(test_month());
     CHECK(test_year());
+    CHECK(test_weekday());
     return true;
 }
 
