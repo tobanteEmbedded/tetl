@@ -371,6 +371,37 @@
     return true;
 }
 
+[[nodiscard]] constexpr auto test_weekday_last() -> bool
+{
+    // traits
+    CHECK(etl::is_nothrow_constructible_v<etl::chrono::weekday_last, etl::chrono::weekday>);
+
+    {
+        auto const wdl = etl::chrono::weekday_last{etl::chrono::Monday};
+        CHECK_NOEXCEPT(wdl.ok());
+        CHECK_NOEXCEPT(wdl.weekday());
+        CHECK_NOEXCEPT(wdl == etl::chrono::weekday_last{etl::chrono::Monday});
+    }
+
+    // construct
+    {
+        auto const wdl = etl::chrono::weekday_last{etl::chrono::Monday};
+        CHECK(wdl.ok());
+        CHECK(wdl.weekday() == etl::chrono::Monday);
+    }
+
+    // compare
+    {
+        auto const wdl = etl::chrono::weekday_last{etl::chrono::Monday};
+        CHECK(wdl == etl::chrono::weekday_last{etl::chrono::Monday});
+        CHECK(wdl != etl::chrono::weekday_last{etl::chrono::Tuesday});
+        CHECK(wdl == etl::chrono::Monday[etl::chrono::last]);
+        CHECK(wdl != etl::chrono::Tuesday[etl::chrono::last]);
+    }
+
+    return true;
+}
+
 [[nodiscard]] constexpr auto test_all() -> bool
 {
     CHECK(test_duration());
@@ -379,6 +410,7 @@
     CHECK(test_year());
     CHECK(test_weekday());
     CHECK(test_weekday_indexed());
+    CHECK(test_weekday_last());
     return true;
 }
 

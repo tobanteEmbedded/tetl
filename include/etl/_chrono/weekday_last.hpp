@@ -18,6 +18,11 @@ struct weekday_last {
 
     [[nodiscard]] constexpr auto ok() const noexcept -> bool { return _wd.ok(); }
 
+    friend constexpr auto operator==(weekday_last lhs, weekday_last rhs) noexcept -> bool
+    {
+        return lhs.weekday() == rhs.weekday();
+    }
+
 private:
     chrono::weekday _wd;
 };
