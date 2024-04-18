@@ -64,39 +64,34 @@ struct year {
 
     [[nodiscard]] static constexpr auto max() noexcept -> year { return year{32767}; }
 
+    friend constexpr auto operator==(year lhs, year rhs) noexcept -> bool
+    {
+        return static_cast<int32_t>(lhs) == static_cast<int32_t>(rhs);
+    }
+
+    friend constexpr auto operator<(year lhs, year rhs) noexcept -> bool
+    {
+        return static_cast<int32_t>(lhs) < static_cast<int32_t>(rhs);
+    }
+
+    friend constexpr auto operator<=(year lhs, year rhs) noexcept -> bool
+    {
+        return static_cast<int32_t>(lhs) <= static_cast<int32_t>(rhs);
+    }
+
+    friend constexpr auto operator>(year lhs, year rhs) noexcept -> bool
+    {
+        return static_cast<int32_t>(lhs) > static_cast<int32_t>(rhs);
+    }
+
+    friend constexpr auto operator>=(year lhs, year rhs) noexcept -> bool
+    {
+        return static_cast<int32_t>(lhs) >= static_cast<int32_t>(rhs);
+    }
+
 private:
-    int16_t _count{};
+    int16_t _count;
 };
-
-[[nodiscard]] constexpr auto operator==(year lhs, year rhs) noexcept -> bool
-{
-    return static_cast<int32_t>(lhs) == static_cast<int32_t>(rhs);
-}
-
-[[nodiscard]] constexpr auto operator!=(year lhs, year rhs) noexcept -> bool
-{
-    return static_cast<int32_t>(lhs) != static_cast<int32_t>(rhs);
-}
-
-[[nodiscard]] constexpr auto operator<(year lhs, year rhs) noexcept -> bool
-{
-    return static_cast<int32_t>(lhs) < static_cast<int32_t>(rhs);
-}
-
-[[nodiscard]] constexpr auto operator<=(year lhs, year rhs) noexcept -> bool
-{
-    return static_cast<int32_t>(lhs) <= static_cast<int32_t>(rhs);
-}
-
-[[nodiscard]] constexpr auto operator>(year lhs, year rhs) noexcept -> bool
-{
-    return static_cast<int32_t>(lhs) > static_cast<int32_t>(rhs);
-}
-
-[[nodiscard]] constexpr auto operator>=(year lhs, year rhs) noexcept -> bool
-{
-    return static_cast<int32_t>(lhs) >= static_cast<int32_t>(rhs);
-}
 
 [[nodiscard]] constexpr auto operator+(year const& lhs, years const& rhs) noexcept -> year
 {

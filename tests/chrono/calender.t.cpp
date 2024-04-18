@@ -2,6 +2,8 @@
 
 #include <etl/chrono.hpp>
 
+#include <etl/type_traits.hpp>
+
 #include "testing/testing.hpp"
 
 [[nodiscard]] constexpr auto test_duration() -> bool
@@ -15,6 +17,27 @@
 
 [[nodiscard]] constexpr auto test_day() -> bool
 {
+    using namespace etl::chrono_literals;
+
+    // traits
+    CHECK(etl::is_trivially_default_constructible_v<etl::chrono::day>);
+
+    // construct
+    auto d = etl::chrono::day{};
+    CHECK_FALSE(d.ok());
+    CHECK(static_cast<etl::uint32_t>(d) == 0U);
+
+    // inc/dec
+    ++d;
+    CHECK(d == 1_d);
+
+    ++d;
+    CHECK(d == 2_d);
+
+    --d;
+    CHECK(d == 1_d);
+
+    // ok
     CHECK(etl::chrono::day(1).ok());
     CHECK(etl::chrono::day(2).ok());
     CHECK(etl::chrono::day(30).ok());
@@ -22,24 +45,50 @@
     CHECK_FALSE(etl::chrono::day(0).ok());
     CHECK_FALSE(etl::chrono::day(32).ok());
 
-    auto d = etl::chrono::day{};
-    CHECK_FALSE(d.ok());
-    CHECK(static_cast<etl::uint32_t>(d) == 0U);
+    // compare
+    CHECK(1_d == 1_d);
+    CHECK(1_d != 2_d);
+    CHECK(2_d != 1_d);
 
-    ++d;
-    CHECK(d == etl::chrono::day(1));
+    CHECK(1_d < 2_d);
+    CHECK_FALSE(2_d < 1_d);
 
-    ++d;
-    CHECK(d == etl::chrono::day(2));
+    CHECK(1_d <= 1_d);
+    CHECK(1_d <= 2_d);
+    CHECK_FALSE(2_d <= 1_d);
 
-    --d;
-    CHECK(d == etl::chrono::day(1));
+    CHECK(2_d > 1_d);
+    CHECK_FALSE(1_d > 1_d);
+    CHECK_FALSE(1_d > 2_d);
+
+    CHECK(2_d >= 1_d);
+    CHECK(1_d >= 1_d);
+    CHECK_FALSE(1_d >= 2_d);
 
     return true;
 }
 
 [[nodiscard]] constexpr auto test_month() -> bool
 {
+    // traits
+    CHECK(etl::is_trivially_default_constructible_v<etl::chrono::month>);
+
+    // construct
+    auto m = etl::chrono::month{};
+    CHECK(static_cast<etl::uint32_t>(m) == 0U);
+    CHECK_FALSE(m.ok());
+
+    // inc/dec
+    ++m;
+    CHECK(m == etl::chrono::month(1));
+
+    ++m;
+    CHECK(m == etl::chrono::month(2));
+
+    --m;
+    CHECK(m == etl::chrono::month(1));
+
+    // ok
     CHECK(etl::chrono::month(1).ok());
     CHECK(etl::chrono::month(2).ok());
     CHECK(etl::chrono::month(11).ok());
@@ -47,6 +96,27 @@
     CHECK_FALSE(etl::chrono::month(0).ok());
     CHECK_FALSE(etl::chrono::month(13).ok());
 
+    // compare
+    CHECK(etl::chrono::month(1) == etl::chrono::month(1));
+    CHECK(etl::chrono::month(1) != etl::chrono::month(2));
+    CHECK(etl::chrono::month(2) != etl::chrono::month(1));
+
+    CHECK(etl::chrono::month(1) < etl::chrono::month(2));
+    CHECK_FALSE(etl::chrono::month(2) < etl::chrono::month(1));
+
+    CHECK(etl::chrono::month(1) <= etl::chrono::month(1));
+    CHECK(etl::chrono::month(1) <= etl::chrono::month(2));
+    CHECK_FALSE(etl::chrono::month(2) <= etl::chrono::month(1));
+
+    CHECK(etl::chrono::month(2) > etl::chrono::month(1));
+    CHECK_FALSE(etl::chrono::month(1) > etl::chrono::month(1));
+    CHECK_FALSE(etl::chrono::month(1) > etl::chrono::month(2));
+
+    CHECK(etl::chrono::month(2) >= etl::chrono::month(1));
+    CHECK(etl::chrono::month(1) >= etl::chrono::month(1));
+    CHECK_FALSE(etl::chrono::month(1) >= etl::chrono::month(2));
+
+    // constants
     CHECK(etl::chrono::month(1) == etl::chrono::January);
     CHECK(etl::chrono::month(2) == etl::chrono::February);
     CHECK(etl::chrono::month(3) == etl::chrono::March);
@@ -60,33 +130,20 @@
     CHECK(etl::chrono::month(11) == etl::chrono::November);
     CHECK(etl::chrono::month(12) == etl::chrono::December);
 
-    auto m = etl::chrono::month{};
-    CHECK_FALSE(m.ok());
-    CHECK(static_cast<etl::uint32_t>(m) == 0U);
-
-    ++m;
-    CHECK(m == etl::chrono::month(1));
-
-    ++m;
-    CHECK(m == etl::chrono::month(2));
-
-    --m;
-    CHECK(m == etl::chrono::month(1));
-
     return true;
 }
 
 [[nodiscard]] constexpr auto test_year() -> bool
 {
-    CHECK(etl::chrono::year(2000).is_leap());
-    CHECK(etl::chrono::year(2004).is_leap());
-    CHECK_FALSE(etl::chrono::year(2023).is_leap());
-    CHECK_FALSE(etl::chrono::year(1900).is_leap());
+    // traits
+    CHECK(etl::is_trivially_default_constructible_v<etl::chrono::year>);
 
+    // construct
     auto y = etl::chrono::year{};
     CHECK(y.ok());
     CHECK(static_cast<etl::int32_t>(y) == 0U);
 
+    // inc/dec
     ++y;
     CHECK(y == etl::chrono::year(1));
 
@@ -95,6 +152,32 @@
 
     --y;
     CHECK(y == etl::chrono::year(1));
+
+    // is_leap
+    CHECK(etl::chrono::year(2000).is_leap());
+    CHECK(etl::chrono::year(2004).is_leap());
+    CHECK_FALSE(etl::chrono::year(2023).is_leap());
+    CHECK_FALSE(etl::chrono::year(1900).is_leap());
+
+    // compare
+    CHECK(etl::chrono::year(1) == etl::chrono::year(1));
+    CHECK(etl::chrono::year(1) != etl::chrono::year(2));
+    CHECK(etl::chrono::year(2) != etl::chrono::year(1));
+
+    CHECK(etl::chrono::year(1) < etl::chrono::year(2));
+    CHECK_FALSE(etl::chrono::year(2) < etl::chrono::year(1));
+
+    CHECK(etl::chrono::year(1) <= etl::chrono::year(1));
+    CHECK(etl::chrono::year(1) <= etl::chrono::year(2));
+    CHECK_FALSE(etl::chrono::year(2) <= etl::chrono::year(1));
+
+    CHECK(etl::chrono::year(2) > etl::chrono::year(1));
+    CHECK_FALSE(etl::chrono::year(1) > etl::chrono::year(1));
+    CHECK_FALSE(etl::chrono::year(1) > etl::chrono::year(2));
+
+    CHECK(etl::chrono::year(2) >= etl::chrono::year(1));
+    CHECK(etl::chrono::year(1) >= etl::chrono::year(1));
+    CHECK_FALSE(etl::chrono::year(1) >= etl::chrono::year(2));
 
     return true;
 }
