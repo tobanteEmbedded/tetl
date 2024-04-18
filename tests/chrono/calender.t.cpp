@@ -402,6 +402,74 @@
     return true;
 }
 
+[[nodiscard]] constexpr auto test_year_month() -> bool
+{
+    // traits
+    CHECK(etl::is_trivially_default_constructible_v<etl::chrono::year_month>);
+    CHECK(etl::is_nothrow_constructible_v<etl::chrono::year_month, etl::chrono::year, etl::chrono::month>);
+
+    {
+        auto const ym = etl::chrono::year_month{};
+        CHECK_NOEXCEPT(ym.ok());
+        CHECK_NOEXCEPT(ym.year());
+        CHECK_NOEXCEPT(ym.month());
+    }
+
+    // construct
+    {
+        auto const ym = etl::chrono::year_month{};
+        CHECK_FALSE(ym.ok());
+        CHECK(ym.year() == etl::chrono::year(0));
+        CHECK(ym.month() == etl::chrono::month(0));
+    }
+    {
+        auto const ym = etl::chrono::year_month{etl::chrono::year(1995), etl::chrono::month(5)};
+        CHECK(ym.ok());
+        CHECK(ym.year() == etl::chrono::year(1995));
+        CHECK(ym.month() == etl::chrono::month(5));
+    }
+    {
+        auto const ym = etl::chrono::year_month{etl::chrono::year(1995), etl::chrono::month(13)};
+        CHECK_FALSE(ym.ok());
+        CHECK(ym.year() == etl::chrono::year(1995));
+        CHECK(ym.month() == etl::chrono::month(13));
+    }
+
+    // inc/dec
+    {
+        auto ym = etl::chrono::year_month{};
+        CHECK(ym.year() == etl::chrono::year(0));
+        CHECK(ym.month() == etl::chrono::month(0));
+
+        ym += etl::chrono::years(1);
+        CHECK(ym.year() == etl::chrono::year(1));
+        CHECK(ym.month() == etl::chrono::month(0));
+
+        ym += etl::chrono::months(5);
+        CHECK(ym.year() == etl::chrono::year(1));
+        CHECK(ym.month() == etl::chrono::month(5));
+
+        ym -= etl::chrono::years(1);
+        CHECK(ym.year() == etl::chrono::year(0));
+        CHECK(ym.month() == etl::chrono::month(5));
+
+        ym -= etl::chrono::months(4);
+        CHECK(ym.year() == etl::chrono::year(0));
+        CHECK(ym.month() == etl::chrono::month(1));
+    }
+
+    // compare
+    {
+        auto const birthday  = etl::chrono::year_month{etl::chrono::year(1995), etl::chrono::month(5)};
+        auto const christmas = etl::chrono::year_month{etl::chrono::year(1995), etl::chrono::month(12)};
+        CHECK(birthday == birthday);
+        CHECK(christmas != birthday);
+        CHECK(birthday != christmas);
+    }
+
+    return true;
+}
+
 [[nodiscard]] constexpr auto test_all() -> bool
 {
     CHECK(test_duration());
@@ -411,6 +479,7 @@
     CHECK(test_weekday());
     CHECK(test_weekday_indexed());
     CHECK(test_weekday_last());
+    CHECK(test_year_month());
     return true;
 }
 
