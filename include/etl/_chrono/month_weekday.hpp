@@ -22,10 +22,35 @@ struct month_weekday {
 
     [[nodiscard]] constexpr auto ok() const noexcept -> bool { return month().ok() and weekday_indexed().ok(); }
 
+    friend constexpr auto operator==(month_weekday const& lhs, month_weekday const& rhs) noexcept -> bool
+    {
+        return lhs.month() == rhs.month() and lhs.weekday_indexed() == rhs.weekday_indexed();
+    }
+
 private:
     chrono::month _m;
     chrono::weekday_indexed _wdi;
 };
+
+[[nodiscard]] constexpr auto operator/(month const& m, weekday_indexed const& wdi) noexcept -> month_weekday
+{
+    return {m, wdi};
+}
+
+[[nodiscard]] constexpr auto operator/(int m, weekday_indexed const& wdi) noexcept -> month_weekday
+{
+    return {month(static_cast<etl::uint32_t>(m)), wdi};
+}
+
+[[nodiscard]] constexpr auto operator/(weekday_indexed const& wdi, month const& m) noexcept -> month_weekday
+{
+    return {m, wdi};
+}
+
+[[nodiscard]] constexpr auto operator/(weekday_indexed const& wdi, int m) noexcept -> month_weekday
+{
+    return {month(static_cast<etl::uint32_t>(m)), wdi};
+}
 
 } // namespace etl::chrono
 
