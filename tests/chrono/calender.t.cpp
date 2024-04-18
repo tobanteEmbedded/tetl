@@ -229,6 +229,16 @@
     // traits
     CHECK(etl::is_trivially_default_constructible_v<etl::chrono::weekday>);
     CHECK(etl::is_nothrow_constructible_v<etl::chrono::weekday, unsigned>);
+    CHECK(etl::is_nothrow_constructible_v<etl::chrono::weekday, etl::chrono::sys_days>);
+    CHECK(etl::is_nothrow_constructible_v<etl::chrono::weekday, etl::chrono::local_days>);
+
+    {
+        auto const wd = etl::chrono::weekday{};
+        CHECK_NOEXCEPT(wd.ok());
+        CHECK_NOEXCEPT(wd.c_encoding());
+        CHECK_NOEXCEPT(wd.iso_encoding());
+        CHECK_NOEXCEPT(wd == etl::chrono::weekday{1});
+    }
 
     // construct
     {
@@ -250,10 +260,66 @@
         CHECK_FALSE(wd.ok());
     }
 
+    {
+        auto const wd = etl::chrono::weekday{etl::chrono::sys_days(etl::chrono::days(-4))};
+        CHECK(wd.c_encoding() == 0U);
+        CHECK(wd.iso_encoding() == 7U);
+    }
+
+    {
+        auto const wd = etl::chrono::weekday{etl::chrono::local_days(etl::chrono::days(-4))};
+        CHECK(wd.c_encoding() == 0U);
+        CHECK(wd.iso_encoding() == 7U);
+    }
+
+    // inc/dec
+    {
+        auto wd = etl::chrono::weekday{};
+
+        ++wd;
+        CHECK(wd == etl::chrono::weekday(1));
+
+        wd++;
+        CHECK(wd == etl::chrono::weekday(2));
+
+        --wd;
+        CHECK(wd == etl::chrono::weekday(1));
+
+        wd--;
+        CHECK(wd == etl::chrono::weekday(0));
+    }
+
+    // arithemtic
+    {
+        auto wd = etl::chrono::weekday{};
+
+        wd += etl::chrono::days(1);
+        CHECK(wd.c_encoding() == 1);
+
+        wd += etl::chrono::days(2);
+        CHECK(wd.c_encoding() == 3);
+
+        wd -= etl::chrono::days(1);
+        CHECK(wd.c_encoding() == 2);
+
+        CHECK((etl::chrono::Monday - etl::chrono::days(1)) == etl::chrono::Sunday);
+        CHECK((etl::chrono::Monday + etl::chrono::days(1)) == etl::chrono::Tuesday);
+        CHECK((etl::chrono::days(1) + etl::chrono::Monday) == etl::chrono::Tuesday);
+    }
+
     // compare
     CHECK(etl::chrono::weekday(1) == etl::chrono::weekday(1));
     CHECK(etl::chrono::weekday(1) != etl::chrono::weekday(2));
     CHECK(etl::chrono::weekday(2) != etl::chrono::weekday(1));
+
+    CHECK(etl::chrono::Sunday == etl::chrono::weekday(0));
+    CHECK(etl::chrono::Monday == etl::chrono::weekday(1));
+    CHECK(etl::chrono::Tuesday == etl::chrono::weekday(2));
+    CHECK(etl::chrono::Wednesday == etl::chrono::weekday(3));
+    CHECK(etl::chrono::Thursday == etl::chrono::weekday(4));
+    CHECK(etl::chrono::Friday == etl::chrono::weekday(5));
+    CHECK(etl::chrono::Saturday == etl::chrono::weekday(6));
+    CHECK(etl::chrono::Sunday == etl::chrono::weekday(7));
 
     return true;
 }
