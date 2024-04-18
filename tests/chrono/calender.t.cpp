@@ -441,6 +441,7 @@
         CHECK(etl::chrono::month_day{etl::chrono::month(2), etl::chrono::day(28)}.ok());
         CHECK(etl::chrono::month_day{etl::chrono::month(12), etl::chrono::day(15)}.ok());
 
+        CHECK_FALSE(etl::chrono::month_day{etl::chrono::month(1), etl::chrono::day(0)}.ok());
         CHECK_FALSE(etl::chrono::month_day{etl::chrono::month(1), etl::chrono::day(32)}.ok());
         CHECK_FALSE(etl::chrono::month_day{etl::chrono::month(2), etl::chrono::day(30)}.ok());
         CHECK_FALSE(etl::chrono::month_day{etl::chrono::month(13), etl::chrono::day(15)}.ok());
