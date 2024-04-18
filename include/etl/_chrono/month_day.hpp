@@ -32,7 +32,12 @@ struct month_day {
         if (static_cast<uint32_t>(day()) < 1) {
             return false;
         }
-        return static_cast<uint32_t>(day()) <= maxDaysInMonth[uint32_t{month()}];
+        return static_cast<uint32_t>(day()) <= maxDaysInMonth[uint32_t{month()} - 1];
+    }
+
+    friend constexpr auto operator==(month_day const& lhs, month_day const& rhs) noexcept -> bool
+    {
+        return lhs.month() == rhs.month() and lhs.day() == rhs.day();
     }
 
 private:

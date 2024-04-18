@@ -402,6 +402,62 @@
     return true;
 }
 
+[[nodiscard]] constexpr auto test_month_day() -> bool
+{
+    // traits
+    CHECK(etl::is_trivially_default_constructible_v<etl::chrono::month_day>);
+    CHECK(etl::is_nothrow_constructible_v<etl::chrono::month_day, etl::chrono::month, etl::chrono::day>);
+
+    {
+        auto const md = etl::chrono::month_day{};
+        CHECK_NOEXCEPT(md.month());
+        CHECK_NOEXCEPT(md.day());
+        CHECK_NOEXCEPT(md.ok());
+    }
+
+    // construct
+    {
+        auto const md = etl::chrono::month_day{};
+        CHECK_FALSE(md.ok());
+        CHECK(md.month() == etl::chrono::month(0));
+        CHECK(md.day() == etl::chrono::day(0));
+    }
+    {
+        auto const md = etl::chrono::month_day{etl::chrono::month(5), etl::chrono::day(15)};
+        CHECK(md.ok());
+        CHECK(md.day() == etl::chrono::day(15));
+        CHECK(md.month() == etl::chrono::month(5));
+    }
+    {
+        auto const md = etl::chrono::month_day{etl::chrono::month(13), etl::chrono::day(15)};
+        CHECK_FALSE(md.ok());
+        CHECK(md.day() == etl::chrono::day(15));
+        CHECK(md.month() == etl::chrono::month(13));
+    }
+
+    // ok
+    {
+        CHECK(etl::chrono::month_day{etl::chrono::month(1), etl::chrono::day(31)}.ok());
+        CHECK(etl::chrono::month_day{etl::chrono::month(2), etl::chrono::day(28)}.ok());
+        CHECK(etl::chrono::month_day{etl::chrono::month(12), etl::chrono::day(15)}.ok());
+
+        CHECK_FALSE(etl::chrono::month_day{etl::chrono::month(1), etl::chrono::day(32)}.ok());
+        CHECK_FALSE(etl::chrono::month_day{etl::chrono::month(2), etl::chrono::day(30)}.ok());
+        CHECK_FALSE(etl::chrono::month_day{etl::chrono::month(13), etl::chrono::day(15)}.ok());
+    }
+
+    // compare
+    {
+        auto const birthday  = etl::chrono::month_day{etl::chrono::month(5), etl::chrono::day(15)};
+        auto const christmas = etl::chrono::month_day{etl::chrono::month(12), etl::chrono::day(24)};
+        CHECK(birthday == birthday);
+        CHECK(christmas != birthday);
+        CHECK(birthday != christmas);
+    }
+
+    return true;
+}
+
 [[nodiscard]] constexpr auto test_year_month() -> bool
 {
     // traits
@@ -481,13 +537,18 @@
 [[nodiscard]] constexpr auto test_all() -> bool
 {
     CHECK(test_duration());
+
     CHECK(test_day());
     CHECK(test_month());
     CHECK(test_year());
+
     CHECK(test_weekday());
     CHECK(test_weekday_indexed());
     CHECK(test_weekday_last());
+
+    CHECK(test_month_day());
     CHECK(test_year_month());
+
     return true;
 }
 
