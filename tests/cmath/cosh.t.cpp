@@ -25,10 +25,6 @@ auto main() -> int
 {
     STATIC_CHECK(test<float>());
     STATIC_CHECK(test<double>());
-
-    // TODO
-    // static_assert(test<long double>());
-    // CHECK(test<long double>());
-    // CHECK(etl::coshl(0) == 1.0L);
+    STATIC_CHECK(test<long double>());
     return 0;
 }

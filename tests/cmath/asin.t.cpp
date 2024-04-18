@@ -26,9 +26,6 @@ auto main() -> int
 {
     STATIC_CHECK(test<float>());
     STATIC_CHECK(test<double>());
-
-    // TODO: Fix for long double
-    // STATIC_CHECK(test<long double>());
-
+    STATIC_CHECK(test<long double>());
     return 0;
 }

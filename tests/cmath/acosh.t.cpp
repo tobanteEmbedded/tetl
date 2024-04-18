@@ -12,14 +12,10 @@ constexpr auto test() -> bool
     CHECK(etl::acoshl(1) == 0.0L);
     CHECK(etl::acosh(T(1)) == T(0));
 
+    CHECK(etl::isnan(etl::acosh(T(0))));
+    CHECK(etl::isnan(etl::acosh(T(0.5))));
     CHECK_APPROX(etl::acosh(T(2)), T(1.31696));
     CHECK_APPROX(etl::acosh(T(3)), T(1.76275));
-
-    // TODO: Fix for long double
-    if constexpr (not etl::is_same_v<T, long double>) {
-        CHECK(etl::isnan(etl::acosh(T(0))));
-        CHECK(etl::isnan(etl::acosh(T(0.5))));
-    }
 
     return true;
 }

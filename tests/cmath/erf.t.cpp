@@ -8,15 +8,11 @@
 template <typename T>
 constexpr auto test() -> bool
 {
+    CHECK_APPROX(etl::erf(T(0)), T(0));
     CHECK_APPROX(etl::erf(T(0.5)), T(0.5204998778));
     CHECK_APPROX(etl::erf(T(1)), T(0.8427007929));
     CHECK_APPROX(etl::erf(T(2)), T(0.995322265));
     CHECK_APPROX(etl::erf(T(4)), T(0.9999999846));
-
-    // TODO: Fix for long double
-    if constexpr (not etl::is_same_v<T, long double>) {
-        CHECK_APPROX(etl::erf(T(0)), T(0));
-    }
 
     return true;
 }
