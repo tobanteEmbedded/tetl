@@ -111,6 +111,15 @@ private:
     etl::uint8_t _count;
 };
 
+[[nodiscard]] constexpr auto operator+(month const& m, months const& ms) noexcept -> month { return month{m} += ms; }
+[[nodiscard]] constexpr auto operator+(months const& ms, month const& m) noexcept -> month { return month{m} += ms; }
+[[nodiscard]] constexpr auto operator-(month const& m, months const& ms) noexcept -> month { return month{m} -= ms; }
+[[nodiscard]] constexpr auto operator-(month const& m1, month const& m2) noexcept -> months
+{
+    auto const delta = static_cast<unsigned>(m1) - static_cast<unsigned>(m2);
+    return months{static_cast<etl::int_least32_t>(delta <= 11 ? delta : delta + 12)};
+}
+
 inline constexpr auto January   = etl::chrono::month{1};
 inline constexpr auto February  = etl::chrono::month{2};
 inline constexpr auto March     = etl::chrono::month{3};

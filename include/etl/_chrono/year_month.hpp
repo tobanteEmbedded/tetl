@@ -17,35 +17,14 @@ struct year_month {
     {
     }
 
+    [[nodiscard]] constexpr auto ok() const noexcept -> bool { return year().ok() and month().ok(); }
     [[nodiscard]] constexpr auto year() const noexcept -> chrono::year { return _y; }
-
     [[nodiscard]] constexpr auto month() const noexcept -> chrono::month { return _m; }
 
-    [[nodiscard]] constexpr auto ok() const noexcept -> bool { return year().ok() and month().ok(); }
-
-    constexpr auto operator+=(months const& dm) noexcept -> year_month&
-    {
-        _m += dm;
-        return *this;
-    }
-
-    constexpr auto operator-=(months const& dm) noexcept -> year_month&
-    {
-        _m -= dm;
-        return *this;
-    }
-
-    constexpr auto operator+=(years const& dy) noexcept -> year_month&
-    {
-        _y += dy;
-        return *this;
-    }
-
-    constexpr auto operator-=(years const& dy) noexcept -> year_month&
-    {
-        _y -= dy;
-        return *this;
-    }
+    constexpr auto operator+=(months const& dm) noexcept -> year_month&;
+    constexpr auto operator-=(months const& dm) noexcept -> year_month&;
+    constexpr auto operator+=(years const& dy) noexcept -> year_month&;
+    constexpr auto operator-=(years const& dy) noexcept -> year_month&;
 
     friend constexpr auto operator==(year_month const& lhs, year_month const& rhs) noexcept -> bool
     {
@@ -72,25 +51,25 @@ operator+(chrono::years const& dy, chrono::year_month const& ym) noexcept -> chr
 [[nodiscard]] constexpr auto
 operator+(chrono::year_month const& ym, chrono::months const& dm) noexcept -> chrono::year_month
 {
-    return chrono::year_month{ym} += dm;
+    return {ym.year(), ym.month() + dm};
 }
 
 [[nodiscard]] constexpr auto
 operator+(chrono::months const& dm, chrono::year_month const& ym) noexcept -> chrono::year_month
 {
-    return chrono::year_month{ym} += dm;
+    return {ym.year(), ym.month() + dm};
 }
 
 [[nodiscard]] constexpr auto
 operator-(chrono::year_month const& ym, chrono::years const& dy) noexcept -> chrono::year_month
 {
-    return chrono::year_month{ym} -= dy;
+    return {ym.year() - dy, ym.month()};
 }
 
 [[nodiscard]] constexpr auto
 operator-(chrono::year_month const& ym, chrono::months const& dm) noexcept -> chrono::year_month
 {
-    return chrono::year_month{ym} -= dm;
+    return {ym.year(), ym.month() - dm};
 }
 
 // [[nodiscard]] constexpr auto operator-(chrono::year_month const& ym1, chrono::year_month const&
@@ -98,6 +77,30 @@ operator-(chrono::year_month const& ym, chrono::months const& dm) noexcept -> ch
 //     -> chrono::months
 // {
 // }
+
+constexpr auto year_month::operator+=(months const& dm) noexcept -> year_month&
+{
+    *this = *this + dm;
+    return *this;
+}
+
+constexpr auto year_month::operator-=(months const& dm) noexcept -> year_month&
+{
+    *this = *this - dm;
+    return *this;
+}
+
+constexpr auto year_month::operator+=(years const& dy) noexcept -> year_month&
+{
+    *this = *this + dy;
+    return *this;
+}
+
+constexpr auto year_month::operator-=(years const& dy) noexcept -> year_month&
+{
+    *this = *this - dy;
+    return *this;
+}
 
 [[nodiscard]] constexpr auto operator/(year const& y, month const& m) noexcept -> year_month
 {
