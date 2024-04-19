@@ -547,6 +547,64 @@ namespace chrono = etl::chrono;
     return true;
 }
 
+[[nodiscard]] constexpr auto test_month_weekday_last() -> bool
+{
+    // traits
+    CHECK(etl::is_nothrow_constructible_v<chrono::month_weekday_last, chrono::month, chrono::weekday_last>);
+
+    {
+        auto const mwdl = chrono::month_weekday_last{chrono::January, chrono::Sunday[chrono::last]};
+        CHECK_NOEXCEPT(mwdl.weekday_last());
+        CHECK_NOEXCEPT(mwdl.month());
+        CHECK_NOEXCEPT(mwdl.ok());
+    }
+
+    // construct
+    {
+        auto const mwdl = chrono::month_weekday_last{chrono::January, chrono::Sunday[chrono::last]};
+        CHECK(mwdl.ok());
+        CHECK(mwdl.month() == chrono::January);
+        CHECK(mwdl.weekday_last() == chrono::Sunday[chrono::last]);
+    }
+
+    {
+        auto const mwdl = chrono::May / chrono::Monday[chrono::last];
+        CHECK(mwdl.ok());
+        CHECK(mwdl.month() == chrono::May);
+        CHECK(mwdl.weekday_last() == chrono::Monday[chrono::last]);
+    }
+
+    {
+        auto const mwdl = chrono::Friday[chrono::last] / chrono::April;
+        CHECK(mwdl.ok());
+        CHECK(mwdl.month() == chrono::April);
+        CHECK(mwdl.weekday_last() == chrono::Friday[chrono::last]);
+    }
+
+    {
+        auto const mwdl = 9 / chrono::Monday[chrono::last];
+        CHECK(mwdl.ok());
+        CHECK(mwdl.month() == chrono::September);
+        CHECK(mwdl.weekday_last() == chrono::Monday[chrono::last]);
+    }
+
+    {
+        auto const mwdl = chrono::Friday[chrono::last] / 3;
+        CHECK(mwdl.ok());
+        CHECK(mwdl.month() == chrono::March);
+        CHECK(mwdl.weekday_last() == chrono::Friday[chrono::last]);
+    }
+
+    // compare
+    {
+        CHECK((chrono::Friday[chrono::last] / 3) == (chrono::Friday[chrono::last] / 3));
+        CHECK((chrono::Friday[chrono::last] / 4) != (chrono::Friday[chrono::last] / 3));
+        CHECK((chrono::Sunday[chrono::last] / 3) != (chrono::Friday[chrono::last] / 3));
+    }
+
+    return true;
+}
+
 [[nodiscard]] constexpr auto test_year_month() -> bool
 {
     // traits
@@ -638,6 +696,7 @@ namespace chrono = etl::chrono;
     CHECK(test_month_day());
     CHECK(test_month_day_last());
     CHECK(test_month_weekday());
+    CHECK(test_month_weekday_last());
 
     CHECK(test_year_month());
 

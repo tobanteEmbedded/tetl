@@ -16,16 +16,40 @@ struct month_weekday_last {
     {
     }
 
-    [[nodiscard]] constexpr auto month() const noexcept -> chrono::month { return _m; }
+    [[nodiscard]] constexpr auto ok() const noexcept -> bool { return month().ok() and weekday_last().ok(); }
 
+    [[nodiscard]] constexpr auto month() const noexcept -> chrono::month { return _m; }
     [[nodiscard]] constexpr auto weekday_last() const noexcept -> chrono::weekday_last { return _wdl; }
 
-    [[nodiscard]] constexpr auto ok() const noexcept -> bool { return month().ok() and weekday_last().ok(); }
+    friend constexpr auto operator==(month_weekday_last const& lhs, month_weekday_last const& rhs) noexcept -> bool
+    {
+        return lhs.month() == rhs.month() and lhs.weekday_last() == rhs.weekday_last();
+    }
 
 private:
     chrono::month _m;
     chrono::weekday_last _wdl;
 };
+
+[[nodiscard]] constexpr auto operator/(month const& m, weekday_last const& wdl) noexcept -> month_weekday_last
+{
+    return {m, wdl};
+}
+
+[[nodiscard]] constexpr auto operator/(int m, weekday_last const& wdl) noexcept -> month_weekday_last
+{
+    return {month(static_cast<unsigned>(m)), wdl};
+}
+
+[[nodiscard]] constexpr auto operator/(weekday_last const& wdl, month const& m) noexcept -> month_weekday_last
+{
+    return {m, wdl};
+}
+
+[[nodiscard]] constexpr auto operator/(weekday_last const& wdl, int m) noexcept -> month_weekday_last
+{
+    return {month(static_cast<unsigned>(m)), wdl};
+}
 
 } // namespace etl::chrono
 
