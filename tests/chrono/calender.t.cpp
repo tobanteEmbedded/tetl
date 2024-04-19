@@ -734,13 +734,26 @@ namespace chrono = etl::chrono;
         CHECK(static_cast<chrono::sys_days>(ymd) == chrono::sys_days(chrono::days(0)));
     }
 
-    // // arithmetic
+    // arithmetic
+    {
+        auto const epoch     = chrono::year_month_day{chrono::sys_days(chrono::days(0))};
+        auto const nextMonth = epoch + chrono::months(1);
+        CHECK(nextMonth.year() == 1970_y);
+        CHECK(nextMonth.month() == chrono::month(2));
+        CHECK(nextMonth.day() == 1_d);
+
+        auto const afterNextMonth = chrono::months(2) + epoch;
+        CHECK(afterNextMonth.year() == 1970_y);
+        CHECK(afterNextMonth.month() == chrono::month(3));
+        CHECK(afterNextMonth.day() == 1_d);
+    }
+
     // {
     //     auto const epoch     = chrono::year_month_day{chrono::sys_days(chrono::days(0))};
-    //     auto const nextMonth = epoch + chrono::months(1);
-    //     CHECK(nextMonth.year() == 1970_y);
-    //     CHECK(nextMonth.month() == chrono::month(2));
-    //     CHECK(nextMonth.day() == 1_d);
+    //     auto const prevMonth = epoch - chrono::months(1);
+    //     CHECK(prevMonth.year() == 1969_y);
+    //     CHECK(prevMonth.month() == chrono::month(12));
+    //     CHECK(prevMonth.day() == 1_d);
     // }
 
     return true;
