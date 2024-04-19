@@ -608,11 +608,11 @@ namespace chrono = etl::chrono;
 [[nodiscard]] constexpr auto test_year_month() -> bool
 {
     // traits
-    CHECK(etl::is_trivially_default_constructible_v<etl::chrono::year_month>);
-    CHECK(etl::is_nothrow_constructible_v<etl::chrono::year_month, etl::chrono::year, etl::chrono::month>);
+    CHECK(etl::is_trivially_default_constructible_v<chrono::year_month>);
+    CHECK(etl::is_nothrow_constructible_v<chrono::year_month, chrono::year, chrono::month>);
 
     {
-        auto const ym = etl::chrono::year_month{};
+        auto const ym = chrono::year_month{};
         CHECK_NOEXCEPT(ym.ok());
         CHECK_NOEXCEPT(ym.year());
         CHECK_NOEXCEPT(ym.month());
@@ -620,62 +620,103 @@ namespace chrono = etl::chrono;
 
     // construct
     {
-        auto const ym = etl::chrono::year_month{};
+        auto const ym = chrono::year_month{};
         CHECK_FALSE(ym.ok());
-        CHECK(ym.year() == etl::chrono::year(0));
-        CHECK(ym.month() == etl::chrono::month(0));
+        CHECK(ym.year() == chrono::year(0));
+        CHECK(ym.month() == chrono::month(0));
     }
     {
-        auto const ym = etl::chrono::year(1995) / etl::chrono::month(5);
+        auto const ym = chrono::year(1995) / chrono::month(5);
         CHECK(ym.ok());
-        CHECK(ym.year() == etl::chrono::year(1995));
-        CHECK(ym.month() == etl::chrono::month(5));
+        CHECK(ym.year() == chrono::year(1995));
+        CHECK(ym.month() == chrono::month(5));
     }
     {
-        auto const ym = etl::chrono::year(1995) / etl::chrono::month(13);
+        auto const ym = chrono::year(1995) / chrono::month(13);
         CHECK_FALSE(ym.ok());
-        CHECK(ym.year() == etl::chrono::year(1995));
-        CHECK(ym.month() == etl::chrono::month(13));
+        CHECK(ym.year() == chrono::year(1995));
+        CHECK(ym.month() == chrono::month(13));
     }
 
     // arithmetic
     {
-        auto ym = etl::chrono::year_month{};
-        CHECK(ym.year() == etl::chrono::year(0));
-        CHECK(ym.month() == etl::chrono::month(0));
+        auto ym = chrono::year_month{};
+        CHECK(ym.year() == chrono::year(0));
+        CHECK(ym.month() == chrono::month(0));
 
-        ym += etl::chrono::years(1);
-        CHECK(ym.year() == etl::chrono::year(1));
-        CHECK(ym.month() == etl::chrono::month(0));
+        ym += chrono::years(1);
+        CHECK(ym.year() == chrono::year(1));
+        CHECK(ym.month() == chrono::month(0));
 
-        ym += etl::chrono::months(5);
-        CHECK(ym.year() == etl::chrono::year(1));
-        CHECK(ym.month() == etl::chrono::month(5));
+        ym += chrono::months(5);
+        CHECK(ym.year() == chrono::year(1));
+        CHECK(ym.month() == chrono::month(5));
 
-        ym -= etl::chrono::years(1);
-        CHECK(ym.year() == etl::chrono::year(0));
-        CHECK(ym.month() == etl::chrono::month(5));
+        ym -= chrono::years(1);
+        CHECK(ym.year() == chrono::year(0));
+        CHECK(ym.month() == chrono::month(5));
 
-        ym -= etl::chrono::months(4);
-        CHECK(ym.year() == etl::chrono::year(0));
-        CHECK(ym.month() == etl::chrono::month(1));
+        ym -= chrono::months(4);
+        CHECK(ym.year() == chrono::year(0));
+        CHECK(ym.month() == chrono::month(1));
 
-        auto const ymp1 = ym + etl::chrono::years(1);
-        CHECK(ymp1.year() == etl::chrono::year(1));
-        CHECK(ymp1.month() == etl::chrono::month(1));
+        auto const ymp1 = ym + chrono::years(1);
+        CHECK(ymp1.year() == chrono::year(1));
+        CHECK(ymp1.month() == chrono::month(1));
 
-        auto const ymp2 = etl::chrono::years(2) + ym;
-        CHECK(ymp2.year() == etl::chrono::year(2));
-        CHECK(ymp2.month() == etl::chrono::month(1));
+        auto const ymp2 = chrono::years(2) + ym;
+        CHECK(ymp2.year() == chrono::year(2));
+        CHECK(ymp2.month() == chrono::month(1));
     }
 
     // compare
     {
-        auto const birthday  = etl::chrono::year(1995) / 5;
-        auto const christmas = etl::chrono::year(1995) / 12;
+        auto const birthday  = chrono::year(1995) / 5;
+        auto const christmas = chrono::year(1995) / 12;
         CHECK(birthday == birthday);
         CHECK(christmas != birthday);
         CHECK(birthday != christmas);
+    }
+
+    return true;
+}
+
+[[nodiscard]] constexpr auto test_year_month_day() -> bool
+{
+    // traits
+    CHECK(etl::is_trivially_default_constructible_v<chrono::year_month_day>);
+    CHECK(etl::is_nothrow_constructible_v<chrono::year_month_day, chrono::year, chrono::month, chrono::day>);
+    CHECK(etl::is_nothrow_constructible_v<chrono::year_month_day, chrono::year_month_day_last>);
+    CHECK(etl::is_nothrow_constructible_v<chrono::year_month_day, chrono::sys_days>);
+    CHECK(etl::is_nothrow_constructible_v<chrono::year_month_day, chrono::local_days>);
+
+    // construct
+    {
+        auto const ymd = chrono::year_month_day{};
+        CHECK_FALSE(ymd.ok());
+        CHECK(ymd.year() == chrono::year(0));
+        CHECK(ymd.month() == chrono::month(0));
+        CHECK(ymd.day() == chrono::day(0));
+    }
+
+    {
+        auto const ymd = chrono::year_month_day{chrono::year(1995), chrono::month(5), chrono::day(15)};
+        CHECK(ymd.ok());
+        CHECK(ymd.year() == chrono::year(1995));
+        CHECK(ymd.month() == chrono::month(5));
+        CHECK(ymd.day() == chrono::day(15));
+        CHECK(ymd == (chrono::year(1995) / 5 / 15));
+        CHECK(ymd == (chrono::day(15) / 5 / chrono::year(1995)));
+        CHECK(ymd == (chrono::day(15) / 5 / 1995));
+    }
+
+    {
+        auto const ymd = chrono::year_month_day{chrono::sys_days(chrono::days(0))};
+        CHECK(ymd.ok());
+        CHECK(ymd.year() == chrono::year(1970));
+        CHECK(ymd.month() == chrono::month(1));
+        CHECK(ymd.day() == chrono::day(1));
+        CHECK(static_cast<chrono::sys_days>(ymd) == chrono::sys_days(chrono::days(0)));
     }
 
     return true;
@@ -699,6 +740,7 @@ namespace chrono = etl::chrono;
     CHECK(test_month_weekday_last());
 
     CHECK(test_year_month());
+    CHECK(test_year_month_day());
 
     return true;
 }

@@ -181,6 +181,36 @@ constexpr auto year_month_day::operator-=(years const& y) noexcept -> year_month
     return *this;
 }
 
+[[nodiscard]] constexpr auto operator/(year_month const& ym, day const& d) noexcept -> year_month_day
+{
+    return {ym.year(), ym.month(), d};
+}
+
+[[nodiscard]] constexpr auto operator/(year_month const& ym, int d) noexcept -> year_month_day
+{
+    return {ym.year(), ym.month(), day(static_cast<unsigned>(d))};
+}
+
+[[nodiscard]] constexpr auto operator/(year const& y, month_day const& md) noexcept -> year_month_day
+{
+    return {y, md.month(), md.day()};
+}
+
+[[nodiscard]] constexpr auto operator/(int y, month_day const& md) noexcept -> year_month_day
+{
+    return {year{y}, md.month(), md.day()};
+}
+
+[[nodiscard]] constexpr auto operator/(month_day const& md, year const& y) noexcept -> year_month_day
+{
+    return {y, md.month(), md.day()};
+}
+
+[[nodiscard]] constexpr auto operator/(month_day const& md, int y) noexcept -> year_month_day
+{
+    return {year{y}, md.month(), md.day()};
+}
+
 } // namespace etl::chrono
 
 #endif // TETL_CHRONO_YEAR_MONTH_DAY_HPP
