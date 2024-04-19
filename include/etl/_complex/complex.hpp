@@ -48,6 +48,16 @@ struct complex {
     template <typename X>
     constexpr auto operator/=(complex<X> const& val) -> complex<T>&;
 
+    friend constexpr auto operator==(complex const& lhs, complex const& rhs) -> bool
+    {
+        return lhs.real() == rhs.real() and lhs.imag() == rhs.imag();
+    }
+
+    friend constexpr auto operator==(complex const& lhs, T const& rhs) -> bool
+    {
+        return lhs.real() == rhs and lhs.imag() == T{};
+    }
+
 private:
     value_type _real;
     value_type _imag;
@@ -82,8 +92,8 @@ constexpr complex<T>::complex(complex const& other)
 template <typename T>
 template <typename X>
 constexpr complex<T>::complex(complex<X> const& other)
-    : _real{other.real()}
-    , _imag{other.imag()}
+    : _real{static_cast<T>(other.real())}
+    , _imag{static_cast<T>(other.imag())}
 {
 }
 
@@ -123,6 +133,7 @@ template <typename T>
 constexpr auto complex<T>::operator=(T const& val) -> complex<T>&
 {
     _real = val;
+    _imag = T{};
     return *this;
 }
 
@@ -281,42 +292,6 @@ template <typename T>
 [[nodiscard]] constexpr auto operator/(T const& lhs, complex<T> const& rhs) -> complex<T>
 {
     return complex<T>(lhs) /= rhs;
-}
-
-template <typename T>
-[[nodiscard]] constexpr auto operator==(complex<T> const& lhs, complex<T> const& rhs) -> bool
-{
-    return lhs.real() == rhs.real() and lhs.imag() == rhs.imag();
-}
-
-template <typename T>
-[[nodiscard]] constexpr auto operator==(complex<T> const& lhs, T const& rhs) -> bool
-{
-    return lhs == complex<T>(rhs);
-}
-
-template <typename T>
-[[nodiscard]] constexpr auto operator==(T const& lhs, complex<T> const& rhs) -> bool
-{
-    return complex<T>(lhs) == rhs;
-}
-
-template <typename T>
-[[nodiscard]] constexpr auto operator!=(complex<T> const& lhs, complex<T> const& rhs) -> bool
-{
-    return !(lhs == rhs);
-}
-
-template <typename T>
-[[nodiscard]] constexpr auto operator!=(complex<T> const& lhs, T const& rhs) -> bool
-{
-    return !(lhs == rhs);
-}
-
-template <typename T>
-[[nodiscard]] constexpr auto operator!=(T const& lhs, complex<T> const& rhs) -> bool
-{
-    return !(lhs == rhs);
 }
 
 // NOLINTNEXTLINE(modernize-concat-nested-namespaces)

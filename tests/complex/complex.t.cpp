@@ -2,18 +2,18 @@
 
 #include <etl/complex.hpp>
 
-#include <etl/concepts.hpp>
-#include <etl/cstdint.hpp>
-
 #include "testing/testing.hpp"
 
 template <typename T>
 constexpr auto test() -> bool
 {
+    // traits
     CHECK(etl::tuple_size_v<etl::complex<T>> == 2);
+    CHECK(sizeof(etl::complex<T>) == sizeof(T) * 2);
     CHECK_SAME_TYPE(etl::tuple_element_t<0, etl::complex<T>>, T);
     CHECK_SAME_TYPE(etl::tuple_element_t<1, etl::complex<T>>, T);
 
+    // construct
     auto tc = etl::complex<T>{};
     CHECK(tc.real() == T(0));
     CHECK(tc.imag() == T(0));
@@ -25,6 +25,17 @@ constexpr auto test() -> bool
     auto im = etl::complex<T>{T(1), T(2)};
     CHECK(im.real() == T(1));
     CHECK(im.imag() == T(2));
+
+    {
+        // from complex<U>
+        auto z = etl::complex<T>(etl::complex<signed char>{1, 2});
+        CHECK(z.real() == T(1));
+        CHECK(z.imag() == T(2));
+
+        z = T(4);
+        CHECK(z.real() == T(4));
+        CHECK(z.imag() == T(0));
+    }
 
     tc = re;
     CHECK(tc.real() == T(1));
@@ -78,63 +89,153 @@ constexpr auto test() -> bool
     CHECK(scaledDiv.real() == T(-1));
     CHECK(scaledDiv.imag() == T(-2));
 
+    // operator-=
+    {
+        auto z = etl::complex<T>{T(1), T(2)};
+        z -= T(1);
+        CHECK(z.real() == T(0));
+    }
+
+    // operator+
+    {
+        auto z = etl::complex<T>{T(1), T(2)};
+        CHECK((z + T(1)) == etl::complex{T(2), T(2)});
+        CHECK((z + T(3)) == etl::complex{T(4), T(2)});
+        CHECK((T(1) + z) == etl::complex{T(2), T(2)});
+    }
+
+    // operator-
+    {
+        auto z = etl::complex<T>{T(1), T(2)};
+        CHECK((z - T(1)) == etl::complex{T(0), T(2)});
+        CHECK((z - T(3)) == etl::complex{T(-2), T(2)});
+        CHECK((T(1) - z) == etl::complex{T(0), T(-2)});
+    }
+
+    // compare
+    {
+        CHECK(etl::complex<T>{} == etl::complex<T>{});
+        CHECK(etl::complex<T>{T(1)} == etl::complex<T>{T(1)});
+        CHECK(etl::complex<T>{T(1), T(2)} == etl::complex<T>{T(1), T(2)});
+
+        CHECK(etl::complex<T>{T(1), T(2)} != etl::complex<T>{T(1), T(3)});
+        CHECK(etl::complex<T>{T(2), T(2)} != etl::complex<T>{T(1), T(2)});
+
+        CHECK(etl::complex<T>{} == T(0));
+        CHECK(etl::complex<T>{T(1)} == T(1));
+        CHECK(etl::complex<T>{T(1)} != T(2));
+
+        CHECK(T(0) == etl::complex<T>{});
+        CHECK(T(1) == etl::complex<T>{T(1)});
+    }
+
+    // udl
     {
         using namespace etl::literals;
 
-        auto f = 2_if;
+        auto f = 3.0_if;
         CHECK(f.real() == 0.0F);
-        CHECK(f.imag() == 2.0F);
+        CHECK(f.imag() == 3.0F);
 
-        auto d = 2_i;
+        auto d = 3.0_i;
         CHECK(d.real() == 0.0);
-        CHECK(d.imag() == 2.0);
+        CHECK(d.imag() == 3.0);
 
-        auto ld = 2_il;
+        auto ld = 3.0_il;
         CHECK(ld.real() == 0.0L);
-        CHECK(ld.imag() == 2.0L);
+        CHECK(ld.imag() == 3.0L);
+
+        auto fi = 2_if;
+        CHECK(fi.real() == 0.0F);
+        CHECK(fi.imag() == 2.0F);
+
+        auto di = 2_i;
+        CHECK(di.real() == 0.0);
+        CHECK(di.imag() == 2.0);
+
+        auto ldi = 2_il;
+        CHECK(ldi.real() == 0.0L);
+        CHECK(ldi.imag() == 2.0L);
     }
     {
         using namespace etl::complex_literals;
 
-        auto f = 2_if;
+        auto f = 3.0_if;
         CHECK(f.real() == 0.0F);
-        CHECK(f.imag() == 2.0F);
+        CHECK(f.imag() == 3.0F);
 
-        auto d = 2_i;
+        auto d = 3.0_i;
         CHECK(d.real() == 0.0);
-        CHECK(d.imag() == 2.0);
+        CHECK(d.imag() == 3.0);
 
-        auto ld = 2_il;
+        auto ld = 3.0_il;
         CHECK(ld.real() == 0.0L);
-        CHECK(ld.imag() == 2.0L);
+        CHECK(ld.imag() == 3.0L);
+
+        auto fi = 2_if;
+        CHECK(fi.real() == 0.0F);
+        CHECK(fi.imag() == 2.0F);
+
+        auto di = 2_i;
+        CHECK(di.real() == 0.0);
+        CHECK(di.imag() == 2.0);
+
+        auto ldi = 2_il;
+        CHECK(ldi.real() == 0.0L);
+        CHECK(ldi.imag() == 2.0L);
     }
     {
         using namespace etl::literals::complex_literals;
 
-        auto f = 2_if;
+        auto f = 3.0_if;
         CHECK(f.real() == 0.0F);
-        CHECK(f.imag() == 2.0F);
+        CHECK(f.imag() == 3.0F);
 
-        auto d = 2_i;
+        auto d = 3.0_i;
         CHECK(d.real() == 0.0);
-        CHECK(d.imag() == 2.0);
+        CHECK(d.imag() == 3.0);
 
-        auto ld = 2_il;
+        auto ld = 3.0_il;
         CHECK(ld.real() == 0.0L);
-        CHECK(ld.imag() == 2.0L);
+        CHECK(ld.imag() == 3.0L);
+
+        auto fi = 2_if;
+        CHECK(fi.real() == 0.0F);
+        CHECK(fi.imag() == 2.0F);
+
+        auto di = 2_i;
+        CHECK(di.real() == 0.0);
+        CHECK(di.imag() == 2.0);
+
+        auto ldi = 2_il;
+        CHECK(ldi.real() == 0.0L);
+        CHECK(ldi.imag() == 2.0L);
     }
+
+    CHECK(etl::conj(T(12)) == T(12));
+    CHECK(etl::real(T(12)) == T(12));
+    CHECK(etl::imag(T(12)) == T(0));
 
     return true;
 }
 
 constexpr auto test_all() -> bool
 {
-    CHECK(test<etl::int8_t>());
-    CHECK(test<etl::int16_t>());
-    CHECK(test<etl::int32_t>());
-    CHECK(test<etl::int64_t>());
+    CHECK(test<signed char>());
+    CHECK(test<signed short>());
+    CHECK(test<signed int>());
+    CHECK(test<signed long>());
+    CHECK(test<signed long long>());
+
+    // CHECK(test<unsigned char>());
+    // CHECK(test<unsigned short>());
+    // CHECK(test<unsigned int>());
+    // CHECK(test<unsigned long>());
+    // CHECK(test<unsigned long long>());
+
     CHECK(test<float>());
     CHECK(test<double>());
+    CHECK(test<long double>());
 
     return true;
 }

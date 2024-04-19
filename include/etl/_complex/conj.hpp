@@ -27,7 +27,7 @@ template <floating_point Float>
 template <integral Integer>
 [[nodiscard]] constexpr auto conj(Integer i) noexcept -> complex<double>
 {
-    return complex<double>(i);
+    return complex<double>(static_cast<double>(i));
 }
 
 } // namespace etl
