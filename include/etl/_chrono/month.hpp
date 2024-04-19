@@ -20,7 +20,7 @@ namespace etl::chrono {
 struct month {
     month() = default;
 
-    constexpr explicit month(etl::uint32_t d) noexcept
+    constexpr explicit month(unsigned d) noexcept
         : _count{static_cast<etl::uint8_t>(d)}
     {
     }
@@ -63,33 +63,33 @@ struct month {
         return *this;
     }
 
-    constexpr explicit operator etl::uint32_t() const noexcept { return _count; }
+    constexpr explicit operator unsigned() const noexcept { return _count; }
 
     [[nodiscard]] constexpr auto ok() const noexcept -> bool { return (_count > 0U) and (_count <= 12U); }
 
     friend constexpr auto operator==(month lhs, month rhs) noexcept -> bool
     {
-        return static_cast<etl::uint32_t>(lhs) == static_cast<etl::uint32_t>(rhs);
+        return static_cast<unsigned>(lhs) == static_cast<unsigned>(rhs);
     }
 
     friend constexpr auto operator<(month lhs, month rhs) noexcept -> bool
     {
-        return static_cast<etl::uint32_t>(lhs) < static_cast<etl::uint32_t>(rhs);
+        return static_cast<unsigned>(lhs) < static_cast<unsigned>(rhs);
     }
 
     friend constexpr auto operator<=(month lhs, month rhs) noexcept -> bool
     {
-        return static_cast<etl::uint32_t>(lhs) <= static_cast<etl::uint32_t>(rhs);
+        return static_cast<unsigned>(lhs) <= static_cast<unsigned>(rhs);
     }
 
     friend constexpr auto operator>(month lhs, month rhs) noexcept -> bool
     {
-        return static_cast<etl::uint32_t>(lhs) > static_cast<etl::uint32_t>(rhs);
+        return static_cast<unsigned>(lhs) > static_cast<unsigned>(rhs);
     }
 
     friend constexpr auto operator>=(month lhs, month rhs) noexcept -> bool
     {
-        return static_cast<etl::uint32_t>(lhs) >= static_cast<etl::uint32_t>(rhs);
+        return static_cast<unsigned>(lhs) >= static_cast<unsigned>(rhs);
     }
 
 private:

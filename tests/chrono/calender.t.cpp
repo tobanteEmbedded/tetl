@@ -27,7 +27,7 @@ namespace chrono = etl::chrono;
     // construct
     auto d = chrono::day{};
     CHECK_FALSE(d.ok());
-    CHECK(static_cast<etl::uint32_t>(d) == 0U);
+    CHECK(static_cast<unsigned>(d) == 0U);
 
     // inc/dec
     ++d;
@@ -77,7 +77,7 @@ namespace chrono = etl::chrono;
 
     // construct
     auto m = chrono::month{};
-    CHECK(static_cast<etl::uint32_t>(m) == 0U);
+    CHECK(static_cast<unsigned>(m) == 0U);
     CHECK_FALSE(m.ok());
 
     // inc/dec
@@ -142,20 +142,20 @@ namespace chrono = etl::chrono;
     // traits
     CHECK(etl::is_trivially_default_constructible_v<chrono::year>);
     CHECK(etl::is_nothrow_constructible_v<chrono::year, etl::int32_t>);
-    CHECK(static_cast<etl::int32_t>(chrono::year::min()) == -32767);
-    CHECK(static_cast<etl::int32_t>(chrono::year::max()) == +32767);
+    CHECK(static_cast<int>(chrono::year::min()) == -32767);
+    CHECK(static_cast<int>(chrono::year::max()) == +32767);
 
     // construct
     {
         auto y = chrono::year{};
         CHECK(y.ok());
-        CHECK(static_cast<etl::int32_t>(y) == 0U);
+        CHECK(static_cast<int>(y) == 0U);
     }
 
     {
         auto y = chrono::year{2024};
         CHECK(y.ok());
-        CHECK(static_cast<etl::int32_t>(y) == 2024U);
+        CHECK(static_cast<int>(y) == 2024U);
     }
 
     // inc/dec

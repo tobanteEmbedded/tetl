@@ -29,10 +29,10 @@ struct month_day {
         if (not month().ok()) {
             return false;
         }
-        if (static_cast<uint32_t>(day()) < 1) {
+        if (static_cast<unsigned>(day()) < 1) {
             return false;
         }
-        return static_cast<uint32_t>(day()) <= maxDaysInMonth[uint32_t{month()} - 1];
+        return static_cast<unsigned>(day()) <= maxDaysInMonth[unsigned{month()} - 1];
     }
 
     friend constexpr auto operator==(month_day const& lhs, month_day const& rhs) noexcept -> bool
@@ -48,16 +48,16 @@ private:
 [[nodiscard]] constexpr auto operator/(month const& m, day const& d) noexcept -> month_day { return {m, d}; }
 [[nodiscard]] constexpr auto operator/(month const& m, int d) noexcept -> month_day
 {
-    return {m, day(static_cast<etl::uint32_t>(d))};
+    return {m, day(static_cast<unsigned>(d))};
 }
 [[nodiscard]] constexpr auto operator/(int m, day const& d) noexcept -> month_day
 {
-    return {month(static_cast<etl::uint32_t>(m)), d};
+    return {month(static_cast<unsigned>(m)), d};
 }
 [[nodiscard]] constexpr auto operator/(day const& d, month const& m) noexcept -> month_day { return {m, d}; }
 [[nodiscard]] constexpr auto operator/(day const& d, int m) noexcept -> month_day
 {
-    return {month(static_cast<etl::uint32_t>(m)), d};
+    return {month(static_cast<unsigned>(m)), d};
 }
 
 } // namespace etl::chrono

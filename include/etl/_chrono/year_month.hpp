@@ -106,7 +106,7 @@ operator+(chrono::years const& dy, chrono::year_month const& ym) noexcept -> chr
 
 [[nodiscard]] constexpr auto operator/(year const& y, int m) noexcept -> year_month
 {
-    return year_month{y, month(static_cast<etl::uint32_t>(m))};
+    return year_month{y, month(static_cast<unsigned>(m))};
 }
 
 } // namespace etl::chrono

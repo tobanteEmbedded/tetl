@@ -18,7 +18,7 @@ namespace etl::chrono {
 struct day {
     day() = default;
 
-    constexpr explicit day(etl::uint32_t d) noexcept
+    constexpr explicit day(unsigned d) noexcept
         : _count{static_cast<etl::uint8_t>(d)}
     {
     }
@@ -53,33 +53,33 @@ struct day {
         return *this;
     }
 
-    constexpr explicit operator etl::uint32_t() const noexcept { return _count; }
+    constexpr explicit operator unsigned() const noexcept { return _count; }
 
     [[nodiscard]] constexpr auto ok() const noexcept -> bool { return (_count > 0U) and (_count < 32U); }
 
     friend constexpr auto operator==(day lhs, day rhs) noexcept -> bool
     {
-        return static_cast<etl::uint32_t>(lhs) == static_cast<etl::uint32_t>(rhs);
+        return static_cast<unsigned>(lhs) == static_cast<unsigned>(rhs);
     }
 
     friend constexpr auto operator<(day lhs, day rhs) noexcept -> bool
     {
-        return static_cast<etl::uint32_t>(lhs) < static_cast<etl::uint32_t>(rhs);
+        return static_cast<unsigned>(lhs) < static_cast<unsigned>(rhs);
     }
 
     friend constexpr auto operator<=(day lhs, day rhs) noexcept -> bool
     {
-        return static_cast<etl::uint32_t>(lhs) <= static_cast<etl::uint32_t>(rhs);
+        return static_cast<unsigned>(lhs) <= static_cast<unsigned>(rhs);
     }
 
     friend constexpr auto operator>(day lhs, day rhs) noexcept -> bool
     {
-        return static_cast<etl::uint32_t>(lhs) > static_cast<etl::uint32_t>(rhs);
+        return static_cast<unsigned>(lhs) > static_cast<unsigned>(rhs);
     }
 
     friend constexpr auto operator>=(day lhs, day rhs) noexcept -> bool
     {
-        return static_cast<etl::uint32_t>(lhs) >= static_cast<etl::uint32_t>(rhs);
+        return static_cast<unsigned>(lhs) >= static_cast<unsigned>(rhs);
     }
 
 private:
@@ -88,22 +88,22 @@ private:
 
 [[nodiscard]] constexpr auto operator+(day const& d, days const& ds) noexcept -> day
 {
-    return day(static_cast<etl::uint32_t>(d) + static_cast<etl::uint32_t>(ds.count()));
+    return day(static_cast<unsigned>(d) + static_cast<unsigned>(ds.count()));
 }
 
 [[nodiscard]] constexpr auto operator+(days const& ds, day const& d) noexcept -> day
 {
-    return day(static_cast<etl::uint32_t>(d) + static_cast<etl::uint32_t>(ds.count()));
+    return day(static_cast<unsigned>(d) + static_cast<unsigned>(ds.count()));
 }
 
 [[nodiscard]] constexpr auto operator-(day const& d, days const& ds) noexcept -> day
 {
-    return day(static_cast<etl::uint32_t>(d) - static_cast<etl::uint32_t>(ds.count()));
+    return day(static_cast<unsigned>(d) - static_cast<unsigned>(ds.count()));
 }
 
 [[nodiscard]] constexpr auto operator-(day const& x, day const& y) noexcept -> days
 {
-    return days(int(etl::uint32_t(x)) - int(etl::uint32_t(y)));
+    return days(int(unsigned(x)) - int(unsigned(y)));
 }
 
 } // namespace etl::chrono
@@ -116,7 +116,7 @@ inline namespace chrono_literals {
 /// \brief Forms a etl::chrono::day literal representing a day of the month in the calendar.
 [[nodiscard]] constexpr auto operator""_d(unsigned long long d) noexcept -> etl::chrono::day
 {
-    return etl::chrono::day{static_cast<etl::uint32_t>(d)};
+    return etl::chrono::day{static_cast<unsigned>(d)};
 }
 
 } // namespace chrono_literals

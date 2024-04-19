@@ -34,7 +34,7 @@ private:
 
 [[nodiscard]] constexpr auto operator/(int m, last_spec /*tag*/) noexcept -> month_day_last
 {
-    return month_day_last{month(static_cast<etl::uint32_t>(m))};
+    return month_day_last{month(static_cast<unsigned>(m))};
 }
 
 [[nodiscard]] constexpr auto operator/(last_spec /*tag*/, month const& m) noexcept -> month_day_last
@@ -44,7 +44,7 @@ private:
 
 [[nodiscard]] constexpr auto operator/(last_spec /*tag*/, int m) noexcept -> month_day_last
 {
-    return month_day_last{month(static_cast<etl::uint32_t>(m))};
+    return month_day_last{month(static_cast<unsigned>(m))};
 }
 
 } // namespace etl::chrono

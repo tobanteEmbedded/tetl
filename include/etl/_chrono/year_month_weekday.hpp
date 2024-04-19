@@ -38,7 +38,7 @@ struct year_month_weekday {
 
     [[nodiscard]] constexpr auto weekday() const noexcept -> chrono::weekday { return _wdi.weekday(); }
 
-    [[nodiscard]] constexpr auto index() const noexcept -> uint32_t { return _wdi.index(); }
+    [[nodiscard]] constexpr auto index() const noexcept -> unsigned { return _wdi.index(); }
 
     [[nodiscard]] constexpr auto weekday_indexed() const noexcept -> chrono::weekday_indexed { return _wdi; }
 

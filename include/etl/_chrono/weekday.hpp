@@ -18,18 +18,18 @@ struct weekday_last;
 struct weekday {
     weekday() = default;
 
-    constexpr explicit weekday(etl::uint32_t wd) noexcept
+    constexpr explicit weekday(unsigned wd) noexcept
         : _wd{static_cast<etl::uint8_t>(wd == 7 ? 0 : wd)}
     {
     }
 
     constexpr weekday(sys_days const& dp) noexcept
-        : _wd{static_cast<uint8_t>(weekday_from_days(dp.time_since_epoch().count()))}
+        : _wd{weekday_from_days(dp.time_since_epoch().count())}
     {
     }
 
     constexpr explicit weekday(local_days const& dp) noexcept
-        : _wd{static_cast<uint8_t>(weekday_from_days(dp.time_since_epoch().count()))}
+        : _wd{weekday_from_days(dp.time_since_epoch().count())}
     {
     }
 
@@ -55,14 +55,14 @@ struct weekday {
         return *this;
     }
 
-    [[nodiscard]] constexpr auto c_encoding() const noexcept -> etl::uint32_t { return _wd; }
+    [[nodiscard]] constexpr auto c_encoding() const noexcept -> unsigned { return _wd; }
 
-    [[nodiscard]] constexpr auto iso_encoding() const noexcept -> etl::uint32_t { return _wd == 0U ? 7U : _wd; }
+    [[nodiscard]] constexpr auto iso_encoding() const noexcept -> unsigned { return _wd == 0U ? 7U : _wd; }
 
     [[nodiscard]] constexpr auto ok() const noexcept -> bool { return _wd < 7U; }
 
     // Defined in weekday_indexed
-    [[nodiscard]] constexpr auto operator[](etl::uint32_t index) const noexcept -> weekday_indexed;
+    [[nodiscard]] constexpr auto operator[](unsigned index) const noexcept -> weekday_indexed;
 
     // Defined in weekday_last
     [[nodiscard]] constexpr auto operator[](etl::chrono::last_spec /*tag*/) const noexcept -> weekday_last;
@@ -73,9 +73,9 @@ struct weekday {
     }
 
 private:
-    [[nodiscard]] static constexpr auto weekday_from_days(int tp) noexcept -> etl::uint32_t
+    [[nodiscard]] static constexpr auto weekday_from_days(int tp) noexcept -> etl::uint8_t
     {
-        return static_cast<etl::uint32_t>(tp >= -4 ? (tp + 4) % 7 : (tp + 5) % 7 + 6);
+        return static_cast<etl::uint8_t>(tp >= -4 ? (tp + 4) % 7 : (tp + 5) % 7 + 6);
     }
 
     etl::uint8_t _wd;
@@ -83,14 +83,14 @@ private:
 
 [[nodiscard]] constexpr auto operator+(weekday const& lhs, days const& rhs) noexcept -> weekday
 {
-    return weekday{static_cast<etl::uint32_t>((static_cast<int32_t>(lhs.c_encoding()) + rhs.count()) % 7)};
+    return weekday{static_cast<unsigned>((static_cast<int32_t>(lhs.c_encoding()) + rhs.count()) % 7)};
 }
 
 [[nodiscard]] constexpr auto operator+(days const& lhs, weekday const& rhs) noexcept -> weekday { return rhs + lhs; }
 
 [[nodiscard]] constexpr auto operator-(weekday const& lhs, days const& rhs) noexcept -> weekday
 {
-    return weekday{static_cast<etl::uint32_t>((static_cast<int32_t>(lhs.c_encoding()) - rhs.count()) % 7)};
+    return weekday{static_cast<unsigned>((static_cast<int32_t>(lhs.c_encoding()) - rhs.count()) % 7)};
 }
 
 inline constexpr auto Sunday    = etl::chrono::weekday{0}; // NOLINT(readability-identifier-naming)

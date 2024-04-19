@@ -39,7 +39,7 @@ private:
 
 [[nodiscard]] constexpr auto operator/(int m, weekday_indexed const& wdi) noexcept -> month_weekday
 {
-    return {month(static_cast<etl::uint32_t>(m)), wdi};
+    return {month(static_cast<unsigned>(m)), wdi};
 }
 
 [[nodiscard]] constexpr auto operator/(weekday_indexed const& wdi, month const& m) noexcept -> month_weekday
@@ -49,7 +49,7 @@ private:
 
 [[nodiscard]] constexpr auto operator/(weekday_indexed const& wdi, int m) noexcept -> month_weekday
 {
-    return {month(static_cast<etl::uint32_t>(m)), wdi};
+    return {month(static_cast<unsigned>(m)), wdi};
 }
 
 } // namespace etl::chrono
