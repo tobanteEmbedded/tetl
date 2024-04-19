@@ -22,7 +22,7 @@ struct complex {
     constexpr complex(T const& re = T(), T const& im = T());
     constexpr complex(complex const& other) = default;
     template <typename X>
-    constexpr complex(complex<X> const& other);
+    explicit(sizeof(X) > sizeof(T)) constexpr complex(complex<X> const& other);
 
     constexpr auto operator=(T const& val) -> complex<T>&;
     constexpr auto operator=(complex const& other) -> complex& = default;
