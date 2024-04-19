@@ -33,11 +33,14 @@ namespace chrono = etl::chrono;
     ++d;
     CHECK(d == 1_d);
 
-    ++d;
+    d++;
     CHECK(d == 2_d);
 
     --d;
     CHECK(d == 1_d);
+
+    d--;
+    CHECK(d == 0_d);
 
     // ok
     CHECK(chrono::day(1).ok());
@@ -46,6 +49,13 @@ namespace chrono = etl::chrono;
     CHECK(chrono::day(31).ok());
     CHECK_FALSE(chrono::day(0).ok());
     CHECK_FALSE(chrono::day(32).ok());
+
+    // arithmetic
+    CHECK(1_d + chrono::days(3) == 4_d);
+    CHECK(chrono::days(5) + 1_d == 6_d);
+
+    CHECK(7_d - chrono::days(3) == 4_d);
+    CHECK(7_d - 4_d == chrono::days(3));
 
     // compare
     CHECK(1_d == 1_d);

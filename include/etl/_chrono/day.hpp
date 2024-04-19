@@ -4,7 +4,9 @@
 #define TETL_CHRONO_DAY_HPP
 
 #include <etl/_chrono/duration.hpp>
+#include <etl/_contracts/check.hpp>
 #include <etl/_cstdint/uint_t.hpp>
+#include <etl/_limits/numeric_limits.hpp>
 
 namespace etl::chrono {
 
@@ -21,6 +23,7 @@ struct day {
     constexpr explicit day(unsigned d) noexcept
         : _count{static_cast<etl::uint8_t>(d)}
     {
+        TETL_PRECONDITION(d < etl::numeric_limits<etl::uint8_t>::max());
     }
 
     constexpr auto operator++() noexcept -> day& { return *this += days{1}; }
