@@ -5,6 +5,7 @@
 
 #include <etl/_config/all.hpp>
 
+#include <etl/_contracts/check.hpp>
 #include <etl/_cstddef/size_t.hpp>
 #include <etl/_functional/equal_to.hpp>
 #include <etl/_functional/greater.hpp>
@@ -207,6 +208,7 @@ public:
     constexpr auto operator[](index_constant<I> index) & -> auto&
     {
         static_assert(I < sizeof...(Ts));
+        TETL_PRECONDITION(I == index());
         return _union[index];
     }
 
@@ -216,6 +218,7 @@ public:
     constexpr auto operator[](index_constant<I> index) const& -> auto const&
     {
         static_assert(I < sizeof...(Ts));
+        TETL_PRECONDITION(I == index());
         return _union[index];
     }
 
@@ -225,6 +228,7 @@ public:
     constexpr auto operator[](index_constant<I> index) && -> auto&&
     {
         static_assert(I < sizeof...(Ts));
+        TETL_PRECONDITION(I == index());
         return etl::move(_union)[index];
     }
 
@@ -234,6 +238,7 @@ public:
     constexpr auto operator[](index_constant<I> index) const&& -> auto const&&
     {
         static_assert(I < sizeof...(Ts));
+        TETL_PRECONDITION(I == index());
         return etl::move(_union)[index];
     }
 
@@ -393,6 +398,7 @@ template <size_t I, typename... Ts>
 constexpr auto unchecked_get(variant<Ts...>& v) -> auto&
 {
     static_assert(I < sizeof...(Ts));
+    TETL_PRECONDITION(I == v.index());
     return v[index_v<I>];
 }
 
@@ -403,6 +409,7 @@ template <size_t I, typename... Ts>
 constexpr auto unchecked_get(variant<Ts...> const& v) -> auto const&
 {
     static_assert(I < sizeof...(Ts));
+    TETL_PRECONDITION(I == v.index());
     return v[index_v<I>];
 }
 
@@ -413,6 +420,7 @@ template <size_t I, typename... Ts>
 constexpr auto unchecked_get(variant<Ts...>&& v) -> auto&&
 {
     static_assert(I < sizeof...(Ts));
+    TETL_PRECONDITION(I == v.index());
     return etl::move(v)[index_v<I>];
 }
 
@@ -423,6 +431,7 @@ template <size_t I, typename... Ts>
 constexpr auto unchecked_get(variant<Ts...> const&& v) -> auto const&&
 {
     static_assert(I < sizeof...(Ts));
+    TETL_PRECONDITION(I == v.index());
     return etl::move(v)[index_v<I>];
 }
 

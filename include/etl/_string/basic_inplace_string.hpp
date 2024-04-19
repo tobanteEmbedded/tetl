@@ -147,7 +147,9 @@ public:
     /// string pointed to by s.
     constexpr auto operator=(const_pointer s) noexcept -> basic_inplace_string&
     {
-        assign(s, traits_type::length(s));
+        auto const len = traits_type::length(s);
+        TETL_PRECONDITION(len <= capacity());
+        assign(s, len);
         return *this;
     }
 
@@ -173,6 +175,7 @@ public:
     /// Replaces the contents with count copies of character ch.
     constexpr auto assign(size_type count, Char ch) noexcept -> basic_inplace_string&
     {
+        TETL_PRECONDITION(count <= capacity());
         (*this) = basic_inplace_string{count, ch};
         return *this;
     }
@@ -193,17 +196,11 @@ public:
         return *this;
     }
 
-    /// Replaces the contents with those of str using move semantics.
-    constexpr auto assign(basic_inplace_string&& str) noexcept -> basic_inplace_string&
-    {
-        *this = etl::move(str);
-        return *this;
-    }
-
     /// Replaces the contents with copies of the characters in the range
     /// [ s, s + count ). This range can contain null characters.
     constexpr auto assign(const_pointer s, size_type count) noexcept -> basic_inplace_string&
     {
+        TETL_PRECONDITION(count <= capacity());
         *this = basic_inplace_string{s, count};
         return *this;
     }
@@ -308,16 +305,32 @@ public:
     [[nodiscard]] constexpr auto crend() const noexcept -> const_reverse_iterator { return rend(); }
 
     /// \brief Accesses the first character.
-    [[nodiscard]] constexpr auto front() noexcept -> reference { return *begin(); }
+    [[nodiscard]] constexpr auto front() noexcept -> reference
+    {
+        TETL_PRECONDITION(not empty());
+        return *begin();
+    }
 
     /// \brief Accesses the first character.
-    [[nodiscard]] constexpr auto front() const noexcept -> const_reference { return *begin(); }
+    [[nodiscard]] constexpr auto front() const noexcept -> const_reference
+    {
+        TETL_PRECONDITION(not empty());
+        return *begin();
+    }
 
     /// \brief Accesses the last character.
-    [[nodiscard]] constexpr auto back() noexcept -> reference { return *etl::prev(end()); }
+    [[nodiscard]] constexpr auto back() noexcept -> reference
+    {
+        TETL_PRECONDITION(not empty());
+        return *etl::prev(end());
+    }
 
     /// \brief Accesses the last character.
-    [[nodiscard]] constexpr auto back() const noexcept -> const_reference { return *etl::prev(end()); }
+    [[nodiscard]] constexpr auto back() const noexcept -> const_reference
+    {
+        TETL_PRECONDITION(not empty());
+        return *etl::prev(end());
+    }
 
     /// \brief Checks whether the string is empty.
     [[nodiscard]] constexpr auto empty() const noexcept -> bool { return size() == 0; }

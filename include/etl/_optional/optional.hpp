@@ -525,7 +525,11 @@ struct optional<T&> {
 
     [[nodiscard]] constexpr auto operator->() const noexcept -> T* { return _ptr; }
 
-    [[nodiscard]] constexpr auto operator*() const noexcept -> T& { return *_ptr; }
+    [[nodiscard]] constexpr auto operator*() const noexcept -> T&
+    {
+        TETL_PRECONDITION(has_value());
+        return *_ptr;
+    }
 
     [[nodiscard]] constexpr explicit operator bool() const noexcept { return has_value(); }
 

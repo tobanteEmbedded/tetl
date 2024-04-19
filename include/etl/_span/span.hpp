@@ -193,16 +193,28 @@ struct span {
 
     /// \brief Returns a reference to the first element in the span. Calling
     /// front on an empty span results in undefined behavior.
-    [[nodiscard]] constexpr auto front() const -> reference { return *begin(); }
+    [[nodiscard]] constexpr auto front() const -> reference
+    {
+        TETL_PRECONDITION(not empty());
+        return *begin();
+    }
 
     /// \brief Returns a reference to the last element in the span. Calling
     /// front on an empty span results in undefined behavior.
-    [[nodiscard]] constexpr auto back() const -> reference { return *(end() - 1); }
+    [[nodiscard]] constexpr auto back() const -> reference
+    {
+        TETL_PRECONDITION(not empty());
+        return *(end() - 1);
+    }
 
     /// \brief Returns a reference to the idx-th element of the sequence. The
     /// behavior is undefined if idx is out of range (i.e., if it is greater
     /// than or equal to size()).
-    [[nodiscard]] constexpr auto operator[](size_type idx) const -> reference { return data()[idx]; }
+    [[nodiscard]] constexpr auto operator[](size_type idx) const -> reference
+    {
+        TETL_PRECONDITION(idx < size());
+        return data()[idx];
+    }
 
     /// \brief Returns a pointer to the beginning of the sequence.
     [[nodiscard]] constexpr auto data() const noexcept -> pointer { return _storage.data(); }
@@ -221,7 +233,7 @@ struct span {
     template <size_t Count>
     [[nodiscard]] constexpr auto first() const -> span<element_type, Count>
     {
-        static_assert(!(Count > Extent));
+        static_assert(Count <= Extent);
         return span<element_type, Count>{data(), static_cast<size_type>(Count)};
     }
 
@@ -229,7 +241,7 @@ struct span {
     /// this span. The behavior is undefined if Count > size().
     [[nodiscard]] constexpr auto first(size_type count) const -> span<element_type, dynamic_extent>
     {
-        TETL_PRECONDITION(!(count > size()));
+        TETL_PRECONDITION(count <= size());
         return {data(), static_cast<size_type>(count)};
     }
 
@@ -238,7 +250,7 @@ struct span {
     template <size_t Count>
     [[nodiscard]] constexpr auto last() const -> span<element_type, Count>
     {
-        static_assert(!(Count > Extent));
+        static_assert(Count <= Extent);
         return span<element_type, Count>{data() + (size() - Count), static_cast<size_type>(Count)};
     }
 
@@ -246,7 +258,7 @@ struct span {
     /// this span. The behavior is undefined if Count > size().
     [[nodiscard]] constexpr auto last(size_type count) const -> span<element_type, dynamic_extent>
     {
-        TETL_PRECONDITION(!(count > size()));
+        TETL_PRECONDITION(count <= size());
         return {data() + (size() - count), static_cast<size_type>(count)};
     }
 

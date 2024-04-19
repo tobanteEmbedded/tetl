@@ -15,6 +15,7 @@
 #include <etl/_bit/set_bit.hpp>
 #include <etl/_bit/test_bit.hpp>
 #include <etl/_concepts/unsigned_integral.hpp>
+#include <etl/_contracts/check.hpp>
 #include <etl/_cstddef/size_t.hpp>
 #include <etl/_functional/plus.hpp>
 #include <etl/_iterator/prev.hpp>
@@ -85,12 +86,17 @@ struct basic_bitset {
 
     /// Returns true if the bit at position \p pos is set.
     /// \pre `pos < size()`
-    [[nodiscard]] constexpr auto operator[](etl::size_t pos) const -> bool { return unchecked_test(pos); }
+    [[nodiscard]] constexpr auto operator[](etl::size_t pos) const -> bool
+    {
+        TETL_PRECONDITION(pos < size());
+        return unchecked_test(pos);
+    }
 
     /// Returns a reference to the bit at position \p pos
     /// \pre `pos < size()`
     [[nodiscard]] constexpr auto operator[](etl::size_t pos) -> reference
     {
+        TETL_PRECONDITION(pos < size());
         return reference{_words[word_index(pos)], offset_in_word(pos)};
     }
 
@@ -125,6 +131,7 @@ struct basic_bitset {
     /// \pre `pos < size()`
     [[nodiscard]] constexpr auto unchecked_test(etl::size_t pos) const -> bool
     {
+        TETL_PRECONDITION(pos < size());
         return etl::test_bit(_words[word_index(pos)], offset_in_word(pos));
     }
 
@@ -147,6 +154,7 @@ struct basic_bitset {
     /// \pre `pos < size()`
     constexpr auto unchecked_set(etl::size_t pos, bool value = true) -> basic_bitset&
     {
+        TETL_PRECONDITION(pos < size());
         return transform_bit(pos, [value](auto word, auto bit) { return etl::set_bit(word, bit, value); });
     }
 
@@ -161,6 +169,7 @@ struct basic_bitset {
     /// \pre `pos < size()`
     constexpr auto unchecked_reset(etl::size_t pos) -> basic_bitset&
     {
+        TETL_PRECONDITION(pos < size());
         return transform_bit(pos, [](auto word, auto bit) { return etl::reset_bit(word, bit); });
     }
 
@@ -185,6 +194,7 @@ struct basic_bitset {
     /// \pre `pos < size()`
     constexpr auto unchecked_flip(etl::size_t pos) -> basic_bitset&
     {
+        TETL_PRECONDITION(pos < size());
         return transform_bit(pos, [](auto word, auto bit) { return etl::flip_bit(word, bit); });
     }
 

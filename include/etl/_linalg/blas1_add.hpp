@@ -15,6 +15,7 @@ template <in_object InObj1, in_object InObj2, out_object OutObj>
 constexpr auto add(InObj1 x, InObj2 y, OutObj z) -> void
 {
     TETL_PRECONDITION(x.extents() == y.extents());
+    TETL_PRECONDITION(x.extents() == z.extents());
 
     using size_type = detail::common_size_type_t<InObj1, InObj2, OutObj>;
 

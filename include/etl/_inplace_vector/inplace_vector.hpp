@@ -6,6 +6,7 @@
 #include <etl/_config/all.hpp>
 
 #include <etl/_array/uninitialized_array.hpp>
+#include <etl/_contracts/check.hpp>
 #include <etl/_cstddef/ptrdiff_t.hpp>
 #include <etl/_cstddef/size_t.hpp>
 #include <etl/_iterator/next.hpp>
@@ -100,21 +101,39 @@ struct TETL_TRIVIAL_ABI inplace_vector {
 
     [[nodiscard]] static constexpr auto max_size() noexcept -> etl::size_t { return Capacity; }
 
-    [[nodiscard]] constexpr auto front() -> reference { return *begin(); }
+    [[nodiscard]] constexpr auto front() -> reference
+    {
+        TETL_PRECONDITION(not empty());
+        return *begin();
+    }
 
-    [[nodiscard]] constexpr auto front() const -> const_reference { return *begin(); }
+    [[nodiscard]] constexpr auto front() const -> const_reference
+    {
+        TETL_PRECONDITION(not empty());
+        return *begin();
+    }
 
-    [[nodiscard]] constexpr auto back() -> reference { return *etl::prev(end()); }
+    [[nodiscard]] constexpr auto back() -> reference
+    {
+        TETL_PRECONDITION(not empty());
+        return *etl::prev(end());
+    }
 
-    [[nodiscard]] constexpr auto back() const -> const_reference { return *etl::prev(end()); }
+    [[nodiscard]] constexpr auto back() const -> const_reference
+    {
+        TETL_PRECONDITION(not empty());
+        return *etl::prev(end());
+    }
 
     [[nodiscard]] constexpr auto operator[](size_type n) -> reference
     {
+        TETL_PRECONDITION(n < size());
         return *etl::next(data(), static_cast<etl::ptrdiff_t>(n));
     }
 
     [[nodiscard]] constexpr auto operator[](size_type n) const -> const_reference
     {
+        TETL_PRECONDITION(n < size());
         return *etl::next(data(), static_cast<etl::ptrdiff_t>(n));
     }
 
@@ -148,6 +167,7 @@ struct TETL_TRIVIAL_ABI inplace_vector {
     template <typename... Args>
     constexpr auto unchecked_emplace_back(Args&&... args) -> T&
     {
+        TETL_PRECONDITION(size() != max_size());
         etl::ranges::construct_at(end(), etl::forward<Args>(args)...);
         unsafe_set_size(size() + 1U);
         return back();
@@ -155,6 +175,7 @@ struct TETL_TRIVIAL_ABI inplace_vector {
 
     constexpr auto unchecked_push_back(T const& val) -> T&
     {
+        TETL_PRECONDITION(size() != max_size());
         etl::ranges::construct_at(end(), val);
         unsafe_set_size(size() + 1U);
         return back();
@@ -162,6 +183,7 @@ struct TETL_TRIVIAL_ABI inplace_vector {
 
     constexpr auto unchecked_push_back(T&& val) -> T&
     {
+        TETL_PRECONDITION(size() != max_size());
         etl::ranges::construct_at(end(), etl::move(val));
         unsafe_set_size(size() + 1U);
         return back();
@@ -169,6 +191,7 @@ struct TETL_TRIVIAL_ABI inplace_vector {
 
     constexpr auto pop_back() -> void
     {
+        TETL_PRECONDITION(not empty());
         etl::ranges::destroy_at(etl::addressof(back()));
         unsafe_set_size(size() - 1U);
     }
@@ -182,6 +205,7 @@ struct TETL_TRIVIAL_ABI inplace_vector {
 private:
     constexpr auto unsafe_set_size(size_type newSize) noexcept -> void
     {
+        TETL_PRECONDITION(newSize <= max_size());
         _size = static_cast<internal_size_t>(newSize);
     }
 

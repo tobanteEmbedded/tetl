@@ -4,6 +4,7 @@
 #define TETL_BIT_FLIP_BIT_HPP
 
 #include <etl/_concepts/builtin_unsigned_integer.hpp>
+#include <etl/_contracts/check.hpp>
 #include <etl/_cstddef/size_t.hpp>
 #include <etl/_limits/numeric_limits.hpp>
 
@@ -17,6 +18,7 @@ namespace etl {
 template <etl::builtin_unsigned_integer UInt>
 [[nodiscard]] constexpr auto flip_bit(UInt word, UInt pos) noexcept -> UInt
 {
+    TETL_PRECONDITION(static_cast<int>(pos) < etl::numeric_limits<UInt>::digits);
     return static_cast<UInt>(word ^ static_cast<UInt>(UInt(1) << pos));
 }
 

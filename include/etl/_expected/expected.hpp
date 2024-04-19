@@ -4,6 +4,7 @@
 #define TETL_EXPECTED_EXPECTED_HPP
 
 #include <etl/_concepts/same_as.hpp>
+#include <etl/_contracts/check.hpp>
 #include <etl/_expected/unexpect.hpp>
 #include <etl/_expected/unexpected.hpp>
 #include <etl/_functional/invoke.hpp>
@@ -59,21 +60,53 @@ struct expected {
 
     [[nodiscard]] constexpr auto operator->() noexcept -> T* { return etl::get_if<0>(&_u); }
 
-    [[nodiscard]] constexpr auto operator*() const& noexcept -> T const& { return _u[index_v<0>]; }
+    [[nodiscard]] constexpr auto operator*() const& noexcept -> T const&
+    {
+        TETL_PRECONDITION(has_value());
+        return _u[index_v<0>];
+    }
 
-    [[nodiscard]] constexpr auto operator*() & noexcept -> T& { return _u[index_v<0>]; }
+    [[nodiscard]] constexpr auto operator*() & noexcept -> T&
+    {
+        TETL_PRECONDITION(has_value());
+        return _u[index_v<0>];
+    }
 
-    [[nodiscard]] constexpr auto operator*() const&& noexcept -> T const&& { return etl::move(_u[index_v<0>]); }
+    [[nodiscard]] constexpr auto operator*() const&& noexcept -> T const&&
+    {
+        TETL_PRECONDITION(has_value());
+        return etl::move(_u[index_v<0>]);
+    }
 
-    [[nodiscard]] constexpr auto operator*() && noexcept -> T&& { return etl::move(_u[index_v<0>]); }
+    [[nodiscard]] constexpr auto operator*() && noexcept -> T&&
+    {
+        TETL_PRECONDITION(has_value());
+        return etl::move(_u[index_v<0>]);
+    }
 
-    [[nodiscard]] constexpr auto error() & -> E& { return _u[index_v<1>]; }
+    [[nodiscard]] constexpr auto error() & -> E&
+    {
+        TETL_PRECONDITION(not has_value());
+        return _u[index_v<1>];
+    }
 
-    [[nodiscard]] constexpr auto error() const& -> E const& { return _u[index_v<1>]; }
+    [[nodiscard]] constexpr auto error() const& -> E const&
+    {
+        TETL_PRECONDITION(not has_value());
+        return _u[index_v<1>];
+    }
 
-    [[nodiscard]] constexpr auto error() && -> E&& { return etl::move(_u[index_v<1>]); }
+    [[nodiscard]] constexpr auto error() && -> E&&
+    {
+        TETL_PRECONDITION(not has_value());
+        return etl::move(_u[index_v<1>]);
+    }
 
-    [[nodiscard]] constexpr auto error() const&& -> E const&& { return etl::move(_u[index_v<1>]); }
+    [[nodiscard]] constexpr auto error() const&& -> E const&&
+    {
+        TETL_PRECONDITION(not has_value());
+        return etl::move(_u[index_v<1>]);
+    }
 
     template <typename... Args>
         requires is_nothrow_constructible_v<T, Args...>
