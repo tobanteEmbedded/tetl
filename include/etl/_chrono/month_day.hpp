@@ -45,6 +45,21 @@ private:
     chrono::day _d;
 };
 
+[[nodiscard]] constexpr auto operator/(month const& m, day const& d) noexcept -> month_day { return {m, d}; }
+[[nodiscard]] constexpr auto operator/(month const& m, int d) noexcept -> month_day
+{
+    return {m, day(static_cast<etl::uint32_t>(d))};
+}
+[[nodiscard]] constexpr auto operator/(int m, day const& d) noexcept -> month_day
+{
+    return {month(static_cast<etl::uint32_t>(m)), d};
+}
+[[nodiscard]] constexpr auto operator/(day const& d, month const& m) noexcept -> month_day { return {m, d}; }
+[[nodiscard]] constexpr auto operator/(day const& d, int m) noexcept -> month_day
+{
+    return {month(static_cast<etl::uint32_t>(m)), d};
+}
+
 } // namespace etl::chrono
 
 #endif // TETL_CHRONO_MONTH_DAY_HPP

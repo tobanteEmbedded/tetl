@@ -431,7 +431,7 @@ namespace chrono = etl::chrono;
         CHECK(md.month() == chrono::month(5));
     }
     {
-        auto const md = chrono::month_day{chrono::month(13), chrono::day(15)};
+        auto const md = chrono::month(13) / 15;
         CHECK_FALSE(md.ok());
         CHECK(md.day() == chrono::day(15));
         CHECK(md.month() == chrono::month(13));
@@ -439,14 +439,14 @@ namespace chrono = etl::chrono;
 
     // ok
     {
-        CHECK(chrono::month_day{chrono::month(1), chrono::day(31)}.ok());
-        CHECK(chrono::month_day{chrono::month(2), chrono::day(28)}.ok());
-        CHECK(chrono::month_day{chrono::month(12), chrono::day(15)}.ok());
+        CHECK((chrono::month(1) / 31).ok());
+        CHECK((chrono::month(2) / 28).ok());
+        CHECK((chrono::month(12) / 15).ok());
 
-        CHECK_FALSE(chrono::month_day{chrono::month(1), chrono::day(0)}.ok());
-        CHECK_FALSE(chrono::month_day{chrono::month(1), chrono::day(32)}.ok());
-        CHECK_FALSE(chrono::month_day{chrono::month(2), chrono::day(30)}.ok());
-        CHECK_FALSE(chrono::month_day{chrono::month(13), chrono::day(15)}.ok());
+        CHECK_FALSE((chrono::month(1) / chrono::day(0)).ok());
+        CHECK_FALSE((chrono::month(1) / chrono::day(32)).ok());
+        CHECK_FALSE((2 / chrono::day(30)).ok());
+        CHECK_FALSE((chrono::day(15) / 13).ok());
     }
 
     // compare
@@ -479,20 +479,20 @@ namespace chrono = etl::chrono;
         CHECK(md.month() == chrono::January);
     }
     {
-        auto const md = chrono::month_day_last{chrono::May};
+        auto const md = chrono::last / chrono::May;
         CHECK(md.ok());
         CHECK(md.month() == chrono::May);
     }
     {
-        auto const md = chrono::month_day_last{chrono::month(13)};
+        auto const md = chrono::month(13) / chrono::last;
         CHECK_FALSE(md.ok());
         CHECK(md.month() == chrono::month(13));
     }
 
     // compare
     {
-        auto const birthday  = chrono::month_day_last{chrono::May};
-        auto const christmas = chrono::month_day_last{chrono::December};
+        auto const birthday  = chrono::last / 5;
+        auto const christmas = 12 / chrono::last;
         CHECK(birthday == birthday);
         CHECK(christmas != birthday);
         CHECK(birthday != christmas);
@@ -568,13 +568,13 @@ namespace chrono = etl::chrono;
         CHECK(ym.month() == etl::chrono::month(0));
     }
     {
-        auto const ym = etl::chrono::year_month{etl::chrono::year(1995), etl::chrono::month(5)};
+        auto const ym = etl::chrono::year(1995) / etl::chrono::month(5);
         CHECK(ym.ok());
         CHECK(ym.year() == etl::chrono::year(1995));
         CHECK(ym.month() == etl::chrono::month(5));
     }
     {
-        auto const ym = etl::chrono::year_month{etl::chrono::year(1995), etl::chrono::month(13)};
+        auto const ym = etl::chrono::year(1995) / etl::chrono::month(13);
         CHECK_FALSE(ym.ok());
         CHECK(ym.year() == etl::chrono::year(1995));
         CHECK(ym.month() == etl::chrono::month(13));
@@ -613,8 +613,8 @@ namespace chrono = etl::chrono;
 
     // compare
     {
-        auto const birthday  = etl::chrono::year_month{etl::chrono::year(1995), etl::chrono::month(5)};
-        auto const christmas = etl::chrono::year_month{etl::chrono::year(1995), etl::chrono::month(12)};
+        auto const birthday  = etl::chrono::year(1995) / 5;
+        auto const christmas = etl::chrono::year(1995) / 12;
         CHECK(birthday == birthday);
         CHECK(christmas != birthday);
         CHECK(birthday != christmas);

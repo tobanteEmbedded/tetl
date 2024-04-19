@@ -27,6 +27,26 @@ private:
     chrono::month _m;
 };
 
+[[nodiscard]] constexpr auto operator/(month const& m, last_spec /*tag*/) noexcept -> month_day_last
+{
+    return month_day_last{m};
+}
+
+[[nodiscard]] constexpr auto operator/(int m, last_spec /*tag*/) noexcept -> month_day_last
+{
+    return month_day_last{month(static_cast<etl::uint32_t>(m))};
+}
+
+[[nodiscard]] constexpr auto operator/(last_spec /*tag*/, month const& m) noexcept -> month_day_last
+{
+    return month_day_last{m};
+}
+
+[[nodiscard]] constexpr auto operator/(last_spec /*tag*/, int m) noexcept -> month_day_last
+{
+    return month_day_last{month(static_cast<etl::uint32_t>(m))};
+}
+
 } // namespace etl::chrono
 
 #endif // TETL_CHRONO_MONTH_DAY_LAST_HPP
