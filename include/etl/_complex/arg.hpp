@@ -14,7 +14,7 @@ namespace etl {
 template <typename T>
 [[nodiscard]] constexpr auto arg(complex<T> const& z) noexcept -> T
 {
-    return etl::atan2(z.real(), z.imag());
+    return etl::atan2(z.imag(), z.real());
 }
 
 /// \ingroup complex

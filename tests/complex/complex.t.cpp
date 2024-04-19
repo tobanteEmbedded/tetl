@@ -2,6 +2,9 @@
 
 #include <etl/complex.hpp>
 
+#include <etl/concepts.hpp>
+
+#include "testing/approx.hpp"
 #include "testing/testing.hpp"
 
 template <typename T>
@@ -226,12 +229,6 @@ constexpr auto test_all() -> bool
     CHECK(test<signed int>());
     CHECK(test<signed long>());
     CHECK(test<signed long long>());
-
-    // CHECK(test<unsigned char>());
-    // CHECK(test<unsigned short>());
-    // CHECK(test<unsigned int>());
-    // CHECK(test<unsigned long>());
-    // CHECK(test<unsigned long long>());
 
     CHECK(test<float>());
     CHECK(test<double>());
