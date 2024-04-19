@@ -2,6 +2,7 @@
 
 #include <etl/complex.hpp>
 
+#include <etl/type_traits.hpp>
 #include <etl/utility.hpp>
 
 #include "testing/approx.hpp"
@@ -13,6 +14,7 @@ constexpr auto test() -> bool
     // traits
     CHECK(sizeof(etl::complex<T>) == sizeof(T) * 2);
     CHECK_SAME_TYPE(typename etl::complex<T>::value_type, T);
+    CHECK(etl::is_trivially_copyable_v<etl::complex<T>>);
 
     // construct
     auto z1 = etl::complex<T>{};

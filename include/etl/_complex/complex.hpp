@@ -20,12 +20,12 @@ struct complex {
     using value_type = T;
 
     constexpr complex(T const& re = T(), T const& im = T());
-    constexpr complex(complex const& other);
+    constexpr complex(complex const& other) = default;
     template <typename X>
     constexpr complex(complex<X> const& other);
 
     constexpr auto operator=(T const& val) -> complex<T>&;
-    constexpr auto operator=(complex const& other) -> complex&;
+    constexpr auto operator=(complex const& other) -> complex& = default;
     template <typename X>
     constexpr auto operator=(complex<X> const& other) -> complex<T>&;
 
@@ -140,26 +140,11 @@ constexpr complex<T>::complex(T const& re, T const& im)
 }
 
 template <typename T>
-constexpr complex<T>::complex(complex const& other)
-    : _real{other.real()}
-    , _imag{other.imag()}
-{
-}
-
-template <typename T>
 template <typename X>
 constexpr complex<T>::complex(complex<X> const& other)
     : _real{static_cast<T>(other.real())}
     , _imag{static_cast<T>(other.imag())}
 {
-}
-
-template <typename T>
-constexpr auto complex<T>::operator=(complex const& other) -> complex&
-{
-    _real = other._real;
-    _imag = other._imag;
-    return *this;
 }
 
 template <typename T>
