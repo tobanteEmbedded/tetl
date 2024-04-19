@@ -650,6 +650,13 @@ namespace chrono = etl::chrono;
         CHECK(ym.year() == chrono::year(1995));
         CHECK(ym.month() == chrono::month(13));
     }
+    {
+        auto const min = etl::numeric_limits<etl::int16_t>::min();
+        auto const ym  = chrono::year(min) / chrono::month(1);
+        CHECK_FALSE(ym.ok());
+        CHECK(ym.year() == chrono::year(min));
+        CHECK(ym.month() == chrono::month(1));
+    }
 
     // arithmetic
     {
