@@ -734,6 +734,87 @@ namespace chrono = etl::chrono;
         CHECK(static_cast<chrono::sys_days>(ymd) == chrono::sys_days(chrono::days(0)));
     }
 
+    {
+        auto const ymd = chrono::year_month_day{chrono::sys_days(chrono::days(1000))};
+        CHECK(ymd.ok());
+        CHECK(ymd.year() == 1972_y);
+        CHECK(ymd.month() == chrono::September);
+        CHECK(ymd.day() == 27_d);
+        CHECK(static_cast<chrono::sys_days>(ymd) == chrono::sys_days(chrono::days(1000)));
+    }
+
+    {
+        auto const ymd = chrono::year_month_day{chrono::sys_days(chrono::days(10000))};
+        CHECK(ymd.ok());
+        CHECK(ymd.year() == 1997_y);
+        CHECK(ymd.month() == chrono::May);
+        CHECK(ymd.day() == 19_d);
+        CHECK(static_cast<chrono::sys_days>(ymd) == chrono::sys_days(chrono::days(10000)));
+    }
+
+    {
+        auto const ymd = chrono::year_month_day{chrono::sys_days(chrono::days(20000))};
+        CHECK(ymd.ok());
+        CHECK(ymd.year() == 2024_y);
+        CHECK(ymd.month() == chrono::October);
+        CHECK(ymd.day() == 4_d);
+        CHECK(static_cast<chrono::sys_days>(ymd) == chrono::sys_days(chrono::days(20000)));
+    }
+
+    {
+        auto const ymd = chrono::year_month_day{chrono::sys_days(chrono::days(100'000))};
+        CHECK(ymd.ok());
+        CHECK(ymd.year() == 2243_y);
+        CHECK(ymd.month() == chrono::October);
+        CHECK(ymd.day() == 17_d);
+        CHECK(static_cast<chrono::sys_days>(ymd) == chrono::sys_days(chrono::days(100'000)));
+    }
+
+    {
+        auto const ymd = chrono::year_month_day{chrono::sys_days(chrono::days(-10000))};
+        CHECK(ymd.ok());
+        CHECK(ymd.year() == 1942_y);
+        CHECK(ymd.month() == chrono::August);
+        CHECK(ymd.day() == 16_d);
+        CHECK(static_cast<chrono::sys_days>(ymd) == chrono::sys_days(chrono::days(-10000)));
+    }
+
+    {
+        auto const ymd = chrono::year_month_day{chrono::sys_days(chrono::days(-20000))};
+        CHECK(ymd.ok());
+        CHECK(ymd.year() == 1915_y);
+        CHECK(ymd.month() == chrono::March);
+        CHECK(ymd.day() == 31_d);
+        CHECK(static_cast<chrono::sys_days>(ymd) == chrono::sys_days(chrono::days(-20000)));
+    }
+
+    {
+        auto const ymd = chrono::year_month_day{chrono::sys_days(chrono::days(-100'000))};
+        CHECK(ymd.ok());
+        CHECK(ymd.year() == 1696_y);
+        CHECK(ymd.month() == chrono::March);
+        CHECK(ymd.day() == 17_d);
+        CHECK(static_cast<chrono::sys_days>(ymd) == chrono::sys_days(chrono::days(-100'000)));
+    }
+
+    {
+        auto const ymd = chrono::year_month_day{chrono::sys_days(chrono::days(-719'468))};
+        CHECK(ymd.ok());
+        CHECK(ymd.year() == 0_y);
+        CHECK(ymd.month() == chrono::March);
+        CHECK(ymd.day() == 1_d);
+        CHECK(static_cast<chrono::sys_days>(ymd) == chrono::sys_days(chrono::days(-719'468)));
+    }
+
+    {
+        auto const ymd = chrono::year_month_day{chrono::sys_days(chrono::days(-719'469))};
+        CHECK(ymd.ok());
+        CHECK(ymd.year() == 0_y);
+        CHECK(ymd.month() == chrono::February);
+        CHECK(ymd.day() == 29_d);
+        CHECK(static_cast<chrono::sys_days>(ymd) == chrono::sys_days(chrono::days(-719'469)));
+    }
+
     // arithmetic
     {
         auto const epoch     = chrono::year_month_day{chrono::sys_days(chrono::days(0))};
