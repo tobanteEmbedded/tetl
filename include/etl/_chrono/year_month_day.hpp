@@ -24,7 +24,7 @@ private:
 
         z += 719468;
         int32_t const era  = (z >= 0 ? z : z - 146096) / 146097;
-        uint32_t const doe = static_cast<uint32_t>(z - era * 146097);
+        auto const doe     = static_cast<uint32_t>(z - era * 146097);
         uint32_t const yoe = (doe - doe / 1460 + doe / 36524 - doe / 146096) / 365;
         int32_t const y    = static_cast<int32_t>(yoe) + era * 400;
         uint32_t const doy = doe - (365 * yoe + yoe / 4 - yoe / 100);
@@ -33,7 +33,7 @@ private:
         uint32_t const m   = mp < 10 ? mp + 3 : mp - 9;
 
         return {
-            chrono::year{static_cast<int>(y + (m <= 2))},
+            chrono::year{static_cast<int>(y) + static_cast<int>(m <= 2)},
             chrono::month{static_cast<unsigned>(m)},
             chrono::day{static_cast<unsigned>(d)},
         };
@@ -45,7 +45,7 @@ private:
         static_assert(etl::numeric_limits<uint32_t>::digits >= 18, "Not yet ported to a 16 bit unsigned integer");
         static_assert(etl::numeric_limits<int32_t>::digits >= 20, "Not yet ported to a 16 bit signed integer");
 
-        y -= m <= 2;
+        y -= static_cast<int32_t>(m <= 2);
         int32_t const era  = (y >= 0 ? y : y - 399) / 400;
         auto const yoe     = static_cast<uint32_t>(y - era * 400);            // [0, 399]
         uint32_t const doy = (153 * (m > 2 ? m - 3 : m + 9) + 2) / 5 + d - 1; // [0, 365]
