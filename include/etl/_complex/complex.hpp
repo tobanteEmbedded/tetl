@@ -8,6 +8,7 @@
 #include <etl/_tuple/tuple_element.hpp>
 #include <etl/_tuple/tuple_size.hpp>
 #include <etl/_type_traits/integral_constant.hpp>
+#include <etl/_utility/move.hpp>
 
 namespace etl {
 
@@ -48,6 +49,18 @@ struct complex {
     template <typename X>
     constexpr auto operator/=(complex<X> const& val) -> complex<T>&;
 
+    template <size_t I, typename X>
+    friend constexpr auto get(complex<X>&) noexcept -> X&;
+
+    template <size_t I, typename X>
+    friend constexpr auto get(complex<X>&&) noexcept -> X&&;
+
+    template <size_t I, typename X>
+    friend constexpr auto get(complex<X> const&) noexcept -> X const&;
+
+    template <size_t I, typename X>
+    friend constexpr auto get(complex<X> const&&) noexcept -> X const&&;
+
     friend constexpr auto operator==(complex const& lhs, complex const& rhs) -> bool
     {
         return lhs.real() == rhs.real() and lhs.imag() == rhs.imag();
@@ -70,10 +83,54 @@ template <typename T>
 struct tuple_size<etl::complex<T>> : etl::integral_constant<etl::size_t, 2> { };
 
 template <size_t I, typename T>
-    requires(I < 2)
 struct tuple_element<I, etl::complex<T>> {
+    static_assert(I < 2, "Index out of range for etl::complex");
     using type = T;
 };
+
+template <size_t I, typename X>
+constexpr auto get(complex<X>& z) noexcept -> X&
+{
+    static_assert(I < 2, "Index out of range for etl::complex");
+    if constexpr (I == 0) {
+        return z._real;
+    } else {
+        return z._imag;
+    }
+}
+
+template <size_t I, typename X>
+constexpr auto get(complex<X>&& z) noexcept -> X&&
+{
+    static_assert(I < 2, "Index out of range for etl::complex");
+    if constexpr (I == 0) {
+        return etl::move(z._real);
+    } else {
+        return etl::move(z._imag);
+    }
+}
+
+template <size_t I, typename X>
+constexpr auto get(complex<X> const& z) noexcept -> X const&
+{
+    static_assert(I < 2, "Index out of range for etl::complex");
+    if constexpr (I == 0) {
+        return z._real;
+    } else {
+        return z._imag;
+    }
+}
+
+template <size_t I, typename X>
+constexpr auto get(complex<X> const&& z) noexcept -> X const&&
+{
+    static_assert(I < 2, "Index out of range for etl::complex");
+    if constexpr (I == 0) {
+        return etl::move(z._real);
+    } else {
+        return etl::move(z._imag);
+    }
+}
 
 template <typename T>
 constexpr complex<T>::complex(T const& re, T const& im)
@@ -315,6 +372,7 @@ constexpr auto operator""_if(unsigned long long d) -> complex<float> { return {0
 
 } // namespace complex_literals
 } // namespace literals
+
 } // namespace etl
 
 #endif // TETL_COMPLEX_COMPLEX_HPP

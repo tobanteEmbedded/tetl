@@ -2,7 +2,7 @@
 
 #include <etl/complex.hpp>
 
-#include <etl/concepts.hpp>
+#include <etl/utility.hpp>
 
 #include "testing/approx.hpp"
 #include "testing/testing.hpp"
@@ -11,23 +11,21 @@ template <typename T>
 constexpr auto test() -> bool
 {
     // traits
-    CHECK(etl::tuple_size_v<etl::complex<T>> == 2);
     CHECK(sizeof(etl::complex<T>) == sizeof(T) * 2);
-    CHECK_SAME_TYPE(etl::tuple_element_t<0, etl::complex<T>>, T);
-    CHECK_SAME_TYPE(etl::tuple_element_t<1, etl::complex<T>>, T);
+    CHECK_SAME_TYPE(typename etl::complex<T>::value_type, T);
 
     // construct
-    auto tc = etl::complex<T>{};
-    CHECK(tc.real() == T(0));
-    CHECK(tc.imag() == T(0));
+    auto z1 = etl::complex<T>{};
+    CHECK(z1.real() == T(0));
+    CHECK(z1.imag() == T(0));
 
-    auto re = etl::complex<T>{T(1)};
-    CHECK(re.real() == T(1));
-    CHECK(re.imag() == T(0));
+    auto z2 = etl::complex<T>{T(1)};
+    CHECK(z2.real() == T(1));
+    CHECK(z2.imag() == T(0));
 
-    auto im = etl::complex<T>{T(1), T(2)};
-    CHECK(im.real() == T(1));
-    CHECK(im.imag() == T(2));
+    auto z3 = etl::complex<T>{T(1), T(2)};
+    CHECK(z3.real() == T(1));
+    CHECK(z3.imag() == T(2));
 
     {
         // from complex<U>
@@ -40,45 +38,45 @@ constexpr auto test() -> bool
         CHECK(z.imag() == T(0));
     }
 
-    tc = re;
-    CHECK(tc.real() == T(1));
-    CHECK(tc.imag() == T(0));
-    CHECK(etl::real(tc) == T(1));
-    CHECK(etl::imag(tc) == T(0));
-    CHECK(real(tc) == T(1)); // ADL
-    CHECK(imag(tc) == T(0)); // ADL
+    z1 = z2;
+    CHECK(z1.real() == T(1));
+    CHECK(z1.imag() == T(0));
+    CHECK(etl::real(z1) == T(1));
+    CHECK(etl::imag(z1) == T(0));
+    CHECK(real(z1) == T(1)); // ADL
+    CHECK(imag(z1) == T(0)); // ADL
 
-    tc *= T(2);
-    CHECK(tc.real() == T(2));
-    CHECK(tc.imag() == T(0));
+    z1 *= T(2);
+    CHECK(z1.real() == T(2));
+    CHECK(z1.imag() == T(0));
 
-    tc.real(T(1));
-    tc.imag(T(2));
-    CHECK(tc.real() == T(1));
-    CHECK(tc.imag() == T(2));
+    z1.real(T(1));
+    z1.imag(T(2));
+    CHECK(z1.real() == T(1));
+    CHECK(z1.imag() == T(2));
 
     // unary +
-    tc = +tc;
-    CHECK(tc.real() == T(1));
-    CHECK(tc.imag() == T(2));
+    z1 = +z1;
+    CHECK(z1.real() == T(1));
+    CHECK(z1.imag() == T(2));
 
     // unary -
-    tc = -tc;
-    CHECK(tc.real() == T(-1));
-    CHECK(tc.imag() == T(-2));
+    z1 = -z1;
+    CHECK(z1.real() == T(-1));
+    CHECK(z1.imag() == T(-2));
 
     // unary -
-    tc = -tc;
-    CHECK(tc.real() == T(1));
-    CHECK(tc.imag() == T(2));
+    z1 = -z1;
+    CHECK(z1.real() == T(1));
+    CHECK(z1.imag() == T(2));
 
     // operator+
-    auto sum = tc + tc;
+    auto sum = z1 + z1;
     CHECK(sum.real() == T(2));
     CHECK(sum.imag() == T(4));
 
     // operator-
-    auto diff = tc - sum;
+    auto diff = z1 - sum;
     CHECK(diff.real() == T(-1));
     CHECK(diff.imag() == T(-2));
 
@@ -215,6 +213,49 @@ constexpr auto test() -> bool
         CHECK(ldi.imag() == 2.0L);
     }
 
+    // tuple protocol
+    CHECK(etl::tuple_size_v<etl::complex<T>> == 2);
+    CHECK_SAME_TYPE(etl::tuple_element_t<0, etl::complex<T>>, T);
+    CHECK_SAME_TYPE(etl::tuple_element_t<1, etl::complex<T>>, T);
+
+    auto z = etl::complex{T(1), T(2)};
+
+    CHECK_SAME_TYPE(decltype(etl::get<0>(z)), T&);
+    CHECK_SAME_TYPE(decltype(etl::get<0>(etl::as_const(z))), T const&);
+    CHECK_SAME_TYPE(decltype(etl::get<0>(etl::move(z))), T&&);
+    CHECK_SAME_TYPE(decltype(etl::get<1>(z)), T&);
+    CHECK_SAME_TYPE(decltype(etl::get<1>(etl::as_const(z))), T const&);
+    CHECK_SAME_TYPE(decltype(etl::get<1>(etl::move(z))), T&&);
+
+    CHECK_NOEXCEPT(etl::get<0>(z));
+    CHECK_NOEXCEPT(etl::get<0>(etl::as_const(z)));
+    CHECK_NOEXCEPT(etl::get<0>(etl::move(z)));
+    CHECK_NOEXCEPT(etl::get<1>(z));
+    CHECK_NOEXCEPT(etl::get<1>(etl::as_const(z)));
+    CHECK_NOEXCEPT(etl::get<1>(etl::move(z)));
+
+    CHECK(etl::get<0>(z) == T(1));
+    CHECK(etl::get<1>(z) == T(2));
+    CHECK(etl::get<0>(etl::as_const(z)) == T(1));
+    CHECK(etl::get<1>(etl::as_const(z)) == T(2));
+    CHECK(etl::get<0>(etl::complex{T(1), T(2)}) == T(1));
+    CHECK(etl::get<1>(etl::complex{T(1), T(2)}) == T(2));
+
+    CHECK_SAME_TYPE(decltype(get<0>(z)), T&);                         // ADL
+    CHECK_SAME_TYPE(decltype(get<0>(etl::as_const(z))), T const&);    // ADL
+    CHECK_SAME_TYPE(decltype(get<0>(etl::complex{T(1), T(2)})), T&&); // ADL
+    CHECK_SAME_TYPE(decltype(get<1>(z)), T&);                         // ADL
+    CHECK_SAME_TYPE(decltype(get<1>(etl::as_const(z))), T const&);    // ADL
+    CHECK_SAME_TYPE(decltype(get<1>(etl::complex{T(1), T(2)})), T&&); // ADL
+
+    CHECK(get<0>(z) == T(1));                        // ADL
+    CHECK(get<1>(z) == T(2));                        // ADL
+    CHECK(get<0>(etl::as_const(z)) == T(1));         // ADL
+    CHECK(get<1>(etl::as_const(z)) == T(2));         // ADL
+    CHECK(get<0>(etl::complex{T(1), T(2)}) == T(1)); // ADL
+    CHECK(get<1>(etl::complex{T(1), T(2)}) == T(2)); // ADL
+
+    // access
     CHECK(etl::conj(T(12)) == T(12));
     CHECK(etl::real(T(12)) == T(12));
     CHECK(etl::imag(T(12)) == T(0));
