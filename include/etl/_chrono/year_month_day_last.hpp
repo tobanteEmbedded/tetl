@@ -32,7 +32,7 @@ namespace detail {
     if (m == chrono::month{2} and y.is_leap()) {
         return chrono::day{29};
     }
-    return lastDays[(static_cast<unsigned>(m) - 1) & static_cast<unsigned>(0xF)];
+    return lastDays[static_cast<unsigned>(m) - 1];
 }
 
 } // namespace detail
@@ -130,6 +130,31 @@ constexpr auto year_month_day_last::operator-=(years const& y) noexcept -> year_
 {
     *this = *this - y;
     return *this;
+}
+
+[[nodiscard]] constexpr auto operator/(year_month const& ym, last_spec /*tag*/) noexcept -> year_month_day_last
+{
+    return {ym.year(), month_day_last(ym.month())};
+}
+
+[[nodiscard]] constexpr auto operator/(year const& y, month_day_last const& mdl) noexcept -> year_month_day_last
+{
+    return {y, mdl};
+}
+
+[[nodiscard]] constexpr auto operator/(int y, month_day_last const& mdl) noexcept -> year_month_day_last
+{
+    return {year(y), mdl};
+}
+
+[[nodiscard]] constexpr auto operator/(month_day_last const& mdl, year const& y) noexcept -> year_month_day_last
+{
+    return {y, mdl};
+}
+
+[[nodiscard]] constexpr auto operator/(month_day_last const& mdl, int y) noexcept -> year_month_day_last
+{
+    return {year(y), mdl};
 }
 
 } // namespace etl::chrono

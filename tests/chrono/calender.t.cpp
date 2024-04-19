@@ -722,6 +722,55 @@ namespace chrono = etl::chrono;
     return true;
 }
 
+[[nodiscard]] constexpr auto test_year_month_day_last() -> bool
+{
+    // traits
+    CHECK(etl::is_nothrow_constructible_v<chrono::year_month_day_last, chrono::year, chrono::month_day_last>);
+
+    // construct
+    {
+        auto const ymd = chrono::year(1995) / 5 / chrono::last;
+        CHECK(ymd.ok());
+        CHECK(ymd.year() == chrono::year(1995));
+        CHECK(ymd.month() == chrono::month(5));
+        CHECK(ymd.day() == chrono::day(31));
+    }
+
+    {
+        auto const ymd = chrono::May / chrono::last / chrono::year(1995);
+        CHECK(ymd.ok());
+        CHECK(ymd.year() == chrono::year(1995));
+        CHECK(ymd.month() == chrono::month(5));
+        CHECK(ymd.day() == chrono::day(31));
+    }
+
+    {
+        auto const ymd = chrono::May / chrono::last / 1995;
+        CHECK(ymd.ok());
+        CHECK(ymd.year() == chrono::year(1995));
+        CHECK(ymd.month() == chrono::month(5));
+        CHECK(ymd.day() == chrono::day(31));
+    }
+
+    {
+        auto const ymd = 1995 / (chrono::February / chrono::last);
+        CHECK(ymd.ok());
+        CHECK(ymd.year() == chrono::year(1995));
+        CHECK(ymd.month() == chrono::month(2));
+        CHECK(ymd.day() == chrono::day(28));
+    }
+
+    {
+        auto const ymd = chrono::year(2020) / (chrono::February / chrono::last);
+        CHECK(ymd.ok());
+        CHECK(ymd.year() == chrono::year(2020));
+        CHECK(ymd.month() == chrono::month(2));
+        CHECK(ymd.day() == chrono::day(29));
+    }
+
+    return true;
+}
+
 [[nodiscard]] constexpr auto test_all() -> bool
 {
     CHECK(test_duration());
@@ -741,6 +790,7 @@ namespace chrono = etl::chrono;
 
     CHECK(test_year_month());
     CHECK(test_year_month_day());
+    CHECK(test_year_month_day_last());
 
     return true;
 }
