@@ -886,6 +886,12 @@ namespace chrono = etl::chrono;
         CHECK(ymd.day() == chrono::day(29));
     }
 
+    {
+        auto const min = etl::numeric_limits<etl::int16_t>::min();
+        CHECK_FALSE((chrono::year(2020) / (chrono::month(13) / chrono::last)).ok()); // invalid month
+        CHECK_FALSE((chrono::year(min) / (chrono::month(1) / chrono::last)).ok());   // invalid year
+    }
+
     return true;
 }
 
