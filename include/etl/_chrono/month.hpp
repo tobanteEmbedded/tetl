@@ -4,7 +4,9 @@
 #define TETL_CHRONO_MONTH_HPP
 
 #include <etl/_chrono/duration.hpp>
+#include <etl/_contracts/check.hpp>
 #include <etl/_cstdint/uint_t.hpp>
+#include <etl/_limits/numeric_limits.hpp>
 
 namespace etl::chrono {
 
@@ -20,9 +22,10 @@ namespace etl::chrono {
 struct month {
     month() = default;
 
-    constexpr explicit month(unsigned d) noexcept
-        : _count{static_cast<etl::uint8_t>(d)}
+    constexpr explicit month(unsigned m) noexcept
+        : _count{static_cast<etl::uint8_t>(m)}
     {
+        TETL_PRECONDITION(m < etl::numeric_limits<etl::uint8_t>::max());
     }
 
     constexpr auto operator++() noexcept -> month&

@@ -94,11 +94,14 @@ namespace chrono = etl::chrono;
     ++m;
     CHECK(m == chrono::month(1));
 
-    ++m;
+    m++;
     CHECK(m == chrono::month(2));
 
     --m;
     CHECK(m == chrono::month(1));
+
+    m--;
+    CHECK(m == chrono::month(0));
 
     // ok
     CHECK(chrono::month(1).ok());
@@ -693,6 +696,8 @@ namespace chrono = etl::chrono;
 
 [[nodiscard]] constexpr auto test_year_month_day() -> bool
 {
+    using namespace etl::chrono_literals;
+
     // traits
     CHECK(etl::is_trivially_default_constructible_v<chrono::year_month_day>);
     CHECK(etl::is_nothrow_constructible_v<chrono::year_month_day, chrono::year, chrono::month, chrono::day>);
@@ -704,30 +709,39 @@ namespace chrono = etl::chrono;
     {
         auto const ymd = chrono::year_month_day{};
         CHECK_FALSE(ymd.ok());
-        CHECK(ymd.year() == chrono::year(0));
+        CHECK(ymd.year() == 0_y);
         CHECK(ymd.month() == chrono::month(0));
-        CHECK(ymd.day() == chrono::day(0));
+        CHECK(ymd.day() == 0_d);
     }
 
     {
-        auto const ymd = chrono::year_month_day{chrono::year(1995), chrono::month(5), chrono::day(15)};
+        auto const ymd = chrono::year_month_day{1995_y, chrono::month(5), 15_d};
         CHECK(ymd.ok());
-        CHECK(ymd.year() == chrono::year(1995));
+        CHECK(ymd.year() == 1995_y);
         CHECK(ymd.month() == chrono::month(5));
-        CHECK(ymd.day() == chrono::day(15));
-        CHECK(ymd == (chrono::year(1995) / 5 / 15));
-        CHECK(ymd == (chrono::day(15) / 5 / chrono::year(1995)));
-        CHECK(ymd == (chrono::day(15) / 5 / 1995));
+        CHECK(ymd.day() == 15_d);
+        CHECK(ymd == (1995_y / 5 / 15));
+        CHECK(ymd == (15_d / 5 / 1995_y));
+        CHECK(ymd == (15_d / 5 / 1995));
     }
 
     {
         auto const ymd = chrono::year_month_day{chrono::sys_days(chrono::days(0))};
         CHECK(ymd.ok());
-        CHECK(ymd.year() == chrono::year(1970));
+        CHECK(ymd.year() == 1970_y);
         CHECK(ymd.month() == chrono::month(1));
-        CHECK(ymd.day() == chrono::day(1));
+        CHECK(ymd.day() == 1_d);
         CHECK(static_cast<chrono::sys_days>(ymd) == chrono::sys_days(chrono::days(0)));
     }
+
+    // // arithmetic
+    // {
+    //     auto const epoch     = chrono::year_month_day{chrono::sys_days(chrono::days(0))};
+    //     auto const nextMonth = epoch + chrono::months(1);
+    //     CHECK(nextMonth.year() == 1970_y);
+    //     CHECK(nextMonth.month() == chrono::month(2));
+    //     CHECK(nextMonth.day() == 1_d);
+    // }
 
     return true;
 }
