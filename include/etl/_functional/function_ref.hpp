@@ -27,12 +27,10 @@ struct function_ref<Noexcept, R(Args...)> {
         requires(not etl::is_same_v<decay_t<F>, function_ref> and etl::is_invocable_r_v<R, F &&, Args...>)
     function_ref(F&& f) noexcept
         : _obj(const_cast<void*>(reinterpret_cast<void const*>(etl::addressof(f))))
-        , _callable{
-              +[](void* obj, Args... args) -> R {
-                  auto* func = reinterpret_cast<etl::add_pointer_t<F>>(obj);
-                  return etl::invoke_r<R>(*func, etl::forward<Args>(args)...);
-              },
-          }
+        , _callable{+[](void* obj, Args... args) -> R {
+            auto* func = reinterpret_cast<etl::add_pointer_t<F>>(obj);
+            return etl::invoke_r<R>(*func, etl::forward<Args>(args)...);
+        }}
     {
     }
 
