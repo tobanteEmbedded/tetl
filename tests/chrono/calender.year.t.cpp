@@ -381,12 +381,46 @@ namespace chrono = etl::chrono;
     return true;
 }
 
+[[nodiscard]] constexpr auto test_year_month_weekday() -> bool
+{
+    using namespace etl::chrono_literals;
+    using chrono::year_month_weekday;
+
+    // traits
+    CHECK(etl::is_trivially_default_constructible_v<year_month_weekday>);
+    CHECK(etl::is_nothrow_constructible_v<year_month_weekday, chrono::sys_days>);
+    CHECK(etl::is_nothrow_constructible_v<year_month_weekday, chrono::local_days>);
+    CHECK(etl::is_nothrow_constructible_v<year_month_weekday, chrono::year, chrono::month, chrono::weekday_indexed>);
+
+    // construct
+    {
+        auto const ymd = year_month_weekday{chrono::year(1995), chrono::May, chrono::Monday[2]};
+        CHECK(ymd.ok());
+        CHECK(ymd.year() == chrono::year(1995));
+        CHECK(ymd.month() == chrono::May);
+        CHECK(ymd.weekday() == chrono::Monday);
+        CHECK(ymd.weekday_indexed() == chrono::Monday[2]);
+    }
+
+    {
+        auto const ymd = year_month_weekday{chrono::year(1970), chrono::January, chrono::Monday[6]};
+        CHECK_FALSE(ymd.ok());
+        CHECK(ymd.year() == chrono::year(1970));
+        CHECK(ymd.month() == chrono::January);
+        CHECK(ymd.weekday() == chrono::Monday);
+        CHECK(ymd.weekday_indexed() == chrono::Monday[6]);
+    }
+
+    return true;
+}
+
 [[nodiscard]] constexpr auto test_all() -> bool
 {
     CHECK(test_year());
     CHECK(test_year_month());
     CHECK(test_year_month_day());
     CHECK(test_year_month_day_last());
+    CHECK(test_year_month_weekday());
     return true;
 }
 

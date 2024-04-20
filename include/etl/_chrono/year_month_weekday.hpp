@@ -33,18 +33,26 @@ struct year_month_weekday {
     constexpr auto operator-=(years const& y) noexcept -> year_month_weekday&;
 
     [[nodiscard]] constexpr auto year() const noexcept -> chrono::year { return _y; }
-
     [[nodiscard]] constexpr auto month() const noexcept -> chrono::month { return _m; }
-
     [[nodiscard]] constexpr auto weekday() const noexcept -> chrono::weekday { return _wdi.weekday(); }
-
     [[nodiscard]] constexpr auto index() const noexcept -> unsigned { return _wdi.index(); }
-
     [[nodiscard]] constexpr auto weekday_indexed() const noexcept -> chrono::weekday_indexed { return _wdi; }
+
+    [[nodiscard]] constexpr auto ok() const noexcept -> bool
+    {
+        if (not _y.ok() or not _m.ok() or not _wdi.weekday().ok() or _wdi.index() < 1) {
+            return false;
+        }
+        if (_wdi.index() <= 4) {
+            return true;
+        }
+        auto firstOfMonth = chrono::weekday(static_cast<sys_days>(_y / _m / 1));
+        auto d2 = _wdi.weekday() - firstOfMonth + days(static_cast<int_least32_t>((_wdi.index() - 1) * 7 + 1));
+        return static_cast<unsigned>(d2.count()) <= static_cast<unsigned>((_y / _m / last).day());
+    }
 
     [[nodiscard]] constexpr operator sys_days() const noexcept;
     [[nodiscard]] constexpr explicit operator local_days() const noexcept;
-    [[nodiscard]] constexpr auto ok() const noexcept -> bool;
 
 private:
     chrono::year _y;

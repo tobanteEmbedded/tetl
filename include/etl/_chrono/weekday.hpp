@@ -93,6 +93,12 @@ private:
     return weekday{static_cast<unsigned>((static_cast<int32_t>(lhs.c_encoding()) - rhs.count()) % 7)};
 }
 
+[[nodiscard]] constexpr auto operator-(weekday const& lhs, weekday const& rhs) noexcept -> days
+{
+    auto const count = static_cast<int_least32_t>(lhs.c_encoding() - rhs.c_encoding());
+    return count >= 0 ? days{count} : days{count + 7};
+}
+
 inline constexpr auto Sunday    = etl::chrono::weekday{0}; // NOLINT(readability-identifier-naming)
 inline constexpr auto Monday    = etl::chrono::weekday{1}; // NOLINT(readability-identifier-naming)
 inline constexpr auto Tuesday   = etl::chrono::weekday{2}; // NOLINT(readability-identifier-naming)
