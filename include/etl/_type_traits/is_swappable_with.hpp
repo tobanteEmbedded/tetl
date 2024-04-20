@@ -22,13 +22,13 @@ struct is_swappable;
 template <typename T>
 struct is_nothrow_swappable;
 
-// clang-format off
 template <typename T>
-requires(etl::is_move_constructible_v<T> && etl::is_move_assignable_v<T>)
-constexpr auto swap(T& a, T& b) noexcept(etl::is_nothrow_move_constructible_v<T> && etl::is_nothrow_move_assignable_v<T>) -> void;
+    requires(etl::is_move_constructible_v<T> && etl::is_move_assignable_v<T>)
+constexpr auto swap(T& a, T& b)
+    noexcept(etl::is_nothrow_move_constructible_v<T> && etl::is_nothrow_move_assignable_v<T>) -> void;
 
-template<typename T, etl::size_t N>
-requires(etl::is_swappable<T>::value)
+template <typename T, etl::size_t N>
+    requires(etl::is_swappable<T>::value)
 constexpr auto swap(T (&a)[N], T (&b)[N]) noexcept(etl::is_nothrow_swappable<T>::value) -> void;
 
 // swap(declval<T>(), declval<U>()) is not valid
@@ -42,12 +42,10 @@ struct _swappable_with_helper<T, U, void_t<decltype(swap(declval<T>(), declval<U
 // Determine if expressions with type and value category T and U can be
 // swapped (and vice versa)
 template <typename T, typename U>
-struct is_swappable_with : bool_constant<conjunction_v<_swappable_with_helper<T, U>, _swappable_with_helper<U, T>>> {};
+struct is_swappable_with : bool_constant<conjunction_v<_swappable_with_helper<T, U>, _swappable_with_helper<U, T>>> { };
 
 template <typename T, typename U>
 inline constexpr bool is_swappable_with_v = is_swappable_with<T, U>::value;
-
-// clang-format on
 
 } // namespace etl
 

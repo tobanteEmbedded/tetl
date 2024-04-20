@@ -8,19 +8,15 @@
 
 namespace etl {
 
-// clang-format off
-
 /// \brief If T is not a referenceable type (i.e., possibly cv-qualified void or
 /// a function type with a cv-qualifier-seq or a ref-qualifier), provides a
 /// member constant value equal to false. Otherwise, provides a member constant
 /// value equal to etl::is_nothrow_swappable_with<T&, T&>::value
 template <typename T>
-struct is_nothrow_swappable : is_nothrow_swappable_with<add_lvalue_reference_t<T>, add_lvalue_reference_t<T>>::type {};
+struct is_nothrow_swappable : is_nothrow_swappable_with<add_lvalue_reference_t<T>, add_lvalue_reference_t<T>>::type { };
 
 template <typename T>
 inline constexpr bool is_nothrow_swappable_v = is_nothrow_swappable<T>::value;
-
-// clang-format on
 
 } // namespace etl
 

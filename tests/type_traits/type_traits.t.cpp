@@ -29,7 +29,6 @@ constexpr auto test_identity() -> bool
     CHECK_SAME_TYPE(T, typename etl::type_identity<T>::type);
     CHECK_SAME_TYPE(T, etl::type_identity_t<T>);
 
-    // clang-format off
     if constexpr (not etl::is_function_v<T>) {
         CHECK_SAME_TYPE(T const, typename etl::type_identity<T const>::type);
         CHECK_SAME_TYPE(T volatile, typename etl::type_identity<T volatile>::type);
@@ -64,7 +63,6 @@ constexpr auto test_identity() -> bool
         CHECK_SAME_TYPE(T const volatile&&, etl::type_identity_t<T const volatile&&>);
     }
 
-    // clang-format on
     return true;
 }
 } // namespace
@@ -481,7 +479,6 @@ constexpr auto test() -> bool
     CHECK_TRAIT_TYPE(remove_reference, TV&&, TV);
     CHECK_TRAIT_TYPE(remove_reference, TCV&&, TCV);
 
-    // clang-format off
     CHECK_TRAIT_TYPE(add_lvalue_reference, T, T&);
     CHECK_TRAIT_TYPE(add_lvalue_reference, TC, TC&);
     CHECK_TRAIT_TYPE(add_lvalue_reference, TV, TV&);
@@ -490,7 +487,6 @@ constexpr auto test() -> bool
     CHECK_TRAIT_TYPE(add_lvalue_reference, void const, void const);
     CHECK_TRAIT_TYPE(add_lvalue_reference, void volatile, void volatile);
     CHECK_TRAIT_TYPE(add_lvalue_reference, void const volatile, void const volatile);
-    // clang-format on
 
     CHECK_TRAIT_TYPE(add_rvalue_reference, T, T&&);
     CHECK_TRAIT_TYPE(add_rvalue_reference, TC, TC&&);
@@ -504,7 +500,6 @@ constexpr auto test() -> bool
     CHECK_IS_TRAIT_CV(is_swappable, T*);
     CHECK_IS_TRAIT_CV(is_swappable, void*);
 
-    // clang-format off
     CHECK(test_identity<void>());
     CHECK(test_identity<T>());
     CHECK(test_identity<T*>());
@@ -539,7 +534,6 @@ constexpr auto test() -> bool
     CHECK(test_identity<T const& (IDS::*)(T)>());
     CHECK(test_identity<T volatile& (IDS::*)(T)>());
     CHECK(test_identity<T const volatile& (IDS::*)(T)>());
-    // clang-format on
 
     CHECK(sizeof(etl::aligned_union_t<0, char>) == 1);
     CHECK(sizeof(etl::aligned_union_t<2, char>) == 2);

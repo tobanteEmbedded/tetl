@@ -16,15 +16,11 @@ template <typename From, typename To>
 struct is_nothrow_convertible : bool_constant<is_void_v<From> && is_void_v<To>> { };
 
 template <typename From, typename To>
-// clang-format off
-    requires
-    requires {
-        static_cast<To(*)()>(nullptr);
-        { declval<void(&)(To) noexcept>()(declval<From>()) } noexcept;
+    requires requires {
+        static_cast<To (*)()>(nullptr);
+        { declval<void (&)(To) noexcept>()(declval<From>()) } noexcept;
     }
-struct is_nothrow_convertible<From, To> : true_type {};
-
-// clang-format on
+struct is_nothrow_convertible<From, To> : true_type { };
 
 template <typename From, typename To>
 inline constexpr bool is_nothrow_convertible_v = is_nothrow_convertible<From, To>::value;

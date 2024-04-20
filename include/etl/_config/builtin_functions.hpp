@@ -107,12 +107,10 @@
     #define TETL_BUILTIN_HUGE_VALL (1.0L / 0.0L)
 #endif
 
-// clang-format off
 #if defined(TETL_COMPILER_CLANG) or defined(TETL_COMPILER_MSVC)
     #define TETL_BUILTIN_INT_SEQ(T, N) __make_integer_seq<integer_sequence, T, N>
 #else
     #define TETL_BUILTIN_INT_SEQ(T, N) integer_sequence<T, __integer_pack(N)...>
 #endif
-// clang-format on
 
 #endif // TETL_CONFIG_BUILTIN_FUNCTIONS_HPP

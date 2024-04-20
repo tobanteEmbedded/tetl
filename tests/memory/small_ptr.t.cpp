@@ -34,19 +34,17 @@ auto test() -> bool
     {
         using ptr_t = etl::small_ptr<T const, 16, etl::uintptr_t>;
 
-        // clang-format off
-        auto ptr = ptr_t { reinterpret_cast<T*>(32) };
+        auto ptr = ptr_t{reinterpret_cast<T*>(32)};
         CHECK(ptr.compressed_value() == static_cast<etl::uintptr_t>(32 - 16));
         CHECK(reinterpret_cast<etl::uintptr_t>(ptr.operator->()) == static_cast<etl::uintptr_t>(32));
 
-        ptr = ptr_t { reinterpret_cast<T*>(2048) };
+        ptr = ptr_t{reinterpret_cast<T*>(2048)};
         CHECK(ptr.compressed_value() == static_cast<etl::uintptr_t>(2048 - 16));
         CHECK(reinterpret_cast<etl::uintptr_t>(ptr.operator->()) == static_cast<etl::uintptr_t>(2048));
 
-        ptr = ptr_t { reinterpret_cast<T*>(4100) };
+        ptr = ptr_t{reinterpret_cast<T*>(4100)};
         CHECK(ptr.compressed_value() == static_cast<etl::uintptr_t>(4100 - 16));
         CHECK(reinterpret_cast<etl::uintptr_t>(ptr.operator->()) == static_cast<etl::uintptr_t>(4100));
-        // clang-format on
     }
 
     // get mutable

@@ -10,7 +10,6 @@
 
 namespace etl {
 
-// clang-format off
 namespace detail {
 
 template <typename Result, typename Ret, bool = etl::is_void_v<Ret>, typename = void>
@@ -23,15 +22,16 @@ struct is_invocable_impl<Result, Ret, true, etl::void_t<typename Result::type>> 
 template <typename Result, typename Ret>
 struct is_invocable_impl<Result, Ret, false, etl::void_t<typename Result::type>> {
     static auto get_t() -> typename Result::type;
-    template <typename T> static auto use_t(T /*ignore*/) -> void;
-    template <typename T, typename = decltype(use_t<T>(get_t()))> static auto check_converts_to_t(int /*ignore*/) -> etl::true_type;
-    template <typename T> static auto check_converts_to_t(...) -> etl::false_type;
+    template <typename T>
+    static auto use_t(T /*ignore*/) -> void;
+    template <typename T, typename = decltype(use_t<T>(get_t()))>
+    static auto check_converts_to_t(int /*ignore*/) -> etl::true_type;
+    template <typename T>
+    static auto check_converts_to_t(...) -> etl::false_type;
     using type = decltype(check_converts_to_t<Ret>(1));
 };
 
 } // namespace detail
-
-// clang-format on
 
 template <typename Fn, typename... ArgTypes>
 struct is_invocable : detail::is_invocable_impl<invoke_result<Fn, ArgTypes...>, void>::type { };

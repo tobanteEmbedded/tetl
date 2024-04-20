@@ -17,17 +17,16 @@ namespace size_cpo {
 auto size(auto&) -> void       = delete;
 auto size(auto const&) -> void = delete;
 
-// clang-format off
 template <typename T>
 concept has_member_size = not etl::ranges::disable_sized_range<etl::remove_cv_t<T>> and requires(T&& t) {
     { decay_copy(t.size()) } -> etl::integral;
 };
 
+// clang-format off
 template <typename T>
 concept has_adl_size = not has_member_size<T> and not etl::ranges::disable_sized_range<etl::remove_cv_t<T>> and requires(T&& t) {
     { decay_copy(size(t)) } -> etl::integral;
 };
-
 // clang-format on
 
 struct fn {

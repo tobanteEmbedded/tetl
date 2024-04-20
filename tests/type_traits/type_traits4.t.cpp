@@ -93,7 +93,6 @@ constexpr auto test() -> bool
     CHECK_IS_TRAIT_CV_FALSE(is_trivially_destructible, NonTrivialDtor);
     CHECK_IS_TRAIT_CV_FALSE(is_trivially_destructible, NonTrivialDtorMember);
 
-    // clang-format off
     CHECK_IS_TRAIT(is_default_constructible, T);
     CHECK_IS_TRAIT(is_default_constructible, T*);
     CHECK_IS_TRAIT(is_default_constructible, TriviallyConstructable);
@@ -108,7 +107,6 @@ constexpr auto test() -> bool
     CHECK_IS_TRAIT(is_trivially_default_constructible, T*);
     CHECK_IS_TRAIT(is_trivially_default_constructible, TriviallyConstructable);
     CHECK_IS_TRAIT_FALSE(is_trivially_default_constructible, NonTriviallyConstructable);
-    // clang-format on
 
     CHECK(etl::is_trivially_constructible_v<T>);
     CHECK(etl::is_trivially_constructible_v<T*>);

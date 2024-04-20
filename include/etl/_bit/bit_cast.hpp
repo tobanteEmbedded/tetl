@@ -13,15 +13,11 @@
 namespace etl {
 
 namespace detail {
-// clang-format off
-template <typename To, typename From>
-inline constexpr auto bit_castable_types =
-        (sizeof(To) == sizeof(From))
-    and is_trivially_copyable_v<From>
-    and is_trivially_copyable_v<To>;
-}
 
-// clang-format on
+template <typename To, typename From>
+concept bitcastable = (sizeof(To) == sizeof(From)) and is_trivially_copyable_v<From> and is_trivially_copyable_v<To>;
+
+} // namespace detail
 
 /// Obtain a value of type To by reinterpreting the object representation
 /// of from. Every bit in the value representation of the returned To object is
@@ -38,7 +34,7 @@ inline constexpr auto bit_castable_types =
 ///
 /// \ingroup bit
 template <typename To, typename From>
-    requires(detail::bit_castable_types<To, From>)
+    requires detail::bitcastable<To, From>
 constexpr auto bit_cast(From const& src) noexcept -> To
 {
 #if __has_builtin(__builtin_bit_cast) or (defined(_MSC_VER) and not defined(__clang__))

@@ -16,7 +16,6 @@ namespace end_cpo {
 auto end(auto&) -> void       = delete;
 auto end(auto const&) -> void = delete;
 
-// clang-format off
 template <typename T>
 concept has_member_end = ranges::detail::can_borrow<T> and requires(T&& t) {
     { decay_copy(t.end()) } -> etl::sentinel_for<etl::ranges::iterator_t<T>>;
@@ -26,7 +25,6 @@ template <typename T>
 concept has_adl_end = not has_member_end<T> and ranges::detail::can_borrow<T> and requires(T&& t) {
     { decay_copy(end(t)) } -> etl::sentinel_for<etl::ranges::iterator_t<T>>;
 };
-// clang-format on
 
 struct fn {
     template <typename T, etl::size_t Size>
