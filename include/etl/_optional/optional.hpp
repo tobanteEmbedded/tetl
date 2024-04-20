@@ -588,21 +588,6 @@ template <typename T, typename U>
 /// \relates optional
 /// \ingroup optional
 template <typename T, typename U>
-[[nodiscard]] constexpr auto operator!=(optional<T> const& lhs, optional<U> const& rhs) -> bool
-{
-    if (static_cast<bool>(lhs) != static_cast<bool>(rhs)) {
-        return true;
-    }
-    if (not static_cast<bool>(lhs) and not static_cast<bool>(rhs)) {
-        return false;
-    }
-    return (*lhs) != (*rhs);
-}
-
-/// \brief Compares two optional objects, lhs and rhs.
-/// \relates optional
-/// \ingroup optional
-template <typename T, typename U>
 [[nodiscard]] constexpr auto operator<(optional<T> const& lhs, optional<U> const& rhs) -> bool
 {
     if (not static_cast<bool>(rhs)) {

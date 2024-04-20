@@ -134,8 +134,10 @@ constexpr auto test() -> bool
         CHECK(optional<T>{} == optional<T>{});
         CHECK(optional<T>{T(42)} == optional<T>{T(42)});
         CHECK_FALSE(optional<T>{T(42)} == optional<T>{T(99)});
+
         CHECK_FALSE(optional<T>{} == optional<T>{T(99)});
         CHECK_FALSE(optional<T>{T(42)} == optional<T>{});
+
         CHECK_FALSE(T(42) == optional<T>{});
         CHECK_FALSE(optional<T>{} == T(42));
 
