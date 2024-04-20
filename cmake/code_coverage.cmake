@@ -7,12 +7,6 @@ if(TETL_BUILD_COVERAGE AND CMAKE_CXX_COMPILER_ID MATCHES "GNU")
 endif()
 
 if(TETL_BUILD_COVERAGE AND CMAKE_CXX_COMPILER_ID MATCHES "Clang")
-  target_compile_options(coverage_config INTERFACE
-    -O0 -g
-    -ftest-coverage
-    -fcoverage-mapping
-    -fprofile-arcs
-    -fprofile-instr-generate
-  )
+  target_compile_options(coverage_config INTERFACE -g --coverage)
   target_link_libraries(coverage_config INTERFACE --coverage)
 endif()
