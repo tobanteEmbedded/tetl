@@ -9,11 +9,13 @@ Checks: >
   -bugprone-inc-dec-in-conditions,
   -bugprone-macro-parentheses,
   -bugprone-unhandled-self-assignment,
+  -bugprone-signed-char-misuse,
 
   -clang-analyzer-core.*,
   -clang-analyzer-cplusplus.PlacementNew,
 
   cert-*,
+  -cert-str34-c,
   -cert-oop54-cpp,
   -cert-err58-cpp,
 
@@ -72,7 +74,6 @@ Checks: >
   -readability-function-cognitive-complexity,
   -readability-function-size,
   -readability-identifier-length,
-  -readability-redundant-casting,
   -readability-suspicious-call-argument,
   -readability-qualified-auto,
 
