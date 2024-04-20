@@ -404,11 +404,20 @@ namespace chrono = etl::chrono;
 
     {
         auto const ymd = year_month_weekday{chrono::year(1970), chrono::January, chrono::Monday[6]};
-        CHECK_FALSE(ymd.ok());
+        CHECK_FALSE(ymd.ok()); // invalid index
         CHECK(ymd.year() == chrono::year(1970));
         CHECK(ymd.month() == chrono::January);
         CHECK(ymd.weekday() == chrono::Monday);
         CHECK(ymd.weekday_indexed() == chrono::Monday[6]);
+    }
+
+    {
+        auto const ymd = year_month_weekday{chrono::year(1970), chrono::month(13), chrono::Monday[1]};
+        CHECK_FALSE(ymd.ok()); // invalid month
+        CHECK(ymd.year() == chrono::year(1970));
+        CHECK(ymd.month() == chrono::month(13));
+        CHECK(ymd.weekday() == chrono::Monday);
+        CHECK(ymd.weekday_indexed() == chrono::Monday[1]);
     }
 
     return true;
