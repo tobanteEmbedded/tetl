@@ -73,6 +73,7 @@ template <typename ElementType, typename IndexType>
         CHECK(m.static_extent(1) == etl::dynamic_extent);
         CHECK(m.extent(0) == 2);
         CHECK(m.extent(1) == 8);
+        CHECK(m.stride(0) == 8);
 
         CHECK_FALSE(m.empty());
         CHECK(m.size() == buffer.size());

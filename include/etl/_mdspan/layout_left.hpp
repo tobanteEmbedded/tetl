@@ -3,6 +3,7 @@
 #ifndef TETL_MDSPAN_LAYOUT_LEFT_HPP
 #define TETL_MDSPAN_LAYOUT_LEFT_HPP
 
+#include <etl/_contracts/check.hpp>
 #include <etl/_mdspan/extents.hpp>
 #include <etl/_mdspan/is_extents.hpp>
 #include <etl/_mdspan/layout.hpp>
@@ -32,7 +33,7 @@ struct layout_left::mapping {
 
     template <typename OtherExtents>
         requires is_constructible_v<extents_type, OtherExtents>
-    constexpr explicit(!is_convertible_v<OtherExtents, extents_type>)
+    constexpr explicit(not is_convertible_v<OtherExtents, extents_type>)
         mapping(mapping<OtherExtents> const& other) noexcept
         : _extents{other.extents()}
     {
@@ -40,7 +41,7 @@ struct layout_left::mapping {
 
     template <typename OtherExtents>
         requires(extents_type::rank() <= 1) && is_constructible_v<extents_type, OtherExtents>
-    constexpr explicit(!is_convertible_v<OtherExtents, extents_type>)
+    constexpr explicit(not is_convertible_v<OtherExtents, extents_type>)
         mapping(layout_right::mapping<OtherExtents> const& other) noexcept
         : _extents{other.extents()}
     {
@@ -73,19 +74,24 @@ struct layout_left::mapping {
         return impl(make_index_sequence<extents_type::rank()>{}, static_cast<index_type>(indices)...);
     }
 
+    [[nodiscard]] constexpr auto stride(rank_type r) const noexcept -> index_type
+        requires(extents_type::rank() > 0)
+    {
+        TETL_PRECONDITION(r < extents_type::rank());
+        auto s = index_type{1};
+        for (auto i = rank_type{0}; i < r; ++i) {
+            s *= static_cast<index_type>(_extents.extent(i));
+        }
+        return s;
+    }
+
     [[nodiscard]] static constexpr auto is_always_unique() noexcept -> bool { return true; }
-
     [[nodiscard]] static constexpr auto is_always_exhaustive() noexcept -> bool { return true; }
-
     [[nodiscard]] static constexpr auto is_always_strided() noexcept -> bool { return true; }
 
     [[nodiscard]] static constexpr auto is_unique() noexcept -> bool { return true; }
-
     [[nodiscard]] static constexpr auto is_exhaustive() noexcept -> bool { return true; }
-
     [[nodiscard]] static constexpr auto is_strided() noexcept -> bool { return true; }
-
-    [[nodiscard]] constexpr auto stride(rank_type) const noexcept -> index_type;
 
     template <typename OtherExtents>
     friend constexpr auto operator==(mapping const& lhs, mapping<OtherExtents> const& rhs) noexcept -> bool

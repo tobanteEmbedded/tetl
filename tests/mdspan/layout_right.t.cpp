@@ -43,6 +43,8 @@ constexpr auto test_layout_right() -> bool
         auto ext     = extents_2d_t(42);
         auto mapping = mapping_2d_t(ext);
         CHECK(mapping.extents() == ext);
+        CHECK(mapping.stride(0) == 42);
+        CHECK(mapping.stride(1) == 1);
         CHECK(etl::is_nothrow_constructible_v<mapping_2d_t, extents_2d_t>);
     }
 

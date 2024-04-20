@@ -3,6 +3,7 @@
 #ifndef TETL_MDSPAN_LAYOUT_RIGHT_HPP
 #define TETL_MDSPAN_LAYOUT_RIGHT_HPP
 
+#include <etl/_contracts/check.hpp>
 #include <etl/_mdspan/extents.hpp>
 #include <etl/_mdspan/is_extents.hpp>
 #include <etl/_mdspan/layout.hpp>
@@ -75,19 +76,24 @@ struct layout_right::mapping {
         return impl(make_index_sequence<extents_type::rank()>{}, static_cast<index_type>(indices)...);
     }
 
+    [[nodiscard]] constexpr auto stride(rank_type r) const noexcept -> index_type
+        requires(extents_type::rank() > 0)
+    {
+        TETL_PRECONDITION(r < extents_type::rank());
+        auto s = index_type{1};
+        for (auto i = static_cast<rank_type>(extents_type::rank() - 1); i > r; --i) {
+            s *= static_cast<index_type>(_extents.extent(i));
+        }
+        return s;
+    }
+
     [[nodiscard]] static constexpr auto is_always_unique() noexcept -> bool { return true; }
-
     [[nodiscard]] static constexpr auto is_always_exhaustive() noexcept -> bool { return true; }
-
     [[nodiscard]] static constexpr auto is_always_strided() noexcept -> bool { return true; }
 
     [[nodiscard]] static constexpr auto is_unique() noexcept -> bool { return true; }
-
     [[nodiscard]] static constexpr auto is_exhaustive() noexcept -> bool { return true; }
-
     [[nodiscard]] static constexpr auto is_strided() noexcept -> bool { return true; }
-
-    [[nodiscard]] constexpr auto stride(rank_type) const noexcept -> index_type;
 
     template <typename OtherExtents>
     friend constexpr auto operator==(mapping const& lhs, mapping<OtherExtents> const& rhs) noexcept -> bool
