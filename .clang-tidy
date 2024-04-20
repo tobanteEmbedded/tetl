@@ -74,6 +74,7 @@ Checks: >
   -readability-function-cognitive-complexity,
   -readability-function-size,
   -readability-identifier-length,
+  -readability-redundant-casting,
   -readability-suspicious-call-argument,
   -readability-qualified-auto,
 
