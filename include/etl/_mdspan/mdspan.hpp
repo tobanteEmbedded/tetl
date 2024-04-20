@@ -6,6 +6,7 @@
 #include <etl/_config/all.hpp>
 
 #include <etl/_array/array.hpp>
+#include <etl/_contracts/check.hpp>
 #include <etl/_mdspan/default_accessor.hpp>
 #include <etl/_mdspan/layout_left.hpp>
 #include <etl/_mdspan/layout_right.hpp>
@@ -127,7 +128,8 @@ struct mdspan {
         )
     [[nodiscard]] constexpr auto operator()(OtherIndexTypes... indices) const -> reference
     {
-        return _acc.access(_ptr, static_cast<etl::size_t>(_map(static_cast<index_type>(etl::move(indices))...)));
+        auto const idx = static_cast<etl::size_t>(_map(extents_type::index_cast(etl::move(indices))...));
+        return _acc.access(_ptr, idx);
     }
 
 #if defined(__cpp_multidimensional_subscript)
@@ -139,7 +141,7 @@ struct mdspan {
         )
     [[nodiscard]] constexpr auto operator[](OtherIndexTypes... indices) const -> reference
     {
-        return _acc.access(_ptr, static_cast<etl::size_t>(_map(static_cast<index_type>(etl::move(indices))...)));
+        return (*this)(etl::move(indices)...);
     }
 #endif
     // clang-format on
@@ -171,7 +173,7 @@ struct mdspan {
     [[nodiscard]] constexpr auto empty() const noexcept -> bool { return size() == size_type{}; }
     [[nodiscard]] constexpr auto size() const noexcept -> size_type
     {
-        return static_cast<size_type>(detail::fwd_prod_of_extents(extents(), rank()));
+        return static_cast<size_type>(extents().fwd_prod_of_extents(rank()));
     }
 
     [[nodiscard]] constexpr auto is_unique() const -> bool { return _map.is_unique(); }

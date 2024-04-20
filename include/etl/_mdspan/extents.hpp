@@ -49,9 +49,6 @@ private:
         return result;
     }
 
-    template <typename OtherSizeType>
-    [[nodiscard]] static constexpr auto _index_cast(OtherSizeType&&) noexcept;
-
 public:
     [[nodiscard]] static constexpr auto rank() noexcept -> rank_type { return sizeof...(Extents); }
 
@@ -134,41 +131,41 @@ public:
         }
     }
 
+    template <typename OtherSizeType>
+    [[nodiscard]] static constexpr auto index_cast(OtherSizeType&& i) noexcept -> size_type
+    {
+        return static_cast<size_type>(i);
+    }
+
+    [[nodiscard]] constexpr auto fwd_prod_of_extents(rank_type i) const noexcept -> size_t
+    {
+        if constexpr (rank() == 0) {
+            return 1;
+        } else {
+            auto result = size_t(1);
+            for (auto e = rank_type(0); e < i; ++e) {
+                result *= static_cast<size_t>(extent(e));
+            }
+            return result;
+        }
+    }
+
+    [[nodiscard]] constexpr auto rev_prod_of_extents(rank_type i) const noexcept -> size_t
+    {
+        auto result = size_t(1);
+        for (auto e = i + 1; e < rank(); ++e) {
+            result *= static_cast<size_t>(extent(e));
+        }
+        return result;
+    }
+
 private:
     struct empty_array_t { };
-
     using array_t = conditional_t<rank_dynamic() == 0, empty_array_t, array<size_type, rank_dynamic()>>;
-
     TETL_NO_UNIQUE_ADDRESS array_t _extents{};
 };
 
 namespace detail {
-
-template <typename Extents>
-    requires is_extents<Extents>
-[[nodiscard]] constexpr auto fwd_prod_of_extents(Extents const& exts, typename Extents::rank_type i) noexcept
-{
-    if constexpr (Extents::rank() == 0) {
-        return typename Extents::index_type(1);
-    } else {
-        auto result = typename Extents::index_type(1);
-        for (auto e = etl::size_t(0); e < i; ++e) {
-            result *= static_cast<typename Extents::index_type>(exts.extent(e));
-        }
-        return result;
-    }
-}
-
-template <typename Extents>
-    requires is_extents<Extents>
-[[nodiscard]] constexpr auto rev_prod_of_extents(Extents const& exts, typename Extents::rank_type i) noexcept
-{
-    auto result = typename Extents::index_type(1);
-    for (auto e = i + 1; e < Extents::rank(); ++e) {
-        result *= static_cast<typename Extents::index_type>(exts.extent(e));
-    }
-    return result;
-}
 
 template <typename IndexType, typename Integrals>
 struct dextents_impl;

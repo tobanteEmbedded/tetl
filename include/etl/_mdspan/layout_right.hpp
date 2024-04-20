@@ -59,7 +59,7 @@ struct layout_right::mapping {
 
     [[nodiscard]] constexpr auto required_span_size() const noexcept -> index_type
     {
-        return static_cast<index_type>(detail::fwd_prod_of_extents(extents(), extents_type::rank()));
+        return static_cast<index_type>(extents().fwd_prod_of_extents(extents_type::rank()));
     }
 
     template <typename... Indices>
@@ -67,24 +67,16 @@ struct layout_right::mapping {
                 and (is_nothrow_constructible_v<index_type, Indices> and ...)
     [[nodiscard]] constexpr auto operator()(Indices... indices) const noexcept -> index_type
     {
-        auto impl = [this]<typename... IT, size_t... Is>(index_sequence<Is...> /*seq*/, IT... is) {
-            auto result = index_type(0);
-            ((result = static_cast<index_type>(is + static_cast<index_type>(_extents.extent(Is)) * result)), ...);
-            return result;
-        };
-
-        return impl(make_index_sequence<extents_type::rank()>{}, static_cast<index_type>(indices)...);
+        return [&]<size_t... Is>(index_sequence<Is...> /*seq*/) {
+            return static_cast<index_type>(((static_cast<index_type>(indices) * stride(Is)) + ... + 0));
+        }(index_sequence_for<Indices...>{});
     }
 
     [[nodiscard]] constexpr auto stride(rank_type r) const noexcept -> index_type
         requires(extents_type::rank() > 0)
     {
         TETL_PRECONDITION(r < extents_type::rank());
-        auto s = index_type{1};
-        for (auto i = static_cast<rank_type>(extents_type::rank() - 1); i > r; --i) {
-            s *= static_cast<index_type>(_extents.extent(i));
-        }
-        return s;
+        return static_cast<index_type>(_extents.rev_prod_of_extents(r));
     }
 
     [[nodiscard]] static constexpr auto is_always_unique() noexcept -> bool { return true; }
