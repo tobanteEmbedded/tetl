@@ -13,6 +13,10 @@ function(tetl_add_test _header _target)
     target_compile_definitions("test_${_header}_${_target}" PRIVATE TETL_ENABLE_CONTRACT_CHECKS=1)
   endif()
 
+  if(${TETL_BUILD_CONTRACT_CHECKS_SAFE})
+    target_compile_definitions("test_${_header}_${_target}" PRIVATE TETL_ENABLE_CONTRACT_CHECKS_SAFE=1)
+  endif()
+
   add_test(NAME "${_header}.hpp: ${_target}" COMMAND "test_${_header}_${_target}")
   set_tests_properties("${_header}.hpp: ${_target}" PROPERTIES WILL_FAIL ${TETL_ADD_TEST_PREFIX_WILL_FAIL})
 endfunction()
