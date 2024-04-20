@@ -33,6 +33,14 @@ template <typename ElementType, typename IndexType>
 
         CHECK(m.empty());
         CHECK(m.size() == 0); // NOLINT
+
+        CHECK(m.is_unique());
+        CHECK(m.is_exhaustive());
+        CHECK(m.is_strided());
+
+        CHECK(m.is_always_unique());
+        CHECK(m.is_always_exhaustive());
+        CHECK(m.is_always_strided());
     }
 
     {
@@ -48,6 +56,8 @@ template <typename ElementType, typename IndexType>
 
         CHECK(m(0) == ElementType(1));
         CHECK(m(1) == ElementType(0));
+        CHECK(m[etl::array{0}] == ElementType(1));
+        CHECK(m[etl::array{1}] == ElementType(0));
 #if defined(__cpp_multidimensional_subscript)
         CHECK(m[0] == ElementType(1));
         CHECK(m[1] == ElementType(0));
@@ -69,6 +79,10 @@ template <typename ElementType, typename IndexType>
 
         CHECK(m(0, 0) == ElementType(1));
         CHECK(m(0, 1) == ElementType(0));
+        CHECK(m[etl::array{0, 0}] == ElementType(1));
+        CHECK(m[etl::array{0, 1}] == ElementType(0));
+        CHECK(m[etl::array{0LL, 0LL}] == ElementType(1));
+        CHECK(m[etl::array{0LL, 1LL}] == ElementType(0));
 #if defined(__cpp_multidimensional_subscript)
         CHECK(m[0, 0] == ElementType(1));
         CHECK(m[0, 1] == ElementType(0));

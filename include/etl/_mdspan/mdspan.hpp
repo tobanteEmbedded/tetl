@@ -5,9 +5,11 @@
 
 #include <etl/_config/all.hpp>
 
+#include <etl/_array/array.hpp>
 #include <etl/_mdspan/default_accessor.hpp>
 #include <etl/_mdspan/layout_left.hpp>
 #include <etl/_mdspan/layout_right.hpp>
+#include <etl/_span/span.hpp>
 #include <etl/_type_traits/extent.hpp>
 #include <etl/_type_traits/is_array.hpp>
 #include <etl/_type_traits/is_constructible.hpp>
@@ -21,6 +23,7 @@
 #include <etl/_type_traits/remove_cv.hpp>
 #include <etl/_type_traits/remove_pointer.hpp>
 #include <etl/_type_traits/remove_reference.hpp>
+#include <etl/_utility/index_sequence.hpp>
 #include <etl/_utility/move.hpp>
 
 namespace etl {
@@ -141,34 +144,43 @@ struct mdspan {
 #endif
     // clang-format on
 
+    template <typename OtherIndexType>
+        requires(is_convertible_v<OtherIndexType const&, index_type>
+                 and is_nothrow_constructible_v<index_type, OtherIndexType const&>)
+    [[nodiscard]] constexpr auto operator[](span<OtherIndexType, rank()> indices) const -> reference
+    {
+        return [&]<size_t... Is>(index_sequence<Is...> /*seq*/) -> reference {
+            return (*this)(indices[Is]...);
+        }(make_index_sequence<rank()>{});
+    }
+
+    template <typename OtherIndexType>
+        requires(is_convertible_v<OtherIndexType const&, index_type>
+                 and is_nothrow_constructible_v<index_type, OtherIndexType const&>)
+    [[nodiscard]] constexpr auto operator[](array<OtherIndexType, rank()> const& indices) const -> reference
+    {
+        return (*this)[etl::span{indices}];
+    }
+
+    [[nodiscard]] constexpr auto data_handle() const noexcept -> data_handle_type const& { return _ptr; }
+    [[nodiscard]] constexpr auto mapping() const noexcept -> mapping_type const& { return _map; }
+    [[nodiscard]] constexpr auto accessor() const noexcept -> accessor_type const& { return _acc; }
+
+    [[nodiscard]] constexpr auto extents() const noexcept -> extents_type const& { return _map.extents(); }
+    [[nodiscard]] constexpr auto stride(rank_type r) const -> index_type { return _map.stride(r); }
+    [[nodiscard]] constexpr auto empty() const noexcept -> bool { return size() == size_type{}; }
     [[nodiscard]] constexpr auto size() const noexcept -> size_type
     {
         return static_cast<size_type>(detail::fwd_prod_of_extents(extents(), rank()));
     }
 
-    [[nodiscard]] constexpr auto empty() const noexcept -> bool { return size() == size_type{}; }
-
-    [[nodiscard]] constexpr auto extents() const noexcept -> extents_type const& { return _map.extents(); }
-
-    [[nodiscard]] constexpr auto data_handle() const noexcept -> data_handle_type const& { return _ptr; }
-
-    [[nodiscard]] constexpr auto mapping() const noexcept -> mapping_type const& { return _map; }
-
-    [[nodiscard]] constexpr auto accessor() const noexcept -> accessor_type const& { return _acc; }
-
-    [[nodiscard]] static constexpr auto is_always_unique() -> bool { return mapping_type::is_always_unique(); }
-
-    [[nodiscard]] static constexpr auto is_always_exhaustive() -> bool { return mapping_type::is_always_exhaustive(); }
-
-    [[nodiscard]] static constexpr auto is_always_strided() -> bool { return mapping_type::is_always_strided(); }
-
     [[nodiscard]] constexpr auto is_unique() const -> bool { return _map.is_unique(); }
-
     [[nodiscard]] constexpr auto is_exhaustive() const -> bool { return _map.is_exhaustive(); }
-
     [[nodiscard]] constexpr auto is_strided() const -> bool { return _map.is_strided(); }
 
-    [[nodiscard]] constexpr auto stride(rank_type r) const -> index_type { return _map.stride(r); }
+    [[nodiscard]] static constexpr auto is_always_unique() -> bool { return mapping_type::is_always_unique(); }
+    [[nodiscard]] static constexpr auto is_always_exhaustive() -> bool { return mapping_type::is_always_exhaustive(); }
+    [[nodiscard]] static constexpr auto is_always_strided() -> bool { return mapping_type::is_always_strided(); }
 
 private:
     TETL_NO_UNIQUE_ADDRESS accessor_type _acc;    // NOLINT(modernize-use-default-member-init)
