@@ -4,63 +4,81 @@
 
 #include <etl/array.hpp>
 #include <etl/concepts.hpp>
-#include <etl/cstdint.hpp>
 #include <etl/type_traits.hpp>
 
 #include "testing/testing.hpp"
 
 template <typename ElementType>
-constexpr auto test_one(etl::array<ElementType, 2> elements) -> bool
+constexpr auto test(etl::array<ElementType, 2> elements) -> bool
 {
-    using accessor_t = etl::default_accessor<ElementType>;
+    using accessor_type       = etl::default_accessor<ElementType>;
+    using const_accessor_type = etl::default_accessor<ElementType const>;
 
-    CHECK(etl::is_empty_v<accessor_t>);
+    CHECK_SAME_TYPE(typename accessor_type::offset_policy, accessor_type);
+    CHECK_SAME_TYPE(typename accessor_type::element_type, ElementType);
+    CHECK_SAME_TYPE(typename accessor_type::reference, ElementType&);
+    CHECK_SAME_TYPE(typename accessor_type::data_handle_type, ElementType*);
 
-    CHECK(etl::is_nothrow_default_constructible_v<accessor_t>);
-    CHECK(etl::is_nothrow_move_constructible_v<accessor_t>);
-    CHECK(etl::is_nothrow_move_assignable_v<accessor_t>);
-    CHECK(etl::is_nothrow_swappable_v<accessor_t>);
-    CHECK(etl::is_trivially_copyable_v<accessor_t>);
+    CHECK_SAME_TYPE(typename const_accessor_type::offset_policy, const_accessor_type);
+    CHECK_SAME_TYPE(typename const_accessor_type::element_type, ElementType const);
+    CHECK_SAME_TYPE(typename const_accessor_type::reference, ElementType const&);
+    CHECK_SAME_TYPE(typename const_accessor_type::data_handle_type, ElementType const*);
 
-    CHECK_SAME_TYPE(typename accessor_t::offset_policy, accessor_t);
-    CHECK_SAME_TYPE(typename accessor_t::element_type, ElementType);
-    CHECK_SAME_TYPE(typename accessor_t::reference, ElementType&);
-    CHECK_SAME_TYPE(typename accessor_t::data_handle_type, ElementType*);
+    CHECK(etl::is_nothrow_default_constructible_v<accessor_type>);
+    CHECK(etl::is_nothrow_move_constructible_v<accessor_type>);
+    CHECK(etl::is_nothrow_move_assignable_v<accessor_type>);
+    CHECK(etl::is_nothrow_swappable_v<accessor_type>);
+    CHECK(etl::is_trivially_copyable_v<accessor_type>);
+    CHECK(etl::is_empty_v<accessor_type>);
 
-    auto accessor = accessor_t{};
-    CHECK(accessor.access(elements.data(), 0) == elements[0]);
-    CHECK(accessor.access(elements.data(), 1) == elements[1]);
-    CHECK(accessor.offset(elements.data(), 0) == etl::next(elements.data(), 0));
-    CHECK(accessor.offset(elements.data(), 1) == etl::next(elements.data(), 1));
+    auto const a = accessor_type{};
+    CHECK_SAME_TYPE(decltype(a.access(elements.data(), 0)), ElementType&);
+    CHECK_SAME_TYPE(decltype(a.offset(elements.data(), 0)), ElementType*);
+    CHECK(a.access(elements.data(), 0) == elements[0]);
+    CHECK(a.access(elements.data(), 1) == elements[1]);
+    CHECK(a.offset(elements.data(), 0) == etl::next(elements.data(), 0));
+    CHECK(a.offset(elements.data(), 1) == etl::next(elements.data(), 1));
+
+    auto const ca = const_accessor_type{a};
+    CHECK_SAME_TYPE(decltype(ca.access(elements.data(), 0)), ElementType const&);
+    CHECK_SAME_TYPE(decltype(ca.offset(elements.data(), 0)), ElementType const*);
+    CHECK(ca.access(elements.data(), 0) == elements[0]);
+    CHECK(ca.access(elements.data(), 1) == elements[1]);
+    CHECK(ca.offset(elements.data(), 0) == etl::next(elements.data(), 0));
+    CHECK(ca.offset(elements.data(), 1) == etl::next(elements.data(), 1));
 
     return true;
 }
 
-constexpr auto test_default_accessor() -> bool
+constexpr auto test_all() -> bool
 {
-    CHECK(test_one<char>({'a', 'b'}));
+    CHECK(test<signed char>({0, 1}));
+    CHECK(test<signed short>({0, 1}));
+    CHECK(test<signed int>({0, 1}));
+    CHECK(test<signed long>({0, 1}));
+    CHECK(test<signed long long>({0, 1}));
 
-    CHECK(test_one<etl::uint8_t>({0, 1}));
-    CHECK(test_one<etl::uint16_t>({0, 1}));
-    CHECK(test_one<etl::uint32_t>({0, 1}));
-    CHECK(test_one<etl::uint64_t>({0, 1}));
+    CHECK(test<unsigned char>({0, 1}));
+    CHECK(test<unsigned short>({0, 1}));
+    CHECK(test<unsigned int>({0, 1}));
+    CHECK(test<unsigned long>({0, 1}));
+    CHECK(test<unsigned long long>({0, 1}));
 
-    CHECK(test_one<etl::int8_t>({0, 1}));
-    CHECK(test_one<etl::int16_t>({0, 1}));
-    CHECK(test_one<etl::int32_t>({0, 1}));
-    CHECK(test_one<etl::int64_t>({0, 1}));
+    CHECK(test<char>({'a', 'b'}));
+    CHECK(test<wchar_t>({'a', 'b'}));
+    CHECK(test<char8_t>({'a', 'b'}));
+    CHECK(test<char16_t>({'a', 'b'}));
+    CHECK(test<char32_t>({'a', 'b'}));
 
-    CHECK(test_one<etl::size_t>({0, 1}));
-    CHECK(test_one<etl::ptrdiff_t>({0, 1}));
-
-    CHECK(test_one<float>({0.0F, 1.0F}));
-    CHECK(test_one<double>({0.0, 1.0}));
+    CHECK(test<float>({0.0F, 1.0F}));
+    CHECK(test<double>({0.0, 1.0}));
+    CHECK(test<long double>({0.0L, 1.0L}));
 
     return true;
 }
 
 auto main() -> int
 {
-    STATIC_CHECK(test_default_accessor());
+    STATIC_CHECK(test_all());
     return 0;
 }
