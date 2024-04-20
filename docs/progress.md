@@ -13,28 +13,43 @@ Unless stated otherwise, all papers are implemented to work with the minimum C++
 
 ## C++26
 
-| Paper                                  |                                   Name                                   |  Status  | Comment |
-| :------------------------------------- | :----------------------------------------------------------------------: | :------: | ------: |
-| [P2937R0](https://wg21.link/P2937R0)   |                   Freestanding: removing `std::strtok`                   |          |         |
-| [P2821R5](https://wg21.link/P2821R5)   |                            `std::span::at()`                             |          |         |
-| [P2819R2](https://wg21.link/P2819R2)   |                  Added tuple protocol to `std::complex`                  | **Done** |         |
-| [P2714R1](https://wg21.link/P2714R1)   | `std::bind_front`, `std::bind_back`, and `std::not_fn` to NTTP callables |          |         |
-| [P2697R1](https://wg21.link/P2697R1)   |                 Interfacing `bitset` with `string_view`                  | **Done** |         |
-| [P2641R4](https://wg21.link/P2641R4)   |                        `std::is_within_lifetime`                         |          |         |
-| [P2637R3](https://wg21.link/P2637R3)   |                               Member visit                               |          |         |
-| [P2630R4](https://wg21.link/P2630R4)   |                            `std::submdspan()`                            |  _WIP_   |         |
-| [P2592R3](https://wg21.link/P2592R3)   |             Hashing support for `std::chrono` value classes              |          |         |
-| [P2562R1](https://wg21.link/P2562R1)   |                         constexpr stable sorting                         | **Done** |         |
-| [P2546R5](https://wg21.link/P2546R5)   |                     `<debugging>`: Debugging Support                     |  _WIP_   |         |
-| [P2538R1](https://wg21.link/P2538R1)   |                        ADL-proof `std::projected`                        |          |         |
-| [P2497R0](https://wg21.link/P2497R0)   |         Testing for success or failure of `<charconv>` functions         | **Done** |         |
-| [P2264R7](https://wg21.link/P2264R7)   |            Make `assert()` macro user friendly for C and C++             |          |         |
-| [P2013R5](https://wg21.link/P2013R5)   |             Freestanding Language: Optional `::operator new`             |          |         |
-| [P1673R13](https://wg21.link/P1673R13) |  `<linalg>`: A free function linear algebra interface based on the BLAS  |  _WIP_   |         |
-| [P1383R2](https://wg21.link/P1383R2)   |               More constexpr for `<cmath>` and `<complex>`               | **Done** |         |
-| [P0952R1](https://wg21.link/P0952R1)   |            A new specification for `std::generate_canonical`             |          |         |
-| [P0792R14](https://wg21.link/P0792R14) |           `std::function_ref`: type-erased callable reference            |  _WIP_   |         |
-| [P0543R3](https://wg21.link/P0543R3)   |                          Saturation Arithmetic                           |  _WIP_   |         |
+| Paper                                  |                                                  Name                                                   |  Status  | Comment |
+| :------------------------------------- | :-----------------------------------------------------------------------------------------------------: | :------: | ------: |
+| [P2937R0](https://wg21.link/P2937R0)   |                                  Freestanding: removing `std::strtok`                                   | **Done** |         |
+| [P2918R2](https://wg21.link/P2918R2)   |                                         Runtime format strings                                          |          |         |
+| [P2868R1](https://wg21.link/P2868R1)   |                      Removing deprecated typedef `std::allocator::is_always_equal`                      |          |         |
+| [P2821R5](https://wg21.link/P2821R5)   |                                            `std::span::at()`                                            |          |         |
+| [P2819R2](https://wg21.link/P2819R2)   |                                 Added tuple protocol to `std::complex`                                  |  _WIP_   |         |
+| [P2757R3](https://wg21.link/P2757R3)   |                                        Type checking format args                                        |          |         |
+| [P2734R0](https://wg21.link/P2734R0)   | Adding the new 2022 SI prefixes on ratios: `std::quecto`, `std::ronto`, `std::ronna`, and `std::quetta` |          |         |
+| [P2714R1](https://wg21.link/P2714R1)   |                `std::bind_front`, `std::bind_back`, and `std::not_fn` to NTTP callables                 |          |         |
+| [P2697R1](https://wg21.link/P2697R1)   |                                 Interfacing `bitset` with `string_view`                                 | **Done** |         |
+| [P2641R4](https://wg21.link/P2641R4)   |                                        `std::is_within_lifetime`                                        |          |         |
+| [P2637R3](https://wg21.link/P2637R3)   |                                              Member visit                                               |          |         |
+| [P2630R4](https://wg21.link/P2630R4)   |                                           `std::submdspan()`                                            |  _WIP_   |         |
+| [P2592R3](https://wg21.link/P2592R3)   |                             Hashing support for `std::chrono` value classes                             |          |         |
+| [P2587R3](https://wg21.link/P2587R3)   |            Arithmetic overloads of `std::to_string` and `std::to_wstring` use `std::format`             |          |         |
+| [P2562R1](https://wg21.link/P2562R1)   |                                        constexpr stable sorting                                         | **Done** |         |
+| [P2548R6](https://wg21.link/P2548R6)   |                                        `std::copyable_function`                                         |          |         |
+| [P2546R5](https://wg21.link/P2546R5)   |                                    `<debugging>`: Debugging Support                                     |  _WIP_   |         |
+| [P2545R4](https://wg21.link/P2545R4)   |                                            Read-Copy Update                                             |          |         |
+| [P2538R1](https://wg21.link/P2538R1)   |                                       ADL-proof `std::projected`                                        |          |         |
+| [P2530R3](https://wg21.link/P2530R3)   |                                             Hazard Pointers                                             |          |         |
+| [P2510R3](https://wg21.link/P2510R3)   |                                           Formatting pointers                                           |          |         |
+| [P2497R0](https://wg21.link/P2497R0)   |                        Testing for success or failure of `<charconv>` functions                         | **Done** |         |
+| [P2495R3](https://wg21.link/P2495R3)   |                           Interfacing string streams with `std::string_view`                            |          |         |
+| [P2447R4](https://wg21.link/P2447R4)   |                                  `std::span` over an initializer list                                   |          |         |
+| [P2363R5](https://wg21.link/P2363R5)   |               Extending associative containers with the remaining heterogeneous overloads               |          |         |
+| [P2264R7](https://wg21.link/P2264R7)   |                            Make `assert()` macro user friendly for C and C++                            |          |         |
+| [P2013R5](https://wg21.link/P2013R5)   |                            Freestanding Language: Optional `::operator new`                             |          |         |
+| [P1901R2](https://wg21.link/P1901R2)   |              Enabling the use of std::weak_ptr as keys in unordered associative containers              |          |         |
+| [P1885R12](https://wg21.link/P1885R12) |                           `std::text_encoding`: text encodings identification                           |          |         |
+| [P1759R6](https://wg21.link/P1759R6)   |                                     Native handles in file streams                                      |          |         |
+| [P1673R13](https://wg21.link/P1673R13) |                 `<linalg>`: A free function linear algebra interface based on the BLAS                  |  _WIP_   |         |
+| [P1383R2](https://wg21.link/P1383R2)   |                              More constexpr for `<cmath>` and `<complex>`                               | **Done** |         |
+| [P0952R1](https://wg21.link/P0952R1)   |                            A new specification for `std::generate_canonical`                            |          |         |
+| [P0792R14](https://wg21.link/P0792R14) |                           `std::function_ref`: type-erased callable reference                           |  _WIP_   |         |
+| [P0543R3](https://wg21.link/P0543R3)   |                                          Saturation Arithmetic                                          |  _WIP_   |         |
 
 ## C++23
 
