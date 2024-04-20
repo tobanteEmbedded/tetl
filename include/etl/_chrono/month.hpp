@@ -5,7 +5,6 @@
 
 #include <etl/_chrono/duration.hpp>
 #include <etl/_contracts/check.hpp>
-#include <etl/_cstdint/uint_t.hpp>
 #include <etl/_limits/numeric_limits.hpp>
 
 namespace etl::chrono {
@@ -23,101 +22,105 @@ struct month {
     month() = default;
 
     constexpr explicit month(unsigned m) noexcept
-        : _count{static_cast<etl::uint8_t>(m)}
+        : _count{static_cast<unsigned char>(m)}
     {
-        TETL_PRECONDITION(m < etl::numeric_limits<etl::uint8_t>::max());
+        TETL_PRECONDITION(m < etl::numeric_limits<unsigned char>::max());
     }
-
-    constexpr auto operator++() noexcept -> month&
-    {
-        add(months{1}.count());
-        return *this;
-    }
-
-    constexpr auto operator++(int) noexcept -> month
-    {
-        auto tmp = *this;
-        ++(*this);
-        return tmp;
-    }
-
-    constexpr auto operator--() noexcept -> month&
-    {
-        sub(months{1}.count());
-        return *this;
-    }
-
-    constexpr auto operator--(int) noexcept -> month
-    {
-        auto tmp = *this;
-        --(*this);
-        return tmp;
-    }
-
-    constexpr auto operator+=(months const& d) noexcept -> month&
-    {
-        add(d.count());
-        return *this;
-    }
-
-    constexpr auto operator-=(months const& d) noexcept -> month&
-    {
-        sub(d.count());
-        return *this;
-    }
-
-    constexpr explicit operator unsigned() const noexcept { return _count; }
 
     [[nodiscard]] constexpr auto ok() const noexcept -> bool { return (_count > 0U) and (_count <= 12U); }
 
-    friend constexpr auto operator==(month lhs, month rhs) noexcept -> bool
-    {
-        return static_cast<unsigned>(lhs) == static_cast<unsigned>(rhs);
-    }
+    constexpr explicit operator unsigned() const noexcept { return _count; }
 
-    friend constexpr auto operator<(month lhs, month rhs) noexcept -> bool
-    {
-        return static_cast<unsigned>(lhs) < static_cast<unsigned>(rhs);
-    }
+    constexpr auto operator++() noexcept -> month&;
+    constexpr auto operator++(int) noexcept -> month;
+    constexpr auto operator--() noexcept -> month&;
+    constexpr auto operator--(int) noexcept -> month;
 
-    friend constexpr auto operator<=(month lhs, month rhs) noexcept -> bool
-    {
-        return static_cast<unsigned>(lhs) <= static_cast<unsigned>(rhs);
-    }
-
-    friend constexpr auto operator>(month lhs, month rhs) noexcept -> bool
-    {
-        return static_cast<unsigned>(lhs) > static_cast<unsigned>(rhs);
-    }
-
-    friend constexpr auto operator>=(month lhs, month rhs) noexcept -> bool
-    {
-        return static_cast<unsigned>(lhs) >= static_cast<unsigned>(rhs);
-    }
+    constexpr auto operator+=(months const& m) noexcept -> month&;
+    constexpr auto operator-=(months const& m) noexcept -> month&;
 
 private:
-    constexpr auto add(int count) noexcept -> void
-    {
-        _count += static_cast<etl::uint8_t>(count);
-        _count %= 12;
-    }
-
-    constexpr auto sub(int count) noexcept -> void
-    {
-        _count -= static_cast<etl::uint8_t>(count);
-        _count %= 12;
-    }
-
-    etl::uint8_t _count;
+    unsigned char _count;
 };
 
-[[nodiscard]] constexpr auto operator+(month const& m, months const& ms) noexcept -> month { return month{m} += ms; }
-[[nodiscard]] constexpr auto operator+(months const& ms, month const& m) noexcept -> month { return month{m} += ms; }
-[[nodiscard]] constexpr auto operator-(month const& m, months const& ms) noexcept -> month { return month{m} -= ms; }
+[[nodiscard]] constexpr auto operator==(month lhs, month rhs) noexcept -> bool
+{
+    return static_cast<unsigned>(lhs) == static_cast<unsigned>(rhs);
+}
+
+[[nodiscard]] constexpr auto operator<(month lhs, month rhs) noexcept -> bool
+{
+    return static_cast<unsigned>(lhs) < static_cast<unsigned>(rhs);
+}
+
+[[nodiscard]] constexpr auto operator<=(month lhs, month rhs) noexcept -> bool
+{
+    return static_cast<unsigned>(lhs) <= static_cast<unsigned>(rhs);
+}
+
+[[nodiscard]] constexpr auto operator>(month lhs, month rhs) noexcept -> bool
+{
+    return static_cast<unsigned>(lhs) > static_cast<unsigned>(rhs);
+}
+
+[[nodiscard]] constexpr auto operator>=(month lhs, month rhs) noexcept -> bool
+{
+    return static_cast<unsigned>(lhs) >= static_cast<unsigned>(rhs);
+}
+
+[[nodiscard]] constexpr auto operator+(month const& m, months const& ms) noexcept -> month
+{
+    auto const mo  = static_cast<long long>(static_cast<unsigned>(m)) + (ms.count() - 1);
+    auto const div = (mo >= 0 ? mo : mo - 11) / 12;
+    return month{static_cast<unsigned int>(mo - div * 12 + 1)};
+}
+
+[[nodiscard]] constexpr auto operator+(months const& ms, month const& m) noexcept -> month { return m + ms; }
+
+[[nodiscard]] constexpr auto operator-(month const& m, months const& ms) noexcept -> month { return m + -ms; }
+
 [[nodiscard]] constexpr auto operator-(month const& m1, month const& m2) noexcept -> months
 {
     auto const delta = static_cast<unsigned>(m1) - static_cast<unsigned>(m2);
     return months{static_cast<etl::int_least32_t>(delta <= 11 ? delta : delta + 12)};
+}
+
+constexpr auto month::operator++() noexcept -> month&
+{
+    *this = *this + months{1};
+    return *this;
+}
+
+constexpr auto month::operator++(int) noexcept -> month
+{
+    auto tmp = *this;
+    ++(*this);
+    return tmp;
+}
+
+constexpr auto month::operator--() noexcept -> month&
+{
+    *this = *this - months{1};
+    return *this;
+}
+
+constexpr auto month::operator--(int) noexcept -> month
+{
+    auto tmp = *this;
+    --(*this);
+    return tmp;
+}
+
+constexpr auto month::operator+=(months const& m) noexcept -> month&
+{
+    *this = *this + m;
+    return *this;
+}
+
+constexpr auto month::operator-=(months const& m) noexcept -> month&
+{
+    *this = *this - m;
+    return *this;
 }
 
 inline constexpr auto January   = etl::chrono::month{1};

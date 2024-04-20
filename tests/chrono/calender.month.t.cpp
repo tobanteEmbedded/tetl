@@ -18,6 +18,14 @@ namespace chrono = etl::chrono;
     CHECK(static_cast<unsigned>(m) == 0U);
     CHECK_FALSE(m.ok());
 
+    // ok
+    CHECK(chrono::month(1).ok());
+    CHECK(chrono::month(2).ok());
+    CHECK(chrono::month(11).ok());
+    CHECK(chrono::month(12).ok());
+    CHECK_FALSE(chrono::month(0).ok());
+    CHECK_FALSE(chrono::month(13).ok());
+
     // inc/dec
     ++m;
     CHECK(m == chrono::month(1));
@@ -29,15 +37,35 @@ namespace chrono = etl::chrono;
     CHECK(m == chrono::month(1));
 
     m--;
-    CHECK(m == chrono::month(0));
+    CHECK(m == chrono::month(12));
 
-    // ok
-    CHECK(chrono::month(1).ok());
-    CHECK(chrono::month(2).ok());
-    CHECK(chrono::month(11).ok());
-    CHECK(chrono::month(12).ok());
-    CHECK_FALSE(chrono::month(0).ok());
-    CHECK_FALSE(chrono::month(13).ok());
+    m += chrono::months(2);
+    CHECK(m == chrono::February);
+
+    m -= chrono::months(2);
+    CHECK(m == chrono::December);
+
+    // arithmetic
+    CHECK(chrono::month(1) + chrono::months(1) == chrono::month(2));
+    CHECK(chrono::month(12) + chrono::months(1) == chrono::month(1));
+    CHECK(chrono::December + chrono::months(2) == chrono::February);
+    CHECK(chrono::December + chrono::months(12) == chrono::December);
+    CHECK(chrono::December + chrono::months(13) == chrono::January);
+    CHECK(chrono::months(1) + chrono::month(1) == chrono::month(2));
+
+    CHECK(chrono::December - chrono::months(2) == chrono::October);
+    CHECK(chrono::December - chrono::months(12) == chrono::December);
+    CHECK(chrono::December - chrono::months(13) == chrono::November);
+
+    CHECK(chrono::January - chrono::January == chrono::months(0));
+    CHECK(chrono::January - chrono::December == chrono::months(1));
+    CHECK(chrono::January - chrono::November == chrono::months(2));
+    CHECK(chrono::January - chrono::October == chrono::months(3));
+
+    CHECK(chrono::December - chrono::December == chrono::months(0));
+    CHECK(chrono::December - chrono::November == chrono::months(1));
+    CHECK(chrono::December - chrono::October == chrono::months(2));
+    CHECK(chrono::December - chrono::January == chrono::months(11));
 
     // compare
     CHECK(chrono::month(1) == chrono::month(1));
