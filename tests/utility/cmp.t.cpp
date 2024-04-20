@@ -10,6 +10,7 @@ constexpr auto test() -> bool
     {
         CHECK(etl::cmp_equal(0, T{0}));
         CHECK_FALSE(etl::cmp_equal(-1, T{0}));
+        CHECK_FALSE(etl::cmp_equal(T{0}, -1));
 
         CHECK(etl::cmp_equal(T{0}, T{0}));
         CHECK(etl::cmp_equal(T{1}, T{1}));
@@ -22,6 +23,7 @@ constexpr auto test() -> bool
 
     {
         CHECK(etl::cmp_not_equal(-1, T{0}));
+        CHECK(etl::cmp_not_equal(T{0}, -1));
         CHECK_FALSE(etl::cmp_not_equal(0, T{0}));
 
         CHECK_FALSE(etl::cmp_not_equal(T{0}, T{0}));
