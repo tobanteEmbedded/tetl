@@ -159,7 +159,8 @@ constexpr auto test() -> bool
 
     {
         // get
-        auto a = etl::array<T, 3>{};
+        auto a         = etl::array<T, 3>{};
+        auto const& ca = a;
 
         etl::get<0>(a) = T{1};
         etl::get<1>(a) = T{2};
@@ -168,6 +169,13 @@ constexpr auto test() -> bool
         CHECK(etl::get<0>(a) == T{1});
         CHECK(etl::get<1>(a) == T{2});
         CHECK(etl::get<2>(a) == T{3});
+
+        CHECK(etl::get<0>(ca) == T{1});
+        CHECK(etl::get<1>(ca) == T{2});
+        CHECK(etl::get<2>(ca) == T{3});
+
+        CHECK(etl::get<0>(etl::array{T(0), T(1)}) == T{0});
+        CHECK(etl::get<1>(etl::array{T(0), T(1)}) == T{1});
     }
     {
         // to_array
