@@ -7,13 +7,70 @@
 #include <etl/_cctype/isdigit.hpp>
 #include <etl/_cctype/isspace.hpp>
 #include <etl/_cctype/tolower.hpp>
+#include <etl/_concepts/integral.hpp>
+#include <etl/_concepts/signed_integral.hpp>
 #include <etl/_cstddef/size_t.hpp>
 #include <etl/_iterator/next.hpp>
 #include <etl/_limits/numeric_limits.hpp>
+#include <etl/_numeric/abs.hpp>
 #include <etl/_string_view/basic_string_view.hpp>
+#include <etl/_type_traits/conditional.hpp>
 #include <etl/_type_traits/is_signed.hpp>
 
 namespace etl::strings {
+
+namespace detail {
+
+template <etl::integral Int>
+struct nop_overflow_checker {
+    explicit constexpr nop_overflow_checker(Int /*base*/) noexcept { }
+
+    [[nodiscard]] constexpr auto operator()(Int /*value*/, Int /*digit*/) const noexcept -> bool { return false; }
+};
+
+template <etl::integral Int>
+struct unsigned_overflow_checker {
+    explicit constexpr unsigned_overflow_checker(Int base) noexcept
+        : _base{base}
+    {
+    }
+
+    [[nodiscard]] constexpr auto operator()(Int value, Int digit) const noexcept -> bool
+    {
+        return value > _maxDivBase or (value == _maxDivBase and digit > _maxModBase);
+    }
+
+private:
+    Int _base;
+    Int _maxDivBase{static_cast<Int>(etl::numeric_limits<Int>::max() / _base)};
+    Int _maxModBase{static_cast<Int>(etl::numeric_limits<Int>::max() % _base)};
+};
+
+template <etl::integral Int>
+struct signed_overflow_checker {
+    explicit constexpr signed_overflow_checker(Int base) noexcept
+        : _base{base}
+    {
+    }
+
+    [[nodiscard]] constexpr auto operator()(Int value, Int digit) const noexcept -> bool
+    {
+        return value < _minDivBase or (value == _minDivBase and digit > _minModBase);
+    }
+
+private:
+    Int _base;
+    Int _minDivBase{static_cast<Int>(etl::numeric_limits<Int>::min() / _base)};
+    Int _minModBase{etl::abs(static_cast<Int>(etl::numeric_limits<Int>::min() % _base))};
+};
+
+template <etl::integral Int, bool Check>
+using overflow_checker = etl::conditional_t<
+    Check,
+    etl::conditional_t<signed_integral<Int>, signed_overflow_checker<Int>, unsigned_overflow_checker<Int>>,
+    nop_overflow_checker<Int>>;
+
+} // namespace detail
 
 struct to_integer_options {
     bool skip_whitespace = true;
@@ -26,25 +83,16 @@ enum struct to_integer_error : unsigned char {
     overflow,
 };
 
-template <typename Int>
+template <etl::integral Int>
 struct to_integer_result {
     char const* end{nullptr};
     to_integer_error error{to_integer_error::none};
     Int value;
 };
 
-template <typename Int, to_integer_options Options = to_integer_options{}>
+template <etl::integral Int, to_integer_options Options = to_integer_options{}>
 [[nodiscard]] constexpr auto to_integer(etl::string_view str, Int base = Int(10)) noexcept -> to_integer_result<Int>
 {
-    constexpr auto const max = etl::numeric_limits<Int>::max();
-    auto const wouldOverflow = [maxDivBase = max / base, maxModBase = max % base](Int val, Int digit) -> bool {
-        if constexpr (Options.check_overflow) {
-            return val > maxDivBase or (val == maxDivBase and digit > maxModBase);
-        } else {
-            return false;
-        }
-    };
-
     auto const len = str.size();
     auto pos       = size_t{};
 
@@ -59,15 +107,16 @@ template <typename Int, to_integer_options Options = to_integer_options{}>
     }
 
     // optional minus for signed types
-    [[maybe_unused]] auto sign = Int(1);
+    [[maybe_unused]] auto positive = true;
     if constexpr (is_signed_v<Int>) {
         if (str[pos] == '-') {
-            sign = Int(-1);
+            positive = false;
             ++pos;
         }
     }
 
-    auto const firstDigit = pos;
+    auto const firstDigit    = pos;
+    auto const wouldOverflow = detail::overflow_checker<Int, Options.check_overflow>{base};
 
     // loop over digits
     auto value = Int{};
@@ -97,11 +146,20 @@ template <typename Int, to_integer_options Options = to_integer_options{}>
             return {.end = str.data(), .error = to_integer_error::overflow, .value = Int{}};
         }
 
-        value = static_cast<Int>(value * base + digit);
+        if constexpr (is_signed_v<Int>) {
+            value = static_cast<Int>(value * base - digit);
+        } else {
+            value = static_cast<Int>(value * base + digit);
+        }
     }
 
     if constexpr (is_signed_v<Int>) {
-        value *= sign;
+        if (positive) {
+            if (value == etl::numeric_limits<Int>::min()) {
+                return {.end = str.data(), .error = to_integer_error::overflow, .value = Int{}};
+            }
+            value *= Int(-1);
+        }
     }
 
     auto const end = etl::next(str.data(), static_cast<etl::ptrdiff_t>(pos));

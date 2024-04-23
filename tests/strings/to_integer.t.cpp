@@ -3,6 +3,7 @@
 #include <etl/strings.hpp>
 
 #include <etl/array.hpp>
+#include <etl/cstdint.hpp>
 #include <etl/string_view.hpp>
 #include <etl/type_traits.hpp>
 
@@ -17,14 +18,27 @@ constexpr auto test() -> bool
     using namespace etl::string_view_literals;
     using namespace etl::strings;
 
+    constexpr auto noOverflowChecks = to_integer_options{
+        .skip_whitespace = true,
+        .check_overflow  = false,
+    };
+
     CHECK(to_integer<Int>({}, 10).end == nullptr);
     CHECK(to_integer<Int>({}, 10).error == to_integer_error::invalid_input);
 
+    CHECK(to_integer<Int, noOverflowChecks>({}, 10).end == nullptr);
+    CHECK(to_integer<Int, noOverflowChecks>({}, 10).error == to_integer_error::invalid_input);
+
     {
-        auto str    = ""_sv;
+        auto str = ""_sv;
+
         auto result = to_integer<Int>(str, 10);
         CHECK(result.end == str.begin());
         CHECK(result.error == to_integer_error::invalid_input);
+
+        auto resultNoChecks = to_integer<Int, noOverflowChecks>(str, 10);
+        CHECK(resultNoChecks.end == str.begin());
+        CHECK(resultNoChecks.error == to_integer_error::invalid_input);
     }
     {
         auto str    = "$"_sv;
@@ -53,6 +67,11 @@ constexpr auto test() -> bool
         CHECK(result.error == to_integer_error::none);
         CHECK(result.end == str.end());
         CHECK(result.value == Int(10));
+
+        auto resultNoChecks = to_integer<Int, noOverflowChecks>(str, 16);
+        CHECK(resultNoChecks.error == to_integer_error::none);
+        CHECK(resultNoChecks.end == str.end());
+        CHECK(resultNoChecks.value == Int(10));
     }
 
     {
@@ -94,14 +113,39 @@ constexpr auto test() -> bool
         CHECK(result.end == str.data());
     }
 
-    if constexpr (etl::is_same_v<Int, signed char>) {
-        auto legal = "127"_sv;
-        CHECK(to_integer<Int>(legal, 10).value == Int(127));
-        CHECK(to_integer<Int>(legal, 10).error == to_integer_error::none);
+    if constexpr (etl::is_same_v<Int, etl::int8_t>) {
+        auto legalMin = "-128"_sv;
+        CHECK(to_integer<Int>(legalMin, 10).value == Int(-128));
+        CHECK(to_integer<Int>(legalMin, 10).error == to_integer_error::none);
+
+        auto legalMax = "127"_sv;
+        CHECK(to_integer<Int>(legalMax, 10).value == Int(127));
+        CHECK(to_integer<Int>(legalMax, 10).error == to_integer_error::none);
 
         auto overflow = "128"_sv;
         CHECK(to_integer<Int>(overflow, 10).end == overflow.begin());
         CHECK(to_integer<Int>(overflow, 10).error == to_integer_error::overflow);
+
+        auto moreOverflow = "999"_sv;
+        CHECK(to_integer<Int>(moreOverflow, 10).end == moreOverflow.begin());
+        CHECK(to_integer<Int>(moreOverflow, 10).error == to_integer_error::overflow);
+    }
+
+    if constexpr (etl::is_same_v<Int, etl::uint8_t>) {
+        auto illegalMinus = "-1"_sv;
+        CHECK(to_integer<Int>(illegalMinus, 10).error == to_integer_error::invalid_input);
+
+        auto legalMax = "255"_sv;
+        CHECK(to_integer<Int>(legalMax, 10).value == Int(255));
+        CHECK(to_integer<Int>(legalMax, 10).error == to_integer_error::none);
+
+        auto overflow = "256"_sv;
+        CHECK(to_integer<Int>(overflow, 10).end == overflow.begin());
+        CHECK(to_integer<Int>(overflow, 10).error == to_integer_error::overflow);
+
+        auto moreOverflow = "999"_sv;
+        CHECK(to_integer<Int>(moreOverflow, 10).end == moreOverflow.begin());
+        CHECK(to_integer<Int>(moreOverflow, 10).error == to_integer_error::overflow);
     }
 
     if constexpr (sizeof(Int) < 4) {
