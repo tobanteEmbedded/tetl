@@ -17,12 +17,28 @@ constexpr auto test() -> bool
     using namespace etl::string_view_literals;
     using namespace etl::strings;
 
-    CHECK(to_integer({}, 10).end == nullptr);
-    CHECK(to_integer({}, 10).error == to_integer_error::invalid_input);
+    CHECK(to_integer<Int>({}, 10).end == nullptr);
+    CHECK(to_integer<Int>({}, 10).error == to_integer_error::invalid_input);
 
     auto null = ""_sv;
-    CHECK(to_integer(null, 10).end == null.begin());
-    CHECK(to_integer(null, 10).error == to_integer_error::invalid_input);
+    CHECK(to_integer<Int>(null, 10).end == null.begin());
+    CHECK(to_integer<Int>(null, 10).error == to_integer_error::invalid_input);
+
+    if constexpr (etl::is_same_v<Int, signed char>) {
+        auto legal = "127"_sv;
+        CHECK(to_integer<Int>(legal, 10).value == Int(127));
+        CHECK(to_integer<Int>(legal, 10).error == to_integer_error::none);
+
+        auto overflow = "128"_sv;
+        CHECK(to_integer<Int>(overflow, 10).end == overflow.begin());
+        CHECK(to_integer<Int>(overflow, 10).error == to_integer_error::overflow);
+    }
+
+    if constexpr (sizeof(Int) < 4) {
+        auto number = "99999"_sv;
+        CHECK(to_integer<Int>(number, 10).end == number.begin());
+        CHECK(to_integer<Int>(number, 10).error == to_integer_error::overflow);
+    }
 
     auto test = [](auto str, auto expected) -> bool {
         auto const res = to_integer<Int>(str, 10);
@@ -46,10 +62,10 @@ constexpr auto test() -> bool
     if constexpr (etl::is_signed_v<Int>) {
         CHECK(test("-10"_sv, -10));
         CHECK(test("-99"_sv, -99));
-        CHECK(test("-999"_sv, -999));
         CHECK(test("  -42"_sv, -42));
 
         if constexpr (sizeof(Int) >= 4) {
+            CHECK(test("-999"_sv, -999));
             CHECK(test("-123456789"_sv, -123456789));
             CHECK(test("   -123456789"_sv, -123456789));
         }

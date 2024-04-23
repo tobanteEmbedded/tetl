@@ -8,6 +8,7 @@
 #include <etl/_cctype/isspace.hpp>
 #include <etl/_cctype/tolower.hpp>
 #include <etl/_cstddef/size_t.hpp>
+#include <etl/_limits/numeric_limits.hpp>
 #include <etl/_memory/addressof.hpp>
 #include <etl/_string_view/basic_string_view.hpp>
 #include <etl/_type_traits/is_signed.hpp>
@@ -40,6 +41,15 @@ struct to_integer_result {
 template <typename Int, to_integer_options Options = to_integer_options{}>
 [[nodiscard]] constexpr auto to_integer(etl::string_view str, Int base = Int(10)) noexcept -> to_integer_result<Int>
 {
+    constexpr auto const max = etl::numeric_limits<Int>::max();
+    auto const wouldOverflow = [maxDivBase = max / base, maxModBase = max % base](Int val, Int digit) -> bool {
+        if constexpr (Options.check_overflow) {
+            return val > maxDivBase or (val == maxDivBase and digit > maxModBase);
+        } else {
+            return false;
+        }
+    };
+
     auto len = str.size();
 
     auto i = size_t{};
@@ -71,9 +81,9 @@ template <typename Int, to_integer_options Options = to_integer_options{}>
     for (; (len != 0) and (str[i] != char(0)); ++i, --len) {
 
         auto digit = Int{};
-        if (etl::isdigit(static_cast<int>(str[i]))) {
+        if (etl::isdigit(static_cast<int>(str[i])) != 0) {
             digit = static_cast<Int>(str[i] - '0');
-        } else if (etl::isalpha(static_cast<int>(str[i]))) {
+        } else if (etl::isalpha(static_cast<int>(str[i])) != 0) {
             auto const x = static_cast<char>(etl::tolower(static_cast<int>(str[i])));
             digit        = static_cast<Int>(static_cast<Int>(x) - static_cast<Int>('a') + 10);
         } else {
@@ -87,8 +97,11 @@ template <typename Int, to_integer_options Options = to_integer_options{}>
             return {.end = str.data(), .error = to_integer_error::invalid_input, .value = Int{}};
         }
 
-        // TODO(tobi): Check overflow
-        value = static_cast<Int>(value * base + digit);
+        if (wouldOverflow(value, digit)) {
+            return {.end = str.data(), .error = to_integer_error::overflow, .value = Int{}};
+        } else {
+            value = static_cast<Int>(value * base + digit);
+        }
     }
 
     if constexpr (is_signed_v<Int>) {
