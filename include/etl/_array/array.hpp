@@ -6,13 +6,16 @@
 #include <etl/_config/all.hpp>
 
 #include <etl/_algorithm/equal.hpp>
+#include <etl/_algorithm/fill_n.hpp>
 #include <etl/_algorithm/lexicographical_compare.hpp>
+#include <etl/_algorithm/swap_ranges.hpp>
 #include <etl/_array/c_array.hpp>
 #include <etl/_contracts/check.hpp>
 #include <etl/_cstddef/size_t.hpp>
 #include <etl/_iterator/begin.hpp>
 #include <etl/_iterator/data.hpp>
 #include <etl/_iterator/end.hpp>
+#include <etl/_iterator/prev.hpp>
 #include <etl/_iterator/rbegin.hpp>
 #include <etl/_iterator/rend.hpp>
 #include <etl/_iterator/reverse_iterator.hpp>
@@ -78,16 +81,16 @@ struct array {
     }
 
     /// Accesses the first item.
-    [[nodiscard]] constexpr auto front() noexcept -> reference { return (*this)[0]; }
+    [[nodiscard]] constexpr auto front() noexcept -> reference { return *begin(); }
 
     /// Accesses the first item.
-    [[nodiscard]] constexpr auto front() const noexcept -> const_reference { return (*this)[0]; }
+    [[nodiscard]] constexpr auto front() const noexcept -> const_reference { return *begin(); }
 
     /// Accesses the last item.
-    [[nodiscard]] constexpr auto back() noexcept -> reference { return (*this)[Size - 1]; }
+    [[nodiscard]] constexpr auto back() noexcept -> reference { return *etl::prev(end()); }
 
     /// Accesses the last item.
-    [[nodiscard]] constexpr auto back() const noexcept -> const_reference { return (*this)[Size - 1]; }
+    [[nodiscard]] constexpr auto back() const noexcept -> const_reference { return *etl::prev(end()); }
 
     /// Returns pointer to the underlying array serving as element
     /// storage. The pointer is such that range [data(); data() + size()) is
@@ -201,22 +204,14 @@ struct array {
     [[nodiscard]] constexpr auto max_size() const noexcept -> size_type { return Size; }
 
     /// Assigns the given value value to all elements in the container.
-    constexpr auto fill(const_reference value) -> void
-    {
-        for (auto& item : (*this)) {
-            item = value;
-        }
-    }
+    constexpr auto fill(const_reference value) -> void { etl::fill_n(begin(), Size, value); }
 
     /// Exchanges the contents of the container with those of other. Does
     /// not cause iterators and references to associate with the other
     /// container.
     constexpr auto swap(array& other) noexcept(is_nothrow_swappable_v<Type>) -> void
     {
-        using etl::swap;
-        for (auto i = size_type{0}; i < size(); ++i) {
-            swap((*this)[i], other[i]);
-        }
+        etl::swap_ranges(begin(), end(), other.begin());
     }
 
     /// Specializes the swap algorithm for array. Swaps the contents of lhs and rhs.
