@@ -15,7 +15,6 @@
 #include <etl/_numeric/abs.hpp>
 #include <etl/_string_view/basic_string_view.hpp>
 #include <etl/_type_traits/conditional.hpp>
-#include <etl/_type_traits/is_signed.hpp>
 
 namespace etl::strings {
 
@@ -108,52 +107,57 @@ template <etl::integral Int, to_integer_options Options = to_integer_options{}>
 
     // optional minus for signed types
     [[maybe_unused]] auto positive = true;
-    if constexpr (is_signed_v<Int>) {
+    if constexpr (signed_integral<Int>) {
         if (str[pos] == '-') {
             positive = false;
             ++pos;
         }
     }
 
-    auto const firstDigit    = pos;
     auto const wouldOverflow = detail::overflow_checker<Int, Options.check_overflow>{base};
-
-    // loop over digits
-    auto value = Int{};
-    for (; pos != len; ++pos) {
-        auto const ch = static_cast<int>(str[pos]);
-
-        auto digit = Int{};
+    auto const parseDigit    = [](int ch) -> Int {
         if (etl::isdigit(ch) != 0) {
-            digit = static_cast<Int>(ch - int{'0'});
-        } else if (etl::isalpha(ch) != 0) {
-            digit = static_cast<Int>(static_cast<Int>(etl::tolower(ch)) - Int{'a'} + Int{10});
-        } else {
-            if (pos == firstDigit) {
-                return {.end = str.data(), .error = to_integer_error::invalid_input, .value = Int{}};
-            }
-            break;
+            return static_cast<Int>(ch - int{'0'});
         }
+        if (etl::isalpha(ch) != 0) {
+            return static_cast<Int>(static_cast<Int>(etl::tolower(ch)) - Int{'a'} + Int{10});
+        }
+        return etl::numeric_limits<Int>::max();
+    };
 
+    // first digit
+    auto value = [&] {
+        auto const ch = static_cast<int>(str[pos++]);
+        if constexpr (signed_integral<Int>) {
+            return static_cast<Int>(-parseDigit(ch));
+        } else {
+            return static_cast<Int>(parseDigit(ch));
+        }
+    }();
+
+    if (etl::abs(value) >= base) {
+        return {.end = str.data(), .error = to_integer_error::invalid_input, .value = Int{}};
+    }
+
+    // loop over rest of digits
+    for (; pos != len; ++pos) {
+        auto const digit = parseDigit(static_cast<int>(str[pos]));
         if (digit >= base) {
-            if (pos != firstDigit) {
-                break;
-            }
-            return {.end = str.data(), .error = to_integer_error::invalid_input, .value = Int{}};
+            break;
         }
 
         if (wouldOverflow(value, digit)) {
             return {.end = str.data(), .error = to_integer_error::overflow, .value = Int{}};
         }
 
-        if constexpr (is_signed_v<Int>) {
+        if constexpr (signed_integral<Int>) {
             value = static_cast<Int>(value * base - digit);
         } else {
             value = static_cast<Int>(value * base + digit);
         }
     }
 
-    if constexpr (is_signed_v<Int>) {
+    if constexpr (signed_integral<Int>) {
         if (positive) {
             if (value == etl::numeric_limits<Int>::min()) {
                 return {.end = str.data(), .error = to_integer_error::overflow, .value = Int{}};
