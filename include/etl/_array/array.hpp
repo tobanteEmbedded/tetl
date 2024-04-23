@@ -3,8 +3,11 @@
 #ifndef TETL_ARRAY_ARRAY_HPP
 #define TETL_ARRAY_ARRAY_HPP
 
+#include <etl/_config/all.hpp>
+
 #include <etl/_algorithm/equal.hpp>
 #include <etl/_algorithm/lexicographical_compare.hpp>
+#include <etl/_array/c_array.hpp>
 #include <etl/_contracts/check.hpp>
 #include <etl/_cstddef/size_t.hpp>
 #include <etl/_iterator/begin.hpp>
@@ -17,10 +20,12 @@
 #include <etl/_tuple/is_tuple_like.hpp>
 #include <etl/_tuple/tuple_element.hpp>
 #include <etl/_tuple/tuple_size.hpp>
+#include <etl/_type_traits/conditional.hpp>
 #include <etl/_type_traits/is_nothrow_swappable.hpp>
 #include <etl/_type_traits/remove_cv.hpp>
 #include <etl/_utility/index_sequence.hpp>
 #include <etl/_utility/move.hpp>
+#include <etl/_utility/unreachable.hpp>
 
 namespace etl {
 /// A container that encapsulates fixed size arrays.
@@ -53,58 +58,94 @@ struct array {
     /// Accesses the specified item with range checking.
     [[nodiscard]] constexpr auto operator[](size_type const pos) noexcept -> reference
     {
-        TETL_PRECONDITION(pos < Size);
-        return _internal_data[pos];
+        if constexpr (Size == 0) {
+            etl::unreachable();
+        } else {
+            TETL_PRECONDITION_SAFE(pos < Size);
+            return _buf[pos];
+        }
     }
 
     /// Accesses the specified item with range checking.
     [[nodiscard]] constexpr auto operator[](size_type const pos) const noexcept -> const_reference
     {
-        TETL_PRECONDITION(pos < Size);
-        return _internal_data[pos];
+        if constexpr (Size == 0) {
+            etl::unreachable();
+        } else {
+            TETL_PRECONDITION_SAFE(pos < Size);
+            return _buf[pos];
+        }
     }
 
     /// Accesses the first item.
-    [[nodiscard]] constexpr auto front() noexcept -> reference { return _internal_data[0]; }
+    [[nodiscard]] constexpr auto front() noexcept -> reference { return (*this)[0]; }
 
     /// Accesses the first item.
-    [[nodiscard]] constexpr auto front() const noexcept -> const_reference { return _internal_data[0]; }
+    [[nodiscard]] constexpr auto front() const noexcept -> const_reference { return (*this)[0]; }
 
     /// Accesses the last item.
-    [[nodiscard]] constexpr auto back() noexcept -> reference { return _internal_data[Size - 1]; }
+    [[nodiscard]] constexpr auto back() noexcept -> reference { return (*this)[Size - 1]; }
 
     /// Accesses the last item.
-    [[nodiscard]] constexpr auto back() const noexcept -> const_reference { return _internal_data[Size - 1]; }
+    [[nodiscard]] constexpr auto back() const noexcept -> const_reference { return (*this)[Size - 1]; }
 
     /// Returns pointer to the underlying array serving as element
     /// storage. The pointer is such that range [data(); data() + size()) is
     /// always a valid range, even if the container is empty (data() is not
     /// dereferenceable in that case).
-    [[nodiscard]] constexpr auto data() noexcept -> pointer { return &_internal_data[0]; }
+    [[nodiscard]] constexpr auto data() noexcept -> pointer { return begin(); }
 
     /// Returns pointer to the underlying array serving as element
     /// storage. The pointer is such that range [data(); data() + size()) is
     /// always a valid range, even if the container is empty (data() is not
     /// dereferenceable in that case).
-    [[nodiscard]] constexpr auto data() const noexcept -> const_pointer { return &_internal_data[0]; }
+    [[nodiscard]] constexpr auto data() const noexcept -> const_pointer { return begin(); }
 
     /// Returns an iterator to the beginning.
-    [[nodiscard]] constexpr auto begin() noexcept -> iterator { return &_internal_data[0]; }
+    [[nodiscard]] constexpr auto begin() noexcept -> iterator
+    {
+        if constexpr (Size == 0) {
+            return nullptr;
+        } else {
+            return etl::begin(_buf);
+        }
+    }
 
     /// Returns an iterator to the beginning.
-    [[nodiscard]] constexpr auto begin() const noexcept -> const_iterator { return &_internal_data[0]; }
+    [[nodiscard]] constexpr auto begin() const noexcept -> const_iterator
+    {
+        if constexpr (Size == 0) {
+            return nullptr;
+        } else {
+            return etl::begin(_buf);
+        }
+    }
 
     /// Returns an const iterator to the beginning.
-    [[nodiscard]] constexpr auto cbegin() const noexcept -> const_iterator { return &_internal_data[0]; }
+    [[nodiscard]] constexpr auto cbegin() const noexcept -> const_iterator { return begin(); }
 
     /// Returns an iterator to the end.
-    [[nodiscard]] constexpr auto end() noexcept -> iterator { return &_internal_data[0] + size(); }
+    [[nodiscard]] constexpr auto end() noexcept -> iterator
+    {
+        if constexpr (Size == 0) {
+            return nullptr;
+        } else {
+            return etl::end(_buf);
+        };
+    }
 
     /// Returns an iterator to the end.
-    [[nodiscard]] constexpr auto end() const noexcept -> const_iterator { return &_internal_data[0] + size(); }
+    [[nodiscard]] constexpr auto end() const noexcept -> const_iterator
+    {
+        if constexpr (Size == 0) {
+            return nullptr;
+        } else {
+            return etl::end(_buf);
+        };
+    }
 
     /// Returns an const iterator to the end.
-    [[nodiscard]] constexpr auto cend() const noexcept -> const_iterator { return &_internal_data[0] + size(); }
+    [[nodiscard]] constexpr auto cend() const noexcept -> const_iterator { return end(); }
 
     /// Returns a reverse iterator to the first element of the reversed
     /// array. It corresponds to the last element of the non-reversed array. If
@@ -203,7 +244,8 @@ struct array {
     friend constexpr auto operator>=(array const& lhs, array const& rhs) -> bool { return !(lhs < rhs); }
 
     /// \internal
-    Type _internal_data[Size]; // NOLINT(readability-identifier-naming)
+    // NOLINTNEXTLINE(readability-identifier-naming)
+    TETL_NO_UNIQUE_ADDRESS conditional_t<Size == 0, empty_c_array, c_array<Type, Size + (Size == 0)>> _buf;
 };
 
 /// One deduction guide is provided for array to provide an equivalent of

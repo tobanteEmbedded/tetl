@@ -160,9 +160,7 @@ public:
     }
 
 private:
-    struct empty_array_t { };
-    using array_t = conditional_t<rank_dynamic() == 0, empty_array_t, array<size_type, rank_dynamic()>>;
-    TETL_NO_UNIQUE_ADDRESS array_t _extents{};
+    TETL_NO_UNIQUE_ADDRESS array<size_type, rank_dynamic()> _extents{};
 };
 
 namespace detail {

@@ -13,6 +13,29 @@ template <typename T>
 constexpr auto test() -> bool
 {
     {
+        etl::array<T, 0> a{};
+        etl::array<T, 0> b{};
+        auto const& ca = a;
+        auto const& cb = b;
+
+        CHECK(a.empty());
+        CHECK(a.size() == 0);
+        CHECK(a.max_size() == 0);
+
+        CHECK(ca.empty());
+        CHECK(ca.size() == 0);
+        CHECK(ca.max_size() == 0);
+
+        CHECK(a.begin() == a.end());
+        CHECK(a.begin() == b.begin());
+        CHECK(a.begin() == b.end());
+
+        CHECK(ca.begin() == ca.end());
+        CHECK(ca.begin() == cb.begin());
+        CHECK(ca.begin() == cb.end());
+    }
+
+    {
         etl::array<T, 2> a{};
         CHECK(a.empty() == false);
         CHECK(a.size() == 2);
