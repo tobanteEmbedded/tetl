@@ -103,10 +103,14 @@ struct basic_bitset {
     /// Checks if all bits are set to true.
     [[nodiscard]] constexpr auto all() const noexcept -> bool
     {
-        if constexpr (not has_padding) {
-            return etl::all_of(_words.cbegin(), _words.cend(), [](auto word) { return word == ones; });
+        auto const allSet = [](auto word) { return word == ones; };
+
+        if constexpr (has_padding) {
+            auto const head = etl::all_of(_words.cbegin(), etl::prev(_words.cend()), allSet);
+            auto const tail = _words[num_words - 1] == padding_mask_inv;
+            return head and tail;
         } else {
-            return count() == size();
+            return etl::all_of(_words.cbegin(), _words.cend(), allSet);
         }
     }
 
@@ -138,13 +142,11 @@ struct basic_bitset {
     /// Sets all bits to true.
     constexpr auto set() noexcept -> basic_bitset&
     {
-        if constexpr (not has_padding) {
-            etl::fill(_words.begin(), _words.end(), ones);
+        if constexpr (has_padding) {
+            etl::fill(_words.begin(), etl::prev(_words.end()), ones);
+            _words[num_words - 1] = padding_mask_inv;
         } else {
-            // TODO: Improve
-            for (auto i = etl::size_t(0); i < size(); ++i) {
-                unchecked_set(i, true);
-            }
+            etl::fill(_words.begin(), _words.end(), ones);
         }
 
         return *this;
@@ -176,15 +178,12 @@ struct basic_bitset {
     /// Flips all bits.
     constexpr auto flip() noexcept -> basic_bitset&
     {
-        if constexpr (not has_padding) {
-            etl::transform(_words.cbegin(), _words.cend(), _words.begin(), [](auto word) {
-                return static_cast<WordType>(~word);
-            });
-        } else {
-            // TODO: Improve
-            for (auto i = etl::size_t(0); i < size(); ++i) {
-                unchecked_flip(i);
-            }
+        etl::transform(_words.cbegin(), _words.cend(), _words.begin(), [](auto word) {
+            return static_cast<WordType>(~word);
+        });
+
+        if constexpr (has_padding) {
+            _words[num_words - 1] &= padding_mask_inv;
         }
 
         return *this;
@@ -250,8 +249,16 @@ private:
     static constexpr auto ones          = etl::numeric_limits<WordType>::max();
     static constexpr auto bits_per_word = static_cast<size_t>(etl::numeric_limits<WordType>::digits);
     static constexpr auto num_words     = (Bits + bits_per_word - 1) / bits_per_word;
-    static constexpr auto padding       = Bits % bits_per_word;
+    static constexpr auto padding       = num_words * bits_per_word - Bits;
     static constexpr auto has_padding   = padding != 0;
+    static constexpr auto padding_mask  = [] {
+        auto mask = WordType{};
+        for (auto i{bits_per_word - padding}; i < bits_per_word; ++i) {
+            mask = etl::set_bit(mask, static_cast<WordType>(i));
+        }
+        return mask;
+    }();
+    static constexpr auto padding_mask_inv = static_cast<WordType>(~padding_mask);
 
     [[nodiscard]] static constexpr auto word_index(etl::size_t pos) -> etl::size_t { return pos / bits_per_word; }
 
