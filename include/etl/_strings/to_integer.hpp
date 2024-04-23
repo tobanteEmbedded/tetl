@@ -99,9 +99,9 @@ template <typename Int, to_integer_options Options = to_integer_options{}>
 
         if (wouldOverflow(value, digit)) {
             return {.end = str.data(), .error = to_integer_error::overflow, .value = Int{}};
-        } else {
-            value = static_cast<Int>(value * base + digit);
         }
+
+        value = static_cast<Int>(value * base + digit);
     }
 
     if constexpr (is_signed_v<Int>) {
