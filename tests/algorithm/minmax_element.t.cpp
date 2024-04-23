@@ -17,6 +17,10 @@ constexpr auto test() -> bool
         auto const out = etl::minmax_element(in.begin(), in.end());
         CHECK(out.first == in.end());
         CHECK(out.second == in.end());
+
+        auto const outG = etl::minmax_element(in.begin(), in.end(), etl::greater());
+        CHECK(outG.first == in.end());
+        CHECK(outG.second == in.end());
     }
 
     {
@@ -24,6 +28,10 @@ constexpr auto test() -> bool
         auto const out = etl::minmax_element(in.begin(), in.end());
         CHECK(*out.first == T(1));
         CHECK(*out.second == T(1));
+
+        auto const outG = etl::minmax_element(in.begin(), in.end(), etl::greater());
+        CHECK(*outG.first == T(1));
+        CHECK(*outG.second == T(1));
     }
 
     {
@@ -31,6 +39,10 @@ constexpr auto test() -> bool
         auto const out = etl::minmax_element(in.begin(), in.end());
         CHECK(*out.first == T(1));
         CHECK(*out.second == T(2));
+
+        auto const outG = etl::minmax_element(in.begin(), in.end(), etl::greater());
+        CHECK(*outG.first == T(2));
+        CHECK(*outG.second == T(1));
     }
 
     {
@@ -38,13 +50,10 @@ constexpr auto test() -> bool
         auto const out = etl::minmax_element(in.begin(), in.end());
         CHECK(*out.first == T(1));
         CHECK(*out.second == T(3));
-    }
 
-    {
-        auto const in  = etl::array{T(1), T(2), T(3)};
-        auto const out = etl::minmax_element(in.begin(), in.end(), etl::greater{});
-        CHECK(*out.first == T(3));
-        CHECK(*out.second == T(1));
+        auto const outG = etl::minmax_element(in.begin(), in.end(), etl::greater());
+        CHECK(*outG.first == T(3));
+        CHECK(*outG.second == T(1));
     }
 
     {
@@ -52,6 +61,10 @@ constexpr auto test() -> bool
         auto const out = etl::minmax_element(in.begin(), in.end());
         CHECK(*out.first == T(1));
         CHECK(*out.second == T(3));
+
+        auto const outG = etl::minmax_element(in.begin(), in.end(), etl::greater());
+        CHECK(*outG.first == T(3));
+        CHECK(*outG.second == T(1));
     }
 
     {
@@ -59,6 +72,10 @@ constexpr auto test() -> bool
         auto const out = etl::minmax_element(in.begin(), in.end());
         CHECK(*out.first == T(1));
         CHECK(*out.second == T(6));
+
+        auto const outG = etl::minmax_element(in.begin(), in.end(), etl::greater());
+        CHECK(*outG.first == T(6));
+        CHECK(*outG.second == T(1));
     }
 
     {
@@ -66,6 +83,10 @@ constexpr auto test() -> bool
         auto const out = etl::minmax_element(in.begin(), in.end());
         CHECK(*out.first == T(1));
         CHECK(*out.second == T(5));
+
+        auto const outG = etl::minmax_element(in.begin(), in.end(), etl::greater());
+        CHECK(*outG.first == T(5));
+        CHECK(*outG.second == T(1));
     }
 
     {
@@ -73,6 +94,10 @@ constexpr auto test() -> bool
         auto const out = etl::minmax_element(in.begin(), in.end());
         CHECK(*out.first == T(0));
         CHECK(*out.second == T(100));
+
+        auto const outG = etl::minmax_element(in.begin(), in.end(), etl::greater());
+        CHECK(*outG.first == T(100));
+        CHECK(*outG.second == T(0));
     }
 
     {
@@ -80,6 +105,10 @@ constexpr auto test() -> bool
         auto const out = etl::minmax_element(in.begin(), in.end());
         CHECK(*out.first == T(0));
         CHECK(*out.second == T(112));
+
+        auto const outG = etl::minmax_element(in.begin(), in.end(), etl::greater());
+        CHECK(*outG.first == T(112));
+        CHECK(*outG.second == T(0));
     }
 
     return true;
