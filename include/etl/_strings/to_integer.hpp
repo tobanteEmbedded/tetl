@@ -9,16 +9,10 @@
 #include <etl/_cctype/tolower.hpp>
 #include <etl/_cstddef/size_t.hpp>
 #include <etl/_limits/numeric_limits.hpp>
-#include <etl/_memory/addressof.hpp>
 #include <etl/_string_view/basic_string_view.hpp>
 #include <etl/_type_traits/is_signed.hpp>
 
 namespace etl::strings {
-
-enum struct skip_whitespace : unsigned char {
-    no,
-    yes,
-};
 
 struct to_integer_options {
     bool skip_whitespace = true;
@@ -50,48 +44,46 @@ template <typename Int, to_integer_options Options = to_integer_options{}>
         }
     };
 
-    auto len = str.size();
+    auto const len = str.size();
+    auto pos       = size_t{};
 
-    auto i = size_t{};
     if constexpr (Options.skip_whitespace) {
-        while ((len != 0) and etl::isspace(static_cast<int>(str[i])) and (str[i] != char(0))) {
-            ++i;
-            --len;
+        while (pos != len and etl::isspace(static_cast<int>(str[pos]))) {
+            ++pos;
         }
     }
 
-    if (len == 0 or str[i] == char(0)) {
+    if (pos == len) {
         return {.end = str.data(), .error = to_integer_error::invalid_input, .value = Int{}};
     }
 
     // optional minus for signed types
     [[maybe_unused]] auto sign = Int(1);
     if constexpr (is_signed_v<Int>) {
-        if (((len != 0) and (str[i] != char(0))) and (str[i] == '-')) {
+        if (str[pos] == '-') {
             sign = Int(-1);
-            ++i;
-            --len;
+            ++pos;
         }
     }
 
-    auto const firstDigit = i;
+    auto const firstDigit = pos;
 
     // loop over digits
     auto value = Int{};
-    for (; (len != 0) and (str[i] != char(0)); ++i, --len) {
+    for (; pos != len; ++pos) {
+        auto const ch = static_cast<int>(str[pos]);
 
         auto digit = Int{};
-        if (etl::isdigit(static_cast<int>(str[i])) != 0) {
-            digit = static_cast<Int>(str[i] - '0');
-        } else if (etl::isalpha(static_cast<int>(str[i])) != 0) {
-            auto const x = static_cast<char>(etl::tolower(static_cast<int>(str[i])));
-            digit        = static_cast<Int>(static_cast<Int>(x) - static_cast<Int>('a') + 10);
+        if (etl::isdigit(ch) != 0) {
+            digit = static_cast<Int>(ch - int{'0'});
+        } else if (etl::isalpha(ch) != 0) {
+            digit = static_cast<Int>(etl::tolower(ch) - int{'a'} + 10);
         } else {
             break;
         }
 
         if (digit >= base) {
-            if (i != firstDigit) {
+            if (pos != firstDigit) {
                 break;
             }
             return {.end = str.data(), .error = to_integer_error::invalid_input, .value = Int{}};
@@ -108,7 +100,7 @@ template <typename Int, to_integer_options Options = to_integer_options{}>
         value *= sign;
     }
 
-    return {.end = etl::addressof(str[i]), .error = to_integer_error::none, .value = value};
+    return {.end = &str[pos], .error = to_integer_error::none, .value = value};
 }
 
 } // namespace etl::strings
