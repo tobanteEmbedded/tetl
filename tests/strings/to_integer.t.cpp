@@ -29,6 +29,20 @@ constexpr auto test() -> bool
     CHECK(to_integer<Int, noOverflowChecks>({}, 10).end == nullptr);
     CHECK(to_integer<Int, noOverflowChecks>({}, 10).error == to_integer_error::invalid_input);
 
+    // illegal chars
+    {
+        for (auto i{0}; i <= static_cast<int>(etl::numeric_limits<char>::max()); ++i) {
+            if (etl::isdigit(i) or etl::isalpha(i)) {
+                continue;
+            }
+
+            auto const ch  = static_cast<char>(i);
+            auto const str = etl::string_view{&ch, 1};
+            CHECK(to_integer<Int>(str, 10).end == str.data());
+            CHECK(to_integer<Int>(str, 10).error == to_integer_error::invalid_input);
+        }
+    }
+
     {
         auto str = ""_sv;
 
@@ -117,6 +131,10 @@ constexpr auto test() -> bool
         auto legalMin = "-128"_sv;
         CHECK(to_integer<Int>(legalMin, 10).value == Int(-128));
         CHECK(to_integer<Int>(legalMin, 10).error == to_integer_error::none);
+
+        auto legalMinNoChecks = "-128"_sv;
+        CHECK(to_integer<Int, noOverflowChecks>(legalMinNoChecks, 10).value == Int(-128));
+        CHECK(to_integer<Int, noOverflowChecks>(legalMinNoChecks, 10).error == to_integer_error::none);
 
         auto legalMax = "127"_sv;
         CHECK(to_integer<Int>(legalMax, 10).value == Int(127));

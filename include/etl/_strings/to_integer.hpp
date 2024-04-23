@@ -92,16 +92,27 @@ struct to_integer_result {
 template <etl::integral Int, to_integer_options Options = to_integer_options{}>
 [[nodiscard]] constexpr auto to_integer(etl::string_view str, Int base = Int(10)) noexcept -> to_integer_result<Int>
 {
-    auto const len = str.size();
-    auto pos       = size_t{};
+    auto const length        = str.size();
+    auto const wouldOverflow = detail::overflow_checker<Int, Options.check_overflow>{base};
+    auto const parseDigit    = [](int ch) -> Int {
+        if (etl::isdigit(ch) != 0) {
+            return static_cast<Int>(ch - int{'0'});
+        }
+        if (etl::isalpha(ch) != 0) {
+            return static_cast<Int>(static_cast<Int>(etl::tolower(ch)) - Int{'a'} + Int{10});
+        }
+        return etl::numeric_limits<Int>::max(); // always greater than base
+    };
 
+    auto pos = size_t{};
     if constexpr (Options.skip_whitespace) {
-        while (pos != len and etl::isspace(static_cast<int>(str[pos]))) {
+        while (pos != length and etl::isspace(static_cast<int>(str[pos]))) {
             ++pos;
         }
     }
 
-    if (pos == len) {
+    // empty or only whitespace
+    if (pos == length) {
         return {.end = str.data(), .error = to_integer_error::invalid_input, .value = Int{}};
     }
 
@@ -114,19 +125,15 @@ template <etl::integral Int, to_integer_options Options = to_integer_options{}>
         }
     }
 
-    auto const wouldOverflow = detail::overflow_checker<Int, Options.check_overflow>{base};
-    auto const parseDigit    = [](int ch) -> Int {
-        if (etl::isdigit(ch) != 0) {
-            return static_cast<Int>(ch - int{'0'});
-        }
-        if (etl::isalpha(ch) != 0) {
-            return static_cast<Int>(static_cast<Int>(etl::tolower(ch)) - Int{'a'} + Int{10});
-        }
-        return etl::numeric_limits<Int>::max();
-    };
-
     // first digit
     auto value = [&] {
+        // minus "-" was last character in string
+        if constexpr (signed_integral<Int>) {
+            if (pos == length) {
+                return etl::numeric_limits<Int>::max(); // always greater than base
+            }
+        }
+
         auto const ch = static_cast<int>(str[pos++]);
         if constexpr (signed_integral<Int>) {
             return static_cast<Int>(-parseDigit(ch));
@@ -140,7 +147,7 @@ template <etl::integral Int, to_integer_options Options = to_integer_options{}>
     }
 
     // loop over rest of digits
-    for (; pos != len; ++pos) {
+    for (; pos != length; ++pos) {
         auto const digit = parseDigit(static_cast<int>(str[pos]));
         if (digit >= base) {
             break;
