@@ -43,6 +43,28 @@ constexpr auto test() -> bool
         }
     }
 
+    // digits
+    for (auto ch{'0'}; ch <= '9'; ++ch) {
+        // single
+        {
+            auto const buffer = etl::array<char, 1>{ch};
+            auto const str    = etl::string_view{buffer.data(), buffer.size()};
+            auto const result = to_integer<Int>(str, 10);
+            CHECK(result.error == to_integer_error::none);
+            CHECK(result.end == str.end());
+            CHECK(result.value == static_cast<Int>(ch - '0'));
+        }
+        // tens
+        {
+            auto const buffer = etl::array<char, 2>{ch, '0'};
+            auto const str    = etl::string_view{buffer.data(), buffer.size()};
+            auto const result = to_integer<Int>(str, 10);
+            CHECK(result.error == to_integer_error::none);
+            CHECK(result.end == str.end());
+            CHECK(result.value == static_cast<Int>(ch - '0') * 10);
+        }
+    }
+
     {
         auto str = ""_sv;
 
