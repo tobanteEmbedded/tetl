@@ -77,7 +77,7 @@ template <typename Int, to_integer_options Options = to_integer_options{}>
         if (etl::isdigit(ch) != 0) {
             digit = static_cast<Int>(ch - int{'0'});
         } else if (etl::isalpha(ch) != 0) {
-            digit = static_cast<Int>(etl::tolower(ch) - int{'a'} + 10);
+            digit = static_cast<Int>(static_cast<Int>(etl::tolower(ch)) - Int{'a'} + Int{10});
         } else {
             break;
         }
