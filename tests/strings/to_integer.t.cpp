@@ -20,9 +20,79 @@ constexpr auto test() -> bool
     CHECK(to_integer<Int>({}, 10).end == nullptr);
     CHECK(to_integer<Int>({}, 10).error == to_integer_error::invalid_input);
 
-    auto null = ""_sv;
-    CHECK(to_integer<Int>(null, 10).end == null.begin());
-    CHECK(to_integer<Int>(null, 10).error == to_integer_error::invalid_input);
+    {
+        auto str    = ""_sv;
+        auto result = to_integer<Int>(str, 10);
+        CHECK(result.end == str.begin());
+        CHECK(result.error == to_integer_error::invalid_input);
+    }
+    {
+        auto str    = "$"_sv;
+        auto result = to_integer<Int>(str, 10);
+        CHECK(result.end == str.begin());
+        CHECK(result.error == to_integer_error::invalid_input);
+    }
+
+    {
+        auto str    = "Z"_sv;
+        auto result = to_integer<Int>(str, 10);
+        CHECK(result.end == str.begin());
+        CHECK(result.error == to_integer_error::invalid_input);
+    }
+
+    {
+        auto str    = "z"_sv;
+        auto result = to_integer<Int>(str, 10);
+        CHECK(result.end == str.begin());
+        CHECK(result.error == to_integer_error::invalid_input);
+    }
+
+    {
+        auto str    = "A"_sv;
+        auto result = to_integer<Int>(str, 16);
+        CHECK(result.error == to_integer_error::none);
+        CHECK(result.end == str.end());
+        CHECK(result.value == Int(10));
+    }
+
+    {
+        auto str    = "a"_sv;
+        auto result = to_integer<Int>(str, 16);
+        CHECK(result.error == to_integer_error::none);
+        CHECK(result.end == str.end());
+        CHECK(result.value == Int(10));
+    }
+
+    {
+        auto str    = "B"_sv;
+        auto result = to_integer<Int>(str, 16);
+        CHECK(result.error == to_integer_error::none);
+        CHECK(result.end == str.end());
+        CHECK(result.value == Int(11));
+    }
+
+    {
+        auto str    = "b"_sv;
+        auto result = to_integer<Int>(str, 16);
+        CHECK(result.error == to_integer_error::none);
+        CHECK(result.end == str.end());
+        CHECK(result.value == Int(11));
+    }
+
+    {
+        auto str    = "F"_sv;
+        auto result = to_integer<Int>(str, 16);
+        CHECK(result.error == to_integer_error::none);
+        CHECK(result.end == str.end());
+        CHECK(result.value == Int(15));
+    }
+
+    {
+        auto str    = "G"_sv;
+        auto result = to_integer<Int>(str, 16);
+        CHECK(result.error == to_integer_error::invalid_input);
+        CHECK(result.end == str.data());
+    }
 
     if constexpr (etl::is_same_v<Int, signed char>) {
         auto legal = "127"_sv;

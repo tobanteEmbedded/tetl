@@ -8,6 +8,7 @@
 #include <etl/_cctype/isspace.hpp>
 #include <etl/_cctype/tolower.hpp>
 #include <etl/_cstddef/size_t.hpp>
+#include <etl/_iterator/next.hpp>
 #include <etl/_limits/numeric_limits.hpp>
 #include <etl/_string_view/basic_string_view.hpp>
 #include <etl/_type_traits/is_signed.hpp>
@@ -79,6 +80,9 @@ template <typename Int, to_integer_options Options = to_integer_options{}>
         } else if (etl::isalpha(ch) != 0) {
             digit = static_cast<Int>(static_cast<Int>(etl::tolower(ch)) - Int{'a'} + Int{10});
         } else {
+            if (pos == firstDigit) {
+                return {.end = str.data(), .error = to_integer_error::invalid_input, .value = Int{}};
+            }
             break;
         }
 
@@ -100,7 +104,8 @@ template <typename Int, to_integer_options Options = to_integer_options{}>
         value *= sign;
     }
 
-    return {.end = &str[pos], .error = to_integer_error::none, .value = value};
+    auto const end = etl::next(str.data(), static_cast<etl::ptrdiff_t>(pos));
+    return {.end = end, .error = to_integer_error::none, .value = value};
 }
 
 } // namespace etl::strings
