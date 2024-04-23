@@ -86,7 +86,7 @@ template <etl::integral Int>
 struct to_integer_result {
     char const* end{nullptr};
     to_integer_error error{to_integer_error::none};
-    Int value;
+    Int value{};
 };
 
 template <etl::integral Int, to_integer_options Options = to_integer_options{}>
@@ -94,6 +94,7 @@ template <etl::integral Int, to_integer_options Options = to_integer_options{}>
 {
     auto const length        = str.size();
     auto const wouldOverflow = detail::overflow_checker<Int, Options.check_overflow>{base};
+    auto const makeError     = [str](auto err) { return to_integer_result<Int>{.end = str.data(), .error = err}; };
     auto const parseDigit    = [](int ch) -> Int {
         if (etl::isdigit(ch) != 0) {
             return static_cast<Int>(ch - int{'0'});
@@ -113,7 +114,7 @@ template <etl::integral Int, to_integer_options Options = to_integer_options{}>
 
     // empty or only whitespace
     if (pos == length) {
-        return {.end = str.data(), .error = to_integer_error::invalid_input, .value = Int{}};
+        return makeError(to_integer_error::invalid_input);
     }
 
     // optional minus for signed types
@@ -121,29 +122,26 @@ template <etl::integral Int, to_integer_options Options = to_integer_options{}>
     if constexpr (signed_integral<Int>) {
         if (str[pos] == '-') {
             positive = false;
-            ++pos;
+            if (++pos == length) {
+                // minus "-" was last character in string
+                return makeError(to_integer_error::invalid_input);
+            }
         }
     }
 
     // first digit
     auto value = [&] {
-        // minus "-" was last character in string
+        auto const ch    = static_cast<int>(str[pos++]);
+        auto const digit = static_cast<Int>(parseDigit(ch));
         if constexpr (signed_integral<Int>) {
-            if (pos == length) {
-                return etl::numeric_limits<Int>::max(); // always greater than base
-            }
-        }
-
-        auto const ch = static_cast<int>(str[pos++]);
-        if constexpr (signed_integral<Int>) {
-            return static_cast<Int>(-parseDigit(ch));
+            return static_cast<Int>(-digit);
         } else {
-            return static_cast<Int>(parseDigit(ch));
+            return digit;
         }
     }();
 
     if (etl::abs(value) >= base) {
-        return {.end = str.data(), .error = to_integer_error::invalid_input, .value = Int{}};
+        return makeError(to_integer_error::invalid_input);
     }
 
     // loop over rest of digits
@@ -154,7 +152,7 @@ template <etl::integral Int, to_integer_options Options = to_integer_options{}>
         }
 
         if (wouldOverflow(value, digit)) {
-            return {.end = str.data(), .error = to_integer_error::overflow, .value = Int{}};
+            return makeError(to_integer_error::overflow);
         }
 
         if constexpr (signed_integral<Int>) {
@@ -167,7 +165,7 @@ template <etl::integral Int, to_integer_options Options = to_integer_options{}>
     if constexpr (signed_integral<Int>) {
         if (positive) {
             if (value == etl::numeric_limits<Int>::min()) {
-                return {.end = str.data(), .error = to_integer_error::overflow, .value = Int{}};
+                return makeError(to_integer_error::overflow);
             }
             value *= Int(-1);
         }
