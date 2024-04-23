@@ -84,8 +84,8 @@ template <typename IndexType>
     CHECK(test_linalg_vector_idx_abs_max_real<unsigned long, IndexType>());
     CHECK(test_linalg_vector_idx_abs_max_real<unsigned long long, IndexType>());
 
-    // CHECK(test_linalg_vector_idx_abs_max_real<signed char, IndexType>());
-    // CHECK(test_linalg_vector_idx_abs_max_real<signed short, IndexType>());
+    CHECK(test_linalg_vector_idx_abs_max_real<signed char, IndexType>());
+    CHECK(test_linalg_vector_idx_abs_max_real<signed short, IndexType>());
     CHECK(test_linalg_vector_idx_abs_max_real<signed int, IndexType>());
     CHECK(test_linalg_vector_idx_abs_max_real<signed long, IndexType>());
     CHECK(test_linalg_vector_idx_abs_max_real<signed long long, IndexType>());

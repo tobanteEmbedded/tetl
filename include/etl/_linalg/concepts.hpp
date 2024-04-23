@@ -78,17 +78,19 @@ template <typename T>
 concept has_adl_imag = linalg_adl_checks::has_imag<T>;
 
 inline constexpr auto abs_if_needed = []<typename T>(T const& val) {
-    if constexpr (has_adl_abs<T>) {
-        using etl::abs;
+    if constexpr (unsigned_integral<T>) {
+        return val;
+    } else if constexpr (is_arithmetic_v<T>) {
+        return etl::abs(val);
+    } else if constexpr (has_adl_abs<T>) {
         return abs(val);
     } else {
-        return val;
+        static_assert(always_false<T>);
     }
 };
 
 inline constexpr auto conj_if_needed = []<typename T>(T const& val) {
-    if constexpr (has_adl_conj<T>) {
-        using etl::conj;
+    if constexpr (not is_arithmetic_v<T> and has_adl_conj<T>) {
         return conj(val);
     } else {
         return val;
@@ -96,8 +98,7 @@ inline constexpr auto conj_if_needed = []<typename T>(T const& val) {
 };
 
 inline constexpr auto real_if_needed = []<typename T>(T const& val) {
-    if constexpr (has_adl_real<T>) {
-        using etl::real;
+    if constexpr (not is_arithmetic_v<T> and has_adl_real<T>) {
         return real(val);
     } else {
         return val;
@@ -105,10 +106,7 @@ inline constexpr auto real_if_needed = []<typename T>(T const& val) {
 };
 
 inline constexpr auto imag_if_needed = []<typename T>(T const& val) {
-    if constexpr (is_arithmetic_v<T>) {
-        return val;
-    } else if constexpr (has_adl_imag<T>) {
-        using etl::imag;
+    if constexpr (not is_arithmetic_v<T> and has_adl_imag<T>) {
         return imag(val);
     } else {
         return T{};
