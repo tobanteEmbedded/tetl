@@ -145,8 +145,7 @@ struct basic_string_view {
     /// \pre `pos < size()`
     [[nodiscard]] constexpr auto operator[](size_type pos) const -> const_reference
     {
-        // TODO: Currently fails because of strings::to_integer implementation
-        // TETL_PRECONDITION(pos < size());
+        TETL_PRECONDITION(pos < size());
         return unsafe_at(pos);
     }
 
