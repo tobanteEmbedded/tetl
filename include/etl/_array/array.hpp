@@ -131,7 +131,7 @@ struct array {
             return nullptr;
         } else {
             return etl::end(_buf);
-        };
+        }
     }
 
     /// Returns an iterator to the end.
@@ -141,7 +141,7 @@ struct array {
             return nullptr;
         } else {
             return etl::end(_buf);
-        };
+        }
     }
 
     /// Returns an const iterator to the end.
@@ -245,7 +245,7 @@ struct array {
 
     /// \internal
     // NOLINTNEXTLINE(readability-identifier-naming)
-    TETL_NO_UNIQUE_ADDRESS conditional_t<Size == 0, empty_c_array, c_array<Type, Size + (Size == 0)>> _buf;
+    TETL_NO_UNIQUE_ADDRESS conditional_t<Size == 0, empty_c_array, c_array<Type, Size + size_t{Size == 0}>> _buf;
 };
 
 /// One deduction guide is provided for array to provide an equivalent of
