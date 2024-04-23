@@ -134,6 +134,16 @@ constexpr auto test_sort() -> bool
         CHECK(src[1] == T{2});
     }
 
+    // empty
+    {
+        auto empty = etl::static_vector<T, 3>{};
+        CHECK(etl::is_sorted(empty.begin(), empty.end()));
+        CHECK(etl::is_sorted_until(empty.begin(), empty.end()) == empty.end());
+
+        CHECK(etl::is_sorted(empty.begin(), empty.end(), etl::greater()));
+        CHECK(etl::is_sorted_until(empty.begin(), empty.end(), etl::greater()) == empty.end());
+    }
+
     // already is_sorteded
     {
         auto src = etl::array<T, 4>{
