@@ -3,6 +3,7 @@
 #include <etl/charconv.hpp>
 
 #include <etl/array.hpp>
+#include <etl/cstdint.hpp>
 #include <etl/iterator.hpp>
 #include <etl/string.hpp>
 #include <etl/string_view.hpp>
@@ -61,6 +62,14 @@ constexpr auto test_from_chars_result() -> bool
         auto lhs        = etl::from_chars_result{buffer, etl::errc{}};
         auto rhs        = etl::from_chars_result{buffer, etl::errc{}};
         CHECK(lhs == rhs);
+
+        CHECK(lhs != etl::from_chars_result{nullptr, etl::errc{}});
+        CHECK(lhs != etl::from_chars_result{buffer, etl::errc::invalid_argument});
+        CHECK(lhs != etl::from_chars_result{buffer, etl::errc::result_out_of_range});
+
+        CHECK(etl::from_chars_result{nullptr, etl::errc{}} != rhs);
+        CHECK(etl::from_chars_result{buffer, etl::errc::invalid_argument} != rhs);
+        CHECK(etl::from_chars_result{buffer, etl::errc::result_out_of_range} != rhs);
     }
 
     return true;
@@ -71,14 +80,6 @@ constexpr auto test_from_chars() -> bool
 {
     using namespace etl::string_view_literals;
 
-    auto test = [](auto tc, T expected, int base) -> bool {
-        auto val          = T{};
-        auto const result = etl::from_chars(tc.begin(), tc.end(), val, base);
-        CHECK(static_cast<bool>(result));
-        CHECK(val == expected);
-        return true;
-    };
-
     {
         auto val = T{};
 
@@ -87,13 +88,31 @@ constexpr auto test_from_chars() -> bool
         CHECK(etl::from_chars(foo.begin(), foo.end(), val).ptr == foo.data());
         CHECK(etl::from_chars(foo.begin(), foo.end(), val).ec == etl::errc::invalid_argument);
 
+        auto minus = "-"_sv;
+        CHECK_FALSE(static_cast<bool>(etl::from_chars(minus.begin(), minus.end(), val)));
+        CHECK(etl::from_chars(minus.begin(), minus.end(), val).ptr == minus.data());
+        CHECK(etl::from_chars(minus.begin(), minus.end(), val).ec == etl::errc::invalid_argument);
+
+        auto plus = "+"_sv;
+        CHECK_FALSE(static_cast<bool>(etl::from_chars(plus.begin(), plus.end(), val)));
+        CHECK(etl::from_chars(plus.begin(), plus.end(), val).ptr == plus.data());
+        CHECK(etl::from_chars(plus.begin(), plus.end(), val).ec == etl::errc::invalid_argument);
+
         auto fourfoo      = "4foo"_sv;
         auto const result = etl::from_chars(fourfoo.begin(), fourfoo.end(), val);
-        CHECK(static_cast<bool>(result));
+        CHECK(bool{result});
         CHECK(result.ptr == etl::next(fourfoo.data()));
         CHECK(result.ec == etl::errc{});
         CHECK(val == T(4));
     }
+
+    auto test = [](auto tc, T expected, int base) -> bool {
+        auto val          = T{};
+        auto const result = etl::from_chars(tc.begin(), tc.end(), val, base);
+        CHECK(bool{result});
+        CHECK(val == expected);
+        return true;
+    };
 
     CHECK(test("1"_sv, 1, 2));
     CHECK(test("1"_sv, 1, 10));
@@ -129,6 +148,47 @@ constexpr auto test_from_chars() -> bool
             CHECK(test("-9999"_sv, -9999, 10));
         }
     }
+
+    if constexpr (etl::is_same_v<T, etl::int8_t>) {
+        {
+            auto val          = T{};
+            auto const str    = "-128"_sv;
+            auto const result = etl::from_chars(str.begin(), str.end(), val);
+            CHECK(bool{result});
+            CHECK(val == T(-128));
+            CHECK(result.ptr == str.end());
+            CHECK(result.ec == etl::errc{});
+        }
+
+        {
+            auto val          = T{};
+            auto const str    = "127"_sv;
+            auto const result = etl::from_chars(str.begin(), str.end(), val);
+            CHECK(bool{result});
+            CHECK(val == T(127));
+            CHECK(result.ptr == str.end());
+            CHECK(result.ec == etl::errc{});
+        }
+
+        {
+            auto val          = T{};
+            auto const str    = "128"_sv;
+            auto const result = etl::from_chars(str.begin(), str.end(), val);
+            CHECK_FALSE(bool{result});
+            CHECK(result.ptr == str.data());
+            CHECK(result.ec == etl::errc::result_out_of_range);
+        }
+
+        {
+            auto val          = T{};
+            auto const str    = "-129"_sv;
+            auto const result = etl::from_chars(str.begin(), str.end(), val);
+            CHECK_FALSE(bool{result});
+            CHECK(result.ptr == str.data());
+            CHECK(result.ec == etl::errc::result_out_of_range);
+        }
+    }
+
     return true;
 }
 
@@ -140,7 +200,7 @@ constexpr auto test_to_chars() -> bool
     auto test = [](T tc, etl::string_view expected) {
         auto buf          = etl::array<char, 16>{};
         auto const result = etl::to_chars(buf.begin(), buf.end(), tc, 10);
-        CHECK(static_cast<bool>(result));
+        CHECK(bool{result});
         CHECK(result.ptr != nullptr);
         CHECK(buf.data() == expected);
         return true;
@@ -175,7 +235,7 @@ constexpr auto test_to_chars() -> bool
     // overflow
     auto buf          = etl::array<char, 3>{};
     auto const result = etl::to_chars(buf.begin(), buf.end(), 9999, 10);
-    CHECK_FALSE(static_cast<bool>(result));
+    CHECK_FALSE(bool{result});
     CHECK(result.ec == etl::errc::value_too_large);
 
     return true;
