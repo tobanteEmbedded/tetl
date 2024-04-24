@@ -145,9 +145,9 @@ public:
     }
 
     template <typename OtherIndexType>
-    [[nodiscard]] static constexpr auto index_cast(OtherIndexType&& i) noexcept -> size_type
+    [[nodiscard]] static constexpr auto index_cast(OtherIndexType&& i) noexcept -> IndexType
     {
-        return static_cast<size_type>(i);
+        return static_cast<IndexType>(i);
     }
 
     [[nodiscard]] constexpr auto fwd_prod_of_extents(rank_type i) const noexcept -> size_t
