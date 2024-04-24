@@ -44,6 +44,12 @@ constexpr auto test_to_chars_result() -> bool
         auto lhs        = etl::to_chars_result{buffer, etl::errc{}};
         auto rhs        = etl::to_chars_result{buffer, etl::errc{}};
         CHECK(lhs == rhs);
+
+        CHECK(lhs != etl::to_chars_result{nullptr, etl::errc{}});
+        CHECK(lhs != etl::to_chars_result{buffer, etl::errc::value_too_large});
+
+        CHECK(etl::to_chars_result{nullptr, etl::errc{}} != rhs);
+        CHECK(etl::to_chars_result{buffer, etl::errc::value_too_large} != rhs);
     }
 
     return true;
