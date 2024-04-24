@@ -21,7 +21,7 @@ jobs:
         uses: actions/checkout@v4
 
       - name: Install ninja
-        run: choco install ninja
+        run: choco install ninja opencppcoverage
 
       - name: Install Clang
         if: matrix.compiler == 'clang'
@@ -33,7 +33,7 @@ jobs:
         with:
           arch: x64
 
-      - name: CMake configure
+      - name: Configure
         if: matrix.compiler == 'Visual Studio'
         run: >
           cmake -S .
@@ -42,18 +42,8 @@ jobs:
           -D CMAKE_CXX_STANDARD=${{ matrix.cxx }}
           -D TETL_BUILD_WERROR=ON
 
-      - name: CMake configure
-        if: (matrix.compiler == 'ClangCL') && (matrix.image == 'windows-2019')
-        run: >
-          cmake -S .
-          -B build
-          -G "Visual Studio 16 2019"
-          -T ClangCL
-          -D CMAKE_CXX_STANDARD=${{ matrix.cxx }}
-          -D TETL_BUILD_WERROR=ON
-
-      - name: CMake configure
-        if: (matrix.compiler == 'ClangCL') && (matrix.image == 'windows-2022')
+      - name: Configure
+        if: matrix.compiler == 'ClangCL'
         run: >
           cmake -S .
           -B build
@@ -62,7 +52,7 @@ jobs:
           -D CMAKE_CXX_STANDARD=${{ matrix.cxx }}
           -D TETL_BUILD_WERROR=ON
 
-      - name: CMake configure
+      - name: Configure
         if: matrix.compiler == 'clang'
         run: >
           cmake -S .
@@ -73,14 +63,26 @@ jobs:
           -D CMAKE_CXX_STANDARD=${{ matrix.cxx }}
           -D TETL_BUILD_WERROR=ON
 
-      - name: CMake build -- Debug
-        run: cmake --build build --config "Debug" --parallel 2
+      - name: Build -- Debug
+        run: cmake --build build --config Debug --parallel 2
 
-      - name: Run tests -- Debug
+      - name: Test -- Debug
         run: ctest --test-dir build -C Debug --output-on-failure
 
-      - name: CMake build -- Release
-        run: cmake --build build --config "Release" --parallel 2
+      - name: Build -- Release
+        run: cmake --build build --config Release --parallel 2
 
-      - name: Run tests -- Release
+      - name: Test -- Release
         run: ctest --test-dir build -C Release --output-on-failure
+
+      - name: Coverage (MSVC)
+        if: matrix.compiler == 'Visual Studio'
+        working-directory: ./build
+        run: OpenCppCoverage.exe --export_type cobertura:coverage.xml --cover_children -- ctest -C Debug
+
+      - uses: codecov/codecov-action@v4
+        if: matrix.compiler == 'Visual Studio'
+        with:
+          token: ${{ secrets.CODECOV_TOKEN }}
+          files: ./build/coverage.xml
+          fail_ci_if_error: true
