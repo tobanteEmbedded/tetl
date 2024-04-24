@@ -21,7 +21,9 @@ jobs:
         uses: actions/checkout@v4
 
       - name: Install ninja
-        run: choco install ninja opencppcoverage
+        run: |
+          choco install ninja opencppcoverage
+          echo "C:/Program Files/OpenCppCoverage" >> $GITHUB_PATH
 
       - name: Install Clang
         if: matrix.compiler == 'clang'
@@ -41,6 +43,7 @@ jobs:
           -G "Ninja Multi-Config"
           -D CMAKE_CXX_STANDARD=${{ matrix.cxx }}
           -D TETL_BUILD_WERROR=ON
+          -D TETL_BUILD_CONTRACT_CHECKS=OFF
 
       - name: Configure
         if: matrix.compiler == 'ClangCL'
@@ -67,18 +70,19 @@ jobs:
         run: cmake --build build --config Debug --parallel 2
 
       - name: Test -- Debug
+        if: matrix.compiler != 'Visual Studio'
         run: ctest --test-dir build -C Debug --output-on-failure
+
+      - name: Test -- Coverage
+        if: matrix.compiler == 'Visual Studio'
+        working-directory: ./build
+        run: OpenCppCoverage --export_type cobertura:coverage.xml --cover_children -- ctest -C Debug --output-on-failure
 
       - name: Build -- Release
         run: cmake --build build --config Release --parallel 2
 
       - name: Test -- Release
         run: ctest --test-dir build -C Release --output-on-failure
-
-      - name: Coverage (MSVC)
-        if: matrix.compiler == 'Visual Studio'
-        working-directory: ./build
-        run: OpenCppCoverage.exe --export_type cobertura:coverage.xml --cover_children -- ctest -C Debug
 
       - uses: codecov/codecov-action@v4
         if: matrix.compiler == 'Visual Studio'
