@@ -54,13 +54,10 @@ struct mdspan {
 
     [[nodiscard]] static constexpr auto static_extent(rank_type r) noexcept -> size_t
     {
-        return extents_type::static_extent(r);
+        return Extents::static_extent(r);
     }
 
-    [[nodiscard]] constexpr auto extent(rank_type r) const noexcept -> index_type
-    {
-        return static_cast<index_type>(extents().extent(r));
-    }
+    [[nodiscard]] constexpr auto extent(rank_type r) const noexcept -> index_type { return extents().extent(r); }
 
     // clang-format off
 

@@ -59,15 +59,15 @@ public:
         return _static_extents[i];
     }
 
-    [[nodiscard]] constexpr auto extent(rank_type i) const noexcept -> size_type
+    [[nodiscard]] constexpr auto extent(rank_type i) const noexcept -> index_type
     {
         if constexpr (rank_dynamic() == 0) {
-            return static_cast<size_type>(static_extent(i));
+            return static_cast<index_type>(static_extent(i));
         } else if constexpr (rank_dynamic() == rank()) {
             return _extents[static_cast<etl::size_t>(i)];
         } else {
             if (auto const ext = static_extent(i); ext != dynamic_extent) {
-                return static_cast<size_type>(ext);
+                return static_cast<index_type>(ext);
             }
             return _extents[static_cast<etl::size_t>(_dynamic_index(i))];
         }
@@ -76,34 +76,34 @@ public:
     // [mdspan.extents.ctor], Constructors
     constexpr extents() noexcept = default;
 
-    template <typename OtherSizeType, etl::size_t... OtherExtents>
+    template <typename OtherIndexType, etl::size_t... OtherExtents>
         requires requires {
             sizeof...(OtherExtents) == rank();
             ((OtherExtents == dynamic_extent || Extents == dynamic_extent || OtherExtents == Extents) && ...);
         }
     explicit(
         (((Extents != dynamic_extent) && (OtherExtents == dynamic_extent)) || ...)
-        || (numeric_limits<size_type>::max() < numeric_limits<OtherSizeType>::max())
-    ) constexpr extents(extents<OtherSizeType, OtherExtents...> const& e) noexcept
+        || (numeric_limits<size_type>::max() < numeric_limits<OtherIndexType>::max())
+    ) constexpr extents(extents<OtherIndexType, OtherExtents...> const& e) noexcept
     {
         if constexpr (rank_dynamic() > 0) {
             for (rank_type i{0}; i < rank(); ++i) {
                 if (e.static_extent(i) == dynamic_extent) {
-                    _extents[_dynamic_index(i)] = e.extent(i);
+                    _extents[_dynamic_index(i)] = static_cast<index_type>(e.extent(i));
                 }
             }
         }
     }
 
-    template <typename... OtherSizeTypes>
+    template <typename... OtherIndexTypes>
         requires requires {
-            (is_convertible_v<OtherSizeTypes, size_type> && ...);
-            (is_nothrow_constructible_v<size_type, OtherSizeTypes> && ...)
-                and (sizeof...(OtherSizeTypes) == rank_dynamic() || sizeof...(OtherSizeTypes) == rank());
+            (is_convertible_v<OtherIndexTypes, index_type> && ...);
+            (is_nothrow_constructible_v<index_type, OtherIndexTypes> && ...)
+                and (sizeof...(OtherIndexTypes) == rank_dynamic() || sizeof...(OtherIndexTypes) == rank());
         }
-    explicit constexpr extents(OtherSizeTypes... es) noexcept
+    explicit constexpr extents(OtherIndexTypes... es) noexcept
     {
-        auto const ext = array<size_type, sizeof...(OtherSizeTypes)>{static_cast<size_type>(es)...};
+        auto const ext = array<index_type, sizeof...(OtherIndexTypes)>{static_cast<index_type>(es)...};
         if constexpr (rank_dynamic() != 0) {
             copy(ext.begin(), ext.end(), _extents.begin());
         }
@@ -160,7 +160,7 @@ public:
     }
 
 private:
-    TETL_NO_UNIQUE_ADDRESS array<size_type, rank_dynamic()> _extents{};
+    TETL_NO_UNIQUE_ADDRESS array<index_type, rank_dynamic()> _extents{};
 };
 
 namespace detail {

@@ -14,7 +14,7 @@ namespace etl::linalg {
 template <in_vector InVec>
 constexpr auto idx_abs_max(InVec v) -> typename InVec::size_type
 {
-    auto getValue = [](auto val) {
+    constexpr auto getValue = [](typename InVec::value_type const& val) {
         if constexpr (is_arithmetic_v<typename InVec::value_type>) {
             return detail::abs_if_needed(val);
         } else {

@@ -38,8 +38,8 @@ template <typename IndexType>
         CHECK(transposed.static_extent(1) == ext.static_extent(0));
         CHECK(transposed.extent(0) == ext.extent(1));
         CHECK(transposed.extent(1) == ext.extent(0));
-        CHECK(transposed.extent(0) != transposed.static_extent(0));
-        CHECK(transposed.extent(1) != transposed.static_extent(1));
+        CHECK(transposed.extent(0) != static_cast<IndexType>(transposed.static_extent(0)));
+        CHECK(transposed.extent(1) != static_cast<IndexType>(transposed.static_extent(1)));
 
         auto const mapping = etl::linalg::layout_transpose<etl::layout_right>::mapping<extents_t>{ext};
         CHECK(mapping.extents().extent(0) == IndexType(3));
