@@ -3,7 +3,7 @@
 #ifndef TETL_MDSPAN_EXTENTS_HPP
 #define TETL_MDSPAN_EXTENTS_HPP
 
-#include <etl/_algorithm/copy.hpp>
+#include <etl/_algorithm/transform.hpp>
 #include <etl/_array/array.hpp>
 #include <etl/_cstddef/size_t.hpp>
 #include <etl/_limits/numeric_limits.hpp>
@@ -77,49 +77,62 @@ public:
     constexpr extents() noexcept = default;
 
     template <typename OtherIndexType, etl::size_t... OtherExtents>
-        requires requires {
-            sizeof...(OtherExtents) == rank();
-            ((OtherExtents == dynamic_extent || Extents == dynamic_extent || OtherExtents == Extents) && ...);
-        }
+        requires(
+            sizeof...(OtherExtents) == rank()
+            and ((OtherExtents == dynamic_extent or Extents == dynamic_extent or OtherExtents == Extents) and ...)
+        )
     explicit(
-        (((Extents != dynamic_extent) && (OtherExtents == dynamic_extent)) || ...)
-        || (numeric_limits<size_type>::max() < numeric_limits<OtherIndexType>::max())
+        ((Extents != dynamic_extent and OtherExtents == dynamic_extent) or ...)
+        or (numeric_limits<IndexType>::max() < numeric_limits<OtherIndexType>::max())
     ) constexpr extents(extents<OtherIndexType, OtherExtents...> const& e) noexcept
     {
         if constexpr (rank_dynamic() > 0) {
             for (rank_type i{0}; i < rank(); ++i) {
                 if (e.static_extent(i) == dynamic_extent) {
-                    _extents[_dynamic_index(i)] = static_cast<index_type>(e.extent(i));
+                    _extents[_dynamic_index(i)] = static_cast<IndexType>(e.extent(i));
                 }
             }
         }
     }
 
     template <typename... OtherIndexTypes>
-        requires requires {
-            (is_convertible_v<OtherIndexTypes, index_type> && ...);
-            (is_nothrow_constructible_v<index_type, OtherIndexTypes> && ...)
-                and (sizeof...(OtherIndexTypes) == rank_dynamic() || sizeof...(OtherIndexTypes) == rank());
-        }
+        requires(
+            (is_convertible_v<OtherIndexTypes, IndexType> and ...)
+            and (is_nothrow_constructible_v<IndexType, OtherIndexTypes> and ...)
+            and (sizeof...(OtherIndexTypes) == rank_dynamic() or sizeof...(OtherIndexTypes) == rank())
+        )
     explicit constexpr extents(OtherIndexTypes... es) noexcept
+        : extents{array<IndexType, sizeof...(OtherIndexTypes)>{static_cast<IndexType>(es)...}}
     {
-        auto const ext = array<index_type, sizeof...(OtherIndexTypes)>{static_cast<index_type>(es)...};
+    }
+
+    template <typename OtherIndexType, etl::size_t N>
+        requires(
+            is_convertible_v<OtherIndexType const&, IndexType>
+            and is_nothrow_constructible_v<IndexType, OtherIndexType const&> and (N == rank_dynamic() or N == rank())
+        )
+    explicit(N != rank_dynamic()) constexpr extents(span<OtherIndexType, N> ext) noexcept
+    {
         if constexpr (rank_dynamic() != 0) {
-            copy(ext.begin(), ext.end(), _extents.begin());
+            transform(ext.begin(), ext.end(), _extents.begin(), [](auto e) { return static_cast<IndexType>(e); });
         }
     }
 
-    template <typename OtherSizeType, etl::size_t N>
-    explicit(N != rank_dynamic()) constexpr extents(span<OtherSizeType, N> e) noexcept;
-
-    template <typename OtherSizeType, etl::size_t N>
-    explicit(N != rank_dynamic()) constexpr extents(array<OtherSizeType, N> const& e) noexcept;
-
-    template <typename OtherSizeType, etl::size_t... OtherExtents>
-    friend constexpr auto
-    operator==(extents const& lhs, extents<OtherSizeType, OtherExtents...> const& rhs) noexcept -> bool
+    template <typename OtherIndexType, etl::size_t N>
+        requires(
+            is_convertible_v<OtherIndexType const&, IndexType>
+            and is_nothrow_constructible_v<IndexType, OtherIndexType const&> and (N == rank_dynamic() or N == rank())
+        )
+    explicit(N != rank_dynamic()) constexpr extents(array<OtherIndexType, N> const& e) noexcept
+        : extents{span{e}}
     {
-        if constexpr (rank() != extents<OtherSizeType, OtherExtents...>::rank()) {
+    }
+
+    template <typename OtherIndexType, etl::size_t... OtherExtents>
+    friend constexpr auto
+    operator==(extents const& lhs, extents<OtherIndexType, OtherExtents...> const& rhs) noexcept -> bool
+    {
+        if constexpr (rank() != extents<OtherIndexType, OtherExtents...>::rank()) {
             return false;
         } else {
             for (auto i = rank_type(0); i < rank(); ++i) {
@@ -131,8 +144,8 @@ public:
         }
     }
 
-    template <typename OtherSizeType>
-    [[nodiscard]] static constexpr auto index_cast(OtherSizeType&& i) noexcept -> size_type
+    template <typename OtherIndexType>
+    [[nodiscard]] static constexpr auto index_cast(OtherIndexType&& i) noexcept -> size_type
     {
         return static_cast<size_type>(i);
     }
@@ -160,7 +173,7 @@ public:
     }
 
 private:
-    TETL_NO_UNIQUE_ADDRESS array<index_type, rank_dynamic()> _extents{};
+    TETL_NO_UNIQUE_ADDRESS array<IndexType, rank_dynamic()> _extents{};
 };
 
 namespace detail {
