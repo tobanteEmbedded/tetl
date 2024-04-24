@@ -23,7 +23,7 @@ jobs:
       - name: Install ninja
         run: |
           choco install ninja opencppcoverage
-          echo "C:/Program Files/OpenCppCoverage" >> $GITHUB_PATH
+          echo "C:/Program Files/OpenCppCoverage" | Out-File -FilePath $env:GITHUB_PATH -Encoding utf8 -Append
 
       - name: Install Clang
         if: matrix.compiler == 'clang'
