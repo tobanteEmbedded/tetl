@@ -62,6 +62,7 @@ jobs:
           -D CMAKE_CXX_COMPILER=${{ matrix.config.cxx }}
           -D CMAKE_CXX_STANDARD=${{ matrix.cxx_std }}
           -D TETL_BUILD_WERROR=ON
+          -D TETL_BUILD_WEVERYTHING=ON
 
       - name: CMake build -- Debug
         run: cmake --build build --config Debug

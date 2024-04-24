@@ -39,6 +39,7 @@ jobs:
           -D CMAKE_CXX_STANDARD="${{ matrix.cxx }}"
           -D CMAKE_EXPORT_COMPILE_COMMANDS=ON
           -D TETL_BUILD_WERROR=ON
+          -D TETL_BUILD_WEVERYTHING=ON
 
       - name: Clang-Tidy check
         run: CLANG_VERSION="-18" BUILD_DIR=cmake-build-tidy make tidy-check
