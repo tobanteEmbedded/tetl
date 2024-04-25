@@ -16,10 +16,10 @@
 #include <etl/_mdspan/extents.hpp>
 #include <etl/_mdspan/full_extent.hpp>
 #include <etl/_mdspan/is_extents.hpp>
-#include <etl/_mdspan/layout.hpp>
 #include <etl/_mdspan/layout_left.hpp>
 #include <etl/_mdspan/layout_mapping_alike.hpp>
 #include <etl/_mdspan/layout_right.hpp>
+#include <etl/_mdspan/layout_stride.hpp>
 #include <etl/_mdspan/mdspan.hpp>
 #include <etl/_mdspan/strided_slice.hpp>
 #include <etl/_mdspan/submdspan.hpp>
