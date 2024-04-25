@@ -11,6 +11,7 @@
 #include <etl/_span/span.hpp>
 #include <etl/_type_traits/is_convertible.hpp>
 #include <etl/_type_traits/is_nothrow_constructible.hpp>
+#include <etl/_utility/as_const.hpp>
 #include <etl/_utility/index_sequence.hpp>
 
 namespace etl {
@@ -35,18 +36,16 @@ public:
                  and is_nothrow_constructible_v<index_type, OtherIndexType const&>)
     constexpr mapping(extents_type const& ext, span<OtherIndexType, rank> s) noexcept
         : _extents(ext)
-        , _strides([s] {
-            auto val = array<index_type, rank>{};
-            etl::transform(s.begin(), s.end(), val.begin(), [](auto const& v) { return static_cast<index_type>(v); });
-            return val;
-        }())
+        , _strides([&]<size_t... Is>(index_sequence<Is...> /*seq*/) {
+            return array{static_cast<index_type>(etl::as_const(s[Is]))...};
+        }(make_index_sequence<rank>()))
     {
     }
 
     template <typename OtherIndexType>
         requires(is_convertible_v<OtherIndexType const&, index_type> and is_nothrow_constructible_v<index_type, OtherIndexType const&>)
     constexpr mapping(extents_type const& ext, array<OtherIndexType, rank> const& s) noexcept
-        : mapping(ext, span{s})
+        : mapping(ext, span(s))
     {
     }
 
