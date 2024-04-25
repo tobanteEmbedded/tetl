@@ -63,9 +63,9 @@ struct mdspan {
     constexpr mdspan()
         requires((rank_dynamic() > 0) and is_default_constructible_v<data_handle_type>
                  and is_default_constructible_v<mapping_type> and is_default_constructible_v<accessor_type>)
-        : _acc()
+        : _ptr()
         , _map()
-        , _ptr()
+        , _acc()
     {
     }
 
@@ -76,8 +76,8 @@ struct mdspan {
                  and ((sizeof...(OtherIndexTypes) == rank()) || (sizeof...(OtherIndexTypes) == rank_dynamic()))
                  and is_constructible_v<mapping_type, extents_type> and is_default_constructible_v<accessor_type>)
     explicit constexpr mdspan(data_handle_type ptr, OtherIndexTypes... exts)
-        : _map(extents_type(static_cast<index_type>(etl::move(exts))...))
-        , _ptr(etl::move(ptr))
+        : _ptr(etl::move(ptr))
+        , _map(extents_type(static_cast<index_type>(etl::move(exts))...))
     {
     }
 
@@ -88,9 +88,9 @@ struct mdspan {
                  and (N == rank() or N == rank_dynamic())
                  and is_constructible_v<mapping_type, extents_type> and is_default_constructible_v<accessor_type>)
     explicit(N != rank_dynamic()) constexpr mdspan(data_handle_type p, span<OtherIndexType, N> exts)
-        : _acc()
+        : _ptr(etl::move(p))
         , _map(extents_type(exts))
-        , _ptr(etl::move(p))
+        , _acc()
     {
     }
 
@@ -101,33 +101,33 @@ struct mdspan {
                  and (N == rank() or N == rank_dynamic())
                  and is_constructible_v<mapping_type, extents_type> and is_default_constructible_v<accessor_type>)
     explicit(N != rank_dynamic()) constexpr mdspan(data_handle_type p, array<OtherIndexType, N> const& exts)
-        : _acc()
+        : _ptr(etl::move(p))
         , _map(extents_type(exts))
-        , _ptr(etl::move(p))
+        , _acc()
     {
     }
 
     // Constructor (5)
     constexpr mdspan(data_handle_type ptr, extents_type const& ext)
         requires(is_constructible_v<mapping_type, mapping_type const&> and is_default_constructible_v<accessor_type>)
-        : _map(ext)
-        , _ptr(etl::move(ptr))
+        : _ptr(etl::move(ptr))
+        , _map(ext)
     {
     }
 
     // Constructor (6)
     constexpr mdspan(data_handle_type ptr, mapping_type const& m)
         requires(is_default_constructible_v<accessor_type>)
-        : _map(m)
-        , _ptr(etl::move(ptr))
+        : _ptr(etl::move(ptr))
+        , _map(m)
     {
     }
 
     // Constructor (7)
     constexpr mdspan(data_handle_type ptr, mapping_type const& m, accessor_type const& a)
-        : _acc(a)
+        : _ptr(etl::move(ptr))
         , _map(m)
-        , _ptr(etl::move(ptr))
+        , _acc(a)
     {
     }
 
@@ -194,9 +194,9 @@ struct mdspan {
     [[nodiscard]] static constexpr auto is_always_strided() -> bool { return mapping_type::is_always_strided(); }
 
 private:
-    TETL_NO_UNIQUE_ADDRESS accessor_type _acc;    // NOLINT(modernize-use-default-member-init)
-    TETL_NO_UNIQUE_ADDRESS mapping_type _map;     // NOLINT(modernize-use-default-member-init)
     TETL_NO_UNIQUE_ADDRESS data_handle_type _ptr; // NOLINT(modernize-use-default-member-init)
+    TETL_NO_UNIQUE_ADDRESS mapping_type _map;     // NOLINT(modernize-use-default-member-init)
+    TETL_NO_UNIQUE_ADDRESS accessor_type _acc;    // NOLINT(modernize-use-default-member-init)
 };
 
 template <typename CArray>
