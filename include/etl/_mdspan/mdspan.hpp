@@ -59,35 +59,31 @@ struct mdspan {
 
     [[nodiscard]] constexpr auto extent(rank_type r) const noexcept -> index_type { return extents().extent(r); }
 
-    // clang-format off
-
     // Constructor (1)
     constexpr mdspan()
-        requires(
-                (rank_dynamic() > 0)
-            and is_default_constructible_v<data_handle_type>
-            and is_default_constructible_v<mapping_type>
-            and is_default_constructible_v<accessor_type>
-        )
-        : _acc {}, _map {}, _ptr {}
+        requires(                                                    //
+                    (rank_dynamic() > 0)                             //
+                    and is_default_constructible_v<data_handle_type> //
+                    and is_default_constructible_v<mapping_type>     //
+                    and is_default_constructible_v<accessor_type>    //
+                )
+        : _acc{}
+        , _map{}
+        , _ptr{}
     {
     }
 
     // Constructor (2)
-    template <typename... OtherSizeTypes>
-        requires(
-                (is_convertible_v<OtherSizeTypes, size_type> and ...)
-            and (is_nothrow_constructible_v<size_type, OtherSizeTypes> and ...)
-            and ((sizeof...(OtherSizeTypes) == rank()) || (sizeof...(OtherSizeTypes) == rank_dynamic()))
-            and is_constructible_v<mapping_type, extents_type>
-            and is_default_constructible_v<accessor_type>
-        )
-    explicit constexpr mdspan(data_handle_type ptr, OtherSizeTypes... exts)
-        :  _map(extents_type(static_cast<size_type>(etl::move(exts))...)),_ptr(etl::move(ptr))
+    template <typename... OtherIndexTypes>
+        requires((is_convertible_v<OtherIndexTypes, index_type> and ...)
+                 and (is_nothrow_constructible_v<index_type, OtherIndexTypes> and ...)
+                 and ((sizeof...(OtherIndexTypes) == rank()) || (sizeof...(OtherIndexTypes) == rank_dynamic()))
+                 and is_constructible_v<mapping_type, extents_type> and is_default_constructible_v<accessor_type>)
+    explicit constexpr mdspan(data_handle_type ptr, OtherIndexTypes... exts)
+        : _map(extents_type(static_cast<index_type>(etl::move(exts))...))
+        , _ptr(etl::move(ptr))
     {
     }
-
-    // clang-format on
 
     // Constructor (5)
     constexpr mdspan(data_handle_type ptr, extents_type const& ext)
