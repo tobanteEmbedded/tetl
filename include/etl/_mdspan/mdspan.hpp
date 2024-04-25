@@ -61,15 +61,11 @@ struct mdspan {
 
     // Constructor (1)
     constexpr mdspan()
-        requires(                                                    //
-                    (rank_dynamic() > 0)                             //
-                    and is_default_constructible_v<data_handle_type> //
-                    and is_default_constructible_v<mapping_type>     //
-                    and is_default_constructible_v<accessor_type>    //
-                )
-        : _acc{}
-        , _map{}
-        , _ptr{}
+        requires((rank_dynamic() > 0) and is_default_constructible_v<data_handle_type>
+                 and is_default_constructible_v<mapping_type> and is_default_constructible_v<accessor_type>)
+        : _acc()
+        , _map()
+        , _ptr()
     {
     }
 
@@ -82,6 +78,32 @@ struct mdspan {
     explicit constexpr mdspan(data_handle_type ptr, OtherIndexTypes... exts)
         : _map(extents_type(static_cast<index_type>(etl::move(exts))...))
         , _ptr(etl::move(ptr))
+    {
+    }
+
+    // Constructor (3)
+    template <typename OtherIndexType, size_t N>
+        requires(is_convertible_v<OtherIndexType const&, index_type>
+                 and is_nothrow_constructible_v<index_type, OtherIndexType const&>
+                 and (N == rank() or N == rank_dynamic())
+                 and is_constructible_v<mapping_type, extents_type> and is_default_constructible_v<accessor_type>)
+    explicit(N != rank_dynamic()) constexpr mdspan(data_handle_type p, span<OtherIndexType, N> exts)
+        : _acc()
+        , _map(extents_type(exts))
+        , _ptr(etl::move(p))
+    {
+    }
+
+    // Constructor (4)
+    template <typename OtherIndexType, size_t N>
+        requires(is_convertible_v<OtherIndexType const&, index_type>
+                 and is_nothrow_constructible_v<index_type, OtherIndexType const&>
+                 and (N == rank() or N == rank_dynamic())
+                 and is_constructible_v<mapping_type, extents_type> and is_default_constructible_v<accessor_type>)
+    explicit(N != rank_dynamic()) constexpr mdspan(data_handle_type p, array<OtherIndexType, N> const& exts)
+        : _acc()
+        , _map(extents_type(exts))
+        , _ptr(etl::move(p))
     {
     }
 
@@ -112,13 +134,10 @@ struct mdspan {
     constexpr mdspan(mdspan const& rhs) = default;
     constexpr mdspan(mdspan&& rhs)      = default; // NOLINT(performance-noexcept-move-constructor)
 
-    // clang-format off
     template <typename... OtherIndexTypes>
-        requires(
-                (is_convertible_v<OtherIndexTypes, index_type> && ...)
-            and (is_nothrow_constructible_v<index_type, OtherIndexTypes> && ...)
-            and sizeof...(OtherIndexTypes) == rank()
-        )
+        requires((is_convertible_v<OtherIndexTypes, index_type> && ...)
+                 and (is_nothrow_constructible_v<index_type, OtherIndexTypes> && ...)
+                 and sizeof...(OtherIndexTypes) == rank())
     [[nodiscard]] constexpr auto operator()(OtherIndexTypes... indices) const -> reference
     {
         auto const idx = static_cast<etl::size_t>(_map(extents_type::index_cast(etl::move(indices))...));
@@ -127,17 +146,14 @@ struct mdspan {
 
 #if defined(__cpp_multidimensional_subscript)
     template <typename... OtherIndexTypes>
-        requires(
-                (is_convertible_v<OtherIndexTypes, index_type> && ...)
-            and (is_nothrow_constructible_v<index_type, OtherIndexTypes> && ...)
-            and sizeof...(OtherIndexTypes) == rank()
-        )
+        requires((is_convertible_v<OtherIndexTypes, index_type> && ...)
+                 and (is_nothrow_constructible_v<index_type, OtherIndexTypes> && ...)
+                 and sizeof...(OtherIndexTypes) == rank())
     [[nodiscard]] constexpr auto operator[](OtherIndexTypes... indices) const -> reference
     {
         return (*this)(etl::move(indices)...);
     }
 #endif
-    // clang-format on
 
     template <typename OtherIndexType>
         requires(is_convertible_v<OtherIndexType const&, index_type>

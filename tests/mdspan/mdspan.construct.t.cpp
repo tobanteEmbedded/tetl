@@ -74,6 +74,54 @@ template <typename T, typename Index>
         CHECK(m.extent(1) == 1);
     }
 
+    // 3. 1D-Dynamic
+    {
+        auto buf = etl::array<T, 2>{};
+        auto ext = etl::array<Index, 1>{2};
+        auto m   = etl::mdspan<T, etl::dextents<Index, 1>>{buf.data(), etl::span{ext}};
+        CHECK(m.rank() == 1);
+        CHECK(m.rank_dynamic() == 1);
+        CHECK(m.static_extent(0) == etl::dynamic_extent);
+        CHECK(m.extent(0) == 2);
+    }
+
+    // 3. 2D-Mixed
+    {
+        auto buf = etl::array<T, 2>{};
+        auto ext = etl::array<Index, 1>{1};
+        auto m   = etl::mdspan<T, etl::extents<Index, 2, etl::dynamic_extent>>{buf.data(), etl::span{ext}};
+        CHECK(m.rank() == 2);
+        CHECK(m.rank_dynamic() == 1);
+        CHECK(m.static_extent(0) == 2);
+        CHECK(m.extent(0) == 2);
+        CHECK(m.static_extent(1) == etl::dynamic_extent);
+        CHECK(m.extent(1) == 1);
+    }
+
+    // 4. 1D-Dynamic
+    {
+        auto buf = etl::array<T, 2>{};
+        auto ext = etl::array<Index, 1>{2};
+        auto m   = etl::mdspan<T, etl::dextents<Index, 1>>{buf.data(), ext};
+        CHECK(m.rank() == 1);
+        CHECK(m.rank_dynamic() == 1);
+        CHECK(m.static_extent(0) == etl::dynamic_extent);
+        CHECK(m.extent(0) == 2);
+    }
+
+    // 4. 2D-Mixed
+    {
+        auto buf = etl::array<T, 2>{};
+        auto ext = etl::array<Index, 1>{1};
+        auto m   = etl::mdspan<T, etl::extents<Index, 2, etl::dynamic_extent>>{buf.data(), ext};
+        CHECK(m.rank() == 2);
+        CHECK(m.rank_dynamic() == 1);
+        CHECK(m.static_extent(0) == 2);
+        CHECK(m.extent(0) == 2);
+        CHECK(m.static_extent(1) == etl::dynamic_extent);
+        CHECK(m.extent(1) == 1);
+    }
+
     // 5. 1D-Dynamic
     {
         auto buf = etl::array<T, 2>{};
@@ -115,6 +163,17 @@ template <typename T, typename Index>
         CHECK(m.rank() == 1);
         CHECK(m.rank_dynamic() == 0);
         CHECK(m.static_extent(0) == 2);
+        CHECK(m.extent(0) == 2);
+    }
+
+    // 7. 1D-Dynamic
+    {
+        auto buf = etl::array<T, 2>{};
+        auto map = etl::layout_right::mapping(etl::dextents<Index, 1>{buf.size()});
+        auto m   = etl::mdspan{buf.data(), map, etl::default_accessor<T>()};
+        CHECK(m.rank() == 1);
+        CHECK(m.rank_dynamic() == 1);
+        CHECK(m.static_extent(0) == etl::dynamic_extent);
         CHECK(m.extent(0) == 2);
     }
 
