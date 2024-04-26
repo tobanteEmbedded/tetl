@@ -3,6 +3,8 @@
 #ifndef TETL_ARRAY_MDARRAY_HPP
 #define TETL_ARRAY_MDARRAY_HPP
 
+#include <etl/_array/array.hpp>
+#include <etl/_iterator/size.hpp>
 #include <etl/_mdspan/mdspan.hpp>
 #include <etl/_memory/to_address.hpp>
 #include <etl/_span/span.hpp>
@@ -12,6 +14,7 @@
 #include <etl/_type_traits/is_convertible.hpp>
 #include <etl/_type_traits/is_nothrow_constructible.hpp>
 #include <etl/_utility/as_const.hpp>
+#include <etl/_utility/forward.hpp>
 #include <etl/_utility/index_sequence.hpp>
 #include <etl/_utility/move.hpp>
 
@@ -87,14 +90,48 @@ public:
     {
     }
 
-    // constexpr mdarray(extents_type const& ext, value_type const& val);
-    // constexpr mdarray(mapping_type const& m, value_type const& val);
+    constexpr mdarray(extents_type const& ext, value_type const& val)
+        requires(is_constructible_v<mapping_type, extents_type const&> and array_or_constructible_from<Container, size_t, value_type>)
+        : mdarray(mapping_type(ext), val)
+    {
+    }
 
-    // constexpr mdarray(extents_type const& ext, container_type const& c);
-    // constexpr mdarray(mapping_type const& m, container_type const& c, );
+    constexpr mdarray(mapping_type const& m, value_type const& val)
+        requires(array_or_constructible_from<Container, size_t, value_type>)
+        : _map(m)
+        , _ctr([&]() -> container_type {
+            if constexpr (is_constructible_v<Container, size_t, value_type>) {
+                return container_type(static_cast<size_t>(_map.required_span_size()), val);
+            } else {
+                return value_to_array<element_type, container_type().size()>(val);
+            }
+        }())
+    {
+    }
 
-    // constexpr mdarray(extents_type const& ext, container_type&& c);
-    // constexpr mdarray(mapping_type const& m, container_type&& c, );
+    constexpr mdarray(extents_type const& ext, container_type const& c)
+        requires(is_constructible_v<mapping_type, extents_type const&>)
+        : mdarray(mapping_type(ext), c)
+    {
+    }
+
+    constexpr mdarray(mapping_type const& m, container_type const& c)
+        : _map(m)
+        , _ctr(c)
+    {
+    }
+
+    constexpr mdarray(extents_type const& ext, container_type&& c)
+        requires(is_constructible_v<mapping_type, extents_type const&>)
+        : mdarray(mapping_type(ext), etl::move(c))
+    {
+    }
+
+    constexpr mdarray(mapping_type const& m, container_type&& c)
+        : _map(m)
+        , _ctr(etl::move(c))
+    {
+    }
 
     // template <typename OtherElementType, typename OtherExtents, typename OtherLayoutPolicy,
     // typename OtherContainer> explicit(see below) constexpr mdarray(
@@ -225,7 +262,7 @@ public:
 
     template <typename OtherAccessor = default_accessor<element_type const>>
     // requires is_assignable_v<typename OtherAccessor::data_handle_type, const_pointer>
-    constexpr auto to_mdspan(OtherAccessor const& a = default_accessor<element_type const>()) const
+    [[nodiscard]] constexpr auto to_mdspan(OtherAccessor const& a = default_accessor<element_type const>()) const
         -> mdspan<element_type const, extents_type, layout_type, OtherAccessor>
     {
         return mdspan<element_type const, extents_type, layout_type, OtherAccessor>(container_data(), _map, a);
@@ -238,6 +275,15 @@ public:
     }
 
 private:
+    template <typename Value, size_t N>
+    [[nodiscard]] static constexpr auto value_to_array(Value const& t) -> array<Value, N>
+    {
+        constexpr auto value = []<typename V>(auto /*i*/, V&& v) -> decltype(auto) { return etl::forward<V&&>(v); };
+        return [&]<size_t... Indices>(index_sequence<Indices...>) {
+            return array<Value, N>{value(Indices, t)...};
+        }(make_index_sequence<N>());
+    }
+
     mapping_type _map;
     container_type _ctr;
 };

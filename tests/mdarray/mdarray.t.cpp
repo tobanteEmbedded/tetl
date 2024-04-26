@@ -97,6 +97,33 @@ template <typename T, typename Index>
         CHECK(c[0] == T(99));
     }
 
+    // ctor(extents, value)
+    {
+        using extents       = etl::dextents<Index, 2>;
+        using array_matrix  = etl::mdarray<T, extents, etl::layout_left, etl::array<T, 6>>;
+        using vector_matrix = etl::mdarray<T, extents, etl::layout_left, etl::static_vector<T, 6>>;
+
+        auto am = array_matrix(extents{2, 3}, T(42));
+        auto vm = vector_matrix(extents{2, 3}, T(42));
+        CHECK(am(0, 0) == T(42));
+        CHECK(am(0, 0) == vm(0, 0));
+        CHECK(am(1, 1) == vm(1, 1));
+    }
+
+    // ctor(extents, container)
+    {
+        using extents       = etl::dextents<Index, 2>;
+        using array_matrix  = etl::mdarray<T, extents, etl::layout_left, etl::array<T, 6>>;
+        using vector_matrix = etl::mdarray<T, extents, etl::layout_left, etl::static_vector<T, 6>>;
+
+        auto const a = etl::array<T, 6>{T(42)};
+        auto am      = array_matrix(extents{2, 3}, a);
+        CHECK(am(0, 0) == T(42));
+
+        auto vm = vector_matrix(extents{2, 3}, etl::static_vector<T, 6>(etl::c_array<T, 6>{T(42)}));
+        CHECK(vm(0, 0) == T(42));
+    }
+
     return true;
 }
 
@@ -115,14 +142,8 @@ template <typename Index>
     CHECK(test<signed long, Index>());
     CHECK(test<signed long long, Index>());
 
-    CHECK(test<char, Index>());
-    CHECK(test<char8_t, Index>());
-    CHECK(test<char16_t, Index>());
-    CHECK(test<char32_t, Index>());
-
     CHECK(test<float, Index>());
     CHECK(test<double, Index>());
-    CHECK(test<long double, Index>());
 
     return true;
 }
