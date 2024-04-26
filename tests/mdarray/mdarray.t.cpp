@@ -55,6 +55,24 @@ template <typename T, typename Index>
         CHECK(etl::as_const(am)[0, 1] == T(43));
 #endif
 
+        {
+            typename array_matrix::mdspan_type view        = am;
+            typename array_matrix::const_mdspan_type cview = etl::as_const(am);
+            CHECK(view.extents() == am.extents());
+            CHECK(cview.extents() == am.extents());
+            CHECK(am(0, 0) == view(0, 0));
+            CHECK(am(0, 0) == cview(0, 0));
+        }
+
+        {
+            auto view  = am.to_mdspan();
+            auto cview = etl::as_const(am).to_mdspan();
+            CHECK(view.extents() == am.extents());
+            CHECK(cview.extents() == am.extents());
+            CHECK(am(0, 0) == view(0, 0));
+            CHECK(am(0, 0) == cview(0, 0));
+        }
+
         auto vm = vector_matrix{2, 3};
         CHECK_FALSE(vm.empty());
         CHECK(vm.size() == 6);

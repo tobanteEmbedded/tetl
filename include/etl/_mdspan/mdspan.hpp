@@ -131,6 +131,21 @@ struct mdspan {
     {
     }
 
+    template <typename OtherElement, typename OtherExtents, typename OtherLayout, typename OtherAccessor>
+        requires((is_constructible_v<mapping_type, typename OtherLayout::template mapping<OtherExtents> const&>
+                  and is_constructible_v<accessor_type, OtherAccessor const&>))
+    explicit(
+        (not is_convertible_v<typename OtherLayout::template mapping<OtherExtents> const&, mapping_type>
+         or not is_convertible_v<OtherAccessor const&, accessor_type>)
+    ) constexpr mdspan(mdspan<OtherElement, OtherExtents, OtherLayout, OtherAccessor> const& other)
+        : _ptr(other.data_handle())
+        , _map(other.mapping())
+        , _acc(other.accessor())
+    {
+        static_assert(is_constructible_v<extents_type, OtherExtents>);
+        static_assert(is_constructible_v<data_handle_type, typename OtherAccessor::data_handle_type const&>);
+    }
+
     constexpr mdspan(mdspan const& rhs) = default;
     constexpr mdspan(mdspan&& rhs)      = default; // NOLINT(performance-noexcept-move-constructor)
 
@@ -226,6 +241,17 @@ mdspan(typename AccessorType::data_handle_type const&, MappingType const&, Acces
         typename MappingType::extents_type,
         typename MappingType::layout_type,
         AccessorType>;
+
+template <typename ElementType, typename Extents, typename LayoutPolicy, typename Container>
+struct mdarray;
+
+template <class ElementType, class Extents, class Layout, class Container>
+mdspan(mdarray<ElementType, Extents, Layout, Container>)
+    -> mdspan<
+        typename decltype(declval<mdarray<ElementType, Extents, Layout, Container>>().to_mdspan())::element_type,
+        typename decltype(declval<mdarray<ElementType, Extents, Layout, Container>>().to_mdspan())::extens_type,
+        typename decltype(declval<mdarray<ElementType, Extents, Layout, Container>>().to_mdspan())::layout_type,
+        typename decltype(declval<mdarray<ElementType, Extents, Layout, Container>>().to_mdspan())::accessor_type>;
 
 } // namespace etl
 

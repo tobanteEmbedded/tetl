@@ -7,6 +7,7 @@
 #include <etl/_memory/to_address.hpp>
 #include <etl/_span/span.hpp>
 #include <etl/_type_traits/declval.hpp>
+#include <etl/_type_traits/is_assignable.hpp>
 #include <etl/_type_traits/is_constructible.hpp>
 #include <etl/_type_traits/is_convertible.hpp>
 #include <etl/_type_traits/is_nothrow_constructible.hpp>
@@ -106,7 +107,6 @@ public:
     constexpr auto operator=(mdarray const& rhs) -> mdarray& = default;
     constexpr auto operator=(mdarray&& rhs) -> mdarray&      = default;
 
-// // [mdarray.members], mdarray members
 #if defined(__cpp_multidimensional_subscript)
     template <typename... OtherIndexTypes>
         requires((is_convertible_v<OtherIndexTypes, index_type> and ...)
@@ -201,15 +201,35 @@ public:
     [[nodiscard]] static constexpr auto is_always_exhaustive() -> bool { return mapping_type::is_always_exhaustive(); }
     [[nodiscard]] static constexpr auto is_always_strided() -> bool { return mapping_type::is_always_strided(); }
 
-    // template <typename OtherElementType, typename OtherExtents, typename OtherLayoutType, typename
-    // OtherAccessorType> constexpr operator mdspan() const;
+    template <typename OtherElement, typename OtherExtents, typename OtherLayout, typename OtherAccessor>
+    // requires is_assignable_v<mdspan<OtherElement, OtherExtents, OtherLayout, OtherAccessor>, mdspan_type>
+    [[nodiscard]] constexpr operator mdspan<OtherElement, OtherExtents, OtherLayout, OtherAccessor>()
+    {
+        return mdspan_type(container_data(), _map);
+    }
 
-    // template <typename OtherAccessorType = default_accessor<element_type>>
-    // constexpr mdspan<element_type, extents_type, layout_type, OtherAccessorType> to_mdspan(
-    //     OtherAccessorType const& a = default_accessor<element_type>());
-    // template <typename OtherAccessorType = default_accessor<element_type const>>
-    // constexpr mdspan<const element_type, extents_type, layout_type, OtherAccessorType> to_mdspan(
-    //     OtherAccessorType const& a = default_accessor<const_element_type>()) const;
+    template <typename OtherElement, typename OtherExtents, typename OtherLayout, typename OtherAccessor>
+    // requires is_assignable_v<mdspan<OtherElement, OtherExtents, OtherLayout, OtherAccessor>, const_mdspan_type>
+    [[nodiscard]] constexpr operator mdspan<OtherElement, OtherExtents, OtherLayout, OtherAccessor>() const
+    {
+        return const_mdspan_type(container_data(), _map);
+    }
+
+    template <typename OtherAccessor = default_accessor<element_type>>
+    // requires is_assignable_v<typename OtherAccessor::data_handle_type, pointer>
+    [[nodiscard]] constexpr auto to_mdspan(OtherAccessor const& a = default_accessor<element_type>())
+        -> mdspan<element_type, extents_type, layout_type, OtherAccessor>
+    {
+        return mdspan<element_type, extents_type, layout_type, OtherAccessor>(container_data(), _map, a);
+    }
+
+    template <typename OtherAccessor = default_accessor<element_type const>>
+    // requires is_assignable_v<typename OtherAccessor::data_handle_type, const_pointer>
+    constexpr auto to_mdspan(OtherAccessor const& a = default_accessor<element_type const>()) const
+        -> mdspan<element_type const, extents_type, layout_type, OtherAccessor>
+    {
+        return mdspan<element_type const, extents_type, layout_type, OtherAccessor>(container_data(), _map, a);
+    }
 
     friend constexpr void swap(mdarray& lhs, mdarray& rhs) noexcept
     {
