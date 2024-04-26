@@ -3,8 +3,6 @@
 #include <etl/mdarray.hpp>
 
 #include <etl/array.hpp>
-#include <etl/concepts.hpp>
-#include <etl/cstdint.hpp>
 #include <etl/vector.hpp>
 
 #include "testing/testing.hpp"
@@ -15,6 +13,7 @@ template <typename T, typename Index>
     // traits
     {
         using matrix = etl::mdarray<T, etl::extents<Index, 2, 3>, etl::layout_left, etl::array<T, 6>>;
+
         CHECK_SAME_TYPE(typename matrix::value_type, T);
         CHECK_SAME_TYPE(typename matrix::element_type, T);
         CHECK_SAME_TYPE(typename matrix::container_type, etl::array<T, 6>);
@@ -31,6 +30,9 @@ template <typename T, typename Index>
         CHECK(matrix().is_unique());
         CHECK(matrix().is_exhaustive());
         CHECK(matrix().is_strided());
+
+        CHECK(matrix().size() == 6);
+        CHECK_FALSE(matrix().empty());
     }
 
     // ctor(index...)
@@ -81,40 +83,45 @@ template <typename T, typename Index>
 }
 
 template <typename Index>
-[[nodiscard]] constexpr auto test_index_type() -> bool
+[[nodiscard]] constexpr auto test_index() -> bool
 {
+    CHECK(test<unsigned char, Index>());
+    CHECK(test<unsigned short, Index>());
+    CHECK(test<unsigned int, Index>());
+    CHECK(test<unsigned long, Index>());
+    CHECK(test<unsigned long long, Index>());
+
+    CHECK(test<signed char, Index>());
+    CHECK(test<signed short, Index>());
+    CHECK(test<signed int, Index>());
+    CHECK(test<signed long, Index>());
+    CHECK(test<signed long long, Index>());
+
     CHECK(test<char, Index>());
     CHECK(test<char8_t, Index>());
     CHECK(test<char16_t, Index>());
     CHECK(test<char32_t, Index>());
 
-    CHECK(test<etl::uint8_t, Index>());
-    CHECK(test<etl::uint16_t, Index>());
-    CHECK(test<etl::uint32_t, Index>());
-    CHECK(test<etl::uint64_t, Index>());
-
-    CHECK(test<etl::int8_t, Index>());
-    CHECK(test<etl::int16_t, Index>());
-    CHECK(test<etl::int32_t, Index>());
-    CHECK(test<etl::int64_t, Index>());
-
     CHECK(test<float, Index>());
     CHECK(test<double, Index>());
+    CHECK(test<long double, Index>());
 
     return true;
 }
 
 [[nodiscard]] constexpr auto test_all() -> bool
 {
-    CHECK(test_index_type<etl::uint8_t>());
-    CHECK(test_index_type<etl::uint16_t>());
-    CHECK(test_index_type<etl::uint32_t>());
-    CHECK(test_index_type<etl::uint64_t>());
+    CHECK(test_index<unsigned char>());
+    CHECK(test_index<unsigned short>());
+    CHECK(test_index<unsigned int>());
+    CHECK(test_index<unsigned long>());
+    CHECK(test_index<unsigned long long>());
 
-    CHECK(test_index_type<etl::int8_t>());
-    CHECK(test_index_type<etl::int16_t>());
-    CHECK(test_index_type<etl::int32_t>());
-    CHECK(test_index_type<etl::int64_t>());
+    CHECK(test_index<signed char>());
+    CHECK(test_index<signed short>());
+    CHECK(test_index<signed int>());
+    CHECK(test_index<signed long>());
+    CHECK(test_index<signed long long>());
 
     return true;
 }
