@@ -10,6 +10,9 @@
 #include <etl/_type_traits/is_constructible.hpp>
 #include <etl/_type_traits/is_convertible.hpp>
 #include <etl/_type_traits/is_nothrow_constructible.hpp>
+#include <etl/_utility/as_const.hpp>
+#include <etl/_utility/index_sequence.hpp>
+#include <etl/_utility/move.hpp>
 
 namespace etl {
 
@@ -100,37 +103,103 @@ public:
     // typename Accessor> explicit(see below) constexpr mdarray(
     //     mdspan<OtherElementType, OtherExtents, OtherLayoutPolicy, Accessor> const& other);
 
-    // constexpr mdarray& operator=(mdarray const& rhs) = default;
-    // constexpr mdarray& operator=(mdarray&& rhs)      = default;
+    constexpr auto operator=(mdarray const& rhs) -> mdarray& = default;
+    constexpr auto operator=(mdarray&& rhs) -> mdarray&      = default;
 
-    // // [mdarray.members], mdarray members
-    // template <typename... OtherIndexTypes>
-    // constexpr reference operator[](OtherIndexTypes... indices);
-    // template <typename OtherIndexType>
-    // constexpr reference operator[](span<OtherIndexType, rank()> indices);
-    // template <typename OtherIndexType>
-    // constexpr reference operator[](array<OtherIndexType, rank()> const& indices);
+// // [mdarray.members], mdarray members
+#if defined(__cpp_multidimensional_subscript)
+    template <typename... OtherIndexTypes>
+        requires((is_convertible_v<OtherIndexTypes, index_type> and ...)
+                 and (is_nothrow_constructible_v<index_type, OtherIndexTypes> and ...)
+                 and (sizeof...(OtherIndexTypes) == rank()))
+    [[nodiscard]] constexpr auto operator[](OtherIndexTypes... indices) -> reference
+    {
+        return (*this)(etl::move(indices)...);
+    }
 
-    // template <typename... OtherIndexTypes>
-    // constexpr const_reference operator[](OtherIndexTypes... indices) const;
-    // template <typename OtherIndexType>
-    // constexpr const_reference operator[](span<OtherIndexType, rank()> indices) const;
-    // template <typename OtherIndexType>
-    // constexpr const_reference operator[](array<OtherIndexType, rank()> const& indices) const;
+    template <typename... OtherIndexTypes>
+        requires((is_convertible_v<OtherIndexTypes, index_type> and ...)
+                 and (is_nothrow_constructible_v<index_type, OtherIndexTypes> and ...)
+                 and (sizeof...(OtherIndexTypes) == rank()))
+    [[nodiscard]] constexpr auto operator[](OtherIndexTypes... indices) const -> const_reference
+    {
+        return (*this)(etl::move(indices)...);
+    }
+#endif
 
-    // constexpr size_type size() const;
-    // [[nodiscard]] constexpr bool empty() const noexcept;
-    [[nodiscard]] constexpr auto container_size() const { return _ctr.size(); }
+    template <typename... OtherIndexTypes>
+        requires((is_convertible_v<OtherIndexTypes, index_type> and ...)
+                 and (is_nothrow_constructible_v<index_type, OtherIndexTypes> and ...)
+                 and (sizeof...(OtherIndexTypes) == rank()))
+    [[nodiscard]] constexpr auto operator()(OtherIndexTypes... indices) -> reference
+    {
+        return _ctr[static_cast<size_t>(_map(static_cast<index_type>(etl::move(indices))...))];
+    }
 
-    // friend constexpr void swap(mdarray& x, mdarray& y) noexcept;
+    template <typename... OtherIndexTypes>
+        requires((is_convertible_v<OtherIndexTypes, index_type> and ...)
+                 and (is_nothrow_constructible_v<index_type, OtherIndexTypes> and ...)
+                 and (sizeof...(OtherIndexTypes) == rank()))
+    [[nodiscard]] constexpr auto operator()(OtherIndexTypes... indices) const -> const_reference
+    {
+        return _ctr[static_cast<size_t>(_map(static_cast<index_type>(etl::move(indices))...))];
+    }
+
+    template <typename OtherIndexType>
+        requires(is_convertible_v<OtherIndexType const&, index_type>
+                 and is_nothrow_constructible_v<index_type, OtherIndexType const&>)
+    [[nodiscard]] constexpr auto operator[](span<OtherIndexType, rank()> indices) -> reference
+    {
+        return [&]<size_t... Is>(index_sequence<Is...> /*seq*/) -> decltype(auto) {
+            return (*this)(etl::as_const(indices[Is])...);
+        }(make_index_sequence<rank()>());
+    }
+
+    template <typename OtherIndexType>
+        requires(is_convertible_v<OtherIndexType const&, index_type>
+                 and is_nothrow_constructible_v<index_type, OtherIndexType const&>)
+    [[nodiscard]] constexpr auto operator[](span<OtherIndexType, rank()> indices) const -> const_reference
+    {
+        return [&]<size_t... Is>(index_sequence<Is...> /*seq*/) -> decltype(auto) {
+            return (*this)(etl::as_const(indices[Is])...);
+        }(make_index_sequence<rank()>());
+    }
+
+    template <typename OtherIndexType>
+        requires(is_convertible_v<OtherIndexType const&, index_type>
+                 and is_nothrow_constructible_v<index_type, OtherIndexType const&>)
+    [[nodiscard]] constexpr auto operator[](array<OtherIndexType, rank()> const& indices) -> reference
+    {
+        return operator[](span{indices});
+    }
+
+    template <typename OtherIndexType>
+        requires(is_convertible_v<OtherIndexType const&, index_type>
+                 and is_nothrow_constructible_v<index_type, OtherIndexType const&>)
+    [[nodiscard]] constexpr auto operator[](array<OtherIndexType, rank()> const& indices) const -> const_reference
+    {
+        return operator[](span{indices});
+    }
+
+    [[nodiscard]] constexpr auto size() const -> size_type { return size_type(extents().fwd_prod_of_extents(rank())); }
+    [[nodiscard]] constexpr auto empty() const noexcept -> bool { return size() == 0; }
 
     [[nodiscard]] constexpr auto extents() const -> extents_type const& { return _map.extents(); }
-
-    [[nodiscard]] constexpr auto container_data() -> pointer { return to_address(_ctr.begin()); }
-
-    [[nodiscard]] constexpr auto container_data() const -> const_pointer { return to_address(_ctr.cbegin()); }
-
     [[nodiscard]] constexpr auto mapping() const -> mapping_type const& { return _map; }
+    [[nodiscard]] constexpr auto stride(size_t r) const -> index_type { return _map.stride(r); }
+
+    [[nodiscard]] constexpr auto container_size() const { return _ctr.size(); }
+    [[nodiscard]] constexpr auto container_data() -> pointer { return to_address(_ctr.begin()); }
+    [[nodiscard]] constexpr auto container_data() const -> const_pointer { return to_address(_ctr.cbegin()); }
+    [[nodiscard]] constexpr auto extract_container() && -> container_type&& { return etl::move(_ctr); }
+
+    [[nodiscard]] constexpr auto is_unique() const -> bool { return _map.is_unique(); }
+    [[nodiscard]] constexpr auto is_exhaustive() const -> bool { return _map.is_exhaustive(); }
+    [[nodiscard]] constexpr auto is_strided() const -> bool { return _map.is_strided(); }
+
+    [[nodiscard]] static constexpr auto is_always_unique() -> bool { return mapping_type::is_always_unique(); }
+    [[nodiscard]] static constexpr auto is_always_exhaustive() -> bool { return mapping_type::is_always_exhaustive(); }
+    [[nodiscard]] static constexpr auto is_always_strided() -> bool { return mapping_type::is_always_strided(); }
 
     // template <typename OtherElementType, typename OtherExtents, typename OtherLayoutType, typename
     // OtherAccessorType> constexpr operator mdspan() const;
@@ -142,17 +211,11 @@ public:
     // constexpr mdspan<const element_type, extents_type, layout_type, OtherAccessorType> to_mdspan(
     //     OtherAccessorType const& a = default_accessor<const_element_type>()) const;
 
-    [[nodiscard]] auto extract_container() && -> container_type&& { return etl::move(_ctr); }
-
-    [[nodiscard]] static constexpr auto is_always_unique() -> bool { return mapping_type::is_always_unique(); }
-    [[nodiscard]] static constexpr auto is_always_exhaustive() -> bool { return mapping_type::is_always_exhaustive(); }
-    [[nodiscard]] static constexpr auto is_always_strided() -> bool { return mapping_type::is_always_strided(); }
-
-    [[nodiscard]] constexpr auto is_unique() const -> bool { return _map.is_unique(); }
-    [[nodiscard]] constexpr auto is_exhaustive() const -> bool { return _map.is_exhaustive(); }
-    [[nodiscard]] constexpr auto is_strided() const -> bool { return _map.is_strided(); }
-
-    [[nodiscard]] constexpr auto stride(etl::size_t r) const -> index_type { return _map.stride(r); }
+    friend constexpr void swap(mdarray& lhs, mdarray& rhs) noexcept
+    {
+        swap(lhs._map, rhs._map);
+        swap(lhs._ctr, rhs._ctr);
+    }
 
 private:
     mapping_type _map;

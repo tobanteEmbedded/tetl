@@ -10,7 +10,7 @@
 #include "testing/testing.hpp"
 
 template <typename T, typename Index>
-[[nodiscard]] constexpr auto test_mdarray() -> bool
+[[nodiscard]] constexpr auto test() -> bool
 {
     // traits
     {
@@ -23,6 +23,14 @@ template <typename T, typename Index>
         CHECK(matrix::rank_dynamic() == 0);
         CHECK(matrix::static_extent(0) == 2);
         CHECK(matrix::static_extent(1) == 3);
+
+        CHECK(matrix::is_always_unique());
+        CHECK(matrix::is_always_exhaustive());
+        CHECK(matrix::is_always_strided());
+
+        CHECK(matrix().is_unique());
+        CHECK(matrix().is_exhaustive());
+        CHECK(matrix().is_strided());
     }
 
     // ctor(index...)
@@ -32,12 +40,41 @@ template <typename T, typename Index>
         using vector_matrix = etl::mdarray<T, extents, etl::layout_left, etl::static_vector<T, 6>>;
 
         auto am = array_matrix{2, 3};
-        CHECK(am.extents().extent(0) == Index(2));
-        CHECK(am.extents().extent(1) == Index(3));
+        CHECK_FALSE(am.empty());
+        CHECK(am.size() == 6);
+        CHECK(am.stride(0) == Index(1));
+        CHECK(am.stride(1) == Index(2));
+        CHECK(am.extent(0) == Index(2));
+        CHECK(am.extent(1) == Index(3));
+#if defined(__cpp_multidimensional_subscript)
+        am[0, 0] = T(42);
+        am[0, 1] = T(43);
+        CHECK(etl::as_const(am)[0, 0] == T(42));
+        CHECK(etl::as_const(am)[0, 1] == T(43));
+#endif
 
         auto vm = vector_matrix{2, 3};
-        CHECK(vm.extents().extent(0) == Index(2));
-        CHECK(vm.extents().extent(1) == Index(3));
+        CHECK_FALSE(vm.empty());
+        CHECK(vm.size() == 6);
+        CHECK(vm.stride(0) == Index(1));
+        CHECK(vm.stride(1) == Index(2));
+        CHECK(vm.extent(0) == Index(2));
+        CHECK(vm.extent(1) == Index(3));
+
+        vm[etl::array{0, 0}] = T(99);
+        vm[etl::array{0, 1}] = T(100);
+        CHECK(etl::as_const(vm)[etl::array{0, 0}] == T(99));
+        CHECK(etl::as_const(vm)[etl::array{0, 1}] == T(100));
+
+        auto vm2 = vector_matrix{};
+        CHECK(vm2.size() == 0);
+
+        swap(vm, vm2);
+        CHECK(vm.size() == 0);
+        CHECK(vm2.size() == 6);
+
+        auto c = etl::move(vm2).extract_container();
+        CHECK(c[0] == T(99));
     }
 
     return true;
@@ -46,23 +83,23 @@ template <typename T, typename Index>
 template <typename Index>
 [[nodiscard]] constexpr auto test_index_type() -> bool
 {
-    CHECK(test_mdarray<char, Index>());
-    CHECK(test_mdarray<char8_t, Index>());
-    CHECK(test_mdarray<char16_t, Index>());
-    CHECK(test_mdarray<char32_t, Index>());
+    CHECK(test<char, Index>());
+    CHECK(test<char8_t, Index>());
+    CHECK(test<char16_t, Index>());
+    CHECK(test<char32_t, Index>());
 
-    CHECK(test_mdarray<etl::uint8_t, Index>());
-    CHECK(test_mdarray<etl::uint16_t, Index>());
-    CHECK(test_mdarray<etl::uint32_t, Index>());
-    CHECK(test_mdarray<etl::uint64_t, Index>());
+    CHECK(test<etl::uint8_t, Index>());
+    CHECK(test<etl::uint16_t, Index>());
+    CHECK(test<etl::uint32_t, Index>());
+    CHECK(test<etl::uint64_t, Index>());
 
-    CHECK(test_mdarray<etl::int8_t, Index>());
-    CHECK(test_mdarray<etl::int16_t, Index>());
-    CHECK(test_mdarray<etl::int32_t, Index>());
-    CHECK(test_mdarray<etl::int64_t, Index>());
+    CHECK(test<etl::int8_t, Index>());
+    CHECK(test<etl::int16_t, Index>());
+    CHECK(test<etl::int32_t, Index>());
+    CHECK(test<etl::int64_t, Index>());
 
-    CHECK(test_mdarray<float, Index>());
-    CHECK(test_mdarray<double, Index>());
+    CHECK(test<float, Index>());
+    CHECK(test<double, Index>());
 
     return true;
 }
