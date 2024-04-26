@@ -327,6 +327,12 @@ template <typename T, size_t N>
     }(etl::make_index_sequence<N>{});
 }
 
+template <typename T>
+inline constexpr auto is_etl_array = false;
+
+template <typename T, size_t Size>
+inline constexpr auto is_etl_array<array<T, Size>> = true;
+
 } // namespace etl
 
 #endif // TETL_ARRAY_ARRAY_HPP

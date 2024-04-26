@@ -5,21 +5,40 @@
 #include <etl/array.hpp>
 #include <etl/concepts.hpp>
 #include <etl/cstdint.hpp>
+#include <etl/vector.hpp>
 
 #include "testing/testing.hpp"
 
-template <typename Value, typename Index>
+template <typename T, typename Index>
 [[nodiscard]] constexpr auto test_mdarray() -> bool
 {
-    using matrix = etl::mdarray<Value, etl::extents<Index, 2, 3>, etl::layout_left, etl::array<Value, 6>>;
-    CHECK_SAME_TYPE(typename matrix::value_type, Value);
-    CHECK_SAME_TYPE(typename matrix::element_type, Value);
-    CHECK_SAME_TYPE(typename matrix::container_type, etl::array<Value, 6>);
+    // traits
+    {
+        using matrix = etl::mdarray<T, etl::extents<Index, 2, 3>, etl::layout_left, etl::array<T, 6>>;
+        CHECK_SAME_TYPE(typename matrix::value_type, T);
+        CHECK_SAME_TYPE(typename matrix::element_type, T);
+        CHECK_SAME_TYPE(typename matrix::container_type, etl::array<T, 6>);
 
-    CHECK(matrix::rank() == 2);
-    CHECK(matrix::rank_dynamic() == 0);
-    CHECK(matrix::static_extent(0) == 2);
-    CHECK(matrix::static_extent(1) == 3);
+        CHECK(matrix::rank() == 2);
+        CHECK(matrix::rank_dynamic() == 0);
+        CHECK(matrix::static_extent(0) == 2);
+        CHECK(matrix::static_extent(1) == 3);
+    }
+
+    // ctor(index...)
+    {
+        using extents       = etl::dextents<Index, 2>;
+        using array_matrix  = etl::mdarray<T, extents, etl::layout_left, etl::array<T, 6>>;
+        using vector_matrix = etl::mdarray<T, extents, etl::layout_left, etl::static_vector<T, 6>>;
+
+        auto am = array_matrix{2, 3};
+        CHECK(am.extents().extent(0) == Index(2));
+        CHECK(am.extents().extent(1) == Index(3));
+
+        auto vm = vector_matrix{2, 3};
+        CHECK(vm.extents().extent(0) == Index(2));
+        CHECK(vm.extents().extent(1) == Index(3));
+    }
 
     return true;
 }

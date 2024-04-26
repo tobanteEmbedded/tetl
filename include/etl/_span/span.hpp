@@ -57,16 +57,10 @@ struct span;
 namespace detail {
 
 template <typename T>
-inline constexpr auto is_etl_span = false;
+inline constexpr auto is_span = false;
 
 template <typename T, size_t Size>
-inline constexpr auto is_etl_span<etl::span<T, Size>> = true;
-
-template <typename T>
-inline constexpr auto is_etl_array = false;
-
-template <typename T, size_t Size>
-inline constexpr auto is_etl_array<etl::array<T, Size>> = true;
+inline constexpr auto is_span<etl::span<T, Size>> = true;
 
 template <typename From, typename To>
 concept span_convertible_from = is_convertible_v<From (*)[], To (*)[]>;
@@ -151,8 +145,8 @@ struct span {
                 ranges::sized_range<R>
             and (ranges::borrowed_range<R> or is_const_v<T>)
             and not is_array_v<remove_cvref_t<R>>
-            and not detail::is_etl_array<R>
-            and not detail::is_etl_span<R>
+            and not is_etl_array<R>
+            and not detail::is_span<R>
             and detail::span_convertible_from<remove_reference_t<ranges::range_reference_t<R>>, T>
         )
     // clang-format on

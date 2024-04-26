@@ -5,13 +5,22 @@
 
 #include <etl/_mdspan/mdspan.hpp>
 #include <etl/_memory/to_address.hpp>
+#include <etl/_span/span.hpp>
 #include <etl/_type_traits/declval.hpp>
+#include <etl/_type_traits/is_constructible.hpp>
+#include <etl/_type_traits/is_convertible.hpp>
+#include <etl/_type_traits/is_nothrow_constructible.hpp>
 
 namespace etl {
 
 /// \ingroup mdarray
 template <typename ElementType, typename Extents, typename LayoutPolicy, typename Container>
 struct mdarray {
+private:
+    template <typename C, typename... Args>
+    static constexpr auto array_or_constructible_from = is_etl_array<C> or is_constructible_v<C, Args...>;
+
+public:
     using extents_type      = Extents;
     using layout_type       = LayoutPolicy;
     using container_type    = Container;
@@ -29,14 +38,11 @@ struct mdarray {
     using const_reference   = typename container_type::const_reference;
 
     [[nodiscard]] static constexpr auto rank() noexcept -> rank_type { return Extents::rank(); }
-
     [[nodiscard]] static constexpr auto rank_dynamic() noexcept -> rank_type { return Extents::rank_dynamic(); }
-
     [[nodiscard]] static constexpr auto static_extent(rank_type r) noexcept -> size_t
     {
         return Extents::static_extent(r);
     }
-
     [[nodiscard]] constexpr auto extent(rank_type r) const noexcept -> index_type { return extents().extent(r); }
 
     // [mdarray.ctors], mdarray constructors
@@ -46,10 +52,36 @@ struct mdarray {
     constexpr mdarray(mdarray const& rhs) = default;
     constexpr mdarray(mdarray&& rhs)      = default;
 
-    // template <typename... OtherIndexTypes>
-    // explicit constexpr mdarray(OtherIndexTypes... exts);
-    // explicit constexpr mdarray(extents_type const& ext);
-    // explicit constexpr mdarray(mapping_type const& m);
+    template <typename... OtherIndexTypes>
+        requires(
+            (is_convertible_v<OtherIndexTypes, index_type> and ...)
+            and (is_nothrow_constructible_v<index_type, OtherIndexTypes> and ...)
+            and (is_constructible_v<extents_type, OtherIndexTypes...>)
+            and (is_constructible_v<mapping_type, extents_type>) and (array_or_constructible_from<Container, size_t>)
+        )
+    explicit constexpr mdarray(OtherIndexTypes... exts)
+        : mdarray(extents_type(static_cast<index_type>(etl::move(exts))...))
+    {
+    }
+
+    explicit constexpr mdarray(extents_type const& ext)
+        requires(is_constructible_v<mapping_type, extents_type const&> and array_or_constructible_from<Container, size_t>)
+        : mdarray(mapping_type(ext))
+    {
+    }
+
+    explicit constexpr mdarray(mapping_type const& m)
+        requires(array_or_constructible_from<Container, size_t>)
+        : _map(m)
+        , _ctr([&]() -> container_type {
+            if constexpr (is_constructible_v<Container, size_t>) {
+                return container_type(static_cast<size_t>(_map.required_span_size()));
+            } else {
+                return {};
+            }
+        }())
+    {
+    }
 
     // constexpr mdarray(extents_type const& ext, value_type const& val);
     // constexpr mdarray(mapping_type const& m, value_type const& val);
@@ -68,41 +100,6 @@ struct mdarray {
     // typename Accessor> explicit(see below) constexpr mdarray(
     //     mdspan<OtherElementType, OtherExtents, OtherLayoutPolicy, Accessor> const& other);
 
-    // // [mdarray.ctors.alloc], mdarray constructors with allocators
-    // template <typename Alloc>
-    // constexpr mdarray(extents_type const& ext, Alloc const& a);
-    // template <typename Alloc>
-    // constexpr mdarray(mapping_type const& m, Alloc const& a);
-
-    // template <typename Alloc>
-    // constexpr mdarray(extents_type const& ext, value_type const& val, Alloc const& a);
-    // template <typename Alloc>
-    // constexpr mdarray(mapping_type const& m, value_type const& val, Alloc const& a);
-
-    // template <typename Alloc>
-    // constexpr mdarray(extents_type const& ext, container_type const& c, Alloc const& a);
-    // template <typename Alloc>
-    // constexpr mdarray(mapping_type const& m, container_type const& c, Alloc const& a);
-
-    // template <typename Alloc>
-    // constexpr mdarray(extents_type const& ext, container_type&& c, Alloc const& a);
-    // template <typename Alloc>
-    // constexpr mdarray(mapping_type const& m, container_type&& c, Alloc const& a);
-
-    // template <typename OtherElementType, typename OtherExtents, typename OtherLayoutPolicy,
-    // typename OtherContainer,
-    //     typename Alloc>
-    // explicit(see below) constexpr mdarray(
-    //     mdarray<OtherElementType, OtherExtents, OtherLayoutPolicy, OtherContainer> const& other,
-    //     Alloc const& a);
-
-    // template <typename OtherElementType, typename OtherExtents, typename OtherLayoutPolicy,
-    // typename Accessor,
-    //     typename Alloc>
-    // explicit(see below) constexpr mdarray(
-    //     mdspan<OtherElementType, OtherExtents, OtherLayoutPolicy, Accessor> const& other, Alloc
-    //     const& a);
-
     // constexpr mdarray& operator=(mdarray const& rhs) = default;
     // constexpr mdarray& operator=(mdarray&& rhs)      = default;
 
@@ -113,6 +110,7 @@ struct mdarray {
     // constexpr reference operator[](span<OtherIndexType, rank()> indices);
     // template <typename OtherIndexType>
     // constexpr reference operator[](array<OtherIndexType, rank()> const& indices);
+
     // template <typename... OtherIndexTypes>
     // constexpr const_reference operator[](OtherIndexTypes... indices) const;
     // template <typename OtherIndexType>
@@ -147,22 +145,18 @@ struct mdarray {
     [[nodiscard]] auto extract_container() && -> container_type&& { return etl::move(_ctr); }
 
     [[nodiscard]] static constexpr auto is_always_unique() -> bool { return mapping_type::is_always_unique(); }
-
     [[nodiscard]] static constexpr auto is_always_exhaustive() -> bool { return mapping_type::is_always_exhaustive(); }
-
     [[nodiscard]] static constexpr auto is_always_strided() -> bool { return mapping_type::is_always_strided(); }
 
     [[nodiscard]] constexpr auto is_unique() const -> bool { return _map.is_unique(); }
-
     [[nodiscard]] constexpr auto is_exhaustive() const -> bool { return _map.is_exhaustive(); }
-
     [[nodiscard]] constexpr auto is_strided() const -> bool { return _map.is_strided(); }
 
     [[nodiscard]] constexpr auto stride(etl::size_t r) const -> index_type { return _map.stride(r); }
 
 private:
-    container_type _ctr;
     mapping_type _map;
+    container_type _ctr;
 };
 
 } // namespace etl
