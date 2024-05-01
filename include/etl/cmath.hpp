@@ -61,6 +61,7 @@
 #include <etl/_math/abs.hpp>
 
 // Non-standard extensions
+#include <etl/_math/idiv.hpp>
 #include <etl/_math/ilog2.hpp>
 #include <etl/_math/ipow.hpp>
 
