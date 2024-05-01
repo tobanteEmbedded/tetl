@@ -18,11 +18,8 @@
 #include <etl/_cstdlib/atoll.hpp>
 #include <etl/_cstdlib/div.hpp>
 #include <etl/_cstdlib/exit.hpp>
-#include <etl/_cstdlib/imaxdiv.hpp>
 #include <etl/_cstdlib/labs.hpp>
-#include <etl/_cstdlib/ldiv.hpp>
 #include <etl/_cstdlib/llabs.hpp>
-#include <etl/_cstdlib/lldiv.hpp>
 #include <etl/_cstdlib/strtod.hpp>
 #include <etl/_cstdlib/strtof.hpp>
 #include <etl/_cstdlib/strtol.hpp>
