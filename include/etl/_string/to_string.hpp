@@ -4,6 +4,7 @@
 #define TETL_STRING_TO_STRING_HPP
 
 #include <etl/_contracts/check.hpp>
+#include <etl/_iterator/data.hpp>
 #include <etl/_string/basic_inplace_string.hpp>
 #include <etl/_strings/from_integer.hpp>
 
@@ -15,10 +16,9 @@ template <etl::size_t Capacity, typename Int>
 constexpr auto to_string(Int val) -> etl::inplace_string<Capacity>
 {
     char buffer[Capacity]{};
-    auto* first    = etl::begin(buffer);
-    auto const res = etl::strings::from_integer<Int>(val, first, Capacity, 10);
+    auto const res = etl::strings::from_integer<Int>(val, etl::data(buffer), Capacity, 10);
     TETL_PRECONDITION(res.error == etl::strings::from_integer_error::none);
-    return etl::inplace_string<Capacity>{first, res.end};
+    return etl::inplace_string<Capacity>{etl::data(buffer), res.end};
 }
 
 } // namespace detail

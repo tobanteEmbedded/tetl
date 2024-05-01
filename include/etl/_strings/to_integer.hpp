@@ -20,14 +20,14 @@ namespace etl::strings {
 
 namespace detail {
 
-template <etl::integral Int>
+template <integral Int>
 struct nop_overflow_checker {
     explicit constexpr nop_overflow_checker(Int /*base*/) noexcept { }
 
     [[nodiscard]] constexpr auto operator()(Int /*value*/, Int /*digit*/) const noexcept -> bool { return false; }
 };
 
-template <etl::integral Int>
+template <integral Int>
 struct unsigned_overflow_checker {
     explicit constexpr unsigned_overflow_checker(Int base) noexcept
         : _base{base}
@@ -41,11 +41,11 @@ struct unsigned_overflow_checker {
 
 private:
     Int _base;
-    Int _maxDivBase{static_cast<Int>(etl::numeric_limits<Int>::max() / _base)};
-    Int _maxModBase{static_cast<Int>(etl::numeric_limits<Int>::max() % _base)};
+    Int _maxDivBase{static_cast<Int>(numeric_limits<Int>::max() / _base)};
+    Int _maxModBase{static_cast<Int>(numeric_limits<Int>::max() % _base)};
 };
 
-template <etl::integral Int>
+template <integral Int>
 struct signed_overflow_checker {
     explicit constexpr signed_overflow_checker(Int base) noexcept
         : _base{base}
@@ -59,14 +59,14 @@ struct signed_overflow_checker {
 
 private:
     Int _base;
-    Int _minDivBase{static_cast<Int>(etl::numeric_limits<Int>::min() / _base)};
-    Int _minModBase{etl::abs(static_cast<Int>(etl::numeric_limits<Int>::min() % _base))};
+    Int _minDivBase{static_cast<Int>(numeric_limits<Int>::min() / _base)};
+    Int _minModBase{abs(static_cast<Int>(numeric_limits<Int>::min() % _base))};
 };
 
-template <etl::integral Int, bool Check>
-using overflow_checker = etl::conditional_t<
+template <integral Int, bool Check>
+using overflow_checker = conditional_t<
     Check,
-    etl::conditional_t<signed_integral<Int>, signed_overflow_checker<Int>, unsigned_overflow_checker<Int>>,
+    conditional_t<signed_integral<Int>, signed_overflow_checker<Int>, unsigned_overflow_checker<Int>>,
     nop_overflow_checker<Int>>;
 
 } // namespace detail
@@ -82,15 +82,15 @@ enum struct to_integer_error : unsigned char {
     overflow,
 };
 
-template <etl::integral Int>
+template <integral Int>
 struct to_integer_result {
     char const* end{nullptr};
     to_integer_error error{to_integer_error::none};
     Int value{};
 };
 
-template <etl::integral Int, to_integer_options Options = to_integer_options{}>
-[[nodiscard]] constexpr auto to_integer(etl::string_view str, Int base = Int(10)) noexcept -> to_integer_result<Int>
+template <integral Int, to_integer_options Options = to_integer_options{}>
+[[nodiscard]] constexpr auto to_integer(string_view str, Int base = Int(10)) noexcept -> to_integer_result<Int>
 {
     auto const length        = str.size();
     auto const wouldOverflow = detail::overflow_checker<Int, Options.check_overflow>{base};
@@ -164,7 +164,7 @@ template <etl::integral Int, to_integer_options Options = to_integer_options{}>
 
     if constexpr (signed_integral<Int>) {
         if (positive) {
-            if (value == etl::numeric_limits<Int>::min()) {
+            if (value == numeric_limits<Int>::min()) {
                 return makeError(to_integer_error::overflow);
             }
             value *= Int(-1);

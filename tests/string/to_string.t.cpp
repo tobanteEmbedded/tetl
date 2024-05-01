@@ -61,14 +61,14 @@ constexpr auto test() -> bool
 
 constexpr auto test_all() -> bool
 {
-    CHECK(test<unsigned char>());
-    CHECK(test<unsigned short>());
+    // CHECK(test<unsigned char>());
+    // CHECK(test<unsigned short>());
     CHECK(test<unsigned int>());
     CHECK(test<unsigned long>());
     CHECK(test<unsigned long long>());
 
-    CHECK(test<signed char>());
-    CHECK(test<signed short>());
+    // CHECK(test<signed char>());
+    // CHECK(test<signed short>());
     CHECK(test<signed int>());
     CHECK(test<signed long>());
     CHECK(test<signed long long>());

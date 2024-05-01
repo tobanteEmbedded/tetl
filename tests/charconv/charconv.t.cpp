@@ -8,6 +8,7 @@
 #include <etl/string.hpp>
 #include <etl/string_view.hpp>
 #include <etl/type_traits.hpp>
+#include <etl/utility.hpp>
 
 #include "testing/testing.hpp"
 
@@ -204,11 +205,11 @@ constexpr auto test_to_chars() -> bool
     using namespace etl::string_view_literals;
 
     auto test = [](T tc, etl::string_view expected) {
-        auto buf          = etl::array<char, 16>{};
+        auto buf          = etl::array<char, 8>{};
         auto const result = etl::to_chars(buf.begin(), buf.end(), tc, 10);
         CHECK(bool{result});
         CHECK(result.ptr != nullptr);
-        CHECK(buf.data() == expected);
+        CHECK(etl::string_view{etl::as_const(buf).data(), result.ptr} == expected);
         return true;
     };
 

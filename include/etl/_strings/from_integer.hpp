@@ -3,10 +3,18 @@
 #ifndef TETL_STRINGS_CONVERSION_HPP
 #define TETL_STRINGS_CONVERSION_HPP
 
+#include <etl/_algorithm/reverse.hpp>
+#include <etl/_concepts/integral.hpp>
 #include <etl/_cstddef/size_t.hpp>
+#include <etl/_math/abs.hpp>
+#include <etl/_math/idiv.hpp>
 #include <etl/_type_traits/is_signed.hpp>
 
 namespace etl::strings {
+
+struct from_integer_options {
+    bool terminate_with_null = true;
+};
 
 enum struct from_integer_error : unsigned char {
     none,
@@ -18,64 +26,48 @@ struct from_integer_result {
     from_integer_error error{from_integer_error::none};
 };
 
-template <typename Int, bool TerminateWithNull = true>
+template <integral Int, from_integer_options Options = from_integer_options{}>
 [[nodiscard]] constexpr auto from_integer(Int num, char* str, size_t length, int base) -> from_integer_result
 {
-    auto reverseString = [](char* string, etl::size_t len) {
-        etl::size_t f = 0;
-        etl::size_t l = len - 1;
-        while (f < l) {
-            auto const tmp = string[f];
-            string[f]      = string[l];
-            string[l]      = tmp;
-            f++;
-            l--;
-        }
-    };
-
     // Handle 0 explicitely, otherwise empty string is printed for 0
     etl::size_t i = 0;
     if (num == 0) {
-        if (length < (1 + static_cast<size_t>(TerminateWithNull))) {
-            return {str + length, from_integer_error::overflow};
+        if (length < (1 + static_cast<size_t>(Options.terminate_with_null))) {
+            return {.end = str + length, .error = from_integer_error::overflow};
         }
         str[i++] = '0';
-        if constexpr (TerminateWithNull) {
+        if constexpr (Options.terminate_with_null) {
             str[i] = '\0';
         }
-        return {&str[i]};
+        return {.end = str + i, .error = from_integer_error::none};
     }
 
     bool isNegative = false;
     if constexpr (is_signed_v<Int>) {
-        if (num < 0 && base == 10) {
+        if (num < 0 and base == 10) {
             isNegative = true;
-            num        = -num;
+            str[i++]   = '-';
         }
     }
 
     while (num != 0) {
-        auto const rem = static_cast<char>(num % static_cast<Int>(base));
-        str[i++]       = (rem > 9) ? (rem - 10) + 'a' : rem + '0';
-        num            = num / static_cast<Int>(base);
+        auto const [quot, rem] = etl::idiv(num, static_cast<Int>(base));
+        auto const digit       = static_cast<char>(etl::abs(rem));
+
+        str[i++] = (digit > 9) ? (digit - 10) + 'a' : digit + '0';
+        num      = quot;
 
         if (length <= i) {
-            return {nullptr, from_integer_error::overflow};
+            return {.end = nullptr, .error = from_integer_error::overflow};
         }
     }
 
-    if constexpr (is_signed_v<Int>) {
-        if (isNegative) {
-            str[i++] = '-';
-        }
-    }
-
-    if constexpr (TerminateWithNull) {
+    etl::reverse(str + static_cast<size_t>(isNegative), str + i);
+    if constexpr (Options.terminate_with_null) {
         str[i] = '\0';
     }
 
-    reverseString(str, i);
-    return {&str[i]};
+    return {.end = str + i, .error = from_integer_error::none};
 }
 
 } // namespace etl::strings
