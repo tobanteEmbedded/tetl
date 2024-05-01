@@ -16,6 +16,7 @@ else ()
       $<$<BOOL:${TETL_BUILD_WERROR}>:-Werror>
 
       -Wcast-align
+      -Wcast-qual
       -Wdouble-promotion
       -Wmissing-field-initializers
       -Wnarrowing
@@ -23,6 +24,7 @@ else ()
       -Wreorder
       -Wshadow
       -Wsign-compare
+      -Wsign-promo
       -Wstrict-aliasing
       -Wswitch-enum
       -Wuninitialized
