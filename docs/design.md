@@ -2,21 +2,23 @@
 
 ## Builtin Types
 
-|       **Type**       | AVR | MSP430 | ARM32 Thumb | Unix ARM64 | Win ARM64 | Unix X64 | Win X64 | WebAssembly |
-| :------------------: | :-: | :----: | :---------: | :--------: | :-------: | :------: | :-----: | :---------: |
-|   `unsigned char`    |  1  |   1    |      1      |     1      |     1     |    1     |    1    |      1      |
-|   `unsigned short`   |  2  |   2    |      2      |     2      |     2     |    2     |    2    |      2      |
-|    `unsigned int`    |  2  |   2    |      4      |     4      |     4     |    4     |    4    |      4      |
-|   `unsigned long`    |  4  |   4    |      4      |     8      |     4     |    8     |    4    |      4      |
-| `unsigned long long` |  8  |   8    |      8      |     8      |     8     |    8     |    8    |      8      |
-|       `float`        |  4  |   4    |      4      |     4      |     4     |    4     |    4    |      4      |
-|       `double`       |  4  |   8    |      8      |     8      |     8     |    8     |    8    |      8      |
-|    `long double`     |  8  |   8    |      8      |     16     |     8     |    16    |    8    |     16      |
-|        `char`        |  1  |   1    |      1      |     1      |     1     |    1     |    1    |      1      |
-|      `wchar_t`       |  2  |   4    |      4      |     4      |     2     |    4     |    2    |      4      |
-|      `char8_t`       |  1  |   1    |      1      |     1      |     1     |    1     |    1    |      1      |
-|      `char16_t`      |  2  |   2    |      2      |     2      |     2     |    2     |    2    |      2      |
-|      `char32_t`      |  4  |   4    |      4      |     4      |     4     |    4     |    4    |      4      |
+|       **Type**       | AVR | MSP430 | ARM32 | Unix ARM32/X86 | Unix ARM64/X64 | Win ARM64/X64 |
+| :------------------: | :-: | :----: | :---: | :------------: | :------------: | :-----------: |
+|   `unsigned char`    |  1  |   1    |   1   |       1        |       1        |       1       |
+|   `unsigned short`   |  2  |   2    |   2   |       2        |       2        |       2       |
+|    `unsigned int`    |  2  |   2    |   4   |       4        |       4        |       4       |
+|   `unsigned long`    |  4  |   4    |   4   |       4        |       8        |       4       |
+| `unsigned long long` |  8  |   8    |   8   |       8        |       8        |       8       |
+|       `float`        |  4  |   4    |   4   |       4        |       4        |       4       |
+|       `double`       |  4  |   8    |   8   |       8        |       8        |       8       |
+|    `long double`     |  8  |   8    |   8   |       16       |       16       |       8       |
+|        `char`        |  1  |   1    |   1   |       1        |       1        |       1       |
+|      `wchar_t`       |  2  |   4    |   4   |       4        |       4        |       2       |
+|      `char8_t`       |  1  |   1    |   1   |       1        |       1        |       1       |
+|      `char16_t`      |  2  |   2    |   2   |       2        |       2        |       2       |
+|      `char32_t`      |  4  |   4    |   4   |       4        |       4        |       4       |
+
+- **Unix:** Linux, macOS, BSD and WebAssembly
 
 ### AVR
 
