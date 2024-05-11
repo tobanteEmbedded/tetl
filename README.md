@@ -55,7 +55,7 @@ For examples look at the [examples](./examples) subdirectory or the test files i
 | **Platform** |                                                                                         **Status**                                                                                          | **Notes** |
 | :----------: | :-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------: | :-------: |
 |   **ARM**    |     [![ARM](https://github.com/tobanteEmbedded/tetl/actions/workflows/freestanding-arm.yml/badge.svg)](https://github.com/tobanteEmbedded/tetl/actions/workflows/freestanding-arm.yml)      |  GCC 13   |
-|   **AVR**    |     [![AVR](https://github.com/tobanteEmbedded/tetl/actions/workflows/freestanding-avr.yml/badge.svg)](https://github.com/tobanteEmbedded/tetl/actions/workflows/freestanding-avr.yml)      |  GCC 12   |
+|   **AVR**    |     [![AVR](https://github.com/tobanteEmbedded/tetl/actions/workflows/freestanding-avr.yml/badge.svg)](https://github.com/tobanteEmbedded/tetl/actions/workflows/freestanding-avr.yml)      |  GCC 14   |
 |  **MSP430**  | [![MSP430](https://github.com/tobanteEmbedded/tetl/actions/workflows/freestanding-msp430.yml/badge.svg)](https://github.com/tobanteEmbedded/tetl/actions/workflows/freestanding-msp430.yml) |  GCC 13   |
 
 ### Analysis
