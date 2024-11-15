@@ -85,7 +85,7 @@ jobs:
       - name: Test -- Release
         run: ctest --test-dir build -C Release --output-on-failure
 
-      - uses: codecov/codecov-action@v4
+      - uses: codecov/codecov-action@v5
         if: matrix.compiler == 'Visual Studio'
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
