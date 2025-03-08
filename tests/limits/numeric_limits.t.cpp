@@ -172,6 +172,7 @@ template <typename T>
 
 auto main() -> int
 {
+    STATIC_CHECK(test_default());
     STATIC_CHECK(test_bool());
 
     STATIC_CHECK(test_signed<signed char>());
