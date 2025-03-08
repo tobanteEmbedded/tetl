@@ -5,7 +5,7 @@
 #include "testing/testing.hpp"
 
 template <typename T>
-constexpr auto test() -> bool
+static constexpr auto test() -> bool
 {
     {
         auto count = etl::size_t(0);
@@ -103,7 +103,7 @@ constexpr auto test() -> bool
     return true;
 }
 
-constexpr auto test_all() -> bool
+static constexpr auto test_all() -> bool
 {
     CHECK(test<etl::inplace_string<16>>());
     CHECK(test<etl::inplace_string<17>>());

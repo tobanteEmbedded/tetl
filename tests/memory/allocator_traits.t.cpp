@@ -11,7 +11,7 @@
 #include "testing/testing.hpp"
 
 template <typename T>
-auto test() -> bool
+static auto test() -> bool
 {
     using Alloc  = etl::monotonic_allocator<T>;
     using Traits = etl::allocator_traits<Alloc>;

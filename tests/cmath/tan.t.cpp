@@ -8,7 +8,7 @@
 #include "testing/testing.hpp"
 
 template <typename T>
-constexpr auto test() -> bool
+static constexpr auto test() -> bool
 {
     CHECK_APPROX(etl::tan(T(0)), T(0));
     CHECK_APPROX(etl::tan(T(etl::numbers::pi)), T(0));

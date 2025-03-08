@@ -4,7 +4,7 @@
 
 #include "testing/testing.hpp"
 
-constexpr auto test() -> bool
+static constexpr auto test() -> bool
 {
     CHECK(sizeof(etl::int8_t) == 1);
     CHECK(sizeof(etl::int16_t) == 2);

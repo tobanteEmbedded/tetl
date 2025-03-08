@@ -6,7 +6,7 @@
 #include <etl/cmath.hpp>
 #include <etl/utility.hpp>
 
-constexpr auto test() -> bool
+static constexpr auto test() -> bool
 {
     etl::ignore_unused(etl::exp(1.0F));
     etl::ignore_unused(etl::exp(1.0));

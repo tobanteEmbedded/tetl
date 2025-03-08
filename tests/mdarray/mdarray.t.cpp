@@ -8,7 +8,7 @@
 #include "testing/testing.hpp"
 
 template <typename T, typename Index>
-[[nodiscard]] constexpr auto test() -> bool
+[[nodiscard]] constexpr static auto test() -> bool
 {
     // traits
     {
@@ -128,7 +128,7 @@ template <typename T, typename Index>
 }
 
 template <typename Index>
-[[nodiscard]] constexpr auto test_index() -> bool
+[[nodiscard]] constexpr static auto test_index() -> bool
 {
     CHECK(test<unsigned char, Index>());
     CHECK(test<unsigned short, Index>());
@@ -148,7 +148,7 @@ template <typename Index>
     return true;
 }
 
-[[nodiscard]] constexpr auto test_all() -> bool
+[[nodiscard]] constexpr static auto test_all() -> bool
 {
     CHECK(test_index<unsigned char>());
     CHECK(test_index<unsigned short>());

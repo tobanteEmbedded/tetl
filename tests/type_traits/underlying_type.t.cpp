@@ -8,7 +8,7 @@
 #include "testing/types.hpp"
 
 template <typename T>
-constexpr auto test() -> bool
+static constexpr auto test() -> bool
 {
     enum E : T {
         foobar
@@ -25,7 +25,7 @@ constexpr auto test() -> bool
     return true;
 }
 
-constexpr auto test_all() -> bool
+static constexpr auto test_all() -> bool
 {
     CHECK(test<char>());
     CHECK(test<etl::uint8_t>());

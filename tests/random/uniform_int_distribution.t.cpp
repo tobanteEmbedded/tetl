@@ -5,7 +5,7 @@
 #include "testing/testing.hpp"
 
 template <typename URNG, typename IntType>
-constexpr auto test_uniform_int_distribution() -> bool
+static constexpr auto test_uniform_int_distribution() -> bool
 {
     constexpr auto minimum = IntType(5);
     constexpr auto maximum = IntType(100);
@@ -22,7 +22,7 @@ constexpr auto test_uniform_int_distribution() -> bool
     return true;
 }
 
-constexpr auto test() -> bool
+static constexpr auto test() -> bool
 {
     CHECK(test_uniform_int_distribution<etl::xorshift32, short>());
     CHECK(test_uniform_int_distribution<etl::xorshift32, int>());

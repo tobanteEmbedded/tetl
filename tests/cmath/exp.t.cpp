@@ -6,7 +6,7 @@
 #include "testing/testing.hpp"
 
 template <typename T>
-constexpr auto test() -> bool
+static constexpr auto test() -> bool
 {
     CHECK_APPROX(etl::exp(T(0)), T(1));
     CHECK_APPROX(etl::exp(T(0.5)), T(1.64872));

@@ -8,7 +8,7 @@
 #include "testing/testing.hpp"
 
 template <typename T>
-constexpr auto test() -> bool
+static constexpr auto test() -> bool
 {
 
     CHECK_APPROX(etl::abs(etl::complex(T(3), T(2))), etl::sqrt(T(13)));
@@ -51,7 +51,7 @@ constexpr auto test() -> bool
     return true;
 }
 
-constexpr auto test_all() -> bool
+static constexpr auto test_all() -> bool
 {
     CHECK(test<float>());
     CHECK(test<double>());

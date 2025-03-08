@@ -5,7 +5,7 @@
 #include "testing/testing.hpp"
 
 template <typename URNG, typename RealType>
-constexpr auto test_uniform_real_distribution() -> bool
+static constexpr auto test_uniform_real_distribution() -> bool
 {
     constexpr auto minimum = RealType(0);
     constexpr auto maximum = RealType(100);
@@ -22,7 +22,7 @@ constexpr auto test_uniform_real_distribution() -> bool
     return true;
 }
 
-constexpr auto test() -> bool
+static constexpr auto test() -> bool
 {
     CHECK(test_uniform_real_distribution<etl::xorshift32, float>());
     CHECK(test_uniform_real_distribution<etl::xoshiro128plus, float>());

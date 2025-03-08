@@ -11,7 +11,7 @@
 #include "testing/testing.hpp"
 
 template <typename T>
-constexpr auto test() -> bool
+static constexpr auto test() -> bool
 {
     etl::array<T, 4> a{T(2), T(2), T(2), T(2)};
     auto func = [](auto v) { return static_cast<T>(v * 2); };
@@ -40,7 +40,7 @@ constexpr auto test() -> bool
     return true;
 }
 
-constexpr auto test_all() -> bool
+static constexpr auto test_all() -> bool
 {
     CHECK(test<signed char>());
     CHECK(test<signed short>());

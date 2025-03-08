@@ -5,7 +5,7 @@
 #include "testing/testing.hpp"
 
 template <typename T>
-constexpr auto test() -> bool
+static constexpr auto test() -> bool
 {
     CHECK(etl::abs(T(0)) == T(0));
 

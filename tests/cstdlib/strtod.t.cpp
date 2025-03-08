@@ -5,7 +5,7 @@
 #include "testing/testing.hpp"
 
 template <typename T, typename F>
-constexpr auto test(F func) -> bool
+static constexpr auto test(F func) -> bool
 {
     auto check = [&](auto const* str, auto expected) -> bool {
         char const* end = nullptr;
@@ -26,7 +26,7 @@ constexpr auto test(F func) -> bool
     return true;
 }
 
-constexpr auto test_all() -> bool
+static constexpr auto test_all() -> bool
 {
     CHECK(test<float>(etl::strtof));
     CHECK(test<double>(etl::strtod));

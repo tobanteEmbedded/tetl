@@ -6,7 +6,7 @@
 
 #include "testing/testing.hpp"
 
-constexpr auto test_bit_ceil() -> bool
+static constexpr auto test_bit_ceil() -> bool
 {
     CHECK(etl::bit_ceil(0b00000000U) == 0b00000001U);
     CHECK(etl::bit_ceil(0b00000001U) == 0b00000001U);
@@ -21,7 +21,7 @@ constexpr auto test_bit_ceil() -> bool
     return true;
 }
 
-constexpr auto test_bit_floor() -> bool
+static constexpr auto test_bit_floor() -> bool
 {
     CHECK(etl::bit_floor(0b00000000UL) == 0b00000000UL);
     CHECK(etl::bit_floor(0b00000001UL) == 0b00000001UL);
@@ -37,7 +37,7 @@ constexpr auto test_bit_floor() -> bool
 }
 
 template <typename T>
-constexpr auto test_bit_width() -> bool
+static constexpr auto test_bit_width() -> bool
 {
     CHECK(etl::bit_width(T{0}) == 0);
     CHECK(etl::bit_width(T{1}) == 1);
@@ -50,7 +50,7 @@ constexpr auto test_bit_width() -> bool
     return true;
 }
 
-constexpr auto test_rotl() -> bool
+static constexpr auto test_rotl() -> bool
 {
     etl::uint8_t const i = 0b00011101;
 
@@ -63,7 +63,7 @@ constexpr auto test_rotl() -> bool
     return true;
 }
 
-constexpr auto test_rotr() -> bool
+static constexpr auto test_rotr() -> bool
 {
     etl::uint8_t const i = 0b00011101;
 
@@ -76,7 +76,7 @@ constexpr auto test_rotr() -> bool
 }
 
 template <typename T>
-constexpr auto test_countl_zero() -> bool
+static constexpr auto test_countl_zero() -> bool
 {
     CHECK(etl::countl_zero(T{0}) == etl::numeric_limits<T>::digits);
 
@@ -97,7 +97,7 @@ constexpr auto test_countl_zero() -> bool
 }
 
 template <typename T>
-constexpr auto test_countl_one() -> bool
+static constexpr auto test_countl_one() -> bool
 {
     CHECK(etl::countl_one(T{etl::numeric_limits<T>::max()}) == etl::numeric_limits<T>::digits);
 
@@ -111,7 +111,7 @@ constexpr auto test_countl_one() -> bool
 }
 
 template <typename T>
-constexpr auto test_countr_zero() -> bool
+static constexpr auto test_countr_zero() -> bool
 {
     CHECK(etl::countr_zero(T{0}) == etl::numeric_limits<T>::digits);
 
@@ -127,7 +127,7 @@ constexpr auto test_countr_zero() -> bool
 }
 
 template <typename T>
-constexpr auto test_countr_one() -> bool
+static constexpr auto test_countr_one() -> bool
 {
     CHECK(etl::countr_one(etl::numeric_limits<T>::max()) == etl::numeric_limits<T>::digits);
 
@@ -142,7 +142,7 @@ constexpr auto test_countr_one() -> bool
 }
 
 template <typename T>
-constexpr auto test_has_single_bit() -> bool
+static constexpr auto test_has_single_bit() -> bool
 {
     CHECK(etl::has_single_bit(T{1 << 0}));
     CHECK(etl::has_single_bit(T{1 << 1}));
@@ -157,7 +157,7 @@ constexpr auto test_has_single_bit() -> bool
     return true;
 }
 
-constexpr auto test_all() -> bool
+static constexpr auto test_all() -> bool
 {
     CHECK(etl::endian::big != etl::endian::little);
 

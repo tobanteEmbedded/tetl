@@ -9,7 +9,7 @@
 #include "testing/testing.hpp"
 
 template <typename T>
-constexpr auto test() -> bool
+static constexpr auto test() -> bool
 {
     using Alloc  = etl::monotonic_allocator<T>;
     using Vector = etl::vector<T, Alloc>;
@@ -63,7 +63,7 @@ constexpr auto test() -> bool
     return true;
 }
 
-constexpr auto test_all() -> bool
+static constexpr auto test_all() -> bool
 {
     CHECK(test<signed char>());
     CHECK(test<signed short>());

@@ -9,7 +9,7 @@
 #include "testing/testing.hpp"
 
 template <typename ElementType>
-constexpr auto test(etl::array<ElementType, 2> elements) -> bool
+static constexpr auto test(etl::array<ElementType, 2> elements) -> bool
 {
     using accessor_type       = etl::default_accessor<ElementType>;
     using const_accessor_type = etl::default_accessor<ElementType const>;
@@ -50,7 +50,7 @@ constexpr auto test(etl::array<ElementType, 2> elements) -> bool
     return true;
 }
 
-constexpr auto test_all() -> bool
+static constexpr auto test_all() -> bool
 {
     CHECK(test<signed char>({0, 1}));
     CHECK(test<signed short>({0, 1}));

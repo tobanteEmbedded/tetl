@@ -6,7 +6,7 @@
 
 #include "testing/testing.hpp"
 
-constexpr auto test_all() -> bool
+static constexpr auto test_all() -> bool
 {
     using namespace etl::experimental::net;
 

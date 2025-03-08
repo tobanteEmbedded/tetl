@@ -12,7 +12,7 @@
 
 #include "testing/testing.hpp"
 
-constexpr auto test_chars_format() -> bool
+static constexpr auto test_chars_format() -> bool
 {
     CHECK(etl::chars_format::scientific != etl::chars_format::hex);
     CHECK(etl::chars_format::scientific != etl::chars_format::fixed);
@@ -32,18 +32,18 @@ constexpr auto test_chars_format() -> bool
     return true;
 }
 
-constexpr auto test_to_chars_result() -> bool
+static constexpr auto test_to_chars_result() -> bool
 {
     {
-        auto lhs = etl::to_chars_result{nullptr, etl::errc{}};
-        auto rhs = etl::to_chars_result{nullptr, etl::errc{}};
+        auto lhs = etl::to_chars_result{.ptr = nullptr, .ec = etl::errc{}};
+        auto rhs = etl::to_chars_result{.ptr = nullptr, .ec = etl::errc{}};
         CHECK(lhs == rhs);
     }
 
     {
         char buffer[16] = {};
-        auto lhs        = etl::to_chars_result{buffer, etl::errc{}};
-        auto rhs        = etl::to_chars_result{buffer, etl::errc{}};
+        auto lhs        = etl::to_chars_result{.ptr = buffer, .ec = etl::errc{}};
+        auto rhs        = etl::to_chars_result{.ptr = buffer, .ec = etl::errc{}};
         CHECK(lhs == rhs);
 
         CHECK(lhs != etl::to_chars_result{nullptr, etl::errc{}});
@@ -56,18 +56,18 @@ constexpr auto test_to_chars_result() -> bool
     return true;
 }
 
-constexpr auto test_from_chars_result() -> bool
+static constexpr auto test_from_chars_result() -> bool
 {
     {
-        auto lhs = etl::from_chars_result{nullptr, etl::errc{}};
-        auto rhs = etl::from_chars_result{nullptr, etl::errc{}};
+        auto lhs = etl::from_chars_result{.ptr = nullptr, .ec = etl::errc{}};
+        auto rhs = etl::from_chars_result{.ptr = nullptr, .ec = etl::errc{}};
         CHECK(lhs == rhs);
     }
 
     {
         char buffer[16] = {};
-        auto lhs        = etl::from_chars_result{buffer, etl::errc{}};
-        auto rhs        = etl::from_chars_result{buffer, etl::errc{}};
+        auto lhs        = etl::from_chars_result{.ptr = buffer, .ec = etl::errc{}};
+        auto rhs        = etl::from_chars_result{.ptr = buffer, .ec = etl::errc{}};
         CHECK(lhs == rhs);
 
         CHECK(lhs != etl::from_chars_result{nullptr, etl::errc{}});
@@ -83,7 +83,7 @@ constexpr auto test_from_chars_result() -> bool
 }
 
 template <typename T>
-constexpr auto test_from_chars() -> bool
+static constexpr auto test_from_chars() -> bool
 {
     using namespace etl::string_view_literals;
 
@@ -200,7 +200,7 @@ constexpr auto test_from_chars() -> bool
 }
 
 template <typename T>
-constexpr auto test_to_chars() -> bool
+static constexpr auto test_to_chars() -> bool
 {
     using namespace etl::string_view_literals;
 
@@ -248,7 +248,7 @@ constexpr auto test_to_chars() -> bool
     return true;
 }
 
-constexpr auto test_all() -> bool
+static constexpr auto test_all() -> bool
 {
     CHECK(test_chars_format());
     CHECK(test_to_chars_result());

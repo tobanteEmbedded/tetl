@@ -9,7 +9,7 @@
 #include "testing/testing.hpp"
 
 template <typename IndexType>
-constexpr auto test_one() -> bool
+static constexpr auto test_one() -> bool
 {
     using unsigned_t = etl::make_unsigned_t<IndexType>;
     using extents_t  = etl::extents<IndexType, 2, etl::dynamic_extent>;
@@ -138,7 +138,7 @@ constexpr auto test_one() -> bool
     return true;
 }
 
-constexpr auto test_extents() -> bool
+static constexpr auto test_extents() -> bool
 {
     CHECK(test_one<etl::uint8_t>());
     CHECK(test_one<etl::uint16_t>());

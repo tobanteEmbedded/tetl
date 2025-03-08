@@ -8,7 +8,7 @@
 #include "testing/testing.hpp"
 
 template <typename T>
-constexpr auto test() -> bool
+static constexpr auto test() -> bool
 {
     CHECK(etl::sin(short{0}) == 0.0);
     CHECK(etl::sinl(0) == 0.0L);

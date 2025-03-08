@@ -7,7 +7,7 @@
 #include "testing/testing.hpp"
 
 template <typename T>
-constexpr auto test() -> bool
+static constexpr auto test() -> bool
 {
     {
         auto const b = etl::byte{42};
@@ -120,7 +120,7 @@ constexpr auto test() -> bool
     return true;
 }
 
-constexpr auto test_all() -> bool
+static constexpr auto test_all() -> bool
 {
     CHECK(test<etl::uint8_t>());
     CHECK(test<etl::uint16_t>());

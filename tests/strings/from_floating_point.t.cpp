@@ -10,7 +10,7 @@
 #include "testing/testing.hpp"
 
 template <typename Float>
-constexpr auto test() -> bool
+static constexpr auto test() -> bool
 {
     using namespace etl::strings;
     using namespace etl::string_view_literals;

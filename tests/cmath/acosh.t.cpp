@@ -6,7 +6,7 @@
 #include "testing/testing.hpp"
 
 template <typename T>
-constexpr auto test() -> bool
+static constexpr auto test() -> bool
 {
     CHECK(etl::acosh(short{1}) == 0.0);
     CHECK(etl::acoshl(1) == 0.0L);

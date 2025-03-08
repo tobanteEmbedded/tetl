@@ -8,7 +8,7 @@
 #include "testing/exception.hpp"
 #include "testing/testing.hpp"
 
-constexpr auto test_opional_3() -> bool
+static constexpr auto test_opional_3() -> bool
 {
     etl::optional<int> opt1{42};
 
@@ -43,7 +43,7 @@ constexpr auto test_opional_3() -> bool
     return true;
 }
 
-constexpr auto test_opional_4() -> bool
+static constexpr auto test_opional_4() -> bool
 {
     struct S {
         constexpr S() = default;
@@ -116,7 +116,7 @@ constexpr auto test_opional_4() -> bool
     return true;
 }
 
-constexpr auto test_all() -> bool
+static constexpr auto test_all() -> bool
 {
     CHECK(test_opional_3());
     CHECK(test_opional_4());

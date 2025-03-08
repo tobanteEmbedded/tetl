@@ -4,7 +4,7 @@
 
 #include "testing/testing.hpp"
 
-constexpr auto test() -> bool
+static constexpr auto test() -> bool
 {
     CHECK(etl::gcd(5, 10) == 5);
     CHECK(etl::gcd(10, 5) == 5);

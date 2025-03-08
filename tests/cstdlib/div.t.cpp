@@ -4,7 +4,7 @@
 #include "testing/testing.hpp"
 
 template <typename T, typename F>
-constexpr auto test(F func) -> bool
+static constexpr auto test(F func) -> bool
 {
     CHECK(func(T(2), T(1)).quot == T(2));
     CHECK(func(T(2), T(1)).rem == T(0));
@@ -23,7 +23,7 @@ constexpr auto test(F func) -> bool
     return true;
 }
 
-constexpr auto test_all() -> bool
+static constexpr auto test_all() -> bool
 {
     CHECK(test<int>(static_cast<etl::div_t (*)(int, int)>(etl::div)));
     CHECK(test<long>(etl::ldiv));

@@ -12,9 +12,9 @@ struct Complex {
     float imag;
 };
 
-[[maybe_unused]] auto real(Complex const& cplx) -> float;
-[[maybe_unused]] auto imag(Complex const& cplx) -> float;
-[[maybe_unused]] auto conj(Complex const& cplx) -> Complex;
+[[maybe_unused]] static auto real(Complex const& cplx) -> float;
+[[maybe_unused]] static auto imag(Complex const& cplx) -> float;
+[[maybe_unused]] static auto conj(Complex const& cplx) -> Complex;
 
 struct String { };
 

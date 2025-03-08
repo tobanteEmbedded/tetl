@@ -9,7 +9,7 @@
 #include "testing/testing.hpp"
 
 template <typename T>
-constexpr auto test() -> bool
+static constexpr auto test() -> bool
 {
     CHECK_EXCEPTION_TYPE(etl::bad_optional_access, etl::exception);
 
@@ -507,7 +507,7 @@ constexpr auto test() -> bool
     return true;
 }
 
-constexpr auto test_all() -> bool
+static constexpr auto test_all() -> bool
 {
     CHECK(test<signed char>());
     CHECK(test<signed short>());

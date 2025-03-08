@@ -10,7 +10,7 @@
 #include "testing/testing.hpp"
 
 template <typename T>
-constexpr auto test() -> bool
+static constexpr auto test() -> bool
 {
     constexpr auto pred = [](auto n) { return n < T(10); };
 
@@ -42,7 +42,7 @@ constexpr auto test() -> bool
     return true;
 }
 
-constexpr auto test_all() -> bool
+static constexpr auto test_all() -> bool
 {
     CHECK(test<signed char>());
     CHECK(test<signed short>());

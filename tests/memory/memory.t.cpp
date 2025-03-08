@@ -26,7 +26,7 @@ struct Counter {
 } // namespace
 
 template <typename T>
-auto test() -> bool
+static auto test() -> bool
 {
     // "scalar"
     {
@@ -52,7 +52,7 @@ auto test() -> bool
 
         auto counter = 0;
         for (auto i = 0U; i < 8; ++i) {
-            new (buffer + sizeof(Counter) * i) Counter{counter};
+            new (buffer + (sizeof(Counter) * i)) Counter{counter};
         }
         CHECK(counter == 0);
 
@@ -69,7 +69,7 @@ auto test() -> bool
 
         auto counter = 0;
         for (auto i = 0U; i < 8; ++i) {
-            new (buffer + sizeof(Counter) * i) Counter{counter};
+            new (buffer + (sizeof(Counter) * i)) Counter{counter};
         }
         CHECK(counter == 0);
 
@@ -84,7 +84,7 @@ auto test() -> bool
 
         auto counter = 0;
         for (auto i = 0U; i < 8; ++i) {
-            new (&buffer[0] + sizeof(Counter) * i) Counter{counter};
+            new (&buffer[0] + (sizeof(Counter) * i)) Counter{counter};
         }
         CHECK(counter == 0);
 

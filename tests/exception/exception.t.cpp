@@ -6,7 +6,7 @@
 
 #include "testing/testing.hpp"
 
-constexpr auto test() -> bool
+static constexpr auto test() -> bool
 {
     CHECK(etl::is_default_constructible_v<etl::exception>);
     CHECK(etl::is_constructible_v<etl::exception, char const*>);

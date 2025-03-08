@@ -8,7 +8,7 @@
 #include "testing/testing.hpp"
 
 template <typename T>
-constexpr auto test(auto add) -> bool
+static constexpr auto test(auto add) -> bool
 {
     using limits = etl::numeric_limits<T>;
 
@@ -29,7 +29,7 @@ constexpr auto test(auto add) -> bool
     return true;
 }
 
-constexpr auto test_all() -> bool
+static constexpr auto test_all() -> bool
 {
     CHECK(test<unsigned char>([](auto x, auto y) { return etl::add_sat(x, y); }));
     CHECK(test<unsigned short>([](auto x, auto y) { return etl::add_sat(x, y); }));

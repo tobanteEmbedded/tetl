@@ -7,7 +7,7 @@
 #include "testing/testing.hpp"
 
 template <etl::size_t Bits, typename Word>
-constexpr auto test() -> bool
+static constexpr auto test() -> bool
 {
     using bitset = etl::basic_bitset<Bits, Word>;
 
@@ -79,7 +79,7 @@ constexpr auto test() -> bool
 }
 
 template <typename Word>
-constexpr auto test_word_type() -> bool
+static constexpr auto test_word_type() -> bool
 {
     CHECK(test<1, Word>());
     CHECK(test<7, Word>());
@@ -90,7 +90,7 @@ constexpr auto test_word_type() -> bool
     return true;
 }
 
-constexpr auto test_all() -> bool
+static constexpr auto test_all() -> bool
 {
     CHECK(test_word_type<unsigned char>());
     CHECK(test_word_type<unsigned short>());

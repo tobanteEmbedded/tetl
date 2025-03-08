@@ -8,7 +8,7 @@
 #include "testing/testing.hpp"
 
 template <typename T>
-constexpr auto test() -> bool
+static constexpr auto test() -> bool
 {
     CHECK_SAME_TYPE(etl::unexpect_t, etl::decay_t<decltype(etl::unexpect)>);
     CHECK(etl::is_default_constructible_v<etl::unexpect_t>);
@@ -30,7 +30,7 @@ constexpr auto test() -> bool
     return true;
 }
 
-constexpr auto test_all() -> bool
+static constexpr auto test_all() -> bool
 {
     CHECK(test<signed char>());
     CHECK(test<signed short>());

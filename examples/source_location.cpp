@@ -21,7 +21,7 @@ static auto log(etl::string_view const message, etl::source_location const locat
 }
 
 template <typename T>
-auto fun(T x) -> void
+static auto fun(T x) -> void
 {
     log(x);
 }

@@ -4,7 +4,7 @@
 
 #include "testing/testing.hpp"
 
-constexpr auto test() -> bool
+static constexpr auto test() -> bool
 {
     CHECK(etl::language_standard::cpp_17 == etl::language_standard::cpp_17);
     CHECK(etl::language_standard::cpp_20 == etl::language_standard::cpp_20);

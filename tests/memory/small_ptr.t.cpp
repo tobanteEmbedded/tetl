@@ -8,7 +8,7 @@
 #include "testing/testing.hpp"
 
 template <typename T>
-auto test() -> bool
+static auto test() -> bool
 {
 
     {

@@ -8,7 +8,7 @@
 #include "testing/testing.hpp"
 
 template <typename T>
-constexpr auto test() -> bool
+static constexpr auto test() -> bool
 {
     using limits_int = etl::numeric_limits<int>;
     using limits_val = etl::numeric_limits<T>;
@@ -35,7 +35,7 @@ constexpr auto test() -> bool
     return true;
 }
 
-constexpr auto test_all() -> bool
+static constexpr auto test_all() -> bool
 {
     CHECK(test<unsigned char>());
     CHECK(test<unsigned short>());

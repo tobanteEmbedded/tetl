@@ -5,7 +5,7 @@
 #include "testing/testing.hpp"
 
 template <typename String>
-constexpr auto test() -> bool
+static constexpr auto test() -> bool
 {
     using namespace etl::string_view_literals;
 
@@ -37,7 +37,7 @@ constexpr auto test() -> bool
     return true;
 }
 
-constexpr auto test_all() -> bool
+static constexpr auto test_all() -> bool
 {
     CHECK(test<etl::inplace_u32string<16>>());
     CHECK(test<etl::inplace_u32string<17>>());

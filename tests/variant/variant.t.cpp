@@ -8,7 +8,7 @@
 
 #include "testing/testing.hpp"
 
-constexpr auto test() -> bool
+static constexpr auto test() -> bool
 {
 
     // default
@@ -301,7 +301,7 @@ constexpr auto test() -> bool
     return true;
 }
 
-[[nodiscard]] constexpr auto test_non_trivial() -> bool
+[[nodiscard]] constexpr static auto test_non_trivial() -> bool
 {
     struct non_trivial_alternative {
         constexpr explicit non_trivial_alternative(int& v)
@@ -337,7 +337,7 @@ constexpr auto test() -> bool
     return true;
 }
 
-constexpr auto test_variant_alternative_selector_t() -> bool
+static constexpr auto test_variant_alternative_selector_t() -> bool
 {
     using string_t = etl::inplace_string<15>;
 

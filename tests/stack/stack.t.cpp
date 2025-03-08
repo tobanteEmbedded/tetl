@@ -8,7 +8,7 @@
 #include "testing/testing.hpp"
 
 template <typename T>
-auto test() -> bool
+static auto test() -> bool
 {
     using pair_type  = etl::pair<int, T>;
     using stack_type = etl::stack<pair_type, etl::static_vector<pair_type, 4>>;

@@ -11,7 +11,7 @@
 #if not defined(TETL_WORKAROUND_AVR_BROKEN_TESTS)
 
 template <typename T>
-auto test() -> bool
+static auto test() -> bool
 {
     // simple
     {

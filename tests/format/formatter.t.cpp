@@ -11,7 +11,7 @@
 using namespace etl::string_view_literals;
 
 template <typename T>
-constexpr auto test() -> bool
+static constexpr auto test() -> bool
 {
     // {
     //     using string_t = T;
@@ -95,7 +95,7 @@ constexpr auto test() -> bool
     return true;
 }
 
-constexpr auto test_all() -> bool
+static constexpr auto test_all() -> bool
 {
     CHECK(test<etl::inplace_string<24>>());
     CHECK(test<etl::inplace_string<55>>());

@@ -8,7 +8,7 @@
 #include "testing/testing.hpp"
 
 template <typename T>
-constexpr auto test() -> bool
+static constexpr auto test() -> bool
 {
     auto const vec = etl::array{T(1), T(2), T(3), T(4)};
     CHECK(etl::accumulate(vec.begin(), vec.end(), T{0}) == T(10));
@@ -18,7 +18,7 @@ constexpr auto test() -> bool
     return true;
 }
 
-constexpr auto test_all() -> bool
+static constexpr auto test_all() -> bool
 {
     CHECK(test<etl::int8_t>());
     CHECK(test<etl::int16_t>());

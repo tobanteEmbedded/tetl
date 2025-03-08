@@ -12,7 +12,7 @@
 
 using namespace etl::literals;
 
-constexpr auto test() -> bool
+static constexpr auto test() -> bool
 {
     // strcpy
     {

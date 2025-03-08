@@ -9,7 +9,7 @@
 #include "testing/testing.hpp"
 
 template <typename IndexType>
-constexpr auto test_layout_right() -> bool
+static constexpr auto test_layout_right() -> bool
 {
     using extents_2d_t = etl::extents<IndexType, 2, etl::dynamic_extent>;
     using mapping_2d_t = etl::layout_right::mapping<extents_2d_t>;
@@ -114,7 +114,7 @@ constexpr auto test_layout_right() -> bool
     return true;
 }
 
-constexpr auto test_all() -> bool
+static constexpr auto test_all() -> bool
 {
     CHECK(test_layout_right<etl::uint8_t>());
     CHECK(test_layout_right<etl::uint16_t>());

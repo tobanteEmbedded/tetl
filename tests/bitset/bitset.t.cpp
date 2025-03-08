@@ -9,7 +9,7 @@
 #include "testing/testing.hpp"
 
 template <etl::size_t N>
-constexpr auto test_bitset() -> bool
+static constexpr auto test_bitset() -> bool
 {
     using namespace etl::string_view_literals;
 
@@ -270,7 +270,7 @@ constexpr auto test_bitset() -> bool
     return true;
 }
 
-constexpr auto test_all() -> bool
+static constexpr auto test_all() -> bool
 {
     CHECK(test_bitset<8>());
     CHECK(test_bitset<16>());

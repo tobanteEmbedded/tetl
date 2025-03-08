@@ -6,7 +6,7 @@
 
 #include "testing/testing.hpp"
 
-constexpr auto test_8bit() -> bool
+static constexpr auto test_8bit() -> bool
 {
     CHECK_NOEXCEPT(etl::byteswap(etl::uint8_t{0}));
     CHECK_SAME_TYPE(decltype(etl::byteswap(etl::uint8_t{0})), etl::uint8_t);
@@ -21,7 +21,7 @@ constexpr auto test_8bit() -> bool
     return true;
 }
 
-constexpr auto test_16bit() -> bool
+static constexpr auto test_16bit() -> bool
 {
     CHECK_NOEXCEPT(etl::byteswap(etl::uint16_t{0}));
     CHECK_SAME_TYPE(decltype(etl::byteswap(etl::uint16_t{0})), etl::uint16_t);
@@ -37,7 +37,7 @@ constexpr auto test_16bit() -> bool
     return true;
 }
 
-constexpr auto test_32bit() -> bool
+static constexpr auto test_32bit() -> bool
 {
     CHECK_NOEXCEPT(etl::byteswap(etl::uint32_t{0}));
     CHECK_SAME_TYPE(decltype(etl::byteswap(etl::uint32_t{0})), etl::uint32_t);
@@ -51,7 +51,7 @@ constexpr auto test_32bit() -> bool
     return true;
 }
 
-constexpr auto test_64bit() -> bool
+static constexpr auto test_64bit() -> bool
 {
     CHECK_NOEXCEPT(etl::byteswap(etl::uint64_t{0}));
     CHECK_SAME_TYPE(decltype(etl::byteswap(etl::uint64_t{0})), etl::uint64_t);
@@ -65,7 +65,7 @@ constexpr auto test_64bit() -> bool
     return true;
 }
 
-constexpr auto test_all() -> bool
+static constexpr auto test_all() -> bool
 {
     CHECK(test_8bit());
     CHECK(test_16bit());

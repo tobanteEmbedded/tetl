@@ -9,7 +9,7 @@
 #include "testing/testing.hpp"
 
 template <typename Int>
-constexpr auto test_integer() -> bool
+static constexpr auto test_integer() -> bool
 {
     if constexpr (etl::is_signed_v<Int>) {
         CHECK(etl::midpoint<Int>(-3, -4) == -3);
@@ -31,7 +31,7 @@ constexpr auto test_integer() -> bool
 }
 
 template <typename Float>
-constexpr auto test_float() -> bool
+static constexpr auto test_float() -> bool
 {
     constexpr auto min     = etl::numeric_limits<Float>::min();
     constexpr auto max     = etl::numeric_limits<Float>::max();
@@ -80,7 +80,7 @@ constexpr auto test_float() -> bool
 }
 
 template <typename T>
-constexpr auto test_pointer() -> bool
+static constexpr auto test_pointer() -> bool
 {
     {
         T data[] = {T(1), T(2), T(3), T(4)};
@@ -102,7 +102,7 @@ constexpr auto test_pointer() -> bool
     return true;
 }
 
-constexpr auto test_all() -> bool
+static constexpr auto test_all() -> bool
 {
     CHECK(test_pointer<char>());
     CHECK(test_pointer<short>());

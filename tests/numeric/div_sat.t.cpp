@@ -8,7 +8,7 @@
 #include "testing/testing.hpp"
 
 template <typename T>
-constexpr auto test() -> bool
+static constexpr auto test() -> bool
 {
     CHECK_NOEXCEPT(etl::div_sat<T>(T(0), T(1)));
     CHECK_NOEXCEPT(etl::div_sat<T>(T(1), T(1)));
@@ -25,7 +25,7 @@ constexpr auto test() -> bool
     return true;
 }
 
-constexpr auto test_all() -> bool
+static constexpr auto test_all() -> bool
 {
     CHECK(test<unsigned char>());
     CHECK(test<unsigned short>());

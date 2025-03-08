@@ -8,7 +8,7 @@
 
 namespace chrono = etl::chrono;
 
-[[nodiscard]] constexpr auto test_month() -> bool
+[[nodiscard]] constexpr static auto test_month() -> bool
 {
     // traits
     CHECK(etl::is_trivially_default_constructible_v<chrono::month>);
@@ -104,7 +104,7 @@ namespace chrono = etl::chrono;
     return true;
 }
 
-[[nodiscard]] constexpr auto test_month_day() -> bool
+[[nodiscard]] constexpr static auto test_month_day() -> bool
 {
     // traits
     CHECK(etl::is_trivially_default_constructible_v<chrono::month_day>);
@@ -161,7 +161,7 @@ namespace chrono = etl::chrono;
     return true;
 }
 
-[[nodiscard]] constexpr auto test_month_day_last() -> bool
+[[nodiscard]] constexpr static auto test_month_day_last() -> bool
 {
     // traits
     CHECK(etl::is_nothrow_constructible_v<chrono::month_day_last, chrono::month>);
@@ -201,7 +201,7 @@ namespace chrono = etl::chrono;
     return true;
 }
 
-[[nodiscard]] constexpr auto test_month_weekday() -> bool
+[[nodiscard]] constexpr static auto test_month_weekday() -> bool
 {
     // traits
     CHECK(etl::is_nothrow_constructible_v<chrono::month_weekday, chrono::month, chrono::weekday_indexed>);
@@ -247,7 +247,7 @@ namespace chrono = etl::chrono;
     return true;
 }
 
-[[nodiscard]] constexpr auto test_month_weekday_last() -> bool
+[[nodiscard]] constexpr static auto test_month_weekday_last() -> bool
 {
     // traits
     CHECK(etl::is_nothrow_constructible_v<chrono::month_weekday_last, chrono::month, chrono::weekday_last>);
@@ -305,7 +305,7 @@ namespace chrono = etl::chrono;
     return true;
 }
 
-[[nodiscard]] constexpr auto test_all() -> bool
+[[nodiscard]] constexpr static auto test_all() -> bool
 {
     CHECK(test_month());
     CHECK(test_month_day());

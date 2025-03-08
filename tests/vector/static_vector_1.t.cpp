@@ -10,7 +10,7 @@
 #include "testing/testing.hpp"
 
 template <typename T>
-constexpr auto test_cx() -> bool
+static constexpr auto test_cx() -> bool
 {
     {
         using vec_t = etl::static_vector<T, 16>;
@@ -352,7 +352,7 @@ constexpr auto test_cx() -> bool
     return true;
 }
 
-constexpr auto test_all_cx() -> bool
+static constexpr auto test_all_cx() -> bool
 {
     CHECK(test_cx<signed char>());
     CHECK(test_cx<signed short>());

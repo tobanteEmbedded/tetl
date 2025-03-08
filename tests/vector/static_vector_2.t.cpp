@@ -31,7 +31,7 @@ struct Vertex {
 } // namespace
 
 template <typename T>
-auto test() -> bool
+static auto test() -> bool
 {
     {
         etl::static_vector<T, 16> vec{};

@@ -11,7 +11,7 @@
 using namespace etl::string_view_literals;
 
 template <typename T>
-auto test_ints() -> bool
+static auto test_ints() -> bool
 {
     // auto test = [](T in, auto expected) -> bool {
     //     using string_t = etl::inplace_string<32>;

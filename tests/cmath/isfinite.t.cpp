@@ -5,7 +5,7 @@
 #include "testing/testing.hpp"
 
 template <typename T>
-constexpr auto test() -> bool
+static constexpr auto test() -> bool
 {
     CHECK(etl::isfinite(T(0)));
     CHECK(etl::isfinite(T(1)));

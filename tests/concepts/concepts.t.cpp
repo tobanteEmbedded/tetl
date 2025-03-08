@@ -28,7 +28,7 @@ constexpr auto destructible_test(etl::destructible auto /*v*/) { return true; }
 [[maybe_unused]] constexpr auto destructible_test(auto /*v*/) { return false; }
 } // namespace
 
-constexpr auto test() -> bool
+static constexpr auto test() -> bool
 {
     CHECK(floating_point_test(143.0));
     CHECK(floating_point_test(143.0F));

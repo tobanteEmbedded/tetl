@@ -7,7 +7,7 @@
 #include "testing/testing.hpp"
 
 template <typename Float, typename String>
-constexpr auto test(auto func) -> bool
+static constexpr auto test(auto func) -> bool
 {
     {
         auto count = etl::size_t(0);
@@ -33,7 +33,7 @@ constexpr auto test(auto func) -> bool
     return true;
 }
 
-constexpr auto test_all() -> bool
+static constexpr auto test_all() -> bool
 {
     auto stof = []<typename... Args>(Args&&... args) { return etl::stof(etl::forward<Args>(args)...); };
     CHECK(test<float, etl::inplace_string<7>>(stof));

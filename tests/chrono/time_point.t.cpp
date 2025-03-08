@@ -19,14 +19,14 @@ struct NullClock {
 };
 
 template <typename T>
-constexpr auto test() -> bool
+static constexpr auto test() -> bool
 {
     auto null = etl::chrono::time_point<NullClock<T>>{};
     CHECK(null.time_since_epoch().count() == T{0});
     return true;
 }
 
-constexpr auto test_all() -> bool
+static constexpr auto test_all() -> bool
 {
     CHECK(test<etl::int8_t>());
     CHECK(test<etl::int16_t>());

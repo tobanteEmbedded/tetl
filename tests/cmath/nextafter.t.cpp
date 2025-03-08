@@ -4,7 +4,7 @@
 
 #include "testing/testing.hpp"
 
-constexpr auto test() -> bool
+static constexpr auto test() -> bool
 {
     CHECK(etl::bit_cast<etl::uint32_t>(etl::nextafter(0.0F, 1.0F)) == 1U);
 

@@ -88,7 +88,7 @@ struct IsAbstract_D : IsAbstract_C {
 
 } // namespace
 
-constexpr auto test_all() -> bool
+static constexpr auto test_all() -> bool
 {
     CHECK_TRAIT_TYPE(make_signed, etl::int8_t, etl::int8_t);
     CHECK_TRAIT_TYPE(make_signed, etl::int16_t, etl::int16_t);

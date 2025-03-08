@@ -23,7 +23,7 @@ struct Error {
 } // namespace
 
 template <typename T, typename E>
-constexpr auto test() -> bool
+static constexpr auto test() -> bool
 {
     using expected_t = etl::expected<T, E>;
 
@@ -78,7 +78,7 @@ constexpr auto test() -> bool
     return true;
 }
 
-constexpr auto test_all() -> bool
+static constexpr auto test_all() -> bool
 {
     // E == int
     CHECK(test<signed char, int>());

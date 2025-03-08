@@ -4,7 +4,7 @@
 #include "testing/testing.hpp"
 
 template <typename T>
-constexpr auto test() -> bool
+static constexpr auto test() -> bool
 {
     CHECK(etl::atoi("0") == T(0));
     CHECK(etl::atoi("10") == T(10));
@@ -22,7 +22,7 @@ constexpr auto test() -> bool
     return true;
 }
 
-constexpr auto test_all() -> bool
+static constexpr auto test_all() -> bool
 {
     CHECK(test<int>());
     CHECK(test<long>());

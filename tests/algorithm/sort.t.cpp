@@ -12,7 +12,7 @@
 #include "testing/testing.hpp"
 
 template <typename T>
-constexpr auto test_sort() -> bool
+static constexpr auto test_sort() -> bool
 {
 
     // already sorted
@@ -214,7 +214,7 @@ constexpr auto test_sort() -> bool
 }
 
 template <typename T>
-constexpr auto test_bubble_sort() -> bool
+static constexpr auto test_bubble_sort() -> bool
 {
 
     // already bubble_sorted
@@ -266,7 +266,7 @@ constexpr auto test_bubble_sort() -> bool
 }
 
 template <typename T>
-constexpr auto test_insertion_sort() -> bool
+static constexpr auto test_insertion_sort() -> bool
 {
 
     // already insertion_sorted
@@ -318,7 +318,7 @@ constexpr auto test_insertion_sort() -> bool
 }
 
 template <typename T>
-constexpr auto test_merge_sort() -> bool
+static constexpr auto test_merge_sort() -> bool
 {
 
     // already merge_sorted
@@ -370,7 +370,7 @@ constexpr auto test_merge_sort() -> bool
 }
 
 template <typename T>
-constexpr auto test_gnome_sort() -> bool
+static constexpr auto test_gnome_sort() -> bool
 {
 
     // already gnome_sorted
@@ -422,7 +422,7 @@ constexpr auto test_gnome_sort() -> bool
 }
 
 template <typename T>
-constexpr auto test_exchange_sort() -> bool
+static constexpr auto test_exchange_sort() -> bool
 {
 
     // already exchange_sorted
@@ -473,7 +473,7 @@ constexpr auto test_exchange_sort() -> bool
     return true;
 }
 
-constexpr auto test_all() -> bool
+static constexpr auto test_all() -> bool
 {
     CHECK(test_sort<etl::uint8_t>());
     CHECK(test_sort<etl::int8_t>());

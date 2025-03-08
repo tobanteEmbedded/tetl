@@ -10,7 +10,7 @@
 #include "testing/testing.hpp"
 
 template <typename T>
-constexpr auto test() -> bool
+static constexpr auto test() -> bool
 {
     auto data            = etl::array{T(1), T(2), T(3), T(4)};
     auto const greater0  = [](T a) { return a > T(0); };
@@ -32,7 +32,7 @@ constexpr auto test() -> bool
     return true;
 }
 
-constexpr auto test_all() -> bool
+static constexpr auto test_all() -> bool
 {
     CHECK(test<signed char>());
     CHECK(test<signed short>());

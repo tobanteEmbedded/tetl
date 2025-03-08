@@ -9,7 +9,7 @@
 #include "testing/testing.hpp"
 
 template <typename Index>
-constexpr auto test() -> bool
+static constexpr auto test() -> bool
 {
     using extents_1d = etl::dextents<Index, 1>;
     using mapping_1d = etl::layout_stride::mapping<extents_1d>;
@@ -60,7 +60,7 @@ constexpr auto test() -> bool
     return true;
 }
 
-constexpr auto test_all() -> bool
+static constexpr auto test_all() -> bool
 {
     CHECK(test<etl::uint8_t>());
     CHECK(test<etl::uint16_t>());

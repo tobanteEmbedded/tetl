@@ -11,7 +11,7 @@
 using namespace etl::string_view_literals;
 
 template <typename T>
-auto test() -> bool
+static auto test() -> bool
 {
     using func_t = etl::inplace_function<T(T), sizeof(void*) * 2U>;
 

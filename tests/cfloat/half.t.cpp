@@ -4,7 +4,7 @@
 
 #include "testing/testing.hpp"
 
-constexpr auto test_inf() -> bool
+static constexpr auto test_inf() -> bool
 {
     CHECK(etl::isinf(etl::half{etl::binary, 0b0111'1100'0000'0000})); // +inf
     CHECK(etl::isinf(etl::half{etl::binary, 0b1111'1100'0000'0000})); // -inf
@@ -20,7 +20,7 @@ constexpr auto test_inf() -> bool
     return true;
 }
 
-constexpr auto test_nan() -> bool
+static constexpr auto test_nan() -> bool
 {
     CHECK(etl::isnan(etl::half{etl::binary, 0b0111'1100'0000'0001})); // +nan
     CHECK(etl::isnan(etl::half{etl::binary, 0b1111'1100'0000'0001})); // -nan
@@ -36,7 +36,7 @@ constexpr auto test_nan() -> bool
     return true;
 }
 
-constexpr auto test_normal() -> bool
+static constexpr auto test_normal() -> bool
 {
     CHECK(etl::isnormal(etl::half{etl::binary, 0b0011'1100'0000'0000})); // +1
     CHECK(etl::isnormal(etl::half{etl::binary, 0b1011'1100'0000'0000})); // -1
@@ -57,7 +57,7 @@ constexpr auto test_normal() -> bool
     return true;
 }
 
-constexpr auto test_finite() -> bool
+static constexpr auto test_finite() -> bool
 {
     CHECK(etl::isfinite(etl::half{etl::binary, 0b0000'0000'0000'0000})); // +0
     CHECK(etl::isfinite(etl::half{etl::binary, 0b1000'0000'0000'0000})); // -0
@@ -77,7 +77,7 @@ constexpr auto test_finite() -> bool
     return true;
 }
 
-constexpr auto test_signbit() -> bool
+static constexpr auto test_signbit() -> bool
 {
     CHECK(etl::signbit(etl::half{etl::binary, 0b1000'0000'0000'0000})); // -0
     CHECK(etl::signbit(etl::half{etl::binary, 0b1011'1100'0000'0000})); // -1
@@ -96,7 +96,7 @@ constexpr auto test_signbit() -> bool
     return true;
 }
 
-constexpr auto test_all() -> bool
+static constexpr auto test_all() -> bool
 {
     CHECK(test_inf());
     CHECK(test_nan());

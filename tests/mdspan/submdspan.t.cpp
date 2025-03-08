@@ -7,7 +7,7 @@
 #include "testing/testing.hpp"
 
 template <typename Int>
-constexpr auto test_strided_slice() -> bool
+static constexpr auto test_strided_slice() -> bool
 {
     auto slice = etl::strided_slice{Int(1), Int(2), Int(3)};
     CHECK_SAME_TYPE(typename decltype(slice)::offset_type, Int);
@@ -21,7 +21,7 @@ constexpr auto test_strided_slice() -> bool
     return true;
 }
 
-constexpr auto test_submdspan_extents() -> bool
+static constexpr auto test_submdspan_extents() -> bool
 {
     auto ext = etl::extents<int, 2, 3>{};
 
@@ -48,7 +48,7 @@ constexpr auto test_submdspan_extents() -> bool
     return true;
 }
 
-constexpr auto test() -> bool
+static constexpr auto test() -> bool
 {
     CHECK(test_strided_slice<signed char>());
     CHECK(test_strided_slice<signed short>());

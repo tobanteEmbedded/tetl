@@ -6,7 +6,7 @@
 #include "testing/testing.hpp"
 
 template <typename T>
-constexpr auto test() -> bool
+static constexpr auto test() -> bool
 {
     CHECK_APPROX(etl::numbers::e_v<T>, T(2.7182818));
     CHECK_APPROX(etl::numbers::log2e_v<T>, T(1.44269504));
@@ -25,7 +25,7 @@ constexpr auto test() -> bool
     return true;
 }
 
-constexpr auto test_all() -> bool
+static constexpr auto test_all() -> bool
 {
     CHECK(test<float>());
     CHECK(test<double>());

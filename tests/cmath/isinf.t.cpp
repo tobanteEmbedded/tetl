@@ -7,7 +7,7 @@
 #include "testing/testing.hpp"
 
 template <typename T>
-constexpr auto test() -> bool
+static constexpr auto test() -> bool
 {
     CHECK(etl::isinf(etl::numeric_limits<T>::infinity()));
     CHECK_FALSE(etl::isinf(etl::numeric_limits<T>::quiet_NaN()));

@@ -4,7 +4,7 @@
 
 #include "testing/testing.hpp"
 
-constexpr auto test_xorshift32() -> bool
+static constexpr auto test_xorshift32() -> bool
 {
     CHECK(etl::xorshift32::min() == 0);
     CHECK(etl::xorshift32::max() == etl::uint32_t(-2));
@@ -14,7 +14,7 @@ constexpr auto test_xorshift32() -> bool
     return true;
 }
 
-constexpr auto test_xorshift64() -> bool
+static constexpr auto test_xorshift64() -> bool
 {
     CHECK(etl::xorshift64::min() == 0);
     CHECK(etl::xorshift64::max() == etl::uint64_t(-2));
@@ -24,7 +24,7 @@ constexpr auto test_xorshift64() -> bool
     return true;
 }
 
-constexpr auto test() -> bool
+static constexpr auto test() -> bool
 {
     CHECK(test_xorshift32());
     CHECK(test_xorshift64());

@@ -4,7 +4,7 @@
 
 #include "testing/testing.hpp"
 
-constexpr auto test_isalnum() -> bool
+static constexpr auto test_isalnum() -> bool
 {
     for (auto ch = 'a'; ch <= 'z'; ++ch) {
         CHECK(etl::isalnum(ch));
@@ -32,7 +32,7 @@ constexpr auto test_isalnum() -> bool
     return true;
 }
 
-constexpr auto test_isalpha() -> bool
+static constexpr auto test_isalpha() -> bool
 {
     for (auto ch = 'a'; ch <= 'z'; ++ch) {
         CHECK(etl::isalpha(ch));
@@ -59,7 +59,7 @@ constexpr auto test_isalpha() -> bool
     return true;
 }
 
-constexpr auto test_islower() -> bool
+static constexpr auto test_islower() -> bool
 {
     for (auto ch = 'a'; ch <= 'z'; ++ch) {
         CHECK(etl::islower(ch));
@@ -86,7 +86,7 @@ constexpr auto test_islower() -> bool
     return true;
 }
 
-constexpr auto test_isupper() -> bool
+static constexpr auto test_isupper() -> bool
 {
     for (auto ch = 'A'; ch <= 'Z'; ++ch) {
         CHECK(etl::isupper(ch));
@@ -113,7 +113,7 @@ constexpr auto test_isupper() -> bool
     return true;
 }
 
-constexpr auto test_isdigit() -> bool
+static constexpr auto test_isdigit() -> bool
 {
     for (auto ch = '0'; ch <= '9'; ++ch) {
         CHECK(etl::isdigit(ch));
@@ -140,7 +140,7 @@ constexpr auto test_isdigit() -> bool
     return true;
 }
 
-constexpr auto test_isxdigit() -> bool
+static constexpr auto test_isxdigit() -> bool
 {
     for (auto ch = '0'; ch <= '9'; ++ch) {
         CHECK(etl::isxdigit(ch));
@@ -173,7 +173,7 @@ constexpr auto test_isxdigit() -> bool
     return true;
 }
 
-constexpr auto test_isspace() -> bool
+static constexpr auto test_isspace() -> bool
 {
     CHECK(etl::isspace(' '));
     CHECK(etl::isspace('\f'));
@@ -206,7 +206,7 @@ constexpr auto test_isspace() -> bool
     return true;
 }
 
-constexpr auto test_isblank() -> bool
+static constexpr auto test_isblank() -> bool
 {
     CHECK(etl::isblank(' '));
     CHECK(etl::isblank('\t'));
@@ -241,7 +241,7 @@ constexpr auto test_isblank() -> bool
     return true;
 }
 
-constexpr auto test_ispunct() -> bool
+static constexpr auto test_ispunct() -> bool
 {
     for (auto ch = '!'; ch <= '/'; ++ch) {
         CHECK(etl::ispunct(ch));
@@ -268,7 +268,7 @@ constexpr auto test_ispunct() -> bool
     return true;
 }
 
-constexpr auto test_isgraph() -> bool
+static constexpr auto test_isgraph() -> bool
 {
     for (auto ch = '!'; ch <= '/'; ++ch) {
         CHECK(etl::isgraph(ch));
@@ -301,7 +301,7 @@ constexpr auto test_isgraph() -> bool
     return true;
 }
 
-constexpr auto test_isprint() -> bool
+static constexpr auto test_isprint() -> bool
 {
     CHECK(etl::isprint(' '));
 
@@ -336,7 +336,7 @@ constexpr auto test_isprint() -> bool
     return true;
 }
 
-constexpr auto test_iscntrl() -> bool
+static constexpr auto test_iscntrl() -> bool
 {
     CHECK(etl::iscntrl(0x7F));
     for (auto ch = 0x00; ch <= 0x1F; ++ch) {
@@ -369,7 +369,7 @@ constexpr auto test_iscntrl() -> bool
     return true;
 }
 
-constexpr auto test_tolower() -> bool
+static constexpr auto test_tolower() -> bool
 {
     CHECK(static_cast<char>(etl::tolower('a')) == 'a');
     CHECK(static_cast<char>(etl::tolower('A')) == 'a');
@@ -389,7 +389,7 @@ constexpr auto test_tolower() -> bool
     return true;
 }
 
-constexpr auto test_toupper() -> bool
+static constexpr auto test_toupper() -> bool
 {
     CHECK(static_cast<char>(etl::toupper('a')) == 'A');
     CHECK(static_cast<char>(etl::toupper('A')) == 'A');

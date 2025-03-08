@@ -8,7 +8,7 @@
 #include "testing/testing.hpp"
 
 template <etl::integral Int>
-constexpr auto test() -> bool
+static constexpr auto test() -> bool
 {
     static_assert(etl::same_as<decltype(etl::ilog2(etl::declval<Int>())), Int>);
 

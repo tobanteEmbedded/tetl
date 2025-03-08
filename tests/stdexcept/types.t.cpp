@@ -8,7 +8,7 @@
 #include "testing/exception.hpp"
 #include "testing/testing.hpp"
 
-constexpr auto test() -> bool
+static constexpr auto test() -> bool
 {
     CHECK_EXCEPTION_TYPE(etl::logic_error, etl::exception);
     CHECK_EXCEPTION_TYPE(etl::domain_error, etl::logic_error);

@@ -10,7 +10,7 @@
 #include "testing/testing.hpp"
 
 template <typename T>
-constexpr auto test() -> bool
+static constexpr auto test() -> bool
 {
     CHECK(etl::hash<etl::nullptr_t>{}(nullptr) == 0);
 
@@ -34,7 +34,7 @@ constexpr auto test() -> bool
     return true;
 }
 
-constexpr auto test_all() -> bool
+static constexpr auto test_all() -> bool
 {
     CHECK(test<char>());
     CHECK(test<etl::int8_t>());
