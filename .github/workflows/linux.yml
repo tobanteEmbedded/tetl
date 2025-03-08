@@ -12,16 +12,16 @@ jobs:
       matrix:
         config:
           [
-            { cc: gcc-11, cxx: g++-11 },
             { cc: gcc-12, cxx: g++-12 },
             { cc: gcc-13, cxx: g++-13 },
-            { cc: clang-16, cxx: clang++-16 },
+            { cc: gcc-14, cxx: g++-14 },
             { cc: clang-17, cxx: clang++-17 },
             { cc: clang-18, cxx: clang++-18 },
+            { cc: clang-19, cxx: clang++-19 },
           ]
         cxx_std: [20, 23]
       fail-fast: false
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-24.04
     name: ${{ matrix.config.cc }} (C++${{ matrix.cxx_std }})
     steps:
       - name: Check out code
@@ -31,13 +31,6 @@ jobs:
         run: |
           sudo apt update -y
           sudo apt install -y ninja-build
-
-      - name: Install clang-16
-        if: matrix.config.cc == 'clang-16'
-        run: |
-          wget https://apt.llvm.org/llvm.sh
-          chmod +x llvm.sh
-          sudo ./llvm.sh 16 all
 
       - name: Install clang-17
         if: matrix.config.cc == 'clang-17'
@@ -52,6 +45,13 @@ jobs:
           wget https://apt.llvm.org/llvm.sh
           chmod +x llvm.sh
           sudo ./llvm.sh 18 all
+
+      - name: Install clang-19
+        if: matrix.config.cc == 'clang-19'
+        run: |
+          wget https://apt.llvm.org/llvm.sh
+          chmod +x llvm.sh
+          sudo ./llvm.sh 19 all
 
       - name: CMake configure
         run: >
