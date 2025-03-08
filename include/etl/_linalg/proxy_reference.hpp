@@ -16,7 +16,7 @@ struct proxy_reference : proxy_reference_base {
     using value_type     = Value;
     using derived_type   = Derived;
 
-    constexpr explicit proxy_reference(Reference reference)
+    constexpr explicit proxy_reference(Reference reference) // NOLINT(bugprone-crtp-constructor-accessibility)
         : _reference(reference)
     {
     }
