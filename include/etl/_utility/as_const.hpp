@@ -6,11 +6,12 @@
 #include <etl/_type_traits/add_const.hpp>
 
 namespace etl {
+
 /// \brief Forms lvalue reference to const type of t.
 template <typename T>
 [[nodiscard]] constexpr auto as_const(T& t) noexcept -> add_const_t<T>&
 {
-    return t;
+    return t; // NOLINT(bugprone-return-const-ref-from-parameter)
 }
 
 template <typename T>
