@@ -42,7 +42,10 @@ template <integral T>
     if (res.error == strings::from_integer_error::none) {
         return to_chars_result{res.end, {}};
     }
-    return to_chars_result{last, errc::value_too_large};
+    return to_chars_result{
+        .ptr = last,
+        .ec  = errc::value_too_large,
+    };
 }
 
 [[nodiscard]] constexpr auto to_chars(char*, char*, bool, int = 10) -> to_chars_result = delete;
