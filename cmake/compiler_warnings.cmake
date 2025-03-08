@@ -5,6 +5,7 @@ if (MSVC)
   target_compile_options(compiler_warnings
     INTERFACE
       /W3
+      /wdC4723
       $<$<BOOL:${TETL_BUILD_WERROR}>:/WX>
   )
 else ()
