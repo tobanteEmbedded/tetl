@@ -34,9 +34,10 @@ jobs:
           -D CMAKE_TOOLCHAIN_FILE=cmake/toolchain/atmega328p.cmake
           -D CMAKE_CXX_STANDARD=${{ matrix.cxx }}
           -D TETL_BUILD_WERROR=ON
+          -D TETL_BUILD_CONTRACT_CHECKS=OFF
 
-    #   - name: Build tests -- Debug
-    #     run: cmake --build build --config Debug
+      - name: Build tests -- Debug
+        run: cmake --build build --config Debug
 
       - name: Build tests -- Release
         run: cmake --build build --config Release
