@@ -5,13 +5,14 @@
 
 #include <etl/_type_traits/bool_constant.hpp>
 #include <etl/_type_traits/is_class.hpp>
+#include <etl/_type_traits/remove_cv.hpp>
 
 namespace etl {
 
 namespace detail {
 
 template <typename T>
-struct is_empty_tester_1 : T {
+struct is_empty_tester_1 : etl::remove_cv_t<T> {
     char dummy_data;
 };
 
