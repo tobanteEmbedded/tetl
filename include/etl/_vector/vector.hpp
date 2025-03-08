@@ -53,8 +53,8 @@ struct vector {
 
     constexpr vector(vector&& other) noexcept
         : _ptr{etl::exchange(other._ptr, nullptr)}
-        , _size{etl::exchange(other._size, 0)}
-        , _capacity{etl::exchange(other._capacity, 0)}
+        , _size{etl::exchange(other._size, etl::size_t(0))}
+        , _capacity{etl::exchange(other._capacity, etl::size_t(0))}
         , _alloc{etl::exchange(other._alloc, Allocator{})}
     {
     }
@@ -62,8 +62,8 @@ struct vector {
     constexpr auto operator=(vector&& other) noexcept -> vector&
     {
         _ptr      = etl::exchange(other._ptr, nullptr);
-        _size     = etl::exchange(other._size, 0);
-        _capacity = etl::exchange(other._capacity, 0);
+        _size     = etl::exchange(other._size, etl::size_t(0));
+        _capacity = etl::exchange(other._capacity, etl::size_t(0));
         _alloc    = etl::exchange(other._alloc, Allocator{});
         return *this;
     }

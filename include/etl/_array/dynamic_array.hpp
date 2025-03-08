@@ -55,7 +55,7 @@ struct dynamic_array {
 
     dynamic_array(dynamic_array&& other) noexcept
         : _ptr{etl::exchange(other._ptr, nullptr)}
-        , _size{etl::exchange(other._size, 0)}
+        , _size{etl::exchange(other._size, etl::size_t(0))}
         , _alloc{etl::exchange(other._alloc, Allocator{})}
     {
     }
@@ -63,7 +63,7 @@ struct dynamic_array {
     auto operator=(dynamic_array&& other) noexcept -> dynamic_array&
     {
         _ptr   = etl::exchange(other._ptr, nullptr);
-        _size  = etl::exchange(other._size, 0);
+        _size  = etl::exchange(other._size, etl::size_t(0));
         _alloc = etl::exchange(other._alloc, Allocator{});
         return *this;
     }
