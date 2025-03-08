@@ -27,8 +27,8 @@ namespace etl {
 ///
 /// \ingroup algorithm
 template <typename BidiIt>
-constexpr auto
-shift_right(BidiIt first, BidiIt last, typename etl::iterator_traits<BidiIt>::difference_type n) -> BidiIt
+constexpr auto shift_right(BidiIt first, BidiIt last, typename etl::iterator_traits<BidiIt>::difference_type n)
+    -> BidiIt
 {
     // The standard only checks for n == 0. n < 0 would be undefined behavior.
     // This implementation does nothing if n < 0.

@@ -71,39 +71,39 @@ private:
     chrono::month_day_last _mdl;
 };
 
-[[nodiscard]] constexpr auto
-operator+(chrono::year_month_day_last const& lhs, chrono::months const& rhs) noexcept -> chrono::year_month_day_last
+[[nodiscard]] constexpr auto operator+(chrono::year_month_day_last const& lhs, chrono::months const& rhs) noexcept
+    -> chrono::year_month_day_last
 {
     auto const ym = year_month{lhs.year(), lhs.month()} + rhs;
     return {ym.year(), month_day_last{ym.month()}};
 }
 
-[[nodiscard]] constexpr auto
-operator+(chrono::months const& lhs, chrono::year_month_day_last const& rhs) noexcept -> chrono::year_month_day_last
+[[nodiscard]] constexpr auto operator+(chrono::months const& lhs, chrono::year_month_day_last const& rhs) noexcept
+    -> chrono::year_month_day_last
 {
     return rhs + lhs;
 }
 
-[[nodiscard]] constexpr auto
-operator-(chrono::year_month_day_last const& lhs, chrono::months const& rhs) noexcept -> chrono::year_month_day_last
+[[nodiscard]] constexpr auto operator-(chrono::year_month_day_last const& lhs, chrono::months const& rhs) noexcept
+    -> chrono::year_month_day_last
 {
     return lhs + -rhs;
 }
 
-[[nodiscard]] constexpr auto
-operator+(chrono::year_month_day_last const& lhs, chrono::years const& rhs) noexcept -> chrono::year_month_day_last
+[[nodiscard]] constexpr auto operator+(chrono::year_month_day_last const& lhs, chrono::years const& rhs) noexcept
+    -> chrono::year_month_day_last
 {
     return {lhs.year() + rhs, lhs.month_day_last()};
 }
 
-[[nodiscard]] constexpr auto
-operator+(chrono::years const& lhs, chrono::year_month_day_last const& rhs) noexcept -> chrono::year_month_day_last
+[[nodiscard]] constexpr auto operator+(chrono::years const& lhs, chrono::year_month_day_last const& rhs) noexcept
+    -> chrono::year_month_day_last
 {
     return rhs + lhs;
 }
 
-[[nodiscard]] constexpr auto
-operator-(chrono::year_month_day_last const& lhs, chrono::years const& rhs) noexcept -> chrono::year_month_day_last
+[[nodiscard]] constexpr auto operator-(chrono::year_month_day_last const& lhs, chrono::years const& rhs) noexcept
+    -> chrono::year_month_day_last
 {
     return lhs + -rhs;
 }

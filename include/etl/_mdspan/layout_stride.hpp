@@ -64,9 +64,11 @@ public:
     }
 
     template <typename... Indices>
-        requires((sizeof...(Indices) == rank)                        //
-                 and (is_convertible_v<Indices, index_type> and ...) //
-                 and (is_nothrow_constructible_v<index_type, Indices> and ...))
+        requires(
+            (sizeof...(Indices) == rank)                        //
+            and (is_convertible_v<Indices, index_type> and ...) //
+            and (is_nothrow_constructible_v<index_type, Indices> and ...)
+        )
     [[nodiscard]] constexpr auto operator()(Indices... is) const noexcept -> index_type
     {
         return [&]<size_t... Is>(index_sequence<Is...> /*seq*/) {

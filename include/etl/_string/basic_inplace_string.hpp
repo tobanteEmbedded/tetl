@@ -189,8 +189,8 @@ public:
 
     /// Replaces the contents with a substring [ pos, pos + count )
     /// of str.
-    constexpr auto
-    assign(basic_inplace_string const& str, size_type pos, size_type count = npos) noexcept -> basic_inplace_string&
+    constexpr auto assign(basic_inplace_string const& str, size_type pos, size_type count = npos) noexcept
+        -> basic_inplace_string&
     {
         *this = str.substr(pos, count);
         return *this;
@@ -239,8 +239,8 @@ public:
     /// sv.
     template <typename StringView>
         requires string_view_like<StringView>
-    constexpr auto
-    assign(StringView const& view, size_type pos, size_type count = npos) noexcept -> basic_inplace_string&
+    constexpr auto assign(StringView const& view, size_type pos, size_type count = npos) noexcept
+        -> basic_inplace_string&
     {
         auto tmp = basic_inplace_string{view, pos, count};
         *this    = tmp;
@@ -488,8 +488,8 @@ public:
     }
 
     /// \brief Appends a substring [ pos, pos + count ) of str.
-    constexpr auto
-    append(basic_inplace_string const& str, size_type pos, size_type count = npos) noexcept -> basic_inplace_string&
+    constexpr auto append(basic_inplace_string const& str, size_type pos, size_type count = npos) noexcept
+        -> basic_inplace_string&
     {
         return append(str.substr(pos, count));
     }
@@ -551,8 +551,8 @@ public:
 
     /// \brief Inserts the characters in the range [s, s+count) at the position
     /// index. The range can contain null characters.
-    constexpr auto
-    insert(size_type const index, const_pointer s, size_type const count) noexcept -> basic_inplace_string&
+    constexpr auto insert(size_type const index, const_pointer s, size_type const count) noexcept
+        -> basic_inplace_string&
     {
         insert_impl(begin() + index, s, count);
         return *this;
@@ -798,8 +798,8 @@ public:
 
     /// \brief Replaces the part of the string indicated [first, last) with a
     /// new string.
-    constexpr auto
-    replace(const_iterator first, const_iterator last, basic_inplace_string const& str) -> basic_inplace_string&
+    constexpr auto replace(const_iterator first, const_iterator last, basic_inplace_string const& str)
+        -> basic_inplace_string&
     {
         auto* f = to_mutable_iterator(first);
         auto* l = to_mutable_iterator(last);
@@ -833,8 +833,8 @@ public:
         return *this;
     }
 
-    constexpr auto
-    replace(const_iterator first, const_iterator last, Char const* str, size_type count2) -> basic_inplace_string&
+    constexpr auto replace(const_iterator first, const_iterator last, Char const* str, size_type count2)
+        -> basic_inplace_string&
     {
         auto* f = to_mutable_iterator(first);
         auto* l = to_mutable_iterator(last);
@@ -873,8 +873,8 @@ public:
     //    return *this;
     //}
 
-    constexpr auto
-    replace(const_iterator first, const_iterator last, size_type count2, Char ch) -> basic_inplace_string&
+    constexpr auto replace(const_iterator first, const_iterator last, size_type count2, Char ch)
+        -> basic_inplace_string&
     {
         auto* f = to_mutable_iterator(first);
         auto* l = etl::min(to_mutable_iterator(last), f + count2);
@@ -1067,8 +1067,8 @@ public:
     /// given character sequence. The search considers only the interval [pos,
     /// size()). If the character is not present in the interval, npos will be
     /// returned.
-    [[nodiscard]] constexpr auto
-    find_first_of(basic_inplace_string const& str, size_type pos = 0) const noexcept -> size_type
+    [[nodiscard]] constexpr auto find_first_of(basic_inplace_string const& str, size_type pos = 0) const noexcept
+        -> size_type
     {
         return find_first_of(str.c_str(), pos, str.size());
     }
@@ -1119,8 +1119,8 @@ public:
     ///
     /// \return Position of the first character not equal to any of the
     /// characters in the given string, or npos if no such character is found.
-    [[nodiscard]] constexpr auto
-    find_first_not_of(basic_inplace_string const& str, size_type pos = 0) const noexcept -> size_type
+    [[nodiscard]] constexpr auto find_first_not_of(basic_inplace_string const& str, size_type pos = 0) const noexcept
+        -> size_type
     {
         return basic_string_view<Char, Traits>{*this}.find_first_not_of(str, pos);
     }
@@ -1159,8 +1159,8 @@ public:
     /// character sequence. The exact search algorithm is not specified. The
     /// search considers only the interval [0, pos]. If the character is not
     /// present in the interval, npos will be returned.
-    [[nodiscard]] constexpr auto
-    find_last_of(basic_inplace_string const& str, size_type pos = 0) const noexcept -> size_type
+    [[nodiscard]] constexpr auto find_last_of(basic_inplace_string const& str, size_type pos = 0) const noexcept
+        -> size_type
     {
         return basic_string_view<Char, Traits>{*this}.find_last_of(str, pos);
     }
@@ -1196,8 +1196,8 @@ public:
     /// given character sequence. The search considers only the interval [0,
     /// pos]. If the character is not present in the interval, npos will be
     /// returned.
-    [[nodiscard]] constexpr auto
-    find_last_not_of(basic_inplace_string const& str, size_type pos = 0) const noexcept -> size_type
+    [[nodiscard]] constexpr auto find_last_not_of(basic_inplace_string const& str, size_type pos = 0) const noexcept
+        -> size_type
     {
         return basic_string_view<Char, Traits>{*this}.find_last_not_of(str, pos);
     }
@@ -1361,8 +1361,9 @@ template <typename Char, typename Traits, size_t Capacity1, size_t Capacity2>
 /// \brief Returns a string containing characters from lhs followed by the
 /// characters from rhs.
 template <typename Char, typename Traits, size_t Capacity>
-[[nodiscard]] constexpr auto operator+(basic_inplace_string<Char, Capacity, Traits> const& lhs, Char const* rhs)
-    noexcept -> basic_inplace_string<Char, Capacity, Traits>
+[[nodiscard]] constexpr auto
+operator+(basic_inplace_string<Char, Capacity, Traits> const& lhs, Char const* rhs) noexcept
+    -> basic_inplace_string<Char, Capacity, Traits>
 {
     auto str = basic_inplace_string<Char, Capacity, Traits>{lhs};
     str.append(rhs);
@@ -1383,8 +1384,9 @@ template <typename Char, typename Traits, size_t Capacity>
 /// \brief Returns a string containing characters from lhs followed by the
 /// characters from rhs.
 template <typename Char, typename Traits, size_t Capacity>
-[[nodiscard]] constexpr auto operator+(Char const* lhs, basic_inplace_string<Char, Capacity, Traits> const& rhs)
-    noexcept -> basic_inplace_string<Char, Capacity, Traits>
+[[nodiscard]] constexpr auto
+operator+(Char const* lhs, basic_inplace_string<Char, Capacity, Traits> const& rhs) noexcept
+    -> basic_inplace_string<Char, Capacity, Traits>
 {
     auto str = basic_inplace_string<Char, Capacity, Traits>{lhs};
     str.append(rhs);

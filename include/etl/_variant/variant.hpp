@@ -159,31 +159,27 @@ public:
     constexpr auto operator=(variant const&) -> variant& = default;
 
     constexpr auto operator=(variant const& other
-    ) noexcept((... and is_nothrow_copy_assignable_v<Ts>) and (... and is_nothrow_copy_constructible_v<Ts>)) -> variant&
-        requires(
+    ) noexcept((... and is_nothrow_copy_assignable_v<Ts>) and (... and is_nothrow_copy_constructible_v<Ts>))
+        -> variant& requires(
             (... and detail::variant_copy_assignable<Ts>) and not(... and detail::variant_trivially_copy_assignable<Ts>)
-        )
-    {
-        assign(other);
-        return *this;
-    }
+        ) {
+            assign(other);
+            return *this;
+        }
 
     constexpr auto operator=(variant&&) -> variant& = default;
 
     constexpr auto operator=(variant&& other
-    ) noexcept((... and is_nothrow_move_assignable_v<Ts>) and (... and is_nothrow_move_constructible_v<Ts>)) -> variant&
-        requires(
+    ) noexcept((... and is_nothrow_move_assignable_v<Ts>) and (... and is_nothrow_move_constructible_v<Ts>))
+        -> variant& requires(
             (... and detail::variant_move_assignable<Ts>) and !(... and detail::variant_trivially_move_assignable<Ts>)
-        )
-    {
-        assign(etl::move(other));
-        return *this;
-    }
+        ) {
+            assign(etl::move(other));
+            return *this;
+        }
 
     template <typename T>
-        requires(not is_same_v<remove_cvref_t<T>, variant>
-                 and is_assignable_v<detail::variant_alternative_selector_t<T, Ts...>&, T>
-                 and is_assignable_v<detail::variant_alternative_selector_t<T, Ts...>, T>)
+        requires(not is_same_v<remove_cvref_t<T>, variant> and is_assignable_v<detail::variant_alternative_selector_t<T, Ts...>&, T> and is_assignable_v<detail::variant_alternative_selector_t<T, Ts...>, T>)
     constexpr auto operator=(T&& t) noexcept(
         (is_nothrow_assignable_v<detail::variant_alternative_selector_t<T, Ts...>&, T>
          and is_nothrow_constructible_v<detail::variant_alternative_selector_t<T, Ts...>, T>)
@@ -454,8 +450,8 @@ constexpr auto get_if(variant<Ts...>* pv) noexcept -> add_pointer_t<variant_alte
 ///        a null pointer value. The call is ill-formed if I is not a valid index in the variant.
 /// \relates variant
 template <size_t I, typename... Ts>
-constexpr auto get_if(variant<Ts...> const* pv
-) noexcept -> add_pointer_t<variant_alternative_t<I, variant<Ts...>> const>
+constexpr auto get_if(variant<Ts...> const* pv) noexcept
+    -> add_pointer_t<variant_alternative_t<I, variant<Ts...>> const>
 {
     static_assert(I < sizeof...(Ts));
     if (pv == nullptr or pv->index() != I) {

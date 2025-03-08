@@ -461,8 +461,8 @@ public:
     /// \brief Data access
     using base_type::data;
 
-    constexpr auto insert(const_iterator position, value_type&& x)
-        noexcept(noexcept(move_insert(position, &x, &x + 1))) -> iterator
+    constexpr auto insert(const_iterator position, value_type&& x) noexcept(noexcept(move_insert(position, &x, &x + 1)))
+        -> iterator
         requires(is_move_constructible_v<T>)
     {
         TETL_PRECONDITION(!full());
@@ -496,8 +496,8 @@ public:
     }
 
     template <typename InputIt>
-    constexpr auto insert(const_iterator position, InputIt first, InputIt last)
-        noexcept(noexcept(emplace_back(*first))) -> iterator
+    constexpr auto insert(const_iterator position, InputIt first, InputIt last) noexcept(noexcept(emplace_back(*first)))
+        -> iterator
         requires(detail::InputIterator<InputIt> && is_constructible_v<value_type, detail::iterator_reference_t<InputIt>>)
     {
         assert_iterator_in_range(position);
@@ -556,27 +556,25 @@ public:
 
     /// \brief Copy assignment.
     constexpr auto operator=(static_vector const& other)
-        noexcept(noexcept(clear()) && noexcept(insert(begin(), other.begin(), other.end()))) -> static_vector&
-        requires(is_assignable_v<reference, const_reference>)
-    {
-        // Nothing to assert: size of other cannot exceed capacity because both
-        // vectors have the same type
-        clear();
-        insert(begin(), other.begin(), other.end());
-        return *this;
-    }
+        noexcept(noexcept(clear()) && noexcept(insert(begin(), other.begin(), other.end())))
+            -> static_vector& requires(is_assignable_v<reference, const_reference>) {
+                // Nothing to assert: size of other cannot exceed capacity because both
+                // vectors have the same type
+                clear();
+                insert(begin(), other.begin(), other.end());
+                return *this;
+            }
 
     /// \brief Move assignment.
     constexpr auto operator=(static_vector&& other)
-        noexcept(noexcept(clear()) and noexcept(move_insert(begin(), other.begin(), other.end()))) -> static_vector&
-        requires(is_assignable_v<reference, reference>)
-    {
-        // Nothing to assert: size of other cannot exceed capacity because both
-        // vectors have the same type
-        clear();
-        move_insert(begin(), other.begin(), other.end());
-        return *this;
-    }
+        noexcept(noexcept(clear()) and noexcept(move_insert(begin(), other.begin(), other.end())))
+            -> static_vector& requires(is_assignable_v<reference, reference>) {
+                // Nothing to assert: size of other cannot exceed capacity because both
+                // vectors have the same type
+                clear();
+                move_insert(begin(), other.begin(), other.end());
+                return *this;
+            }
 
     /// \brief Initializes vector with n default-constructed elements.
     explicit constexpr static_vector(size_type n) noexcept(noexcept(emplace_n(n)))

@@ -157,8 +157,8 @@ public:
     /// longer than timeout_duration due to scheduling or resource contention
     /// delays.
     template <typename Rep, typename Period>
-    constexpr auto try_lock_for(chrono::duration<Rep, Period> const& dur)
-        noexcept(noexcept(_mutex->try_lock_for(dur))) -> bool
+    constexpr auto try_lock_for(chrono::duration<Rep, Period> const& dur) noexcept(noexcept(_mutex->try_lock_for(dur)))
+        -> bool
     {
         if ((_mutex != nullptr) && !_owns) {
             if (auto success = _mutex->try_lock_for(dur); success) {

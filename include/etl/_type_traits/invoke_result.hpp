@@ -37,11 +37,11 @@ struct invoke_impl<MT B::*> {
 
     template <typename T, typename... Args, typename MT1>
         requires is_function_v<MT1>
-    static auto call(MT1 B::*pmf, T&& t, Args&&... args)
+    static auto call(MT1 B::* pmf, T&& t, Args&&... args)
         -> decltype((invoke_impl::get(etl::forward<T>(t)).*pmf)(etl::forward<Args>(args)...));
 
     template <typename T>
-    static auto call(MT B::*pmd, T&& t) -> decltype(invoke_impl::get(etl::forward<T>(t)).*pmd);
+    static auto call(MT B::* pmd, T&& t) -> decltype(invoke_impl::get(etl::forward<T>(t)).*pmd);
 };
 
 template <typename F, typename... Args, typename Fd = decay_t<F>>

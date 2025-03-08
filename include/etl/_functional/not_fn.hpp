@@ -26,16 +26,16 @@ struct not_fn_t {
 
     template <typename... Args>
         requires negate_invocable<F&, Args...>
-    constexpr auto operator()(Args&&... args) & noexcept(noexcept(not etl::invoke(f, etl::forward<Args>(args)...))
-    ) -> decltype(auto)
+    constexpr auto operator()(Args&&... args) & noexcept(noexcept(not etl::invoke(f, etl::forward<Args>(args)...)))
+        -> decltype(auto)
     {
         return not etl::invoke(f, etl::forward<Args>(args)...);
     }
 
     template <typename... Args>
         requires negate_invocable<F const&, Args...>
-    constexpr auto operator()(Args&&... args) const& noexcept(noexcept(not etl::invoke(f, etl::forward<Args>(args)...))
-    ) -> decltype(auto)
+    constexpr auto operator()(Args&&... args) const& noexcept(noexcept(not etl::invoke(f, etl::forward<Args>(args)...)))
+        -> decltype(auto)
     {
         return not etl::invoke(f, etl::forward<Args>(args)...);
     }
@@ -72,8 +72,9 @@ struct not_fn_t {
 template <auto ConstFn>
 struct stateless_not_fn {
     template <typename... Args>
-    constexpr auto operator()(Args&&... args) const noexcept(noexcept(!etl::invoke(ConstFn, etl::forward<Args>(args)...)
-    )) -> decltype(!etl::invoke(ConstFn, etl::forward<Args>(args)...))
+    constexpr auto operator()(Args&&... args) const
+        noexcept(noexcept(!etl::invoke(ConstFn, etl::forward<Args>(args)...)))
+            -> decltype(!etl::invoke(ConstFn, etl::forward<Args>(args)...))
     {
         return !etl::invoke(ConstFn, etl::forward<Args>(args)...);
     }

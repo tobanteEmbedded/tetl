@@ -18,8 +18,8 @@ namespace etl {
 ///
 /// \ingroup algorithm
 template <typename ForwardIt, typename T, typename Compare>
-[[nodiscard]] constexpr auto
-lower_bound(ForwardIt first, ForwardIt last, T const& value, Compare comp) noexcept -> ForwardIt
+[[nodiscard]] constexpr auto lower_bound(ForwardIt first, ForwardIt last, T const& value, Compare comp) noexcept
+    -> ForwardIt
 {
     using diff_t = typename iterator_traits<ForwardIt>::difference_type;
     ForwardIt it{};

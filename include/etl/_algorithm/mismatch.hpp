@@ -22,8 +22,8 @@ namespace etl {
 ///
 /// \ingroup algorithm
 template <typename InputIt1, typename InputIt2, typename Predicate>
-[[nodiscard]] constexpr auto
-mismatch(InputIt1 first1, InputIt1 last1, InputIt2 first2, Predicate pred) -> pair<InputIt1, InputIt2>
+[[nodiscard]] constexpr auto mismatch(InputIt1 first1, InputIt1 last1, InputIt2 first2, Predicate pred)
+    -> pair<InputIt1, InputIt2>
 {
     for (; first1 != last1; ++first1, (void)++first2) {
         if (not pred(*first1, *first2)) {
@@ -41,8 +41,8 @@ template <typename InputIt1, typename InputIt2>
 }
 
 template <typename InputIt1, typename InputIt2, typename Predicate>
-[[nodiscard]] constexpr auto
-mismatch(InputIt1 first1, InputIt1 last1, InputIt2 first2, InputIt2 last2, Predicate pred) -> pair<InputIt1, InputIt2>
+[[nodiscard]] constexpr auto mismatch(InputIt1 first1, InputIt1 last1, InputIt2 first2, InputIt2 last2, Predicate pred)
+    -> pair<InputIt1, InputIt2>
 {
     for (; first1 != last1 and first2 != last2; ++first1, (void)++first2) {
         if (not pred(*first1, *first2)) {
@@ -54,8 +54,8 @@ mismatch(InputIt1 first1, InputIt1 last1, InputIt2 first2, InputIt2 last2, Predi
 }
 
 template <typename InputIt1, typename InputIt2>
-[[nodiscard]] constexpr auto
-mismatch(InputIt1 first1, InputIt1 last1, InputIt2 first2, InputIt2 last2) -> pair<InputIt1, InputIt2>
+[[nodiscard]] constexpr auto mismatch(InputIt1 first1, InputIt1 last1, InputIt2 first2, InputIt2 last2)
+    -> pair<InputIt1, InputIt2>
 {
     return etl::mismatch(first1, last1, first2, last2, etl::equal_to());
 }

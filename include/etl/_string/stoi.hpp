@@ -72,8 +72,8 @@ template <etl::integral Int>
 /// processed.
 /// \param base The number base.
 /// \returns Integer value corresponding to the content of str.
-[[nodiscard]] constexpr auto
-stoull(etl::string_view str, etl::size_t* pos = nullptr, int base = 10) -> unsigned long long
+[[nodiscard]] constexpr auto stoull(etl::string_view str, etl::size_t* pos = nullptr, int base = 10)
+    -> unsigned long long
 {
     return detail::sto_impl<unsigned long long>(str, pos, base);
 }

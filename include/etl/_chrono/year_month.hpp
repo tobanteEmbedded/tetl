@@ -36,38 +36,38 @@ private:
     chrono::month _m;
 };
 
-[[nodiscard]] constexpr auto
-operator+(chrono::year_month const& ym, chrono::years const& dy) noexcept -> chrono::year_month
+[[nodiscard]] constexpr auto operator+(chrono::year_month const& ym, chrono::years const& dy) noexcept
+    -> chrono::year_month
 {
     return chrono::year_month{ym.year() + dy, ym.month()};
 }
 
-[[nodiscard]] constexpr auto
-operator+(chrono::years const& dy, chrono::year_month const& ym) noexcept -> chrono::year_month
+[[nodiscard]] constexpr auto operator+(chrono::years const& dy, chrono::year_month const& ym) noexcept
+    -> chrono::year_month
 {
     return chrono::year_month{ym.year() + dy, ym.month()};
 }
 
-[[nodiscard]] constexpr auto
-operator+(chrono::year_month const& ym, chrono::months const& dm) noexcept -> chrono::year_month
+[[nodiscard]] constexpr auto operator+(chrono::year_month const& ym, chrono::months const& dm) noexcept
+    -> chrono::year_month
 {
     return {ym.year(), ym.month() + dm};
 }
 
-[[nodiscard]] constexpr auto
-operator+(chrono::months const& dm, chrono::year_month const& ym) noexcept -> chrono::year_month
+[[nodiscard]] constexpr auto operator+(chrono::months const& dm, chrono::year_month const& ym) noexcept
+    -> chrono::year_month
 {
     return {ym.year(), ym.month() + dm};
 }
 
-[[nodiscard]] constexpr auto
-operator-(chrono::year_month const& ym, chrono::years const& dy) noexcept -> chrono::year_month
+[[nodiscard]] constexpr auto operator-(chrono::year_month const& ym, chrono::years const& dy) noexcept
+    -> chrono::year_month
 {
     return {ym.year() - dy, ym.month()};
 }
 
-[[nodiscard]] constexpr auto
-operator-(chrono::year_month const& ym, chrono::months const& dm) noexcept -> chrono::year_month
+[[nodiscard]] constexpr auto operator-(chrono::year_month const& ym, chrono::months const& dm) noexcept
+    -> chrono::year_month
 {
     return {ym.year(), ym.month() - dm};
 }

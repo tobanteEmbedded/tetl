@@ -47,8 +47,8 @@ template <typename ForwardIt1, typename ForwardIt2>
 
 /// \ingroup algorithm
 template <typename ForwardIt1, typename ForwardIt2>
-[[nodiscard]] constexpr auto
-is_permutation(ForwardIt1 first1, ForwardIt1 last1, ForwardIt2 first2, ForwardIt2 last2) -> bool
+[[nodiscard]] constexpr auto is_permutation(ForwardIt1 first1, ForwardIt1 last1, ForwardIt2 first2, ForwardIt2 last2)
+    -> bool
 {
     using tag = random_access_iterator_tag;
 

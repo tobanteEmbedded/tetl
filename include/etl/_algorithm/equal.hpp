@@ -34,8 +34,8 @@ template <typename InputIt1, typename InputIt2>
 
 /// \ingroup algorithm
 template <typename InputIt1, typename InputIt2, typename Predicate>
-[[nodiscard]] constexpr auto
-equal(InputIt1 first1, InputIt1 last1, InputIt2 first2, InputIt2 last2, Predicate p) -> bool
+[[nodiscard]] constexpr auto equal(InputIt1 first1, InputIt1 last1, InputIt2 first2, InputIt2 last2, Predicate p)
+    -> bool
 {
     using Tag       = etl::random_access_iterator_tag;
     using Category1 = typename etl::iterator_traits<InputIt1>::iterator_category;

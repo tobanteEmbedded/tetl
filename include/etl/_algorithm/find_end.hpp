@@ -42,8 +42,8 @@ find_end(ForwardIt1 first, ForwardIt1 last, ForwardIt2 sFirst, ForwardIt2 sLast,
 
 /// \ingroup algorithm
 template <typename ForwardIt1, typename ForwardIt2>
-[[nodiscard]] constexpr auto
-find_end(ForwardIt1 first, ForwardIt1 last, ForwardIt2 sFirst, ForwardIt2 sLast) -> ForwardIt1
+[[nodiscard]] constexpr auto find_end(ForwardIt1 first, ForwardIt1 last, ForwardIt2 sFirst, ForwardIt2 sLast)
+    -> ForwardIt1
 {
     return etl::find_end(first, last, sFirst, sLast, etl::equal_to());
 }

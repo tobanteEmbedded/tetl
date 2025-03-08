@@ -106,8 +106,8 @@ struct NonTrivialDtorMember {
 };
 
 using PointerToMemberObj         = int VirtualDtor::*;
-using PointerToConstMemberObj    = int VirtualDtor::*const;
-using PointerToVolatileMemberObj = int VirtualDtor::*volatile;
+using PointerToConstMemberObj    = int VirtualDtor::* const;
+using PointerToVolatileMemberObj = int VirtualDtor::* volatile;
 using PointerToCVMemberObj       = int const volatile VirtualDtor::*;
 
 using PointerToMemberFunc         = void (VirtualDtor::*)();

@@ -129,8 +129,8 @@ public:
     }
 
     template <typename OtherIndexType, etl::size_t... OtherExtents>
-    friend constexpr auto
-    operator==(extents const& lhs, extents<OtherIndexType, OtherExtents...> const& rhs) noexcept -> bool
+    friend constexpr auto operator==(extents const& lhs, extents<OtherIndexType, OtherExtents...> const& rhs) noexcept
+        -> bool
     {
         if constexpr (rank() != extents<OtherIndexType, OtherExtents...>::rank()) {
             return false;

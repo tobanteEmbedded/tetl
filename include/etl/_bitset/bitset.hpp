@@ -235,8 +235,8 @@ struct bitset {
     /// \todo Currently truncates the low bits, if the string is large enough.
     template <size_t Capacity, typename CharT = char, typename Traits = char_traits<CharT>>
         requires(Capacity >= Bits)
-    [[nodiscard]] constexpr auto
-    to_string(CharT zero = CharT('0'), CharT one = CharT('1')) const -> basic_inplace_string<CharT, Capacity, Traits>
+    [[nodiscard]] constexpr auto to_string(CharT zero = CharT('0'), CharT one = CharT('1')) const
+        -> basic_inplace_string<CharT, Capacity, Traits>
     {
         auto str = basic_inplace_string<CharT, Capacity, Traits>{};
         for (auto i{size() - 1U}; i != 0; --i) {

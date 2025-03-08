@@ -120,39 +120,39 @@ private:
     return lhs.year() == rhs.year() and lhs.month() == rhs.month() and lhs.day() == rhs.day();
 }
 
-[[nodiscard]] constexpr auto
-operator+(chrono::year_month_day const& lhs, chrono::months const& rhs) noexcept -> chrono::year_month_day
+[[nodiscard]] constexpr auto operator+(chrono::year_month_day const& lhs, chrono::months const& rhs) noexcept
+    -> chrono::year_month_day
 {
     auto const ym = year_month{lhs.year(), lhs.month()} + rhs;
     return {ym.year(), ym.month(), lhs.day()};
 }
 
-[[nodiscard]] constexpr auto
-operator+(chrono::months const& lhs, chrono::year_month_day const& rhs) noexcept -> chrono::year_month_day
+[[nodiscard]] constexpr auto operator+(chrono::months const& lhs, chrono::year_month_day const& rhs) noexcept
+    -> chrono::year_month_day
 {
     return rhs + lhs;
 }
 
-[[nodiscard]] constexpr auto
-operator+(chrono::year_month_day const& lhs, chrono::years const& rhs) noexcept -> chrono::year_month_day
+[[nodiscard]] constexpr auto operator+(chrono::year_month_day const& lhs, chrono::years const& rhs) noexcept
+    -> chrono::year_month_day
 {
     return {lhs.year() + rhs, lhs.month(), lhs.day()};
 }
 
-[[nodiscard]] constexpr auto
-operator+(chrono::years const& lhs, chrono::year_month_day const& rhs) noexcept -> chrono::year_month_day
+[[nodiscard]] constexpr auto operator+(chrono::years const& lhs, chrono::year_month_day const& rhs) noexcept
+    -> chrono::year_month_day
 {
     return rhs + lhs;
 }
 
-[[nodiscard]] constexpr auto
-operator-(chrono::year_month_day const& lhs, chrono::months const& rhs) noexcept -> chrono::year_month_day
+[[nodiscard]] constexpr auto operator-(chrono::year_month_day const& lhs, chrono::months const& rhs) noexcept
+    -> chrono::year_month_day
 {
     return lhs + -rhs;
 }
 
-[[nodiscard]] constexpr auto
-operator-(chrono::year_month_day const& lhs, chrono::years const& rhs) noexcept -> chrono::year_month_day
+[[nodiscard]] constexpr auto operator-(chrono::year_month_day const& lhs, chrono::years const& rhs) noexcept
+    -> chrono::year_month_day
 {
     return lhs + -rhs;
 }

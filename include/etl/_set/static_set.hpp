@@ -83,8 +83,8 @@ public:
     constexpr auto operator=(static_set const& other) -> static_set& = default;
 
     /// \brief
-    constexpr auto operator=(static_set&& other)
-        noexcept(noexcept(etl::move(declval<storage_type>()))) -> static_set& = default;
+    constexpr auto operator=(static_set&& other) noexcept(noexcept(etl::move(declval<storage_type>())))
+        -> static_set& = default;
 
     /// \brief Returns an iterator to the first element of the set.
     [[nodiscard]] constexpr auto begin() noexcept -> iterator { return _storage.begin(); }
@@ -179,8 +179,8 @@ public:
 
     /// \brief Inserts element into the container, if the container doesn't
     /// already contain an element with an equivalent key.
-    constexpr auto insert(value_type const& value)
-        noexcept(noexcept(insert(etl::move(declval<key_type>())))) -> pair<iterator, bool>
+    constexpr auto insert(value_type const& value) noexcept(noexcept(insert(etl::move(declval<key_type>()))))
+        -> pair<iterator, bool>
         requires(is_copy_constructible_v<value_type>)
     {
         value_type tmp = value;

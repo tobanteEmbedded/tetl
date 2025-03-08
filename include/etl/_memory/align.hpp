@@ -19,8 +19,8 @@ namespace etl {
 /// the buffer is too small, the function does nothing and returns nullptr.
 ///
 /// \warning The behavior is undefined if alignment is not a power of two.
-[[nodiscard]] inline auto
-align(etl::size_t alignment, etl::size_t size, void*& ptr, etl::size_t& space) noexcept -> void*
+[[nodiscard]] inline auto align(etl::size_t alignment, etl::size_t size, void*& ptr, etl::size_t& space) noexcept
+    -> void*
 {
     auto off = static_cast<etl::size_t>(bit_cast<etl::uintptr_t>(ptr) & (alignment - 1));
     if (off != 0) {

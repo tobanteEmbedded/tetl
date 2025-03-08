@@ -54,8 +54,8 @@ struct xoshiro128plus {
         return result;
     }
 
-    [[nodiscard]] friend constexpr auto
-    operator==(xoshiro128plus const& lhs, xoshiro128plus const& rhs) noexcept -> bool
+    [[nodiscard]] friend constexpr auto operator==(xoshiro128plus const& lhs, xoshiro128plus const& rhs) noexcept
+        -> bool
     {
         return equal(begin(lhs._state), end(lhs._state), begin(rhs._state), end(rhs._state));
     }

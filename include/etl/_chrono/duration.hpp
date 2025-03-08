@@ -269,8 +269,8 @@ template <typename Rep1, typename Period1, typename Rep2, typename Period2>
 ///
 /// https://en.cppreference.com/w/cpp/chrono/duration/operator_arith4
 template <typename Rep1, typename Period1, typename Rep2, typename Period2>
-[[nodiscard]] constexpr auto
-operator/(duration<Rep1, Period1> const& lhs, duration<Rep2, Period2> const& rhs) -> common_type_t<Rep1, Rep2>
+[[nodiscard]] constexpr auto operator/(duration<Rep1, Period1> const& lhs, duration<Rep2, Period2> const& rhs)
+    -> common_type_t<Rep1, Rep2>
 {
     using CD = common_type_t<duration<Rep1, Period1>, duration<Rep2, Period2>>;
     return CD(lhs).count() / CD(rhs).count();

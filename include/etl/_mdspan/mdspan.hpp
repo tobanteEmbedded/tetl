@@ -150,9 +150,11 @@ struct mdspan {
     constexpr mdspan(mdspan&& rhs)      = default; // NOLINT(performance-noexcept-move-constructor)
 
     template <typename... OtherIndexTypes>
-        requires((is_convertible_v<OtherIndexTypes, index_type> && ...)
-                 and (is_nothrow_constructible_v<index_type, OtherIndexTypes> && ...)
-                 and sizeof...(OtherIndexTypes) == rank())
+        requires(
+            (is_convertible_v<OtherIndexTypes, index_type> && ...)
+            and (is_nothrow_constructible_v<index_type, OtherIndexTypes> && ...)
+            and sizeof...(OtherIndexTypes) == rank()
+        )
     [[nodiscard]] constexpr auto operator()(OtherIndexTypes... indices) const -> reference
     {
         auto const idx = static_cast<etl::size_t>(_map(extents_type::index_cast(etl::move(indices))...));
@@ -161,9 +163,11 @@ struct mdspan {
 
 #if defined(__cpp_multidimensional_subscript)
     template <typename... OtherIndexTypes>
-        requires((is_convertible_v<OtherIndexTypes, index_type> && ...)
-                 and (is_nothrow_constructible_v<index_type, OtherIndexTypes> && ...)
-                 and sizeof...(OtherIndexTypes) == rank())
+        requires(
+            (is_convertible_v<OtherIndexTypes, index_type> && ...)
+            and (is_nothrow_constructible_v<index_type, OtherIndexTypes> && ...)
+            and sizeof...(OtherIndexTypes) == rank()
+        )
     [[nodiscard]] constexpr auto operator[](OtherIndexTypes... indices) const -> reference
     {
         return (*this)(etl::move(indices)...);
@@ -171,8 +175,7 @@ struct mdspan {
 #endif
 
     template <typename OtherIndexType>
-        requires(is_convertible_v<OtherIndexType const&, index_type>
-                 and is_nothrow_constructible_v<index_type, OtherIndexType const&>)
+        requires(is_convertible_v<OtherIndexType const&, index_type> and is_nothrow_constructible_v<index_type, OtherIndexType const&>)
     [[nodiscard]] constexpr auto operator[](span<OtherIndexType, rank()> indices) const -> reference
     {
         return [&]<size_t... Is>(index_sequence<Is...> /*seq*/) -> reference {
@@ -181,8 +184,7 @@ struct mdspan {
     }
 
     template <typename OtherIndexType>
-        requires(is_convertible_v<OtherIndexType const&, index_type>
-                 and is_nothrow_constructible_v<index_type, OtherIndexType const&>)
+        requires(is_convertible_v<OtherIndexType const&, index_type> and is_nothrow_constructible_v<index_type, OtherIndexType const&>)
     [[nodiscard]] constexpr auto operator[](array<OtherIndexType, rank()> const& indices) const -> reference
     {
         return (*this)[etl::span{indices}];
@@ -235,23 +237,21 @@ mdspan(ElementType*, MappingType const&)
     -> mdspan<ElementType, typename MappingType::extents_type, typename MappingType::layout_type>;
 
 template <typename MappingType, typename AccessorType>
-mdspan(typename AccessorType::data_handle_type const&, MappingType const&, AccessorType const&)
-    -> mdspan<
-        typename AccessorType::element_type,
-        typename MappingType::extents_type,
-        typename MappingType::layout_type,
-        AccessorType>;
+mdspan(typename AccessorType::data_handle_type const&, MappingType const&, AccessorType const&) -> mdspan<
+    typename AccessorType::element_type,
+    typename MappingType::extents_type,
+    typename MappingType::layout_type,
+    AccessorType>;
 
 template <typename ElementType, typename Extents, typename LayoutPolicy, typename Container>
 struct mdarray;
 
 template <class ElementType, class Extents, class Layout, class Container>
-mdspan(mdarray<ElementType, Extents, Layout, Container>)
-    -> mdspan<
-        typename decltype(declval<mdarray<ElementType, Extents, Layout, Container>>().to_mdspan())::element_type,
-        typename decltype(declval<mdarray<ElementType, Extents, Layout, Container>>().to_mdspan())::extens_type,
-        typename decltype(declval<mdarray<ElementType, Extents, Layout, Container>>().to_mdspan())::layout_type,
-        typename decltype(declval<mdarray<ElementType, Extents, Layout, Container>>().to_mdspan())::accessor_type>;
+mdspan(mdarray<ElementType, Extents, Layout, Container>) -> mdspan<
+    typename decltype(declval<mdarray<ElementType, Extents, Layout, Container>>().to_mdspan())::element_type,
+    typename decltype(declval<mdarray<ElementType, Extents, Layout, Container>>().to_mdspan())::extens_type,
+    typename decltype(declval<mdarray<ElementType, Extents, Layout, Container>>().to_mdspan())::layout_type,
+    typename decltype(declval<mdarray<ElementType, Extents, Layout, Container>>().to_mdspan())::accessor_type>;
 
 } // namespace etl
 

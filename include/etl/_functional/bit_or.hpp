@@ -22,8 +22,8 @@ struct bit_or<void> {
 
     template <typename T, typename U>
     [[nodiscard]] constexpr auto operator()(T&& lhs, U&& rhs) const
-        noexcept(noexcept(etl::forward<T>(lhs) | etl::forward<U>(rhs))
-        ) -> decltype(etl::forward<T>(lhs) | etl::forward<U>(rhs))
+        noexcept(noexcept(etl::forward<T>(lhs) | etl::forward<U>(rhs)))
+            -> decltype(etl::forward<T>(lhs) | etl::forward<U>(rhs))
     {
         return etl::forward<T>(lhs) | etl::forward<U>(rhs);
     }

@@ -146,18 +146,22 @@ public:
 
 #if defined(__cpp_multidimensional_subscript)
     template <typename... OtherIndexTypes>
-        requires((is_convertible_v<OtherIndexTypes, index_type> and ...)
-                 and (is_nothrow_constructible_v<index_type, OtherIndexTypes> and ...)
-                 and (sizeof...(OtherIndexTypes) == rank()))
+        requires(
+            (is_convertible_v<OtherIndexTypes, index_type> and ...)
+            and (is_nothrow_constructible_v<index_type, OtherIndexTypes> and ...)
+            and (sizeof...(OtherIndexTypes) == rank())
+        )
     [[nodiscard]] constexpr auto operator[](OtherIndexTypes... indices) -> reference
     {
         return (*this)(etl::move(indices)...);
     }
 
     template <typename... OtherIndexTypes>
-        requires((is_convertible_v<OtherIndexTypes, index_type> and ...)
-                 and (is_nothrow_constructible_v<index_type, OtherIndexTypes> and ...)
-                 and (sizeof...(OtherIndexTypes) == rank()))
+        requires(
+            (is_convertible_v<OtherIndexTypes, index_type> and ...)
+            and (is_nothrow_constructible_v<index_type, OtherIndexTypes> and ...)
+            and (sizeof...(OtherIndexTypes) == rank())
+        )
     [[nodiscard]] constexpr auto operator[](OtherIndexTypes... indices) const -> const_reference
     {
         return (*this)(etl::move(indices)...);
@@ -165,26 +169,29 @@ public:
 #endif
 
     template <typename... OtherIndexTypes>
-        requires((is_convertible_v<OtherIndexTypes, index_type> and ...)
-                 and (is_nothrow_constructible_v<index_type, OtherIndexTypes> and ...)
-                 and (sizeof...(OtherIndexTypes) == rank()))
+        requires(
+            (is_convertible_v<OtherIndexTypes, index_type> and ...)
+            and (is_nothrow_constructible_v<index_type, OtherIndexTypes> and ...)
+            and (sizeof...(OtherIndexTypes) == rank())
+        )
     [[nodiscard]] constexpr auto operator()(OtherIndexTypes... indices) -> reference
     {
         return _ctr[static_cast<size_t>(_map(static_cast<index_type>(etl::move(indices))...))];
     }
 
     template <typename... OtherIndexTypes>
-        requires((is_convertible_v<OtherIndexTypes, index_type> and ...)
-                 and (is_nothrow_constructible_v<index_type, OtherIndexTypes> and ...)
-                 and (sizeof...(OtherIndexTypes) == rank()))
+        requires(
+            (is_convertible_v<OtherIndexTypes, index_type> and ...)
+            and (is_nothrow_constructible_v<index_type, OtherIndexTypes> and ...)
+            and (sizeof...(OtherIndexTypes) == rank())
+        )
     [[nodiscard]] constexpr auto operator()(OtherIndexTypes... indices) const -> const_reference
     {
         return _ctr[static_cast<size_t>(_map(static_cast<index_type>(etl::move(indices))...))];
     }
 
     template <typename OtherIndexType>
-        requires(is_convertible_v<OtherIndexType const&, index_type>
-                 and is_nothrow_constructible_v<index_type, OtherIndexType const&>)
+        requires(is_convertible_v<OtherIndexType const&, index_type> and is_nothrow_constructible_v<index_type, OtherIndexType const&>)
     [[nodiscard]] constexpr auto operator[](span<OtherIndexType, rank()> indices) -> reference
     {
         return [&]<size_t... Is>(index_sequence<Is...> /*seq*/) -> decltype(auto) {
@@ -193,8 +200,7 @@ public:
     }
 
     template <typename OtherIndexType>
-        requires(is_convertible_v<OtherIndexType const&, index_type>
-                 and is_nothrow_constructible_v<index_type, OtherIndexType const&>)
+        requires(is_convertible_v<OtherIndexType const&, index_type> and is_nothrow_constructible_v<index_type, OtherIndexType const&>)
     [[nodiscard]] constexpr auto operator[](span<OtherIndexType, rank()> indices) const -> const_reference
     {
         return [&]<size_t... Is>(index_sequence<Is...> /*seq*/) -> decltype(auto) {
@@ -203,16 +209,14 @@ public:
     }
 
     template <typename OtherIndexType>
-        requires(is_convertible_v<OtherIndexType const&, index_type>
-                 and is_nothrow_constructible_v<index_type, OtherIndexType const&>)
+        requires(is_convertible_v<OtherIndexType const&, index_type> and is_nothrow_constructible_v<index_type, OtherIndexType const&>)
     [[nodiscard]] constexpr auto operator[](array<OtherIndexType, rank()> const& indices) -> reference
     {
         return operator[](span{indices});
     }
 
     template <typename OtherIndexType>
-        requires(is_convertible_v<OtherIndexType const&, index_type>
-                 and is_nothrow_constructible_v<index_type, OtherIndexType const&>)
+        requires(is_convertible_v<OtherIndexType const&, index_type> and is_nothrow_constructible_v<index_type, OtherIndexType const&>)
     [[nodiscard]] constexpr auto operator[](array<OtherIndexType, rank()> const& indices) const -> const_reference
     {
         return operator[](span{indices});

@@ -275,8 +275,8 @@ struct span {
     /// span starting at offset Offset. If Count is etl::dynamic_extent, the
     /// number of elements in the subspan is size() - offset (i.e., it ends at
     /// the end of *this.).
-    [[nodiscard]] constexpr auto
-    subspan(size_type offset, size_type count = dynamic_extent) const -> span<T, dynamic_extent>
+    [[nodiscard]] constexpr auto subspan(size_type offset, size_type count = dynamic_extent) const
+        -> span<T, dynamic_extent>
     {
         TETL_PRECONDITION(offset <= size());
         TETL_PRECONDITION(count != dynamic_extent ? (count <= size() - offset) : true);

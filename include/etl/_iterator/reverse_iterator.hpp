@@ -164,8 +164,8 @@ operator!=(etl::reverse_iterator<Iter1> const& lhs, etl::reverse_iterator<Iter2>
 /// Compares the underlying iterators. Inverse comparisons are applied in
 /// order to take into account that the iterator order is reversed.
 template <typename Iter1, typename Iter2>
-[[nodiscard]] constexpr auto
-operator<(etl::reverse_iterator<Iter1> const& lhs, etl::reverse_iterator<Iter2> const& rhs) -> bool
+[[nodiscard]] constexpr auto operator<(etl::reverse_iterator<Iter1> const& lhs, etl::reverse_iterator<Iter2> const& rhs)
+    -> bool
 {
     return lhs.base() < rhs.base();
 }
@@ -182,8 +182,8 @@ operator<=(etl::reverse_iterator<Iter1> const& lhs, etl::reverse_iterator<Iter2>
 /// Compares the underlying iterators. Inverse comparisons are applied in
 /// order to take into account that the iterator order is reversed.
 template <typename Iter1, typename Iter2>
-[[nodiscard]] constexpr auto
-operator>(etl::reverse_iterator<Iter1> const& lhs, etl::reverse_iterator<Iter2> const& rhs) -> bool
+[[nodiscard]] constexpr auto operator>(etl::reverse_iterator<Iter1> const& lhs, etl::reverse_iterator<Iter2> const& rhs)
+    -> bool
 {
     return lhs.base() > rhs.base();
 }

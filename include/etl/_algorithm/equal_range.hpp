@@ -17,8 +17,8 @@ namespace etl {
 ///
 /// \ingroup algorithm
 template <typename ForwardIt, typename T, typename Compare>
-[[nodiscard]] constexpr auto
-equal_range(ForwardIt first, ForwardIt last, T const& value, Compare comp) -> pair<ForwardIt, ForwardIt>
+[[nodiscard]] constexpr auto equal_range(ForwardIt first, ForwardIt last, T const& value, Compare comp)
+    -> pair<ForwardIt, ForwardIt>
 {
     return etl::make_pair(etl::lower_bound(first, last, value, comp), etl::upper_bound(first, last, value, comp));
 }
