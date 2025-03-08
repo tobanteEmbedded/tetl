@@ -18,7 +18,7 @@ namespace detail {
 template <typename T>
 constexpr auto FUN(T& t) noexcept -> T&
 {
-    return t;
+    return t; // NOLINT(bugprone-return-const-ref-from-parameter)
 }
 
 template <typename T>
