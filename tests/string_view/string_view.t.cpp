@@ -1,12 +1,20 @@
 // SPDX-License-Identifier: BSL-1.0
 
-#include <etl/string_view.hpp>
-
-#include <etl/ranges.hpp>
-#include <etl/string.hpp>
-#include <etl/type_traits.hpp>
-
 #include "testing/testing.hpp"
+
+#if defined(TETL_ENABLE_CXX_MODULES)
+import etl.cstddef;
+import etl.iterator;
+import etl.ranges;
+import etl.string;
+import etl.string_view;
+#else
+    #include <etl/cstddef.hpp>
+    #include <etl/iterator.hpp>
+    #include <etl/ranges.hpp>
+    #include <etl/string.hpp>
+    #include <etl/string_view.hpp>
+#endif
 
 static constexpr auto test() -> bool
 {
