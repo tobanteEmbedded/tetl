@@ -6,11 +6,13 @@ export module etl.functional;
 
 export namespace etl {
 
+using etl::bad_function_call;
 using etl::bind_front;
 using etl::bit_and;
 using etl::bit_not;
 using etl::bit_or;
 using etl::bit_xor;
+using etl::cref;
 using etl::default_searcher;
 using etl::divides;
 using etl::equal_to;
@@ -33,7 +35,10 @@ using etl::negate;
 using etl::not_equal_to;
 using etl::not_fn;
 using etl::plus;
+using etl::ref;
 using etl::reference_wrapper;
+using etl::operator==;
+using etl::operator!=;
 
 // clang-format off
 using etl::placeholders::_1;
@@ -73,5 +78,10 @@ using etl::placeholders::_32;
 // Non-standard extensions
 using etl::function_ref;
 using etl::inplace_function;
+
+namespace detail {
+using etl::detail::is_transparent;
+using etl::detail::is_transparent_v;
+} // namespace detail
 
 } // namespace etl
