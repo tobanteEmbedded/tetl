@@ -1,0 +1,93 @@
+module;
+
+#include <etl/algorithm.hpp>
+
+export module etl.algorithm;
+
+export namespace etl {
+
+using etl::adjacent_find;
+using etl::all_of;
+using etl::any_of;
+using etl::binary_search;
+using etl::clamp;
+using etl::copy;
+using etl::copy_backward;
+using etl::copy_if;
+using etl::copy_n;
+using etl::count;
+using etl::count_if;
+using etl::equal;
+using etl::equal_range;
+using etl::fill;
+using etl::fill_n;
+using etl::find;
+using etl::find_end;
+using etl::find_first_of;
+using etl::find_if;
+using etl::find_if_not;
+using etl::for_each;
+using etl::for_each_n;
+using etl::generate;
+using etl::generate_n;
+using etl::includes;
+using etl::inplace_merge;
+using etl::is_partitioned;
+using etl::is_permutation;
+using etl::is_sorted;
+using etl::is_sorted_until;
+using etl::iter_swap;
+using etl::lexicographical_compare;
+using etl::lower_bound;
+using etl::max;
+using etl::max_element;
+using etl::merge;
+using etl::min;
+using etl::min_element;
+using etl::minmax;
+using etl::minmax_element;
+using etl::mismatch;
+using etl::move;
+using etl::move_backward;
+using etl::none_of;
+using etl::nth_element;
+using etl::partial_sort;
+using etl::partition;
+using etl::partition_copy;
+using etl::partition_point;
+using etl::remove;
+using etl::remove_copy;
+using etl::remove_copy_if;
+using etl::remove_if;
+using etl::replace;
+using etl::replace_if;
+using etl::reverse;
+using etl::reverse_copy;
+using etl::rotate;
+using etl::rotate_copy;
+using etl::search;
+using etl::search_n;
+using etl::set_difference;
+using etl::set_intersection;
+using etl::set_symmetric_difference;
+using etl::set_union;
+using etl::shift_left;
+using etl::shift_right;
+using etl::sort;
+using etl::stable_partition;
+using etl::stable_sort;
+using etl::swap_ranges;
+using etl::transform;
+using etl::unique;
+using etl::unique_copy;
+using etl::upper_bound;
+using etl::ranges::in_fun_result;
+
+// Non-standard extensions
+using etl::bubble_sort;
+using etl::exchange_sort;
+using etl::gnome_sort;
+using etl::insertion_sort;
+using etl::merge_sort;
+
+} // namespace etl

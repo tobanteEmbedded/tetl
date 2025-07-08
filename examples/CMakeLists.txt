@@ -6,7 +6,7 @@ function(tetl_add_example _target)
 
   add_executable("example_${_target}" "${_target}.cpp")
   target_compile_definitions("example_${_target}" PRIVATE TETL_DEBUG=1)
-  target_link_libraries("example_${_target}" PRIVATE tetl::etl tetl::compiler_options tetl::compiler_warnings tetl::code_coverage)
+  target_link_libraries("example_${_target}" PRIVATE tetl::etl_headers tetl::compiler_options tetl::compiler_warnings tetl::code_coverage)
 
   add_test(NAME "example: ${_target}" COMMAND "example_${_target}")
   set_tests_properties("example: ${_target}" PROPERTIES WILL_FAIL ${tetl_add_example_WILL_FAIL})

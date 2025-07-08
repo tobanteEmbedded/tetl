@@ -127,11 +127,11 @@ CXXFLAGS += -std=c++20 -I3rd_party/tetl/include
 Add `tetl` as a git submodule, then add these lines to your `CMakeLists.txt`:
 
 ```cmake
-# tetl::etl is an interface target.
+# tetl::etl_headers is an interface target.
 # The target only sets the include path. No static library is created.
 
 add_subdirectory(3rd_party/tetl/include EXCLUDE_FROM_ALL)
-target_link_libraries(${YOUR_TARGET} tetl::etl)
+target_link_libraries(${YOUR_TARGET} tetl::etl_headers)
 ```
 
 ### PlatformIO

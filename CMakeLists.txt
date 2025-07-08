@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 3.19)
+cmake_minimum_required(VERSION 3.28)
 project(tetl-dev LANGUAGES CXX)
 
 option(TETL_BUILD_ASAN                 "Build with address sanitizer enabled"            OFF)
@@ -33,5 +33,6 @@ include(compiler_warnings)
 
 enable_testing()
 add_subdirectory(include)
+add_subdirectory(module)
 add_subdirectory(tests)
 add_subdirectory(examples)
