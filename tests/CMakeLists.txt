@@ -7,7 +7,7 @@ function(tetl_add_test _header _target)
   add_executable("test_${_header}_${_target}" "${_target}.t.cpp")
   target_include_directories("test_${_header}_${_target}" PRIVATE "${CMAKE_SOURCE_DIR}/tests")
   target_compile_definitions("test_${_header}_${_target}" PRIVATE TETL_DEBUG=1 TETL_ENABLE_USER_CONFIG_HEADER_INCLUDE=1)
-  target_link_libraries("test_${_header}_${_target}" PRIVATE tetl::etl tetl::compiler_options tetl::compiler_warnings tetl::code_coverage)
+  target_link_libraries("test_${_header}_${_target}" PRIVATE tetl::compiler_options tetl::compiler_warnings tetl::code_coverage)
 
   if(${TETL_BUILD_CONTRACT_CHECKS})
     target_compile_definitions("test_${_header}_${_target}" PRIVATE TETL_ENABLE_CONTRACT_CHECKS=1)
@@ -15,6 +15,14 @@ function(tetl_add_test _header _target)
 
   if(${TETL_BUILD_CONTRACT_CHECKS_SAFE})
     target_compile_definitions("test_${_header}_${_target}" PRIVATE TETL_ENABLE_CONTRACT_CHECKS_SAFE=1)
+  endif()
+
+  if(${TETL_BUILD_CXX_MODULES})
+    target_compile_definitions("test_${_header}_${_target}" PRIVATE TETL_ENABLE_CXX_MODULES=1)
+    target_link_libraries("test_${_header}_${_target}" PRIVATE tetl-module)
+  else()
+    set_target_properties("test_${_header}_${_target}" PROPERTIES CXX_SCAN_FOR_MODULES FALSE)
+    target_link_libraries("test_${_header}_${_target}" PRIVATE tetl::etl_headers)
   endif()
 
   add_test(NAME "${_header}.hpp: ${_target}" COMMAND "test_${_header}_${_target}")
