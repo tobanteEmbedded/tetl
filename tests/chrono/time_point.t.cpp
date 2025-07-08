@@ -1,11 +1,20 @@
 // SPDX-License-Identifier: BSL-1.0
 
-#include <etl/chrono.hpp>
-
-#include <etl/cstdint.hpp>
-#include <etl/ratio.hpp>
-
 #include "testing/testing.hpp"
+
+#if defined(TETL_ENABLE_CXX_MODULES)
+import etl.chrono;
+import etl.cstdint;
+import etl.limits;
+import etl.ratio;
+import etl.type_traits;
+#else
+    #include <etl/chrono.hpp>
+    #include <etl/cstdint.hpp>
+    #include <etl/limits.hpp>
+    #include <etl/ratio.hpp>
+    #include <etl/type_traits.hpp>
+#endif
 
 template <typename T>
 struct NullClock {
