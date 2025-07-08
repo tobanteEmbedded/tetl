@@ -249,7 +249,7 @@ private:
     static constexpr auto ones          = etl::numeric_limits<WordType>::max();
     static constexpr auto bits_per_word = static_cast<size_t>(etl::numeric_limits<WordType>::digits);
     static constexpr auto num_words     = (Bits + bits_per_word - 1) / bits_per_word;
-    static constexpr auto padding       = num_words * bits_per_word - Bits;
+    static constexpr auto padding       = (num_words * bits_per_word) - Bits;
     static constexpr auto has_padding   = padding != 0;
     static constexpr auto padding_mask  = [] {
         auto mask = WordType{};

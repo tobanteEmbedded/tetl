@@ -72,7 +72,7 @@ private:
 {
     auto const mo  = static_cast<long long>(static_cast<unsigned>(m)) + (ms.count() - 1);
     auto const div = (mo >= 0 ? mo : mo - 11) / 12;
-    return month{static_cast<unsigned int>(mo - div * 12 + 1)};
+    return month{static_cast<unsigned int>(mo - (div * 12) + 1)};
 }
 
 [[nodiscard]] constexpr auto operator+(months const& ms, month const& m) noexcept -> month { return m + ms; }

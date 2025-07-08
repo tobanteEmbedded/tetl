@@ -47,7 +47,9 @@ struct year_month_weekday {
             return true;
         }
         auto firstOfMonth = chrono::weekday(static_cast<sys_days>(_y / _m / 1));
-        auto d2 = _wdi.weekday() - firstOfMonth + days(static_cast<int_least32_t>((_wdi.index() - 1) * 7 + 1));
+        auto d2 = _wdi.weekday() - firstOfMonth + days(static_cast<int_least32_t>(((_wdi.index() - 1) * 7) + 1));
+
+        // NOLINTNEXTLINE(modernize-use-integer-sign-comparison)
         return static_cast<unsigned>(d2.count()) <= static_cast<unsigned>((_y / _m / last).day());
     }
 

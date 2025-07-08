@@ -229,7 +229,7 @@ template <typename T>
 template <typename X>
 constexpr auto complex<T>::operator*=(complex<X> const& val) -> complex<T>&
 {
-    auto const r = static_cast<T>(_real * val.real() - _imag * val.imag());
+    auto const r = static_cast<T>((_real * val.real()) - (_imag * val.imag()));
     _imag        = static_cast<T>(_real * val.imag() + _imag * val.real());
     _real        = r;
     return *this;
