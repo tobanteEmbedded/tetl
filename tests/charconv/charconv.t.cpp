@@ -1,16 +1,28 @@
 // SPDX-License-Identifier: BSL-1.0
 
-#include <etl/charconv.hpp>
-
-#include <etl/array.hpp>
-#include <etl/cstdint.hpp>
-#include <etl/iterator.hpp>
-#include <etl/string.hpp>
-#include <etl/string_view.hpp>
-#include <etl/type_traits.hpp>
-#include <etl/utility.hpp>
-
 #include "testing/testing.hpp"
+
+#if defined(TETL_ENABLE_CXX_MODULES)
+import etl.array;
+import etl.charconv;
+import etl.cstdint;
+import etl.iterator;
+import etl.string;
+import etl.string_view;
+import etl.system_error;
+import etl.type_traits;
+import etl.utility;
+#else
+    #include <etl/array.hpp>
+    #include <etl/charconv.hpp>
+    #include <etl/cstdint.hpp>
+    #include <etl/iterator.hpp>
+    #include <etl/string.hpp>
+    #include <etl/string_view.hpp>
+    #include <etl/system_error.hpp>
+    #include <etl/type_traits.hpp>
+    #include <etl/utility.hpp>
+#endif
 
 static constexpr auto test_chars_format() -> bool
 {

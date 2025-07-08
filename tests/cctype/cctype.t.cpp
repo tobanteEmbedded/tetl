@@ -1,8 +1,12 @@
 // SPDX-License-Identifier: BSL-1.0
 
-#include <etl/cctype.hpp>
-
 #include "testing/testing.hpp"
+
+#if defined(TETL_ENABLE_CXX_MODULES)
+import etl.cctype;
+#else
+    #include <etl/cctype.hpp>
+#endif
 
 static constexpr auto test_isalnum() -> bool
 {
