@@ -21,6 +21,9 @@ struct unwrap_reference<reference_wrapper<T>> {
 };
 
 template <typename T>
+using unwrap_reference_t = typename unwrap_reference<T>::type;
+
+template <typename T>
 struct unwrap_ref_decay : conditional_t<not is_same_v<decay_t<T>, T>, unwrap_reference<decay_t<T>>, decay<T>> { };
 
 template <typename T>
