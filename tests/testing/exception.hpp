@@ -3,11 +3,17 @@
 #ifndef TETL_TEST_EXCEPTION_HPP
 #define TETL_TEST_EXCEPTION_HPP
 
-#include <etl/cmath.hpp>
-
-#include <etl/exception.hpp>
-#include <etl/string_view.hpp>
-#include <etl/type_traits.hpp>
+#if defined(TETL_ENABLE_CXX_MODULES)
+import etl.cmath;
+import etl.exception;
+import etl.string_view;
+import etl.type_traits;
+#else
+    #include <etl/cmath.hpp>
+    #include <etl/exception.hpp>
+    #include <etl/string_view.hpp>
+    #include <etl/type_traits.hpp>
+#endif
 
 #define CHECK_EXCEPTION_TYPE(ExceptionType, BaseType)                                                                  \
     do {                                                                                                               \

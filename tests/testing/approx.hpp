@@ -3,7 +3,11 @@
 #ifndef TETL_TEST_TESTING_APPROX_HPP
 #define TETL_TEST_TESTING_APPROX_HPP
 
-#include <etl/cmath.hpp>
+#if defined(TETL_ENABLE_CXX_MODULES)
+import etl.cmath;
+#else
+    #include <etl/cmath.hpp>
+#endif
 
 template <typename T>
 constexpr auto approx(T a, T b, T epsilon = static_cast<T>(0.001)) -> bool

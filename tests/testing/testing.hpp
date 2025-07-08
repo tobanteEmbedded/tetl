@@ -6,7 +6,11 @@
 #undef NDEBUG
 #include <etl/cassert.hpp>
 
-#include <etl/_type_traits/is_same.hpp>
+#if defined(TETL_ENABLE_CXX_MODULES)
+import etl.type_traits;
+#else
+    #include <etl/type_traits.hpp>
+#endif
 
 #define CHECK(...)           assert((__VA_ARGS__))
 #define CHECK_FALSE(...)     assert(not(__VA_ARGS__))
