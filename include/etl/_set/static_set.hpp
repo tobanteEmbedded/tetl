@@ -526,8 +526,9 @@ operator>=(static_set<Key, Capacity, Comp> const& lhs, static_set<Key, Capacity,
 /// \brief Specializes the swap algorithm for set. Swaps the contents
 /// of lhs and rhs. Calls lhs.swap(rhs).
 template <typename Key, size_t Capacity, typename Compare>
-constexpr auto swap(static_set<Key, Capacity, Compare>& lhs, static_set<Key, Capacity, Compare>& rhs)
-    noexcept(noexcept(lhs.swap(rhs))) -> void
+constexpr auto
+swap(static_set<Key, Capacity, Compare>& lhs, static_set<Key, Capacity, Compare>& rhs) noexcept(noexcept(lhs.swap(rhs)))
+    -> void
 {
     lhs.swap(rhs);
 }

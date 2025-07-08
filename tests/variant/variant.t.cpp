@@ -301,7 +301,7 @@ static constexpr auto test() -> bool
     return true;
 }
 
-[[nodiscard]] constexpr static auto test_non_trivial() -> bool
+[[nodiscard]] static constexpr auto test_non_trivial() -> bool
 {
     struct non_trivial_alternative {
         constexpr explicit non_trivial_alternative(int& v)

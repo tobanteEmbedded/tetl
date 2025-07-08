@@ -15,7 +15,10 @@ constexpr auto test() -> bool
 {
     CHECK_SAME_TYPE(decltype(etl::tuple_cat(etl::tuple<T>{})), etl::tuple<T>);
     CHECK_SAME_TYPE(decltype(etl::tuple_cat(etl::tuple<T, float>{})), etl::tuple<T, float>);
-    CHECK_SAME_TYPE(decltype(etl::tuple_cat(etl::tuple<T, float>{}, etl::tuple<T, float>{})), etl::tuple<T, float, T, float>);
+    CHECK_SAME_TYPE(
+        decltype(etl::tuple_cat(etl::tuple<T, float>{}, etl::tuple<T, float>{})),
+        etl::tuple<T, float, T, float>
+    );
 
     auto t = etl::tuple_cat(etl::tuple{T(42), 143.0}, etl::array<T, 2>{});
     CHECK_SAME_TYPE(decltype(t), etl::tuple<T, double, T, T>);

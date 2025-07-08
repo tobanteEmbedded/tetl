@@ -184,7 +184,7 @@ constexpr auto incomplete_beta_inv_err_val(T const value, T const alphaPar, T co
 template <typename T>
 constexpr auto incomplete_beta_inv_deriv_1(T const value, T const alphaPar, T const betaPar, T const lbVal) noexcept
     -> T
-{            // derivative of the incomplete beta function w.r.t. x
+{ // derivative of the incomplete beta function w.r.t. x
     return ( // indistinguishable from zero or one
         etl::numeric_limits<T>::epsilon() > abs(value)          ? T(0)
         : etl::numeric_limits<T>::epsilon() > abs(T(1) - value) ? T(0)

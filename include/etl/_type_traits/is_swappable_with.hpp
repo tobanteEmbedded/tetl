@@ -24,8 +24,8 @@ struct is_nothrow_swappable;
 
 template <typename T>
     requires(etl::is_move_constructible_v<T> && etl::is_move_assignable_v<T>)
-constexpr auto swap(T& a, T& b)
-    noexcept(etl::is_nothrow_move_constructible_v<T> && etl::is_nothrow_move_assignable_v<T>) -> void;
+constexpr auto
+swap(T& a, T& b) noexcept(etl::is_nothrow_move_constructible_v<T> && etl::is_nothrow_move_assignable_v<T>) -> void;
 
 template <typename T, etl::size_t N>
     requires(etl::is_swappable<T>::value)

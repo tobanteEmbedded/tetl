@@ -8,7 +8,7 @@
 #include "testing/testing.hpp"
 
 template <typename T, typename Index>
-[[nodiscard]] constexpr static auto test() -> bool
+[[nodiscard]] static constexpr auto test() -> bool
 {
     using mdspan_type = etl::mdspan<T, etl::extents<Index, etl::dynamic_extent>>;
     CHECK_SAME_TYPE(typename mdspan_type::element_type, T);
@@ -85,7 +85,7 @@ template <typename T, typename Index>
 }
 
 template <typename Index>
-[[nodiscard]] constexpr static auto test_index_type() -> bool
+[[nodiscard]] static constexpr auto test_index_type() -> bool
 {
     CHECK(test<char, Index>());
     CHECK(test<char8_t, Index>());
@@ -110,7 +110,7 @@ template <typename Index>
     return true;
 }
 
-[[nodiscard]] constexpr static auto test_all() -> bool
+[[nodiscard]] static constexpr auto test_all() -> bool
 {
     CHECK(test_index_type<unsigned char>());
     CHECK(test_index_type<unsigned short>());

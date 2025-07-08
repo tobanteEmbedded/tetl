@@ -149,9 +149,11 @@ template <typename F, typename... Vs>
 constexpr auto visit_with_index(F&& f, Vs&&... vs)
 {
     if constexpr (((detail::variant_size<Vs>() == 1) and ...)) {
-        return f(detail::indexed_value<decltype(detail::get<0>(etl::forward<Vs>(vs))), 0>(
-            detail::get<0>(etl::forward<Vs>(vs))
-        )...);
+        return f(
+            detail::indexed_value<decltype(detail::get<0>(etl::forward<Vs>(vs))), 0>(
+                detail::get<0>(etl::forward<Vs>(vs))
+            )...
+        );
     } else {
         return detail::visit_with_index(
             index_sequence<detail::zero<Vs>...>{},

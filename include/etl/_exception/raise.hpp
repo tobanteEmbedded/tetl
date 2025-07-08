@@ -20,12 +20,14 @@ raise(char const* msg, etl::source_location const loc = etl::source_location::cu
     (void)loc;
     etl::exception_handler(Exception{msg});
     #else
-    etl::assert_handler(etl::assert_msg{
-        static_cast<int>(loc.line()),
-        loc.file_name(),
-        loc.function_name(),
-        Exception{msg}.what(),
-    });
+    etl::assert_handler(
+        etl::assert_msg{
+            static_cast<int>(loc.line()),
+            loc.file_name(),
+            loc.function_name(),
+            Exception{msg}.what(),
+        }
+    );
     #endif
 }
 
@@ -37,12 +39,14 @@ template <typename Exception>
     #if defined(TETL_ENABLE_CUSTOM_EXCEPTION_HANDLER)
     etl::exception_handler(Exception{msg});
     #else
-    etl::assert_handler(etl::assert_msg{
-        0,
-        nullptr,
-        nullptr,
-        Exception{msg}.what(),
-    });
+    etl::assert_handler(
+        etl::assert_msg{
+            0,
+            nullptr,
+            nullptr,
+            Exception{msg}.what(),
+        }
+    );
     #endif
 }
 #endif

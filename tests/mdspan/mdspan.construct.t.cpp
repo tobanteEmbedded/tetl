@@ -7,7 +7,7 @@
 #include "testing/testing.hpp"
 
 template <typename T, typename Index>
-[[nodiscard]] constexpr static auto test() -> bool
+[[nodiscard]] static constexpr auto test() -> bool
 {
     // 1. 1D-Dynamic
     {
@@ -181,7 +181,7 @@ template <typename T, typename Index>
 }
 
 template <typename Index>
-[[nodiscard]] constexpr static auto test_index_type() -> bool
+[[nodiscard]] static constexpr auto test_index_type() -> bool
 {
     CHECK(test<char, Index>());
     CHECK(test<char8_t, Index>());
@@ -206,7 +206,7 @@ template <typename Index>
     return true;
 }
 
-[[nodiscard]] constexpr static auto test_all() -> bool
+[[nodiscard]] static constexpr auto test_all() -> bool
 {
     CHECK(test_index_type<unsigned char>());
     CHECK(test_index_type<unsigned short>());

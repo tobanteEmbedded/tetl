@@ -387,8 +387,9 @@ struct optional {
     }
 
     /// Swaps the contents with those of other.
-    constexpr auto swap(optional& other)
-        noexcept(is_nothrow_move_constructible_v<value_type> and is_nothrow_swappable_v<value_type>) -> void
+    constexpr auto
+    swap(optional& other) noexcept(is_nothrow_move_constructible_v<value_type> and is_nothrow_swappable_v<value_type>)
+        -> void
     {
         etl::swap(*this, other);
     }

@@ -8,7 +8,7 @@
 
 namespace chrono = etl::chrono;
 
-[[nodiscard]] constexpr static auto test_duration() -> bool
+[[nodiscard]] static constexpr auto test_duration() -> bool
 {
     CHECK(chrono::days(1) == chrono::hours(24));
     CHECK(chrono::days(2) == chrono::hours(48));
@@ -17,7 +17,7 @@ namespace chrono = etl::chrono;
     return true;
 }
 
-[[nodiscard]] constexpr static auto test_day() -> bool
+[[nodiscard]] static constexpr auto test_day() -> bool
 {
     using namespace etl::chrono_literals;
 
@@ -80,7 +80,7 @@ namespace chrono = etl::chrono;
     return true;
 }
 
-[[nodiscard]] constexpr static auto test_weekday() -> bool
+[[nodiscard]] static constexpr auto test_weekday() -> bool
 {
     using namespace etl::chrono_literals;
 
@@ -182,7 +182,7 @@ namespace chrono = etl::chrono;
     return true;
 }
 
-[[nodiscard]] constexpr static auto test_weekday_indexed() -> bool
+[[nodiscard]] static constexpr auto test_weekday_indexed() -> bool
 {
     // traits
     CHECK(etl::is_trivially_default_constructible_v<chrono::weekday_indexed>);
@@ -229,7 +229,7 @@ namespace chrono = etl::chrono;
     return true;
 }
 
-[[nodiscard]] constexpr static auto test_weekday_last() -> bool
+[[nodiscard]] static constexpr auto test_weekday_last() -> bool
 {
     // traits
     CHECK(etl::is_nothrow_constructible_v<chrono::weekday_last, chrono::weekday>);
@@ -260,7 +260,7 @@ namespace chrono = etl::chrono;
     return true;
 }
 
-[[nodiscard]] constexpr static auto test_all() -> bool
+[[nodiscard]] static constexpr auto test_all() -> bool
 {
     CHECK(test_duration());
     CHECK(test_day());

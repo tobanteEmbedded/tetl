@@ -43,7 +43,10 @@ public:
     }
 
     template <typename OtherIndexType>
-        requires(is_convertible_v<OtherIndexType const&, index_type> and is_nothrow_constructible_v<index_type, OtherIndexType const&>)
+        requires(
+            is_convertible_v<OtherIndexType const&, index_type>
+            and is_nothrow_constructible_v<index_type, OtherIndexType const&>
+        )
     constexpr mapping(extents_type const& ext, array<OtherIndexType, rank> const& s) noexcept
         : mapping(ext, span(s))
     {

@@ -428,8 +428,9 @@ public:
 
     template <typename InIt>
         requires(detail::InputIterator<InIt>)
-    constexpr auto move_insert(const_iterator position, InIt first, InIt last)
-        noexcept(noexcept(emplace_back(etl::move(*first)))) -> iterator
+    constexpr auto
+    move_insert(const_iterator position, InIt first, InIt last) noexcept(noexcept(emplace_back(etl::move(*first))))
+        -> iterator
     {
         assert_iterator_in_range(position);
         assert_valid_iterator_pair(first, last);
@@ -449,8 +450,9 @@ public:
 
     template <typename... Args>
         requires(is_constructible_v<T, Args...>)
-    constexpr auto emplace(const_iterator position, Args&&... args)
-        noexcept(noexcept(move_insert(position, declval<value_type*>(), declval<value_type*>()))) -> iterator
+    constexpr auto emplace(const_iterator position, Args&&... args) noexcept(
+        noexcept(move_insert(position, declval<value_type*>(), declval<value_type*>()))
+    ) -> iterator
     {
         TETL_PRECONDITION(!full());
         assert_iterator_in_range(position);
@@ -486,8 +488,8 @@ public:
         return writablePosition;
     }
 
-    constexpr auto insert(const_iterator position, const_reference x)
-        noexcept(noexcept(insert(position, size_type(1), x))) -> iterator
+    constexpr auto
+    insert(const_iterator position, const_reference x) noexcept(noexcept(insert(position, size_type(1), x))) -> iterator
         requires(is_copy_constructible_v<T>)
     {
         TETL_PRECONDITION(!full());
@@ -498,7 +500,9 @@ public:
     template <typename InputIt>
     constexpr auto insert(const_iterator position, InputIt first, InputIt last) noexcept(noexcept(emplace_back(*first)))
         -> iterator
-        requires(detail::InputIterator<InputIt> && is_constructible_v<value_type, detail::iterator_reference_t<InputIt>>)
+        requires(
+            detail::InputIterator<InputIt> && is_constructible_v<value_type, detail::iterator_reference_t<InputIt>>
+        )
     {
         assert_iterator_in_range(position);
         assert_valid_iterator_pair(first, last);
@@ -555,26 +559,30 @@ public:
     }
 
     /// \brief Copy assignment.
-    constexpr auto operator=(static_vector const& other)
-        noexcept(noexcept(clear()) && noexcept(insert(begin(), other.begin(), other.end())))
-            -> static_vector& requires(is_assignable_v<reference, const_reference>) {
-                // Nothing to assert: size of other cannot exceed capacity because both
-                // vectors have the same type
-                clear();
-                insert(begin(), other.begin(), other.end());
-                return *this;
-            }
+    constexpr auto operator=(static_vector const& other) noexcept(
+        noexcept(clear()) && noexcept(insert(begin(), other.begin(), other.end()))
+    ) -> static_vector&
+        requires(is_assignable_v<reference, const_reference>)
+    {
+        // Nothing to assert: size of other cannot exceed capacity because both
+        // vectors have the same type
+        clear();
+        insert(begin(), other.begin(), other.end());
+        return *this;
+    }
 
     /// \brief Move assignment.
-    constexpr auto operator=(static_vector&& other)
-        noexcept(noexcept(clear()) and noexcept(move_insert(begin(), other.begin(), other.end())))
-            -> static_vector& requires(is_assignable_v<reference, reference>) {
-                // Nothing to assert: size of other cannot exceed capacity because both
-                // vectors have the same type
-                clear();
-                move_insert(begin(), other.begin(), other.end());
-                return *this;
-            }
+    constexpr auto operator=(static_vector&& other) noexcept(
+        noexcept(clear()) and noexcept(move_insert(begin(), other.begin(), other.end()))
+    ) -> static_vector&
+        requires(is_assignable_v<reference, reference>)
+    {
+        // Nothing to assert: size of other cannot exceed capacity because both
+        // vectors have the same type
+        clear();
+        move_insert(begin(), other.begin(), other.end());
+        return *this;
+    }
 
     /// \brief Initializes vector with n default-constructed elements.
     explicit constexpr static_vector(size_type n) noexcept(noexcept(emplace_n(n)))
@@ -620,8 +628,9 @@ public:
     /// \brief assign
     template <typename InputIter>
         requires(detail::InputIterator<InputIter>)
-    constexpr auto assign(InputIter first, InputIter last)
-        noexcept(noexcept(clear()) and noexcept(insert(begin(), first, last))) -> void
+    constexpr auto
+    assign(InputIter first, InputIter last) noexcept(noexcept(clear()) and noexcept(insert(begin(), first, last)))
+        -> void
     {
         if constexpr (detail::RandomAccessIterator<InputIter>) {
             TETL_PRECONDITION(last - first >= 0);

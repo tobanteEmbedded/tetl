@@ -12,7 +12,7 @@
 using namespace etl::string_view_literals;
 
 template <typename String>
-[[nodiscard]] constexpr static auto test() -> bool
+[[nodiscard]] static constexpr auto test() -> bool
 {
 
     // push_back
@@ -202,7 +202,7 @@ template <typename String>
     return true;
 }
 
-[[nodiscard]] constexpr static auto test_all() -> bool
+[[nodiscard]] static constexpr auto test_all() -> bool
 {
     CHECK(test<etl::inplace_string<7>>());
     CHECK(test<etl::inplace_string<18>>());

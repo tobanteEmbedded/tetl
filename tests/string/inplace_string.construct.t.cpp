@@ -11,7 +11,7 @@
 using namespace etl::string_view_literals;
 
 template <typename T>
-[[nodiscard]] constexpr static auto test_constructor() -> bool
+[[nodiscard]] static constexpr auto test_constructor() -> bool
 {
     using string = T;
 
@@ -201,7 +201,7 @@ template <typename T>
 }
 
 template <typename T>
-[[nodiscard]] constexpr static auto test_assign() -> bool
+[[nodiscard]] static constexpr auto test_assign() -> bool
 {
     using string = T;
 
@@ -307,7 +307,7 @@ template <typename T>
     return true;
 }
 
-[[nodiscard]] constexpr static auto test_all() -> bool
+[[nodiscard]] static constexpr auto test_all() -> bool
 {
     CHECK(sizeof(etl::inplace_string<6>) == 7);   // tiny storage, size_type = uint8
     CHECK(sizeof(etl::inplace_string<7>) == 8);   // tiny storage, size_type = uint8

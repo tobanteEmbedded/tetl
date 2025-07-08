@@ -4,7 +4,7 @@
 
 #include "testing/testing.hpp"
 
-[[nodiscard]] constexpr static auto test_default() -> bool
+[[nodiscard]] static constexpr auto test_default() -> bool
 {
     struct S {
         int i = 42;
@@ -28,7 +28,7 @@
     return true;
 }
 
-[[nodiscard]] constexpr static auto test_bool() -> bool
+[[nodiscard]] static constexpr auto test_bool() -> bool
 {
     CHECK(etl::numeric_limits<bool>::is_specialized == true);
     CHECK(etl::numeric_limits<bool>::is_signed == false);
@@ -48,7 +48,7 @@
 }
 
 template <typename T>
-[[nodiscard]] constexpr static auto test_signed() -> bool
+[[nodiscard]] static constexpr auto test_signed() -> bool
 {
     CHECK(etl::numeric_limits<T>::is_specialized == true);
     CHECK(etl::numeric_limits<T>::is_signed == true);
@@ -108,7 +108,7 @@ template <typename T>
 }
 
 template <typename T>
-[[nodiscard]] constexpr static auto test_unsigned() -> bool
+[[nodiscard]] static constexpr auto test_unsigned() -> bool
 {
     CHECK(etl::numeric_limits<T>::is_specialized == true);
     CHECK(etl::numeric_limits<T>::is_signed == false);
@@ -126,7 +126,7 @@ template <typename T>
     return true;
 }
 
-[[nodiscard]] constexpr static auto test_float_round_style() -> bool
+[[nodiscard]] static constexpr auto test_float_round_style() -> bool
 {
     CHECK(etl::float_round_style::round_indeterminate == -1);
     CHECK(etl::float_round_style::round_toward_zero == 0);
@@ -136,7 +136,7 @@ template <typename T>
     return true;
 }
 
-[[nodiscard]] constexpr static auto test_float() -> bool
+[[nodiscard]] static constexpr auto test_float() -> bool
 {
     CHECK(etl::numeric_limits<float>::is_specialized == true);
     CHECK(etl::numeric_limits<float>::is_signed == true);
@@ -153,7 +153,7 @@ template <typename T>
     return true;
 }
 
-[[nodiscard]] constexpr static auto test_double() -> bool
+[[nodiscard]] static constexpr auto test_double() -> bool
 {
     CHECK(etl::numeric_limits<double>::is_specialized == true);
     CHECK(etl::numeric_limits<double>::is_signed == true);

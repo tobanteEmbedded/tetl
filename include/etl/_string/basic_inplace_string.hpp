@@ -624,9 +624,12 @@ public:
     /// [index_str, index_str+count) of sv.
     template <typename StringView>
         requires string_view_like<StringView>
-    constexpr auto
-    insert(size_type const index, StringView const& view, size_type const indexStr, size_type const count = npos)
-        noexcept -> basic_inplace_string&
+    constexpr auto insert(
+        size_type const index,
+        StringView const& view,
+        size_type const indexStr,
+        size_type const count = npos
+    ) noexcept -> basic_inplace_string&
     {
         basic_string_view<Char, traits_type> sv = view;
 
@@ -643,8 +646,8 @@ public:
 
     /// \brief Compares this string to str with other capacity.
     template <size_type OtherCapacity>
-    [[nodiscard]] constexpr auto compare(basic_inplace_string<Char, OtherCapacity, traits_type> const& str
-    ) const noexcept -> int
+    [[nodiscard]] constexpr auto
+    compare(basic_inplace_string<Char, OtherCapacity, traits_type> const& str) const noexcept -> int
     {
         return basic_string_view<Char, Traits>{*this}.compare({str.data(), str.size()});
     }
@@ -738,9 +741,13 @@ public:
     /// of sv.
     template <typename StringView>
         requires string_view_like<StringView>
-    [[nodiscard]] constexpr auto
-    compare(size_type pos1, size_type count1, StringView const& view, size_type pos2, size_type count2 = npos)
-        const noexcept -> int
+    [[nodiscard]] constexpr auto compare(
+        size_type pos1,
+        size_type count1,
+        StringView const& view,
+        size_type pos2,
+        size_type count2 = npos
+    ) const noexcept -> int
     {
         using view_type    = basic_string_view<Char, Traits>;
         view_type const sv = view;
@@ -1623,9 +1630,10 @@ operator>=(Char const* lhs, etl::basic_inplace_string<Char, Capacity, Traits> co
 /// \brief Specializes the etl::swap algorithm for etl::basic_inplace_string.
 /// Swaps the contents of lhs and rhs. Equivalent to lhs.swap(rhs).
 template <typename Char, typename Traits, etl::size_t Capacity>
-constexpr auto
-swap(etl::basic_inplace_string<Char, Capacity, Traits>& lhs, etl::basic_inplace_string<Char, Capacity, Traits>& rhs)
-    noexcept(noexcept(lhs.swap(rhs))) -> void
+constexpr auto swap(
+    etl::basic_inplace_string<Char, Capacity, Traits>& lhs,
+    etl::basic_inplace_string<Char, Capacity, Traits>& rhs
+) noexcept(noexcept(lhs.swap(rhs))) -> void
 {
     lhs.swap(rhs);
 }

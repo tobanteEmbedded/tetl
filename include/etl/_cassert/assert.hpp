@@ -50,12 +50,14 @@ template <typename Assertion>
     do {                                                                                                               \
         if (not(__VA_ARGS__)) [[unlikely]] {                                                                           \
             /* TETL_DEBUG_TRAP(); */                                                                                   \
-            etl::assert_handler(etl::assert_msg{                                                                       \
-                .line       = __LINE__,                                                                                \
-                .file       = __FILE__,                                                                                \
-                .func       = etl::is_hosted() ? TETL_BUILTIN_FUNCTION() : nullptr,                                    \
-                .expression = etl::is_hosted() ? TETL_STRINGIFY((__VA_ARGS__)) : nullptr,                              \
-            });                                                                                                        \
+            etl::assert_handler(                                                                                       \
+                etl::assert_msg{                                                                                       \
+                    .line       = __LINE__,                                                                            \
+                    .file       = __FILE__,                                                                            \
+                    .func       = etl::is_hosted() ? TETL_BUILTIN_FUNCTION() : nullptr,                                \
+                    .expression = etl::is_hosted() ? TETL_STRINGIFY((__VA_ARGS__)) : nullptr,                          \
+                }                                                                                                      \
+            );                                                                                                         \
         }                                                                                                              \
     } while (false)
 

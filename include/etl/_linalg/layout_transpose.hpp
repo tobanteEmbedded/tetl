@@ -68,8 +68,9 @@ struct layout_transpose {
         }
 
         template <typename IndexType, typename... Indices>
-        [[nodiscard]] constexpr auto operator()(Indices... rest, IndexType i, IndexType j) const
-            noexcept(noexcept(_nestedMapping(rest..., j, i))) -> typename Extents::size_type
+        [[nodiscard]] constexpr auto
+        operator()(Indices... rest, IndexType i, IndexType j) const noexcept(noexcept(_nestedMapping(rest..., j, i))) ->
+            typename Extents::size_type
         {
             return _nestedMapping(rest..., j, i);
         }

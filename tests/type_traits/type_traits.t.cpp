@@ -526,7 +526,7 @@ static constexpr auto test() -> bool
     CHECK(test_identity<T (IDS::*)(T const&) const>());
     CHECK(test_identity<T (IDS::*)(T volatile&) volatile>());
     CHECK(test_identity<T (IDS::*)(T const volatile&) const volatile>());
-    CHECK(test_identity<T (IDS::*)(T)&>());
+    CHECK(test_identity<T (IDS::*)(T) &>());
     CHECK(test_identity<T (IDS::*)(T) const&>());
     CHECK(test_identity<T (IDS::*)(T) &&>());
     CHECK(test_identity<T (IDS::*)(T) const&&>());
