@@ -1,12 +1,20 @@
 // SPDX-License-Identifier: BSL-1.0
 
-#include <etl/bitset.hpp>
-
-#include <etl/cstddef.hpp>
-#include <etl/string_view.hpp>
-#include <etl/utility.hpp>
-
 #include "testing/testing.hpp"
+
+#if defined(TETL_ENABLE_CXX_MODULES)
+import etl.bitset;
+import etl.cstddef;
+import etl.limits;
+import etl.string_view;
+import etl.utility;
+#else
+    #include <etl/bitset.hpp>
+    #include <etl/cstddef.hpp>
+    #include <etl/limits.hpp>
+    #include <etl/string_view.hpp>
+    #include <etl/utility.hpp>
+#endif
 
 template <etl::size_t N>
 static constexpr auto test_bitset() -> bool
