@@ -20,7 +20,6 @@
 #include <etl/_memory/destroy.hpp>
 #include <etl/_memory/destroy_at.hpp>
 #include <etl/_memory/destroy_n.hpp>
-#include <etl/_memory/pointer_like_traits.hpp>
 #include <etl/_memory/pointer_traits.hpp>
 #include <etl/_memory/ranges_construct_at.hpp>
 #include <etl/_memory/ranges_destroy.hpp>
@@ -35,6 +34,7 @@
 #include <etl/_memory/monotonic_allocator.hpp>
 #include <etl/_memory/pointer_int_pair.hpp>
 #include <etl/_memory/pointer_int_pair_info.hpp>
+#include <etl/_memory/pointer_like_traits.hpp>
 #include <etl/_memory/small_ptr.hpp>
 
 #endif // TETL_MEMORY_HPP

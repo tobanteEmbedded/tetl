@@ -34,6 +34,7 @@ target_sources(tetl-module
         "src/memory.cpp"
         "src/numbers.cpp"
         "src/numeric.cpp"
+        "src/optional.cpp"
         "src/random.cpp"
         "src/ranges.cpp"
         "src/ratio.cpp"
