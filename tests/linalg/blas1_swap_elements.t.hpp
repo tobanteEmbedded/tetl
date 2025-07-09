@@ -165,26 +165,3 @@ template <typename IndexType>
 
     return true;
 }
-
-[[nodiscard]] static constexpr auto test_all() -> bool
-{
-    CHECK(test_index_type<signed char>());
-    CHECK(test_index_type<signed short>());
-    CHECK(test_index_type<signed int>());
-    CHECK(test_index_type<signed long>());
-    CHECK(test_index_type<signed long long>());
-
-    CHECK(test_index_type<unsigned char>());
-    CHECK(test_index_type<unsigned short>());
-    CHECK(test_index_type<unsigned int>());
-    CHECK(test_index_type<unsigned long>());
-    CHECK(test_index_type<unsigned long long>());
-
-    return true;
-}
-
-auto main() -> int
-{
-    STATIC_CHECK(test_all());
-    return EXIT_SUCCESS;
-}
