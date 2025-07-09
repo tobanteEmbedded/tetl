@@ -10,6 +10,7 @@ export import etl.cctype;
 export import etl.charconv;
 export import etl.chrono;
 export import etl.cmath;
+export import etl.compare;
 export import etl.complex;
 export import etl.concepts;
 export import etl.cstddef;

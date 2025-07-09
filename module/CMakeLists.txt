@@ -17,6 +17,7 @@ target_sources(tetl-module
         "src/charconv.cpp"
         "src/chrono.cpp"
         "src/cmath.cpp"
+        "src/compare.cpp"
         "src/complex.cpp"
         "src/concepts.cpp"
         "src/cstddef.cpp"
