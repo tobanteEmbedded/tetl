@@ -23,6 +23,10 @@ using etl::sin;
 using etl::sinh;
 using etl::tan;
 using etl::tanh;
+using etl::tuple_element;
+using etl::tuple_element_t;
+using etl::tuple_size;
+using etl::tuple_size_v;
 
 using etl::operator+;
 using etl::operator-;
