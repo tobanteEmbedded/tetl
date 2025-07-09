@@ -37,6 +37,7 @@ target_sources(tetl-module
         "src/span.cpp"
         "src/string_view.cpp"
         "src/string.cpp"
+        "src/strings.cpp"
         "src/system_error.cpp"
         "src/tuple.cpp"
         "src/type_traits.cpp"

@@ -30,6 +30,7 @@ export import etl.ratio;
 export import etl.span;
 export import etl.string_view;
 export import etl.string;
+export import etl.strings;
 export import etl.tuple;
 export import etl.type_traits;
 export import etl.utility;

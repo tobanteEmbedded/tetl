@@ -1,14 +1,24 @@
 // SPDX-License-Identifier: BSL-1.0
 
-#include <etl/strings.hpp>
-
-#include <etl/array.hpp>
-#include <etl/cstdint.hpp>
-#include <etl/string_view.hpp>
-#include <etl/type_traits.hpp>
-
-#include "testing/approx.hpp"
 #include "testing/testing.hpp"
+
+#if defined(TETL_ENABLE_CXX_MODULES)
+import etl.array;
+import etl.cctype;
+import etl.cstddef;
+import etl.cstdint;
+import etl.limits;
+import etl.string_view;
+import etl.strings;
+#else
+    #include <etl/array.hpp>
+    #include <etl/cctype.hpp>
+    #include <etl/cstddef.hpp>
+    #include <etl/cstdint.hpp>
+    #include <etl/limits.hpp>
+    #include <etl/string_view.hpp>
+    #include <etl/strings.hpp>
+#endif
 
 namespace {
 
