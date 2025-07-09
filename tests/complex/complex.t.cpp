@@ -1,12 +1,19 @@
 // SPDX-License-Identifier: BSL-1.0
 
-#include <etl/complex.hpp>
-
-#include <etl/type_traits.hpp>
-#include <etl/utility.hpp>
-
 #include "testing/approx.hpp"
 #include "testing/testing.hpp"
+
+#if defined(TETL_ENABLE_CXX_MODULES)
+import etl.complex;
+import etl.concepts;
+import etl.type_traits;
+import etl.utility;
+#else
+    #include <etl/complex.hpp>
+    #include <etl/concepts.hpp>
+    #include <etl/type_traits.hpp>
+    #include <etl/utility.hpp>
+#endif
 
 template <typename T>
 static constexpr auto test() -> bool

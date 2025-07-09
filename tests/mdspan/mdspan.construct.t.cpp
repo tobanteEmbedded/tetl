@@ -1,10 +1,22 @@
 // SPDX-License-Identifier: BSL-1.0
 
-#include <etl/mdspan.hpp>
-
-#include <etl/array.hpp>
-
 #include "testing/testing.hpp"
+
+#if defined(TETL_ENABLE_CXX_MODULES)
+import etl.array;
+import etl.concepts;
+import etl.iterator;
+import etl.mdspan;
+import etl.span;
+import etl.type_traits;
+#else
+    #include <etl/array.hpp>
+    #include <etl/concepts.hpp>
+    #include <etl/iterator.hpp>
+    #include <etl/mdspan.hpp>
+    #include <etl/span.hpp>
+    #include <etl/type_traits.hpp>
+#endif
 
 template <typename T, typename Index>
 [[nodiscard]] static constexpr auto test() -> bool

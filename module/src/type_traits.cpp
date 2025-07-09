@@ -36,6 +36,7 @@ using etl::conjunction;
 using etl::conjunction_v;
 using etl::decay;
 using etl::decay_t;
+using etl::declval;
 using etl::disjunction;
 using etl::disjunction_v;
 using etl::enable_if;

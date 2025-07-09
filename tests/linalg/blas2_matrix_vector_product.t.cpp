@@ -1,11 +1,20 @@
 // SPDX-License-Identifier: BSL-1.0
 
-#include <etl/linalg.hpp>
-
-#include <etl/cassert.hpp>
-#include <etl/complex.hpp>
-
 #include "testing/testing.hpp"
+
+#if defined(TETL_ENABLE_CXX_MODULES)
+import etl.array;
+import etl.complex;
+import etl.concepts;
+import etl.linalg;
+import etl.mdspan;
+#else
+    #include <etl/array.hpp>
+    #include <etl/complex.hpp>
+    #include <etl/concepts.hpp>
+    #include <etl/linalg.hpp>
+    #include <etl/mdspan.hpp>
+#endif
 
 template <typename T>
 [[nodiscard]] static constexpr auto test_linalg_matrix_vector_product() -> bool
