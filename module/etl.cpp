@@ -26,6 +26,7 @@ export import etl.mdspan;
 export import etl.memory;
 export import etl.numbers;
 export import etl.numeric;
+export import etl.random;
 export import etl.ranges;
 export import etl.ratio;
 export import etl.span;

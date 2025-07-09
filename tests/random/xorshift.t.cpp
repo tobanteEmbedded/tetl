@@ -1,8 +1,14 @@
 // SPDX-License-Identifier: BSL-1.0
 
-#include <etl/random.hpp>
-
 #include "testing/testing.hpp"
+
+#if defined(TETL_ENABLE_CXX_MODULES)
+import etl.cstdint;
+import etl.random;
+#else
+    #include <etl/cstdint.hpp>
+    #include <etl/random.hpp>
+#endif
 
 static constexpr auto test_xorshift32() -> bool
 {
