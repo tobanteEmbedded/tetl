@@ -135,6 +135,10 @@ using etl::trunc;
 using etl::truncf;
 using etl::truncl;
 
+// Non-standard extensions
+using etl::ilog2;
+using etl::ipow;
+
 namespace detail {
 using etl::detail::copysign_fallback;
 using etl::detail::signbit_fallback;

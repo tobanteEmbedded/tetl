@@ -1,11 +1,16 @@
 // SPDX-License-Identifier: BSL-1.0
 
-#include <etl/cmath.hpp>
-
-#include <etl/cassert.hpp>
-#include <etl/concepts.hpp>
-
 #include "testing/testing.hpp"
+
+#if defined(TETL_ENABLE_CXX_MODULES)
+import etl.cmath;
+import etl.concepts;
+import etl.type_traits;
+#else
+    #include <etl/cmath.hpp>
+    #include <etl/concepts.hpp>
+    #include <etl/type_traits.hpp>
+#endif
 
 template <etl::integral Int>
 static constexpr auto test() -> bool
