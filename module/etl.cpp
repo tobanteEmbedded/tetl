@@ -21,6 +21,7 @@ export import etl.inplace_vector;
 export import etl.iterator;
 export import etl.limits;
 export import etl.linalg;
+export import etl.mdarray;
 export import etl.mdspan;
 export import etl.memory;
 export import etl.numbers;

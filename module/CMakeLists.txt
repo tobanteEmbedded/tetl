@@ -28,6 +28,7 @@ target_sources(tetl-module
         "src/iterator.cpp"
         "src/limits.cpp"
         "src/linalg.cpp"
+        "src/mdarray.cpp"
         "src/mdspan.cpp"
         "src/memory.cpp"
         "src/numbers.cpp"
