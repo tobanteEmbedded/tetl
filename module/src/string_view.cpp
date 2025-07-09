@@ -8,6 +8,11 @@ export namespace etl {
 
 using etl::basic_string_view;
 using etl::operator==;
+using etl::operator!=;
+using etl::operator<;
+using etl::operator<=;
+using etl::operator>;
+using etl::operator>=;
 using etl::string_view;
 using etl::swap;
 using etl::u16string_view;
