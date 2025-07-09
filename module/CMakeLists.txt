@@ -23,6 +23,7 @@ target_sources(tetl-module
         "src/cstddef.cpp"
         "src/cstdint.cpp"
         "src/exception.cpp"
+        "src/flat_set.cpp"
         "src/functional.cpp"
         "src/inplace_vector.cpp"
         "src/iterator.cpp"

@@ -16,6 +16,7 @@ export import etl.concepts;
 export import etl.cstddef;
 export import etl.cstdint;
 export import etl.exception;
+export import etl.flat_set;
 export import etl.functional;
 export import etl.inplace_vector;
 export import etl.iterator;
