@@ -124,7 +124,8 @@ struct stack {
     /// container adaptors. The comparison is done by applying the corresponding
     /// operator to the underlying containers.
     [[nodiscard]] friend constexpr auto
-    operator==(stack const& lhs, stack const& rhs) noexcept(noexcept(lhs.c == rhs.c)) -> bool
+    operator==(stack const& lhs, stack const& rhs) noexcept(noexcept(declval<Container>() == declval<Container>()))
+        -> bool
     {
         return lhs.c == rhs.c;
     }
@@ -133,7 +134,8 @@ struct stack {
     /// container adaptors. The comparison is done by applying the corresponding
     /// operator to the underlying containers.
     [[nodiscard]] friend constexpr auto
-    operator!=(stack const& lhs, stack const& rhs) noexcept(noexcept(lhs.c != rhs.c)) -> bool
+    operator!=(stack const& lhs, stack const& rhs) noexcept(noexcept(declval<Container>() != declval<Container>()))
+        -> bool
     {
         return lhs.c != rhs.c;
     }
@@ -141,7 +143,8 @@ struct stack {
     /// \brief Compares the contents of the underlying containers of two
     /// container adaptors. The comparison is done by applying the corresponding
     /// operator to the underlying containers.
-    [[nodiscard]] friend constexpr auto operator<(stack const& lhs, stack const& rhs) noexcept(noexcept(lhs.c < rhs.c))
+    [[nodiscard]] friend constexpr auto
+    operator<(stack const& lhs, stack const& rhs) noexcept(noexcept(declval<Container>() < declval<Container>()))
         -> bool
     {
         return lhs.c < rhs.c;
@@ -151,7 +154,8 @@ struct stack {
     /// container adaptors. The comparison is done by applying the corresponding
     /// operator to the underlying containers.
     [[nodiscard]] friend constexpr auto
-    operator<=(stack const& lhs, stack const& rhs) noexcept(noexcept(lhs.c <= rhs.c)) -> bool
+    operator<=(stack const& lhs, stack const& rhs) noexcept(noexcept(declval<Container>() <= declval<Container>()))
+        -> bool
     {
         return lhs.c <= rhs.c;
     }
@@ -159,7 +163,8 @@ struct stack {
     /// \brief Compares the contents of the underlying containers of two
     /// container adaptors. The comparison is done by applying the corresponding
     /// operator to the underlying containers.
-    [[nodiscard]] friend constexpr auto operator>(stack const& lhs, stack const& rhs) noexcept(noexcept(lhs.c > rhs.c))
+    [[nodiscard]] friend constexpr auto
+    operator>(stack const& lhs, stack const& rhs) noexcept(noexcept(declval<Container>() > declval<Container>()))
         -> bool
     {
         return lhs.c > rhs.c;
@@ -169,7 +174,8 @@ struct stack {
     /// container adaptors. The comparison is done by applying the corresponding
     /// operator to the underlying containers.
     [[nodiscard]] friend constexpr auto
-    operator>=(stack const& lhs, stack const& rhs) noexcept(noexcept(lhs.c >= rhs.c)) -> bool
+    operator>=(stack const& lhs, stack const& rhs) noexcept(noexcept(declval<Container>() >= declval<Container>()))
+        -> bool
     {
         return lhs.c >= rhs.c;
     }
