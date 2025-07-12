@@ -1,9 +1,15 @@
 // SPDX-License-Identifier: BSL-1.0
 
-#include <etl/variant.hpp>
-
 #include "testing/exception.hpp"
 #include "testing/testing.hpp"
+
+#if defined(TETL_ENABLE_CXX_MODULES)
+import etl.exception;
+import etl.variant;
+#else
+    #include <etl/exception.hpp>
+    #include <etl/variant.hpp>
+#endif
 
 namespace {
 

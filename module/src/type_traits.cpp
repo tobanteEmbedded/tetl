@@ -228,6 +228,7 @@ using etl::unwrap_reference_t;
 using etl::void_t;
 
 // Non-standard extensions
+using etl::index_v;
 using etl::is_builtin_integer;
 using etl::is_builtin_integer_v;
 using etl::is_builtin_signed_integer;

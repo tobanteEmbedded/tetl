@@ -46,5 +46,6 @@ target_sources(tetl-module
         "src/tuple.cpp"
         "src/type_traits.cpp"
         "src/utility.cpp"
+        "src/variant.cpp"
         "src/vector.cpp"
 )

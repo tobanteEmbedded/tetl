@@ -38,4 +38,5 @@ export import etl.strings;
 export import etl.tuple;
 export import etl.type_traits;
 export import etl.utility;
+export import etl.variant;
 export import etl.vector;
