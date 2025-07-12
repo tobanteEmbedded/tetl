@@ -1,8 +1,12 @@
 // SPDX-License-Identifier: BSL-1.0
 
-#include <etl/cfloat.hpp>
-
 #include "testing/testing.hpp"
+
+#if defined(TETL_ENABLE_CXX_MODULES)
+import etl.cfloat;
+#else
+    #include <etl/cfloat.hpp>
+#endif
 
 static constexpr auto test_inf() -> bool
 {

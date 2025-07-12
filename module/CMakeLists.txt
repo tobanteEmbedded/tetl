@@ -14,6 +14,7 @@ target_sources(tetl-module
         "src/bit.cpp"
         "src/bitset.cpp"
         "src/cctype.cpp"
+        "src/cfloat.cpp"
         "src/charconv.cpp"
         "src/chrono.cpp"
         "src/cmath.cpp"

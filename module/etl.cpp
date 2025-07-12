@@ -7,6 +7,7 @@ export import etl.array;
 export import etl.bit;
 export import etl.bitset;
 export import etl.cctype;
+export import etl.cfloat;
 export import etl.charconv;
 export import etl.chrono;
 export import etl.cmath;
