@@ -1,10 +1,14 @@
 // SPDX-License-Identifier: BSL-1.0
 
-#include <etl/iterator.hpp>
-
-#include <etl/array.hpp>
-
 #include "testing/testing.hpp"
+
+#if defined(TETL_ENABLE_CXX_MODULES)
+import etl.array;
+import etl.iterator;
+#else
+    #include <etl/array.hpp>
+    #include <etl/iterator.hpp>
+#endif
 
 namespace {
 

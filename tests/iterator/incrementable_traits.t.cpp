@@ -1,13 +1,20 @@
 // SPDX-License-Identifier: BSL-1.0
 
-#include <etl/iterator.hpp>
-
-#include <etl/concepts.hpp>
-#include <etl/cstddef.hpp>
-#include <etl/cstdint.hpp>
-#include <etl/type_traits.hpp>
-
 #include "testing/testing.hpp"
+
+#if defined(TETL_ENABLE_CXX_MODULES)
+import etl.concepts;
+import etl.cstddef;
+import etl.cstdint;
+import etl.iterator;
+import etl.type_traits;
+#else
+    #include <etl/concepts.hpp>
+    #include <etl/cstddef.hpp>
+    #include <etl/cstdint.hpp>
+    #include <etl/iterator.hpp>
+    #include <etl/type_traits.hpp>
+#endif
 
 namespace {
 
