@@ -19,10 +19,10 @@ function(tetl_add_test _header _target)
 
   if(${TETL_BUILD_CXX_MODULES})
     target_compile_definitions("test_${_header}_${_target}" PRIVATE TETL_ENABLE_CXX_MODULES=1)
-    target_link_libraries("test_${_header}_${_target}" PRIVATE tetl-module)
+    target_link_libraries("test_${_header}_${_target}" PRIVATE tetl::etl-module)
   else()
     set_target_properties("test_${_header}_${_target}" PROPERTIES CXX_SCAN_FOR_MODULES FALSE)
-    target_link_libraries("test_${_header}_${_target}" PRIVATE tetl::etl_headers)
+    target_link_libraries("test_${_header}_${_target}" PRIVATE tetl::etl)
   endif()
 
   add_test(NAME "${_header}.hpp: ${_target}" COMMAND "test_${_header}_${_target}")
