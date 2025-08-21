@@ -27,12 +27,15 @@ jobs:
           chmod +x llvm.sh
           sudo ./llvm.sh 20 all
           which run-clang-tidy
+          which run-clang-tidy-20
+          clang-tidy --version
+          clang-tidy-20 --version
 
       - name: CMake configure
         run: >
           cmake -S .
           -G "Unix Makefiles"
-          -B cmake-build-tidy
+          -B build
           -D CMAKE_BUILD_TYPE=Debug
           -D CMAKE_C_COMPILER="clang-20"
           -D CMAKE_CXX_COMPILER="clang++-20"
@@ -42,4 +45,12 @@ jobs:
           -D TETL_BUILD_WEVERYTHING=ON
 
       - name: Clang-Tidy check
-        run: CLANG_VERSION="-20" BUILD_DIR=cmake-build-tidy make tidy-check
+        run: >
+          run-clang-tidy-20
+          -clang-tidy-binary clang-tidy-20
+          -clang-apply-replacements-binary clang-apply-replacements-20
+          -header-filter=$(realpath .)
+          -quiet
+          -j $(nproc)
+          -p ./build
+          $(realpath .)
