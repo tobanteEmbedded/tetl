@@ -4,7 +4,6 @@ project(tetl-dev LANGUAGES CXX)
 option(TETL_BUILD_CONTRACT_CHECKS      "Build with contract assertions"                  ON)
 option(TETL_BUILD_CONTRACT_CHECKS_SAFE "Build with all/slow contract assertions"         OFF)
 option(TETL_BUILD_CXX_MODULES          "Build with C++20 modules"                        OFF)
-option(TETL_BUILD_WEVERYTHING          "Build with -Weverything (clang only)"            OFF)
 
 find_program(CCACHE ccache)
 if(CCACHE)

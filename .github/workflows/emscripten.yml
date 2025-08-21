@@ -41,7 +41,6 @@ jobs:
           -D CMAKE_CXX_FLAGS="-fexceptions"
           -D CMAKE_CXX_STANDARD=${{ matrix.cxx }}
           -D CMAKE_COMPILE_WARNING_AS_ERROR=ON
-          -D TETL_BUILD_WEVERYTHING=ON
 
       - name: CMake build -- Debug
         run: cmake --build build --config Debug
