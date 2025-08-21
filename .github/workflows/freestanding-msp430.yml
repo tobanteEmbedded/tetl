@@ -10,7 +10,7 @@ jobs:
   build:
     runs-on: ubuntu-24.04
     container:
-      image: alpine:edge
+      image: alpine:3.20
     strategy:
       matrix:
         cxx: ["20", "23", "2c"]
