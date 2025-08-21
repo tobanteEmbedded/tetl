@@ -119,6 +119,7 @@ run-clang-tidy -fix -j 8 -quiet -p cmake-build-tidy -header-filter $(realpath .)
 # build with coverage flags
 cmake -S . -B cmake-build-coverage -G Ninja -D CMAKE_BUILD_TYPE=Debug -D CMAKE_CXX_STANDARD=23 -D CMAKE_CXX_FLAGS="--coverage" -D CMAKE_EXE_LINKER_FLAGS="--coverage"
 cmake --build cmake-build-coverage --parallel 8
+ctest --test-dir cmake-build-coverage -C Debug --output-on-failure -j 8
 
 # run gcov
 gcovr --html-details -e ".*_3rd_party*" --exclude-unreachable-branches -r . -s cmake-build-coverage -o cmake-build-coverage/coverage.html -j 4
