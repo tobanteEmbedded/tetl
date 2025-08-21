@@ -109,8 +109,8 @@ ctest --preset desktop
 
 ```sh
 cmake -S . -B cmake-build-tidy -G "Unix Makefiles" -D CMAKE_BUILD_TYPE=Debug
-cmake --build cmake-build-tidy --parallel 8
-run-clang-tidy -fix -j 8 -quiet -p cmake-build-tidy -header-filter $(realpath .) $(realpath .)
+cmake --build cmake-build-tidy --parallel $(nproc)
+run-clang-tidy -fix -j $(nproc) -quiet -p cmake-build-tidy -header-filter $(realpath .) $(realpath .)
 ```
 
 ### coverage
@@ -118,14 +118,14 @@ run-clang-tidy -fix -j 8 -quiet -p cmake-build-tidy -header-filter $(realpath .)
 ```sh
 # build with coverage flags
 cmake -S . -B cmake-build-coverage -G Ninja -D CMAKE_BUILD_TYPE=Debug -D CMAKE_CXX_STANDARD=23 -D CMAKE_CXX_FLAGS="--coverage" -D CMAKE_EXE_LINKER_FLAGS="--coverage"
-cmake --build cmake-build-coverage --parallel 8
-ctest --test-dir cmake-build-coverage -C Debug --output-on-failure -j 8
+cmake --build cmake-build-coverage --parallel $(nproc)
+ctest --test-dir cmake-build-coverage -C Debug --output-on-failure -j $(nproc)
 
 # run gcov
-gcovr --html-details -e ".*_3rd_party*" --exclude-unreachable-branches -r . -s cmake-build-coverage -o cmake-build-coverage/coverage.html -j 4
+gcovr --html-details -e ".*_3rd_party*" --exclude-unreachable-branches -r . -s cmake-build-coverage -o cmake-build-coverage/coverage.html -j $(nproc)
 
 # or grcov (faster)
-grcov . -s . --binary-path ./cmake-build-coverage/bin/ -t html --ignore-not-existing -o ./cmake-build-coverage/html/ --ignore '*_3rd_party/*' --threads 4
+grcov . -s . --binary-path ./cmake-build-coverage/bin/ -t html --ignore-not-existing -o ./cmake-build-coverage/html/ --ignore '*_3rd_party/*' --threads $(nproc)
 ```
 
 ### pre-commit

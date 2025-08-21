@@ -51,7 +51,7 @@ jobs:
           -s build
           -o build/coverage.xml
           -r include
-          -j 2
+          -j $(nproc)
 
       - uses: codecov/codecov-action@v5
         with:
