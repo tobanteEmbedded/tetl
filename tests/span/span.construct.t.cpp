@@ -79,14 +79,8 @@ static constexpr auto test() -> bool
 
     // from Container const
     {
-        auto const vec = []() {
-            auto v = etl::static_vector<T, 8>{};
-            v.push_back(T{});
-            v.push_back(T{});
-            return v;
-        }();
-
-        auto const sp = etl::span{vec};
+        auto const vec = etl::static_vector<T, 8>({T(), T()});
+        auto const sp  = etl::span{vec};
         CHECK(sp.data() == vec.data());
         CHECK(sp.size() == 2);
     }
