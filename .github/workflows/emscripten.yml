@@ -22,11 +22,6 @@ jobs:
       - name: Check out code
         uses: actions/checkout@v4
 
-      - name: Install ninja
-        run: |
-          sudo apt update -y
-          sudo apt install -y ninja-build
-
       - name: Setup emsdk
         uses: mymindstorm/setup-emsdk@v14
         with:

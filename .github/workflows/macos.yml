@@ -27,9 +27,6 @@ jobs:
       - name: Check out code
         uses: actions/checkout@v4
 
-      - name: Install ninja
-        run: brew install ninja
-
       - name: CMake configure
         run: >
           cmake -S .
