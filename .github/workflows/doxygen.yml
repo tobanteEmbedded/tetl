@@ -1,6 +1,8 @@
 name: Doxygen
 
-on: [push, pull_request]
+on:
+  push:
+    branches: [main]
 
 concurrency:
   group: ${{ github.ref }}-${{ github.workflow }}
