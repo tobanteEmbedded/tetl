@@ -13,7 +13,7 @@ namespace etl {
 template <typename T = void>
 struct plus {
     /// \brief Returns the sum of lhs and rhs.
-    [[nodiscard]] constexpr auto operator()(T const& lhs, T const& rhs) const -> T { return lhs + rhs; }
+    [[nodiscard]] constexpr auto operator()(T const& lhs, T const& rhs) const -> T { return static_cast<T>(lhs + rhs); }
 };
 
 template <>

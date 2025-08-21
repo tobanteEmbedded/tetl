@@ -13,7 +13,7 @@ namespace etl {
 template <typename T = void>
 struct multiplies {
     /// \brief Returns the product between lhs and rhs.
-    [[nodiscard]] constexpr auto operator()(T const& lhs, T const& rhs) const -> T { return lhs * rhs; }
+    [[nodiscard]] constexpr auto operator()(T const& lhs, T const& rhs) const -> T { return static_cast<T>(lhs * rhs); }
 };
 
 template <>
