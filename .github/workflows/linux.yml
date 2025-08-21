@@ -59,7 +59,7 @@ jobs:
           -D CMAKE_CXX_STANDARD=${{ matrix.cxx_std }}
           -D CMAKE_CXX_FLAGS="-g -fno-omit-frame-pointer -fsanitize=address,undefined -fno-sanitize-recover=undefined"
           -D CMAKE_EXE_LINKER_FLAGS="-g -fno-omit-frame-pointer -fsanitize=address,undefined -fno-sanitize-recover=undefined"
-          -D TETL_BUILD_WERROR=ON
+          -D CMAKE_COMPILE_WARNING_AS_ERROR=ON
           -D TETL_BUILD_WEVERYTHING=ON
 
       - name: CMake build -- Debug

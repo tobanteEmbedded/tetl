@@ -36,7 +36,7 @@ jobs:
           -B build
           -G "Ninja Multi-Config"
           -D CMAKE_CXX_STANDARD=${{ matrix.config.cxx }}
-          -D TETL_BUILD_WERROR=${{ matrix.config.werror }}
+          -D CMAKE_COMPILE_WARNING_AS_ERROR=${{ matrix.config.werror }}
 
       - name: CMake build -- Debug
         run: cmake --build build --config Debug

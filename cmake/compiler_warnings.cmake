@@ -6,7 +6,6 @@ if (MSVC)
     INTERFACE
       /W3
       /wd4723 # potential divide by 0
-      $<$<BOOL:${TETL_BUILD_WERROR}>:/WX>
   )
 else ()
   target_compile_options(compiler_warnings
@@ -14,7 +13,6 @@ else ()
       -Wall
       -Wextra
       -Wpedantic
-      $<$<BOOL:${TETL_BUILD_WERROR}>:-Werror>
 
       -Wcast-align
       -Wcast-qual

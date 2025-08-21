@@ -36,7 +36,7 @@ jobs:
           -G "Ninja Multi-Config"
           -D CMAKE_TOOLCHAIN_FILE=cmake/toolchain/atmega2560.cmake
           -D CMAKE_CXX_STANDARD=${{ matrix.cxx }}
-          -D TETL_BUILD_WERROR=ON
+          -D CMAKE_COMPILE_WARNING_AS_ERROR=ON
           -D TETL_BUILD_CONTRACT_CHECKS=OFF
 
       - name: Build tests -- Debug

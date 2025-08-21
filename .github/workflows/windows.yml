@@ -46,7 +46,7 @@ jobs:
           -B build
           -G "Ninja Multi-Config"
           -D CMAKE_CXX_STANDARD=${{ matrix.cxx }}
-          -D TETL_BUILD_WERROR=ON
+          -D CMAKE_COMPILE_WARNING_AS_ERROR=ON
           -D TETL_BUILD_CONTRACT_CHECKS=OFF
 
       - name: Configure
@@ -57,7 +57,7 @@ jobs:
           -G "Visual Studio 17 2022"
           -T ClangCL
           -D CMAKE_CXX_STANDARD=${{ matrix.cxx }}
-          -D TETL_BUILD_WERROR=ON
+          -D CMAKE_COMPILE_WARNING_AS_ERROR=ON
 
       - name: Configure
         if: matrix.compiler == 'clang'
@@ -68,7 +68,7 @@ jobs:
           -D CMAKE_C_COMPILER=clang
           -D CMAKE_CXX_COMPILER=clang++
           -D CMAKE_CXX_STANDARD=${{ matrix.cxx }}
-          -D TETL_BUILD_WERROR=ON
+          -D CMAKE_COMPILE_WARNING_AS_ERROR=ON
           -D TETL_BUILD_WEVERYTHING=ON
 
       - name: Build -- Debug
