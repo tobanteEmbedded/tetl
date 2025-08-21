@@ -34,7 +34,7 @@ elseif(CMAKE_CXX_COMPILER_ID STREQUAL "GCC")
         "-Wunused-parameter"
         "-Wzero-as-null-pointer-constant"
     )
-elseif(CMAKE_CXX_COMPILER_ID MATCHES "Clang")
+elseif(CMAKE_CXX_COMPILER_ID MATCHES "AppleClang|Clang")
     target_compile_options(tetl.compiler_warnings INTERFACE
         "-Weverything"
 
