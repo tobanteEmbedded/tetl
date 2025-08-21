@@ -26,7 +26,6 @@ jobs:
 
       - name: Install dependencies
         run: |
-          apk add git --no-cache
           apk add make gcc-msp430-elf g++-msp430-elf newlib-msp430-elf grep --no-cache
           grep --version
           msp430-elf-g++ --version
