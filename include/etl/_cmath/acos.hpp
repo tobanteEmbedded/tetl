@@ -18,20 +18,18 @@ inline constexpr struct acos {
     template <typename Float>
     [[nodiscard]] constexpr auto operator()(Float arg) const noexcept -> Float
     {
-#if not defined(__AVR__)
         if (not is_constant_evaluated()) {
-    #if __has_builtin(__builtin_acosf)
+#if __has_builtin(__builtin_acosf)
             if constexpr (etl::same_as<Float, float>) {
                 return __builtin_acosf(arg);
             }
-    #endif
-    #if __has_builtin(__builtin_acos)
+#endif
+#if __has_builtin(__builtin_acos)
             if constexpr (etl::same_as<Float, double>) {
                 return __builtin_acos(arg);
             }
-    #endif
-        }
 #endif
+        }
         return etl::detail::gcem::acos(arg);
     }
 } acos;

@@ -18,20 +18,18 @@ inline constexpr struct asin {
     template <typename Float>
     [[nodiscard]] constexpr auto operator()(Float arg) const noexcept -> Float
     {
-#if not defined(__AVR__)
         if (not is_constant_evaluated()) {
-    #if __has_builtin(__builtin_asinf)
+#if __has_builtin(__builtin_asinf)
             if constexpr (etl::same_as<Float, float>) {
                 return __builtin_asinf(arg);
             }
-    #endif
-    #if __has_builtin(__builtin_asin)
+#endif
+#if __has_builtin(__builtin_asin)
             if constexpr (etl::same_as<Float, double>) {
                 return __builtin_asin(arg);
             }
-    #endif
-        }
 #endif
+        }
         return etl::detail::gcem::asin(arg);
     }
 } asin;

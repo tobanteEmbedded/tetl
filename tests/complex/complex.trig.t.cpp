@@ -22,7 +22,6 @@ static constexpr auto test() -> bool
     CHECK_APPROX(etl::abs(etl::complex(T(3), T(2))), etl::sqrt(T(13)));
     CHECK_APPROX(etl::arg(etl::complex(T(3), T(2))), T(0.588003));
 
-#if not defined(TETL_WORKAROUND_AVR_BROKEN_TESTS)
     auto const cos = etl::cos(etl::complex(T(3), T(2)));
     CHECK_APPROX(cos.real(), T(-3.72455));
     CHECK_APPROX(cos.imag(), T(-0.511823));
@@ -54,7 +53,6 @@ static constexpr auto test() -> bool
     auto const tanh = etl::tanh(etl::complex(T(3), T(2)));
     CHECK_APPROX(tanh.real(), T(1.00324));
     CHECK_APPROX(tanh.imag(), T(-0.00376403));
-#endif
 
     return true;
 }
@@ -63,7 +61,10 @@ static constexpr auto test_all() -> bool
 {
     CHECK(test<float>());
     CHECK(test<double>());
+
+#if not defined(TETL_WORKAROUND_AVR_BROKEN_TESTS)
     CHECK(test<long double>());
+#endif
 
     return true;
 }

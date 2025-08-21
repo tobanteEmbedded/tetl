@@ -547,10 +547,10 @@ static constexpr auto test() -> bool
     CHECK(sizeof(etl::aligned_union_t<2, char[3]>) == 3);
     CHECK(sizeof(etl::aligned_union_t<3, char[4]>) == 4);
 
-#if not defined(__AVR__)
-    CHECK(sizeof(etl::aligned_union_t<1, char, T, double>) == 8);
-    CHECK(sizeof(etl::aligned_union_t<12, char, T, double>) == 16);
-#endif
+    if constexpr (sizeof(double) == 8) {
+        CHECK(sizeof(etl::aligned_union_t<1, char, T, double>) == 8);
+        CHECK(sizeof(etl::aligned_union_t<12, char, T, double>) == 16);
+    }
 
     CHECK(etl::is_specialized_v<test_is_specialized, Foo<float>>);
     CHECK_FALSE(etl::is_specialized_v<test_is_specialized, T>);

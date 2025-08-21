@@ -8,10 +8,10 @@
 auto main() -> int
 {
 #if not defined(TETL_WORKAROUND_AVR_BROKEN_TESTS)
-    auto ptr = etl::pointer_int_pair<double*, 2>{new double(42.0), 1U};
+    auto val = 42.0;
+    auto ptr = etl::pointer_int_pair<double*, 2>{&val, 1U};
     assert(*ptr.get_pointer() == 42.0);
     assert(ptr.get_int() == 1U);
-    delete ptr.get_pointer();
 #endif
 
     return 0;

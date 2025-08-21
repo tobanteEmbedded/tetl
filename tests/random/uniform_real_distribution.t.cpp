@@ -33,9 +33,10 @@ static constexpr auto test() -> bool
     CHECK(test_uniform_real_distribution<etl::xoshiro128plusplus, float>());
     CHECK(test_uniform_real_distribution<etl::xoshiro128starstar, float>());
 
-#if not defined(TETL_WORKAROUND_AVR_BROKEN_TESTS)
-    CHECK(test_uniform_real_distribution<etl::xorshift64, double>());
-#endif
+    if constexpr (sizeof(double) == 8) {
+        CHECK(test_uniform_real_distribution<etl::xorshift64, double>());
+    }
+
     return true;
 }
 
