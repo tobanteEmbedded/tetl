@@ -5,10 +5,10 @@
 
 #include <etl/version.hpp>
 
+#include <etl/cstddef.hpp>
 #include <etl/cstdint.hpp>
+#include <etl/span.hpp>
 #include <etl/utility.hpp>
-
-#include <etl/experimental/net/buffer.hpp>
 
 #if defined(TETL_FREERTOS_USE_STUBS)
     #include <etl/experimental/freertos/stubs.hpp>
@@ -50,23 +50,23 @@ struct stream_buffer {
     /// stream buffer.
     ///
     /// https://www.freertos.org/xStreamBufferSend.html
-    auto write(net::const_buffer data, TickType_t ticks) -> size_type;
+    auto write(etl::span<etl::byte const> data, TickType_t ticks) -> size_type;
 
     /// \brief Interrupt safe version of the API function that sends a stream of
     /// bytes to the stream buffer.
     ///
     /// https://www.freertos.org/xStreamBufferSendFromISR.html
-    auto write_from_isr(net::const_buffer data, BaseType_t* prio) -> size_type;
+    auto write_from_isr(etl::span<etl::byte const> data, BaseType_t* prio) -> size_type;
 
     /// \brief Receives bytes from a stream buffer.
     ///
     /// https://www.freertos.org/xStreamBufferReceive.html
-    auto read(net::mutable_buffer data, TickType_t ticks) -> size_type;
+    auto read(etl::span<etl::byte> data, TickType_t ticks) -> size_type;
 
     /// \brief Receives bytes from a stream buffer.
     ///
     /// https://www.freertos.org/xStreamBufferReceiveFromISR.html
-    auto read_from_isr(net::mutable_buffer data, BaseType_t* prio) -> size_type;
+    auto read_from_isr(etl::span<etl::byte> data, BaseType_t* prio) -> size_type;
 
     /// \brief Queries a stream buffer to see if it is empty. A stream buffer is
     /// empty if it does not contain any data.
@@ -136,22 +136,22 @@ inline stream_buffer::stream_buffer(size_t size, size_t triggerLevel) noexcept
 
 inline stream_buffer::~stream_buffer() noexcept { vStreamBufferDelete(_handle); }
 
-inline auto stream_buffer::write(net::const_buffer data, TickType_t ticks) -> size_t
+inline auto stream_buffer::write(etl::span<etl::byte const> data, TickType_t ticks) -> size_t
 {
     return xStreamBufferSend(_handle, data.data(), data.size(), ticks);
 }
 
-inline auto stream_buffer::write_from_isr(net::const_buffer data, BaseType_t* prio) -> size_t
+inline auto stream_buffer::write_from_isr(etl::span<etl::byte const> data, BaseType_t* prio) -> size_t
 {
     return xStreamBufferSendFromISR(_handle, data.data(), data.size(), prio);
 }
 
-inline auto stream_buffer::read(net::mutable_buffer data, TickType_t ticks) -> size_t
+inline auto stream_buffer::read(etl::span<etl::byte> data, TickType_t ticks) -> size_t
 {
     return xStreamBufferReceive(_handle, data.data(), data.size(), ticks);
 }
 
-inline auto stream_buffer::read_from_isr(net::mutable_buffer data, BaseType_t* prio) -> size_t
+inline auto stream_buffer::read_from_isr(etl::span<etl::byte> data, BaseType_t* prio) -> size_t
 {
     return xStreamBufferReceiveFromISR(_handle, data.data(), data.size(), prio);
 }
