@@ -29,23 +29,7 @@ jobs:
         uses: actions/checkout@v4
 
       - name: Update APT
-        run: |
-          sudo apt update -y
-          sudo apt install -y ninja-build
-
-      - name: Install clang-17
-        if: matrix.config.cc == 'clang-17'
-        run: |
-          wget https://apt.llvm.org/llvm.sh
-          chmod +x llvm.sh
-          sudo ./llvm.sh 17 all
-
-      - name: Install clang-18
-        if: matrix.config.cc == 'clang-18'
-        run: |
-          wget https://apt.llvm.org/llvm.sh
-          chmod +x llvm.sh
-          sudo ./llvm.sh 18 all
+        run: sudo apt update -y
 
       - name: Install clang-19
         if: matrix.config.cc == 'clang-19'
@@ -69,6 +53,8 @@ jobs:
           -D CMAKE_C_COMPILER=${{ matrix.config.cc }}
           -D CMAKE_CXX_COMPILER=${{ matrix.config.cxx }}
           -D CMAKE_CXX_STANDARD=${{ matrix.cxx_std }}
+          -D CMAKE_CXX_FLAGS="-g -fno-omit-frame-pointer -fsanitize=address,undefined -fno-sanitize-recover=undefined"
+          -D CMAKE_EXE_LINKER_FLAGS="-g -fno-omit-frame-pointer -fsanitize=address,undefined -fno-sanitize-recover=undefined"
           -D TETL_BUILD_WERROR=ON
           -D TETL_BUILD_WEVERYTHING=ON
 
