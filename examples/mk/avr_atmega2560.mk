@@ -27,5 +27,5 @@ WARNINGFLAGS += -Wduplicated-branches
 WARNINGFLAGS += -Wduplicated-cond
 # WARNINGFLAGS += -Wsign-conversion
 
-MCU ?= atmega328p
+MCU ?= atmega2560
 CXXFLAGS = -mmcu=${MCU} -std=c++${CXXSTD} -ffreestanding ${DEBUGFLAGS} -I ../include ${WARNINGFLAGS}

@@ -26,7 +26,7 @@
     {
       "name": "avr-gcc",
       "description": "Configure with avr-gcc toolchain",
-      "toolchainFile": "${sourceDir}/cmake/toolchain/atmega328p.cmake",
+      "toolchainFile": "${sourceDir}/cmake/toolchain/atmega2560.cmake",
       "inherits": ["ninja-base"]
     }
   ],

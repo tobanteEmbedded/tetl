@@ -7,7 +7,7 @@ include mk/arm_stm32f103.mk
 endif
 
 ifdef AVR
-include mk/avr_atmega328p.mk
+include mk/avr_atmega2560.mk
 endif
 
 ifdef MSP430
