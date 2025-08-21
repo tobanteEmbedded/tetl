@@ -7,7 +7,7 @@ function(tetl_add_test _header _target)
   add_executable("test_${_header}_${_target}" "${_target}.t.cpp")
   target_include_directories("test_${_header}_${_target}" PRIVATE "${CMAKE_SOURCE_DIR}/tests")
   target_compile_definitions("test_${_header}_${_target}" PRIVATE TETL_DEBUG=1 TETL_ENABLE_USER_CONFIG_HEADER_INCLUDE=1)
-  target_link_libraries("test_${_header}_${_target}" PRIVATE tetl::compiler_options tetl::compiler_warnings tetl::code_coverage)
+  target_link_libraries("test_${_header}_${_target}" PRIVATE tetl::compiler_warnings tetl::code_coverage)
 
   if(${TETL_BUILD_CONTRACT_CHECKS})
     target_compile_definitions("test_${_header}_${_target}" PRIVATE TETL_ENABLE_CONTRACT_CHECKS=1)
