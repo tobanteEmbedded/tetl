@@ -17,12 +17,12 @@ set(CMAKE_RANLIB        "avr-ranlib")
 set(CMAKE_OBJCOPY       "avr-objcopy" CACHE FILEPATH "The toolchain objcopy command" FORCE)
 set(CMAKE_SIZE_UTIL     "avr-size"    CACHE INTERNAL "size tool")
 
-set(CPU_FLAGS "-mmcu=atmega328p")
+set(CPU_FLAGS "-mmcu=atmega2560")
 set(COMPILER_FLAGS "-ffreestanding -fno-threadsafe-statics")
 
 set(CMAKE_ASM_FLAGS         "${CPU_FLAGS} -x assembler-with-cpp -Wno-comment" CACHE INTERNAL "")
 set(CMAKE_C_FLAGS           "${CPU_FLAGS} ${COMPILER_FLAGS}"                  CACHE INTERNAL "")
-set(CMAKE_CXX_FLAGS         "${CPU_FLAGS} ${COMPILER_FLAGS}"                  CACHE INTERNAL "")
+set(CMAKE_CXX_FLAGS         "${CPU_FLAGS} ${COMPILER_FLAGS} -fno-exceptions"  CACHE INTERNAL "")
 set(CMAKE_EXE_LINKER_FLAGS  "${CPU_FLAGS}"                                    CACHE INTERNAL "")
 
 set(CMAKE_ASM_FLAGS_DEBUG           "-g"                CACHE INTERNAL "")
