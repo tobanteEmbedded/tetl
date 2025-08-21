@@ -117,7 +117,7 @@ run-clang-tidy -fix -j 8 -quiet -p cmake-build-tidy -header-filter $(realpath .)
 
 ```sh
 # build with coverage flags
-cmake -S . -B cmake-build-coverage -G Ninja -D CMAKE_BUILD_TYPE=Debug -D CMAKE_CXX_STANDARD=23 -D TETL_BUILD_COVERAGE=ON
+cmake -S . -B cmake-build-coverage -G Ninja -D CMAKE_BUILD_TYPE=Debug -D CMAKE_CXX_STANDARD=23 -D CMAKE_CXX_FLAGS="--coverage" -D CMAKE_EXE_LINKER_FLAGS="--coverage"
 cmake --build cmake-build-coverage --parallel 8
 
 # run gcov

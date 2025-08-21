@@ -3,7 +3,6 @@ project(tetl-dev LANGUAGES CXX)
 
 option(TETL_BUILD_CONTRACT_CHECKS      "Build with contract assertions"                  ON)
 option(TETL_BUILD_CONTRACT_CHECKS_SAFE "Build with all/slow contract assertions"         OFF)
-option(TETL_BUILD_COVERAGE             "Build with coverage reporting for gcc/clang"     OFF)
 option(TETL_BUILD_CXX_MODULES          "Build with C++20 modules"                        OFF)
 option(TETL_BUILD_WERROR               "Build with all warnings as errors"               OFF)
 option(TETL_BUILD_WEVERYTHING          "Build with -Weverything (clang only)"            OFF)
@@ -25,7 +24,6 @@ set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin)
 set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 
 list(APPEND CMAKE_MODULE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/cmake")
-include(code_coverage)
 include(compiler_warnings)
 
 add_subdirectory(include)
