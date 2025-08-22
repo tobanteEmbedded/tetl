@@ -44,7 +44,7 @@ template <integral Int, from_integer_options Options = from_integer_options{}>
 
     bool isNegative = false;
     if constexpr (is_signed_v<Int>) {
-        if (num < 0 and base == 10) {
+        if (num < 0) {
             isNegative = true;
             str[i++]   = '-';
         }
@@ -57,8 +57,16 @@ template <integral Int, from_integer_options Options = from_integer_options{}>
         str[i++] = (digit > 9) ? (digit - 10) + 'a' : digit + '0';
         num      = quot;
 
-        if (length <= i) {
-            return {.end = nullptr, .error = from_integer_error::overflow};
+        if (i == length) {
+            if constexpr (Options.terminate_with_null) {
+                return {.end = nullptr, .error = from_integer_error::overflow};
+            } else {
+                if (num != 0) {
+                    return {.end = nullptr, .error = from_integer_error::overflow};
+                } else {
+                    break;
+                }
+            }
         }
     }
 

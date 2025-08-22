@@ -94,8 +94,8 @@ template <integral Int, to_integer_options Options = to_integer_options{}>
 {
     auto const length        = str.size();
     auto const wouldOverflow = detail::overflow_checker<Int, Options.check_overflow>{base};
-    auto const makeError     = [str](auto err) { return to_integer_result<Int>{.end = str.data(), .error = err}; };
-    auto const parseDigit    = [](int ch) -> Int {
+
+    auto const parseDigit = [](int ch) -> Int {
         if (etl::isdigit(ch) != 0) {
             return static_cast<Int>(ch - int{'0'});
         }
@@ -103,6 +103,28 @@ template <integral Int, to_integer_options Options = to_integer_options{}>
             return static_cast<Int>(static_cast<Int>(etl::tolower(ch)) - Int{'a'} + Int{10});
         }
         return etl::numeric_limits<Int>::max(); // always greater than base
+    };
+
+    auto const invalidInputError = [end = str.data()] {
+        return to_integer_result<Int>{
+            .end   = end,
+            .error = to_integer_error::invalid_input,
+        };
+    };
+
+    auto const overflowError = [&]<bool MatchRestOfPattern>(auto pos, bool_constant<MatchRestOfPattern> /*bc*/) {
+        if constexpr (MatchRestOfPattern) {
+            for (; pos != length; ++pos) {
+                auto const digit = parseDigit(static_cast<int>(str[pos]));
+                if (digit >= base) {
+                    break;
+                }
+            }
+        }
+        return to_integer_result<Int>{
+            .end   = etl::next(str.data(), static_cast<etl::ptrdiff_t>(pos)),
+            .error = to_integer_error::overflow,
+        };
     };
 
     auto pos = size_t{};
@@ -114,7 +136,7 @@ template <integral Int, to_integer_options Options = to_integer_options{}>
 
     // empty or only whitespace
     if (pos == length) {
-        return makeError(to_integer_error::invalid_input);
+        return invalidInputError();
     }
 
     // optional minus for signed types
@@ -124,7 +146,7 @@ template <integral Int, to_integer_options Options = to_integer_options{}>
             positive = false;
             if (++pos == length) {
                 // minus "-" was last character in string
-                return makeError(to_integer_error::invalid_input);
+                return invalidInputError();
             }
         }
     }
@@ -141,7 +163,7 @@ template <integral Int, to_integer_options Options = to_integer_options{}>
     }();
 
     if (etl::abs(value) >= base) {
-        return makeError(to_integer_error::invalid_input);
+        return invalidInputError();
     }
 
     // loop over rest of digits
@@ -152,7 +174,7 @@ template <integral Int, to_integer_options Options = to_integer_options{}>
         }
 
         if (wouldOverflow(value, digit)) {
-            return makeError(to_integer_error::overflow);
+            return overflowError(pos, etl::true_type{});
         }
 
         if constexpr (signed_integral<Int>) {
@@ -165,7 +187,7 @@ template <integral Int, to_integer_options Options = to_integer_options{}>
     if constexpr (signed_integral<Int>) {
         if (positive) {
             if (value == numeric_limits<Int>::min()) {
-                return makeError(to_integer_error::overflow);
+                return overflowError(pos, etl::false_type{});
             }
             value *= Int(-1);
         }

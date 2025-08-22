@@ -173,11 +173,11 @@ constexpr auto test() -> bool
         CHECK(to_integer<Int>(legalMax, 10).error == to_integer_error::none);
 
         auto overflow = "128"_sv;
-        CHECK(to_integer<Int>(overflow, 10).end == overflow.begin());
+        CHECK(to_integer<Int>(overflow, 10).end == overflow.end());
         CHECK(to_integer<Int>(overflow, 10).error == to_integer_error::overflow);
 
         auto moreOverflow = "999"_sv;
-        CHECK(to_integer<Int>(moreOverflow, 10).end == moreOverflow.begin());
+        CHECK(to_integer<Int>(moreOverflow, 10).end == moreOverflow.end());
         CHECK(to_integer<Int>(moreOverflow, 10).error == to_integer_error::overflow);
     }
 
@@ -190,17 +190,17 @@ constexpr auto test() -> bool
         CHECK(to_integer<Int>(legalMax, 10).error == to_integer_error::none);
 
         auto overflow = "256"_sv;
-        CHECK(to_integer<Int>(overflow, 10).end == overflow.begin());
+        CHECK(to_integer<Int>(overflow, 10).end == overflow.end());
         CHECK(to_integer<Int>(overflow, 10).error == to_integer_error::overflow);
 
         auto moreOverflow = "999"_sv;
-        CHECK(to_integer<Int>(moreOverflow, 10).end == moreOverflow.begin());
+        CHECK(to_integer<Int>(moreOverflow, 10).end == moreOverflow.end());
         CHECK(to_integer<Int>(moreOverflow, 10).error == to_integer_error::overflow);
     }
 
     if constexpr (sizeof(Int) < 4) {
         auto number = "99999"_sv;
-        CHECK(to_integer<Int>(number, 10).end == number.begin());
+        CHECK(to_integer<Int>(number, 10).end == number.end());
         CHECK(to_integer<Int>(number, 10).error == to_integer_error::overflow);
     }
 
