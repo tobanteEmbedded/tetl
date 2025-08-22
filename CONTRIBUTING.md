@@ -128,6 +128,13 @@ gcovr --html-details -e ".*_3rd_party*" --exclude-unreachable-branches -r . -s c
 grcov . -s . --binary-path ./cmake-build-coverage/bin/ -t html --ignore-not-existing -o ./cmake-build-coverage/html/ --ignore '*_3rd_party/*' --threads $(nproc)
 ```
 
+### libFuzzer
+
+```sh
+MAXTIME=20 make -C fuzzing clean report
+firefox fuzzing/lcov/index.html
+```
+
 ### pre-commit
 
 ```sh
