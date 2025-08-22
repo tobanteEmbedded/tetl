@@ -63,9 +63,8 @@ template <integral Int, from_integer_options Options = from_integer_options{}>
             } else {
                 if (num != 0) {
                     return {.end = nullptr, .error = from_integer_error::overflow};
-                } else {
-                    break;
                 }
+                break;
             }
         }
     }
