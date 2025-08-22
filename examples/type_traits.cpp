@@ -6,7 +6,8 @@
 namespace {
 
 template <typename T>
-auto func(T val) -> etl::enable_if_t<etl::is_integral_v<T>, int>
+    requires(etl::is_integral_v<T>)
+auto func(T val) -> int
 {
     return static_cast<int>(val);
 }
