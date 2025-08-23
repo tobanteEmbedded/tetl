@@ -6,7 +6,7 @@ function(tetl_add_module_target _target)
     target_sources(${_target}
         PUBLIC
         FILE_SET CXX_MODULES
-        BASE_DIRS "${CMAKE_SOURCE_DIR}/module"
-        FILES "${CMAKE_SOURCE_DIR}/module/etl.cpp"
+        BASE_DIRS "${CMAKE_SOURCE_DIR}/src"
+        FILES "${CMAKE_SOURCE_DIR}/src/etl.cpp"
     )
 endfunction()

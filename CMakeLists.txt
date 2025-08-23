@@ -27,7 +27,7 @@ include(compiler_warnings)
 add_subdirectory(include)
 
 if(TETL_BUILD_CXX_MODULES)
-    add_subdirectory(module)
+    add_subdirectory(src)
 endif()
 
 enable_testing()
