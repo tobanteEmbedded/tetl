@@ -33,7 +33,7 @@ template <floating_point Float, from_floating_point_options Options = from_float
     constexpr auto toString = [](int_type x, char* str, int numDigits) -> int {
         int i = 0;
         while (x) {
-            str[i++] = (x % 10) + '0';
+            str[i++] = static_cast<char>((x % 10) + int_type('0'));
             x        = x / 10;
         }
 
