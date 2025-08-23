@@ -24,12 +24,10 @@ set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 list(APPEND CMAKE_MODULE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/cmake")
 include(compiler_warnings)
 
-add_subdirectory(include)
-
-if(TETL_BUILD_CXX_MODULES)
-    add_subdirectory(src)
-endif()
-
 enable_testing()
+
+add_subdirectory(include)
+add_subdirectory(src)
+
 add_subdirectory(tests)
 add_subdirectory(examples)

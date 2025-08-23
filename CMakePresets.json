@@ -12,7 +12,7 @@
       "binaryDir": "${sourceDir}/cmake-build-${presetName}",
       "generator": "Ninja Multi-Config",
       "cacheVariables": {
-        "CMAKE_CXX_STANDARD": "26",
+        "CMAKE_CXX_STANDARD": "23",
         "CMAKE_COMPILE_WARNING_AS_ERROR": true,
         "CMAKE_CXX_SCAN_FOR_MODULES": false,
         "CMAKE_EXPORT_COMPILE_COMMANDS": true

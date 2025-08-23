@@ -1,15 +1,26 @@
 project(examples)
 
+if(TETL_BUILD_CXX_MODULES)
+    tetl_add_module_target(tetl.etl-example)
+    target_compile_definitions(tetl.etl-example PUBLIC TETL_DEBUG=1 TETL_ENABLE_CXX_MODULES=1)
+    target_link_libraries(tetl.etl-example PUBLIC tetl::compiler_warnings)
+else()
+    add_library(tetl.etl-example INTERFACE)
+    target_compile_definitions(tetl.etl-example INTERFACE TETL_DEBUG=1)
+    target_link_libraries(tetl.etl-example INTERFACE tetl::etl tetl::compiler_warnings)
+endif()
+
 function(tetl_add_example _target)
-  set(options OPTIONAL WILL_FAIL)
-  cmake_parse_arguments(tetl_add_example "${options}" "${oneValueArgs}" "${multiValueArgs}" ${ARGN})
+    set(options OPTIONAL WILL_FAIL)
+    cmake_parse_arguments(tetl_add_example "${options}" "${oneValueArgs}" "${multiValueArgs}" ${ARGN})
 
-  add_executable("example_${_target}" "${_target}.cpp")
-  target_compile_definitions("example_${_target}" PRIVATE TETL_DEBUG=1)
-  target_link_libraries("example_${_target}" PRIVATE tetl::etl tetl::compiler_warnings)
+    set(target_name "example_${_target}")
+    add_executable(${target_name} "${_target}.cpp")
+    target_link_libraries(${target_name} PRIVATE tetl.etl-example)
+    set_target_properties(${target_name} PROPERTIES CXX_SCAN_FOR_MODULES ${TETL_BUILD_CXX_MODULES})
 
-  add_test(NAME "example: ${_target}" COMMAND "example_${_target}")
-  set_tests_properties("example: ${_target}" PROPERTIES WILL_FAIL ${tetl_add_example_WILL_FAIL})
+    add_test(NAME "example: ${_target}" COMMAND ${target_name})
+    set_tests_properties("example: ${_target}" PROPERTIES WILL_FAIL ${tetl_add_example_WILL_FAIL})
 endfunction()
 
 tetl_add_example("algorithm")
