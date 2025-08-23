@@ -53,6 +53,16 @@ module;
 #include <etl/vector.hpp>
 #include <etl/version.hpp>
 
+#include <etl/experimental/freertos/queue.hpp>
+#include <etl/experimental/freertos/stream_buffer.hpp>
+#include <etl/experimental/freertos/task.hpp>
+
+#include <etl/experimental/hardware/stm32/gpio.hpp>
+#include <etl/experimental/hardware/stm32/interrupt.hpp>
+
+#include <etl/experimental/net/buffer.hpp>
+#include <etl/experimental/net/byte_order.hpp>
+
 export module etl;
 
 #include "inc/algorithm.inc"
@@ -107,3 +117,13 @@ export module etl;
 #include "inc/variant.inc"
 #include "inc/vector.inc"
 #include "inc/version.inc"
+
+#include "inc/experimental/freertos/queue.inc"
+#include "inc/experimental/freertos/stream_buffer.inc"
+#include "inc/experimental/freertos/task.inc"
+
+#include "inc/experimental/hardware/stm32/gpio.inc"
+#include "inc/experimental/hardware/stm32/interrupt.inc"
+
+#include "inc/experimental/net/buffer.inc"
+#include "inc/experimental/net/byte_order.inc"

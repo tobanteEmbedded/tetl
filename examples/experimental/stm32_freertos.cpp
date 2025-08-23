@@ -2,7 +2,6 @@
 
 #include <etl/new.hpp>
 
-#define TETL_FREERTOS_USE_STUBS
 #include <etl/experimental/freertos/task.hpp>       // for once, create_task
 #include <etl/experimental/hardware/stm32/gpio.hpp> // for port, pin_number
 

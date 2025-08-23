@@ -1,9 +1,12 @@
 // SPDX-License-Identifier: BSL-1.0
 
-#define TETL_FREERTOS_USE_STUBS
-#include <etl/experimental/freertos/queue.hpp>
-
 #include "testing/testing.hpp"
+
+#if defined(TETL_ENABLE_CXX_MODULES)
+import etl;
+#else
+    #include <etl/experimental/freertos/queue.hpp>
+#endif
 
 namespace rtos = etl::experimental::freertos;
 
