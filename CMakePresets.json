@@ -1,39 +1,66 @@
 {
-  "version": 3,
+  "version": 6,
   "cmakeMinimumRequired": {
     "major": 3,
-    "minor": 21,
+    "minor": 28,
     "patch": 0
   },
   "configurePresets": [
     {
-      "name": "ninja-base",
+      "name": "_root-config",
       "hidden": true,
       "binaryDir": "${sourceDir}/cmake-build-${presetName}",
       "generator": "Ninja Multi-Config",
       "cacheVariables": {
-        "CMAKE_EXPORT_COMPILE_COMMANDS": {
-          "type": "BOOL",
-          "value": true
-        }
+        "CMAKE_CXX_STANDARD": "26",
+        "CMAKE_COMPILE_WARNING_AS_ERROR": true,
+        "CMAKE_CXX_SCAN_FOR_MODULES": false,
+        "CMAKE_EXPORT_COMPILE_COMMANDS": true
       }
     },
     {
       "name": "desktop",
       "description": "Configure with hosted system toolchain",
-      "inherits": ["ninja-base"]
+      "inherits": ["_root-config"]
     },
     {
       "name": "avr-gcc",
       "description": "Configure with avr-gcc toolchain",
       "toolchainFile": "${sourceDir}/cmake/toolchain/atmega2560.cmake",
-      "inherits": ["ninja-base"]
+      "inherits": ["_root-config"],
+      "cacheVariables": {
+        "TETL_BUILD_CONTRACT_CHECKS": false
+      }
+    },
+    {
+      "name": "arm-gcc",
+      "description": "Configure with arm-gcc toolchain",
+      "toolchainFile": "${sourceDir}/cmake/toolchain/gcc-arm-none-eabi.cmake",
+      "inherits": ["_root-config"],
+      "cacheVariables": {
+        "TETL_BUILD_CONTRACT_CHECKS": false
+      }
+    },
+    {
+      "name": "arm-clang",
+      "description": "Configure with arm-clang toolchain",
+      "toolchainFile": "${sourceDir}/cmake/toolchain/clang-arm-none-eabi.cmake",
+      "inherits": ["_root-config"],
+      "cacheVariables": {
+        "TETL_BUILD_CONTRACT_CHECKS": false
+      }
     }
   ],
   "buildPresets": [
     {
-      "name": "desktop",
-      "description": "Build using ninja and hosted system toolchain",
+      "name": "desktop-debug",
+      "displayName": "Desktop Debug",
+      "configurePreset": "desktop",
+      "configuration": "Debug"
+    },
+    {
+      "name": "desktop-release",
+      "displayName": "Desktop Release",
       "configurePreset": "desktop",
       "configuration": "Release"
     },
@@ -42,16 +69,111 @@
       "description": "Build using ninja and avr-gcc toolchain",
       "configurePreset": "avr-gcc",
       "configuration": "Release"
+    },
+    {
+      "name": "arm-gcc",
+      "description": "Build using ninja and arm-gcc toolchain",
+      "configurePreset": "arm-gcc",
+      "configuration": "Release"
+    },
+    {
+      "name": "arm-clang",
+      "description": "Build using ninja and arm-clang toolchain",
+      "configurePreset": "arm-clang",
+      "configuration": "Release"
     }
   ],
   "testPresets": [
     {
-      "name": "desktop",
+      "name": "desktop-debug",
+      "description": "Test using ninja and system toolchain",
+      "configurePreset": "desktop",
+      "configuration": "Debug",
+      "output": { "outputOnFailure": true },
+      "execution": { "noTestsAction": "error", "stopOnFailure": true }
+    },
+    {
+      "name": "desktop-release",
       "description": "Test using ninja and system toolchain",
       "configurePreset": "desktop",
       "configuration": "Release",
       "output": { "outputOnFailure": true },
       "execution": { "noTestsAction": "error", "stopOnFailure": true }
+    }
+  ],
+  "workflowPresets": [
+    {
+      "name": "desktop-debug",
+      "steps": [
+        {
+          "type": "configure",
+          "name": "desktop"
+        },
+        {
+          "type": "build",
+          "name": "desktop-debug"
+        },
+        {
+          "type": "test",
+          "name": "desktop-debug"
+        }
+      ]
+    },
+    {
+      "name": "desktop-release",
+      "steps": [
+        {
+          "type": "configure",
+          "name": "desktop"
+        },
+        {
+          "type": "build",
+          "name": "desktop-release"
+        },
+        {
+          "type": "test",
+          "name": "desktop-release"
+        }
+      ]
+    },
+    {
+      "name": "avr-gcc",
+      "steps": [
+        {
+          "type": "configure",
+          "name": "avr-gcc"
+        },
+        {
+          "type": "build",
+          "name": "avr-gcc"
+        }
+      ]
+    },
+    {
+      "name": "arm-gcc",
+      "steps": [
+        {
+          "type": "configure",
+          "name": "arm-gcc"
+        },
+        {
+          "type": "build",
+          "name": "arm-gcc"
+        }
+      ]
+    },
+    {
+      "name": "arm-clang",
+      "steps": [
+        {
+          "type": "configure",
+          "name": "arm-clang"
+        },
+        {
+          "type": "build",
+          "name": "arm-clang"
+        }
+      ]
     }
   ]
 }
