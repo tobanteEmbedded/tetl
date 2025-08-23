@@ -4,7 +4,7 @@
 #define TETL_TEST_TESTING_APPROX_HPP
 
 #if defined(TETL_ENABLE_CXX_MODULES)
-import etl.cmath;
+import etl;
 #else
     #include <etl/cmath.hpp>
 #endif

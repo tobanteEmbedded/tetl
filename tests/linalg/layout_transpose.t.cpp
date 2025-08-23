@@ -3,9 +3,7 @@
 #include "testing/testing.hpp"
 
 #if defined(TETL_ENABLE_CXX_MODULES)
-import etl.concepts;
-import etl.linalg;
-import etl.mdspan;
+import etl;
 #else
     #include <etl/concepts.hpp>
     #include <etl/linalg.hpp>

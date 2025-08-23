@@ -3,7 +3,7 @@
 #include "testing/testing.hpp"
 
 #if defined(TETL_ENABLE_CXX_MODULES)
-import etl.functional;
+import etl;
 #else
     #include <etl/functional.hpp>
 #endif

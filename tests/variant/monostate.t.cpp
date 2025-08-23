@@ -3,8 +3,7 @@
 #include "testing/testing.hpp"
 
 #if defined(TETL_ENABLE_CXX_MODULES)
-import etl.type_traits;
-import etl.variant;
+import etl;
 #else
     #include <etl/type_traits.hpp>
     #include <etl/variant.hpp>

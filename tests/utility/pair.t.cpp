@@ -15,9 +15,7 @@
 #include "testing/testing.hpp"
 
 #if defined(TETL_ENABLE_CXX_MODULES)
-import etl.cstddef;
-import etl.type_traits;
-import etl.utility;
+import etl;
 #else
     #include <etl/cstddef.hpp>
     #include <etl/type_traits.hpp>

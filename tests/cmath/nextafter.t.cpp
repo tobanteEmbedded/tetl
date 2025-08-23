@@ -4,9 +4,7 @@
 #include "testing/testing.hpp"
 
 #if defined(TETL_ENABLE_CXX_MODULES)
-import etl.bit;
-import etl.cmath;
-import etl.cstdint;
+import etl;
 #else
     #include <etl/bit.hpp>
     #include <etl/cmath.hpp>

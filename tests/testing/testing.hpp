@@ -7,7 +7,7 @@
 #include <etl/cassert.hpp>
 
 #if defined(TETL_ENABLE_CXX_MODULES)
-import etl.type_traits;
+import etl;
 #else
     #include <etl/type_traits.hpp>
 #endif

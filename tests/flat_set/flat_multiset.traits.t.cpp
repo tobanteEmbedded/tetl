@@ -3,13 +3,7 @@
 #include "testing/testing.hpp"
 
 #if defined(TETL_ENABLE_CXX_MODULES)
-import etl.array;
-import etl.flat_set;
-import etl.functional;
-import etl.inplace_vector;
-import etl.iterator;
-import etl.utility;
-import etl.vector;
+import etl;
 #else
     #include <etl/array.hpp>
     #include <etl/flat_set.hpp>

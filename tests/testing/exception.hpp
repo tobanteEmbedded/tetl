@@ -4,10 +4,7 @@
 #define TETL_TEST_EXCEPTION_HPP
 
 #if defined(TETL_ENABLE_CXX_MODULES)
-import etl.cmath;
-import etl.exception;
-import etl.string_view;
-import etl.type_traits;
+import etl;
 #else
     #include <etl/cmath.hpp>
     #include <etl/exception.hpp>

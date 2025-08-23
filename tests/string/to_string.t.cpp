@@ -3,8 +3,7 @@
 #include "testing/testing.hpp"
 
 #if defined(TETL_ENABLE_CXX_MODULES)
-import etl.string;
-import etl.string_view;
+import etl;
 #else
     #include <etl/string.hpp>
     #include <etl/string_view.hpp>

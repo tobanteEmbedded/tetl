@@ -3,11 +3,7 @@
 #include "testing/testing.hpp"
 
 #if defined(TETL_ENABLE_CXX_MODULES)
-import etl.bitset;
-import etl.cstddef;
-import etl.limits;
-import etl.string_view;
-import etl.utility;
+import etl;
 #else
     #include <etl/bitset.hpp>
     #include <etl/cstddef.hpp>

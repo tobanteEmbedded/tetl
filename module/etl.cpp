@@ -1,44 +1,87 @@
 module;
 
+#include <etl/algorithm.hpp>
+#include <etl/array.hpp>
+#include <etl/bit.hpp>
+#include <etl/bitset.hpp>
+#include <etl/cctype.hpp>
+#include <etl/cfloat.hpp>
+#include <etl/charconv.hpp>
+#include <etl/chrono.hpp>
+#include <etl/cmath.hpp>
+#include <etl/compare.hpp>
+#include <etl/complex.hpp>
+#include <etl/concepts.hpp>
+#include <etl/cstddef.hpp>
+#include <etl/cstdint.hpp>
+#include <etl/cstdlib.hpp>
+#include <etl/exception.hpp>
+#include <etl/flat_set.hpp>
+#include <etl/functional.hpp>
+#include <etl/inplace_vector.hpp>
+#include <etl/iterator.hpp>
+#include <etl/limits.hpp>
+#include <etl/linalg.hpp>
+#include <etl/mdarray.hpp>
+#include <etl/mdspan.hpp>
+#include <etl/memory.hpp>
+#include <etl/numbers.hpp>
+#include <etl/numeric.hpp>
+#include <etl/optional.hpp>
+#include <etl/random.hpp>
+#include <etl/ranges.hpp>
+#include <etl/ratio.hpp>
+#include <etl/span.hpp>
+#include <etl/string.hpp>
+#include <etl/string_view.hpp>
+#include <etl/strings.hpp>
+#include <etl/system_error.hpp>
+#include <etl/tuple.hpp>
+#include <etl/type_traits.hpp>
+#include <etl/utility.hpp>
+#include <etl/variant.hpp>
+#include <etl/vector.hpp>
+
 export module etl;
 
-export import etl.algorithm;
-export import etl.array;
-export import etl.bit;
-export import etl.bitset;
-export import etl.cctype;
-export import etl.cfloat;
-export import etl.charconv;
-export import etl.chrono;
-export import etl.cmath;
-export import etl.compare;
-export import etl.complex;
-export import etl.concepts;
-export import etl.cstddef;
-export import etl.cstdint;
-export import etl.cstdlib;
-export import etl.exception;
-export import etl.flat_set;
-export import etl.functional;
-export import etl.inplace_vector;
-export import etl.iterator;
-export import etl.limits;
-export import etl.linalg;
-export import etl.mdarray;
-export import etl.mdspan;
-export import etl.memory;
-export import etl.numbers;
-export import etl.numeric;
-export import etl.optional;
-export import etl.random;
-export import etl.ranges;
-export import etl.ratio;
-export import etl.span;
-export import etl.string_view;
-export import etl.string;
-export import etl.strings;
-export import etl.tuple;
-export import etl.type_traits;
-export import etl.utility;
-export import etl.variant;
-export import etl.vector;
+#include "src/algorithm.inc"
+#include "src/array.inc"
+#include "src/bit.inc"
+#include "src/bitset.inc"
+#include "src/cctype.inc"
+#include "src/cfloat.inc"
+#include "src/charconv.inc"
+#include "src/chrono.inc"
+#include "src/cmath.inc"
+#include "src/compare.inc"
+#include "src/complex.inc"
+#include "src/concepts.inc"
+#include "src/cstddef.inc"
+#include "src/cstdint.inc"
+#include "src/cstdlib.inc"
+#include "src/exception.inc"
+#include "src/flat_set.inc"
+#include "src/functional.inc"
+#include "src/inplace_vector.inc"
+#include "src/iterator.inc"
+#include "src/limits.inc"
+#include "src/linalg.inc"
+#include "src/mdarray.inc"
+#include "src/mdspan.inc"
+#include "src/memory.inc"
+#include "src/numbers.inc"
+#include "src/numeric.inc"
+#include "src/optional.inc"
+#include "src/random.inc"
+#include "src/ranges.inc"
+#include "src/ratio.inc"
+#include "src/span.inc"
+#include "src/string.inc"
+#include "src/string_view.inc"
+#include "src/strings.inc"
+#include "src/system_error.inc"
+#include "src/tuple.inc"
+#include "src/type_traits.inc"
+#include "src/utility.inc"
+#include "src/variant.inc"
+#include "src/vector.inc"

@@ -3,7 +3,7 @@
 #include "testing/testing.hpp"
 
 #if defined(TETL_ENABLE_CXX_MODULES)
-import etl.numeric;
+import etl;
 #else
     #include <etl/numeric.hpp>
 #endif

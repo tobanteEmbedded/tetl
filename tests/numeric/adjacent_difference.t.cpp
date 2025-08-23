@@ -4,11 +4,7 @@
 #include "testing/testing.hpp"
 
 #if defined(TETL_ENABLE_CXX_MODULES)
-import etl.array;
-import etl.cstdint;
-import etl.functional;
-import etl.numeric;
-import etl.vector;
+import etl;
 #else
     #include <etl/array.hpp>
     #include <etl/cstdint.hpp>

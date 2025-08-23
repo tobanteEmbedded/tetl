@@ -3,9 +3,7 @@
 #include "testing/testing.hpp"
 
 #if defined(TETL_ENABLE_CXX_MODULES)
-import etl.iterator;
-import etl.string;
-import etl.string_view;
+import etl;
 #else
     #include <etl/iterator.hpp>
     #include <etl/string.hpp>

@@ -3,11 +3,7 @@
 #include "testing/testing.hpp"
 
 #if defined(TETL_ENABLE_CXX_MODULES)
-import etl.chrono;
-import etl.cstdint;
-import etl.limits;
-import etl.ratio;
-import etl.type_traits;
+import etl;
 #else
     #include <etl/chrono.hpp>
     #include <etl/cstdint.hpp>

@@ -4,9 +4,7 @@
 #include "testing/testing.hpp"
 
 #if defined(TETL_ENABLE_CXX_MODULES)
-import etl.cstdint;
-import etl.optional;
-import etl.utility;
+import etl;
 #else
     #include <etl/cstdint.hpp>
     #include <etl/optional.hpp>

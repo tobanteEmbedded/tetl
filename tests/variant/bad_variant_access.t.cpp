@@ -4,8 +4,7 @@
 #include "testing/testing.hpp"
 
 #if defined(TETL_ENABLE_CXX_MODULES)
-import etl.exception;
-import etl.variant;
+import etl;
 #else
     #include <etl/exception.hpp>
     #include <etl/variant.hpp>

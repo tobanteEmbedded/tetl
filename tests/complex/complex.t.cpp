@@ -4,10 +4,7 @@
 #include "testing/testing.hpp"
 
 #if defined(TETL_ENABLE_CXX_MODULES)
-import etl.complex;
-import etl.concepts;
-import etl.type_traits;
-import etl.utility;
+import etl;
 #else
     #include <etl/complex.hpp>
     #include <etl/concepts.hpp>

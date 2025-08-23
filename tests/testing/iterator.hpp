@@ -4,7 +4,7 @@
 #define TETL_TESTS_ALGORITHM_ITERATOR_TYPES_HPP
 
 #if defined(TETL_ENABLE_CXX_MODULES)
-import etl.iterator;
+import etl;
 #else
     #include <etl/iterator.hpp>
 #endif

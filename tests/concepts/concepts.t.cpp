@@ -3,8 +3,7 @@
 #include "testing/testing.hpp"
 
 #if defined(TETL_ENABLE_CXX_MODULES)
-import etl.concepts;
-import etl.cstdint;
+import etl;
 #else
     #include <etl/concepts.hpp>
     #include <etl/cstdint.hpp>

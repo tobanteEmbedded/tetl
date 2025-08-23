@@ -3,7 +3,7 @@
 #include "testing/testing.hpp"
 
 #if defined(TETL_ENABLE_CXX_MODULES)
-import etl.cctype;
+import etl;
 #else
     #include <etl/cctype.hpp>
 #endif

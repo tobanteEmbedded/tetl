@@ -3,11 +3,7 @@
 #include "testing/testing.hpp"
 
 #if defined(TETL_ENABLE_CXX_MODULES)
-import etl.array;
-import etl.cstddef;
-import etl.memory;
-import etl.utility;
-import etl.vector;
+import etl;
 #else
     #include <etl/array.hpp>
     #include <etl/cstddef.hpp>

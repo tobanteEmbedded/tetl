@@ -3,9 +3,7 @@
 #include "testing/testing.hpp"
 
 #if defined(TETL_ENABLE_CXX_MODULES)
-import etl.cstdint;
-import etl.cstdlib;
-import etl.type_traits;
+import etl;
 #else
     #include <etl/cstdint.hpp>
     #include <etl/cstdlib.hpp>

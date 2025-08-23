@@ -4,7 +4,7 @@
 #include "testing/testing.hpp"
 
 #if defined(TETL_ENABLE_CXX_MODULES)
-import etl.cstdlib;
+import etl;
 #else
     #include <etl/cstdlib.hpp>
 #endif

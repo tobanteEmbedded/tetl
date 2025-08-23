@@ -4,9 +4,7 @@
 #include "testing/testing.hpp"
 
 #if defined(TETL_ENABLE_CXX_MODULES)
-import etl.cmath;
-import etl.concepts;
-import etl.limits;
+import etl;
 #else
     #include <etl/cmath.hpp>
     #include <etl/concepts.hpp>
