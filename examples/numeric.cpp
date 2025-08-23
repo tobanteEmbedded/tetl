@@ -1,7 +1,5 @@
 // SPDX-License-Identifier: BSL-1.0
 
-#undef NDEBUG
-
 #include <etl/array.hpp>
 #include <etl/iterator.hpp>
 #include <etl/numbers.hpp>

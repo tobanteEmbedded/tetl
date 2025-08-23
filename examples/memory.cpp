@@ -1,7 +1,5 @@
 // SPDX-License-Identifier: BSL-1.0
 
-#undef NDEBUG
-
 #include <etl/cassert.hpp> // for assert
 #include <etl/memory.hpp>  // for pointer_int_pair
 

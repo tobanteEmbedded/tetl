@@ -2,11 +2,11 @@ project(examples)
 
 if(TETL_BUILD_CXX_MODULES)
     tetl_add_module_target(tetl.etl-example)
-    target_compile_definitions(tetl.etl-example PUBLIC TETL_DEBUG=1 TETL_ENABLE_CXX_MODULES=1)
+    target_compile_definitions(tetl.etl-example PUBLIC TETL_ENABLE_ASSERTIONS=1 TETL_ENABLE_CXX_MODULES=1)
     target_link_libraries(tetl.etl-example PUBLIC tetl::compiler_warnings)
 else()
     add_library(tetl.etl-example INTERFACE)
-    target_compile_definitions(tetl.etl-example INTERFACE TETL_DEBUG=1)
+    target_compile_definitions(tetl.etl-example INTERFACE TETL_ENABLE_ASSERTIONS=1)
     target_link_libraries(tetl.etl-example INTERFACE tetl::etl tetl::compiler_warnings)
 endif()
 

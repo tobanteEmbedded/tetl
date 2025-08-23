@@ -2,7 +2,7 @@ project(etl-tests)
 
 add_library(tetl.etl-test-common INTERFACE)
 target_include_directories(tetl.etl-test-common INTERFACE "${CMAKE_SOURCE_DIR}/tests")
-target_compile_definitions(tetl.etl-test-common INTERFACE TETL_DEBUG=1 TETL_ENABLE_USER_CONFIG_HEADER_INCLUDE=1)
+target_compile_definitions(tetl.etl-test-common INTERFACE TETL_ENABLE_USER_CONFIG_HEADER_INCLUDE=1)
 target_link_libraries(tetl.etl-test-common INTERFACE tetl::compiler_warnings)
 
 if(TETL_BUILD_CXX_MODULES)
