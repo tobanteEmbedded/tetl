@@ -23,6 +23,7 @@ constexpr auto rotate(ForwardIt first, ForwardIt nFirst, ForwardIt last) -> Forw
         return first;
     }
 
+    // Do the first pass (this determines the final return value).
     auto read     = nFirst;
     auto write    = first;
     auto nextRead = first;
@@ -34,8 +35,28 @@ constexpr auto rotate(ForwardIt first, ForwardIt nFirst, ForwardIt last) -> Forw
         etl::iter_swap(write++, read++);
     }
 
-    etl::rotate(write, nextRead, last);
-    return write;
+    auto result = write;
+    first       = write;
+    nFirst      = nextRead;
+
+    // Finish the remaining work iteratively instead of recursively.
+    while (first != nFirst) {
+        read     = nFirst;
+        write    = first;
+        nextRead = first;
+
+        while (read != last) {
+            if (write == nextRead) {
+                nextRead = read;
+            }
+            etl::iter_swap(write++, read++);
+        }
+
+        first  = write;
+        nFirst = nextRead;
+    }
+
+    return result;
 }
 
 } // namespace etl
