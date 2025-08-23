@@ -10,6 +10,7 @@ using etl::ranges::dangling;
 using etl::ranges::disable_sized_range;
 using etl::ranges::enable_borrowed_range;
 using etl::ranges::end;
+using etl::ranges::iterator_t;
 using etl::ranges::range;
 using etl::ranges::range_difference_t;
 using etl::ranges::range_reference_t;

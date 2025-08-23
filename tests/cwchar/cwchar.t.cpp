@@ -1,10 +1,13 @@
 // SPDX-License-Identifier: BSL-1.0
 
-#include <etl/cwchar.hpp>
-
-#include <etl/array.hpp>
-
 #include "testing/testing.hpp"
+
+#if defined(TETL_ENABLE_CXX_MODULES)
+import etl;
+#else
+    #include <etl/array.hpp>
+    #include <etl/cwchar.hpp>
+#endif
 
 namespace {
 constexpr auto test() -> bool

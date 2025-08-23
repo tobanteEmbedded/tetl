@@ -1,8 +1,12 @@
 // SPDX-License-Identifier: BSL-1.0
 
-#include <etl/limits.hpp>
-
 #include "testing/testing.hpp"
+
+#if defined(TETL_ENABLE_CXX_MODULES)
+import etl;
+#else
+    #include <etl/limits.hpp>
+#endif
 
 [[nodiscard]] static constexpr auto test_default() -> bool
 {
@@ -143,12 +147,14 @@ template <typename T>
     CHECK(etl::numeric_limits<float>::is_integer == false);
     CHECK(etl::numeric_limits<float>::is_bounded == true);
 
+#if not defined(TETL_ENABLE_CXX_MODULES)
     CHECK(etl::numeric_limits<float>::min() == FLT_MIN);
     CHECK(etl::numeric_limits<float>::max() == FLT_MAX);
     CHECK(etl::numeric_limits<float>::lowest() == -FLT_MAX);
     CHECK(etl::numeric_limits<float>::epsilon() == FLT_EPSILON);
     CHECK(etl::numeric_limits<float>::round_error() == 0.5F);
     // CHECK(etl::numeric_limits<float>::infinity() == HUGE_VALF);
+#endif
 
     return true;
 }
@@ -160,12 +166,14 @@ template <typename T>
     CHECK(etl::numeric_limits<double>::is_integer == false);
     CHECK(etl::numeric_limits<double>::is_bounded == true);
 
+#if not defined(TETL_ENABLE_CXX_MODULES)
     CHECK(etl::numeric_limits<double>::min() == DBL_MIN);
     CHECK(etl::numeric_limits<double>::max() == DBL_MAX);
     CHECK(etl::numeric_limits<double>::lowest() == -DBL_MAX);
     CHECK(etl::numeric_limits<double>::epsilon() == DBL_EPSILON);
     CHECK(etl::numeric_limits<double>::round_error() == 0.5);
     // CHECK(etl::numeric_limits<double>::infinity() == HUGE_VAL);
+#endif
 
     return true;
 }

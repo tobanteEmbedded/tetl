@@ -16,4 +16,8 @@ using etl::operator==;
 using etl::swap;
 using etl::tuple_size_v;
 
+// Non-standard extensions
+using etl::pair_like;
+using etl::tuple_like;
+
 } // namespace etl

@@ -15,7 +15,11 @@ module;
 #include <etl/cstddef.hpp>
 #include <etl/cstdint.hpp>
 #include <etl/cstdlib.hpp>
+#include <etl/cstring.hpp>
+#include <etl/cwchar.hpp>
 #include <etl/exception.hpp>
+#include <etl/execution.hpp>
+#include <etl/expected.hpp>
 #include <etl/flat_set.hpp>
 #include <etl/functional.hpp>
 #include <etl/inplace_vector.hpp>
@@ -25,13 +29,19 @@ module;
 #include <etl/mdarray.hpp>
 #include <etl/mdspan.hpp>
 #include <etl/memory.hpp>
+#include <etl/meta.hpp>
+#include <etl/mutex.hpp>
 #include <etl/numbers.hpp>
 #include <etl/numeric.hpp>
 #include <etl/optional.hpp>
 #include <etl/random.hpp>
 #include <etl/ranges.hpp>
 #include <etl/ratio.hpp>
+#include <etl/scope.hpp>
+#include <etl/set.hpp>
 #include <etl/span.hpp>
+#include <etl/stack.hpp>
+#include <etl/stdexcept.hpp>
 #include <etl/string.hpp>
 #include <etl/string_view.hpp>
 #include <etl/strings.hpp>
@@ -41,6 +51,7 @@ module;
 #include <etl/utility.hpp>
 #include <etl/variant.hpp>
 #include <etl/vector.hpp>
+#include <etl/version.hpp>
 
 export module etl;
 
@@ -59,7 +70,11 @@ export module etl;
 #include "src/cstddef.inc"
 #include "src/cstdint.inc"
 #include "src/cstdlib.inc"
+#include "src/cstring.inc"
+#include "src/cwchar.inc"
 #include "src/exception.inc"
+#include "src/execution.inc"
+#include "src/expected.inc"
 #include "src/flat_set.inc"
 #include "src/functional.inc"
 #include "src/inplace_vector.inc"
@@ -69,13 +84,19 @@ export module etl;
 #include "src/mdarray.inc"
 #include "src/mdspan.inc"
 #include "src/memory.inc"
+#include "src/meta.inc"
+#include "src/mutex.inc"
 #include "src/numbers.inc"
 #include "src/numeric.inc"
 #include "src/optional.inc"
 #include "src/random.inc"
 #include "src/ranges.inc"
 #include "src/ratio.inc"
+#include "src/scope.inc"
+#include "src/set.inc"
 #include "src/span.inc"
+#include "src/stack.inc"
+#include "src/stdexcept.inc"
 #include "src/string.inc"
 #include "src/string_view.inc"
 #include "src/strings.inc"
@@ -85,3 +106,4 @@ export module etl;
 #include "src/utility.inc"
 #include "src/variant.inc"
 #include "src/vector.inc"
+#include "src/version.inc"

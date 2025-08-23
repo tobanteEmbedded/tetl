@@ -1,8 +1,12 @@
 // SPDX-License-Identifier: BSL-1.0
 
-#include <etl/version.hpp>
-
 #include "testing/testing.hpp"
+
+#if defined(TETL_ENABLE_CXX_MODULES)
+import etl;
+#else
+    #include <etl/version.hpp>
+#endif
 
 static constexpr auto test() -> bool
 {
@@ -18,20 +22,22 @@ static constexpr auto test() -> bool
     CHECK(etl::language_standard::cpp_20 > etl::language_standard::cpp_17);
     CHECK(etl::language_standard::cpp_23 > etl::language_standard::cpp_17);
 
-#if TETL_CPP_STANDARD == 17
+#if not defined(TETL_ENABLE_CXX_MODULES)
+    #if TETL_CPP_STANDARD == 17
     CHECK(etl::current_standard == etl::language_standard::cpp_17);
-#endif
+    #endif
 
-#if TETL_CPP_STANDARD == 20
+    #if TETL_CPP_STANDARD == 20
     CHECK(etl::current_standard == etl::language_standard::cpp_20);
-#endif
+    #endif
 
-#if TETL_CPP_STANDARD == 23
+    #if TETL_CPP_STANDARD == 23
     CHECK(etl::current_standard == etl::language_standard::cpp_23);
-#endif
+    #endif
 
-#if TETL_CPP_STANDARD == 26
+    #if TETL_CPP_STANDARD == 26
     CHECK(etl::current_standard == etl::language_standard::cpp_26);
+    #endif
 #endif
 
     return true;
