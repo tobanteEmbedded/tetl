@@ -1,10 +1,15 @@
 // SPDX-License-Identifier: BSL-1.0
 
-#include <etl/algorithm.hpp>
-#include <etl/array.hpp>
 #include <etl/cassert.hpp>
-#include <etl/iterator.hpp>
-#include <etl/set.hpp>
+
+#if defined(TETL_ENABLE_CXX_MODULES)
+import etl;
+#else
+    #include <etl/algorithm.hpp>
+    #include <etl/array.hpp>
+    #include <etl/iterator.hpp>
+    #include <etl/set.hpp>
+#endif
 
 #include <stdio.h>
 

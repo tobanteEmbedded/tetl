@@ -1,8 +1,13 @@
 // SPDX-License-Identifier: BSL-1.0
 
 #include <etl/cassert.hpp>
-#include <etl/cmath.hpp>
-#include <etl/utility.hpp>
+
+#if defined(TETL_ENABLE_CXX_MODULES)
+import etl;
+#else
+    #include <etl/cmath.hpp>
+    #include <etl/utility.hpp>
+#endif
 
 static constexpr auto test() -> bool
 {

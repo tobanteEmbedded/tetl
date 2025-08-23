@@ -45,4 +45,7 @@ using etl::tuple_element_t;
 using etl::tuple_size;
 using etl::tuple_size_v;
 
+// Non-standard extensions
+using etl::ignore_unused;
+
 } // namespace etl

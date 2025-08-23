@@ -39,6 +39,7 @@ module;
 #include <etl/ratio.hpp>
 #include <etl/scope.hpp>
 #include <etl/set.hpp>
+#include <etl/source_location.hpp>
 #include <etl/span.hpp>
 #include <etl/stack.hpp>
 #include <etl/stdexcept.hpp>
@@ -104,6 +105,7 @@ export module etl;
 #include "inc/ratio.inc"
 #include "inc/scope.inc"
 #include "inc/set.inc"
+#include "inc/source_location.inc"
 #include "inc/span.inc"
 #include "inc/stack.inc"
 #include "inc/stdexcept.inc"

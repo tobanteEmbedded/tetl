@@ -1,7 +1,12 @@
 // SPDX-License-Identifier: BSL-1.0
 
 #include <etl/cassert.hpp>
-#include <etl/tuple.hpp>
+
+#if defined(TETL_ENABLE_CXX_MODULES)
+import etl;
+#else
+    #include <etl/tuple.hpp>
+#endif
 
 auto main() -> int
 {

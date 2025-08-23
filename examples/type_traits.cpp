@@ -1,7 +1,11 @@
 // SPDX-License-Identifier: BSL-1.0
 
-#include <etl/cstdint.hpp>
-#include <etl/type_traits.hpp>
+#if defined(TETL_ENABLE_CXX_MODULES)
+import etl;
+#else
+    #include <etl/cstdint.hpp>
+    #include <etl/type_traits.hpp>
+#endif
 
 namespace {
 

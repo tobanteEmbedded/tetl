@@ -1,7 +1,12 @@
 // SPDX-License-Identifier: BSL-1.0
 
-#include <etl/cassert.hpp> // for assert
-#include <etl/memory.hpp>  // for pointer_int_pair
+#include <etl/cassert.hpp>
+
+#if defined(TETL_ENABLE_CXX_MODULES)
+import etl;
+#else
+    #include <etl/memory.hpp> // for pointer_int_pair
+#endif
 
 auto main() -> int
 {
