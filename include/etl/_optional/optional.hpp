@@ -11,6 +11,7 @@
 #include <etl/_contracts/check.hpp>
 #include <etl/_functional/hash.hpp>
 #include <etl/_functional/invoke.hpp>
+#include <etl/_iterator/next.hpp>
 #include <etl/_memory/addressof.hpp>
 #include <etl/_optional/nullopt.hpp>
 #include <etl/_type_traits/add_lvalue_reference.hpp>
@@ -87,7 +88,9 @@ namespace etl {
 /// \include optional.cpp
 template <typename T>
 struct optional {
-    using value_type = T;
+    using value_type     = T;
+    using iterator       = T*;
+    using const_iterator = T const*;
 
     static_assert(!is_array_v<T>, "instantiation of optional with an array type is ill-formed");
     static_assert(!is_same_v<remove_cvref_t<T>, nullopt_t>, "instantiation of optional with nullopt_t is ill-formed");
@@ -384,6 +387,26 @@ struct optional {
     {
         TETL_PRECONDITION(has_value());
         return etl::move(etl::unchecked_get<1>(_var));
+    }
+
+    [[nodiscard]] constexpr auto begin() noexcept -> iterator
+    {
+        return has_value() ? etl::addressof(etl::unchecked_get<1>(_var)) : nullptr;
+    }
+
+    [[nodiscard]] constexpr auto begin() const noexcept -> const_iterator
+    {
+        return has_value() ? etl::addressof(etl::unchecked_get<1>(_var)) : nullptr;
+    }
+
+    [[nodiscard]] constexpr auto end() noexcept -> iterator
+    {
+        return etl::next(begin(), static_cast<etl::ptrdiff_t>(has_value()));
+    }
+
+    [[nodiscard]] constexpr auto end() const noexcept -> const_iterator
+    {
+        return etl::next(begin(), static_cast<etl::ptrdiff_t>(has_value()));
     }
 
     /// Swaps the contents with those of other.
