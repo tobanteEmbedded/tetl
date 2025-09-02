@@ -1,16 +1,20 @@
 // SPDX-License-Identifier: BSL-1.0
 
-#include <etl/charconv.hpp>
-
-#include <etl/array.hpp>
-#include <etl/cstdint.hpp>
-#include <etl/iterator.hpp>
-#include <etl/string.hpp>
-#include <etl/string_view.hpp>
-#include <etl/type_traits.hpp>
-#include <etl/utility.hpp>
-
 #include "testing/testing.hpp"
+
+#if defined(TETL_ENABLE_CXX_MODULES)
+import etl;
+#else
+    #include <etl/array.hpp>
+    #include <etl/charconv.hpp>
+    #include <etl/cstdint.hpp>
+    #include <etl/iterator.hpp>
+    #include <etl/string.hpp>
+    #include <etl/string_view.hpp>
+    #include <etl/system_error.hpp>
+    #include <etl/type_traits.hpp>
+    #include <etl/utility.hpp>
+#endif
 
 static constexpr auto test_chars_format() -> bool
 {
@@ -182,7 +186,7 @@ static constexpr auto test_from_chars() -> bool
             auto const str    = "128"_sv;
             auto const result = etl::from_chars(str.begin(), str.end(), val);
             CHECK_FALSE(bool{result});
-            CHECK(result.ptr == str.data());
+            CHECK(result.ptr == str.end());
             CHECK(result.ec == etl::errc::result_out_of_range);
         }
 
@@ -191,7 +195,7 @@ static constexpr auto test_from_chars() -> bool
             auto const str    = "-129"_sv;
             auto const result = etl::from_chars(str.begin(), str.end(), val);
             CHECK_FALSE(bool{result});
-            CHECK(result.ptr == str.data());
+            CHECK(result.ptr == str.end());
             CHECK(result.ec == etl::errc::result_out_of_range);
         }
     }
@@ -209,7 +213,7 @@ static constexpr auto test_to_chars() -> bool
         auto const result = etl::to_chars(buf.begin(), buf.end(), tc, 10);
         CHECK(bool{result});
         CHECK(result.ptr != nullptr);
-        CHECK(etl::string_view{etl::as_const(buf).data(), result.ptr} == expected);
+        CHECK(etl::string_view{buf.data(), result.ptr} == expected);
         return true;
     };
 

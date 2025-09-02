@@ -1,10 +1,14 @@
 // SPDX-License-Identifier: BSL-1.0
 
-#include <etl/limits.hpp>
-
 #include "testing/testing.hpp"
 
-[[nodiscard]] constexpr static auto test_default() -> bool
+#if defined(TETL_ENABLE_CXX_MODULES)
+import etl;
+#else
+    #include <etl/limits.hpp>
+#endif
+
+[[nodiscard]] static constexpr auto test_default() -> bool
 {
     struct S {
         int i = 42;
@@ -28,7 +32,7 @@
     return true;
 }
 
-[[nodiscard]] constexpr static auto test_bool() -> bool
+[[nodiscard]] static constexpr auto test_bool() -> bool
 {
     CHECK(etl::numeric_limits<bool>::is_specialized == true);
     CHECK(etl::numeric_limits<bool>::is_signed == false);
@@ -48,7 +52,7 @@
 }
 
 template <typename T>
-[[nodiscard]] constexpr static auto test_signed() -> bool
+[[nodiscard]] static constexpr auto test_signed() -> bool
 {
     CHECK(etl::numeric_limits<T>::is_specialized == true);
     CHECK(etl::numeric_limits<T>::is_signed == true);
@@ -108,7 +112,7 @@ template <typename T>
 }
 
 template <typename T>
-[[nodiscard]] constexpr static auto test_unsigned() -> bool
+[[nodiscard]] static constexpr auto test_unsigned() -> bool
 {
     CHECK(etl::numeric_limits<T>::is_specialized == true);
     CHECK(etl::numeric_limits<T>::is_signed == false);
@@ -126,7 +130,7 @@ template <typename T>
     return true;
 }
 
-[[nodiscard]] constexpr static auto test_float_round_style() -> bool
+[[nodiscard]] static constexpr auto test_float_round_style() -> bool
 {
     CHECK(etl::float_round_style::round_indeterminate == -1);
     CHECK(etl::float_round_style::round_toward_zero == 0);
@@ -136,36 +140,40 @@ template <typename T>
     return true;
 }
 
-[[nodiscard]] constexpr static auto test_float() -> bool
+[[nodiscard]] static constexpr auto test_float() -> bool
 {
     CHECK(etl::numeric_limits<float>::is_specialized == true);
     CHECK(etl::numeric_limits<float>::is_signed == true);
     CHECK(etl::numeric_limits<float>::is_integer == false);
     CHECK(etl::numeric_limits<float>::is_bounded == true);
 
+#if not defined(TETL_ENABLE_CXX_MODULES)
     CHECK(etl::numeric_limits<float>::min() == FLT_MIN);
     CHECK(etl::numeric_limits<float>::max() == FLT_MAX);
     CHECK(etl::numeric_limits<float>::lowest() == -FLT_MAX);
     CHECK(etl::numeric_limits<float>::epsilon() == FLT_EPSILON);
     CHECK(etl::numeric_limits<float>::round_error() == 0.5F);
     // CHECK(etl::numeric_limits<float>::infinity() == HUGE_VALF);
+#endif
 
     return true;
 }
 
-[[nodiscard]] constexpr static auto test_double() -> bool
+[[nodiscard]] static constexpr auto test_double() -> bool
 {
     CHECK(etl::numeric_limits<double>::is_specialized == true);
     CHECK(etl::numeric_limits<double>::is_signed == true);
     CHECK(etl::numeric_limits<double>::is_integer == false);
     CHECK(etl::numeric_limits<double>::is_bounded == true);
 
+#if not defined(TETL_ENABLE_CXX_MODULES)
     CHECK(etl::numeric_limits<double>::min() == DBL_MIN);
     CHECK(etl::numeric_limits<double>::max() == DBL_MAX);
     CHECK(etl::numeric_limits<double>::lowest() == -DBL_MAX);
     CHECK(etl::numeric_limits<double>::epsilon() == DBL_EPSILON);
     CHECK(etl::numeric_limits<double>::round_error() == 0.5);
     // CHECK(etl::numeric_limits<double>::infinity() == HUGE_VAL);
+#endif
 
     return true;
 }

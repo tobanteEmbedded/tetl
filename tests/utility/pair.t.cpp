@@ -1,22 +1,15 @@
 // SPDX-License-Identifier: BSL-1.0
 
-// TODO: float <-> double conversion are used to test the converting constructors
-// maybe switch to integer types.
-#if defined(__GNUC__)
-    #pragma GCC diagnostic push
-    #pragma GCC diagnostic ignored "-Wdouble-promotion"
-#endif
-
-#if defined(__clang__)
-    #pragma clang diagnostic push
-    #pragma clang diagnostic ignored "-Wdouble-promotion"
-#endif
-
-#include <etl/utility.hpp>
-
-#include <etl/type_traits.hpp>
-
 #include "testing/testing.hpp"
+
+#if defined(TETL_ENABLE_CXX_MODULES)
+import etl;
+#else
+    #include <etl/cstddef.hpp>
+    #include <etl/cstdint.hpp>
+    #include <etl/type_traits.hpp>
+    #include <etl/utility.hpp>
+#endif
 
 namespace {
 struct DummyString;
@@ -101,8 +94,8 @@ static constexpr auto test() -> bool
 
     // different types
     {
-        auto p     = etl::make_pair(T{0}, 143.0F);
-        auto other = etl::pair<T, double>{p};
+        auto p     = etl::make_pair(T{0}, etl::int16_t(42));
+        auto other = etl::pair<T, etl::int32_t>{p};
 
         CHECK_SAME_TYPE(decltype(other.first), decltype(p.first));
         CHECK_FALSE(etl::is_same_v<decltype(other.second), decltype(p.second)>);
@@ -125,8 +118,8 @@ static constexpr auto test() -> bool
 
     // different types
     {
-        auto p     = etl::make_pair(T{0}, 143.0F);
-        auto other = etl::pair<T, double>{etl::move(p)};
+        auto p     = etl::make_pair(T{0}, etl::int16_t(42));
+        auto other = etl::pair<T, etl::int32_t>{etl::move(p)};
 
         CHECK_SAME_TYPE(decltype(other.first), decltype(p.first));
         CHECK_FALSE(etl::is_same_v<decltype(other.second), decltype(p.second)>);
@@ -145,15 +138,15 @@ static constexpr auto test() -> bool
     }
     // different types
     {
-        auto p     = etl::make_pair(T{0}, 143.0F);
-        auto other = etl::pair<T, double>{};
+        auto p     = etl::make_pair(T{0}, etl::int16_t(42));
+        auto other = etl::pair<T, etl::int32_t>{};
         other      = p;
 
         CHECK_SAME_TYPE(decltype(other.first), decltype(p.first));
         CHECK_FALSE(etl::is_same_v<decltype(other.second), decltype(p.second)>);
 
         CHECK(other.first == p.first);
-        CHECK(other.second == static_cast<float>(p.second));
+        CHECK(other.second == p.second);
     }
 
     // same types
@@ -166,15 +159,15 @@ static constexpr auto test() -> bool
     }
     // different types
     {
-        auto other = etl::pair<T, double>{};
-        auto p     = etl::make_pair(T{0}, 143.0F);
+        auto other = etl::pair<T, etl::int32_t>{};
+        auto p     = etl::make_pair(T{0}, etl::int16_t(42));
         other      = etl::move(p);
 
         CHECK_SAME_TYPE(decltype(other.first), decltype(p.first));
         CHECK_FALSE(etl::is_same_v<decltype(other.second), decltype(p.second)>);
 
         CHECK(other.first == p.first);
-        CHECK(other.second == static_cast<double>(p.second));
+        CHECK(other.second == p.second);
     }
 
     {
@@ -403,11 +396,3 @@ auto main() -> int
     STATIC_CHECK(test_all());
     return 0;
 }
-
-#if defined(__GNUC__)
-    #pragma GCC diagnostic pop
-#endif
-
-#if defined(__clang__)
-    #pragma clang diagnostic pop
-#endif

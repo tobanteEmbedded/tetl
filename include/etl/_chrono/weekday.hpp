@@ -75,7 +75,7 @@ struct weekday {
 private:
     [[nodiscard]] static constexpr auto weekday_from_days(int tp) noexcept -> etl::uint8_t
     {
-        return static_cast<etl::uint8_t>(tp >= -4 ? (tp + 4) % 7 : (tp + 5) % 7 + 6);
+        return static_cast<etl::uint8_t>(tp >= -4 ? (tp + 4) % 7 : ((tp + 5) % 7) + 6);
     }
 
     etl::uint8_t _wd;

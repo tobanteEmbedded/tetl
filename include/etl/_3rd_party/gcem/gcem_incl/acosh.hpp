@@ -1,6 +1,6 @@
 /*################################################################################
   ##
-  ##   Copyright (C) 2016-2020 Keith O'Hara
+  ##   Copyright (C) 2016-2024 Keith O'Hara
   ##
   ##   This file is part of the GCE-Math C++ library.
   ##
@@ -22,41 +22,47 @@
  * compile-time inverse hyperbolic cosine function
  */
 
-#ifndef GCEM_acosh_HPP
-#define GCEM_acosh_HPP
+#ifndef _gcem_acosh_HPP
+#define _gcem_acosh_HPP
 
-namespace internal {
-
-template <typename T>
-constexpr auto acosh_compute(T const x) noexcept -> T
+namespace internal
 {
-    return ( // NaN check
-        is_nan(x) ? etl::numeric_limits<T>::quiet_NaN() :
-                  // function defined for x >= 1
-            x < T(1) ? etl::numeric_limits<T>::quiet_NaN()
-                     :
-                     // indistinguishable from 1
-            etl::numeric_limits<T>::epsilon() > abs(x - T(1)) ? T(0)
-                                                              :
-                                                              // else
-            log(x + sqrt(x * x - T(1)))
-    );
+
+template<typename T>
+constexpr
+T
+acosh_compute(const T x)
+noexcept
+{
+    return( // NaN check
+            is_nan(x) ? \
+                GCLIM<T>::quiet_NaN() :
+            // function defined for x >= 1
+            x < T(1) ? \
+                GCLIM<T>::quiet_NaN() :
+            // indistinguishable from 1
+            GCLIM<T>::min() > abs(x - T(1)) ? \
+                T(0) :
+            // else
+                log( x + sqrt(x*x - T(1)) ) );
 }
 
-} // namespace internal
+}
 
 /**
  * Compile-time inverse hyperbolic cosine function
  *
  * @param x a real-valued input.
- * @return the inverse hyperbolic cosine function using \f[ \text{acosh}(x) =
- * \ln \left( x + \sqrt{x^2 - 1} \right) \f]
+ * @return the inverse hyperbolic cosine function using \f[ \text{acosh}(x) = \ln \left( x + \sqrt{x^2 - 1} \right) \f]
  */
 
-template <typename T>
-constexpr auto acosh(T const x) noexcept -> return_t<T>
+template<typename T>
+constexpr
+return_t<T>
+acosh(const T x)
+noexcept
 {
-    return internal::acosh_compute(static_cast<return_t<T>>(x));
+    return internal::acosh_compute( static_cast<return_t<T>>(x) );
 }
 
 #endif

@@ -1,5 +1,13 @@
 project(tetl)
 
-add_library(${PROJECT_NAME} INTERFACE)
-add_library(tetl::etl ALIAS ${PROJECT_NAME})
-target_include_directories(${PROJECT_NAME} INTERFACE ${PROJECT_SOURCE_DIR})
+add_library(tetl.etl INTERFACE)
+add_library(tetl::etl ALIAS tetl.etl)
+
+file(GLOB_RECURSE TETL_HEADER_FILES CONFIGURE_DEPENDS "*.hpp")
+
+target_sources(tetl.etl
+    INTERFACE
+    FILE_SET HEADERS
+    BASE_DIRS ${PROJECT_SOURCE_DIR}
+    FILES ${TETL_HEADER_FILES}
+)

@@ -1,6 +1,8 @@
 name: Doxygen
 
-on: [push, pull_request]
+on:
+  push:
+    branches: [main]
 
 concurrency:
   group: ${{ github.ref }}-${{ github.workflow }}
@@ -15,7 +17,7 @@ jobs:
         uses: actions/checkout@v4
 
       - name: Install build tools
-        run: sudo apt install -y bison flex ninja-build
+        run: sudo apt install -y bison flex
 
       - name: Build doxygen
         run: |

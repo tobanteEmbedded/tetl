@@ -1,6 +1,10 @@
 name: Freestanding ARM
 
-on: [push, pull_request]
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
 
 concurrency:
   group: ${{ github.ref }}-${{ github.workflow }}
@@ -13,7 +17,7 @@ jobs:
       image: alpine:edge
     strategy:
       matrix:
-        cxx: [20, 23]
+        cxx: ["20", "23", "26"]
       fail-fast: false
     name: C++${{ matrix.cxx }}
     steps:
@@ -21,14 +25,49 @@ jobs:
         uses: actions/checkout@v4
 
       - name: Install dependencies
-        run: |
-          apk add git --no-cache
-          apk add make gcc-arm-none-eabi g++-arm-none-eabi newlib-arm-none-eabi grep --no-cache
-          grep --version
-          arm-none-eabi-g++ --version
+        run: >
+          apk add
+          cmake
+          ninja
+          gcc-arm-none-eabi
+          g++-arm-none-eabi
+          newlib-arm-none-eabi
+          clang
+          lld
+          llvm
+          llvm-linker-tools
+          --no-cache
 
-      - name: Build examples projects (Debug)
-        run: ARM=1 CXXSTD=${{ matrix.cxx }} DEBUG=1 make -C examples clean all
+      - name: "GCC: Configure CMake"
+        run: >
+          cmake
+          -S .
+          -B cmake-build-gcc
+          -G "Ninja Multi-Config"
+          -D CMAKE_TOOLCHAIN_FILE=cmake/toolchain/gcc-arm-none-eabi.cmake
+          -D CMAKE_CXX_STANDARD=${{ matrix.cxx }}
+          -D CMAKE_COMPILE_WARNING_AS_ERROR=ON
+          -D TETL_BUILD_CONTRACT_CHECKS=OFF
 
-      - name: Build examples projects (Release)
-        run: ARM=1 CXXSTD=${{ matrix.cxx }} make -C examples clean all
+      - name: (GCC) Build -- Debug
+        run: cmake --build cmake-build-gcc --config Debug
+
+      - name: (GCC) Build -- Release
+        run: cmake --build cmake-build-gcc --config Release
+
+      - name: "Clang: Configure CMake"
+        run: >
+          cmake
+          -S .
+          -B cmake-build-clang
+          -G "Ninja Multi-Config"
+          -D CMAKE_TOOLCHAIN_FILE=cmake/toolchain/clang-arm-none-eabi.cmake
+          -D CMAKE_CXX_STANDARD=${{ matrix.cxx }}
+          -D CMAKE_COMPILE_WARNING_AS_ERROR=ON
+          -D TETL_BUILD_CONTRACT_CHECKS=OFF
+
+      - name: (Clang) Build -- Debug
+        run: cmake --build cmake-build-clang --config Debug
+
+      - name: (Clang) Build -- Release
+        run: cmake --build cmake-build-clang --config Release

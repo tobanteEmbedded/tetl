@@ -1,6 +1,6 @@
 /*################################################################################
   ##
-  ##   Copyright (C) 2016-2020 Keith O'Hara
+  ##   Copyright (C) 2016-2024 Keith O'Hara
   ##
   ##   This file is part of the GCE-Math C++ library.
   ##
@@ -18,8 +18,8 @@
   ##
   ################################################################################*/
 
-#ifndef GCEM_copysign_HPP
-#define GCEM_copysign_HPP
+#ifndef _gcem_copysign_HPP
+#define _gcem_copysign_HPP
 
 /**
  * Compile-time copy sign function
@@ -30,9 +30,12 @@
  */
 
 template <typename T1, typename T2>
-constexpr auto copysign(const T1 x, const T2 y) noexcept -> T1
+constexpr
+T1
+copysign(const T1 x, const T2 y)
+noexcept
 {
-    return (signbit(x) != signbit(y) ? -x : x);
+    return( signbit(x) != signbit(y) ? -x : x );
 }
 
 #endif

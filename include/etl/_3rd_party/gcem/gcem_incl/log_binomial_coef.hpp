@@ -1,6 +1,6 @@
 /*################################################################################
   ##
-  ##   Copyright (C) 2016-2020 Keith O'Hara
+  ##   Copyright (C) 2016-2024 Keith O'Hara
   ##
   ##   This file is part of the GCE-Math C++ library.
   ##
@@ -18,24 +18,31 @@
   ##
   ################################################################################*/
 
-#ifndef GCEM_log_binomial_coef_HPP
-#define GCEM_log_binomial_coef_HPP
+#ifndef _gcem_log_binomial_coef_HPP
+#define _gcem_log_binomial_coef_HPP
 
-namespace internal {
-
-template <typename T>
-constexpr auto log_binomial_coef_compute(T const n, T const k) noexcept -> T
+namespace internal
 {
-    return (lgamma(n + 1) - (lgamma(k + 1) + lgamma(n - k + 1)));
+
+template<typename T>
+constexpr
+T
+log_binomial_coef_compute(const T n, const T k)
+noexcept
+{
+    return( lgamma(n+1) - (lgamma(k+1) + lgamma(n-k+1)) );
 }
 
-template <typename T1, typename T2, typename TC = common_return_t<T1, T2>>
-constexpr auto log_binomial_coef_type_check(const T1 n, const T2 k) noexcept -> TC
+template<typename T1, typename T2, typename TC = common_return_t<T1,T2>>
+constexpr
+TC
+log_binomial_coef_type_check(const T1 n, const T2 k)
+noexcept
 {
-    return log_binomial_coef_compute(static_cast<TC>(n), static_cast<TC>(k));
+    return log_binomial_coef_compute(static_cast<TC>(n),static_cast<TC>(k));
 }
 
-} // namespace internal
+}
 
 /**
  * Compile-time log binomial coefficient
@@ -43,14 +50,16 @@ constexpr auto log_binomial_coef_type_check(const T1 n, const T2 k) noexcept -> 
  * @param n integral-valued input.
  * @param k integral-valued input.
  * @return computes the log Binomial coefficient
- * \f[ \ln \frac{n!}{k!(n-k)!} = \ln \Gamma(n+1) - [ \ln \Gamma(k+1) + \ln
- * \Gamma(n-k+1) ] \f]
+ * \f[ \ln \frac{n!}{k!(n-k)!} = \ln \Gamma(n+1) - [ \ln \Gamma(k+1) + \ln \Gamma(n-k+1) ] \f]
  */
 
-template <typename T1, typename T2>
-constexpr auto log_binomial_coef(const T1 n, const T2 k) noexcept -> common_return_t<T1, T2>
+template<typename T1, typename T2>
+constexpr
+common_return_t<T1,T2>
+log_binomial_coef(const T1 n, const T2 k)
+noexcept
 {
-    return internal::log_binomial_coef_type_check(n, k);
+    return internal::log_binomial_coef_type_check(n,k);
 }
 
 #endif

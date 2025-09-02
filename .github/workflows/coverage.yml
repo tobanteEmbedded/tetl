@@ -25,7 +25,7 @@ jobs:
       - name: Install dependencies
         run: |
           sudo apt update -y
-          sudo apt install -y ninja-build gcovr
+          sudo apt install -y gcovr
 
       - name: CMake configure
         run: >
@@ -34,8 +34,9 @@ jobs:
           -G Ninja
           -D CMAKE_CXX_STANDARD="${{ matrix.cxx }}"
           -D CMAKE_BUILD_TYPE=Debug
+          -D CMAKE_CXX_FLAGS="--coverage"
+          -D CMAKE_EXE_LINKER_FLAGS="--coverage"
           -D TETL_BUILD_CONTRACT_CHECKS=OFF
-          -D TETL_BUILD_COVERAGE=ON
 
       - name: CMake build
         run: cmake --build build
@@ -50,7 +51,7 @@ jobs:
           -s build
           -o build/coverage.xml
           -r include
-          -j 2
+          -j $(nproc)
 
       - uses: codecov/codecov-action@v5
         with:

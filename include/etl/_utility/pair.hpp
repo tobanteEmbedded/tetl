@@ -38,8 +38,9 @@ struct pair {
     using second_type = T2;
 
     /// \brief Default constructor. Value-initializes both elements.
-    explicit(not is_implicit_default_constructible_v<T1> || not is_implicit_default_constructible_v<T2>) constexpr pair(
-    )
+    explicit(
+        not is_implicit_default_constructible_v<T1> || not is_implicit_default_constructible_v<T2>
+    ) constexpr pair()
         requires(is_default_constructible_v<T1> and is_default_constructible_v<T2>)
         : first{}
         , second{}
@@ -47,10 +48,9 @@ struct pair {
     }
 
     /// \brief Initializes first with x and second with y.
-    explicit(not is_convertible_v<T1 const&, T1> or not is_convertible_v<T2 const&, T2>) constexpr pair(
-        T1 const& t1,
-        T2 const& t2
-    )
+    explicit(
+        not is_convertible_v<T1 const&, T1> or not is_convertible_v<T2 const&, T2>
+    ) constexpr pair(T1 const& t1, T2 const& t2)
         requires(is_copy_constructible_v<T1> and is_copy_constructible_v<T2>)
         : first(t1)
         , second(t2)
@@ -100,19 +100,21 @@ struct pair {
     constexpr auto operator=(pair const& p) -> pair& = default;
 
     template <typename U1, typename U2>
-    constexpr auto operator=(pair<U1, U2> const& p)
-        -> pair& requires((is_assignable_v<first_type&, U1 const&> and is_assignable_v<second_type&, U2 const&>)) {
-            first  = p.first;
-            second = p.second;
-            return *this;
-        }
+    constexpr auto operator=(pair<U1, U2> const& p) -> pair&
+        requires((is_assignable_v<first_type&, U1 const&> and is_assignable_v<second_type&, U2 const&>))
+    {
+        first  = p.first;
+        second = p.second;
+        return *this;
+    }
 
-    constexpr auto operator=(pair&& p) noexcept
-        -> pair& requires((is_move_assignable_v<first_type> and is_move_assignable_v<second_type>)) {
-            first  = etl::move(p.first);
-            second = etl::move(p.second);
-            return *this;
-        }
+    constexpr auto operator=(pair&& p) noexcept -> pair&
+        requires((is_move_assignable_v<first_type> and is_move_assignable_v<second_type>))
+    {
+        first  = etl::move(p.first);
+        second = etl::move(p.second);
+        return *this;
+    }
 
     template <typename U1, typename U2>
         requires(is_assignable_v<first_type&, U1> and is_assignable_v<second_type&, U2>)
@@ -123,8 +125,8 @@ struct pair {
         return *this;
     }
 
-    constexpr auto swap(pair& other)
-        noexcept(is_nothrow_swappable_v<first_type> and is_nothrow_swappable_v<second_type>) -> void
+    constexpr auto
+    swap(pair& other) noexcept(is_nothrow_swappable_v<first_type> and is_nothrow_swappable_v<second_type>) -> void
     {
         using etl::swap;
         swap(first, other.first);

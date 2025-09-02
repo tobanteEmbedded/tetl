@@ -1,6 +1,10 @@
 name: Emscripten
 
-on: [push, pull_request]
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
 
 concurrency:
   group: ${{ github.ref }}-${{ github.workflow }}
@@ -18,11 +22,6 @@ jobs:
       - name: Check out code
         uses: actions/checkout@v4
 
-      - name: Install ninja
-        run: |
-          sudo apt update -y
-          sudo apt install -y ninja-build
-
       - name: Setup emsdk
         uses: mymindstorm/setup-emsdk@v14
         with:
@@ -36,8 +35,7 @@ jobs:
           -G "Ninja Multi-Config"
           -D CMAKE_CXX_FLAGS="-fexceptions"
           -D CMAKE_CXX_STANDARD=${{ matrix.cxx }}
-          -D TETL_BUILD_WERROR=ON
-          -D TETL_BUILD_WEVERYTHING=ON
+          -D CMAKE_COMPILE_WARNING_AS_ERROR=ON
 
       - name: CMake build -- Debug
         run: cmake --build build --config Debug

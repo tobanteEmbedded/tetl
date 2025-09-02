@@ -1,6 +1,6 @@
 /*################################################################################
   ##
-  ##   Copyright (C) 2016-2020 Keith O'Hara
+  ##   Copyright (C) 2016-2024 Keith O'Hara
   ##
   ##   This file is part of the GCE-Math C++ library.
   ##
@@ -22,38 +22,45 @@
  * compile-time inverse hyperbolic sine function
  */
 
-#ifndef GCEM_asinh_HPP
-#define GCEM_asinh_HPP
+#ifndef _gcem_asinh_HPP
+#define _gcem_asinh_HPP
 
-namespace internal {
-
-template <typename T>
-constexpr auto asinh_compute(T const x) noexcept -> T
+namespace internal
 {
-    return ( // NaN check
-        is_nan(x) ? etl::numeric_limits<T>::quiet_NaN() :
-                  // indistinguishable from zero
-            etl::numeric_limits<T>::epsilon() > abs(x) ? T(0)
-                                                       :
-                                                       // else
-            log(x + sqrt(x * x + T(1)))
-    );
+
+template<typename T>
+constexpr
+T
+asinh_compute(const T x)
+noexcept
+{
+    return( // NaN check
+            is_nan(x) ? \
+                GCLIM<T>::quiet_NaN() :
+            // indistinguishable from zero
+            GCLIM<T>::min() > abs(x) ? \
+                T(0) :
+            // else
+                log( x + sqrt(x*x + T(1)) ) );
 }
 
-} // namespace internal
+}
 
 /**
  * Compile-time inverse hyperbolic sine function
  *
  * @param x a real-valued input.
- * @return the inverse hyperbolic sine function using \f[ \text{asinh}(x) = \ln
- * \left( x + \sqrt{x^2 + 1} \right) \f]
+ * @return the inverse hyperbolic sine function using \f[ \text{asinh}(x) = \ln \left( x + \sqrt{x^2 + 1} \right) \f]
  */
 
-template <typename T>
-constexpr auto asinh(T const x) noexcept -> return_t<T>
+template<typename T>
+constexpr
+return_t<T>
+asinh(const T x)
+noexcept
 {
-    return internal::asinh_compute(static_cast<return_t<T>>(x));
+    return internal::asinh_compute( static_cast<return_t<T>>(x) );
 }
+
 
 #endif

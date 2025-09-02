@@ -6,6 +6,7 @@
 #define TETL_ENABLE_ASSERTIONS
 #define TETL_ENABLE_CUSTOM_ASSERT_HANDLER
 #define TETL_ENABLE_CUSTOM_EXCEPTION_HANDLER
+#define TETL_FREERTOS_USE_STUBS
 
 #include <stdio.h>
 #include <stdlib.h>

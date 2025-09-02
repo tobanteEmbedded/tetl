@@ -1,12 +1,15 @@
 // SPDX-License-Identifier: BSL-1.0
 
-#include <etl/variant.hpp>
-
-#include <etl/cstdint.hpp>
-#include <etl/string.hpp>
-#include <etl/type_traits.hpp>
-
 #include "testing/testing.hpp"
+
+#if defined(TETL_ENABLE_CXX_MODULES)
+import etl;
+#else
+    #include <etl/string.hpp>
+    #include <etl/type_traits.hpp>
+    #include <etl/utility.hpp>
+    #include <etl/variant.hpp>
+#endif
 
 static constexpr auto test() -> bool
 {
@@ -301,7 +304,7 @@ static constexpr auto test() -> bool
     return true;
 }
 
-[[nodiscard]] constexpr static auto test_non_trivial() -> bool
+[[nodiscard]] static constexpr auto test_non_trivial() -> bool
 {
     struct non_trivial_alternative {
         constexpr explicit non_trivial_alternative(int& v)

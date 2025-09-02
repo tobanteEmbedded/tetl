@@ -1,11 +1,15 @@
 // SPDX-License-Identifier: BSL-1.0
 
-#include <etl/type_traits.hpp>
-
-#include <etl/cstdint.hpp>
-
 #include "testing/testing.hpp"
 #include "testing/types.hpp"
+
+#if defined(TETL_ENABLE_CXX_MODULES)
+import etl;
+#else
+    #include <etl/cstddef.hpp>
+    #include <etl/cstdint.hpp>
+    #include <etl/type_traits.hpp>
+#endif
 
 namespace {
 [[nodiscard]] constexpr auto func2(char /*ignore*/) -> int (*)() { return nullptr; }

@@ -1,10 +1,13 @@
 // SPDX-License-Identifier: BSL-1.0
 
-#include <etl/experimental/hardware/stm32/gpio.hpp>
-
-#include <etl/bitset.hpp>
-
 #include "testing/testing.hpp"
+
+#if defined(TETL_ENABLE_CXX_MODULES)
+import etl;
+#else
+    #include <etl/bitset.hpp>
+    #include <etl/experimental/hardware/stm32/gpio.hpp>
+#endif
 
 using namespace etl::experimental::hardware;
 using register_bits = etl::bitset<32>;

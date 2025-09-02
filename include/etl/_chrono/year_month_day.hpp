@@ -24,12 +24,12 @@ private:
 
         z += 719468;
         int32_t const era  = (z >= 0 ? z : z - 146096) / 146097;
-        auto const doe     = static_cast<uint32_t>(z - era * 146097);
+        auto const doe     = static_cast<uint32_t>(z - (era * 146097));
         uint32_t const yoe = (doe - doe / 1460 + doe / 36524 - doe / 146096) / 365;
-        int32_t const y    = static_cast<int32_t>(yoe) + era * 400;
+        int32_t const y    = static_cast<int32_t>(yoe) + (era * 400);
         uint32_t const doy = doe - (365 * yoe + yoe / 4 - yoe / 100);
         uint32_t const mp  = (5 * doy + 2) / 153;
-        uint32_t const d   = doy - (153 * mp + 2) / 5 + 1;
+        uint32_t const d   = doy - ((153 * mp + 2) / 5) + 1;
         uint32_t const m   = mp < 10 ? mp + 3 : mp - 9;
 
         return {
@@ -47,10 +47,10 @@ private:
 
         y -= static_cast<int32_t>(m <= 2);
         int32_t const era  = (y >= 0 ? y : y - 399) / 400;
-        auto const yoe     = static_cast<uint32_t>(y - era * 400);            // [0, 399]
-        uint32_t const doy = (153 * (m > 2 ? m - 3 : m + 9) + 2) / 5 + d - 1; // [0, 365]
-        uint32_t const doe = yoe * 365 + yoe / 4 - yoe / 100 + doy;           // [0, 146096]
-        return days{era * 146097 + static_cast<int32_t>(doe) - 719468};
+        auto const yoe     = static_cast<uint32_t>(y - (era * 400));            // [0, 399]
+        uint32_t const doy = ((153 * (m > 2 ? m - 3 : m + 9) + 2) / 5) + d - 1; // [0, 365]
+        uint32_t const doe = (yoe * 365) + (yoe / 4) - (yoe / 100) + doy;       // [0, 146096]
+        return days{(era * 146097) + static_cast<int32_t>(doe) - 719468};
     }
 
 public:

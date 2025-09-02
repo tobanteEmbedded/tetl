@@ -13,7 +13,7 @@ namespace etl {
 template <typename T = void>
 struct plus {
     /// \brief Returns the sum of lhs and rhs.
-    [[nodiscard]] constexpr auto operator()(T const& lhs, T const& rhs) const -> T { return lhs + rhs; }
+    [[nodiscard]] constexpr auto operator()(T const& lhs, T const& rhs) const -> T { return static_cast<T>(lhs + rhs); }
 };
 
 template <>
@@ -22,9 +22,9 @@ struct plus<void> {
 
     /// \brief Returns the sum of lhs and rhs.
     template <typename T, typename U>
-    [[nodiscard]] constexpr auto operator()(T&& lhs, U&& rhs) const
-        noexcept(noexcept(etl::forward<T>(lhs) + etl::forward<U>(rhs)))
-            -> decltype(etl::forward<T>(lhs) + etl::forward<U>(rhs))
+    [[nodiscard]] constexpr auto
+    operator()(T&& lhs, U&& rhs) const noexcept(noexcept(etl::forward<T>(lhs) + etl::forward<U>(rhs)))
+        -> decltype(etl::forward<T>(lhs) + etl::forward<U>(rhs))
     {
         return etl::forward<T>(lhs) + etl::forward<U>(rhs);
     }

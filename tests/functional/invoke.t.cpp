@@ -1,12 +1,14 @@
 // SPDX-License-Identifier: BSL-1.0
 
-#include <etl/functional.hpp>
-
-#include <etl/cstdint.hpp>
-#include <etl/utility.hpp>
-
 #include "testing/testing.hpp"
 
+#if defined(TETL_ENABLE_CXX_MODULES)
+import etl;
+#else
+    #include <etl/cstdint.hpp>
+    #include <etl/functional.hpp>
+    #include <etl/utility.hpp>
+#endif
 namespace {
 
 template <typename T>

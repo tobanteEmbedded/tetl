@@ -1,6 +1,6 @@
 /*################################################################################
   ##
-  ##   Copyright (C) 2016-2020 Keith O'Hara
+  ##   Copyright (C) 2016-2024 Keith O'Hara
   ##
   ##   This file is part of the GCE-Math C++ library.
   ##
@@ -27,36 +27,66 @@
 #include <etl/_type_traits/is_integral.hpp>
 #include <etl/_type_traits/is_signed.hpp>
 
+// undef some functions from math.h
+// see issue #29
+
+#ifdef abs
+    #undef abs
+#endif
+
+#ifdef min
+    #undef min
+#endif
+
+#ifdef max
+    #undef max
+#endif
+
+#ifdef round
+    #undef round
+#endif
+
+#ifdef signbit
+    #undef signbit
+#endif
+
+//
+// version
+
 #ifndef GCEM_VERSION_MAJOR
     #define GCEM_VERSION_MAJOR 1
 #endif
 
 #ifndef GCEM_VERSION_MINOR
-    #define GCEM_VERSION_MINOR 13
+    #define GCEM_VERSION_MINOR 18
 #endif
 
 #ifndef GCEM_VERSION_PATCH
-    #define GCEM_VERSION_PATCH 1
+    #define GCEM_VERSION_PATCH 0
 #endif
 
 //
 // types
 
-namespace etl::detail::gcem {
-using uint_t   = unsigned int;
-using ullint_t = unsigned long long int;
+namespace etl::detail::gcem
+{
+    using uint_t = unsigned int;
+    using ullint_t = unsigned long long int;
 
-using llint_t = long long int;
+    using llint_t = long long int;
 
-template <typename T>
-using return_t = etl::conditional_t<etl::is_integral_v<T>, double, T>;
+    template<class T>
+    using GCLIM = etl::numeric_limits<T>;
 
-template <typename... T>
-using common_t = etl::common_type_t<T...>;
+    template<typename T>
+    using return_t = typename etl::conditional<etl::is_integral<T>::value,double,T>::type;
 
-template <typename... T>
-using common_return_t = return_t<common_t<T...>>;
-} // namespace etl::detail::gcem
+    template<typename ...T>
+    using common_t = typename etl::common_type<T...>::type;
+
+    template<typename ...T>
+    using common_return_t = return_t<common_t<T...>>;
+}
 
 //
 // constants
@@ -67,6 +97,10 @@ using common_return_t = return_t<common_t<T...>>;
 
 #ifndef GCEM_LOG_10
     #define GCEM_LOG_10 2.3025850929940456840179914546843642076011L
+#endif
+
+#ifndef GCEM_PI
+    #define GCEM_PI 3.1415926535897932384626433832795028841972L
 #endif
 
 #ifndef GCEM_LOG_PI
@@ -109,7 +143,7 @@ using common_return_t = return_t<common_t<T...>>;
 #endif
 
 #ifndef GCEM_ERF_INV_MAX_ITER
-    #define GCEM_ERF_INV_MAX_ITER 55
+    #define GCEM_ERF_INV_MAX_ITER 60
 #endif
 
 #ifndef GCEM_EXP_MAX_ITER_SMALL
@@ -152,6 +186,10 @@ using common_return_t = return_t<common_t<T...>>;
     #define GCEM_SQRT_MAX_ITER 100
 #endif
 
+#ifndef GCEM_INV_SQRT_MAX_ITER
+    #define GCEM_INV_SQRT_MAX_ITER 100
+#endif
+
 #ifndef GCEM_TAN_MAX_ITER
     #define GCEM_TAN_MAX_ITER 35
 #endif
@@ -168,13 +206,13 @@ using common_return_t = return_t<common_t<T...>>;
         #define GCEM_SIGNBIT(x) _signbit(x)
     #endif
     #ifndef GCEM_COPYSIGN
-        #define GCEM_COPYSIGN(x, y) _copysign(x, y)
+        #define GCEM_COPYSIGN(x,y) _copysign(x,y)
     #endif
 #else
     #ifndef GCEM_SIGNBIT
         #define GCEM_SIGNBIT(x) __builtin_signbit(x)
     #endif
     #ifndef GCEM_COPYSIGN
-        #define GCEM_COPYSIGN(x, y) __builtin_copysign(x, y)
+        #define GCEM_COPYSIGN(x,y) __builtin_copysign(x,y)
     #endif
 #endif

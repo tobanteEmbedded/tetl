@@ -35,16 +35,18 @@ struct layout_right::mapping {
 
     template <typename OtherExtents>
         requires is_constructible_v<extents_type, OtherExtents>
-    constexpr explicit(!is_convertible_v<OtherExtents, extents_type>)
-        mapping(mapping<OtherExtents> const& other) noexcept
+    constexpr explicit(!is_convertible_v<OtherExtents, extents_type>) mapping(
+        mapping<OtherExtents> const& other
+    ) noexcept
         : _extents{other.extents()}
     {
     }
 
     template <typename OtherExtents>
         requires(extents_type::rank() <= 1) && is_constructible_v<extents_type, OtherExtents>
-    constexpr explicit(!is_convertible_v<OtherExtents, extents_type>)
-        mapping(layout_left::mapping<OtherExtents> const& other) noexcept
+    constexpr explicit(!is_convertible_v<OtherExtents, extents_type>) mapping(
+        layout_left::mapping<OtherExtents> const& other
+    ) noexcept
         : _extents{other.extents()}
     {
     }

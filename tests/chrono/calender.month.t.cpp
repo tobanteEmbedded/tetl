@@ -1,14 +1,18 @@
 // SPDX-License-Identifier: BSL-1.0
 
-#include <etl/chrono.hpp>
-
-#include <etl/type_traits.hpp>
-
 #include "testing/testing.hpp"
+
+#if defined(TETL_ENABLE_CXX_MODULES)
+import etl;
+#else
+    #include <etl/chrono.hpp>
+    #include <etl/cstdint.hpp>
+    #include <etl/type_traits.hpp>
+#endif
 
 namespace chrono = etl::chrono;
 
-[[nodiscard]] constexpr static auto test_month() -> bool
+[[nodiscard]] static constexpr auto test_month() -> bool
 {
     // traits
     CHECK(etl::is_trivially_default_constructible_v<chrono::month>);
@@ -104,7 +108,7 @@ namespace chrono = etl::chrono;
     return true;
 }
 
-[[nodiscard]] constexpr static auto test_month_day() -> bool
+[[nodiscard]] static constexpr auto test_month_day() -> bool
 {
     // traits
     CHECK(etl::is_trivially_default_constructible_v<chrono::month_day>);
@@ -161,7 +165,7 @@ namespace chrono = etl::chrono;
     return true;
 }
 
-[[nodiscard]] constexpr static auto test_month_day_last() -> bool
+[[nodiscard]] static constexpr auto test_month_day_last() -> bool
 {
     // traits
     CHECK(etl::is_nothrow_constructible_v<chrono::month_day_last, chrono::month>);
@@ -201,7 +205,7 @@ namespace chrono = etl::chrono;
     return true;
 }
 
-[[nodiscard]] constexpr static auto test_month_weekday() -> bool
+[[nodiscard]] static constexpr auto test_month_weekday() -> bool
 {
     // traits
     CHECK(etl::is_nothrow_constructible_v<chrono::month_weekday, chrono::month, chrono::weekday_indexed>);
@@ -247,7 +251,7 @@ namespace chrono = etl::chrono;
     return true;
 }
 
-[[nodiscard]] constexpr static auto test_month_weekday_last() -> bool
+[[nodiscard]] static constexpr auto test_month_weekday_last() -> bool
 {
     // traits
     CHECK(etl::is_nothrow_constructible_v<chrono::month_weekday_last, chrono::month, chrono::weekday_last>);
@@ -305,7 +309,7 @@ namespace chrono = etl::chrono;
     return true;
 }
 
-[[nodiscard]] constexpr static auto test_all() -> bool
+[[nodiscard]] static constexpr auto test_all() -> bool
 {
     CHECK(test_month());
     CHECK(test_month_day());

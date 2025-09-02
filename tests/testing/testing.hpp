@@ -3,13 +3,16 @@
 #ifndef TETL_TEST_TESTING_TESTING_HPP
 #define TETL_TEST_TESTING_TESTING_HPP
 
-#undef NDEBUG
 #include <etl/cassert.hpp>
 
-#include <etl/_type_traits/is_same.hpp>
+#if defined(TETL_ENABLE_CXX_MODULES)
+import etl;
+#else
+    #include <etl/type_traits.hpp>
+#endif
 
-#define CHECK(...)           assert((__VA_ARGS__))
-#define CHECK_FALSE(...)     assert(not(__VA_ARGS__))
+#define CHECK(...)           TETL_ASSERT_IMPL((__VA_ARGS__))
+#define CHECK_FALSE(...)     TETL_ASSERT_IMPL(not(__VA_ARGS__))
 #define CHECK_NOEXCEPT(...)  CHECK(noexcept(__VA_ARGS__))
 #define CHECK_SAME_TYPE(...) CHECK(etl::is_same_v<__VA_ARGS__>)
 #define STATIC_CHECK(...)                                                                                              \

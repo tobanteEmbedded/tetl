@@ -1,11 +1,14 @@
 // SPDX-License-Identifier: BSL-1.0
 
-#include <etl/linalg.hpp>
-
-#include <etl/array.hpp>
-#include <etl/mdspan.hpp>
-
 #include "testing/testing.hpp"
+
+#if defined(TETL_ENABLE_CXX_MODULES)
+import etl;
+#else
+    #include <etl/array.hpp>
+    #include <etl/linalg.hpp>
+    #include <etl/mdspan.hpp>
+#endif
 
 template <typename T, typename IndexType>
 [[nodiscard]] static constexpr auto test_linalg_matrix_frob_norm() -> bool

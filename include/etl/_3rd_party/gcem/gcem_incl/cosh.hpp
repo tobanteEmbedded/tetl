@@ -1,6 +1,6 @@
 /*################################################################################
   ##
-  ##   Copyright (C) 2016-2020 Keith O'Hara
+  ##   Copyright (C) 2016-2024 Keith O'Hara
   ##
   ##   This file is part of the GCE-Math C++ library.
   ##
@@ -22,38 +22,44 @@
  * compile-time hyperbolic cosine function
  */
 
-#ifndef GCEM_cosh_HPP
-#define GCEM_cosh_HPP
+#ifndef _gcem_cosh_HPP
+#define _gcem_cosh_HPP
 
-namespace internal {
-
-template <typename T>
-constexpr auto cosh_compute(T const x) noexcept -> T
+namespace internal
 {
-    return ( // NaN check
-        is_nan(x) ? etl::numeric_limits<T>::quiet_NaN() :
-                  // indistinguishable from zero
-            etl::numeric_limits<T>::epsilon() > abs(x) ? T(1)
-                                                       :
-                                                       // else
-            (exp(x) + exp(-x)) / T(2)
-    );
+
+template<typename T>
+constexpr
+T
+cosh_compute(const T x)
+noexcept
+{
+    return( // NaN check
+            is_nan(x) ? \
+                GCLIM<T>::quiet_NaN() :
+            // indistinguishable from zero
+            GCLIM<T>::min() > abs(x) ? \
+                T(1) :
+            // else
+                (exp(x) + exp(-x)) / T(2) );
 }
 
-} // namespace internal
+}
 
 /**
  * Compile-time hyperbolic cosine function
  *
  * @param x a real-valued input.
- * @return the hyperbolic cosine function using \f[ \cosh(x) = \frac{\exp(x) +
- * \exp(-x)}{2} \f]
+ * @return the hyperbolic cosine function using \f[ \cosh(x) = \frac{\exp(x) + \exp(-x)}{2} \f]
  */
 
-template <typename T>
-constexpr auto cosh(T const x) noexcept -> return_t<T>
+template<typename T>
+constexpr
+return_t<T>
+cosh(const T x)
+noexcept
 {
-    return internal::cosh_compute(static_cast<return_t<T>>(x));
+    return internal::cosh_compute( static_cast<return_t<T>>(x) );
 }
 
 #endif

@@ -15,8 +15,8 @@ namespace etl::chrono {
 /// \ingroup chrono
 template <typename To, typename Rep, typename Period>
     requires(detail::is_duration_v<To>)
-[[nodiscard]] constexpr auto floor(duration<Rep, Period> const& d)
-    noexcept(is_arithmetic_v<Rep> and is_arithmetic_v<typename To::rep>) -> To
+[[nodiscard]] constexpr auto
+floor(duration<Rep, Period> const& d) noexcept(is_arithmetic_v<Rep> and is_arithmetic_v<typename To::rep>) -> To
 {
     auto const t{duration_cast<To>(d)};
     if (t > d) {

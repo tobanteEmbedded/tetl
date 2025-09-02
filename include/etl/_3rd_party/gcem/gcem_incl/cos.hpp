@@ -1,6 +1,6 @@
 /*################################################################################
   ##
-  ##   Copyright (C) 2016-2020 Keith O'Hara
+  ##   Copyright (C) 2016-2024 Keith O'Hara
   ##
   ##   This file is part of the GCE-Math C++ library.
   ##
@@ -22,50 +22,62 @@
  * compile-time cosine function using tan(x/2)
  */
 
-#ifndef GCEM_cos_HPP
-#define GCEM_cos_HPP
+#ifndef _gcem_cos_HPP
+#define _gcem_cos_HPP
 
-namespace internal {
-
-template <typename T>
-constexpr auto cos_compute(T const x) noexcept -> T
+namespace internal
 {
-    return (T(1) - x * x) / (T(1) + x * x);
+
+template<typename T>
+constexpr
+T
+cos_compute(const T x)
+noexcept
+{
+    return( T(1) - x*x)/(T(1) + x*x );
 }
 
-template <typename T>
-constexpr auto cos_check(T const x) noexcept -> T
+template<typename T>
+constexpr
+T
+cos_check(const T x)
+noexcept
 {
-    return ( // NaN check
-        is_nan(x) ? etl::numeric_limits<T>::quiet_NaN() :
-                  // indistinguishable from 0
-            etl::numeric_limits<T>::epsilon() > abs(x) ? T(1)
-                                                       :
-                                                       // special cases: pi/2 and pi
-            etl::numeric_limits<T>::epsilon() > abs(x - T(GCEM_HALF_PI))   ? T(0)
-        : etl::numeric_limits<T>::epsilon() > abs(x + T(GCEM_HALF_PI))     ? T(0)
-        : etl::numeric_limits<T>::epsilon() > abs(x - T(etl::numbers::pi)) ? -T(1)
-        : etl::numeric_limits<T>::epsilon() > abs(x + T(etl::numbers::pi)) ? -T(1)
-                                                                           :
-                                                                           // else
-            cos_compute(tan(x / T(2)))
-    );
+    return( // NaN check
+            is_nan(x) ? \
+                GCLIM<T>::quiet_NaN() :
+            // indistinguishable from 0
+            GCLIM<T>::min() > abs(x) ?
+                T(1) :
+            // special cases: pi/2 and pi
+            GCLIM<T>::min() > abs(x - T(GCEM_HALF_PI)) ? \
+                T(0) :
+            GCLIM<T>::min() > abs(x + T(GCEM_HALF_PI)) ? \
+                T(0) :
+            GCLIM<T>::min() > abs(x - T(GCEM_PI)) ? \
+                - T(1) :
+            GCLIM<T>::min() > abs(x + T(GCEM_PI)) ? \
+                - T(1) :
+            // else
+                cos_compute( tan(x/T(2)) ) );
 }
 
-} // namespace internal
+}
 
 /**
  * Compile-time cosine function
  *
  * @param x a real-valued input.
- * @return the cosine function using \f[ \cos(x) =
- * \frac{1-\tan^2(x/2)}{1+\tan^2(x/2)} \f]
+ * @return the cosine function using \f[ \cos(x) = \frac{1-\tan^2(x/2)}{1+\tan^2(x/2)} \f]
  */
 
-template <typename T>
-constexpr auto cos(T const x) noexcept -> return_t<T>
+template<typename T>
+constexpr
+return_t<T>
+cos(const T x)
+noexcept
 {
-    return internal::cos_check(static_cast<return_t<T>>(x));
+    return internal::cos_check( static_cast<return_t<T>>(x) );
 }
 
 #endif

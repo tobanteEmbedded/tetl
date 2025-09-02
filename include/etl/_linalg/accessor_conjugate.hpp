@@ -33,14 +33,15 @@ struct accessor_conjugate {
     {
     }
 
-    [[nodiscard]] constexpr auto access(data_handle_type p, size_t i) const
-        noexcept(noexcept(reference(_nestedAccessor.access(p, i)))) -> reference
+    [[nodiscard]] constexpr auto
+    access(data_handle_type p, size_t i) const noexcept(noexcept(reference(_nestedAccessor.access(p, i)))) -> reference
     {
         return reference(_nestedAccessor.access(p, i));
     }
 
-    [[nodiscard]] constexpr auto offset(data_handle_type p, size_t i) const
-        noexcept(noexcept(_nestedAccessor.offset(p, i))) -> typename offset_policy::data_handle_type
+    [[nodiscard]] constexpr auto
+    offset(data_handle_type p, size_t i) const noexcept(noexcept(_nestedAccessor.offset(p, i))) ->
+        typename offset_policy::data_handle_type
     {
         _nestedAccessor.offset(p, i);
     }

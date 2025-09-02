@@ -1,10 +1,13 @@
 // SPDX-License-Identifier: BSL-1.0
 
-#include <etl/meta.hpp>
-
-#include <etl/type_traits.hpp>
-
 #include "testing/testing.hpp"
+
+#if defined(TETL_ENABLE_CXX_MODULES)
+import etl;
+#else
+    #include <etl/meta.hpp>
+    #include <etl/type_traits.hpp>
+#endif
 
 namespace {
 constexpr auto test_all() -> bool

@@ -10,6 +10,9 @@ namespace etl {
 template <typename T>
 struct is_error_condition_enum : false_type { };
 
+template <typename T>
+inline constexpr auto is_error_condition_enum_v = is_error_condition_enum<T>::value;
+
 } // namespace etl
 
 #endif // TETL_SYSTEM_ERROR_IS_ERROR_CONDITION_ENUM_HPP

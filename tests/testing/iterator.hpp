@@ -3,7 +3,11 @@
 #ifndef TETL_TESTS_ALGORITHM_ITERATOR_TYPES_HPP
 #define TETL_TESTS_ALGORITHM_ITERATOR_TYPES_HPP
 
-#include <etl/iterator.hpp>
+#if defined(TETL_ENABLE_CXX_MODULES)
+import etl;
+#else
+    #include <etl/iterator.hpp>
+#endif
 
 template <typename It>
 struct InIter {

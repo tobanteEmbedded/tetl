@@ -1,14 +1,18 @@
 // SPDX-License-Identifier: BSL-1.0
 
-#include <etl/strings.hpp>
-
-#include <etl/array.hpp>
-#include <etl/cstdint.hpp>
-#include <etl/string_view.hpp>
-#include <etl/type_traits.hpp>
-
-#include "testing/approx.hpp"
 #include "testing/testing.hpp"
+
+#if defined(TETL_ENABLE_CXX_MODULES)
+import etl;
+#else
+    #include <etl/array.hpp>
+    #include <etl/cctype.hpp>
+    #include <etl/cstddef.hpp>
+    #include <etl/cstdint.hpp>
+    #include <etl/limits.hpp>
+    #include <etl/string_view.hpp>
+    #include <etl/strings.hpp>
+#endif
 
 namespace {
 
@@ -163,11 +167,11 @@ constexpr auto test() -> bool
         CHECK(to_integer<Int>(legalMax, 10).error == to_integer_error::none);
 
         auto overflow = "128"_sv;
-        CHECK(to_integer<Int>(overflow, 10).end == overflow.begin());
+        CHECK(to_integer<Int>(overflow, 10).end == overflow.end());
         CHECK(to_integer<Int>(overflow, 10).error == to_integer_error::overflow);
 
         auto moreOverflow = "999"_sv;
-        CHECK(to_integer<Int>(moreOverflow, 10).end == moreOverflow.begin());
+        CHECK(to_integer<Int>(moreOverflow, 10).end == moreOverflow.end());
         CHECK(to_integer<Int>(moreOverflow, 10).error == to_integer_error::overflow);
     }
 
@@ -180,17 +184,17 @@ constexpr auto test() -> bool
         CHECK(to_integer<Int>(legalMax, 10).error == to_integer_error::none);
 
         auto overflow = "256"_sv;
-        CHECK(to_integer<Int>(overflow, 10).end == overflow.begin());
+        CHECK(to_integer<Int>(overflow, 10).end == overflow.end());
         CHECK(to_integer<Int>(overflow, 10).error == to_integer_error::overflow);
 
         auto moreOverflow = "999"_sv;
-        CHECK(to_integer<Int>(moreOverflow, 10).end == moreOverflow.begin());
+        CHECK(to_integer<Int>(moreOverflow, 10).end == moreOverflow.end());
         CHECK(to_integer<Int>(moreOverflow, 10).error == to_integer_error::overflow);
     }
 
     if constexpr (sizeof(Int) < 4) {
         auto number = "99999"_sv;
-        CHECK(to_integer<Int>(number, 10).end == number.begin());
+        CHECK(to_integer<Int>(number, 10).end == number.end());
         CHECK(to_integer<Int>(number, 10).error == to_integer_error::overflow);
     }
 

@@ -1,6 +1,6 @@
 /*################################################################################
   ##
-  ##   Copyright (C) 2016-2020 Keith O'Hara
+  ##   Copyright (C) 2016-2024 Keith O'Hara
   ##
   ##   This file is part of the GCE-Math C++ library.
   ##
@@ -22,12 +22,16 @@
  * extract signbit for signed zeros
  */
 
-namespace internal {
-
-template <typename T>
-constexpr auto neg_zero(T const x) noexcept -> bool
+namespace internal
 {
-    return ((x == T(0.0)) && (copysign(T(1.0), x) == T(-1.0)));
+
+template<typename T>
+constexpr
+bool
+neg_zero(const T x)
+noexcept
+{
+    return( (x == T(0.0)) && (copysign(T(1.0), x) == T(-1.0)) );
 }
 
-} // namespace internal
+}

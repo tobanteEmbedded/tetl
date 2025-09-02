@@ -1,17 +1,22 @@
 // SPDX-License-Identifier: BSL-1.0
 
-#include <etl/string.hpp>
-
-#include <etl/algorithm.hpp>
-#include <etl/string_view.hpp>
-#include <etl/utility.hpp>
-
 #include "testing/testing.hpp"
+
+#if defined(TETL_ENABLE_CXX_MODULES)
+import etl;
+#else
+    #include <etl/algorithm.hpp>
+    #include <etl/cstddef.hpp>
+    #include <etl/iterator.hpp>
+    #include <etl/string.hpp>
+    #include <etl/string_view.hpp>
+    #include <etl/utility.hpp>
+#endif
 
 using namespace etl::string_view_literals;
 
 template <typename T>
-[[nodiscard]] constexpr static auto test_constructor() -> bool
+[[nodiscard]] static constexpr auto test_constructor() -> bool
 {
     using string = T;
 
@@ -201,7 +206,7 @@ template <typename T>
 }
 
 template <typename T>
-[[nodiscard]] constexpr static auto test_assign() -> bool
+[[nodiscard]] static constexpr auto test_assign() -> bool
 {
     using string = T;
 
@@ -307,7 +312,7 @@ template <typename T>
     return true;
 }
 
-[[nodiscard]] constexpr static auto test_all() -> bool
+[[nodiscard]] static constexpr auto test_all() -> bool
 {
     CHECK(sizeof(etl::inplace_string<6>) == 7);   // tiny storage, size_type = uint8
     CHECK(sizeof(etl::inplace_string<7>) == 8);   // tiny storage, size_type = uint8

@@ -172,8 +172,8 @@ public:
     /// \brief Tries to lock (i.e., takes ownership of) the associated mutex
     /// without blocking.
     template <typename Clock, typename Duration>
-    constexpr auto try_lock_until(chrono::time_point<Clock, Duration> const& tp)
-        noexcept(noexcept(_mutex->try_lock_until(tp))) -> bool
+    constexpr auto
+    try_lock_until(chrono::time_point<Clock, Duration> const& tp) noexcept(noexcept(_mutex->try_lock_until(tp))) -> bool
     {
         if ((_mutex != nullptr) && !_owns) {
             if (auto success = _mutex->try_lock_until(tp); success) {

@@ -1,12 +1,16 @@
 // SPDX-License-Identifier: BSL-1.0
 
-#include <etl/functional.hpp>
-
-#include <etl/cstdint.hpp>
-#include <etl/string_view.hpp>
-#include <etl/type_traits.hpp>
-
 #include "testing/testing.hpp"
+
+#if defined(TETL_ENABLE_CXX_MODULES)
+import etl;
+#else
+    #include <etl/cstdint.hpp>
+    #include <etl/functional.hpp>
+    #include <etl/string_view.hpp>
+    #include <etl/type_traits.hpp>
+    #include <etl/utility.hpp>
+#endif
 
 using namespace etl::string_view_literals;
 
@@ -68,7 +72,9 @@ static auto test() -> bool
     CHECK(static_cast<bool>(move));
     CHECK(move(T(1)) == T(3));
 
-#if defined(__cpp_exceptions)
+    // TODO: Somehow enable user config file when using modules
+#if not defined(TETL_ENABLE_CXX_MODULES)
+    #if defined(__cpp_exceptions)
     auto threw = false;
     try {
         auto empty = func_t{};
@@ -78,6 +84,7 @@ static auto test() -> bool
         CHECK(e.what() == "empty inplace_func_vtable"_sv);
     }
     CHECK(threw);
+    #endif
 #endif
     return true;
 }

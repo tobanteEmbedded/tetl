@@ -1,7 +1,11 @@
 // SPDX-License-Identifier: BSL-1.0
 
-#include <etl/source_location.hpp>
-#include <etl/string_view.hpp>
+#if defined(TETL_ENABLE_CXX_MODULES)
+import etl;
+#else
+    #include <etl/source_location.hpp>
+    #include <etl/string_view.hpp>
+#endif
 
 #include <stdio.h>
 

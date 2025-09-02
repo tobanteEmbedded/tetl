@@ -72,7 +72,9 @@ public:
     }
 
     explicit constexpr mdarray(extents_type const& ext)
-        requires(is_constructible_v<mapping_type, extents_type const&> and array_or_constructible_from<Container, size_t>)
+        requires(
+            is_constructible_v<mapping_type, extents_type const&> and array_or_constructible_from<Container, size_t>
+        )
         : mdarray(mapping_type(ext))
     {
     }
@@ -91,7 +93,10 @@ public:
     }
 
     constexpr mdarray(extents_type const& ext, value_type const& val)
-        requires(is_constructible_v<mapping_type, extents_type const&> and array_or_constructible_from<Container, size_t, value_type>)
+        requires(
+            is_constructible_v<mapping_type, extents_type const&>
+            and array_or_constructible_from<Container, size_t, value_type>
+        )
         : mdarray(mapping_type(ext), val)
     {
     }
@@ -191,7 +196,10 @@ public:
     }
 
     template <typename OtherIndexType>
-        requires(is_convertible_v<OtherIndexType const&, index_type> and is_nothrow_constructible_v<index_type, OtherIndexType const&>)
+        requires(
+            is_convertible_v<OtherIndexType const&, index_type>
+            and is_nothrow_constructible_v<index_type, OtherIndexType const&>
+        )
     [[nodiscard]] constexpr auto operator[](span<OtherIndexType, rank()> indices) -> reference
     {
         return [&]<size_t... Is>(index_sequence<Is...> /*seq*/) -> decltype(auto) {
@@ -200,7 +208,10 @@ public:
     }
 
     template <typename OtherIndexType>
-        requires(is_convertible_v<OtherIndexType const&, index_type> and is_nothrow_constructible_v<index_type, OtherIndexType const&>)
+        requires(
+            is_convertible_v<OtherIndexType const&, index_type>
+            and is_nothrow_constructible_v<index_type, OtherIndexType const&>
+        )
     [[nodiscard]] constexpr auto operator[](span<OtherIndexType, rank()> indices) const -> const_reference
     {
         return [&]<size_t... Is>(index_sequence<Is...> /*seq*/) -> decltype(auto) {
@@ -209,14 +220,20 @@ public:
     }
 
     template <typename OtherIndexType>
-        requires(is_convertible_v<OtherIndexType const&, index_type> and is_nothrow_constructible_v<index_type, OtherIndexType const&>)
+        requires(
+            is_convertible_v<OtherIndexType const&, index_type>
+            and is_nothrow_constructible_v<index_type, OtherIndexType const&>
+        )
     [[nodiscard]] constexpr auto operator[](array<OtherIndexType, rank()> const& indices) -> reference
     {
         return operator[](span{indices});
     }
 
     template <typename OtherIndexType>
-        requires(is_convertible_v<OtherIndexType const&, index_type> and is_nothrow_constructible_v<index_type, OtherIndexType const&>)
+        requires(
+            is_convertible_v<OtherIndexType const&, index_type>
+            and is_nothrow_constructible_v<index_type, OtherIndexType const&>
+        )
     [[nodiscard]] constexpr auto operator[](array<OtherIndexType, rank()> const& indices) const -> const_reference
     {
         return operator[](span{indices});

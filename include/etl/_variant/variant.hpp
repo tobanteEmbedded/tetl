@@ -158,32 +158,40 @@ public:
 
     constexpr auto operator=(variant const&) -> variant& = default;
 
-    constexpr auto operator=(variant const& other
-    ) noexcept((... and is_nothrow_copy_assignable_v<Ts>) and (... and is_nothrow_copy_constructible_v<Ts>))
-        -> variant& requires(
+    constexpr auto operator=(variant const& other) noexcept(
+        (... and is_nothrow_copy_assignable_v<Ts>) and (... and is_nothrow_copy_constructible_v<Ts>)
+    ) -> variant&
+        requires(
             (... and detail::variant_copy_assignable<Ts>) and not(... and detail::variant_trivially_copy_assignable<Ts>)
-        ) {
-            assign(other);
-            return *this;
-        }
+        )
+    {
+        assign(other);
+        return *this;
+    }
 
     constexpr auto operator=(variant&&) -> variant& = default;
 
-    constexpr auto operator=(variant&& other
-    ) noexcept((... and is_nothrow_move_assignable_v<Ts>) and (... and is_nothrow_move_constructible_v<Ts>))
-        -> variant& requires(
+    constexpr auto operator=(variant&& other) noexcept(
+        (... and is_nothrow_move_assignable_v<Ts>) and (... and is_nothrow_move_constructible_v<Ts>)
+    ) -> variant&
+        requires(
             (... and detail::variant_move_assignable<Ts>) and !(... and detail::variant_trivially_move_assignable<Ts>)
-        ) {
-            assign(etl::move(other));
-            return *this;
-        }
+        )
+    {
+        assign(etl::move(other));
+        return *this;
+    }
 
     template <typename T>
-        requires(not is_same_v<remove_cvref_t<T>, variant> and is_assignable_v<detail::variant_alternative_selector_t<T, Ts...>&, T> and is_assignable_v<detail::variant_alternative_selector_t<T, Ts...>, T>)
-    constexpr auto operator=(T&& t) noexcept(
-        (is_nothrow_assignable_v<detail::variant_alternative_selector_t<T, Ts...>&, T>
-         and is_nothrow_constructible_v<detail::variant_alternative_selector_t<T, Ts...>, T>)
-    ) -> variant&
+        requires(
+            not is_same_v<remove_cvref_t<T>, variant>
+            and is_assignable_v<detail::variant_alternative_selector_t<T, Ts...>&, T>
+            and is_assignable_v<detail::variant_alternative_selector_t<T, Ts...>, T>
+        )
+    constexpr auto operator=(T&& t) noexcept((
+        is_nothrow_assignable_v<detail::variant_alternative_selector_t<T, Ts...>&, T>
+        and is_nothrow_constructible_v<detail::variant_alternative_selector_t<T, Ts...>, T>
+    )) -> variant&
     {
         emplace<detail::variant_alternative_selector_t<T, Ts...>>(etl::forward<T>(t));
         return *this;

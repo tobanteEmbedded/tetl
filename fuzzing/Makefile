@@ -1,36 +1,34 @@
-CXXFLAGS ?= -std=c++2a -g -O1 -fsanitize=fuzzer,address -ftest-coverage -fcoverage-mapping -fprofile-arcs -fprofile-instr-generate
-CXXWARNINGS = -Wall -Wextra -Wpedantic
+CXX = clang++-20
+CXXFLAGS = -std=c++26 -g3 -O1 -fsanitize=fuzzer,address,undefined -ftest-coverage -fcoverage-mapping -fprofile-arcs -fprofile-instr-generate
+LCOV = lcov --gcov-tool ../scripts/llvm-gcov.sh
+MAXTIME ?= 20
 
-INCLUDES = -I ../include
+.PHONY: bin
+bin:
+	mkdir -p bin
 
 .PHONY: build
-build:
-	mkdir -p build
-	$(CXX) -c $(CXXFLAGS) $(CXXWARNINGS) $(INCLUDES) -o fuzzer.o fuzzer.cpp
-	$(CXX) $(CXXFLAGS) $(CXXWARNINGS) $(INCLUDES) -o fuzzer fuzzer.o
+build: bin
+	$(CXX) $(CXXFLAGS) -I ../include -o bin/fuzz_algorithm src/fuzz_algorithm.cpp
+	$(CXX) $(CXXFLAGS) -I ../include -o bin/fuzz_from_chars src/fuzz_from_chars.cpp
+	$(CXX) $(CXXFLAGS) -I ../include -o bin/fuzz_to_chars src/fuzz_to_chars.cpp
 
-ifneq (,$(findstring clang,$(CXX)))
-    LCOV = lcov --gcov-tool llvm-gcov.sh
-else
-    LCOV = lcov
-endif
 .PHONY: fuzz
 fuzz: build
-	$(LCOV) -c -i -d . --base-directory . -o base_cov.info
-	./fuzzer -max_total_time=60
-	$(LCOV) -c -d . --base-directory . -o fuzz_cov.info
-	$(LCOV) -a base_cov.info -a fuzz_cov.info -o cov.info
-	$(LCOV) --remove cov.info "*3rd_party/*" -o cov.info
-	$(LCOV) --remove cov.info "*c++*" -o cov.info
-	$(LCOV) --remove cov.info "*v1*" -o cov.info
-	$(LCOV) --remove cov.info "*Xcode.app*" -o cov.info
-	$(LCOV) --remove cov.info "*test_*" -o cov.info
-	$(LCOV) --remove cov.info "*clang*" -o cov.info
+	$(LCOV) -c -i -d . --base-directory . -o bin/base_cov.info --ignore-errors inconsistent
+	LLVM_PROFILE_FILE="bin/%p-%m.profraw" ./bin/fuzz_algorithm -max_total_time=$(MAXTIME)
+	LLVM_PROFILE_FILE="bin/%p-%m.profraw" ./bin/fuzz_from_chars -max_total_time=$(MAXTIME)
+	LLVM_PROFILE_FILE="bin/%p-%m.profraw" ./bin/fuzz_to_chars -max_total_time=$(MAXTIME)
+	$(LCOV) -c -d . --base-directory . -o bin/fuzz_cov.info --ignore-errors inconsistent
+	$(LCOV) -a bin/base_cov.info -a bin/fuzz_cov.info -o bin/cov.info --ignore-errors inconsistent
+	$(LCOV) --remove bin/cov.info "*clang*" -o bin/cov.info --ignore-errors inconsistent
+	$(LCOV) --remove bin/cov.info "*c++*" -o bin/cov.info --ignore-errors inconsistent
+
 
 .PHONY: report
-report:
-	genhtml cov.info --output-directory lcov
+report: fuzz
+	genhtml bin/cov.info --output-directory lcov --ignore-errors inconsistent
 
 .PHONY: clean
 clean:
-	rm -rf build lcov *.o *.info *.profraw *.gcda *.gcno fuzzer
+	rm -rf bin lcov *.profraw

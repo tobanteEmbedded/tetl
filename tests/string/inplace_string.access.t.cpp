@@ -1,17 +1,22 @@
 // SPDX-License-Identifier: BSL-1.0
 
-#include <etl/string.hpp>
-
-#include <etl/algorithm.hpp>
-#include <etl/string_view.hpp>
-#include <etl/utility.hpp>
-
 #include "testing/testing.hpp"
+
+#if defined(TETL_ENABLE_CXX_MODULES)
+import etl;
+#else
+    #include <etl/algorithm.hpp>
+    #include <etl/cstddef.hpp>
+    #include <etl/iterator.hpp>
+    #include <etl/string.hpp>
+    #include <etl/string_view.hpp>
+    #include <etl/utility.hpp>
+#endif
 
 using namespace etl::string_view_literals;
 
 template <typename String>
-[[nodiscard]] constexpr static auto test() -> bool
+[[nodiscard]] static constexpr auto test() -> bool
 {
     using string = String;
 
@@ -541,7 +546,7 @@ template <typename String>
     return true;
 }
 
-[[nodiscard]] constexpr static auto test_all() -> bool
+[[nodiscard]] static constexpr auto test_all() -> bool
 {
     CHECK(test<etl::inplace_string<18>>());
     CHECK(test<etl::inplace_string<22>>());

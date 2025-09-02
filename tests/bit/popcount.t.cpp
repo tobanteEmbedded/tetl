@@ -1,12 +1,15 @@
 // SPDX-License-Identifier: BSL-1.0
 
-#include <etl/bit.hpp>
-
-#include <etl/cstddef.hpp>
-#include <etl/cstdint.hpp>
-#include <etl/limits.hpp>
-
 #include "testing/testing.hpp"
+
+#if defined(TETL_ENABLE_CXX_MODULES)
+import etl;
+#else
+    #include <etl/bit.hpp>
+    #include <etl/cstddef.hpp>
+    #include <etl/cstdint.hpp>
+    #include <etl/limits.hpp>
+#endif
 
 namespace {
 

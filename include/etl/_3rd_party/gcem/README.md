@@ -1,6 +1,6 @@
 # GCEM
 
-**Copied on August 30th 2021.** Commit `8d0e62d`.
+**Copied on September 2nd 2025.** Commit `012ae73`, tag `v1.18.0`.
 
 - [github.com/kthohr/gcem](https://github.com/kthohr/gcem)
 - [github.com/kthohr/gcem/blob/master/LICENSE](https://github.com/kthohr/gcem/blob/master/LICENSE)
@@ -10,6 +10,7 @@
 ```cpp
 // replace includes in gcem_options.hpp
 // replace all std:: with etl::
+// fix include order of internal headers in gcem.hpp until gcc is happy
 
 #include <cstddef>      // size_t
 #include <limits>

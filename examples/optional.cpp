@@ -1,9 +1,12 @@
 // SPDX-License-Identifier: BSL-1.0
 
-#undef NDEBUG
-
 #include <etl/cassert.hpp>
-#include <etl/optional.hpp>
+
+#if defined(TETL_ENABLE_CXX_MODULES)
+import etl;
+#else
+    #include <etl/optional.hpp>
+#endif
 
 auto main() -> int
 {

@@ -1,12 +1,14 @@
 // SPDX-License-Identifier: BSL-1.0
 
-#define TETL_FREERTOS_USE_STUBS
-#include <etl/experimental/freertos/stream_buffer.hpp>
-
 #include "testing/testing.hpp"
 
+#if defined(TETL_ENABLE_CXX_MODULES)
+import etl;
+#else
+    #include <etl/experimental/freertos/stream_buffer.hpp>
+#endif
+
 namespace rtos = etl::experimental::freertos;
-namespace net  = etl::experimental::net;
 
 static auto test_all() -> bool
 {
@@ -16,13 +18,13 @@ static auto test_all() -> bool
     CHECK(sb.bytes_available() == 0);
     CHECK(sb.space_available() == 0);
 
-    auto read = etl::array<unsigned char, 16>{};
-    CHECK(sb.read(net::make_buffer(read), 0) == 0);
-    CHECK(sb.read_from_isr(net::make_buffer(read), nullptr) == 0);
+    auto read = etl::array<etl::byte, 16>{};
+    CHECK(sb.read(read, 0) == 0);
+    CHECK(sb.read_from_isr(read, nullptr) == 0);
 
-    auto const write = etl::array<unsigned char, 16>{};
-    CHECK(sb.write(net::make_buffer(write), 0) == 0);
-    CHECK(sb.write_from_isr(net::make_buffer(write), nullptr) == 0);
+    auto const write = etl::array<etl::byte, 16>{};
+    CHECK(sb.write(write, 0) == 0);
+    CHECK(sb.write_from_isr(write, nullptr) == 0);
 
     return true;
 }

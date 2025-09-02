@@ -39,7 +39,8 @@ struct pointer_int_pair_info {
 
     [[nodiscard]] static auto get_pointer(etl::intptr_t value) -> pointer_type
     {
-        return pointer_traits::get_from_void_pointer(etl::bit_cast<void*>(static_cast<etl::uintptr_t>(value) & ptr_mask)
+        return pointer_traits::get_from_void_pointer(
+            etl::bit_cast<void*>(static_cast<etl::uintptr_t>(value) & ptr_mask)
         );
     }
 

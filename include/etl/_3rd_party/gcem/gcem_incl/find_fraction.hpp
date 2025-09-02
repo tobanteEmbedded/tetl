@@ -1,6 +1,6 @@
 /*################################################################################
   ##
-  ##   Copyright (C) 2016-2020 Keith O'Hara
+  ##   Copyright (C) 2016-2024 Keith O'Hara
   ##
   ##   This file is part of the GCE-Math C++ library.
   ##
@@ -22,23 +22,25 @@
  * find the fraction part of x = n + r, where -0.5 <= r <= 0.5
  */
 
-#ifndef GCEM_find_fraction_HPP
-#define GCEM_find_fraction_HPP
+#ifndef _gcem_find_fraction_HPP
+#define _gcem_find_fraction_HPP
 
-namespace internal {
-
-template <typename T>
-constexpr auto find_fraction(T const x) noexcept -> T
+namespace internal
 {
-    return (
-        abs(x - internal::floor_check(x)) >= T(0.5) ? // if
-            x - internal::floor_check(x) - sgn(x)
-                                                    :
-                                                    // else
-            x - internal::floor_check(x)
-    );
+
+template<typename T>
+constexpr
+T
+find_fraction(const T x)
+noexcept
+{
+    return( abs(x - internal::floor_check(x)) >= T(0.5) ? \
+            // if
+                x - internal::floor_check(x) - sgn(x) :
+            //else
+                x - internal::floor_check(x) );
 }
 
-} // namespace internal
+}
 
 #endif

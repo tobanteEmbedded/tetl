@@ -1,13 +1,16 @@
 // SPDX-License-Identifier: BSL-1.0
 
-#include <etl/iterator.hpp>
-
-#include <etl/array.hpp>
-#include <etl/concepts.hpp>
-#include <etl/cstddef.hpp>
-#include <etl/cstdint.hpp>
-
 #include "testing/testing.hpp"
+
+#if defined(TETL_ENABLE_CXX_MODULES)
+import etl;
+#else
+    #include <etl/array.hpp>
+    #include <etl/concepts.hpp>
+    #include <etl/cstddef.hpp>
+    #include <etl/cstdint.hpp>
+    #include <etl/iterator.hpp>
+#endif
 
 template <typename T>
 static constexpr auto test() -> bool

@@ -1,6 +1,6 @@
 /*################################################################################
   ##
-  ##   Copyright (C) 2016-2020 Keith O'Hara
+  ##   Copyright (C) 2016-2024 Keith O'Hara
   ##
   ##   This file is part of the GCE-Math C++ library.
   ##
@@ -22,105 +22,151 @@
  * compile-time check if a float is +/-Inf
  */
 
-#ifndef GCEM_is_inf_HPP
-#define GCEM_is_inf_HPP
+#ifndef _gcem_is_inf_HPP
+#define _gcem_is_inf_HPP
 
-namespace internal {
-
-template <typename T>
-constexpr auto is_neginf(T const x) noexcept -> bool
+namespace internal
 {
-    return x == -etl::numeric_limits<T>::infinity();
+
+template<typename T>
+constexpr
+bool
+is_neginf(const T x)
+noexcept
+{
+    return x == - GCLIM<T>::infinity();
 }
 
-template <typename T1, typename T2>
-constexpr auto any_neginf(const T1 x, const T2 y) noexcept -> bool
+template<typename T1, typename T2>
+constexpr
+bool
+any_neginf(const T1 x, const T2 y)
+noexcept
 {
-    return (is_neginf(x) || is_neginf(y));
+    return( is_neginf(x) || is_neginf(y) );
 }
 
-template <typename T1, typename T2>
-constexpr auto all_neginf(const T1 x, const T2 y) noexcept -> bool
+template<typename T1, typename T2>
+constexpr
+bool
+all_neginf(const T1 x, const T2 y)
+noexcept
 {
-    return (is_neginf(x) && is_neginf(y));
+    return( is_neginf(x) && is_neginf(y) );
 }
 
-template <typename T1, typename T2, typename T3>
-constexpr auto any_neginf(const T1 x, const T2 y, const T3 z) noexcept -> bool
+template<typename T1, typename T2, typename T3>
+constexpr
+bool
+any_neginf(const T1 x, const T2 y, const T3 z)
+noexcept
 {
-    return (is_neginf(x) || is_neginf(y) || is_neginf(z));
+    return( is_neginf(x) || is_neginf(y) || is_neginf(z) );
 }
 
-template <typename T1, typename T2, typename T3>
-constexpr auto all_neginf(const T1 x, const T2 y, const T3 z) noexcept -> bool
+template<typename T1, typename T2, typename T3>
+constexpr
+bool
+all_neginf(const T1 x, const T2 y, const T3 z)
+noexcept
 {
-    return (is_neginf(x) && is_neginf(y) && is_neginf(z));
-}
-
-//
-
-template <typename T>
-constexpr auto is_posinf(T const x) noexcept -> bool
-{
-    return x == etl::numeric_limits<T>::infinity();
-}
-
-template <typename T1, typename T2>
-constexpr auto any_posinf(const T1 x, const T2 y) noexcept -> bool
-{
-    return (is_posinf(x) || is_posinf(y));
-}
-
-template <typename T1, typename T2>
-constexpr auto all_posinf(const T1 x, const T2 y) noexcept -> bool
-{
-    return (is_posinf(x) && is_posinf(y));
-}
-
-template <typename T1, typename T2, typename T3>
-constexpr auto any_posinf(const T1 x, const T2 y, const T3 z) noexcept -> bool
-{
-    return (is_posinf(x) || is_posinf(y) || is_posinf(z));
-}
-
-template <typename T1, typename T2, typename T3>
-constexpr auto all_posinf(const T1 x, const T2 y, const T3 z) noexcept -> bool
-{
-    return (is_posinf(x) && is_posinf(y) && is_posinf(z));
+    return( is_neginf(x) && is_neginf(y) && is_neginf(z) );
 }
 
 //
 
-template <typename T>
-constexpr auto is_inf(T const x) noexcept -> bool
+template<typename T>
+constexpr
+bool
+is_posinf(const T x)
+noexcept
 {
-    return (is_neginf(x) || is_posinf(x));
+    return x == GCLIM<T>::infinity();
 }
 
-template <typename T1, typename T2>
-constexpr auto any_inf(const T1 x, const T2 y) noexcept -> bool
+template<typename T1, typename T2>
+constexpr
+bool
+any_posinf(const T1 x, const T2 y)
+noexcept
 {
-    return (is_inf(x) || is_inf(y));
+    return( is_posinf(x) || is_posinf(y) );
 }
 
-template <typename T1, typename T2>
-constexpr auto all_inf(const T1 x, const T2 y) noexcept -> bool
+template<typename T1, typename T2>
+constexpr
+bool
+all_posinf(const T1 x, const T2 y)
+noexcept
 {
-    return (is_inf(x) && is_inf(y));
+    return( is_posinf(x) && is_posinf(y) );
 }
 
-template <typename T1, typename T2, typename T3>
-constexpr auto any_inf(const T1 x, const T2 y, const T3 z) noexcept -> bool
+template<typename T1, typename T2, typename T3>
+constexpr
+bool
+any_posinf(const T1 x, const T2 y, const T3 z)
+noexcept
 {
-    return (is_inf(x) || is_inf(y) || is_inf(z));
+    return( is_posinf(x) || is_posinf(y) || is_posinf(z) );
 }
 
-template <typename T1, typename T2, typename T3>
-constexpr auto all_inf(const T1 x, const T2 y, const T3 z) noexcept -> bool
+template<typename T1, typename T2, typename T3>
+constexpr
+bool
+all_posinf(const T1 x, const T2 y, const T3 z)
+noexcept
 {
-    return (is_inf(x) && is_inf(y) && is_inf(z));
+    return( is_posinf(x) && is_posinf(y) && is_posinf(z) );
 }
 
-} // namespace internal
+//
+
+template<typename T>
+constexpr
+bool
+is_inf(const T x)
+noexcept
+{
+    return( is_neginf(x) || is_posinf(x) );
+}
+
+template<typename T1, typename T2>
+constexpr
+bool
+any_inf(const T1 x, const T2 y)
+noexcept
+{
+    return( is_inf(x) || is_inf(y) );
+}
+
+template<typename T1, typename T2>
+constexpr
+bool
+all_inf(const T1 x, const T2 y)
+noexcept
+{
+    return( is_inf(x) && is_inf(y) );
+}
+
+template<typename T1, typename T2, typename T3>
+constexpr
+bool
+any_inf(const T1 x, const T2 y, const T3 z)
+noexcept
+{
+    return( is_inf(x) || is_inf(y) || is_inf(z) );
+}
+
+template<typename T1, typename T2, typename T3>
+constexpr
+bool
+all_inf(const T1 x, const T2 y, const T3 z)
+noexcept
+{
+    return( is_inf(x) && is_inf(y) && is_inf(z) );
+}
+
+}
 
 #endif

@@ -20,7 +20,7 @@
 
 namespace std {
 
-template <typename T, typename... Args, typename = decltype(::new(etl::declval<void*>()) T(etl::declval<Args>()...))>
+template <typename T, typename... Args, typename = decltype(::new (etl::declval<void*>()) T(etl::declval<Args>()...))>
 constexpr auto construct_at(T* p, Args&&... args) -> T*
 {
     return ::new (static_cast<void*>(p)) T(etl::forward<Args>(args)...);
@@ -34,7 +34,7 @@ constexpr auto construct_at(T* p, Args&&... args) -> T*
 namespace etl {
 
 /// \brief Creates a T object initialized with arguments args... at given address p.
-template <typename T, typename... Args, typename = decltype(::new(etl::declval<void*>()) T(etl::declval<Args>()...))>
+template <typename T, typename... Args, typename = decltype(::new (etl::declval<void*>()) T(etl::declval<Args>()...))>
 constexpr auto construct_at(T* p, Args&&... args) -> T*
 {
     return ::std::construct_at(p, etl::forward<Args>(args)...);

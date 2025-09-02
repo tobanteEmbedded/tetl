@@ -14,7 +14,7 @@ namespace etl {
 
 /// \brief Primitive numerical output conversion.
 struct to_chars_result {
-    char const* ptr{nullptr};
+    char* ptr{nullptr};
     etl::errc ec{};
 
     [[nodiscard]] constexpr explicit operator bool() const noexcept { return ec == etl::errc{}; }

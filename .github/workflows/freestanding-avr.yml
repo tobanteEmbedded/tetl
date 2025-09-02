@@ -1,6 +1,10 @@
 name: Freestanding AVR
 
-on: [push, pull_request]
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
 
 concurrency:
   group: ${{ github.ref }}-${{ github.workflow }}
@@ -13,7 +17,7 @@ jobs:
       image: alpine:edge
     strategy:
       matrix:
-        cxx: [20, 23]
+        cxx: [20, 23, 26]
       fail-fast: false
     name: C++${{ matrix.cxx }}
     steps:
@@ -22,8 +26,7 @@ jobs:
 
       - name: Install dependencies
         run: |
-          apk add git --no-cache
-          apk add cmake ninja make gcc-avr avr-libc --no-cache
+          apk add cmake ninja gcc-avr avr-libc --no-cache
           avr-g++ --version
 
       - name: Configure CMake
@@ -31,9 +34,9 @@ jobs:
           cmake -S .
           -B build
           -G "Ninja Multi-Config"
-          -D CMAKE_TOOLCHAIN_FILE=cmake/toolchain/atmega328p.cmake
+          -D CMAKE_TOOLCHAIN_FILE=cmake/toolchain/atmega2560.cmake
           -D CMAKE_CXX_STANDARD=${{ matrix.cxx }}
-          -D TETL_BUILD_WERROR=ON
+          -D CMAKE_COMPILE_WARNING_AS_ERROR=ON
           -D TETL_BUILD_CONTRACT_CHECKS=OFF
 
       - name: Build tests -- Debug

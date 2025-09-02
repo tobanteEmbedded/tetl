@@ -1,6 +1,6 @@
 /*################################################################################
   ##
-  ##   Copyright (C) 2016-2020 Keith O'Hara
+  ##   Copyright (C) 2016-2024 Keith O'Hara
   ##
   ##   This file is part of the GCE-Math C++ library.
   ##
@@ -18,40 +18,48 @@
   ##
   ################################################################################*/
 
-#ifndef GCEM_lcm_HPP
-#define GCEM_lcm_HPP
+#ifndef _gcem_lcm_HPP
+#define _gcem_lcm_HPP
 
-namespace internal {
-
-template <typename T>
-constexpr auto lcm_compute(T const a, T const b) noexcept -> T
+namespace internal
 {
-    return abs(a * (b / gcd(a, b)));
+
+template<typename T>
+constexpr
+T
+lcm_compute(const T a, const T b)
+noexcept
+{
+    return abs(a * (b / gcd(a,b)));
 }
 
-template <typename T1, typename T2, typename TC = common_t<T1, T2>>
-constexpr auto lcm_type_check(const T1 a, const T2 b) noexcept -> TC
+template<typename T1, typename T2, typename TC = common_t<T1,T2>>
+constexpr
+TC
+lcm_type_check(const T1 a, const T2 b)
+noexcept
 {
-    return lcm_compute(static_cast<TC>(a), static_cast<TC>(b));
+    return lcm_compute(static_cast<TC>(a),static_cast<TC>(b));
 }
 
-} // namespace internal
+}
 
 /**
  * Compile-time least common multiple (LCM) function
  *
  * @param a integral-valued input.
  * @param b integral-valued input.
- * @return the least common multiple between integers \c a and \c b using the
- * representation \f[ \text{lcm}(a,b) = \dfrac{| a b |}{\text{gcd}(a,b)} \f]
- * where \f$ \text{gcd}(a,b) \f$ denotes the greatest common divisor between \f$
- * a \f$ and \f$ b \f$.
+ * @return the least common multiple between integers \c a and \c b using the representation \f[ \text{lcm}(a,b) = \dfrac{| a b |}{\text{gcd}(a,b)} \f]
+ * where \f$ \text{gcd}(a,b) \f$ denotes the greatest common divisor between \f$ a \f$ and \f$ b \f$.
  */
 
-template <typename T1, typename T2>
-constexpr auto lcm(const T1 a, const T2 b) noexcept -> common_t<T1, T2>
+template<typename T1, typename T2>
+constexpr
+common_t<T1,T2>
+lcm(const T1 a, const T2 b)
+noexcept
 {
-    return internal::lcm_type_check(a, b);
+    return internal::lcm_type_check(a,b);
 }
 
 #endif

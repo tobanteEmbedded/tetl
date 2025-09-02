@@ -1,16 +1,17 @@
 // SPDX-License-Identifier: BSL-1.0
 
-#ifndef TETL_SYSTEM_ERROR_ERROC_HPP
-#define TETL_SYSTEM_ERROR_ERROC_HPP
+#ifndef TETL_SYSTEM_ERROR_ERRC_HPP
+#define TETL_SYSTEM_ERROR_ERRC_HPP
 
 #include <etl/_system_error/is_error_condition_enum.hpp>
 
 namespace etl {
 
 /// \brief The scoped enumeration etl::errc defines the values of portable error
-/// conditions that correspond to the POSIX error codes.
-enum struct errc {
-    address_family_not_supported,       // EAFNOSUPPORT
+/// conditions.
+/// \warning The integer values do *not* match POSIX
+enum struct errc : unsigned char {
+    address_family_not_supported = 1,   // EAFNOSUPPORT
     address_in_use,                     // EADDRINUSE
     address_not_available,              // EADDRNOTAVAIL
     already_connected,                  // EISCONN
@@ -95,4 +96,4 @@ struct is_error_condition_enum<errc> : true_type { };
 
 } // namespace etl
 
-#endif // TETL_SYSTEM_ERROR_ERROC_HPP
+#endif // TETL_SYSTEM_ERROR_ERRC_HPP

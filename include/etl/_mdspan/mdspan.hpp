@@ -134,10 +134,10 @@ struct mdspan {
     template <typename OtherElement, typename OtherExtents, typename OtherLayout, typename OtherAccessor>
         requires((is_constructible_v<mapping_type, typename OtherLayout::template mapping<OtherExtents> const&>
                   and is_constructible_v<accessor_type, OtherAccessor const&>))
-    explicit(
-        (not is_convertible_v<typename OtherLayout::template mapping<OtherExtents> const&, mapping_type>
-         or not is_convertible_v<OtherAccessor const&, accessor_type>)
-    ) constexpr mdspan(mdspan<OtherElement, OtherExtents, OtherLayout, OtherAccessor> const& other)
+    explicit((
+        not is_convertible_v<typename OtherLayout::template mapping<OtherExtents> const&, mapping_type>
+        or not is_convertible_v<OtherAccessor const&, accessor_type>
+    )) constexpr mdspan(mdspan<OtherElement, OtherExtents, OtherLayout, OtherAccessor> const& other)
         : _ptr(other.data_handle())
         , _map(other.mapping())
         , _acc(other.accessor())
@@ -175,7 +175,10 @@ struct mdspan {
 #endif
 
     template <typename OtherIndexType>
-        requires(is_convertible_v<OtherIndexType const&, index_type> and is_nothrow_constructible_v<index_type, OtherIndexType const&>)
+        requires(
+            is_convertible_v<OtherIndexType const&, index_type>
+            and is_nothrow_constructible_v<index_type, OtherIndexType const&>
+        )
     [[nodiscard]] constexpr auto operator[](span<OtherIndexType, rank()> indices) const -> reference
     {
         return [&]<size_t... Is>(index_sequence<Is...> /*seq*/) -> reference {
@@ -184,7 +187,10 @@ struct mdspan {
     }
 
     template <typename OtherIndexType>
-        requires(is_convertible_v<OtherIndexType const&, index_type> and is_nothrow_constructible_v<index_type, OtherIndexType const&>)
+        requires(
+            is_convertible_v<OtherIndexType const&, index_type>
+            and is_nothrow_constructible_v<index_type, OtherIndexType const&>
+        )
     [[nodiscard]] constexpr auto operator[](array<OtherIndexType, rank()> const& indices) const -> reference
     {
         return (*this)[etl::span{indices}];

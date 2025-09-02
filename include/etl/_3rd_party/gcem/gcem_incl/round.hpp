@@ -1,6 +1,6 @@
 /*################################################################################
   ##
-  ##   Copyright (C) 2016-2020 Keith O'Hara
+  ##   Copyright (C) 2016-2024 Keith O'Hara
   ##
   ##   This file is part of the GCE-Math C++ library.
   ##
@@ -18,34 +18,93 @@
   ##
   ################################################################################*/
 
-#ifndef GCEM_round_HPP
-#define GCEM_round_HPP
+#ifndef _gcem_round_HPP
+#define _gcem_round_HPP
 
-namespace internal {
-
-template <typename T>
-constexpr auto round_int(T const x) noexcept -> T
+namespace internal
 {
-    return static_cast<T>(find_whole(x));
+
+template<typename T>
+constexpr
+T
+round_int(const T x)
+noexcept
+{
+    return( abs(x - internal::floor_check(x)) >= T(0.5) ? \
+            // if
+                internal::floor_check(x) + sgn(x) : \
+            // else
+                internal::floor_check(x) );
 }
 
-template <typename T>
-constexpr auto round_check(T const x) noexcept -> T
+template<typename T>
+constexpr
+T
+round_check_internal(const T x)
+noexcept
 {
-    return ( // NaN check
-        is_nan(x) ? etl::numeric_limits<T>::quiet_NaN() :
-                  // +/- infinite
-            !is_finite(x) ? x
-                          :
-                          // signed-zero cases
-            etl::numeric_limits<T>::epsilon() > abs(x) ? x
-                                                       :
-                                                       // else
-            sgn(x) * round_int(abs(x))
-    );
+    return x;
 }
 
-} // namespace internal
+template<>
+constexpr
+float
+round_check_internal<float>(const float x)
+noexcept
+{
+    return( abs(x) >= 8388608.f ? \
+            // if
+                x : \
+            //else
+                round_int(x) );
+}
+
+template<>
+constexpr
+double
+round_check_internal<double>(const double x)
+noexcept
+{
+    return( abs(x) >= 4503599627370496. ? \
+            // if
+                x : \
+            // else
+                round_int(x) );
+}
+
+template<>
+constexpr
+long double
+round_check_internal<long double>(const long double x)
+noexcept
+{
+    return( abs(x) >= 9223372036854775808.l ? \
+            // if
+                x : \
+            // else
+                round_int(x) );
+}
+
+template<typename T>
+constexpr
+T
+round_check(const T x)
+noexcept
+{
+    return( // NaN check
+            is_nan(x) ? \
+                GCLIM<T>::quiet_NaN() :
+            // +/- infinite
+            !is_finite(x) ? \
+                x :
+            // signed-zero cases
+            GCLIM<T>::min() > abs(x) ? \
+                x :
+            // else
+                sgn(x) * round_check_internal(abs(x)) );
+}
+
+}
 
 /**
  * Compile-time round function
@@ -54,10 +113,13 @@ constexpr auto round_check(T const x) noexcept -> T
  * @return computes the rounding value of the input.
  */
 
-template <typename T>
-constexpr auto round(T const x) noexcept -> return_t<T>
+template<typename T>
+constexpr
+return_t<T>
+round(const T x)
+noexcept
 {
-    return internal::round_check(static_cast<return_t<T>>(x));
+    return internal::round_check( static_cast<return_t<T>>(x) );
 }
 
 #endif

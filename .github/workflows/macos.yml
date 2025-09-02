@@ -1,6 +1,10 @@
 name: macOS
 
-on: [push, pull_request]
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
 
 concurrency:
   group: ${{ github.ref }}-${{ github.workflow }}
@@ -14,8 +18,8 @@ jobs:
         config: [
             { image: "macos-13", cxx: 20, arch: "x64", werror: "ON" },
             { image: "macos-13", cxx: 23, arch: "x64", werror: "OFF" }, # -Wpre-c++2b-compat causes issues
-            { image: "macos-14", cxx: 20, arch: "ARM64", werror: "ON" },
-            { image: "macos-14", cxx: 23, arch: "ARM64", werror: "OFF" }, # -Wpre-c++2b-compat causes issues
+            { image: "macos-15", cxx: 20, arch: "ARM64", werror: "ON" },
+            { image: "macos-15", cxx: 23, arch: "ARM64", werror: "OFF" }, # -Wpre-c++2b-compat causes issues
           ]
       fail-fast: false
     name: Xcode ${{ matrix.config.arch }} (C++${{ matrix.config.cxx }})
@@ -23,16 +27,13 @@ jobs:
       - name: Check out code
         uses: actions/checkout@v4
 
-      - name: Install ninja
-        run: brew install ninja
-
       - name: CMake configure
         run: >
           cmake -S .
           -B build
           -G "Ninja Multi-Config"
           -D CMAKE_CXX_STANDARD=${{ matrix.config.cxx }}
-          -D TETL_BUILD_WERROR=${{ matrix.config.werror }}
+          -D CMAKE_COMPILE_WARNING_AS_ERROR=${{ matrix.config.werror }}
 
       - name: CMake build -- Debug
         run: cmake --build build --config Debug

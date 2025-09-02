@@ -36,10 +36,10 @@ template <integral Int>
     auto const [end, err, val] = strings::to_integer<Int, options>({first, last}, static_cast<Int>(base));
 
     if (err == strings::to_integer_error::overflow) {
-        return from_chars_result{.ptr = first, .ec = errc::result_out_of_range};
+        return from_chars_result{.ptr = end, .ec = errc::result_out_of_range};
     }
     if (err == strings::to_integer_error::invalid_input) {
-        return from_chars_result{.ptr = first, .ec = errc::invalid_argument};
+        return from_chars_result{.ptr = end, .ec = errc::invalid_argument};
     }
 
     value = val;

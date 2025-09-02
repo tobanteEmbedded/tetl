@@ -14,7 +14,7 @@ namespace etl {
 /// \ingroup functional
 template <typename T = void>
 struct bit_not {
-    [[nodiscard]] constexpr auto operator()(T const& arg) const -> T { return ~arg; }
+    [[nodiscard]] constexpr auto operator()(T const& arg) const -> T { return static_cast<T>(~arg); }
 };
 
 template <>

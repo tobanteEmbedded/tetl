@@ -1,14 +1,19 @@
 // SPDX-License-Identifier: BSL-1.0
 
-#include <etl/span.hpp>
-
-#include <etl/algorithm.hpp>
-#include <etl/iterator.hpp>
-#include <etl/type_traits.hpp>
-#include <etl/utility.hpp>
-#include <etl/vector.hpp>
-
 #include "testing/testing.hpp"
+
+#if defined(TETL_ENABLE_CXX_MODULES)
+import etl;
+#else
+    #include <etl/algorithm.hpp>
+    #include <etl/array.hpp>
+    #include <etl/iterator.hpp>
+    #include <etl/ranges.hpp>
+    #include <etl/span.hpp>
+    #include <etl/type_traits.hpp>
+    #include <etl/utility.hpp>
+    #include <etl/vector.hpp>
+#endif
 
 template <typename T>
 static constexpr auto test() -> bool
@@ -67,14 +72,8 @@ static constexpr auto test() -> bool
 
     // from Container const
     {
-        auto const vec = []() {
-            auto v = etl::static_vector<T, 8>{};
-            v.push_back(T{});
-            v.push_back(T{});
-            return v;
-        }();
-
-        auto const sp = etl::span{vec};
+        auto const vec = etl::static_vector<T, 8>({T(), T()});
+        auto const sp  = etl::span{vec};
         CHECK(sp.data() == vec.data());
         CHECK(sp.size() == 2);
     }

@@ -15,10 +15,18 @@ namespace etl {
 template <typename M, typename N>
 [[nodiscard]] constexpr auto gcd(M m, N n) noexcept -> etl::common_type_t<M, N>
 {
-    if (n == 0) {
-        return m;
+    using R = etl::common_type_t<M, N>;
+
+    R a = static_cast<R>(m);
+    R b = static_cast<R>(n);
+
+    while (b != 0) {
+        auto const r = static_cast<R>(a % b);
+        a            = b;
+        b            = r;
     }
-    return gcd<M, N>(n, m % n);
+
+    return a; // If both inputs were 0, this is 0.
 }
 
 } // namespace etl

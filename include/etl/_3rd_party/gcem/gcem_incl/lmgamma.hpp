@@ -1,6 +1,6 @@
 /*################################################################################
   ##
-  ##   Copyright (C) 2016-2020 Keith O'Hara
+  ##   Copyright (C) 2016-2024 Keith O'Hara
   ##
   ##   This file is part of the GCE-Math C++ library.
   ##
@@ -22,28 +22,34 @@
  * log multivariate gamma function
  */
 
-#ifndef GCEM_lmgamma_HPP
-#define GCEM_lmgamma_HPP
+#ifndef _gcem_lmgamma_HPP
+#define _gcem_lmgamma_HPP
 
-namespace internal {
+namespace internal
+{
 
 // see https://en.wikipedia.org/wiki/Multivariate_gamma_function
 
-template <typename T1, typename T2>
-constexpr auto lmgamma_recur(const T1 a, const T2 p) noexcept -> T1
+template<typename T1, typename T2>
+constexpr
+T1
+lmgamma_recur(const T1 a, const T2 p)
+noexcept
 {
-    return ( // NaN check
-        is_nan(a) ? etl::numeric_limits<T1>::quiet_NaN() :
-                  //
-            p == T2(1) ? lgamma(a)
-        : p < T2(1)    ? etl::numeric_limits<T1>::quiet_NaN()
-                       :
-                    // else
-            T1(GCEM_LOG_PI) * (p - T1(1)) / T1(2) + lgamma(a) + lmgamma_recur(a - T1(0.5), p - T2(1))
-    );
+    return( // NaN check
+            is_nan(a) ? \
+                GCLIM<T1>::quiet_NaN() :
+            //
+            p == T2(1) ? \
+                lgamma(a) :
+            p <  T2(1) ? \
+                GCLIM<T1>::quiet_NaN() :
+            // else
+                T1(GCEM_LOG_PI) * (p - T1(1))/T1(2) \
+                    + lgamma(a) + lmgamma_recur(a - T1(0.5),p-T2(1)) );
 }
 
-} // namespace internal
+}
 
 /**
  * Compile-time log multivariate gamma function
@@ -55,10 +61,13 @@ constexpr auto lmgamma_recur(const T1 a, const T2 p) noexcept -> T1
  * where \f$ \Gamma_1(a) = \Gamma(a) \f$.
  */
 
-template <typename T1, typename T2>
-constexpr auto lmgamma(const T1 a, const T2 p) noexcept -> return_t<T1>
+template<typename T1, typename T2>
+constexpr
+return_t<T1>
+lmgamma(const T1 a, const T2 p)
+noexcept
 {
-    return internal::lmgamma_recur(static_cast<return_t<T1>>(a), p);
+    return internal::lmgamma_recur(static_cast<return_t<T1>>(a),p);
 }
 
 #endif
