@@ -3,6 +3,8 @@ name: Doxygen
 on:
   push:
     branches: [main]
+  pull_request:
+    branches: [main]
 
 concurrency:
   group: ${{ github.ref }}-${{ github.workflow }}
@@ -17,13 +19,23 @@ jobs:
         uses: actions/checkout@v5
 
       - name: Install build tools
-        run: sudo apt install -y bison flex
+        run: sudo apt install -y bison flex clang
 
       - name: Build doxygen
         run: |
           git clone --depth 1 https://github.com/doxygen/doxygen
           cmake -S doxygen -B cmake-build-doxygen -G Ninja -D CMAKE_BUILD_TYPE=Release
           cmake --build cmake-build-doxygen --config Release
+
+      - name: Configure CMake
+        run: >
+          cmake
+          -S .
+          -B cmake-build-doc
+          -G Ninja
+          -D CMAKE_BUILD_TYPE=Debug
+          -D CMAKE_C_COMPILER=clang
+          -D CMAKE_CXX_COMPILER=clang++
 
       - name: Generate HTML documentation
         run: ./cmake-build-doxygen/bin/doxygen Doxyfile
@@ -32,6 +44,7 @@ jobs:
         run: touch cmake-build-doc/html/.nojekyll
 
       - name: Pushes to documentation repo
+        if: contains(github.ref, 'main')
         uses: cpina/github-action-push-to-another-repository@main
         env:
           SSH_DEPLOY_KEY: ${{ secrets.SSH_DEPLOY_KEY }}
