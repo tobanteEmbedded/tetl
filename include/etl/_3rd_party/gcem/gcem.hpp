@@ -34,6 +34,7 @@
     #pragma clang diagnostic ignored "-Wdouble-promotion"
     #pragma clang diagnostic ignored "-Wimplicit-float-conversion"
     #pragma clang diagnostic ignored "-Wnewline-eof"
+    #pragma clang diagnostic ignored "-Wold-style-cast"
 #endif
 
 #include "gcem_incl/gcem_options.hpp"
