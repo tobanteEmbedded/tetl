@@ -1,6 +1,6 @@
 /*################################################################################
   ##
-  ##   Copyright (C) 2016-2020 Keith O'Hara
+  ##   Copyright (C) 2016-2024 Keith O'Hara
   ##
   ##   This file is part of the GCE-Math C++ library.
   ##
@@ -18,47 +18,104 @@
   ##
   ################################################################################*/
 
-#ifndef GCEM_trunc_HPP
-#define GCEM_trunc_HPP
+#ifndef _gcem_trunc_HPP
+#define _gcem_trunc_HPP
 
-namespace internal {
-
-template <typename T>
-constexpr auto trunc_int(T const x) noexcept -> T
+namespace internal
 {
-    return (T(static_cast<llint_t>(x)));
+
+template<typename T>
+constexpr
+T
+trunc_int(const T x)
+noexcept
+{
+    return( T(static_cast<llint_t>(x)) );
 }
 
-template <typename T>
-constexpr auto trunc_check(T const x) noexcept -> T
+template<typename T>
+constexpr
+T
+trunc_check_internal(const T x)
+noexcept
 {
-    return ( // NaN check
-        is_nan(x) ? etl::numeric_limits<T>::quiet_NaN() :
-                  // +/- infinite
-            !is_finite(x) ? x
-                          :
-                          // signed-zero cases
-            etl::numeric_limits<T>::epsilon() > abs(x) ? x
-                                                       :
-                                                       // else
-            trunc_int(x)
-    );
+    return x;
 }
 
-} // namespace internal
+template<>
+constexpr
+float
+trunc_check_internal<float>(const float x)
+noexcept
+{
+    return( abs(x) >= 8388608.f ? \
+            // if
+                x : \
+            // else
+                trunc_int(x) );
+}
+
+template<>
+constexpr
+double
+trunc_check_internal<double>(const double x)
+noexcept
+{
+    return( abs(x) >= 4503599627370496. ? \
+            // if
+                x : \
+            // else
+                trunc_int(x) );
+}
+
+template<>
+constexpr
+long double
+trunc_check_internal<long double>(const long double x)
+noexcept
+{
+    return( abs(x) >= 9223372036854775808.l ? \
+            // if
+                x : \
+            // else
+                ((long double)static_cast<ullint_t>(abs(x))) * sgn(x) );
+}
+
+template<typename T>
+constexpr
+T
+trunc_check(const T x)
+noexcept
+{
+    return( // NaN check
+            is_nan(x) ? \
+                GCLIM<T>::quiet_NaN() :
+            // +/- infinite
+            !is_finite(x) ? \
+                x :
+            // signed-zero cases
+            GCLIM<T>::min() > abs(x) ? \
+                x :
+            // else
+                trunc_check_internal(x) );
+}
+
+}
 
 /**
  * Compile-time trunc function
  *
  * @param x a real-valued input.
- * @return computes the trunc-value of the input, essentially returning the
- * integer part of the input.
+ * @return computes the trunc-value of the input, essentially returning the integer part of the input.
  */
 
-template <typename T>
-constexpr auto trunc(T const x) noexcept -> return_t<T>
+template<typename T>
+constexpr
+return_t<T>
+trunc(const T x)
+noexcept
 {
-    return internal::trunc_check(static_cast<return_t<T>>(x));
+    return internal::trunc_check( static_cast<return_t<T>>(x) );
 }
 
 #endif

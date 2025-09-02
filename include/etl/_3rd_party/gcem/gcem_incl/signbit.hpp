@@ -1,6 +1,6 @@
 /*################################################################################
   ##
-  ##   Copyright (C) 2016-2020 Keith O'Hara
+  ##   Copyright (C) 2016-2024 Keith O'Hara
   ##
   ##   This file is part of the GCE-Math C++ library.
   ##
@@ -18,8 +18,8 @@
   ##
   ################################################################################*/
 
-#ifndef GCEM_signbit_HPP
-#define GCEM_signbit_HPP
+#ifndef _gcem_signbit_HPP
+#define _gcem_signbit_HPP
 
 /**
  * Compile-time sign bit detection function
@@ -29,10 +29,13 @@
  */
 
 template <typename T>
-constexpr auto signbit(T const x) noexcept -> bool
+constexpr
+bool
+signbit(const T x)
+noexcept
 {
 #ifdef _MSC_VER
-    return ((x == T(0)) ? (_fpclass(x) == _FPCLASS_NZ) : (x < T(0)));
+    return( (x == T(0)) ? (_fpclass(x) == _FPCLASS_NZ) : (x < T(0)) );
 #else
     return GCEM_SIGNBIT(x);
 #endif

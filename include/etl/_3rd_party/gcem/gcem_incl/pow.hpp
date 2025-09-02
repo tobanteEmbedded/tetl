@@ -1,6 +1,6 @@
 /*################################################################################
   ##
-  ##   Copyright (C) 2016-2020 Keith O'Hara
+  ##   Copyright (C) 2016-2024 Keith O'Hara
   ##
   ##   This file is part of the GCE-Math C++ library.
   ##
@@ -22,57 +22,61 @@
  * compile-time power function
  */
 
-#ifndef GCEM_pow_HPP
-#define GCEM_pow_HPP
+#ifndef _gcem_pow_HPP
+#define _gcem_pow_HPP
 
-namespace internal {
-
-template <typename T>
-constexpr auto pow_dbl(T const base, T const expTerm) noexcept -> T
+namespace internal
 {
-    return exp(expTerm * log(base));
+
+template<typename T>
+constexpr
+T
+pow_dbl(const T base, const T exp_term)
+noexcept
+{
+    return exp(exp_term*log(base));
 }
 
-template <
-    typename T1,
-    typename T2,
-    typename TC                                                  = common_t<T1, T2>,
-    typename etl::enable_if<!etl::is_integral<T2>::value>::type* = nullptr>
-constexpr auto pow_check(const T1 base, const T2 expTerm) noexcept -> TC
+template<typename T1, typename T2, typename TC = common_t<T1,T2>,
+         typename etl::enable_if<!etl::is_integral<T2>::value>::type* = nullptr>
+constexpr
+TC
+pow_check(const T1 base, const T2 exp_term)
+noexcept
 {
-    return (
-        base < T1(0) ? etl::numeric_limits<TC>::quiet_NaN() :
-                     //
-            pow_dbl(static_cast<TC>(base), static_cast<TC>(expTerm))
-    );
+    return( base < T1(0) ? \
+                GCLIM<TC>::quiet_NaN() :
+            //
+            pow_dbl(static_cast<TC>(base),static_cast<TC>(exp_term)) );
 }
 
-template <
-    typename T1,
-    typename T2,
-    typename TC                                                 = common_t<T1, T2>,
-    typename etl::enable_if<etl::is_integral<T2>::value>::type* = nullptr>
-constexpr auto pow_check(const T1 base, const T2 expTerm) noexcept -> TC
+template<typename T1, typename T2, typename TC = common_t<T1,T2>,
+         typename etl::enable_if<etl::is_integral<T2>::value>::type* = nullptr>
+constexpr
+TC
+pow_check(const T1 base, const T2 exp_term)
+noexcept
 {
-    return pow_integral(base, expTerm);
+    return pow_integral(base,exp_term);
 }
 
-} // namespace internal
+}
 
 /**
  * Compile-time power function
  *
  * @param base a real-valued input.
  * @param exp_term a real-valued input.
- * @return Computes \c base raised to the power \c exp_term. In the case where
- * \c exp_term is integral-valued, recursion by squaring is used, otherwise \f$
- * \text{base}^{\text{exp\_term}} = e^{\text{exp\_term} \log(\text{base})} \f$
+ * @return Computes \c base raised to the power \c exp_term. In the case where \c exp_term is integral-valued, recursion by squaring is used, otherwise \f$ \text{base}^{\text{exp\_term}} = e^{\text{exp\_term} \log(\text{base})} \f$
  */
 
-template <typename T1, typename T2>
-constexpr auto pow(const T1 base, const T2 expTerm) noexcept -> common_t<T1, T2>
+template<typename T1, typename T2>
+constexpr
+common_t<T1,T2>
+pow(const T1 base, const T2 exp_term)
+noexcept
 {
-    return internal::pow_check(base, expTerm);
+    return internal::pow_check(base,exp_term);
 }
 
 #endif

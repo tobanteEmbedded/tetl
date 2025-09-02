@@ -1,6 +1,6 @@
 /*################################################################################
   ##
-  ##   Copyright (C) 2016-2020 Keith O'Hara
+  ##   Copyright (C) 2016-2024 Keith O'Hara
   ##
   ##   This file is part of the GCE-Math C++ library.
   ##
@@ -18,22 +18,24 @@
   ##
   ################################################################################*/
 
-#ifndef GCEM_max_HPP
-#define GCEM_max_HPP
+#ifndef _gcem_max_HPP
+#define _gcem_max_HPP
 
 /**
  * Compile-time pairwise maximum function
  *
  * @param x a real-valued input.
  * @param y a real-valued input.
- * @return Computes the maximum between \c x and \c y, where \c x and \c y have
- * the same type (e.g., \c int, \c double, etc.)
+ * @return Computes the maximum between \c x and \c y, where \c x and \c y have the same type (e.g., \c int, \c double, etc.)
  */
 
-template <typename T1, typename T2>
-constexpr auto max(const T1 x, const T2 y) noexcept -> common_t<T1, T2>
+template<typename T1, typename T2>
+constexpr
+common_t<T1,T2>
+max(const T1 x, const T2 y)
+noexcept
 {
-    return (y < x ? x : y);
+    return( y < x ? x : y );
 }
 
 #endif

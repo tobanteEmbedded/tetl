@@ -1,6 +1,6 @@
 /*################################################################################
   ##
-  ##   Copyright (C) 2016-2020 Keith O'Hara
+  ##   Copyright (C) 2016-2024 Keith O'Hara
   ##
   ##   This file is part of the GCE-Math C++ library.
   ##
@@ -22,57 +22,92 @@
  * compile-time hyperbolic tangent function
  */
 
-#ifndef GCEM_tanh_HPP
-#define GCEM_tanh_HPP
+#ifndef _gcem_tanh_HPP
+#define _gcem_tanh_HPP
 
-namespace internal {
-
-template <typename T>
-constexpr auto tanh_cf(T const xx, int const depth) noexcept -> T
+namespace internal
 {
-    return (
-        depth < GCEM_TANH_MAX_ITER ? // if
-            (2 * depth - 1) + xx / tanh_cf(xx, depth + 1)
-                                   :
-                                   // else
-            T(2 * depth - 1)
-    );
+
+#if __cplusplus >= 201402L // C++14 version
+
+template<typename T>
+constexpr
+T
+tanh_cf(const T xx, const int depth_end)
+noexcept
+{
+    int depth = GCEM_TANH_MAX_ITER - 1;
+    T res = T(2*(depth+1) - 1);
+
+    while (depth > depth_end - 1) {
+        res = T(2*depth - 1) + xx / res;
+
+        --depth;
+    }
+
+    return res;
 }
 
-template <typename T>
-constexpr auto tanh_begin(T const x) noexcept -> T
+#else // C++11 version
+
+template<typename T>
+constexpr
+T
+tanh_cf(const T xx, const int depth)
+noexcept
 {
-    return (x / tanh_cf(x * x, 1));
+    return( depth < GCEM_TANH_MAX_ITER ? \
+            // if
+                (2*depth - 1) + xx/tanh_cf(xx,depth+1) :
+            // else
+                T(2*depth - 1) );
 }
 
-template <typename T>
-constexpr auto tanh_check(T const x) noexcept -> T
+#endif
+
+template<typename T>
+constexpr
+T
+tanh_begin(const T x)
+noexcept
 {
-    return ( // NaN check
-        is_nan(x) ? etl::numeric_limits<T>::quiet_NaN() :
-                  // indistinguishable from zero
-            etl::numeric_limits<T>::epsilon() > abs(x) ? T(0)
-                                                       :
-                                                       // else
-            x < T(0) ? -tanh_begin(-x)
-                     : tanh_begin(x)
-    );
+    return( x/tanh_cf(x*x,1) );
 }
 
-} // namespace internal
+template<typename T>
+constexpr
+T
+tanh_check(const T x)
+noexcept
+{
+    return( // NaN check
+            is_nan(x) ? \
+                GCLIM<T>::quiet_NaN() :
+            // indistinguishable from zero
+             GCLIM<T>::min() > abs(x) ? \
+                T(0) :
+             // else
+                x < T(0) ? \
+                    - tanh_begin(-x) :
+                      tanh_begin( x) );
+}
+
+}
 
 /**
  * Compile-time hyperbolic tangent function
  *
  * @param x a real-valued input.
- * @return the hyperbolic tangent function using \f[ \tanh(x) = \dfrac{x}{1 +
- * \dfrac{x^2}{3 + \dfrac{x^2}{5 + \dfrac{x^2}{7 + \ddots}}}} \f]
+ * @return the hyperbolic tangent function using \f[ \tanh(x) = \dfrac{x}{1 + \dfrac{x^2}{3 + \dfrac{x^2}{5 + \dfrac{x^2}{7 + \ddots}}}} \f]
  */
 
-template <typename T>
-constexpr auto tanh(T const x) noexcept -> return_t<T>
+template<typename T>
+constexpr
+return_t<T>
+tanh(const T x)
+noexcept
 {
-    return internal::tanh_check(static_cast<return_t<T>>(x));
+    return internal::tanh_check( static_cast<return_t<T>>(x) );
 }
 
 #endif

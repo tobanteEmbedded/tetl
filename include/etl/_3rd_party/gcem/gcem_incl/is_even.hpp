@@ -1,6 +1,6 @@
 /*################################################################################
   ##
-  ##   Copyright (C) 2016-2020 Keith O'Hara
+  ##   Copyright (C) 2016-2024 Keith O'Hara
   ##
   ##   This file is part of the GCE-Math C++ library.
   ##
@@ -22,13 +22,20 @@
  * compile-time check if integer is even
  */
 
-#ifndef GCEM_is_even_HPP
-#define GCEM_is_even_HPP
+#ifndef _gcem_is_even_HPP
+#define _gcem_is_even_HPP
 
-namespace internal {
+namespace internal
+{
 
-constexpr auto is_even(llint_t const x) noexcept -> bool { return !is_odd(x); }
+constexpr
+bool
+is_even(const llint_t x)
+noexcept
+{
+    return !is_odd(x);
+}
 
-} // namespace internal
+}
 
 #endif

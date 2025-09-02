@@ -1,6 +1,6 @@
 /*################################################################################
   ##
-  ##   Copyright (C) 2016-2020 Keith O'Hara
+  ##   Copyright (C) 2016-2024 Keith O'Hara
   ##
   ##   This file is part of the GCE-Math C++ library.
   ##
@@ -22,43 +22,59 @@
  * compile-time check if a float is NaN-valued
  */
 
-#ifndef GCEM_is_nan_HPP
-#define GCEM_is_nan_HPP
+#ifndef _gcem_is_nan_HPP
+#define _gcem_is_nan_HPP
 
-namespace internal {
+namespace internal
+{
 
 // future: consider using __builtin_isnan(__x)
 
-template <typename T>
-constexpr auto is_nan(T const x) noexcept -> bool
+template<typename T>
+constexpr
+bool
+is_nan(const T x)
+noexcept
 {
     return x != x;
 }
 
-template <typename T1, typename T2>
-constexpr auto any_nan(const T1 x, const T2 y) noexcept -> bool
+template<typename T1, typename T2>
+constexpr
+bool
+any_nan(const T1 x, const T2 y)
+noexcept
 {
-    return (is_nan(x) || is_nan(y));
+    return( is_nan(x) || is_nan(y) );
 }
 
-template <typename T1, typename T2>
-constexpr auto all_nan(const T1 x, const T2 y) noexcept -> bool
+template<typename T1, typename T2>
+constexpr
+bool
+all_nan(const T1 x, const T2 y)
+noexcept
 {
-    return (is_nan(x) && is_nan(y));
+    return( is_nan(x) && is_nan(y) );
 }
 
-template <typename T1, typename T2, typename T3>
-constexpr auto any_nan(const T1 x, const T2 y, const T3 z) noexcept -> bool
+template<typename T1, typename T2, typename T3>
+constexpr
+bool
+any_nan(const T1 x, const T2 y, const T3 z)
+noexcept
 {
-    return (is_nan(x) || is_nan(y) || is_nan(z));
+    return( is_nan(x) || is_nan(y) || is_nan(z) );
 }
 
-template <typename T1, typename T2, typename T3>
-constexpr auto all_nan(const T1 x, const T2 y, const T3 z) noexcept -> bool
+template<typename T1, typename T2, typename T3>
+constexpr
+bool
+all_nan(const T1 x, const T2 y, const T3 z)
+noexcept
 {
-    return (is_nan(x) && is_nan(y) && is_nan(z));
+    return( is_nan(x) && is_nan(y) && is_nan(z) );
 }
 
-} // namespace internal
+}
 
 #endif

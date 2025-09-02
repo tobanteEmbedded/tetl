@@ -1,6 +1,6 @@
 /*################################################################################
   ##
-  ##   Copyright (C) 2016-2020 Keith O'Hara
+  ##   Copyright (C) 2016-2024 Keith O'Hara
   ##
   ##   This file is part of the GCE-Math C++ library.
   ##
@@ -18,25 +18,28 @@
   ##
   ################################################################################*/
 
-#ifndef GCEM_abs_HPP
-#define GCEM_abs_HPP
+#ifndef _gcem_abs_HPP
+#define _gcem_abs_HPP
 
 /**
  * Compile-time absolute value function
  *
  * @param x a real-valued input.
- * @return the absolute value of \c x, \f$ |x| \f$.
+ * @return the absolute value of \c x, \f$ |x| \f$, where the return type is the same as the input type.
  */
 
-template <typename T>
-constexpr auto abs(T const x) noexcept -> T
+template<typename T>
+constexpr
+T
+abs(const T x)
+noexcept
 {
-    return ( // deal with signed-zeros
-        x == T(0) ? T(0) :
-                  // else
-            x < T(0) ? -x
-                     : x
-    );
+    return( // deal with signed-zeros
+            x == T(0) ? \
+                T(0) :
+            // else
+            x < T(0) ? \
+                - x : x );
 }
 
 #endif

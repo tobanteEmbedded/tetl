@@ -1,6 +1,6 @@
 /*################################################################################
   ##
-  ##   Copyright (C) 2016-2020 Keith O'Hara
+  ##   Copyright (C) 2016-2024 Keith O'Hara
   ##
   ##   This file is part of the GCE-Math C++ library.
   ##
@@ -18,28 +18,28 @@
   ##
   ################################################################################*/
 
-#ifndef GCEM_sgn_HPP
-#define GCEM_sgn_HPP
+#ifndef _gcem_sgn_HPP
+#define _gcem_sgn_HPP
 
 /**
  * Compile-time sign function
  *
  * @param x a real-valued input
- * @return a value \f$ y \f$ such that \f[ y = \begin{cases} 1 \ &\text{ if } x
- * > 0 \\ 0 \ &\text{ if } x = 0 \\ -1 \ &\text{ if } x < 0 \end{cases} \f]
+ * @return a value \f$ y \f$ such that \f[ y = \begin{cases} 1 \ &\text{ if } x > 0 \\ 0 \ &\text{ if } x = 0 \\ -1 \ &\text{ if } x < 0 \end{cases} \f]
  */
 
-template <typename T>
-constexpr auto sgn(T const x) noexcept -> int
+template<typename T>
+constexpr
+int
+sgn(const T x)
+noexcept
 {
-    return ( // positive
-        x > T(0) ? 1 :
-                 // negative
-            x < T(0) ? -1
-                     :
-                     // else
-            0
-    );
+    return( // positive
+            x > T(0) ?  1 :
+            // negative
+            x < T(0) ? -1 :
+            // else
+                0 );
 }
 
 #endif

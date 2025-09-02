@@ -1,6 +1,6 @@
 /*################################################################################
   ##
-  ##   Copyright (C) 2016-2020 Keith O'Hara
+  ##   Copyright (C) 2016-2024 Keith O'Hara
   ##
   ##   This file is part of the GCE-Math C++ library.
   ##
@@ -22,23 +22,36 @@
  * compile-time find_exponent function
  */
 
-#ifndef GCEM_find_exponent_HPP
-#define GCEM_find_exponent_HPP
+#ifndef _gcem_find_exponent_HPP
+#define _gcem_find_exponent_HPP
 
-namespace internal {
-
-template <typename T>
-constexpr auto find_exponent(T const x, llint_t const exponent) noexcept -> llint_t
+namespace internal
 {
-    return (
-        x < T(1)    ? find_exponent(x * T(10), exponent - llint_t(1))
-        : x > T(10) ? find_exponent(x / T(10), exponent + llint_t(1))
-                    :
-                    // else
-            exponent
-    );
+
+template<typename T>
+constexpr
+llint_t
+find_exponent(const T x, const llint_t exponent)
+noexcept
+{
+    return( // < 1
+            x < T(1e-03)  ? \
+                find_exponent(x * T(1e+04), exponent - llint_t(4)) :
+            x < T(1e-01)  ? \
+                find_exponent(x * T(1e+02), exponent - llint_t(2)) :
+            x < T(1)  ? \
+                find_exponent(x * T(10), exponent - llint_t(1)) :
+            // > 10
+            x > T(10) ? \
+                find_exponent(x / T(10), exponent + llint_t(1)) :
+            x > T(1e+02) ? \
+                find_exponent(x / T(1e+02), exponent + llint_t(2)) :
+            x > T(1e+04) ? \
+                find_exponent(x / T(1e+04), exponent + llint_t(4)) :
+            // else
+                exponent );
 }
 
-} // namespace internal
+}
 
 #endif

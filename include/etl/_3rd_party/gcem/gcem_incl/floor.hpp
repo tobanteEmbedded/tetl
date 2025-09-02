@@ -1,6 +1,6 @@
 /*################################################################################
   ##
-  ##   Copyright (C) 2016-2020 Keith O'Hara
+  ##   Copyright (C) 2016-2024 Keith O'Hara
   ##
   ##   This file is part of the GCE-Math C++ library.
   ##
@@ -18,40 +18,98 @@
   ##
   ################################################################################*/
 
-#ifndef GCEM_floor_HPP
-#define GCEM_floor_HPP
+#ifndef _gcem_floor_HPP
+#define _gcem_floor_HPP
 
-namespace internal {
-
-template <typename T>
-constexpr auto floor_resid(T const x, T const xWhole) noexcept -> int
+namespace internal
 {
-    return ((x < T(0)) && (x < xWhole));
+
+template<typename T>
+constexpr
+int
+floor_resid(const T x, const T x_whole)
+noexcept
+{
+    return( (x < T(0)) && (x < x_whole) );
 }
 
-template <typename T>
-constexpr auto floor_int(T const x, T const xWhole) noexcept -> T
+template<typename T>
+constexpr
+T
+floor_int(const T x, const T x_whole)
+noexcept
 {
-    return (xWhole - static_cast<T>(floor_resid(x, xWhole)));
+    return( x_whole - static_cast<T>(floor_resid(x,x_whole)) );
 }
 
-template <typename T>
-constexpr auto floor_check(T const x) noexcept -> T
+template<typename T>
+constexpr
+T
+floor_check_internal(const T x)
+noexcept
 {
-    return ( // NaN check
-        is_nan(x) ? etl::numeric_limits<T>::quiet_NaN() :
-                  // +/- infinite
-            !is_finite(x) ? x
-                          :
-                          // signed-zero cases
-            etl::numeric_limits<T>::epsilon() > abs(x) ? x
-                                                       :
-                                                       // else
-            floor_int(x, T(static_cast<llint_t>(x)))
-    );
+    return x;
 }
 
-} // namespace internal
+template<>
+constexpr
+float
+floor_check_internal<float>(const float x)
+noexcept
+{
+    return( abs(x) >= 8388608.f ? \
+            // if
+                x : \
+            // else
+                floor_int(x, float(static_cast<int>(x))) );
+}
+
+template<>
+constexpr
+double
+floor_check_internal<double>(const double x)
+noexcept
+{
+    return( abs(x) >= 4503599627370496. ? \
+            // if
+                x : \
+            // else
+                floor_int(x, double(static_cast<llint_t>(x))) );
+}
+
+template<>
+constexpr
+long double
+floor_check_internal<long double>(const long double x)
+noexcept
+{
+    return( abs(x) >= 9223372036854775808.l ? \
+            // if
+                x : \
+            // else
+                floor_int(x, ((long double)static_cast<ullint_t>(abs(x))) * sgn(x)) );
+}
+
+template<typename T>
+constexpr
+T
+floor_check(const T x)
+noexcept
+{
+    return( // NaN check
+            is_nan(x) ? \
+                GCLIM<T>::quiet_NaN() :
+            // +/- infinite
+            !is_finite(x) ? \
+                x :
+            // signed-zero cases
+            GCLIM<T>::min() > abs(x) ? \
+                x :
+            // else
+                floor_check_internal(x) );
+}
+
+}
 
 /**
  * Compile-time floor function
@@ -60,10 +118,13 @@ constexpr auto floor_check(T const x) noexcept -> T
  * @return computes the floor-value of the input.
  */
 
-template <typename T>
-constexpr auto floor(T const x) noexcept -> return_t<T>
+template<typename T>
+constexpr
+return_t<T>
+floor(const T x)
+noexcept
 {
-    return internal::floor_check(static_cast<return_t<T>>(x));
+    return internal::floor_check( static_cast<return_t<T>>(x) );
 }
 
 #endif

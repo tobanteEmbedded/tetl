@@ -1,6 +1,6 @@
 /*################################################################################
   ##
-  ##   Copyright (C) 2016-2020 Keith O'Hara
+  ##   Copyright (C) 2016-2024 Keith O'Hara
   ##
   ##   This file is part of the GCE-Math C++ library.
   ##
@@ -22,41 +22,57 @@
  * compile-time check if a float is not NaN-valued or +/-Inf
  */
 
-#ifndef GCEM_is_finite_HPP
-#define GCEM_is_finite_HPP
+#ifndef _gcem_is_finite_HPP
+#define _gcem_is_finite_HPP
 
-namespace internal {
+namespace internal
+{
 
-template <typename T>
-constexpr auto is_finite(T const x) noexcept -> bool
+template<typename T>
+constexpr
+bool
+is_finite(const T x)
+noexcept
 {
     return (!is_nan(x)) && (!is_inf(x));
 }
 
-template <typename T1, typename T2>
-constexpr auto any_finite(const T1 x, const T2 y) noexcept -> bool
+template<typename T1, typename T2>
+constexpr
+bool
+any_finite(const T1 x, const T2 y)
+noexcept
 {
-    return (is_finite(x) || is_finite(y));
+    return( is_finite(x) || is_finite(y) );
 }
 
-template <typename T1, typename T2>
-constexpr auto all_finite(const T1 x, const T2 y) noexcept -> bool
+template<typename T1, typename T2>
+constexpr
+bool
+all_finite(const T1 x, const T2 y)
+noexcept
 {
-    return (is_finite(x) && is_finite(y));
+    return( is_finite(x) && is_finite(y) );
 }
 
-template <typename T1, typename T2, typename T3>
-constexpr auto any_finite(const T1 x, const T2 y, const T3 z) noexcept -> bool
+template<typename T1, typename T2, typename T3>
+constexpr
+bool
+any_finite(const T1 x, const T2 y, const T3 z)
+noexcept
 {
-    return (is_finite(x) || is_finite(y) || is_finite(z));
+    return( is_finite(x) || is_finite(y) || is_finite(z) );
 }
 
-template <typename T1, typename T2, typename T3>
-constexpr auto all_finite(const T1 x, const T2 y, const T3 z) noexcept -> bool
+template<typename T1, typename T2, typename T3>
+constexpr
+bool
+all_finite(const T1 x, const T2 y, const T3 z)
+noexcept
 {
-    return (is_finite(x) && is_finite(y) && is_finite(z));
+    return( is_finite(x) && is_finite(y) && is_finite(z) );
 }
 
-} // namespace internal
+}
 
 #endif

@@ -18,51 +18,23 @@
   ##
   ################################################################################*/
 
-/*
- * compile-time inverse hyperbolic cosine function
- */
-
-#ifndef _gcem_acosh_HPP
-#define _gcem_acosh_HPP
-
-namespace internal
-{
-
-template<typename T>
-constexpr
-T
-acosh_compute(const T x)
-noexcept
-{
-    return( // NaN check
-            is_nan(x) ? \
-                GCLIM<T>::quiet_NaN() :
-            // function defined for x >= 1
-            x < T(1) ? \
-                GCLIM<T>::quiet_NaN() :
-            // indistinguishable from 1
-            GCLIM<T>::min() > abs(x - T(1)) ? \
-                T(0) :
-            // else
-                log( x + sqrt(x*x - T(1)) ) );
-}
-
-}
+#ifndef _gcem_fabs_HPP
+#define _gcem_fabs_HPP
 
 /**
- * Compile-time inverse hyperbolic cosine function
+ * Compile-time floating-point absolute value function
  *
  * @param x a real-valued input.
- * @return the inverse hyperbolic cosine function using \f[ \text{acosh}(x) = \ln \left( x + \sqrt{x^2 - 1} \right) \f]
+ * @return the absolute value of \c x, \f$ |x| \f$, where the return type is a floating point number (float, double, or long double).
  */
 
 template<typename T>
 constexpr
 return_t<T>
-acosh(const T x)
+fabs(const T x)
 noexcept
 {
-    return internal::acosh_compute( static_cast<return_t<T>>(x) );
+    return gcem::abs( static_cast<return_t<T>>(x) );
 }
 
 #endif

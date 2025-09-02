@@ -1,6 +1,6 @@
 /*################################################################################
   ##
-  ##   Copyright (C) 2016-2020 Keith O'Hara
+  ##   Copyright (C) 2016-2024 Keith O'Hara
   ##
   ##   This file is part of the GCE-Math C++ library.
   ##
@@ -22,38 +22,44 @@
  * compile-time hyperbolic sine function
  */
 
-#ifndef GCEM_sinh_HPP
-#define GCEM_sinh_HPP
+#ifndef _gcem_sinh_HPP
+#define _gcem_sinh_HPP
 
-namespace internal {
-
-template <typename T>
-constexpr auto sinh_check(T const x) noexcept -> T
+namespace internal
 {
-    return ( // NaN check
-        is_nan(x) ? etl::numeric_limits<T>::quiet_NaN() :
-                  // indistinguishable from zero
-            etl::numeric_limits<T>::epsilon() > abs(x) ? T(0)
-                                                       :
-                                                       // else
-            (exp(x) - exp(-x)) / T(2)
-    );
+
+template<typename T>
+constexpr
+T
+sinh_check(const T x)
+noexcept
+{
+    return( // NaN check
+            is_nan(x) ? \
+                GCLIM<T>::quiet_NaN() :
+            // indistinguishable from zero
+            GCLIM<T>::min() > abs(x) ? \
+                T(0) :
+            // else
+                (exp(x) - exp(-x))/T(2) );
 }
 
-} // namespace internal
+}
 
 /**
  * Compile-time hyperbolic sine function
  *
  * @param x a real-valued input.
- * @return the hyperbolic sine function using \f[ \sinh(x) = \frac{\exp(x) -
- * \exp(-x)}{2} \f]
+ * @return the hyperbolic sine function using \f[ \sinh(x) = \frac{\exp(x) - \exp(-x)}{2} \f]
  */
 
-template <typename T>
-constexpr auto sinh(T const x) noexcept -> return_t<T>
+template<typename T>
+constexpr
+return_t<T>
+sinh(const T x)
+noexcept
 {
-    return internal::sinh_check(static_cast<return_t<T>>(x));
+    return internal::sinh_check( static_cast<return_t<T>>(x) );
 }
 
 #endif

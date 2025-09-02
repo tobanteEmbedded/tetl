@@ -19,64 +19,41 @@
   ################################################################################*/
 
 /*
- * compile-time arcsine function
+ * compile-time common logarithm function
  */
 
-#ifndef _gcem_asin_HPP
-#define _gcem_asin_HPP
+#ifndef _gcem_log10_HPP
+#define _gcem_log10_HPP
 
 namespace internal
 {
 
 template<typename T>
 constexpr
-T
-asin_compute(const T x)
+return_t<T>
+log10_check(const T x)
 noexcept
 {
-    return( // only defined on [-1,1]
-            x > T(1) ? \
-                GCLIM<T>::quiet_NaN() :
-            // indistinguishable from one or zero
-            GCLIM<T>::min() > abs(x -  T(1)) ? \
-                T(GCEM_HALF_PI) :
-            GCLIM<T>::min() > abs(x) ? \
-                T(0) :
-            // else
-                atan( x/sqrt(T(1) - x*x) ) );
-}
-
-template<typename T>
-constexpr
-T
-asin_check(const T x)
-noexcept
-{
-    return( // NaN check
-            is_nan(x) ? \
-                GCLIM<T>::quiet_NaN() :
-            //
-            x < T(0) ? \
-                - asin_compute(-x) :
-                  asin_compute(x) );
+    // log_10(x) = ln(x) / ln(10)
+    return return_t<T>(log(x) / GCEM_LOG_10);
 }
 
 }
 
 /**
- * Compile-time arcsine function
+ * Compile-time common logarithm function
  *
- * @param x a real-valued input, where \f$ x \in [-1,1] \f$.
- * @return the inverse sine function using \f[ \text{asin}(x) = \text{atan} \left( \frac{x}{\sqrt{1-x^2}} \right) \f]
+ * @param x a real-valued input.
+ * @return \f$ \log_{10}(x) \f$ using \f[ \log_{10}(x) = \frac{\log_e(x)}{\log_e(10)} \f]
  */
 
 template<typename T>
 constexpr
 return_t<T>
-asin(const T x)
+log10(const T x)
 noexcept
 {
-    return internal::asin_check( static_cast<return_t<T>>(x) );
+    return internal::log10_check( x );
 }
 
 #endif

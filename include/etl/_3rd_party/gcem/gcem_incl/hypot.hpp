@@ -19,11 +19,13 @@
   ################################################################################*/
 
 /*
- * compile-time cosine function using tan(x/2)
+ * compile-time Pythagorean addition function
  */
 
-#ifndef _gcem_cos_HPP
-#define _gcem_cos_HPP
+// see: https://en.wikipedia.org/wiki/Pythagorean_addition
+
+#ifndef _gcem_hypot_HPP
+#define _gcem_hypot_HPP
 
 namespace internal
 {
@@ -31,53 +33,58 @@ namespace internal
 template<typename T>
 constexpr
 T
-cos_compute(const T x)
+hypot_compute(const T x, const T ydx)
 noexcept
 {
-    return( T(1) - x*x)/(T(1) + x*x );
+    return abs(x) * sqrt( T(1) + (ydx * ydx) );
 }
 
 template<typename T>
 constexpr
 T
-cos_check(const T x)
+hypot_vals_check(const T x, const T y)
 noexcept
 {
-    return( // NaN check
-            is_nan(x) ? \
+    return( any_nan(x, y) ? \
                 GCLIM<T>::quiet_NaN() :
-            // indistinguishable from 0
-            GCLIM<T>::min() > abs(x) ?
-                T(1) :
-            // special cases: pi/2 and pi
-            GCLIM<T>::min() > abs(x - T(GCEM_HALF_PI)) ? \
-                T(0) :
-            GCLIM<T>::min() > abs(x + T(GCEM_HALF_PI)) ? \
-                T(0) :
-            GCLIM<T>::min() > abs(x - T(GCEM_PI)) ? \
-                - T(1) :
-            GCLIM<T>::min() > abs(x + T(GCEM_PI)) ? \
-                - T(1) :
+            //
+            any_inf(x,y) ? \
+                GCLIM<T>::infinity() :
+            // indistinguishable from zero or one
+            GCLIM<T>::min() > abs(x) ? \
+                abs(y) :
+            GCLIM<T>::min() > abs(y) ? \
+                abs(x) :
             // else
-                cos_compute( tan(x/T(2)) ) );
+            hypot_compute(x, y/x) );
+}
+
+template<typename T1, typename T2, typename TC = common_return_t<T1,T2>>
+constexpr
+TC
+hypot_type_check(const T1 x, const T2 y)
+noexcept
+{
+    return hypot_vals_check(static_cast<TC>(x),static_cast<TC>(y));
 }
 
 }
 
 /**
- * Compile-time cosine function
+ * Compile-time Pythagorean addition function
  *
  * @param x a real-valued input.
- * @return the cosine function using \f[ \cos(x) = \frac{1-\tan^2(x/2)}{1+\tan^2(x/2)} \f]
+ * @param y a real-valued input.
+ * @return Computes \f$ x \oplus y = \sqrt{x^2 + y^2} \f$.
  */
 
-template<typename T>
+template<typename T1, typename T2>
 constexpr
-return_t<T>
-cos(const T x)
+common_return_t<T1,T2>
+hypot(const T1 x, const T2 y)
 noexcept
 {
-    return internal::cos_check( static_cast<return_t<T>>(x) );
+    return internal::hypot_type_check(x,y);
 }
 
 #endif

@@ -1,6 +1,6 @@
 /*################################################################################
   ##
-  ##   Copyright (C) 2016-2020 Keith O'Hara
+  ##   Copyright (C) 2016-2024 Keith O'Hara
   ##
   ##   This file is part of the GCE-Math C++ library.
   ##
@@ -22,47 +22,38 @@
  * compile-time binary logarithm function
  */
 
-#ifndef GCEM_log2_HPP
-#define GCEM_log2_HPP
+#ifndef _gcem_log2_HPP
+#define _gcem_log2_HPP
 
-namespace internal {
-
-template <typename T>
-constexpr auto log2_check(T const x) noexcept -> T
+namespace internal
 {
-    return (
-        is_nan(x) ? etl::numeric_limits<T>::quiet_NaN() :
-                  // x < 0
-            x < T(0) ? etl::numeric_limits<T>::quiet_NaN()
-                     :
-                     // x ~= 0
-            etl::numeric_limits<T>::epsilon() > x ? -etl::numeric_limits<T>::infinity()
-                                                  :
-                                                  // indistinguishable from 1
-            etl::numeric_limits<T>::epsilon() > abs(x - T(1)) ? T(0)
-                                                              :
-                                                              //
-            x == etl::numeric_limits<T>::infinity() ? etl::numeric_limits<T>::infinity()
-                                                    :
-                                                    // else: log_2(x) = ln(x) / ln(2)
-            T(log(x) / GCEM_LOG_2)
-    );
+
+template<typename T>
+constexpr
+return_t<T>
+log2_check(const T x)
+noexcept
+{
+    // log_2(x) = ln(x) / ln(2)
+    return return_t<T>(log(x) / GCEM_LOG_2);
 }
 
-} // namespace internal
+}
 
 /**
  * Compile-time binary logarithm function
  *
  * @param x a real-valued input.
- * @return \f$ \log_2(x) \f$ using \f[ \log_{2}(x) = \frac{\log_e(x)}{\log_e(2)}
- * \f]
+ * @return \f$ \log_2(x) \f$ using \f[ \log_{2}(x) = \frac{\log_e(x)}{\log_e(2)} \f]
  */
 
-template <typename T>
-constexpr auto log2(T const x) noexcept -> return_t<T>
+template<typename T>
+constexpr
+return_t<T>
+log2(const T x)
+noexcept
 {
-    return internal::log2_check(static_cast<return_t<T>>(x));
+    return internal::log2_check( x );
 }
 
 #endif

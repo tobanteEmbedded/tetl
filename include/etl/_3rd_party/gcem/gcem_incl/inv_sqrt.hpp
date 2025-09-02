@@ -19,11 +19,11 @@
   ################################################################################*/
 
 /*
- * compile-time arcsine function
+ * compile-time inverse-square-root function
  */
 
-#ifndef _gcem_asin_HPP
-#define _gcem_asin_HPP
+#ifndef _gcem_inv_sqrt_HPP
+#define _gcem_inv_sqrt_HPP
 
 namespace internal
 {
@@ -31,52 +31,58 @@ namespace internal
 template<typename T>
 constexpr
 T
-asin_compute(const T x)
+inv_sqrt_recur(const T x, const T xn, const int count)
 noexcept
 {
-    return( // only defined on [-1,1]
-            x > T(1) ? \
-                GCLIM<T>::quiet_NaN() :
-            // indistinguishable from one or zero
-            GCLIM<T>::min() > abs(x -  T(1)) ? \
-                T(GCEM_HALF_PI) :
-            GCLIM<T>::min() > abs(x) ? \
-                T(0) :
+    return( abs( xn - T(1)/(x*xn) ) / (T(1) + xn) < GCLIM<T>::min() ? \
+            // if
+                xn :
+            count < GCEM_INV_SQRT_MAX_ITER ? \
             // else
-                atan( x/sqrt(T(1) - x*x) ) );
+                inv_sqrt_recur(x, T(0.5)*(xn + T(1)/(x*xn)), count+1) :
+                xn );
 }
 
 template<typename T>
 constexpr
 T
-asin_check(const T x)
+inv_sqrt_check(const T x)
 noexcept
 {
-    return( // NaN check
-            is_nan(x) ? \
+    return( is_nan(x) ? \
                 GCLIM<T>::quiet_NaN() :
             //
             x < T(0) ? \
-                - asin_compute(-x) :
-                  asin_compute(x) );
+                GCLIM<T>::quiet_NaN() :
+            //
+            is_posinf(x) ? \
+                T(0) :
+            // indistinguishable from zero or one
+            GCLIM<T>::min() > abs(x) ? \
+                GCLIM<T>::infinity() :
+            GCLIM<T>::min() > abs(T(1) - x) ? \
+                x :
+            // else
+            inv_sqrt_recur(x, x/T(2), 0) );
 }
 
 }
+
 
 /**
- * Compile-time arcsine function
+ * Compile-time inverse-square-root function
  *
- * @param x a real-valued input, where \f$ x \in [-1,1] \f$.
- * @return the inverse sine function using \f[ \text{asin}(x) = \text{atan} \left( \frac{x}{\sqrt{1-x^2}} \right) \f]
+ * @param x a real-valued input.
+ * @return Computes \f$ 1 / \sqrt{x} \f$ using a Newton-Raphson approach.
  */
 
 template<typename T>
 constexpr
 return_t<T>
-asin(const T x)
+inv_sqrt(const T x)
 noexcept
 {
-    return internal::asin_check( static_cast<return_t<T>>(x) );
+    return internal::inv_sqrt_check( static_cast<return_t<T>>(x) );
 }
 
 #endif
