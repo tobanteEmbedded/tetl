@@ -25,7 +25,7 @@ jobs:
     name: Xcode ${{ matrix.config.arch }} (C++${{ matrix.config.cxx }})
     steps:
       - name: Check out code
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
 
       - name: CMake configure
         run: >

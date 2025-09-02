@@ -23,6 +23,7 @@ jobs:
             { cc: clang-18, cxx: clang++-18 },
             { cc: clang-19, cxx: clang++-19 },
             { cc: clang-20, cxx: clang++-20 },
+            { cc: clang-21, cxx: clang++-21 },
           ]
         cxx_std: [20, 23]
       fail-fast: false
@@ -30,7 +31,7 @@ jobs:
     name: ${{ matrix.config.cc }} (C++${{ matrix.cxx_std }})
     steps:
       - name: Check out code
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
 
       - name: Update APT
         run: sudo apt update -y
@@ -48,6 +49,13 @@ jobs:
           wget https://apt.llvm.org/llvm.sh
           chmod +x llvm.sh
           sudo ./llvm.sh 20 all
+
+      - name: Install clang-21
+        if: matrix.config.cc == 'clang-21'
+        run: |
+          wget https://apt.llvm.org/llvm.sh
+          chmod +x llvm.sh
+          sudo ./llvm.sh 21 all
 
       - name: CMake configure
         run: >

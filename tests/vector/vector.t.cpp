@@ -5,6 +5,7 @@
 #if defined(TETL_ENABLE_CXX_MODULES)
 import etl;
 #else
+    #include <etl/algorithm.hpp>
     #include <etl/array.hpp>
     #include <etl/cstddef.hpp>
     #include <etl/memory.hpp>
@@ -43,6 +44,7 @@ static constexpr auto test() -> bool
         auto zeros  = Vector{2, Alloc{memory}};
         CHECK(zeros.size() == 2);
         CHECK(etl::as_const(zeros).size() == 2);
+        CHECK(etl::count(zeros.begin(), zeros.end(), T(0)) == 2);
         CHECK(zeros.data() != nullptr);
         CHECK(etl::as_const(zeros).data() != nullptr);
         CHECK(zeros.begin() != nullptr);
@@ -56,12 +58,7 @@ static constexpr auto test() -> bool
         auto ones   = Vector{4, T(1), Alloc{memory}};
         CHECK(ones.size() == 4);
         CHECK(etl::as_const(ones).size() == 4);
-        CHECK(ones.data() != nullptr);
-        CHECK(etl::as_const(ones).data() != nullptr);
-        CHECK(ones.begin() != nullptr);
-        CHECK(etl::as_const(ones).begin() != nullptr);
-        CHECK(ones.end() != nullptr);
-        CHECK(etl::as_const(ones).end() != nullptr);
+        CHECK(etl::count(ones.begin(), ones.end(), T(1)) == 4);
     }
 
     return true;
