@@ -23,6 +23,7 @@ jobs:
             { cc: clang-18, cxx: clang++-18 },
             { cc: clang-19, cxx: clang++-19 },
             { cc: clang-20, cxx: clang++-20 },
+            { cc: clang-21, cxx: clang++-21 },
           ]
         cxx_std: [20, 23]
       fail-fast: false
