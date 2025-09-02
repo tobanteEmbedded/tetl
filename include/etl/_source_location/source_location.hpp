@@ -10,8 +10,6 @@
 
 namespace etl {
 
-#if defined(__cpp_consteval)
-
 /// A class representing information about the source code, such as file names,
 /// line numbers, and function names
 ///
@@ -50,8 +48,6 @@ private:
     char const* _file     = "";
     char const* _function = "";
 };
-
-#endif
 
 } // namespace etl
 
