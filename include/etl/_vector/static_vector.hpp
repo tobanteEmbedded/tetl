@@ -255,7 +255,7 @@ struct static_vector_non_trivial_storage {
     /// \brief Constructs an element in-place at the end of the embedded
     /// storage.
     template <typename... Args>
-    auto emplace_back(Args&&... args) noexcept(noexcept(new(end()) T(etl::forward<Args>(args)...))) -> void
+    auto emplace_back(Args&&... args) noexcept(noexcept(new (end()) T(etl::forward<Args>(args)...))) -> void
     {
         TETL_PRECONDITION(!full());
         new (end()) T(etl::forward<Args>(args)...);

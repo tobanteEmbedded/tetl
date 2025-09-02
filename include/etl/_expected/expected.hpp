@@ -140,9 +140,12 @@ struct expected {
     }
 
     template <typename F>
-    [[nodiscard]] constexpr auto and_then(F&& f) && requires(is_constructible_v<E, decltype(error())>)
+    [[nodiscard]] constexpr auto and_then(F&& f) &&
+        requires(is_constructible_v<E, decltype(error())>)
     {
-        if (has_value()) { return etl::invoke(etl::forward<F>(f), **this); }
+        if (has_value()) {
+            return etl::invoke(etl::forward<F>(f), **this);
+        }
         using U = remove_cvref_t<invoke_result_t<F, decltype(**this)>>;
         return U(unexpect, error());
     }
@@ -181,10 +184,13 @@ struct expected {
     }
 
     template <typename F>
-    [[nodiscard]] constexpr auto or_else(F&& f) && requires(is_constructible_v<T, decltype(**this)>)
+    [[nodiscard]] constexpr auto or_else(F&& f) &&
+        requires(is_constructible_v<T, decltype(**this)>)
     {
         using G = remove_cvref_t<invoke_result_t<F, decltype(error())>>;
-        if (has_value()) { return G(etl::in_place, **this); }
+        if (has_value()) {
+            return G(etl::in_place, **this);
+        }
         return etl::invoke(etl::forward<F>(f), error());
     }
 
