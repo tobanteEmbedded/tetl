@@ -32,7 +32,7 @@ jobs:
           -D CMAKE_CXX_COMPILER=clang++
 
       - name: Generate HTML documentation
-        run: ./cmake-build-doxygen/bin/doxygen Doxyfile
+        run: doxygen Doxyfile
 
       - name: Disable Jekyll processing
         run: touch cmake-build-doc/html/.nojekyll
