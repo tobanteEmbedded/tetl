@@ -63,7 +63,6 @@ For examples look at the [examples](./examples) subdirectory or the test files i
 |    **Type**    |                                                                                  **Status**                                                                                   | **Notes** |
 | :------------: | :---------------------------------------------------------------------------------------------------------------------------------------------------------------------------: | :-------: |
 |  **Coverage**  |               [![codecov](https://codecov.io/gh/tobanteEmbedded/tetl/branch/main/graph/badge.svg?token=f1QAWTtpIo)](https://codecov.io/gh/tobanteEmbedded/tetl)               |  GCC 13   |
-| **Sanitizers** | [![ASAN/UBSAN](https://github.com/tobanteEmbedded/tetl/actions/workflows/sanitizers.yml/badge.svg)](https://github.com/tobanteEmbedded/tetl/actions/workflows/sanitizers.yml) | Clang 20  |
 | **Clang-Tidy** | [![Clang-Tidy](https://github.com/tobanteEmbedded/tetl/actions/workflows/clang-tidy.yml/badge.svg)](https://github.com/tobanteEmbedded/tetl/actions/workflows/clang-tidy.yml) | Clang 20  |
 
 > [!NOTE]
