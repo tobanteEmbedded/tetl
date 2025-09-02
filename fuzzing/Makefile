@@ -1,4 +1,4 @@
-CXX = clang++-20
+CXX = clang++-21
 CXXFLAGS = -std=c++26 -g3 -O1 -fsanitize=fuzzer,address,undefined -ftest-coverage -fcoverage-mapping -fprofile-arcs -fprofile-instr-generate
 LCOV = lcov --gcov-tool ../scripts/llvm-gcov.sh
 MAXTIME ?= 20
