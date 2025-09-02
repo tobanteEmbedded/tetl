@@ -31,6 +31,6 @@ static auto fun(T x) -> void
 auto main(int /*argc*/, char const** /*argv*/) -> int
 {
     log("Hello world!");
-    fun("Hello C++20!");
+    fun("Hello C++23!");
     return 0;
 }

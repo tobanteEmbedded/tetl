@@ -17,7 +17,7 @@ jobs:
       image: alpine:edge
     strategy:
       matrix:
-        cxx: ["20", "23", "26"]
+        cxx: [23, 26]
       fail-fast: false
     name: C++${{ matrix.cxx }}
     steps:
