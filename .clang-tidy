@@ -38,6 +38,7 @@ Checks:
   - -cppcoreguidelines-pro-type-reinterpret-cast
   - -cppcoreguidelines-pro-type-union-access
   - -cppcoreguidelines-rvalue-reference-param-not-moved
+  - -cppcoreguidelines-use-enum-class
 
   - hicpp-*
   - -hicpp-deprecated-headers
@@ -78,6 +79,7 @@ Checks:
   - -readability-qualified-auto
   - -readability-redundant-casting
   - -readability-suspicious-call-argument
+  - -readability-use-concise-preprocessor-directives
 
   - -*-avoid-c-arrays
   - -*-magic-numbers
@@ -96,6 +98,7 @@ ImplementationFileExtensions: ["cpp"]
 ExcludeHeaderFilterRegex: "(.*/include/etl/_3rd_party/*)"
 CheckOptions:
   cppcoreguidelines-avoid-do-while.IgnoreMacros: true
+  modernize-use-trailing-return-type.TransformLambdas: none
   readability-identifier-naming.LocalVariableCase: camelBack
   readability-identifier-naming.NamespaceCase: lower_case
   readability-identifier-naming.ParameterCase: camelBack
