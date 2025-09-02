@@ -30,7 +30,7 @@ jobs:
     name: ${{ matrix.config.cc }} (C++${{ matrix.cxx_std }})
     steps:
       - name: Check out code
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
 
       - name: Update APT
         run: sudo apt update -y
