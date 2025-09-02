@@ -18,7 +18,7 @@ set(CMAKE_OBJCOPY       "avr-objcopy" CACHE FILEPATH "The toolchain objcopy comm
 set(CMAKE_SIZE_UTIL     "avr-size"    CACHE INTERNAL "size tool")
 
 set(CPU_FLAGS "-mmcu=atmega2560")
-set(COMPILER_FLAGS "-ffreestanding -fno-threadsafe-statics")
+set(COMPILER_FLAGS "-fno-threadsafe-statics")
 
 set(CMAKE_ASM_FLAGS         "${CPU_FLAGS} -x assembler-with-cpp -Wno-comment" CACHE INTERNAL "")
 set(CMAKE_C_FLAGS           "${CPU_FLAGS} ${COMPILER_FLAGS}"                  CACHE INTERNAL "")

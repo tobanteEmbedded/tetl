@@ -6,33 +6,47 @@ if(CMAKE_CXX_COMPILER_FRONTEND_VARIANT STREQUAL "MSVC")
         "/W3"
         "/wd4723" # potential divide by 0
     )
-elseif(CMAKE_CXX_COMPILER_ID STREQUAL "GCC")
+elseif(CMAKE_CXX_COMPILER_ID STREQUAL "GNU")
     target_compile_options(tetl.compiler_warnings INTERFACE
         "-Wall"
         "-Wextra"
         "-Wpedantic"
 
-        "-Wcast-align"
         "-Wcast-qual"
+        "-Wdisabled-optimization"
         "-Wdouble-promotion"
         "-Wduplicated-branches"
         "-Wduplicated-cond"
+        "-Wformat=2"
+        "-Winit-self"
+        "-Winvalid-pch"
         "-Wlogical-op"
         "-Wmisleading-indentation"
+        "-Wmissing-declarations"
         "-Wmissing-field-initializers"
+        "-Wmissing-include-dirs"
         "-Wnarrowing"
+        "-Wold-style-cast"
         "-Woverloaded-virtual"
+        "-Wredundant-decls"
         "-Wreorder"
         "-Wshadow"
         "-Wsign-compare"
         "-Wsign-conversion"
         "-Wsign-promo"
         "-Wstrict-aliasing"
+        "-Wstrict-null-sentinel"
+        "-Wstrict-overflow=1"
         "-Wswitch-enum"
+        "-Wtrampolines"
+        "-Wundef"
         "-Wuninitialized"
         "-Wunreachable-code"
         "-Wunused-parameter"
+        "-Wvector-operation-performance"
         "-Wzero-as-null-pointer-constant"
+
+        "-Wno-cast-align" # warns on arm-gcc-none-eabi, but not on avr or x86
     )
 elseif(CMAKE_CXX_COMPILER_ID MATCHES "AppleClang|Clang")
     target_compile_options(tetl.compiler_warnings INTERFACE
