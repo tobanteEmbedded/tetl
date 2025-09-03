@@ -4,6 +4,7 @@
 #define TETL_EXPECTED_UNEXPECTED_HPP
 
 #include <etl/_type_traits/is_constructible.hpp>
+#include <etl/_type_traits/is_nothrow_constructible.hpp>
 #include <etl/_type_traits/is_nothrow_swappable.hpp>
 #include <etl/_type_traits/is_same.hpp>
 #include <etl/_type_traits/is_swappable.hpp>
@@ -24,14 +25,16 @@ struct unexpected {
             and not etl::is_same_v<etl::remove_cvref_t<Err>, etl::in_place_t> //
             and etl::is_constructible_v<E, Err>
         )
-    constexpr explicit unexpected(Err&& e)
+    constexpr explicit unexpected(Err&& e) noexcept(etl::is_nothrow_constructible_v<E, Err>)
         : _unex(etl::forward<Err>(e))
     {
     }
 
     template <typename... Args>
         requires etl::is_constructible_v<E, Args...>
-    constexpr explicit unexpected(etl::in_place_t /*tag*/, Args&&... args)
+    constexpr explicit unexpected(etl::in_place_t /*tag*/, Args&&... args) noexcept(
+        etl::is_nothrow_constructible_v<E, Args...>
+    )
         : _unex(etl::forward<Args>(args)...)
     {
     }
@@ -51,6 +54,7 @@ struct unexpected {
     [[nodiscard]] constexpr auto error() && noexcept -> E&& { return etl::move(_unex); }
 
     constexpr auto swap(unexpected& other) noexcept(etl::is_nothrow_swappable_v<E>) -> void
+        requires etl::is_swappable_v<E>
     {
         using etl::swap;
         swap(error(), other.error());
@@ -63,7 +67,7 @@ struct unexpected {
     }
 
     friend constexpr auto swap(unexpected& x, unexpected& y) noexcept(noexcept(x.swap(y))) -> void
-        requires(etl::is_swappable_v<E>)
+        requires etl::is_swappable_v<E>
     {
         x.swap(y);
     }
