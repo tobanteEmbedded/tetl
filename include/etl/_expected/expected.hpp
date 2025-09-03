@@ -10,14 +10,21 @@
 #include <etl/_functional/invoke.hpp>
 #include <etl/_type_traits/invoke_result.hpp>
 #include <etl/_type_traits/is_constructible.hpp>
+#include <etl/_type_traits/is_copy_constructible.hpp>
 #include <etl/_type_traits/is_default_constructible.hpp>
+#include <etl/_type_traits/is_move_constructible.hpp>
 #include <etl/_type_traits/is_nothrow_constructible.hpp>
+#include <etl/_type_traits/is_nothrow_copy_constructible.hpp>
 #include <etl/_type_traits/is_nothrow_default_constructible.hpp>
+#include <etl/_type_traits/is_nothrow_move_constructible.hpp>
+#include <etl/_type_traits/is_trivially_copy_constructible.hpp>
+#include <etl/_type_traits/is_trivially_move_constructible.hpp>
 #include <etl/_type_traits/remove_cvref.hpp>
 #include <etl/_utility/forward.hpp>
 #include <etl/_utility/in_place.hpp>
 #include <etl/_utility/in_place_index.hpp>
 #include <etl/_utility/move.hpp>
+#include <etl/_variant/monostate.hpp>
 #include <etl/_variant/variant.hpp>
 
 namespace etl {
@@ -32,87 +39,130 @@ struct expected {
     template <typename U>
     using rebind = etl::expected<U, error_type>;
 
+    /// Value-initializes member of type T.
+    /// \post has_value() == true
     constexpr explicit expected() noexcept(is_nothrow_default_constructible_v<T>)
         requires(is_default_constructible_v<T>)
-        : _u()
+        : _u(in_place_index<1>)
     {
     }
 
+    /// \post rhs.has_value() == this->has_value()
+    constexpr expected(expected const& rhs) = default;
+
+    /// \post rhs.has_value() == this->has_value()
+    constexpr expected(
+        expected const& rhs
+    ) noexcept(etl::is_nothrow_copy_constructible_v<T> and etl::is_nothrow_copy_constructible_v<E>)
+        requires(
+            etl::is_copy_constructible_v<T> and etl::is_copy_constructible_v<E>
+            and (not etl::is_trivially_copy_constructible_v<T> or not etl::is_trivially_copy_constructible_v<E>)
+        )
+        : _u(in_place_index<0>, etl::monostate{})
+    {
+        if (rhs.has_value()) {
+            _u.template emplace<1>(*rhs);
+        } else {
+            _u.template emplace<2>(rhs.error());
+        }
+    }
+
+    /// \post rhs.has_value() == this->has_value()
+    constexpr expected(expected&& rhs) = default;
+
+    /// \post rhs.has_value() == this->has_value()
+    constexpr expected(
+        expected&& rhs
+    ) noexcept(etl::is_nothrow_move_constructible_v<T> and etl::is_nothrow_move_constructible_v<E>)
+        requires(
+            etl::is_move_constructible_v<T> and etl::is_move_constructible_v<E>
+            and (not etl::is_trivially_move_constructible_v<T> or not etl::is_trivially_move_constructible_v<E>)
+        )
+        : _u(in_place_index<0>, etl::monostate{})
+    {
+        if (rhs.has_value()) {
+            _u.template emplace<1>(etl::move(*rhs));
+        } else {
+            _u.template emplace<2>(etl::move(rhs.error()));
+        }
+    }
+
+    ///
     template <typename... Args>
         requires is_constructible_v<T, Args...>
     constexpr explicit expected(in_place_t /*tag*/, Args&&... args) noexcept(is_nothrow_constructible_v<T, Args...>)
-        : _u(in_place_index<0>, etl::forward<Args>(args)...)
+        : _u(in_place_index<1>, etl::forward<Args>(args)...)
     {
     }
 
     template <typename... Args>
         requires is_constructible_v<E, Args...>
     constexpr explicit expected(unexpect_t /*tag*/, Args&&... args) noexcept(is_nothrow_constructible_v<E, Args...>)
-        : _u(in_place_index<1>, etl::forward<Args>(args)...)
+        : _u(in_place_index<2>, etl::forward<Args>(args)...)
     {
     }
 
     [[nodiscard]] constexpr explicit operator bool() const noexcept { return has_value(); }
 
-    [[nodiscard]] constexpr auto has_value() const noexcept -> bool { return _u.index() == 0; }
+    [[nodiscard]] constexpr auto has_value() const noexcept -> bool { return _u.index() == 1; }
 
-    [[nodiscard]] constexpr auto operator->() const noexcept -> T const* { return etl::get_if<0>(&_u); }
+    [[nodiscard]] constexpr auto operator->() const noexcept -> T const* { return etl::get_if<1>(&_u); }
 
-    [[nodiscard]] constexpr auto operator->() noexcept -> T* { return etl::get_if<0>(&_u); }
+    [[nodiscard]] constexpr auto operator->() noexcept -> T* { return etl::get_if<1>(&_u); }
 
     [[nodiscard]] constexpr auto operator*() const& noexcept -> T const&
     {
         TETL_PRECONDITION(has_value());
-        return _u[index_v<0>];
+        return _u[index_v<1>];
     }
 
     [[nodiscard]] constexpr auto operator*() & noexcept -> T&
     {
         TETL_PRECONDITION(has_value());
-        return _u[index_v<0>];
+        return _u[index_v<1>];
     }
 
     [[nodiscard]] constexpr auto operator*() const&& noexcept -> T const&&
     {
         TETL_PRECONDITION(has_value());
-        return etl::move(_u[index_v<0>]);
+        return etl::move(_u[index_v<1>]);
     }
 
     [[nodiscard]] constexpr auto operator*() && noexcept -> T&&
     {
         TETL_PRECONDITION(has_value());
-        return etl::move(_u[index_v<0>]);
+        return etl::move(_u[index_v<1>]);
     }
 
     [[nodiscard]] constexpr auto error() & -> E&
     {
         TETL_PRECONDITION(not has_value());
-        return _u[index_v<1>];
+        return _u[index_v<2>];
     }
 
     [[nodiscard]] constexpr auto error() const& -> E const&
     {
         TETL_PRECONDITION(not has_value());
-        return _u[index_v<1>];
+        return _u[index_v<2>];
     }
 
     [[nodiscard]] constexpr auto error() && -> E&&
     {
         TETL_PRECONDITION(not has_value());
-        return etl::move(_u[index_v<1>]);
+        return etl::move(_u[index_v<2>]);
     }
 
     [[nodiscard]] constexpr auto error() const&& -> E const&&
     {
         TETL_PRECONDITION(not has_value());
-        return etl::move(_u[index_v<1>]);
+        return etl::move(_u[index_v<2>]);
     }
 
     template <typename... Args>
         requires is_nothrow_constructible_v<T, Args...>
     constexpr auto emplace(Args&&... args) noexcept -> T&
     {
-        _u.template emplace<0>(etl::forward<Args>(args)...);
+        _u.template emplace<1>(etl::forward<Args>(args)...);
         return **this;
     }
 
@@ -217,7 +267,7 @@ struct expected {
     }
 
 private:
-    etl::variant<T, E> _u;
+    etl::variant<etl::monostate, T, E> _u;
 };
 
 } // namespace etl
