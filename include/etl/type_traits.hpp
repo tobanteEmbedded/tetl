@@ -125,6 +125,7 @@
 
 // Non-standard extensions
 #include <etl/_type_traits/always_false.hpp>
+#include <etl/_type_traits/copy_cv.hpp>
 #include <etl/_type_traits/index_constant.hpp>
 #include <etl/_type_traits/is_builtin_integer.hpp>
 #include <etl/_type_traits/is_builtin_signed_integer.hpp>
