@@ -21,7 +21,8 @@ namespace etl {
 /// The behavior of a program that adds specializations for any of the templates
 /// described on this page is undefined.
 template <typename T>
-struct is_trivially_copy_constructible : is_trivially_constructible<T, add_lvalue_reference_t<add_const_t<T>>> { };
+struct is_trivially_copy_constructible
+    : bool_constant<__is_trivially_constructible(T, add_lvalue_reference_t<add_const_t<T>>)> { };
 
 template <typename T>
 inline constexpr bool is_trivially_copy_constructible_v = is_trivially_copy_constructible<T>::value;

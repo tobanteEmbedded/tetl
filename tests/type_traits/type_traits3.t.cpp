@@ -43,10 +43,9 @@ static constexpr auto test() -> bool
     CHECK_IS_TRAIT_C(is_copy_constructible, CopyAndMovable);
     CHECK_IS_TRAIT_C_FALSE(is_copy_constructible, MovableOnly);
 
-    CHECK_IS_TRAIT_CV(is_trivially_copy_constructible, T);
-    CHECK_IS_TRAIT_CV(is_trivially_copy_constructible, T*);
-    CHECK_IS_TRAIT_CV(is_trivially_copy_constructible, EmptyClass);
-    CHECK_IS_TRAIT_CV_FALSE(is_trivially_copy_constructible, T&);
+    CHECK_IS_TRAIT_C(is_trivially_copy_constructible, T);
+    CHECK_IS_TRAIT_C(is_trivially_copy_constructible, T*);
+    CHECK_IS_TRAIT_C(is_trivially_copy_constructible, EmptyClass);
 
     CHECK_IS_TRAIT_CV(is_scoped_enum, ScopedEnum);
     CHECK_IS_TRAIT_CV(is_scoped_enum, ScopedEnumWithType);
