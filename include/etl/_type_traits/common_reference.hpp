@@ -58,7 +58,9 @@ struct common_reference<T0> {
 };
 
 template <typename T1, typename T2>
-    requires requires { typename etl::detail::common_ref_t<T1, T2>; } and is_reference_v<T1> and is_reference_v<T2>
+    requires requires { typename etl::detail::common_ref_t<T1, T2>; }
+         and is_reference_v<T1>
+         and is_reference_v<T2>
          and is_convertible_v<add_pointer_t<T1>, add_pointer_t<etl::detail::common_ref_t<T1, T2>>>
          and is_convertible_v<add_pointer_t<T2>, add_pointer_t<etl::detail::common_ref_t<T1, T2>>>
 struct common_reference<T1, T2> {

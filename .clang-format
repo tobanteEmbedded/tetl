@@ -50,6 +50,7 @@ BreakBeforeBinaryOperators: All
 BreakBeforeConceptDeclarations: true
 BreakBeforeTemplateCloser: true
 BreakBeforeTernaryOperators: true
+BreakBinaryOperations: RespectPrecedence
 BreakConstructorInitializers: BeforeComma
 BreakInheritanceList: BeforeComma
 BreakStringLiterals: true

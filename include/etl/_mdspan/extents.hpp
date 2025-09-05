@@ -115,7 +115,8 @@ public:
     template <typename OtherIndexType, etl::size_t N>
         requires(
             is_convertible_v<OtherIndexType const&, IndexType>
-            and is_nothrow_constructible_v<IndexType, OtherIndexType const&> and (N == rank_dynamic() or N == rank())
+            and is_nothrow_constructible_v<IndexType, OtherIndexType const&>
+            and (N == rank_dynamic() or N == rank())
         )
     explicit(N != rank_dynamic()) constexpr extents(span<OtherIndexType, N> ext) noexcept
     {
@@ -127,7 +128,8 @@ public:
     template <typename OtherIndexType, etl::size_t N>
         requires(
             is_convertible_v<OtherIndexType const&, IndexType>
-            and is_nothrow_constructible_v<IndexType, OtherIndexType const&> and (N == rank_dynamic() or N == rank())
+            and is_nothrow_constructible_v<IndexType, OtherIndexType const&>
+            and (N == rank_dynamic() or N == rank())
         )
     explicit(N != rank_dynamic()) constexpr extents(array<OtherIndexType, N> const& e) noexcept
         : extents{span{e}}

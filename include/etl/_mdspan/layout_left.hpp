@@ -65,7 +65,8 @@ struct layout_left::mapping {
     }
 
     template <typename... Indices>
-        requires(sizeof...(Indices) == extents_type::rank()) && (is_convertible_v<Indices, index_type> && ...)
+        requires(sizeof...(Indices) == extents_type::rank())
+             && (is_convertible_v<Indices, index_type> && ...)
              && (is_nothrow_constructible_v<index_type, Indices> && ...)
     [[nodiscard]] constexpr auto operator()(Indices... indices) const noexcept -> index_type
     {

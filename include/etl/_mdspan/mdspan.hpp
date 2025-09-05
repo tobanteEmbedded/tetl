@@ -71,8 +71,10 @@ struct mdspan {
 
     // Constructor (1)
     constexpr mdspan()
-        requires((rank_dynamic() > 0) and is_default_constructible_v<data_handle_type>
-                 and is_default_constructible_v<mapping_type> and is_default_constructible_v<accessor_type>)
+        requires((rank_dynamic() > 0)
+                 and is_default_constructible_v<data_handle_type>
+                 and is_default_constructible_v<mapping_type>
+                 and is_default_constructible_v<accessor_type>)
         : _ptr()
         , _map()
         , _acc()
@@ -84,7 +86,8 @@ struct mdspan {
         requires((is_convertible_v<OtherIndexTypes, index_type> and ...)
                  and (is_nothrow_constructible_v<index_type, OtherIndexTypes> and ...)
                  and ((sizeof...(OtherIndexTypes) == rank()) || (sizeof...(OtherIndexTypes) == rank_dynamic()))
-                 and is_constructible_v<mapping_type, extents_type> and is_default_constructible_v<accessor_type>)
+                 and is_constructible_v<mapping_type, extents_type>
+                 and is_default_constructible_v<accessor_type>)
     explicit constexpr mdspan(data_handle_type ptr, OtherIndexTypes... exts)
         : _ptr(etl::move(ptr))
         , _map(extents_type(static_cast<index_type>(etl::move(exts))...))
@@ -96,7 +99,8 @@ struct mdspan {
         requires(is_convertible_v<OtherIndexType const&, index_type>
                  and is_nothrow_constructible_v<index_type, OtherIndexType const&>
                  and (N == rank() or N == rank_dynamic())
-                 and is_constructible_v<mapping_type, extents_type> and is_default_constructible_v<accessor_type>)
+                 and is_constructible_v<mapping_type, extents_type>
+                 and is_default_constructible_v<accessor_type>)
     explicit(N != rank_dynamic()) constexpr mdspan(data_handle_type p, span<OtherIndexType, N> exts)
         : _ptr(etl::move(p))
         , _map(extents_type(exts))
@@ -109,7 +113,8 @@ struct mdspan {
         requires(is_convertible_v<OtherIndexType const&, index_type>
                  and is_nothrow_constructible_v<index_type, OtherIndexType const&>
                  and (N == rank() or N == rank_dynamic())
-                 and is_constructible_v<mapping_type, extents_type> and is_default_constructible_v<accessor_type>)
+                 and is_constructible_v<mapping_type, extents_type>
+                 and is_default_constructible_v<accessor_type>)
     explicit(N != rank_dynamic()) constexpr mdspan(data_handle_type p, array<OtherIndexType, N> const& exts)
         : _ptr(etl::move(p))
         , _map(extents_type(exts))

@@ -55,7 +55,8 @@ struct expected {
         expected const& rhs
     ) noexcept(etl::is_nothrow_copy_constructible_v<T> and etl::is_nothrow_copy_constructible_v<E>)
         requires(
-            etl::is_copy_constructible_v<T> and etl::is_copy_constructible_v<E>
+            etl::is_copy_constructible_v<T>
+            and etl::is_copy_constructible_v<E>
             and (not etl::is_trivially_copy_constructible_v<T> or not etl::is_trivially_copy_constructible_v<E>)
         )
         : _u(in_place_index<0>, etl::monostate{})
@@ -75,7 +76,8 @@ struct expected {
         expected&& rhs
     ) noexcept(etl::is_nothrow_move_constructible_v<T> and etl::is_nothrow_move_constructible_v<E>)
         requires(
-            etl::is_move_constructible_v<T> and etl::is_move_constructible_v<E>
+            etl::is_move_constructible_v<T>
+            and etl::is_move_constructible_v<E>
             and (not etl::is_trivially_move_constructible_v<T> or not etl::is_trivially_move_constructible_v<E>)
         )
         : _u(in_place_index<0>, etl::monostate{})
