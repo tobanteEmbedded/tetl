@@ -29,9 +29,7 @@ namespace etl {
 /// \ingroup bitset
 template <etl::size_t Bits, etl::unsigned_integral WordType = etl::size_t>
 struct basic_bitset {
-
     struct reference {
-
         constexpr auto operator=(bool x) noexcept -> reference&
         {
             *_word = etl::set_bit(*_word, _offset, x);

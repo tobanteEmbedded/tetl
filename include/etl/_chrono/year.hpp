@@ -42,7 +42,6 @@ struct year {
 
     constexpr auto operator+=(years const& countS) noexcept -> year&
     {
-
         _count = static_cast<int16_t>(_count + countS.count());
         return *this;
     }

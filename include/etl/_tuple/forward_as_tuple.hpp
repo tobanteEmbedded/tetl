@@ -1,5 +1,3 @@
-
-
 // SPDX-License-Identifier: BSL-1.0
 
 #ifndef TETL_TUPLE_FORWARD_AS_TUPLE_HPP

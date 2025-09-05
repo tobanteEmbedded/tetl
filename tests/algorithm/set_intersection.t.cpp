@@ -14,7 +14,6 @@ import etl;
 template <typename T>
 static constexpr auto test() -> bool
 {
-
     // cppreference.com example
     {
         etl::array<T, 8> v1{T(1), T(2), T(3), T(4), T(5), T(6), T(7), T(8)};

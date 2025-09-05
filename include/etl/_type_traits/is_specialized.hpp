@@ -1,5 +1,3 @@
-
-
 // SPDX-License-Identifier: BSL-1.0
 
 #ifndef TETL_TYPE_TRAITS_IS_SPECIALIZED_HPP

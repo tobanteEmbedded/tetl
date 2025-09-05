@@ -73,7 +73,6 @@ struct submdspan_extents_builder {
 
 template <typename Extents, size_t... NewStaticExtents>
 struct submdspan_extents_builder<0, Extents, NewStaticExtents...> {
-
     template <typename... NewExtents>
     static constexpr auto next(Extents const& /*unused*/, NewExtents... newExts)
     {

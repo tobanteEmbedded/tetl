@@ -12,7 +12,6 @@ import etl;
 
 static constexpr auto test() -> bool
 {
-
     // "default construction"
     {
         Mutex mtx{};

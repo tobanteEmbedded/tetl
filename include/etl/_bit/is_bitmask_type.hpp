@@ -1,5 +1,3 @@
-
-
 // SPDX-License-Identifier: BSL-1.0
 
 #ifndef TETL_BIT_IS_BITMASK_TYPE_HPP

@@ -25,7 +25,6 @@ struct SomeTask {
 
 static auto test_all() -> bool
 {
-
     auto task = SomeTask<rtos::once>{};
 
     rtos::create_task(task, "test", 255);

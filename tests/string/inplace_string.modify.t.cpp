@@ -19,7 +19,6 @@ using namespace etl::string_view_literals;
 template <typename String>
 [[nodiscard]] static constexpr auto test() -> bool
 {
-
     // push_back
     {
         String str{""};

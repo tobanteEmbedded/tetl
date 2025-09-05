@@ -14,7 +14,6 @@ import etl;
 template <typename T>
 static constexpr auto test() -> bool
 {
-
     // exchange
     {
         auto original = T{42};

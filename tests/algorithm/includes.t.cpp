@@ -14,7 +14,6 @@ import etl;
 template <typename T>
 static constexpr auto test() -> bool
 {
-
     {
         auto const v1 = etl::array{'a', 'b', 'c', 'f', 'h', 'x'};
         auto const v2 = etl::array{'a', 'b', 'c'};

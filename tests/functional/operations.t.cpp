@@ -14,7 +14,6 @@ import etl;
 template <typename T>
 static constexpr auto test() -> bool
 {
-
     CHECK(etl::detail::is_transparent<etl::plus<>>::value);
     CHECK(etl::plus<T>{}(T{2}, T{1}) == T{3});
     CHECK(etl::plus<T>{}(T{1}, T{1}) == T{2});

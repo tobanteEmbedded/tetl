@@ -59,12 +59,24 @@ ColumnLimit: 120
 CompactNamespaces: false
 Cpp11BracedListStyle: true
 DisableFormat: false
+EmptyLineAfterAccessModifier: Never
+EmptyLineBeforeAccessModifier: Always
+EnumTrailingComma: Leave
 FixNamespaceComments: true
+IncludeBlocks: Preserve
 IndentCaseLabels: true
+IndentExportBlock: true
+IndentRequiresClause: true
 IndentPPDirectives: BeforeHash
 IndentWidth: 4
 IndentWrappedFunctionNames: false
-KeepEmptyLinesAtTheStartOfBlocks: true
+InsertBraces: true
+InsertNewlineAtEOF: true
+InsertTrailingCommas: Wrapped
+KeepEmptyLines:
+  AtEndOfFile: false
+  AtStartOfBlock: false
+  AtStartOfFile: false
 Language: Cpp
 LambdaBodyIndentation: OuterScope
 MaxEmptyLinesToKeep: 1

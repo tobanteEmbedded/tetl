@@ -1,5 +1,3 @@
-
-
 // SPDX-License-Identifier: BSL-1.0
 
 #ifndef TETL_UTILITY_MOVE_IF_NOEXCEPT_HPP

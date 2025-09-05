@@ -1,4 +1,3 @@
-
 // SPDX-License-Identifier: BSL-1.0
 
 #ifndef TETL_VARIANT_OVERLOAD_HPP

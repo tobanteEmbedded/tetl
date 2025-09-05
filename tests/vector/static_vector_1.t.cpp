@@ -140,7 +140,6 @@ static constexpr auto test_cx() -> bool
     }
 
     {
-
         auto vec = etl::static_vector<T, 4>{};
         CHECK(vec.size() == 0);
 

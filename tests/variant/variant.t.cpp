@@ -13,7 +13,6 @@ import etl;
 
 static constexpr auto test() -> bool
 {
-
     // default
     {
         struct S {
