@@ -41,12 +41,30 @@ inline constexpr struct exp {
 
 /// Computes e (Euler's number, 2.7182...) raised to the given power arg
 /// \details https://en.cppreference.com/w/cpp/numeric/math/exp
-[[nodiscard]] constexpr auto exp(float arg) noexcept -> float { return etl::detail::exp(arg); }
-[[nodiscard]] constexpr auto expf(float arg) noexcept -> float { return etl::detail::exp(arg); }
-[[nodiscard]] constexpr auto exp(double arg) noexcept -> double { return etl::detail::exp(arg); }
-[[nodiscard]] constexpr auto exp(long double arg) noexcept -> long double { return etl::detail::exp(arg); }
-[[nodiscard]] constexpr auto expl(long double arg) noexcept -> long double { return etl::detail::exp(arg); }
-[[nodiscard]] constexpr auto exp(integral auto arg) noexcept -> double { return etl::detail::exp(double(arg)); }
+[[nodiscard]] constexpr auto exp(float arg) noexcept -> float
+{
+    return etl::detail::exp(arg);
+}
+[[nodiscard]] constexpr auto expf(float arg) noexcept -> float
+{
+    return etl::detail::exp(arg);
+}
+[[nodiscard]] constexpr auto exp(double arg) noexcept -> double
+{
+    return etl::detail::exp(arg);
+}
+[[nodiscard]] constexpr auto exp(long double arg) noexcept -> long double
+{
+    return etl::detail::exp(arg);
+}
+[[nodiscard]] constexpr auto expl(long double arg) noexcept -> long double
+{
+    return etl::detail::exp(arg);
+}
+[[nodiscard]] constexpr auto exp(integral auto arg) noexcept -> double
+{
+    return etl::detail::exp(double(arg));
+}
 
 /// @}
 

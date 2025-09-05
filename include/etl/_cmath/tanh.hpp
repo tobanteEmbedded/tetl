@@ -41,12 +41,30 @@ inline constexpr struct tanh {
 
 /// Computes e (Euler's number, 2.7182...) raised to the given power arg
 /// \details https://en.cppreference.com/w/cpp/numeric/math/tanh
-[[nodiscard]] constexpr auto tanh(float arg) noexcept -> float { return etl::detail::tanh(arg); }
-[[nodiscard]] constexpr auto tanhf(float arg) noexcept -> float { return etl::detail::tanh(arg); }
-[[nodiscard]] constexpr auto tanh(double arg) noexcept -> double { return etl::detail::tanh(arg); }
-[[nodiscard]] constexpr auto tanh(long double arg) noexcept -> long double { return etl::detail::tanh(arg); }
-[[nodiscard]] constexpr auto tanhl(long double arg) noexcept -> long double { return etl::detail::tanh(arg); }
-[[nodiscard]] constexpr auto tanh(integral auto arg) noexcept -> double { return etl::detail::tanh(double(arg)); }
+[[nodiscard]] constexpr auto tanh(float arg) noexcept -> float
+{
+    return etl::detail::tanh(arg);
+}
+[[nodiscard]] constexpr auto tanhf(float arg) noexcept -> float
+{
+    return etl::detail::tanh(arg);
+}
+[[nodiscard]] constexpr auto tanh(double arg) noexcept -> double
+{
+    return etl::detail::tanh(arg);
+}
+[[nodiscard]] constexpr auto tanh(long double arg) noexcept -> long double
+{
+    return etl::detail::tanh(arg);
+}
+[[nodiscard]] constexpr auto tanhl(long double arg) noexcept -> long double
+{
+    return etl::detail::tanh(arg);
+}
+[[nodiscard]] constexpr auto tanh(integral auto arg) noexcept -> double
+{
+    return etl::detail::tanh(double(arg));
+}
 
 /// @}
 

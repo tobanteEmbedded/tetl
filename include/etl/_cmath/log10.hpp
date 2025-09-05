@@ -41,12 +41,30 @@ inline constexpr struct log10 {
 
 /// Computes the binary (base-10) logarithm of arg.
 /// \details https://en.cppreference.com/w/cpp/numeric/math/log10
-[[nodiscard]] constexpr auto log10(float arg) noexcept -> float { return etl::detail::log10(arg); }
-[[nodiscard]] constexpr auto log10f(float arg) noexcept -> float { return etl::log10(arg); }
-[[nodiscard]] constexpr auto log10(double arg) noexcept -> double { return etl::detail::log10(arg); }
-[[nodiscard]] constexpr auto log10(long double arg) noexcept -> long double { return etl::detail::log10(arg); }
-[[nodiscard]] constexpr auto log10l(long double arg) noexcept -> long double { return etl::detail::log10(arg); }
-[[nodiscard]] constexpr auto log10(integral auto arg) noexcept -> double { return etl::detail::log10(double(arg)); }
+[[nodiscard]] constexpr auto log10(float arg) noexcept -> float
+{
+    return etl::detail::log10(arg);
+}
+[[nodiscard]] constexpr auto log10f(float arg) noexcept -> float
+{
+    return etl::log10(arg);
+}
+[[nodiscard]] constexpr auto log10(double arg) noexcept -> double
+{
+    return etl::detail::log10(arg);
+}
+[[nodiscard]] constexpr auto log10(long double arg) noexcept -> long double
+{
+    return etl::detail::log10(arg);
+}
+[[nodiscard]] constexpr auto log10l(long double arg) noexcept -> long double
+{
+    return etl::detail::log10(arg);
+}
+[[nodiscard]] constexpr auto log10(integral auto arg) noexcept -> double
+{
+    return etl::detail::log10(double(arg));
+}
 
 /// @}
 

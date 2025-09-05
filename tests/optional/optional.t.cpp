@@ -198,7 +198,10 @@ static constexpr auto test() -> bool
             {
             }
 
-            constexpr ~S() { (*counter)++; }
+            constexpr ~S()
+            {
+                (*counter)++;
+            }
 
             constexpr S(S const& /*other*/)                        = default;
             constexpr S(S&& /*other*/) noexcept                    = default;

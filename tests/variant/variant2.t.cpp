@@ -105,7 +105,10 @@ constexpr auto test() -> bool
 
         constexpr ~non_trivial() { } // NOLINT
 
-        constexpr operator int() const noexcept { return value; }
+        constexpr operator int() const noexcept
+        {
+            return value;
+        }
 
         int value;
     };

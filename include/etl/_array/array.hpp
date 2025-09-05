@@ -81,28 +81,46 @@ struct array {
     }
 
     /// Accesses the first item.
-    [[nodiscard]] constexpr auto front() noexcept -> reference { return *begin(); }
+    [[nodiscard]] constexpr auto front() noexcept -> reference
+    {
+        return *begin();
+    }
 
     /// Accesses the first item.
-    [[nodiscard]] constexpr auto front() const noexcept -> const_reference { return *begin(); }
+    [[nodiscard]] constexpr auto front() const noexcept -> const_reference
+    {
+        return *begin();
+    }
 
     /// Accesses the last item.
-    [[nodiscard]] constexpr auto back() noexcept -> reference { return *etl::prev(end()); }
+    [[nodiscard]] constexpr auto back() noexcept -> reference
+    {
+        return *etl::prev(end());
+    }
 
     /// Accesses the last item.
-    [[nodiscard]] constexpr auto back() const noexcept -> const_reference { return *etl::prev(end()); }
+    [[nodiscard]] constexpr auto back() const noexcept -> const_reference
+    {
+        return *etl::prev(end());
+    }
 
     /// Returns pointer to the underlying array serving as element
     /// storage. The pointer is such that range [data(); data() + size()) is
     /// always a valid range, even if the container is empty (data() is not
     /// dereferenceable in that case).
-    [[nodiscard]] constexpr auto data() noexcept -> pointer { return begin(); }
+    [[nodiscard]] constexpr auto data() noexcept -> pointer
+    {
+        return begin();
+    }
 
     /// Returns pointer to the underlying array serving as element
     /// storage. The pointer is such that range [data(); data() + size()) is
     /// always a valid range, even if the container is empty (data() is not
     /// dereferenceable in that case).
-    [[nodiscard]] constexpr auto data() const noexcept -> const_pointer { return begin(); }
+    [[nodiscard]] constexpr auto data() const noexcept -> const_pointer
+    {
+        return begin();
+    }
 
     /// Returns an iterator to the beginning.
     [[nodiscard]] constexpr auto begin() noexcept -> iterator
@@ -125,7 +143,10 @@ struct array {
     }
 
     /// Returns an const iterator to the beginning.
-    [[nodiscard]] constexpr auto cbegin() const noexcept -> const_iterator { return begin(); }
+    [[nodiscard]] constexpr auto cbegin() const noexcept -> const_iterator
+    {
+        return begin();
+    }
 
     /// Returns an iterator to the end.
     [[nodiscard]] constexpr auto end() noexcept -> iterator
@@ -148,12 +169,18 @@ struct array {
     }
 
     /// Returns an const iterator to the end.
-    [[nodiscard]] constexpr auto cend() const noexcept -> const_iterator { return end(); }
+    [[nodiscard]] constexpr auto cend() const noexcept -> const_iterator
+    {
+        return end();
+    }
 
     /// Returns a reverse iterator to the first element of the reversed
     /// array. It corresponds to the last element of the non-reversed array. If
     /// the array is empty, the returned iterator is equal to rend().
-    [[nodiscard]] constexpr auto rbegin() noexcept -> reverse_iterator { return reverse_iterator(end()); }
+    [[nodiscard]] constexpr auto rbegin() noexcept -> reverse_iterator
+    {
+        return reverse_iterator(end());
+    }
 
     /// Returns a reverse iterator to the first element of the reversed
     /// array. It corresponds to the last element of the non-reversed array. If
@@ -166,13 +193,19 @@ struct array {
     /// Returns a reverse iterator to the first element of the reversed
     /// array. It corresponds to the last element of the non-reversed array. If
     /// the array is empty, the returned iterator is equal to rend().
-    [[nodiscard]] constexpr auto crbegin() const noexcept -> const_reverse_iterator { return rbegin(); }
+    [[nodiscard]] constexpr auto crbegin() const noexcept -> const_reverse_iterator
+    {
+        return rbegin();
+    }
 
     /// Returns a reverse iterator to the element following the last
     /// element of the reversed array. It corresponds to the element preceding
     /// the first element of the non-reversed array. This element acts as a
     /// placeholder, attempting to access it results in undefined behavior.
-    [[nodiscard]] constexpr auto rend() noexcept -> reverse_iterator { return reverse_iterator(begin()); }
+    [[nodiscard]] constexpr auto rend() noexcept -> reverse_iterator
+    {
+        return reverse_iterator(begin());
+    }
 
     /// Returns a reverse iterator to the element following the last
     /// element of the reversed array. It corresponds to the element preceding
@@ -187,13 +220,22 @@ struct array {
     /// element of the reversed array. It corresponds to the element preceding
     /// the first element of the non-reversed array. This element acts as a
     /// placeholder, attempting to access it results in undefined behavior.
-    [[nodiscard]] constexpr auto crend() const noexcept -> const_reverse_iterator { return rend(); }
+    [[nodiscard]] constexpr auto crend() const noexcept -> const_reverse_iterator
+    {
+        return rend();
+    }
 
     /// Checks if the container has no elements, i.e. whether begin() == end().
-    [[nodiscard]] constexpr auto empty() const noexcept -> bool { return begin() == end(); }
+    [[nodiscard]] constexpr auto empty() const noexcept -> bool
+    {
+        return begin() == end();
+    }
 
     /// Returns the number of elements in the container, i.e. distance(begin(), end()).
-    [[nodiscard]] constexpr auto size() const noexcept -> size_type { return Size; }
+    [[nodiscard]] constexpr auto size() const noexcept -> size_type
+    {
+        return Size;
+    }
 
     /// Returns the maximum number of elements the container is able to
     /// hold due to system or library implementation limitations, i.e.
@@ -201,10 +243,16 @@ struct array {
     ///
     /// Because each array<T, N> is a fixed-size container, the value
     /// returned by max_size equals N (which is also the value returned by size)
-    [[nodiscard]] constexpr auto max_size() const noexcept -> size_type { return Size; }
+    [[nodiscard]] constexpr auto max_size() const noexcept -> size_type
+    {
+        return Size;
+    }
 
     /// Assigns the given value value to all elements in the container.
-    constexpr auto fill(const_reference value) -> void { etl::fill_n(begin(), Size, value); }
+    constexpr auto fill(const_reference value) -> void
+    {
+        etl::fill_n(begin(), Size, value);
+    }
 
     /// Exchanges the contents of the container with those of other. Does
     /// not cause iterators and references to associate with the other
@@ -215,7 +263,10 @@ struct array {
     }
 
     /// Specializes the swap algorithm for array. Swaps the contents of lhs and rhs.
-    friend constexpr auto swap(array& lhs, array& rhs) noexcept(noexcept(lhs.swap(rhs))) -> void { lhs.swap(rhs); }
+    friend constexpr auto swap(array& lhs, array& rhs) noexcept(noexcept(lhs.swap(rhs))) -> void
+    {
+        lhs.swap(rhs);
+    }
 
     /// Checks if the contents of lhs and rhs are equal, that is, they have
     /// the same number of elements and each element in lhs compares equal with the
@@ -232,11 +283,20 @@ struct array {
         return etl::lexicographical_compare(lhs.begin(), lhs.end(), rhs.begin(), rhs.end());
     }
 
-    friend constexpr auto operator<=(array const& lhs, array const& rhs) -> bool { return !(rhs < lhs); }
+    friend constexpr auto operator<=(array const& lhs, array const& rhs) -> bool
+    {
+        return !(rhs < lhs);
+    }
 
-    friend constexpr auto operator>(array const& lhs, array const& rhs) -> bool { return rhs < lhs; }
+    friend constexpr auto operator>(array const& lhs, array const& rhs) -> bool
+    {
+        return rhs < lhs;
+    }
 
-    friend constexpr auto operator>=(array const& lhs, array const& rhs) -> bool { return !(lhs < rhs); }
+    friend constexpr auto operator>=(array const& lhs, array const& rhs) -> bool
+    {
+        return !(lhs < rhs);
+    }
 
     /// \internal
     // NOLINTNEXTLINE(readability-identifier-naming)

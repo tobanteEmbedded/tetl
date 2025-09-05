@@ -27,11 +27,20 @@ struct uninitialized_array {
 
     constexpr uninitialized_array() = default;
 
-    [[nodiscard]] constexpr auto data() const noexcept -> T const* { return reinterpret_cast<T const*>(_storage); }
+    [[nodiscard]] constexpr auto data() const noexcept -> T const*
+    {
+        return reinterpret_cast<T const*>(_storage);
+    }
 
-    [[nodiscard]] constexpr auto data() noexcept -> T* { return reinterpret_cast<T*>(_storage); }
+    [[nodiscard]] constexpr auto data() noexcept -> T*
+    {
+        return reinterpret_cast<T*>(_storage);
+    }
 
-    [[nodiscard]] static constexpr auto size() noexcept -> etl::size_t { return Size; }
+    [[nodiscard]] static constexpr auto size() noexcept -> etl::size_t
+    {
+        return Size;
+    }
 
 private:
     alignas(T) TETL_NO_UNIQUE_ADDRESS etl::c_array<char, sizeof(T) * Size> _storage;
@@ -44,11 +53,20 @@ struct uninitialized_array<T, Size> {
 
     constexpr uninitialized_array() = default;
 
-    [[nodiscard]] constexpr auto data() const noexcept -> T const* { return static_cast<T const*>(_storage); }
+    [[nodiscard]] constexpr auto data() const noexcept -> T const*
+    {
+        return static_cast<T const*>(_storage);
+    }
 
-    [[nodiscard]] constexpr auto data() noexcept -> T* { return static_cast<T*>(_storage); }
+    [[nodiscard]] constexpr auto data() noexcept -> T*
+    {
+        return static_cast<T*>(_storage);
+    }
 
-    [[nodiscard]] static constexpr auto size() noexcept -> etl::size_t { return Size; }
+    [[nodiscard]] static constexpr auto size() noexcept -> etl::size_t
+    {
+        return Size;
+    }
 
 private:
     TETL_NO_UNIQUE_ADDRESS etl::c_array<T, Size> _storage;
@@ -61,11 +79,20 @@ struct uninitialized_array<T, Size> {
 
     constexpr uninitialized_array() = default;
 
-    [[nodiscard]] constexpr auto data() const noexcept -> T const* { return nullptr; }
+    [[nodiscard]] constexpr auto data() const noexcept -> T const*
+    {
+        return nullptr;
+    }
 
-    [[nodiscard]] constexpr auto data() noexcept -> T* { return nullptr; }
+    [[nodiscard]] constexpr auto data() noexcept -> T*
+    {
+        return nullptr;
+    }
 
-    [[nodiscard]] static constexpr auto size() noexcept -> etl::size_t { return 0; }
+    [[nodiscard]] static constexpr auto size() noexcept -> etl::size_t
+    {
+        return 0;
+    }
 };
 
 } // namespace etl

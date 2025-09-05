@@ -23,7 +23,10 @@ struct Counter {
     {
     }
 
-    ~Counter() { value++; }
+    ~Counter()
+    {
+        value++;
+    }
 };
 
 } // namespace
@@ -138,5 +141,8 @@ auto main() -> int
 }
 
 #else
-auto main() -> int { return 0; }
+auto main() -> int
+{
+    return 0;
+}
 #endif

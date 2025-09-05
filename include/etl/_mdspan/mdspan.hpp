@@ -48,16 +48,25 @@ struct mdspan {
     using data_handle_type = typename accessor_type::data_handle_type;
     using reference        = typename accessor_type::reference;
 
-    [[nodiscard]] static constexpr auto rank() noexcept -> rank_type { return extents_type::rank(); }
+    [[nodiscard]] static constexpr auto rank() noexcept -> rank_type
+    {
+        return extents_type::rank();
+    }
 
-    [[nodiscard]] static constexpr auto rank_dynamic() noexcept -> rank_type { return extents_type::rank_dynamic(); }
+    [[nodiscard]] static constexpr auto rank_dynamic() noexcept -> rank_type
+    {
+        return extents_type::rank_dynamic();
+    }
 
     [[nodiscard]] static constexpr auto static_extent(rank_type r) noexcept -> size_t
     {
         return Extents::static_extent(r);
     }
 
-    [[nodiscard]] constexpr auto extent(rank_type r) const noexcept -> index_type { return extents().extent(r); }
+    [[nodiscard]] constexpr auto extent(rank_type r) const noexcept -> index_type
+    {
+        return extents().extent(r);
+    }
 
     // Constructor (1)
     constexpr mdspan()
@@ -196,25 +205,61 @@ struct mdspan {
         return (*this)[etl::span{indices}];
     }
 
-    [[nodiscard]] constexpr auto data_handle() const noexcept -> data_handle_type const& { return _ptr; }
-    [[nodiscard]] constexpr auto mapping() const noexcept -> mapping_type const& { return _map; }
-    [[nodiscard]] constexpr auto accessor() const noexcept -> accessor_type const& { return _acc; }
+    [[nodiscard]] constexpr auto data_handle() const noexcept -> data_handle_type const&
+    {
+        return _ptr;
+    }
+    [[nodiscard]] constexpr auto mapping() const noexcept -> mapping_type const&
+    {
+        return _map;
+    }
+    [[nodiscard]] constexpr auto accessor() const noexcept -> accessor_type const&
+    {
+        return _acc;
+    }
 
-    [[nodiscard]] constexpr auto extents() const noexcept -> extents_type const& { return _map.extents(); }
-    [[nodiscard]] constexpr auto stride(rank_type r) const -> index_type { return _map.stride(r); }
-    [[nodiscard]] constexpr auto empty() const noexcept -> bool { return size() == size_type{}; }
+    [[nodiscard]] constexpr auto extents() const noexcept -> extents_type const&
+    {
+        return _map.extents();
+    }
+    [[nodiscard]] constexpr auto stride(rank_type r) const -> index_type
+    {
+        return _map.stride(r);
+    }
+    [[nodiscard]] constexpr auto empty() const noexcept -> bool
+    {
+        return size() == size_type{};
+    }
     [[nodiscard]] constexpr auto size() const noexcept -> size_type
     {
         return static_cast<size_type>(extents().fwd_prod_of_extents(rank()));
     }
 
-    [[nodiscard]] constexpr auto is_unique() const -> bool { return _map.is_unique(); }
-    [[nodiscard]] constexpr auto is_exhaustive() const -> bool { return _map.is_exhaustive(); }
-    [[nodiscard]] constexpr auto is_strided() const -> bool { return _map.is_strided(); }
+    [[nodiscard]] constexpr auto is_unique() const -> bool
+    {
+        return _map.is_unique();
+    }
+    [[nodiscard]] constexpr auto is_exhaustive() const -> bool
+    {
+        return _map.is_exhaustive();
+    }
+    [[nodiscard]] constexpr auto is_strided() const -> bool
+    {
+        return _map.is_strided();
+    }
 
-    [[nodiscard]] static constexpr auto is_always_unique() -> bool { return mapping_type::is_always_unique(); }
-    [[nodiscard]] static constexpr auto is_always_exhaustive() -> bool { return mapping_type::is_always_exhaustive(); }
-    [[nodiscard]] static constexpr auto is_always_strided() -> bool { return mapping_type::is_always_strided(); }
+    [[nodiscard]] static constexpr auto is_always_unique() -> bool
+    {
+        return mapping_type::is_always_unique();
+    }
+    [[nodiscard]] static constexpr auto is_always_exhaustive() -> bool
+    {
+        return mapping_type::is_always_exhaustive();
+    }
+    [[nodiscard]] static constexpr auto is_always_strided() -> bool
+    {
+        return mapping_type::is_always_strided();
+    }
 
 private:
     TETL_NO_UNIQUE_ADDRESS data_handle_type _ptr; // NOLINT(modernize-use-default-member-init)

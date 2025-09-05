@@ -201,10 +201,16 @@ public:
         requires(... and is_trivially_destructible_v<Ts>)
     = default;
 
-    constexpr ~variant() { destroy(); }
+    constexpr ~variant()
+    {
+        destroy();
+    }
 
     /// Returns the zero-based index of the alternative that is currently held by the variant.
-    [[nodiscard]] constexpr auto index() const noexcept -> size_t { return static_cast<size_t>(_index); }
+    [[nodiscard]] constexpr auto index() const noexcept -> size_t
+    {
+        return static_cast<size_t>(_index);
+    }
 
     /// Returns a reference to the object stored in the variant.
     /// \pre I == index()

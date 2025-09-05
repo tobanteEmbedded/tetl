@@ -21,7 +21,10 @@ struct default_delete {
     {
     }
 
-    auto operator()(T* ptr) const noexcept -> void { delete ptr; }
+    auto operator()(T* ptr) const noexcept -> void
+    {
+        delete ptr;
+    }
 
 private:
     static_assert(!is_function_v<T>);

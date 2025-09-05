@@ -41,7 +41,10 @@ struct Mutex {
         }
     }
 
-    [[nodiscard]] constexpr auto is_locked() const noexcept { return _isLocked; }
+    [[nodiscard]] constexpr auto is_locked() const noexcept
+    {
+        return _isLocked;
+    }
 
 private:
     bool _failOnTryLock{false};

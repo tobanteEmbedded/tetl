@@ -11,9 +11,15 @@ struct integral_constant {
     using value_type            = Type;
     using type                  = integral_constant<Type, Val>;
 
-    constexpr operator value_type() const noexcept { return value; }
+    constexpr operator value_type() const noexcept
+    {
+        return value;
+    }
 
-    constexpr auto operator()() const noexcept -> value_type { return value; }
+    constexpr auto operator()() const noexcept -> value_type
+    {
+        return value;
+    }
 };
 
 template <typename Rhs, Rhs R, typename Lhs, Lhs L>

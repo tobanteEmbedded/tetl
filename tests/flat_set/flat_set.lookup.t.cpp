@@ -20,11 +20,23 @@ struct Wrapper {
     {
     }
 
-    friend constexpr auto operator<(Wrapper lhs, T rhs) -> bool { return lhs.value < rhs; }
-    friend constexpr auto operator<(T lhs, Wrapper rhs) -> bool { return lhs < rhs.value; }
+    friend constexpr auto operator<(Wrapper lhs, T rhs) -> bool
+    {
+        return lhs.value < rhs;
+    }
+    friend constexpr auto operator<(T lhs, Wrapper rhs) -> bool
+    {
+        return lhs < rhs.value;
+    }
 
-    friend constexpr auto operator>(Wrapper lhs, T rhs) -> bool { return lhs.value > rhs; }
-    friend constexpr auto operator>(T lhs, Wrapper rhs) -> bool { return lhs > rhs.value; }
+    friend constexpr auto operator>(Wrapper lhs, T rhs) -> bool
+    {
+        return lhs.value > rhs;
+    }
+    friend constexpr auto operator>(T lhs, Wrapper rhs) -> bool
+    {
+        return lhs > rhs.value;
+    }
 
     T value;
 };
@@ -191,11 +203,17 @@ template <typename T>
 constexpr auto test_type() -> bool
 {
     struct Less {
-        [[nodiscard]] constexpr auto operator()(T lhs, T rhs) const -> bool { return lhs < rhs; }
+        [[nodiscard]] constexpr auto operator()(T lhs, T rhs) const -> bool
+        {
+            return lhs < rhs;
+        }
     };
 
     struct Greater {
-        [[nodiscard]] constexpr auto operator()(T lhs, T rhs) const -> bool { return lhs > rhs; }
+        [[nodiscard]] constexpr auto operator()(T lhs, T rhs) const -> bool
+        {
+            return lhs > rhs;
+        }
     };
 
     test_less<T, etl::less<T>>();

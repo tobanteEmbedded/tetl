@@ -74,21 +74,45 @@ struct dynamic_array {
         etl::allocator_traits<Allocator>::deallocate(_alloc, _ptr, size());
     }
 
-    [[nodiscard]] auto size() -> etl::size_t { return _size; }
+    [[nodiscard]] auto size() -> etl::size_t
+    {
+        return _size;
+    }
 
-    [[nodiscard]] auto size() const -> etl::size_t { return _size; }
+    [[nodiscard]] auto size() const -> etl::size_t
+    {
+        return _size;
+    }
 
-    [[nodiscard]] auto data() -> T* { return _ptr; }
+    [[nodiscard]] auto data() -> T*
+    {
+        return _ptr;
+    }
 
-    [[nodiscard]] auto data() const -> T const* { return _ptr; }
+    [[nodiscard]] auto data() const -> T const*
+    {
+        return _ptr;
+    }
 
-    [[nodiscard]] auto begin() -> T* { return _ptr; }
+    [[nodiscard]] auto begin() -> T*
+    {
+        return _ptr;
+    }
 
-    [[nodiscard]] auto begin() const -> T const* { return _ptr; }
+    [[nodiscard]] auto begin() const -> T const*
+    {
+        return _ptr;
+    }
 
-    [[nodiscard]] auto end() -> T* { return etl::next(_ptr, static_cast<etl::ptrdiff_t>(size())); }
+    [[nodiscard]] auto end() -> T*
+    {
+        return etl::next(_ptr, static_cast<etl::ptrdiff_t>(size()));
+    }
 
-    [[nodiscard]] auto end() const -> T const* { return etl::next(_ptr, static_cast<etl::ptrdiff_t>(size())); }
+    [[nodiscard]] auto end() const -> T const*
+    {
+        return etl::next(_ptr, static_cast<etl::ptrdiff_t>(size()));
+    }
 
 private:
     T* _ptr{nullptr};

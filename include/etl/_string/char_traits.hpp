@@ -21,11 +21,20 @@ struct char_traits_base {
     using off_type            = etl::streamoff;
     using comparison_category = etl::strong_ordering;
 
-    static constexpr auto assign(char_type& a, char_type const& b) noexcept -> void { a = b; }
+    static constexpr auto assign(char_type& a, char_type const& b) noexcept -> void
+    {
+        a = b;
+    }
 
-    static constexpr auto eq(char_type a, char_type b) noexcept -> bool { return a == b; }
+    static constexpr auto eq(char_type a, char_type b) noexcept -> bool
+    {
+        return a == b;
+    }
 
-    static constexpr auto lt(char_type a, char_type b) noexcept -> bool { return a < b; }
+    static constexpr auto lt(char_type a, char_type b) noexcept -> bool
+    {
+        return a < b;
+    }
 
     static constexpr auto compare(char_type const* lhs, char_type const* rhs, size_t count) -> int
     {
@@ -45,7 +54,10 @@ struct char_traits_base {
         return 0;
     }
 
-    static constexpr auto length(char_type const* str) -> size_t { return etl::detail::strlen<char_type, size_t>(str); }
+    static constexpr auto length(char_type const* str) -> size_t
+    {
+        return etl::detail::strlen<char_type, size_t>(str);
+    }
 
     static constexpr auto find(char_type const* str, size_t count, char_type const& token) -> char_type const*
     {
@@ -82,9 +94,15 @@ struct char_traits_base {
         return str;
     }
 
-    static constexpr auto to_char_type(int_type c) noexcept -> char_type { return static_cast<char_type>(c); }
+    static constexpr auto to_char_type(int_type c) noexcept -> char_type
+    {
+        return static_cast<char_type>(c);
+    }
 
-    static constexpr auto to_int_type(char_type c) noexcept -> int_type { return static_cast<int_type>(c); }
+    static constexpr auto to_int_type(char_type c) noexcept -> int_type
+    {
+        return static_cast<int_type>(c);
+    }
 
     static constexpr auto eq_int_type(int_type lhs, int_type rhs) noexcept -> bool
     {
@@ -100,9 +118,15 @@ struct char_traits_base {
         return false;
     }
 
-    static constexpr auto eof() noexcept -> int_type { return Eof; }
+    static constexpr auto eof() noexcept -> int_type
+    {
+        return Eof;
+    }
 
-    static constexpr auto not_eof(int_type c) noexcept -> int_type { return !eq_int_type(c, eof()) ? c : 0; }
+    static constexpr auto not_eof(int_type c) noexcept -> int_type
+    {
+        return !eq_int_type(c, eof()) ? c : 0;
+    }
 };
 
 } // namespace detail

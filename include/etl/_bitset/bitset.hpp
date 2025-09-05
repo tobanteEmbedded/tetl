@@ -183,22 +183,40 @@ struct bitset {
     }
 
     /// Checks if all bits are set to true.
-    [[nodiscard]] constexpr auto all() const noexcept -> bool { return _bits.all(); }
+    [[nodiscard]] constexpr auto all() const noexcept -> bool
+    {
+        return _bits.all();
+    }
 
     /// Checks if any bits are set to true.
-    [[nodiscard]] constexpr auto any() const noexcept -> bool { return _bits.any(); }
+    [[nodiscard]] constexpr auto any() const noexcept -> bool
+    {
+        return _bits.any();
+    }
 
     /// Checks if none bits are set to true.
-    [[nodiscard]] constexpr auto none() const noexcept -> bool { return _bits.none(); }
+    [[nodiscard]] constexpr auto none() const noexcept -> bool
+    {
+        return _bits.none();
+    }
 
     /// Returns the number of bits that are set to true.
-    [[nodiscard]] constexpr auto count() const noexcept -> size_t { return _bits.count(); }
+    [[nodiscard]] constexpr auto count() const noexcept -> size_t
+    {
+        return _bits.count();
+    }
 
     /// Returns the number of bits that the bitset holds.
-    [[nodiscard]] constexpr auto size() const noexcept -> size_t { return _bits.size(); }
+    [[nodiscard]] constexpr auto size() const noexcept -> size_t
+    {
+        return _bits.size();
+    }
 
     /// Returns true if all of the bits in *this and rhs are equal.
-    [[nodiscard]] constexpr auto operator==(bitset const& rhs) const noexcept -> bool { return _bits == rhs._bits; }
+    [[nodiscard]] constexpr auto operator==(bitset const& rhs) const noexcept -> bool
+    {
+        return _bits == rhs._bits;
+    }
 
     /// Sets the bits to the result of binary AND on corresponding pairs
     /// of bits of *this and other.
@@ -225,7 +243,10 @@ struct bitset {
     }
 
     /// Returns a temporary copy of *this with all bits flipped (binary NOT).
-    constexpr auto operator~() const noexcept -> bitset { return bitset(*this).flip(); }
+    constexpr auto operator~() const noexcept -> bitset
+    {
+        return bitset(*this).flip();
+    }
 
     /// Converts the contents of the bitset to a string. Uses zero to
     /// represent bits with value of false and one to represent bits with value

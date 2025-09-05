@@ -22,7 +22,10 @@ static constexpr auto test() -> bool
         {
         }
 
-        constexpr auto operator<(S const& s) const -> bool { return number < s.number; }
+        constexpr auto operator<(S const& s) const -> bool
+        {
+            return number < s.number;
+        }
 
         T number;
         char name;

@@ -26,7 +26,10 @@ struct bernoulli_distribution {
         {
         }
 
-        [[nodiscard]] constexpr auto p() const noexcept -> double { return probability; }
+        [[nodiscard]] constexpr auto p() const noexcept -> double
+        {
+            return probability;
+        }
 
         [[nodiscard]] friend constexpr auto operator==(param_type const& lhs, param_type const& rhs) noexcept -> bool
         {
@@ -51,11 +54,20 @@ struct bernoulli_distribution {
     {
     }
 
-    [[nodiscard]] constexpr auto p() const noexcept -> double { return _param.p(); }
+    [[nodiscard]] constexpr auto p() const noexcept -> double
+    {
+        return _param.p();
+    }
 
-    constexpr auto param(param_type const& parm) noexcept -> void { _param = parm; }
+    constexpr auto param(param_type const& parm) noexcept -> void
+    {
+        _param = parm;
+    }
 
-    [[nodiscard]] constexpr auto param() const noexcept -> param_type { return _param; }
+    [[nodiscard]] constexpr auto param() const noexcept -> param_type
+    {
+        return _param;
+    }
 
     [[nodiscard]] constexpr auto min() const noexcept -> result_type
     {
@@ -69,7 +81,10 @@ struct bernoulli_distribution {
         return true;
     }
 
-    constexpr auto reset() noexcept -> void { (void)this; }
+    constexpr auto reset() noexcept -> void
+    {
+        (void)this;
+    }
 
     template <typename URBG>
     [[nodiscard]] constexpr auto operator()(URBG& g) noexcept(noexcept(g())) -> result_type

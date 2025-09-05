@@ -30,7 +30,10 @@ struct coroutine_handle<void> {
         return *this;
     }
 
-    [[nodiscard]] constexpr auto address() const noexcept -> void* { return _handle; }
+    [[nodiscard]] constexpr auto address() const noexcept -> void*
+    {
+        return _handle;
+    }
 
     [[nodiscard]] static constexpr auto from_address(void* addr) noexcept -> coroutine_handle
     {
@@ -39,15 +42,30 @@ struct coroutine_handle<void> {
         return self;
     }
 
-    [[nodiscard]] constexpr explicit operator bool() const noexcept { return _handle != nullptr; }
+    [[nodiscard]] constexpr explicit operator bool() const noexcept
+    {
+        return _handle != nullptr;
+    }
 
-    [[nodiscard]] auto done() const noexcept -> bool { return __builtin_coro_done(_handle); }
+    [[nodiscard]] auto done() const noexcept -> bool
+    {
+        return __builtin_coro_done(_handle);
+    }
 
-    auto operator()() const -> void { resume(); }
+    auto operator()() const -> void
+    {
+        resume();
+    }
 
-    auto resume() const -> void { __builtin_coro_resume(_handle); }
+    auto resume() const -> void
+    {
+        __builtin_coro_resume(_handle);
+    }
 
-    auto destroy() const -> void { __builtin_coro_destroy(_handle); }
+    auto destroy() const -> void
+    {
+        __builtin_coro_destroy(_handle);
+    }
 
 protected:
     void* _handle{nullptr};

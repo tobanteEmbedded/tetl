@@ -94,9 +94,15 @@ struct allocator_traits {
     using difference_type    = typename detail::allocator_traits_difference_type<Alloc>::type;
     using size_type          = typename detail::allocator_traits_size_type<Alloc>::type;
 
-    [[nodiscard]] static constexpr auto allocate(Alloc& a, size_type n) { return a.allocate(n); }
+    [[nodiscard]] static constexpr auto allocate(Alloc& a, size_type n)
+    {
+        return a.allocate(n);
+    }
 
-    static constexpr void deallocate(Alloc& a, pointer p, size_type n) { a.deallocate(p, n); }
+    static constexpr void deallocate(Alloc& a, pointer p, size_type n)
+    {
+        a.deallocate(p, n);
+    }
 };
 
 } // namespace etl

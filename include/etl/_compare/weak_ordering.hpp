@@ -29,35 +29,50 @@ struct weak_ordering {
         return v._value == 0;
     }
 
-    [[nodiscard]] friend constexpr auto operator<(weak_ordering v, nullptr_t) noexcept -> bool { return v._value < 0; }
+    [[nodiscard]] friend constexpr auto operator<(weak_ordering v, nullptr_t) noexcept -> bool
+    {
+        return v._value < 0;
+    }
 
     [[nodiscard]] friend constexpr auto operator<=(weak_ordering v, nullptr_t) noexcept -> bool
     {
         return v._value <= 0;
     }
 
-    [[nodiscard]] friend constexpr auto operator>(weak_ordering v, nullptr_t) noexcept -> bool { return v._value > 0; }
+    [[nodiscard]] friend constexpr auto operator>(weak_ordering v, nullptr_t) noexcept -> bool
+    {
+        return v._value > 0;
+    }
 
     [[nodiscard]] friend constexpr auto operator>=(weak_ordering v, nullptr_t) noexcept -> bool
     {
         return v._value >= 0;
     }
 
-    [[nodiscard]] friend constexpr auto operator<(nullptr_t, weak_ordering v) noexcept -> bool { return 0 < v._value; }
+    [[nodiscard]] friend constexpr auto operator<(nullptr_t, weak_ordering v) noexcept -> bool
+    {
+        return 0 < v._value;
+    }
 
     [[nodiscard]] friend constexpr auto operator<=(nullptr_t, weak_ordering v) noexcept -> bool
     {
         return 0 <= v._value;
     }
 
-    [[nodiscard]] friend constexpr auto operator>(nullptr_t, weak_ordering v) noexcept -> bool { return 0 > v._value; }
+    [[nodiscard]] friend constexpr auto operator>(nullptr_t, weak_ordering v) noexcept -> bool
+    {
+        return 0 > v._value;
+    }
 
     [[nodiscard]] friend constexpr auto operator>=(nullptr_t, weak_ordering v) noexcept -> bool
     {
         return 0 >= v._value;
     }
 
-    [[nodiscard]] friend constexpr auto operator<=>(weak_ordering v, nullptr_t) noexcept -> weak_ordering { return v; }
+    [[nodiscard]] friend constexpr auto operator<=>(weak_ordering v, nullptr_t) noexcept -> weak_ordering
+    {
+        return v;
+    }
 
     [[nodiscard]] friend constexpr auto operator<=>(nullptr_t, weak_ordering v) noexcept -> weak_ordering
     {

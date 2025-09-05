@@ -46,7 +46,10 @@ struct accessor_conjugate {
         _nestedAccessor.offset(p, i);
     }
 
-    [[nodiscard]] constexpr auto nested_accessor() const -> Accessor { return _nestedAccessor; }
+    [[nodiscard]] constexpr auto nested_accessor() const -> Accessor
+    {
+        return _nestedAccessor;
+    }
 
 private:
     Accessor _nestedAccessor;

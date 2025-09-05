@@ -36,9 +36,15 @@ struct accessor_scaled {
         return _nestedAccessor.offset(p, i);
     }
 
-    [[nodiscard]] constexpr auto scaling_factor() const -> ScalingFactor { return _scalingFactor; }
+    [[nodiscard]] constexpr auto scaling_factor() const -> ScalingFactor
+    {
+        return _scalingFactor;
+    }
 
-    [[nodiscard]] constexpr auto nested_accessor() const -> Accessor { return _nestedAccessor; }
+    [[nodiscard]] constexpr auto nested_accessor() const -> Accessor
+    {
+        return _nestedAccessor;
+    }
 
 private:
     ScalingFactor _scalingFactor;

@@ -67,23 +67,38 @@ template <typename T>
 
 /// Rounds the floating-point argument arg to an integer value, using the current rounding mode.
 /// \ingroup cmath
-[[nodiscard]] constexpr auto lrint(float arg) noexcept -> long { return detail::lrint_impl(arg); }
+[[nodiscard]] constexpr auto lrint(float arg) noexcept -> long
+{
+    return detail::lrint_impl(arg);
+}
 
 /// Rounds the floating-point argument arg to an integer value, using the current rounding mode.
 /// \ingroup cmath
-[[nodiscard]] constexpr auto lrintf(float arg) noexcept -> long { return detail::lrint_impl(arg); }
+[[nodiscard]] constexpr auto lrintf(float arg) noexcept -> long
+{
+    return detail::lrint_impl(arg);
+}
 
 /// Rounds the floating-point argument arg to an integer value, using the current rounding mode.
 /// \ingroup cmath
-[[nodiscard]] constexpr auto lrint(double arg) noexcept -> long { return detail::lrint_impl(arg); }
+[[nodiscard]] constexpr auto lrint(double arg) noexcept -> long
+{
+    return detail::lrint_impl(arg);
+}
 
 /// Rounds the floating-point argument arg to an integer value, using the current rounding mode.
 /// \ingroup cmath
-[[nodiscard]] constexpr auto lrint(long double arg) noexcept -> long { return detail::lrint_impl(arg); }
+[[nodiscard]] constexpr auto lrint(long double arg) noexcept -> long
+{
+    return detail::lrint_impl(arg);
+}
 
 /// Rounds the floating-point argument arg to an integer value, using the current rounding mode.
 /// \ingroup cmath
-[[nodiscard]] constexpr auto lrintl(long double arg) noexcept -> long { return detail::lrint_impl(arg); }
+[[nodiscard]] constexpr auto lrintl(long double arg) noexcept -> long
+{
+    return detail::lrint_impl(arg);
+}
 
 /// Rounds the floating-point argument arg to an integer value, using the current rounding mode.
 /// \ingroup cmath
@@ -95,23 +110,38 @@ template <integral T>
 
 /// Rounds the floating-point argument arg to an integer value, using the current rounding mode.
 /// \ingroup cmath
-[[nodiscard]] constexpr auto llrint(float arg) noexcept -> long long { return detail::llrint_impl(arg); }
+[[nodiscard]] constexpr auto llrint(float arg) noexcept -> long long
+{
+    return detail::llrint_impl(arg);
+}
 
 /// Rounds the floating-point argument arg to an integer value, using the current rounding mode.
 /// \ingroup cmath
-[[nodiscard]] constexpr auto llrintf(float arg) noexcept -> long long { return detail::llrint_impl(arg); }
+[[nodiscard]] constexpr auto llrintf(float arg) noexcept -> long long
+{
+    return detail::llrint_impl(arg);
+}
 
 /// Rounds the floating-point argument arg to an integer value, using the current rounding mode.
 /// \ingroup cmath
-[[nodiscard]] constexpr auto llrint(double arg) noexcept -> long long { return detail::llrint_impl(arg); }
+[[nodiscard]] constexpr auto llrint(double arg) noexcept -> long long
+{
+    return detail::llrint_impl(arg);
+}
 
 /// Rounds the floating-point argument arg to an integer value, using the current rounding mode.
 /// \ingroup cmath
-[[nodiscard]] constexpr auto llrint(long double arg) noexcept -> long long { return detail::llrint_impl(arg); }
+[[nodiscard]] constexpr auto llrint(long double arg) noexcept -> long long
+{
+    return detail::llrint_impl(arg);
+}
 
 /// Rounds the floating-point argument arg to an integer value, using the current rounding mode.
 /// \ingroup cmath
-[[nodiscard]] constexpr auto llrintl(long double arg) noexcept -> long long { return detail::llrint_impl(arg); }
+[[nodiscard]] constexpr auto llrintl(long double arg) noexcept -> long long
+{
+    return detail::llrint_impl(arg);
+}
 
 /// Rounds the floating-point argument arg to an integer value, using the current rounding mode.
 /// \ingroup cmath

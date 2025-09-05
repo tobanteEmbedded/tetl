@@ -24,7 +24,10 @@ struct DummyString {
 
     constexpr explicit DummyString(DummyStringView /*ignore*/) { }
 
-    constexpr operator DummyStringView() const noexcept { return {*this}; }
+    constexpr operator DummyStringView() const noexcept
+    {
+        return {*this};
+    }
 };
 
 constexpr DummyStringView::DummyStringView(DummyString const& /*ignore*/) { }

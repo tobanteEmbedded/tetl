@@ -29,7 +29,10 @@ struct lock_guard {
     {
     }
 
-    ~lock_guard() { _mutex.unlock(); }
+    ~lock_guard()
+    {
+        _mutex.unlock();
+    }
 
     lock_guard(lock_guard const&)                    = delete;
     auto operator=(lock_guard const&) -> lock_guard& = delete;

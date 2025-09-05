@@ -39,11 +39,20 @@ struct tuple_leaf {
     {
     }
 
-    [[nodiscard]] constexpr auto operator[](index_constant<I> /*idx*/) & noexcept -> T& { return _value; }
+    [[nodiscard]] constexpr auto operator[](index_constant<I> /*idx*/) & noexcept -> T&
+    {
+        return _value;
+    }
 
-    [[nodiscard]] constexpr auto operator[](index_constant<I> /*idx*/) const& noexcept -> T const& { return _value; }
+    [[nodiscard]] constexpr auto operator[](index_constant<I> /*idx*/) const& noexcept -> T const&
+    {
+        return _value;
+    }
 
-    [[nodiscard]] constexpr auto operator[](index_constant<I> /*idx*/) && noexcept -> T&& { return etl::move(_value); }
+    [[nodiscard]] constexpr auto operator[](index_constant<I> /*idx*/) && noexcept -> T&&
+    {
+        return etl::move(_value);
+    }
 
     [[nodiscard]] constexpr auto operator[](index_constant<I> /*idx*/) const&& noexcept -> T const&&
     {

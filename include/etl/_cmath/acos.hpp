@@ -41,12 +41,30 @@ inline constexpr struct acos {
 
 /// Computes the principal value of the arc cosine of arg.
 /// \details https://en.cppreference.com/w/cpp/numeric/math/acos
-[[nodiscard]] constexpr auto acos(float arg) noexcept -> float { return etl::detail::acos(arg); }
-[[nodiscard]] constexpr auto acosf(float arg) noexcept -> float { return etl::detail::acos(arg); }
-[[nodiscard]] constexpr auto acos(double arg) noexcept -> double { return etl::detail::acos(arg); }
-[[nodiscard]] constexpr auto acos(long double arg) noexcept -> long double { return etl::detail::acos(arg); }
-[[nodiscard]] constexpr auto acosl(long double arg) noexcept -> long double { return etl::detail::acos(arg); }
-[[nodiscard]] constexpr auto acos(integral auto arg) noexcept -> double { return etl::detail::acos(double(arg)); }
+[[nodiscard]] constexpr auto acos(float arg) noexcept -> float
+{
+    return etl::detail::acos(arg);
+}
+[[nodiscard]] constexpr auto acosf(float arg) noexcept -> float
+{
+    return etl::detail::acos(arg);
+}
+[[nodiscard]] constexpr auto acos(double arg) noexcept -> double
+{
+    return etl::detail::acos(arg);
+}
+[[nodiscard]] constexpr auto acos(long double arg) noexcept -> long double
+{
+    return etl::detail::acos(arg);
+}
+[[nodiscard]] constexpr auto acosl(long double arg) noexcept -> long double
+{
+    return etl::detail::acos(arg);
+}
+[[nodiscard]] constexpr auto acos(integral auto arg) noexcept -> double
+{
+    return etl::detail::acos(double(arg));
+}
 
 /// @}
 

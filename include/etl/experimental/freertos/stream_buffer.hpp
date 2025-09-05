@@ -134,7 +134,10 @@ inline stream_buffer::stream_buffer(size_t size, size_t triggerLevel) noexcept
 {
 }
 
-inline stream_buffer::~stream_buffer() noexcept { vStreamBufferDelete(_handle); }
+inline stream_buffer::~stream_buffer() noexcept
+{
+    vStreamBufferDelete(_handle);
+}
 
 inline auto stream_buffer::write(etl::span<etl::byte const> data, TickType_t ticks) -> size_t
 {
@@ -156,9 +159,15 @@ inline auto stream_buffer::read_from_isr(etl::span<etl::byte> data, BaseType_t* 
     return xStreamBufferReceiveFromISR(_handle, data.data(), data.size(), prio);
 }
 
-inline auto stream_buffer::empty() const noexcept -> bool { return static_cast<bool>(xStreamBufferIsEmpty(_handle)); }
+inline auto stream_buffer::empty() const noexcept -> bool
+{
+    return static_cast<bool>(xStreamBufferIsEmpty(_handle));
+}
 
-inline auto stream_buffer::full() const noexcept -> bool { return static_cast<bool>(xStreamBufferIsFull(_handle)); }
+inline auto stream_buffer::full() const noexcept -> bool
+{
+    return static_cast<bool>(xStreamBufferIsFull(_handle));
+}
 
 inline auto stream_buffer::bytes_available() const noexcept -> size_type
 {
@@ -170,14 +179,20 @@ inline auto stream_buffer::space_available() const noexcept -> size_type
     return xStreamBufferSpacesAvailable(_handle);
 }
 
-inline auto stream_buffer::reset() noexcept -> void { xStreamBufferReset(_handle); }
+inline auto stream_buffer::reset() noexcept -> void
+{
+    xStreamBufferReset(_handle);
+}
 
 inline auto stream_buffer::trigger_level(size_type triggerLevel) noexcept -> void
 {
     xStreamBufferSetTriggerLevel(_handle, triggerLevel);
 }
 
-inline auto stream_buffer::native_handle() const noexcept -> StreamBufferHandle_t { return _handle; }
+inline auto stream_buffer::native_handle() const noexcept -> StreamBufferHandle_t
+{
+    return _handle;
+}
 
 } // namespace etl::experimental::freertos
 

@@ -16,7 +16,10 @@ struct from_chars_result {
     char const* ptr{nullptr};
     etl::errc ec{};
 
-    [[nodiscard]] constexpr explicit operator bool() const noexcept { return ec == etl::errc{}; }
+    [[nodiscard]] constexpr explicit operator bool() const noexcept
+    {
+        return ec == etl::errc{};
+    }
 
     friend auto operator==(from_chars_result const&, from_chars_result const&) -> bool = default;
 };

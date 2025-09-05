@@ -34,7 +34,10 @@ enum struct pin_state : etl::uint8_t {
     set,
 };
 
-inline auto val(pin_number pin) -> etl::uint16_t { return static_cast<etl::uint16_t>(pin); }
+inline auto val(pin_number pin) -> etl::uint16_t
+{
+    return static_cast<etl::uint16_t>(pin);
+}
 
 struct gpio_memory_layout {
     etl::uint32_t volatile control_low;
@@ -87,7 +90,10 @@ inline auto port::toggle_pin(pin_number const pin) noexcept -> void
     _memory.output_data = _memory.output_data ^ (1U << val(pin));
 }
 
-inline auto port::place_at(void* addr) -> port& { return *new (addr) port; }
+inline auto port::place_at(void* addr) -> port&
+{
+    return *new (addr) port;
+}
 
 } // namespace etl::experimental::hardware::stm32
 

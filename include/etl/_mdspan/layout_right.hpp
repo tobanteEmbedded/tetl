@@ -57,7 +57,10 @@ struct layout_right::mapping {
     constexpr auto operator=(mapping const&) noexcept -> mapping& = default;
 
     // observers
-    [[nodiscard]] constexpr auto extents() const noexcept -> extents_type const& { return _extents; }
+    [[nodiscard]] constexpr auto extents() const noexcept -> extents_type const&
+    {
+        return _extents;
+    }
 
     [[nodiscard]] constexpr auto required_span_size() const noexcept -> index_type
     {
@@ -81,13 +84,31 @@ struct layout_right::mapping {
         return static_cast<index_type>(_extents.rev_prod_of_extents(r));
     }
 
-    [[nodiscard]] static constexpr auto is_always_unique() noexcept -> bool { return true; }
-    [[nodiscard]] static constexpr auto is_always_exhaustive() noexcept -> bool { return true; }
-    [[nodiscard]] static constexpr auto is_always_strided() noexcept -> bool { return true; }
+    [[nodiscard]] static constexpr auto is_always_unique() noexcept -> bool
+    {
+        return true;
+    }
+    [[nodiscard]] static constexpr auto is_always_exhaustive() noexcept -> bool
+    {
+        return true;
+    }
+    [[nodiscard]] static constexpr auto is_always_strided() noexcept -> bool
+    {
+        return true;
+    }
 
-    [[nodiscard]] static constexpr auto is_unique() noexcept -> bool { return true; }
-    [[nodiscard]] static constexpr auto is_exhaustive() noexcept -> bool { return true; }
-    [[nodiscard]] static constexpr auto is_strided() noexcept -> bool { return true; }
+    [[nodiscard]] static constexpr auto is_unique() noexcept -> bool
+    {
+        return true;
+    }
+    [[nodiscard]] static constexpr auto is_exhaustive() noexcept -> bool
+    {
+        return true;
+    }
+    [[nodiscard]] static constexpr auto is_strided() noexcept -> bool
+    {
+        return true;
+    }
 
     template <typename OtherExtents>
     friend constexpr auto operator==(mapping const& lhs, mapping<OtherExtents> const& rhs) noexcept -> bool

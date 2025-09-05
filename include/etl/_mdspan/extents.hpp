@@ -50,9 +50,15 @@ private:
     }
 
 public:
-    [[nodiscard]] static constexpr auto rank() noexcept -> rank_type { return sizeof...(Extents); }
+    [[nodiscard]] static constexpr auto rank() noexcept -> rank_type
+    {
+        return sizeof...(Extents);
+    }
 
-    [[nodiscard]] static constexpr auto rank_dynamic() noexcept -> rank_type { return _rank_dynamic; }
+    [[nodiscard]] static constexpr auto rank_dynamic() noexcept -> rank_type
+    {
+        return _rank_dynamic;
+    }
 
     [[nodiscard]] static constexpr auto static_extent(rank_type i) noexcept -> etl::size_t
     {

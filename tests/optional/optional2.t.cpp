@@ -57,9 +57,15 @@ static constexpr auto test_opional_4() -> bool
 
         constexpr ~S() { } // NOLINT(modernize-use-equals-default)
 
-        constexpr auto operator=(S const& /*s*/) -> S& { return *this; }
+        constexpr auto operator=(S const& /*s*/) -> S&
+        {
+            return *this;
+        }
 
-        constexpr auto operator=(S&& /*s*/) noexcept -> S& { return *this; }
+        constexpr auto operator=(S&& /*s*/) noexcept -> S&
+        {
+            return *this;
+        }
     };
 
     CHECK_FALSE(etl::is_trivially_destructible_v<S>);

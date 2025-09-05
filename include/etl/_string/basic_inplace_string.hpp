@@ -248,22 +248,40 @@ public:
     }
 
     /// \brief Accesses the specified character without bounds checking.
-    constexpr auto operator[](size_type index) noexcept -> reference { return unsafe_at(index); }
+    constexpr auto operator[](size_type index) noexcept -> reference
+    {
+        return unsafe_at(index);
+    }
 
     /// \brief Accesses the specified character without bounds checking.
-    constexpr auto operator[](size_type index) const noexcept -> const_reference { return unsafe_at(index); }
+    constexpr auto operator[](size_type index) const noexcept -> const_reference
+    {
+        return unsafe_at(index);
+    }
 
     /// \brief Returns an iterator to the beginning.
-    constexpr auto begin() noexcept -> iterator { return data(); }
+    constexpr auto begin() noexcept -> iterator
+    {
+        return data();
+    }
 
     /// \brief Returns an const iterator to the beginning.
-    [[nodiscard]] constexpr auto begin() const noexcept -> const_iterator { return data(); }
+    [[nodiscard]] constexpr auto begin() const noexcept -> const_iterator
+    {
+        return data();
+    }
 
     /// \brief Returns an const iterator to the beginning.
-    [[nodiscard]] constexpr auto cbegin() const noexcept -> const_iterator { return begin(); }
+    [[nodiscard]] constexpr auto cbegin() const noexcept -> const_iterator
+    {
+        return begin();
+    }
 
     /// \brief Returns an iterator to the end.
-    constexpr auto end() noexcept -> iterator { return etl::next(begin(), static_cast<ptrdiff_t>(size())); }
+    constexpr auto end() noexcept -> iterator
+    {
+        return etl::next(begin(), static_cast<ptrdiff_t>(size()));
+    }
 
     /// \brief Returns an const iterator to the end.
     [[nodiscard]] constexpr auto end() const noexcept -> const_iterator
@@ -272,11 +290,17 @@ public:
     }
 
     /// \brief Returns an const iterator to the end.
-    [[nodiscard]] constexpr auto cend() const noexcept -> const_iterator { return end(); }
+    [[nodiscard]] constexpr auto cend() const noexcept -> const_iterator
+    {
+        return end();
+    }
 
     /// \brief Returns a reverse iterator to the first character of the reversed
     /// string. It corresponds to the last character of the non-reversed string.
-    [[nodiscard]] constexpr auto rbegin() noexcept -> reverse_iterator { return reverse_iterator(end()); }
+    [[nodiscard]] constexpr auto rbegin() noexcept -> reverse_iterator
+    {
+        return reverse_iterator(end());
+    }
 
     /// \brief Returns a reverse iterator to the first character of the reversed
     /// string. It corresponds to the last character of the non-reversed string.
@@ -287,11 +311,17 @@ public:
 
     /// \brief Returns a reverse iterator to the first character of the reversed
     /// string. It corresponds to the last character of the non-reversed string.
-    [[nodiscard]] constexpr auto crbegin() const noexcept -> const_reverse_iterator { return rbegin(); }
+    [[nodiscard]] constexpr auto crbegin() const noexcept -> const_reverse_iterator
+    {
+        return rbegin();
+    }
 
     /// \brief Returns a reverse iterator to the first character of the reversed
     /// string. It corresponds to the last character of the non-reversed string.
-    [[nodiscard]] constexpr auto rend() noexcept -> reverse_iterator { return reverse_iterator(begin()); }
+    [[nodiscard]] constexpr auto rend() noexcept -> reverse_iterator
+    {
+        return reverse_iterator(begin());
+    }
 
     /// \brief Returns a reverse iterator to the first character of the reversed
     /// string. It corresponds to the last character of the non-reversed string.
@@ -302,7 +332,10 @@ public:
 
     /// \brief Returns a reverse iterator to the first character of the reversed
     /// string. It corresponds to the last character of the non-reversed string.
-    [[nodiscard]] constexpr auto crend() const noexcept -> const_reverse_iterator { return rend(); }
+    [[nodiscard]] constexpr auto crend() const noexcept -> const_reverse_iterator
+    {
+        return rend();
+    }
 
     /// \brief Accesses the first character.
     [[nodiscard]] constexpr auto front() noexcept -> reference
@@ -333,24 +366,42 @@ public:
     }
 
     /// \brief Checks whether the string is empty.
-    [[nodiscard]] constexpr auto empty() const noexcept -> bool { return size() == 0; }
+    [[nodiscard]] constexpr auto empty() const noexcept -> bool
+    {
+        return size() == 0;
+    }
 
     /// \brief Checks whether the string is full. i.e. size() == capacity()
-    [[nodiscard]] constexpr auto full() const noexcept -> bool { return size() == capacity(); }
+    [[nodiscard]] constexpr auto full() const noexcept -> bool
+    {
+        return size() == capacity();
+    }
 
     /// \brief Returns the number of characters.
-    [[nodiscard]] constexpr auto size() const noexcept -> size_type { return _storage.get_size(); }
+    [[nodiscard]] constexpr auto size() const noexcept -> size_type
+    {
+        return _storage.get_size();
+    }
 
     /// \brief Returns the number of characters.
-    [[nodiscard]] constexpr auto length() const noexcept -> size_type { return size(); }
+    [[nodiscard]] constexpr auto length() const noexcept -> size_type
+    {
+        return size();
+    }
 
     /// \brief Returns the number of characters that can be held in allocated
     /// storage, NOT including the null terminator.
-    [[nodiscard]] constexpr auto capacity() const noexcept -> size_type { return Capacity; }
+    [[nodiscard]] constexpr auto capacity() const noexcept -> size_type
+    {
+        return Capacity;
+    }
 
     /// \brief Returns the number of characters that can be held in allocated
     /// storage, NOT including the null terminator.
-    [[nodiscard]] constexpr auto max_size() const noexcept -> size_type { return Capacity; }
+    [[nodiscard]] constexpr auto max_size() const noexcept -> size_type
+    {
+        return Capacity;
+    }
 
     /// \brief Reserve is a nop, since the capacity is fixed.
     static constexpr auto reserve(size_type /*newCap*/) -> void { }
@@ -364,7 +415,10 @@ public:
     /// string.
     ///
     /// \details Always null-terminated.
-    [[nodiscard]] constexpr auto data() noexcept -> pointer { return _storage.data(); }
+    [[nodiscard]] constexpr auto data() noexcept -> pointer
+    {
+        return _storage.data();
+    }
 
     /// \brief Returns a pointer to the underlying array serving as character
     /// storage. The pointer is such that the range [data(); data() + size()) is
@@ -372,7 +426,10 @@ public:
     /// string.
     ///
     /// \details Always null-terminated.
-    [[nodiscard]] constexpr auto data() const noexcept -> const_pointer { return _storage.data(); }
+    [[nodiscard]] constexpr auto data() const noexcept -> const_pointer
+    {
+        return _storage.data();
+    }
 
     /// \brief Returns a pointer to a null-terminated character array.
     ///
@@ -380,7 +437,10 @@ public:
     /// such that the range [c_str(); c_str() + size()] is valid and the values
     /// in it correspond to the values stored in the string with an additional
     /// null character after the last position.
-    [[nodiscard]] constexpr auto c_str() const noexcept -> const_pointer { return data(); }
+    [[nodiscard]] constexpr auto c_str() const noexcept -> const_pointer
+    {
+        return data();
+    }
 
     /// \brief Returns a etl::basic_string_view.
     [[nodiscard]] constexpr operator basic_string_view<Char, traits_type>() const noexcept
@@ -410,7 +470,10 @@ public:
     ///
     /// \returns iterator pointing to the character immediately following the
     /// character erased, or end() if no such character exists.
-    constexpr auto erase(const_iterator position) noexcept -> iterator { return erase(position, position + 1); }
+    constexpr auto erase(const_iterator position) noexcept -> iterator
+    {
+        return erase(position, position + 1);
+    }
 
     /// \brief Removes the characters in the range [first, last).
     ///
@@ -515,13 +578,22 @@ public:
     }
 
     /// \brief Appends string str.
-    constexpr auto operator+=(basic_inplace_string const& str) noexcept -> basic_inplace_string& { return append(str); }
+    constexpr auto operator+=(basic_inplace_string const& str) noexcept -> basic_inplace_string&
+    {
+        return append(str);
+    }
 
     /// \brief Appends character ch.
-    constexpr auto operator+=(Char ch) noexcept -> basic_inplace_string& { return append(1, ch); }
+    constexpr auto operator+=(Char ch) noexcept -> basic_inplace_string&
+    {
+        return append(1, ch);
+    }
 
     /// \brief Appends the null-terminated character string pointed to by s.
-    constexpr auto operator+=(const_pointer s) noexcept -> basic_inplace_string& { return append(s); }
+    constexpr auto operator+=(const_pointer s) noexcept -> basic_inplace_string&
+    {
+        return append(s);
+    }
 
     /// \brief Implicitly converts view to a string view sv, then appends
     /// characters in the string view sv.
@@ -942,7 +1014,10 @@ public:
     /// \details If the current size is less than count, additional characters
     /// are appended, maximum up to it's capacity. If the current size is
     /// greater than count, the string is reduced to its first count elements.
-    constexpr auto resize(size_type count) noexcept -> void { resize(count, Char()); }
+    constexpr auto resize(size_type count) noexcept -> void
+    {
+        resize(count, Char());
+    }
 
     /// \brief Exchanges the contents of the string with those of other. All
     /// iterators and references may be invalidated.
@@ -1298,15 +1373,30 @@ private:
     }
 
     struct tiny_layout {
-        constexpr tiny_layout() noexcept { _buffer[Capacity] = Capacity; }
+        constexpr tiny_layout() noexcept
+        {
+            _buffer[Capacity] = Capacity;
+        }
 
-        [[nodiscard]] constexpr auto data() noexcept { return _buffer.data(); }
+        [[nodiscard]] constexpr auto data() noexcept
+        {
+            return _buffer.data();
+        }
 
-        [[nodiscard]] constexpr auto data() const noexcept { return _buffer.data(); }
+        [[nodiscard]] constexpr auto data() const noexcept
+        {
+            return _buffer.data();
+        }
 
-        [[nodiscard]] constexpr auto get_size() const noexcept { return Capacity - size_type(_buffer[Capacity]); }
+        [[nodiscard]] constexpr auto get_size() const noexcept
+        {
+            return Capacity - size_type(_buffer[Capacity]);
+        }
 
-        constexpr auto set_size(size_t size) noexcept { return _buffer[Capacity] = Char(Capacity - size); }
+        constexpr auto set_size(size_t size) noexcept
+        {
+            return _buffer[Capacity] = Char(Capacity - size);
+        }
 
     private:
         etl::array<Char, Capacity + 1> _buffer{};
@@ -1315,13 +1405,25 @@ private:
     struct normal_layout {
         constexpr normal_layout() noexcept = default;
 
-        [[nodiscard]] constexpr auto data() noexcept { return _buffer.data(); }
+        [[nodiscard]] constexpr auto data() noexcept
+        {
+            return _buffer.data();
+        }
 
-        [[nodiscard]] constexpr auto data() const noexcept { return _buffer.data(); }
+        [[nodiscard]] constexpr auto data() const noexcept
+        {
+            return _buffer.data();
+        }
 
-        [[nodiscard]] constexpr auto get_size() const noexcept { return size_t(_size); }
+        [[nodiscard]] constexpr auto get_size() const noexcept
+        {
+            return size_t(_size);
+        }
 
-        constexpr auto set_size(size_t size) noexcept { return _size = internal_size_t(size); }
+        constexpr auto set_size(size_t size) noexcept
+        {
+            return _size = internal_size_t(size);
+        }
 
     private:
         internal_size_t _size{};

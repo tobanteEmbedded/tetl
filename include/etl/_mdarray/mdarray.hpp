@@ -44,13 +44,22 @@ public:
     using const_pointer     = decltype(etl::to_address(etl::declval<container_type>().cbegin()));
     using const_reference   = typename container_type::const_reference;
 
-    [[nodiscard]] static constexpr auto rank() noexcept -> rank_type { return Extents::rank(); }
-    [[nodiscard]] static constexpr auto rank_dynamic() noexcept -> rank_type { return Extents::rank_dynamic(); }
+    [[nodiscard]] static constexpr auto rank() noexcept -> rank_type
+    {
+        return Extents::rank();
+    }
+    [[nodiscard]] static constexpr auto rank_dynamic() noexcept -> rank_type
+    {
+        return Extents::rank_dynamic();
+    }
     [[nodiscard]] static constexpr auto static_extent(rank_type r) noexcept -> size_t
     {
         return Extents::static_extent(r);
     }
-    [[nodiscard]] constexpr auto extent(rank_type r) const noexcept -> index_type { return extents().extent(r); }
+    [[nodiscard]] constexpr auto extent(rank_type r) const noexcept -> index_type
+    {
+        return extents().extent(r);
+    }
 
     // [mdarray.ctors], mdarray constructors
     constexpr mdarray()
@@ -239,25 +248,70 @@ public:
         return operator[](span{indices});
     }
 
-    [[nodiscard]] constexpr auto size() const -> size_type { return size_type(extents().fwd_prod_of_extents(rank())); }
-    [[nodiscard]] constexpr auto empty() const noexcept -> bool { return size() == 0; }
+    [[nodiscard]] constexpr auto size() const -> size_type
+    {
+        return size_type(extents().fwd_prod_of_extents(rank()));
+    }
+    [[nodiscard]] constexpr auto empty() const noexcept -> bool
+    {
+        return size() == 0;
+    }
 
-    [[nodiscard]] constexpr auto extents() const -> extents_type const& { return _map.extents(); }
-    [[nodiscard]] constexpr auto mapping() const -> mapping_type const& { return _map; }
-    [[nodiscard]] constexpr auto stride(size_t r) const -> index_type { return _map.stride(r); }
+    [[nodiscard]] constexpr auto extents() const -> extents_type const&
+    {
+        return _map.extents();
+    }
+    [[nodiscard]] constexpr auto mapping() const -> mapping_type const&
+    {
+        return _map;
+    }
+    [[nodiscard]] constexpr auto stride(size_t r) const -> index_type
+    {
+        return _map.stride(r);
+    }
 
-    [[nodiscard]] constexpr auto container_size() const { return _ctr.size(); }
-    [[nodiscard]] constexpr auto container_data() -> pointer { return to_address(_ctr.begin()); }
-    [[nodiscard]] constexpr auto container_data() const -> const_pointer { return to_address(_ctr.cbegin()); }
-    [[nodiscard]] constexpr auto extract_container() && -> container_type&& { return etl::move(_ctr); }
+    [[nodiscard]] constexpr auto container_size() const
+    {
+        return _ctr.size();
+    }
+    [[nodiscard]] constexpr auto container_data() -> pointer
+    {
+        return to_address(_ctr.begin());
+    }
+    [[nodiscard]] constexpr auto container_data() const -> const_pointer
+    {
+        return to_address(_ctr.cbegin());
+    }
+    [[nodiscard]] constexpr auto extract_container() && -> container_type&&
+    {
+        return etl::move(_ctr);
+    }
 
-    [[nodiscard]] constexpr auto is_unique() const -> bool { return _map.is_unique(); }
-    [[nodiscard]] constexpr auto is_exhaustive() const -> bool { return _map.is_exhaustive(); }
-    [[nodiscard]] constexpr auto is_strided() const -> bool { return _map.is_strided(); }
+    [[nodiscard]] constexpr auto is_unique() const -> bool
+    {
+        return _map.is_unique();
+    }
+    [[nodiscard]] constexpr auto is_exhaustive() const -> bool
+    {
+        return _map.is_exhaustive();
+    }
+    [[nodiscard]] constexpr auto is_strided() const -> bool
+    {
+        return _map.is_strided();
+    }
 
-    [[nodiscard]] static constexpr auto is_always_unique() -> bool { return mapping_type::is_always_unique(); }
-    [[nodiscard]] static constexpr auto is_always_exhaustive() -> bool { return mapping_type::is_always_exhaustive(); }
-    [[nodiscard]] static constexpr auto is_always_strided() -> bool { return mapping_type::is_always_strided(); }
+    [[nodiscard]] static constexpr auto is_always_unique() -> bool
+    {
+        return mapping_type::is_always_unique();
+    }
+    [[nodiscard]] static constexpr auto is_always_exhaustive() -> bool
+    {
+        return mapping_type::is_always_exhaustive();
+    }
+    [[nodiscard]] static constexpr auto is_always_strided() -> bool
+    {
+        return mapping_type::is_always_strided();
+    }
 
     template <typename OtherElement, typename OtherExtents, typename OtherLayout, typename OtherAccessor>
     // requires is_assignable_v<mdspan<OtherElement, OtherExtents, OtherLayout, OtherAccessor>, mdspan_type>

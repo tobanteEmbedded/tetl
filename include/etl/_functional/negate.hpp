@@ -12,7 +12,10 @@ namespace etl {
 /// https://en.cppreference.com/w/cpp/utility/functional/negate
 template <typename T = void>
 struct negate {
-    [[nodiscard]] constexpr auto operator()(T const& arg) const -> T { return static_cast<T>(-arg); }
+    [[nodiscard]] constexpr auto operator()(T const& arg) const -> T
+    {
+        return static_cast<T>(-arg);
+    }
 };
 
 template <>

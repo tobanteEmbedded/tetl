@@ -12,9 +12,18 @@ namespace etl {
 
 /// Computes the floating-point remainder of the division operation x/y.
 /// \details https://en.cppreference.com/w/cpp/numeric/math/fmod
-[[nodiscard]] constexpr auto fmod(float x, float y) noexcept -> float { return etl::detail::gcem::fmod(x, y); }
-[[nodiscard]] constexpr auto fmodf(float x, float y) noexcept -> float { return etl::detail::gcem::fmod(x, y); }
-[[nodiscard]] constexpr auto fmod(double x, double y) noexcept -> double { return etl::detail::gcem::fmod(x, y); }
+[[nodiscard]] constexpr auto fmod(float x, float y) noexcept -> float
+{
+    return etl::detail::gcem::fmod(x, y);
+}
+[[nodiscard]] constexpr auto fmodf(float x, float y) noexcept -> float
+{
+    return etl::detail::gcem::fmod(x, y);
+}
+[[nodiscard]] constexpr auto fmod(double x, double y) noexcept -> double
+{
+    return etl::detail::gcem::fmod(x, y);
+}
 [[nodiscard]] constexpr auto fmod(long double x, long double y) noexcept -> long double
 {
     return etl::detail::gcem::fmod(x, y);

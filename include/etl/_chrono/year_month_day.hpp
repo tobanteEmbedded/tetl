@@ -85,11 +85,20 @@ public:
     constexpr auto operator+=(years const& y) noexcept -> year_month_day&;
     constexpr auto operator-=(years const& y) noexcept -> year_month_day&;
 
-    [[nodiscard]] constexpr auto year() const noexcept -> chrono::year { return _y; }
+    [[nodiscard]] constexpr auto year() const noexcept -> chrono::year
+    {
+        return _y;
+    }
 
-    [[nodiscard]] constexpr auto month() const noexcept -> chrono::month { return _m; }
+    [[nodiscard]] constexpr auto month() const noexcept -> chrono::month
+    {
+        return _m;
+    }
 
-    [[nodiscard]] constexpr auto day() const noexcept -> chrono::day { return _d; }
+    [[nodiscard]] constexpr auto day() const noexcept -> chrono::day
+    {
+        return _d;
+    }
 
     [[nodiscard]] constexpr operator sys_days() const noexcept
     {

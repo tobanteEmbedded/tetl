@@ -18,13 +18,25 @@ struct string_constant {
 
     static constexpr auto storage = etl::array<CharT, sizeof...(Chars)>{Chars...};
 
-    static constexpr auto size() noexcept { return storage.size(); }
+    static constexpr auto size() noexcept
+    {
+        return storage.size();
+    }
 
-    static constexpr auto begin() noexcept { return storage.cbegin(); }
+    static constexpr auto begin() noexcept
+    {
+        return storage.cbegin();
+    }
 
-    static constexpr auto end() noexcept { return storage.cend(); }
+    static constexpr auto end() noexcept
+    {
+        return storage.cend();
+    }
 
-    [[nodiscard]] constexpr operator string_view_type() const noexcept { return {storage.data(), storage.size()}; }
+    [[nodiscard]] constexpr operator string_view_type() const noexcept
+    {
+        return {storage.data(), storage.size()};
+    }
 };
 
 template <typename CharT, CharT... Chars>

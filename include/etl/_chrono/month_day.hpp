@@ -19,9 +19,15 @@ struct month_day {
     {
     }
 
-    [[nodiscard]] constexpr auto month() const noexcept -> chrono::month { return _m; }
+    [[nodiscard]] constexpr auto month() const noexcept -> chrono::month
+    {
+        return _m;
+    }
 
-    [[nodiscard]] constexpr auto day() const noexcept -> chrono::day { return _d; }
+    [[nodiscard]] constexpr auto day() const noexcept -> chrono::day
+    {
+        return _d;
+    }
 
     [[nodiscard]] constexpr auto ok() const noexcept -> bool
     {
@@ -45,7 +51,10 @@ private:
     chrono::day _d;
 };
 
-[[nodiscard]] constexpr auto operator/(month const& m, day const& d) noexcept -> month_day { return {m, d}; }
+[[nodiscard]] constexpr auto operator/(month const& m, day const& d) noexcept -> month_day
+{
+    return {m, d};
+}
 [[nodiscard]] constexpr auto operator/(month const& m, int d) noexcept -> month_day
 {
     return {m, day(static_cast<unsigned>(d))};
@@ -54,7 +63,10 @@ private:
 {
     return {month(static_cast<unsigned>(m)), d};
 }
-[[nodiscard]] constexpr auto operator/(day const& d, month const& m) noexcept -> month_day { return {m, d}; }
+[[nodiscard]] constexpr auto operator/(day const& d, month const& m) noexcept -> month_day
+{
+    return {m, d};
+}
 [[nodiscard]] constexpr auto operator/(day const& d, int m) noexcept -> month_day
 {
     return {month(static_cast<unsigned>(m)), d};

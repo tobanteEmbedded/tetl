@@ -299,15 +299,24 @@ struct optional {
     }
 
     /// Checks whether *this contains a value.
-    [[nodiscard]] constexpr auto has_value() const noexcept -> bool { return _var.index() == 1; }
+    [[nodiscard]] constexpr auto has_value() const noexcept -> bool
+    {
+        return _var.index() == 1;
+    }
 
     /// Checks whether *this contains a value.
-    [[nodiscard]] constexpr explicit operator bool() const noexcept { return has_value(); }
+    [[nodiscard]] constexpr explicit operator bool() const noexcept
+    {
+        return has_value();
+    }
 
     /// If *this contains a value, destroy that value as if by
     /// value().~value_type(). Otherwise, there are no effects. *this does not
     /// contain a value after this call.
-    constexpr auto reset() noexcept -> void { _var.template emplace<0>(nullopt); }
+    constexpr auto reset() noexcept -> void
+    {
+        _var.template emplace<0>(nullopt);
+    }
 
     /// Returns the contained value if *this has a value, otherwise
     /// returns default_value.
@@ -327,11 +336,17 @@ struct optional {
 
     /// Returns a pointer to the contained value. The pointer is null if
     /// the optional is empty.
-    [[nodiscard]] constexpr auto operator->() const -> value_type const* { return etl::get_if<1>(&_var); }
+    [[nodiscard]] constexpr auto operator->() const -> value_type const*
+    {
+        return etl::get_if<1>(&_var);
+    }
 
     /// Returns a pointer to the contained value. The pointer is null if
     /// the optional is empty.
-    [[nodiscard]] constexpr auto operator->() -> value_type* { return etl::get_if<1>(&_var); }
+    [[nodiscard]] constexpr auto operator->() -> value_type*
+    {
+        return etl::get_if<1>(&_var);
+    }
 
     /// Returns a reference to the contained value.
     ///
@@ -547,7 +562,10 @@ struct optional<T&> {
         return *this;
     }
 
-    [[nodiscard]] constexpr auto operator->() const noexcept -> T* { return _ptr; }
+    [[nodiscard]] constexpr auto operator->() const noexcept -> T*
+    {
+        return _ptr;
+    }
 
     [[nodiscard]] constexpr auto operator*() const noexcept -> T&
     {
@@ -555,13 +573,25 @@ struct optional<T&> {
         return *_ptr;
     }
 
-    [[nodiscard]] constexpr explicit operator bool() const noexcept { return has_value(); }
+    [[nodiscard]] constexpr explicit operator bool() const noexcept
+    {
+        return has_value();
+    }
 
-    [[nodiscard]] constexpr auto has_value() const noexcept -> bool { return _ptr != nullptr; }
+    [[nodiscard]] constexpr auto has_value() const noexcept -> bool
+    {
+        return _ptr != nullptr;
+    }
 
-    constexpr void reset() noexcept { _ptr = nullptr; }
+    constexpr void reset() noexcept
+    {
+        _ptr = nullptr;
+    }
 
-    constexpr void swap(optional& rhs) noexcept { etl::swap(_ptr, rhs._ptr); }
+    constexpr void swap(optional& rhs) noexcept
+    {
+        etl::swap(_ptr, rhs._ptr);
+    }
 
 private:
     T* _ptr{nullptr};

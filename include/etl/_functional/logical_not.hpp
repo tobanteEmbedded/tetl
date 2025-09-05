@@ -12,7 +12,10 @@ namespace etl {
 /// https://en.cppreference.com/w/cpp/utility/functional/logical_not
 template <typename T = void>
 struct logical_not {
-    [[nodiscard]] constexpr auto operator()(T const& arg) const -> bool { return !arg; }
+    [[nodiscard]] constexpr auto operator()(T const& arg) const -> bool
+    {
+        return !arg;
+    }
 };
 
 template <>

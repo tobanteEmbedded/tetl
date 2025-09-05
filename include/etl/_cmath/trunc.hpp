@@ -39,12 +39,30 @@ template <typename T>
 /// Computes the nearest integer not greater in magnitude than arg.
 /// \details https://en.cppreference.com/w/cpp/numeric/math/trunc
 /// \ingroup cmath
-[[nodiscard]] constexpr auto trunc(float arg) noexcept -> float { return detail::trunc(arg); }
-[[nodiscard]] constexpr auto truncf(float arg) noexcept -> float { return detail::trunc(arg); }
-[[nodiscard]] constexpr auto trunc(double arg) noexcept -> double { return detail::trunc(arg); }
-[[nodiscard]] constexpr auto trunc(long double arg) noexcept -> long double { return detail::trunc(arg); }
-[[nodiscard]] constexpr auto truncl(long double arg) noexcept -> long double { return detail::trunc(arg); }
-[[nodiscard]] constexpr auto trunc(integral auto arg) noexcept -> double { return detail::trunc(double(arg)); }
+[[nodiscard]] constexpr auto trunc(float arg) noexcept -> float
+{
+    return detail::trunc(arg);
+}
+[[nodiscard]] constexpr auto truncf(float arg) noexcept -> float
+{
+    return detail::trunc(arg);
+}
+[[nodiscard]] constexpr auto trunc(double arg) noexcept -> double
+{
+    return detail::trunc(arg);
+}
+[[nodiscard]] constexpr auto trunc(long double arg) noexcept -> long double
+{
+    return detail::trunc(arg);
+}
+[[nodiscard]] constexpr auto truncl(long double arg) noexcept -> long double
+{
+    return detail::trunc(arg);
+}
+[[nodiscard]] constexpr auto trunc(integral auto arg) noexcept -> double
+{
+    return detail::trunc(double(arg));
+}
 
 /// @}
 

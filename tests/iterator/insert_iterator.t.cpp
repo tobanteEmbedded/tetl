@@ -16,8 +16,14 @@ namespace {
 template <typename T, etl::size_t Capacity>
 struct push_front_vector {
     using value_type = T;
-    constexpr auto push_front(T const& val) -> void { vector.insert(vector.begin(), val); }
-    constexpr auto push_front(T&& val) -> void { vector.insert(vector.begin(), etl::move(val)); }
+    constexpr auto push_front(T const& val) -> void
+    {
+        vector.insert(vector.begin(), val);
+    }
+    constexpr auto push_front(T&& val) -> void
+    {
+        vector.insert(vector.begin(), etl::move(val));
+    }
     etl::static_vector<T, Capacity> vector;
 };
 

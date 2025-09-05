@@ -27,7 +27,10 @@ struct pointer_traits {
     ///
     /// \param r  Reference to an object of type element_type&.
     /// \returns A pointer to r, of the type pointer_traits::pointer.
-    [[nodiscard]] static auto pointer_to(element_type& r) -> pointer { return Ptr::pointer_to(r); }
+    [[nodiscard]] static auto pointer_to(element_type& r) -> pointer
+    {
+        return Ptr::pointer_to(r);
+    }
 };
 
 /// The pointer_traits class template provides the standardized way to

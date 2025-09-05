@@ -42,12 +42,30 @@ inline constexpr struct floor {
 
 /// Computes the largest integer value not greater than arg.
 /// \details https://en.cppreference.com/w/cpp/numeric/math/floor
-[[nodiscard]] constexpr auto floor(float arg) noexcept -> float { return etl::detail::floor(arg); }
-[[nodiscard]] constexpr auto floorf(float arg) noexcept -> float { return etl::detail::floor(arg); }
-[[nodiscard]] constexpr auto floor(double arg) noexcept -> double { return etl::detail::floor(arg); }
-[[nodiscard]] constexpr auto floor(long double arg) noexcept -> long double { return etl::detail::gcem::floor(arg); }
-[[nodiscard]] constexpr auto floorl(long double arg) noexcept -> long double { return etl::detail::floor(arg); }
-[[nodiscard]] constexpr auto floor(integral auto arg) noexcept -> double { return etl::detail::floor(double(arg)); }
+[[nodiscard]] constexpr auto floor(float arg) noexcept -> float
+{
+    return etl::detail::floor(arg);
+}
+[[nodiscard]] constexpr auto floorf(float arg) noexcept -> float
+{
+    return etl::detail::floor(arg);
+}
+[[nodiscard]] constexpr auto floor(double arg) noexcept -> double
+{
+    return etl::detail::floor(arg);
+}
+[[nodiscard]] constexpr auto floor(long double arg) noexcept -> long double
+{
+    return etl::detail::gcem::floor(arg);
+}
+[[nodiscard]] constexpr auto floorl(long double arg) noexcept -> long double
+{
+    return etl::detail::floor(arg);
+}
+[[nodiscard]] constexpr auto floor(integral auto arg) noexcept -> double
+{
+    return etl::detail::floor(double(arg));
+}
 
 /// @}
 

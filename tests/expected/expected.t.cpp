@@ -21,7 +21,10 @@ struct Error {
 
     int value{0};
 
-    friend constexpr auto operator==(Error ec, int v) { return ec.value == v; }
+    friend constexpr auto operator==(Error ec, int v)
+    {
+        return ec.value == v;
+    }
 };
 struct MoveOnlyType {
     constexpr MoveOnlyType() = default;

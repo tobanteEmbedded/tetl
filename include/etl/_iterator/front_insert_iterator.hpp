@@ -56,19 +56,28 @@ public:
     /// requirements of LegacyOutputIterator. It returns the iterator itself,
     /// which makes it possible to use code such as *iter = value to output
     /// (insert) the value into the underlying container.
-    constexpr auto operator*() -> front_insert_iterator& { return *this; }
+    constexpr auto operator*() -> front_insert_iterator&
+    {
+        return *this;
+    }
 
     /// Does nothing. These operator overloads are provided to satisfy
     /// the requirements of LegacyOutputIterator. They make it possible for the
     /// expressions *iter++=value and *++iter=value to be used to output
     /// (insert) a value into the underlying container.
-    constexpr auto operator++() -> front_insert_iterator& { return *this; }
+    constexpr auto operator++() -> front_insert_iterator&
+    {
+        return *this;
+    }
 
     /// Does nothing. These operator overloads are provided to satisfy
     /// the requirements of LegacyOutputIterator. They make it possible for the
     /// expressions *iter++=value and *++iter=value to be used to output
     /// (insert) a value into the underlying container.
-    constexpr auto operator++(int) -> front_insert_iterator { return *this; }
+    constexpr auto operator++(int) -> front_insert_iterator
+    {
+        return *this;
+    }
 };
 
 /// front_inserter is a convenience function template that constructs a

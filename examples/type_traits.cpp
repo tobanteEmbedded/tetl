@@ -16,7 +16,10 @@ auto func(T val) -> int
     return static_cast<int>(val);
 }
 
-auto func(float val) -> float { return val; }
+auto func(float val) -> float
+{
+    return val;
+}
 
 } // namespace
 

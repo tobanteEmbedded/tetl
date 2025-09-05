@@ -203,7 +203,10 @@ public:
 
     /// \brief Destroys the etl::inplace_function instance.
     /// If the etl::inplace_function is not empty, its target is destroyed also.
-    ~inplace_function() { _vtable->destructor_ptr(etl::addressof(_storage)); }
+    ~inplace_function()
+    {
+        _vtable->destructor_ptr(etl::addressof(_storage));
+    }
 
     /// \brief Invokes the stored callable function target with the parameters args.
     auto operator()(Args... args) const -> R

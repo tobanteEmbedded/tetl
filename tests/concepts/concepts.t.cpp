@@ -10,25 +10,55 @@ import etl;
 #endif
 
 namespace {
-constexpr auto floating_point_test(etl::floating_point auto /*v*/) { return true; }
+constexpr auto floating_point_test(etl::floating_point auto /*v*/)
+{
+    return true;
+}
 
-constexpr auto floating_point_test(auto /*v*/) { return false; }
+constexpr auto floating_point_test(auto /*v*/)
+{
+    return false;
+}
 
-constexpr auto integral_test(etl::integral auto /*v*/) { return true; }
+constexpr auto integral_test(etl::integral auto /*v*/)
+{
+    return true;
+}
 
-constexpr auto integral_test(auto /*v*/) { return false; }
+constexpr auto integral_test(auto /*v*/)
+{
+    return false;
+}
 
-constexpr auto signed_integral_test(etl::signed_integral auto /*v*/) { return true; }
+constexpr auto signed_integral_test(etl::signed_integral auto /*v*/)
+{
+    return true;
+}
 
-constexpr auto signed_integral_test(auto /*v*/) { return false; }
+constexpr auto signed_integral_test(auto /*v*/)
+{
+    return false;
+}
 
-constexpr auto unsigned_integral_test(etl::unsigned_integral auto /*v*/) { return true; }
+constexpr auto unsigned_integral_test(etl::unsigned_integral auto /*v*/)
+{
+    return true;
+}
 
-constexpr auto unsigned_integral_test(auto /*v*/) { return false; }
+constexpr auto unsigned_integral_test(auto /*v*/)
+{
+    return false;
+}
 
-constexpr auto destructible_test(etl::destructible auto /*v*/) { return true; }
+constexpr auto destructible_test(etl::destructible auto /*v*/)
+{
+    return true;
+}
 
-[[maybe_unused]] constexpr auto destructible_test(auto /*v*/) { return false; }
+[[maybe_unused]] constexpr auto destructible_test(auto /*v*/)
+{
+    return false;
+}
 } // namespace
 
 static constexpr auto test() -> bool

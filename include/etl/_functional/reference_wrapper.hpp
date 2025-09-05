@@ -70,10 +70,16 @@ struct reference_wrapper {
     constexpr auto operator=(reference_wrapper const& x) noexcept -> reference_wrapper& = default;
 
     /// \brief Returns the stored reference.
-    [[nodiscard]] constexpr operator type&() const noexcept { return *_ptr; }
+    [[nodiscard]] constexpr operator type&() const noexcept
+    {
+        return *_ptr;
+    }
 
     /// \brief Returns the stored reference.
-    [[nodiscard]] constexpr auto get() const noexcept -> type& { return *_ptr; }
+    [[nodiscard]] constexpr auto get() const noexcept -> type&
+    {
+        return *_ptr;
+    }
 
     /// \brief Calls the Callable object, reference to which is stored. This
     /// function is available only if the stored reference points to a Callable

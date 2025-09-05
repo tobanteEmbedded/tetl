@@ -16,7 +16,10 @@ namespace etl {
 /// https://en.cppreference.com/w/cpp/string/byte/isupper
 ///
 /// \ingroup cctype
-[[nodiscard]] constexpr auto isupper(int ch) noexcept -> int { return static_cast<int>(ch >= 'A' and ch <= 'Z'); }
+[[nodiscard]] constexpr auto isupper(int ch) noexcept -> int
+{
+    return static_cast<int>(ch >= 'A' and ch <= 'Z');
+}
 
 } // namespace etl
 

@@ -12,7 +12,10 @@ namespace etl {
 /// https://en.cppreference.com/w/cpp/utility/functional/less
 template <typename T = void>
 struct less {
-    [[nodiscard]] constexpr auto operator()(T const& lhs, T const& rhs) const -> bool { return lhs < rhs; }
+    [[nodiscard]] constexpr auto operator()(T const& lhs, T const& rhs) const -> bool
+    {
+        return lhs < rhs;
+    }
 };
 
 template <>

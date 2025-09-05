@@ -35,11 +35,26 @@ struct year_month_weekday {
     constexpr auto operator+=(years const& y) noexcept -> year_month_weekday&;
     constexpr auto operator-=(years const& y) noexcept -> year_month_weekday&;
 
-    [[nodiscard]] constexpr auto year() const noexcept -> chrono::year { return _y; }
-    [[nodiscard]] constexpr auto month() const noexcept -> chrono::month { return _m; }
-    [[nodiscard]] constexpr auto weekday() const noexcept -> chrono::weekday { return _wdi.weekday(); }
-    [[nodiscard]] constexpr auto index() const noexcept -> unsigned { return _wdi.index(); }
-    [[nodiscard]] constexpr auto weekday_indexed() const noexcept -> chrono::weekday_indexed { return _wdi; }
+    [[nodiscard]] constexpr auto year() const noexcept -> chrono::year
+    {
+        return _y;
+    }
+    [[nodiscard]] constexpr auto month() const noexcept -> chrono::month
+    {
+        return _m;
+    }
+    [[nodiscard]] constexpr auto weekday() const noexcept -> chrono::weekday
+    {
+        return _wdi.weekday();
+    }
+    [[nodiscard]] constexpr auto index() const noexcept -> unsigned
+    {
+        return _wdi.index();
+    }
+    [[nodiscard]] constexpr auto weekday_indexed() const noexcept -> chrono::weekday_indexed
+    {
+        return _wdi;
+    }
 
     [[nodiscard]] constexpr auto ok() const noexcept -> bool
     {

@@ -24,7 +24,10 @@ template <integral Int>
 struct nop_overflow_checker {
     explicit constexpr nop_overflow_checker(Int /*base*/) noexcept { }
 
-    [[nodiscard]] constexpr auto operator()(Int /*value*/, Int /*digit*/) const noexcept -> bool { return false; }
+    [[nodiscard]] constexpr auto operator()(Int /*value*/, Int /*digit*/) const noexcept -> bool
+    {
+        return false;
+    }
 };
 
 template <integral Int>

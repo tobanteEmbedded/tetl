@@ -167,23 +167,35 @@ struct span {
 
     /// \brief Returns an iterator to the first element of the span. If the span
     /// is empty, the returned iterator will be equal to end().
-    [[nodiscard]] constexpr auto begin() const noexcept -> iterator { return _storage.data(); }
+    [[nodiscard]] constexpr auto begin() const noexcept -> iterator
+    {
+        return _storage.data();
+    }
 
     /// \brief Returns an iterator to the element following the last element of
     /// the span. This element acts as a placeholder; attempting to access it
     /// results in undefined behavior
-    [[nodiscard]] constexpr auto end() const noexcept -> iterator { return begin() + size(); }
+    [[nodiscard]] constexpr auto end() const noexcept -> iterator
+    {
+        return begin() + size();
+    }
 
     /// \brief Returns a reverse iterator to the first element of the reversed
     /// span. It corresponds to the last element of the non-reversed span. If
     /// the span is empty, the returned iterator is equal to rend().
-    [[nodiscard]] constexpr auto rbegin() const noexcept -> reverse_iterator { return reverse_iterator(end()); }
+    [[nodiscard]] constexpr auto rbegin() const noexcept -> reverse_iterator
+    {
+        return reverse_iterator(end());
+    }
 
     /// \brief Returns a reverse iterator to the element following the last
     /// element of the reversed span. It corresponds to the element preceding
     /// the first element of the non-reversed span. This element acts as a
     /// placeholder, attempting to access it results in undefined behavior.
-    [[nodiscard]] constexpr auto rend() const noexcept -> reverse_iterator { return reverse_iterator(begin()); }
+    [[nodiscard]] constexpr auto rend() const noexcept -> reverse_iterator
+    {
+        return reverse_iterator(begin());
+    }
 
     /// \brief Returns a reference to the first element in the span. Calling
     /// front on an empty span results in undefined behavior.
@@ -211,16 +223,28 @@ struct span {
     }
 
     /// \brief Returns a pointer to the beginning of the sequence.
-    [[nodiscard]] constexpr auto data() const noexcept -> pointer { return _storage.data(); }
+    [[nodiscard]] constexpr auto data() const noexcept -> pointer
+    {
+        return _storage.data();
+    }
 
     /// \brief Returns the number of elements in the span.
-    [[nodiscard]] constexpr auto size() const noexcept -> size_type { return _storage.size(); }
+    [[nodiscard]] constexpr auto size() const noexcept -> size_type
+    {
+        return _storage.size();
+    }
 
     /// \brief Returns the number of elements in the span.
-    [[nodiscard]] constexpr auto size_bytes() const noexcept -> size_type { return size() * sizeof(element_type); }
+    [[nodiscard]] constexpr auto size_bytes() const noexcept -> size_type
+    {
+        return size() * sizeof(element_type);
+    }
 
     /// \brief Checks if the span is empty.
-    [[nodiscard]] constexpr auto empty() const noexcept -> bool { return size() == 0; }
+    [[nodiscard]] constexpr auto empty() const noexcept -> bool
+    {
+        return size() == 0;
+    }
 
     /// \brief Obtains a span that is a view over the first Count elements of
     /// this span. The program is ill-formed if Count > Extent.
@@ -292,8 +316,14 @@ private:
         {
         }
 
-        [[nodiscard]] constexpr auto data() const noexcept { return _data; }
-        [[nodiscard]] constexpr auto size() const noexcept { return Extent; }
+        [[nodiscard]] constexpr auto data() const noexcept
+        {
+            return _data;
+        }
+        [[nodiscard]] constexpr auto size() const noexcept
+        {
+            return Extent;
+        }
 
     private:
         T* _data{nullptr};
@@ -307,8 +337,14 @@ private:
         {
         }
 
-        [[nodiscard]] constexpr auto data() const noexcept { return _data; }
-        [[nodiscard]] constexpr auto size() const noexcept { return _size; }
+        [[nodiscard]] constexpr auto data() const noexcept
+        {
+            return _data;
+        }
+        [[nodiscard]] constexpr auto size() const noexcept
+        {
+            return _size;
+        }
 
     private:
         T* _data{nullptr};

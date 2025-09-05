@@ -17,7 +17,10 @@ struct to_chars_result {
     char* ptr{nullptr};
     etl::errc ec{};
 
-    [[nodiscard]] constexpr explicit operator bool() const noexcept { return ec == etl::errc{}; }
+    [[nodiscard]] constexpr explicit operator bool() const noexcept
+    {
+        return ec == etl::errc{};
+    }
 
     friend auto operator==(to_chars_result const&, to_chars_result const&) -> bool = default;
 };

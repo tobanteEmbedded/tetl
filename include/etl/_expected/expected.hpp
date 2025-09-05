@@ -102,13 +102,25 @@ struct expected {
     {
     }
 
-    [[nodiscard]] constexpr explicit operator bool() const noexcept { return has_value(); }
+    [[nodiscard]] constexpr explicit operator bool() const noexcept
+    {
+        return has_value();
+    }
 
-    [[nodiscard]] constexpr auto has_value() const noexcept -> bool { return _u.index() == 1; }
+    [[nodiscard]] constexpr auto has_value() const noexcept -> bool
+    {
+        return _u.index() == 1;
+    }
 
-    [[nodiscard]] constexpr auto operator->() const noexcept -> T const* { return etl::get_if<1>(&_u); }
+    [[nodiscard]] constexpr auto operator->() const noexcept -> T const*
+    {
+        return etl::get_if<1>(&_u);
+    }
 
-    [[nodiscard]] constexpr auto operator->() noexcept -> T* { return etl::get_if<1>(&_u); }
+    [[nodiscard]] constexpr auto operator->() noexcept -> T*
+    {
+        return etl::get_if<1>(&_u);
+    }
 
     [[nodiscard]] constexpr auto operator*() const& noexcept -> T const&
     {

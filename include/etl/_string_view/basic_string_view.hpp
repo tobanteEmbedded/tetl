@@ -96,24 +96,39 @@ struct basic_string_view {
     constexpr auto operator=(basic_string_view const& view) noexcept -> basic_string_view& = default;
 
     /// \brief Returns an iterator to the first character of the view.
-    [[nodiscard]] constexpr auto begin() const noexcept -> const_iterator { return cbegin(); }
+    [[nodiscard]] constexpr auto begin() const noexcept -> const_iterator
+    {
+        return cbegin();
+    }
 
     /// \brief Returns an iterator to the first character of the view.
-    [[nodiscard]] constexpr auto cbegin() const noexcept -> const_iterator { return _begin; }
+    [[nodiscard]] constexpr auto cbegin() const noexcept -> const_iterator
+    {
+        return _begin;
+    }
 
     /// \brief Returns an iterator to the character following the last character
     /// of the view. This character acts as a placeholder, attempting to access
     /// it results in undefined behavior.
-    [[nodiscard]] constexpr auto end() const noexcept -> const_iterator { return cend(); }
+    [[nodiscard]] constexpr auto end() const noexcept -> const_iterator
+    {
+        return cend();
+    }
 
     /// \brief Returns an iterator to the character following the last character
     /// of the view. This character acts as a placeholder, attempting to access
     /// it results in undefined behavior.
-    [[nodiscard]] constexpr auto cend() const noexcept -> const_iterator { return _begin + _size; }
+    [[nodiscard]] constexpr auto cend() const noexcept -> const_iterator
+    {
+        return _begin + _size;
+    }
 
     /// \brief Returns a reverse iterator to the first character of the reversed
     /// view. It corresponds to the last character of the non-reversed view.
-    [[nodiscard]] constexpr auto rbegin() const noexcept -> const_reverse_iterator { return crbegin(); }
+    [[nodiscard]] constexpr auto rbegin() const noexcept -> const_reverse_iterator
+    {
+        return crbegin();
+    }
 
     /// \brief Returns a reverse iterator to the first character of the reversed
     /// view. It corresponds to the last character of the non-reversed view.
@@ -128,7 +143,10 @@ struct basic_string_view {
     /// It corresponds to the character preceding the first character of the
     /// non-reversed view. This character acts as a placeholder, attempting to
     /// access it results in undefined behavior.
-    [[nodiscard]] constexpr auto rend() const noexcept -> const_reverse_iterator { return crend(); }
+    [[nodiscard]] constexpr auto rend() const noexcept -> const_reverse_iterator
+    {
+        return crend();
+    }
 
     /// \brief Returns a reverse iterator to the character following the last
     /// character of the reversed view.
@@ -168,20 +186,35 @@ struct basic_string_view {
     /// Returns a pointer to the underlying character array. The pointer
     /// is such that the range [data(); data() + size()) is valid and the values
     /// in it correspond to the values of the view.
-    [[nodiscard]] constexpr auto data() const noexcept -> const_pointer { return _begin; }
+    [[nodiscard]] constexpr auto data() const noexcept -> const_pointer
+    {
+        return _begin;
+    }
 
     /// Returns the number of Char elements in the view, i.e. etl::distance(begin(), end()).
-    [[nodiscard]] constexpr auto size() const noexcept -> size_type { return length(); }
+    [[nodiscard]] constexpr auto size() const noexcept -> size_type
+    {
+        return length();
+    }
 
     /// Returns the number of Char elements in the view, i.e. etl::distance(begin(), end()).
-    [[nodiscard]] constexpr auto length() const noexcept -> size_type { return _size; }
+    [[nodiscard]] constexpr auto length() const noexcept -> size_type
+    {
+        return _size;
+    }
 
     /// The largest possible number of char-like objects that can be
     /// referred to by a basic_string_view.
-    [[nodiscard]] constexpr auto max_size() const noexcept -> size_type { return size_type(-1); }
+    [[nodiscard]] constexpr auto max_size() const noexcept -> size_type
+    {
+        return size_type(-1);
+    }
 
     /// Checks if the view has no characters, i.e. whether size() == 0.
-    [[nodiscard]] constexpr auto empty() const noexcept -> bool { return _size == 0; }
+    [[nodiscard]] constexpr auto empty() const noexcept -> bool
+    {
+        return _size == 0;
+    }
 
     /// Moves the start of the view forward by n characters.
     /// \pre `n <= size()`
@@ -261,7 +294,10 @@ struct basic_string_view {
     }
 
     /// Compares two character sequences. Equivalent to compare(basic_string_view(s)).
-    [[nodiscard]] constexpr auto compare(Char const* s) const -> int { return compare(basic_string_view(s)); }
+    [[nodiscard]] constexpr auto compare(Char const* s) const -> int
+    {
+        return compare(basic_string_view(s));
+    }
 
     /// Compares two character sequences. Equivalent to substr(pos1, count1).compare(basic_string_view(s)).
     [[nodiscard]] constexpr auto compare(size_type pos1, size_type count1, Char const* s) const -> int
@@ -314,13 +350,19 @@ struct basic_string_view {
     /// prefix is a single character.
     ///
     /// \details Effectively returns !empty() && Traits::eq(back(), c)
-    [[nodiscard]] constexpr auto ends_with(Char c) const noexcept -> bool { return !empty() && Traits::eq(back(), c); }
+    [[nodiscard]] constexpr auto ends_with(Char c) const noexcept -> bool
+    {
+        return !empty() && Traits::eq(back(), c);
+    }
 
     /// \brief Checks if the string view ends with the given suffix, where the
     /// the prefix is a null-terminated character string.
     ///
     /// \details Effectively returns ends_with(basic_string_view(s))
-    constexpr auto ends_with(Char const* str) const -> bool { return ends_with(basic_string_view(str)); }
+    constexpr auto ends_with(Char const* str) const -> bool
+    {
+        return ends_with(basic_string_view(str));
+    }
 
     /// \brief Finds the first substring equal to the given character sequence.
     /// Finds the first occurence of v in this view, starting at position pos.
@@ -384,7 +426,10 @@ struct basic_string_view {
     ///
     /// \returns Position of the first character of the found substring, or npos
     /// if no such substring is found.
-    constexpr auto find(Char const* s, size_type pos = 0) const -> size_type { return find(basic_string_view(s), pos); }
+    constexpr auto find(Char const* s, size_type pos = 0) const -> size_type
+    {
+        return find(basic_string_view(s), pos);
+    }
 
     /// \brief Finds the last substring equal to the given character sequence.
     /// Finds the last occurence of v in this view, starting at position pos.
@@ -674,13 +719,22 @@ struct basic_string_view {
     }
 
     /// \brief Checks if the string contains the given substring.
-    [[nodiscard]] constexpr auto contains(basic_string_view sv) const noexcept -> bool { return find(sv) != npos; }
+    [[nodiscard]] constexpr auto contains(basic_string_view sv) const noexcept -> bool
+    {
+        return find(sv) != npos;
+    }
 
     /// \brief Checks if the string contains the given substring.
-    [[nodiscard]] constexpr auto contains(Char c) const noexcept -> bool { return find(c) != npos; }
+    [[nodiscard]] constexpr auto contains(Char c) const noexcept -> bool
+    {
+        return find(c) != npos;
+    }
 
     /// \brief Checks if the string contains the given substring.
-    [[nodiscard]] constexpr auto contains(Char const* s) const -> bool { return find(s) != npos; }
+    [[nodiscard]] constexpr auto contains(Char const* s) const -> bool
+    {
+        return find(s) != npos;
+    }
 
     /// \brief This is a special value equal to the maximum value
     /// representable by the type size_type.
@@ -692,7 +746,10 @@ struct basic_string_view {
     static constexpr size_type npos = size_type(-1);
 
 private:
-    [[nodiscard]] constexpr auto unsafe_at(size_type pos) const -> const_reference { return _begin[pos]; }
+    [[nodiscard]] constexpr auto unsafe_at(size_type pos) const -> const_reference
+    {
+        return _begin[pos];
+    }
 
     const_pointer _begin = nullptr;
     size_type _size      = 0;

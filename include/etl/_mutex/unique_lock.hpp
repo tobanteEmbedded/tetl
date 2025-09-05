@@ -122,7 +122,10 @@ public:
         return *this;
     }
 
-    constexpr ~unique_lock() noexcept { unlock(); }
+    constexpr ~unique_lock() noexcept
+    {
+        unlock();
+    }
 
     /// \brief Locks (i.e., takes ownership of) the associated mutex.
     constexpr auto lock() noexcept(noexcept(_mutex->lock())) -> void
@@ -217,14 +220,23 @@ public:
     }
 
     /// \brief Checks whether *this owns a locked mutex or not.
-    [[nodiscard]] constexpr auto owns_lock() const noexcept -> bool { return _owns; }
+    [[nodiscard]] constexpr auto owns_lock() const noexcept -> bool
+    {
+        return _owns;
+    }
 
     /// \brief Checks whether *this owns a locked mutex or not.
-    [[nodiscard]] explicit constexpr operator bool() const noexcept { return owns_lock(); }
+    [[nodiscard]] explicit constexpr operator bool() const noexcept
+    {
+        return owns_lock();
+    }
 
     /// \brief Returns a pointer to the associated mutex, or a null pointer if
     /// there is no associated mutex.
-    [[nodiscard]] constexpr auto mutex() const noexcept -> mutex_type* { return _mutex; }
+    [[nodiscard]] constexpr auto mutex() const noexcept -> mutex_type*
+    {
+        return _mutex;
+    }
 
     /// \brief Specializes the swap algorithm for unique_lock. Exchanges the state of lhs with that of rhs.
     friend constexpr auto swap(unique_lock& lhs, unique_lock& rhs) noexcept(noexcept(lhs.swap(rhs))) -> void

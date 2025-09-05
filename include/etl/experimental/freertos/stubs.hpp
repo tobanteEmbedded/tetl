@@ -48,11 +48,17 @@ inline auto xTaskCreate(
     return pdFALSE;
 }
 
-inline auto vTaskDelete(TaskHandle_t xTask) -> void { etl::ignore_unused(xTask); }
+inline auto vTaskDelete(TaskHandle_t xTask) -> void
+{
+    etl::ignore_unused(xTask);
+}
 
 inline auto vTaskStartScheduler() -> void { }
 
-inline auto vTaskDelay(TickType_t const xTicksToDelay) -> void { etl::ignore_unused(xTicksToDelay); }
+inline auto vTaskDelay(TickType_t const xTicksToDelay) -> void
+{
+    etl::ignore_unused(xTicksToDelay);
+}
 
 inline auto vTaskDelayUntil(TickType_t* const pxPreviousWakeTime, TickType_t const xTimeIncrement) -> void
 {
@@ -68,7 +74,10 @@ inline auto xQueueCreate(UBaseType_t uxQueueLength, UBaseType_t uxItemSize) -> Q
     return nullptr;
 }
 
-inline auto vQueueDelete(QueueHandle_t xQueue) -> void { etl::ignore_unused(xQueue); }
+inline auto vQueueDelete(QueueHandle_t xQueue) -> void
+{
+    etl::ignore_unused(xQueue);
+}
 
 inline auto xQueueSend(QueueHandle_t xQueue, void const* pvItemToQueue, TickType_t xTicksToWait) -> BaseType_t
 {
@@ -135,7 +144,10 @@ xStreamBufferReceiveFromISR(StreamBufferHandle_t handle, void* data, etl::size_t
     return 0;
 }
 
-inline auto vStreamBufferDelete(StreamBufferHandle_t handle) -> void { etl::ignore_unused(handle); }
+inline auto vStreamBufferDelete(StreamBufferHandle_t handle) -> void
+{
+    etl::ignore_unused(handle);
+}
 
 [[nodiscard]] inline auto xStreamBufferBytesAvailable(StreamBufferHandle_t handle) -> etl::size_t
 {

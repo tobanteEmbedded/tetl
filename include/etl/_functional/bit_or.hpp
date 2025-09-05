@@ -13,7 +13,10 @@ namespace etl {
 /// https://en.cppreference.com/w/cpp/utility/functional/bit_or
 template <typename T = void>
 struct bit_or {
-    [[nodiscard]] constexpr auto operator()(T const& lhs, T const& rhs) const -> T { return lhs | rhs; }
+    [[nodiscard]] constexpr auto operator()(T const& lhs, T const& rhs) const -> T
+    {
+        return lhs | rhs;
+    }
 };
 
 template <>

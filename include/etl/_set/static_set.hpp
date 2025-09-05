@@ -87,29 +87,50 @@ public:
         -> static_set& = default;
 
     /// \brief Returns an iterator to the first element of the set.
-    [[nodiscard]] constexpr auto begin() noexcept -> iterator { return _storage.begin(); }
+    [[nodiscard]] constexpr auto begin() noexcept -> iterator
+    {
+        return _storage.begin();
+    }
 
     /// \brief Returns an iterator to the first element of the set.
-    [[nodiscard]] constexpr auto begin() const noexcept -> const_iterator { return _storage.begin(); }
+    [[nodiscard]] constexpr auto begin() const noexcept -> const_iterator
+    {
+        return _storage.begin();
+    }
 
     /// \brief Returns an iterator to the first element of the set.
-    [[nodiscard]] constexpr auto cbegin() const noexcept -> const_iterator { return begin(); }
+    [[nodiscard]] constexpr auto cbegin() const noexcept -> const_iterator
+    {
+        return begin();
+    }
 
     /// \brief Returns an iterator to the element following the last element of
     /// the set.
-    [[nodiscard]] constexpr auto end() noexcept -> iterator { return _storage.end(); }
+    [[nodiscard]] constexpr auto end() noexcept -> iterator
+    {
+        return _storage.end();
+    }
 
     /// \brief Returns an iterator to the element following the last element of
     /// the set.
-    [[nodiscard]] constexpr auto end() const noexcept -> const_iterator { return _storage.end(); }
+    [[nodiscard]] constexpr auto end() const noexcept -> const_iterator
+    {
+        return _storage.end();
+    }
 
     /// \brief Returns an iterator to the element following the last element of
     /// the set.
-    [[nodiscard]] constexpr auto cend() const noexcept -> const_iterator { return end(); }
+    [[nodiscard]] constexpr auto cend() const noexcept -> const_iterator
+    {
+        return end();
+    }
 
     /// \brief Returns a reverse iterator to the first element of the reversed
     /// set. It corresponds to the last element of the non-reversed set.
-    [[nodiscard]] constexpr auto rbegin() noexcept -> reverse_iterator { return reverse_iterator(end()); }
+    [[nodiscard]] constexpr auto rbegin() noexcept -> reverse_iterator
+    {
+        return reverse_iterator(end());
+    }
 
     /// \brief Returns a reverse iterator to the first element of the reversed
     /// set. It corresponds to the last element of the non-reversed set.
@@ -120,12 +141,18 @@ public:
 
     /// \brief Returns a reverse iterator to the first element of the reversed
     /// set. It corresponds to the last element of the non-reversed set.
-    [[nodiscard]] constexpr auto crbegin() const noexcept -> const_reverse_iterator { return rbegin(); }
+    [[nodiscard]] constexpr auto crbegin() const noexcept -> const_reverse_iterator
+    {
+        return rbegin();
+    }
 
     /// \brief Returns a reverse iterator to the element following the last
     /// element of the reversed set. It corresponds to the element preceding the
     /// first element of the non-reversed set.
-    [[nodiscard]] constexpr auto rend() noexcept -> reverse_iterator { return reverse_iterator(begin()); }
+    [[nodiscard]] constexpr auto rend() noexcept -> reverse_iterator
+    {
+        return reverse_iterator(begin());
+    }
 
     /// \brief Returns a reverse iterator to the element following the last
     /// element of the reversed set. It corresponds to the element preceding the
@@ -138,26 +165,44 @@ public:
     /// \brief Returns a reverse iterator to the element following the last
     /// element of the reversed set. It corresponds to the element preceding the
     /// first element of the non-reversed set.
-    [[nodiscard]] constexpr auto crend() const noexcept -> const_reverse_iterator { return rend(); }
+    [[nodiscard]] constexpr auto crend() const noexcept -> const_reverse_iterator
+    {
+        return rend();
+    }
 
     /// \brief Checks if the container has no elements, i.e. whether begin() ==
     /// end().
-    [[nodiscard]] constexpr auto empty() const noexcept -> bool { return _storage.empty(); }
+    [[nodiscard]] constexpr auto empty() const noexcept -> bool
+    {
+        return _storage.empty();
+    }
 
     /// \brief Checks if the container full, i.e. whether size() == Capacity.
-    [[nodiscard]] constexpr auto full() const noexcept -> bool { return _storage.full(); }
+    [[nodiscard]] constexpr auto full() const noexcept -> bool
+    {
+        return _storage.full();
+    }
 
     /// \brief Returns the number of elements in the container, i.e.
     /// distance(begin(), end()).
-    [[nodiscard]] constexpr auto size() const noexcept -> size_type { return _storage.size(); }
+    [[nodiscard]] constexpr auto size() const noexcept -> size_type
+    {
+        return _storage.size();
+    }
 
     /// \brief Returns the maximum number of elements the container is able to
     /// hold.
-    [[nodiscard]] constexpr auto max_size() const noexcept -> size_type { return _storage.max_size(); }
+    [[nodiscard]] constexpr auto max_size() const noexcept -> size_type
+    {
+        return _storage.max_size();
+    }
 
     /// \brief Erases all elements from the container. After this call, size()
     /// returns zero.
-    constexpr auto clear() noexcept -> void { _storage.clear(); }
+    constexpr auto clear() noexcept -> void
+    {
+        _storage.clear();
+    }
 
     /// \brief Inserts element into the container, if the container doesn't
     /// already contain an element with an equivalent key.
@@ -214,7 +259,10 @@ public:
     /// https://en.cppreference.com/w/cpp/container/set/erase
     ///
     /// \returns Iterator following the last removed element.
-    constexpr auto erase(iterator pos) noexcept -> iterator { return _storage.erase(pos); }
+    constexpr auto erase(iterator pos) noexcept -> iterator
+    {
+        return _storage.erase(pos);
+    }
 
     /// \brief Removes the elements in the range [first; last), which must be a
     /// valid range in *this.
@@ -314,7 +362,10 @@ public:
 
     /// \brief Checks if there is an element with key equivalent to key in the
     /// container.
-    [[nodiscard]] constexpr auto contains(key_type const& key) const noexcept -> bool { return find(key) != end(); }
+    [[nodiscard]] constexpr auto contains(key_type const& key) const noexcept -> bool
+    {
+        return find(key) != end();
+    }
 
     /// \brief Checks if there is an element with key that compares equivalent
     /// to the value x.
@@ -438,13 +489,19 @@ public:
     /// value_comp.
     ///
     /// \returns The key comparison function object.
-    [[nodiscard]] constexpr auto key_comp() const noexcept -> key_compare { return key_compare(); }
+    [[nodiscard]] constexpr auto key_comp() const noexcept -> key_compare
+    {
+        return key_compare();
+    }
 
     /// \brief Returns the function object that compares the values. It is the
     /// same as key_comp.
     ///
     /// \returns The value comparison function object.
-    [[nodiscard]] constexpr auto value_comp() const noexcept -> value_compare { return value_compare(); }
+    [[nodiscard]] constexpr auto value_comp() const noexcept -> value_compare
+    {
+        return value_compare();
+    }
 };
 
 /// \brief Compares the contents of two sets.

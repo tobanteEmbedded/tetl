@@ -16,7 +16,10 @@ namespace etl {
 /// https://en.cppreference.com/w/cpp/string/byte/islower
 ///
 /// \ingroup cctype
-[[nodiscard]] constexpr auto islower(int ch) noexcept -> int { return static_cast<int>(ch >= 'a' and ch <= 'z'); }
+[[nodiscard]] constexpr auto islower(int ch) noexcept -> int
+{
+    return static_cast<int>(ch >= 'a' and ch <= 'z');
+}
 } // namespace etl
 
 #endif // TETL_CCTYPE_ISLOWER_HPP

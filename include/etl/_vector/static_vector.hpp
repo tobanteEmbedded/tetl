@@ -68,19 +68,34 @@ struct static_vector_zero_storage {
     ~static_vector_zero_storage() = default;
 
     /// \brief Pointer to the data in the storage.
-    [[nodiscard]] static constexpr auto data() noexcept -> pointer { return nullptr; }
+    [[nodiscard]] static constexpr auto data() noexcept -> pointer
+    {
+        return nullptr;
+    }
 
     /// \brief Number of elements currently stored.
-    [[nodiscard]] static constexpr auto size() noexcept -> size_type { return 0; }
+    [[nodiscard]] static constexpr auto size() noexcept -> size_type
+    {
+        return 0;
+    }
 
     /// \brief Capacity of the storage.
-    [[nodiscard]] static constexpr auto capacity() noexcept -> size_type { return 0; }
+    [[nodiscard]] static constexpr auto capacity() noexcept -> size_type
+    {
+        return 0;
+    }
 
     /// \brief Is the storage empty?
-    [[nodiscard]] static constexpr auto empty() noexcept -> bool { return true; }
+    [[nodiscard]] static constexpr auto empty() noexcept -> bool
+    {
+        return true;
+    }
 
     /// \brief Is the storage full?
-    [[nodiscard]] static constexpr auto full() noexcept -> bool { return true; }
+    [[nodiscard]] static constexpr auto full() noexcept -> bool
+    {
+        return true;
+    }
 
     /// \brief Constructs a new element at the end of the storagein-place.
     /// Increases size of the storage by one. Always fails for empty
@@ -94,13 +109,19 @@ struct static_vector_zero_storage {
 
     /// \brief Removes the last element of the storage. Always fails for
     /// empty storage.
-    static constexpr void pop_back() noexcept { TETL_PRECONDITION(false); }
+    static constexpr void pop_back() noexcept
+    {
+        TETL_PRECONDITION(false);
+    }
 
 protected:
     /// \brief Changes the size of the storage without adding or removing
     /// elements (unsafe). The size of an empty storage can only be changed
     /// to 0.
-    static constexpr void unsafe_set_size([[maybe_unused]] size_t newSize) noexcept { TETL_PRECONDITION(newSize == 0); }
+    static constexpr void unsafe_set_size([[maybe_unused]] size_t newSize) noexcept
+    {
+        TETL_PRECONDITION(newSize == 0);
+    }
 
     /// \brief Destroys all elements of the storage in range [begin, end)
     /// without changings its size (unsafe). Nothing to destroy since the
@@ -138,23 +159,41 @@ struct static_vector_trivial_storage {
     ~static_vector_trivial_storage() = default;
 
     /// \brief Direct access to the underlying storage.
-    [[nodiscard]] constexpr auto data() const noexcept -> const_pointer { return _data.data(); }
+    [[nodiscard]] constexpr auto data() const noexcept -> const_pointer
+    {
+        return _data.data();
+    }
 
     /// \brief Direct access to the underlying storage.
-    [[nodiscard]] constexpr auto data() noexcept -> pointer { return _data.data(); }
+    [[nodiscard]] constexpr auto data() noexcept -> pointer
+    {
+        return _data.data();
+    }
 
     /// \brief Number of elements in the storage.
-    [[nodiscard]] constexpr auto size() const noexcept -> size_type { return _size; }
+    [[nodiscard]] constexpr auto size() const noexcept -> size_type
+    {
+        return _size;
+    }
 
     /// \brief Maximum number of elements that can be allocated in the
     /// storage.
-    [[nodiscard]] constexpr auto capacity() const noexcept -> size_type { return Capacity; }
+    [[nodiscard]] constexpr auto capacity() const noexcept -> size_type
+    {
+        return Capacity;
+    }
 
     /// \brief Is the storage empty?
-    [[nodiscard]] constexpr auto empty() const noexcept -> bool { return size() == size_type{0}; }
+    [[nodiscard]] constexpr auto empty() const noexcept -> bool
+    {
+        return size() == size_type{0};
+    }
 
     /// \brief Is the storage full?
-    [[nodiscard]] constexpr auto full() const noexcept -> bool { return size() == Capacity; }
+    [[nodiscard]] constexpr auto full() const noexcept -> bool
+    {
+        return size() == Capacity;
+    }
 
     /// \brief Constructs an element in-place at the end of the storage.
     template <typename... Args>
@@ -225,32 +264,59 @@ struct static_vector_non_trivial_storage {
     static_vector_non_trivial_storage(static_vector_non_trivial_storage&&) noexcept                    = default;
     auto operator=(static_vector_non_trivial_storage&&) noexcept -> static_vector_non_trivial_storage& = default;
 
-    ~static_vector_non_trivial_storage() noexcept(is_nothrow_destructible_v<T>) { unsafe_destroy_all(); }
+    ~static_vector_non_trivial_storage() noexcept(is_nothrow_destructible_v<T>)
+    {
+        unsafe_destroy_all();
+    }
 
     /// \brief Direct access to the underlying storage.
-    [[nodiscard]] auto data() const noexcept -> const_pointer { return reinterpret_cast<const_pointer>(_data); }
+    [[nodiscard]] auto data() const noexcept -> const_pointer
+    {
+        return reinterpret_cast<const_pointer>(_data);
+    }
 
     /// \brief Direct access to the underlying storage.
-    [[nodiscard]] auto data() noexcept -> pointer { return reinterpret_cast<pointer>(_data); }
+    [[nodiscard]] auto data() noexcept -> pointer
+    {
+        return reinterpret_cast<pointer>(_data);
+    }
 
     /// \brief Pointer to one-past-the-end.
-    [[nodiscard]] auto end() const noexcept -> const_pointer { return data() + size(); }
+    [[nodiscard]] auto end() const noexcept -> const_pointer
+    {
+        return data() + size();
+    }
 
     /// \brief Pointer to one-past-the-end.
-    [[nodiscard]] auto end() noexcept -> pointer { return data() + size(); }
+    [[nodiscard]] auto end() noexcept -> pointer
+    {
+        return data() + size();
+    }
 
     /// \brief Number of elements in the storage.
-    [[nodiscard]] auto size() const noexcept -> size_type { return _size; }
+    [[nodiscard]] auto size() const noexcept -> size_type
+    {
+        return _size;
+    }
 
     /// \brief Maximum number of elements that can be allocated in the
     /// storage.
-    [[nodiscard]] auto capacity() const noexcept -> size_type { return Capacity; }
+    [[nodiscard]] auto capacity() const noexcept -> size_type
+    {
+        return Capacity;
+    }
 
     /// \brief Is the storage empty?
-    [[nodiscard]] auto empty() const noexcept -> bool { return size() == size_type{0}; }
+    [[nodiscard]] auto empty() const noexcept -> bool
+    {
+        return size() == size_type{0};
+    }
 
     /// \brief Is the storage full?
-    [[nodiscard]] auto full() const noexcept -> bool { return size() == Capacity; }
+    [[nodiscard]] auto full() const noexcept -> bool
+    {
+        return size() == Capacity;
+    }
 
     /// \brief Constructs an element in-place at the end of the embedded
     /// storage.
@@ -297,7 +363,10 @@ protected:
     /// \brief (unsafe) Destroys all elements of the storage.
     ///
     /// \warning The size of the storage is not changed.
-    auto unsafe_destroy_all() noexcept(is_nothrow_destructible_v<T>) -> void { unsafe_destroy(data(), end()); }
+    auto unsafe_destroy_all() noexcept(is_nothrow_destructible_v<T>) -> void
+    {
+        unsafe_destroy(data(), end());
+    }
 
 private:
     using raw_type     = remove_const_t<T>;
@@ -373,35 +442,65 @@ private:
     }
 
 public:
-    [[nodiscard]] constexpr auto begin() noexcept -> iterator { return data(); }
+    [[nodiscard]] constexpr auto begin() noexcept -> iterator
+    {
+        return data();
+    }
 
-    [[nodiscard]] constexpr auto begin() const noexcept -> const_iterator { return data(); }
+    [[nodiscard]] constexpr auto begin() const noexcept -> const_iterator
+    {
+        return data();
+    }
 
-    [[nodiscard]] constexpr auto end() noexcept -> iterator { return data() + size(); }
+    [[nodiscard]] constexpr auto end() noexcept -> iterator
+    {
+        return data() + size();
+    }
 
-    [[nodiscard]] constexpr auto end() const noexcept -> const_iterator { return data() + size(); }
+    [[nodiscard]] constexpr auto end() const noexcept -> const_iterator
+    {
+        return data() + size();
+    }
 
-    [[nodiscard]] constexpr auto rbegin() noexcept -> reverse_iterator { return reverse_iterator(end()); }
+    [[nodiscard]] constexpr auto rbegin() noexcept -> reverse_iterator
+    {
+        return reverse_iterator(end());
+    }
 
     [[nodiscard]] constexpr auto rbegin() const noexcept -> const_reverse_iterator
     {
         return const_reverse_iterator(end());
     }
 
-    [[nodiscard]] constexpr auto rend() noexcept -> reverse_iterator { return reverse_iterator(begin()); }
+    [[nodiscard]] constexpr auto rend() noexcept -> reverse_iterator
+    {
+        return reverse_iterator(begin());
+    }
 
     [[nodiscard]] constexpr auto rend() const noexcept -> const_reverse_iterator
     {
         return const_reverse_iterator(begin());
     }
 
-    [[nodiscard]] constexpr auto cbegin() noexcept -> const_iterator { return begin(); }
+    [[nodiscard]] constexpr auto cbegin() noexcept -> const_iterator
+    {
+        return begin();
+    }
 
-    [[nodiscard]] constexpr auto cbegin() const noexcept -> const_iterator { return begin(); }
+    [[nodiscard]] constexpr auto cbegin() const noexcept -> const_iterator
+    {
+        return begin();
+    }
 
-    [[nodiscard]] constexpr auto cend() noexcept -> const_iterator { return end(); }
+    [[nodiscard]] constexpr auto cend() noexcept -> const_iterator
+    {
+        return end();
+    }
 
-    [[nodiscard]] constexpr auto cend() const noexcept -> const_iterator { return end(); }
+    [[nodiscard]] constexpr auto cend() const noexcept -> const_iterator
+    {
+        return end();
+    }
 
     [[nodiscard]] constexpr auto crbegin() const noexcept -> const_reverse_iterator
     {
@@ -618,12 +717,21 @@ public:
     using base_type::full;
 
     /// \brief Number of elements in the vector
-    [[nodiscard]] constexpr auto size() const noexcept -> size_type { return base_type::size(); }
+    [[nodiscard]] constexpr auto size() const noexcept -> size_type
+    {
+        return base_type::size();
+    }
 
     /// \brief Maximum number of elements that can be allocated in the vector
-    [[nodiscard]] constexpr auto capacity() const noexcept -> size_type { return base_type::capacity(); }
+    [[nodiscard]] constexpr auto capacity() const noexcept -> size_type
+    {
+        return base_type::capacity();
+    }
 
-    [[nodiscard]] constexpr auto max_size() const noexcept -> size_type { return capacity(); }
+    [[nodiscard]] constexpr auto max_size() const noexcept -> size_type
+    {
+        return capacity();
+    }
 
     /// \brief assign
     template <typename InputIter>
@@ -649,7 +757,10 @@ public:
     }
 
     /// \brief Unchecked access to element at index pos (UB if index not in
-    [[nodiscard]] constexpr auto operator[](size_type pos) noexcept -> reference { return detail::index(*this, pos); }
+    [[nodiscard]] constexpr auto operator[](size_type pos) noexcept -> reference
+    {
+        return detail::index(*this, pos);
+    }
 
     /// \brief Unchecked access to element at index pos (UB if index not in
     [[nodiscard]] constexpr auto operator[](size_type pos) const noexcept -> const_reference
@@ -658,9 +769,15 @@ public:
     }
 
     /// \brief front
-    [[nodiscard]] constexpr auto front() noexcept -> reference { return detail::index(*this, 0); }
+    [[nodiscard]] constexpr auto front() noexcept -> reference
+    {
+        return detail::index(*this, 0);
+    }
 
-    [[nodiscard]] constexpr auto front() const noexcept -> const_reference { return detail::index(*this, 0); }
+    [[nodiscard]] constexpr auto front() const noexcept -> const_reference
+    {
+        return detail::index(*this, 0);
+    }
 
     /// \brief back
     [[nodiscard]] constexpr auto back() noexcept -> reference

@@ -175,7 +175,10 @@ struct hash<etl::nullptr_t> {
 
 template <typename T>
 struct hash<T*> {
-    [[nodiscard]] auto operator()(T* val) const noexcept -> etl::size_t { return etl::bit_cast<etl::size_t>(val); }
+    [[nodiscard]] auto operator()(T* val) const noexcept -> etl::size_t
+    {
+        return etl::bit_cast<etl::size_t>(val);
+    }
 };
 
 } // namespace etl

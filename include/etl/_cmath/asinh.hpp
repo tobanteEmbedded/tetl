@@ -43,12 +43,30 @@ inline constexpr struct asinh {
 
 /// Computes the inverse hyperbolic sine of arg.
 /// \details https://en.cppreference.com/w/cpp/numeric/math/asinh
-[[nodiscard]] constexpr auto asinh(float arg) noexcept -> float { return etl::detail::asinh(arg); }
-[[nodiscard]] constexpr auto asinhf(float arg) noexcept -> float { return etl::detail::asinh(arg); }
-[[nodiscard]] constexpr auto asinh(double arg) noexcept -> double { return etl::detail::asinh(arg); }
-[[nodiscard]] constexpr auto asinh(long double arg) noexcept -> long double { return etl::detail::asinh(arg); }
-[[nodiscard]] constexpr auto asinhl(long double arg) noexcept -> long double { return etl::detail::asinh(arg); }
-[[nodiscard]] constexpr auto asinh(integral auto arg) noexcept -> double { return etl::detail::asinh(double(arg)); }
+[[nodiscard]] constexpr auto asinh(float arg) noexcept -> float
+{
+    return etl::detail::asinh(arg);
+}
+[[nodiscard]] constexpr auto asinhf(float arg) noexcept -> float
+{
+    return etl::detail::asinh(arg);
+}
+[[nodiscard]] constexpr auto asinh(double arg) noexcept -> double
+{
+    return etl::detail::asinh(arg);
+}
+[[nodiscard]] constexpr auto asinh(long double arg) noexcept -> long double
+{
+    return etl::detail::asinh(arg);
+}
+[[nodiscard]] constexpr auto asinhl(long double arg) noexcept -> long double
+{
+    return etl::detail::asinh(arg);
+}
+[[nodiscard]] constexpr auto asinh(integral auto arg) noexcept -> double
+{
+    return etl::detail::asinh(double(arg));
+}
 
 /// @}
 

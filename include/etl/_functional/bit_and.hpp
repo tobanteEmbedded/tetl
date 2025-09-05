@@ -12,7 +12,10 @@ namespace etl {
 /// \ingroup functional
 template <typename T = void>
 struct bit_and {
-    [[nodiscard]] constexpr auto operator()(T const& lhs, T const& rhs) const -> T { return lhs & rhs; }
+    [[nodiscard]] constexpr auto operator()(T const& lhs, T const& rhs) const -> T
+    {
+        return lhs & rhs;
+    }
 };
 
 /// \ingroup functional

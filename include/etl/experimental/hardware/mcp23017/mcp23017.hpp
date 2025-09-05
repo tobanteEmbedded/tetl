@@ -108,9 +108,15 @@ public:
     auto operator=(device&&) -> device&      = delete;
     auto operator=(device const&) -> device& = delete;
 
-    auto init() -> bool { return true; }
+    auto init() -> bool
+    {
+        return true;
+    }
 
-    auto set_io_direction(port p, io_direction direction) -> void { etl::ignore_unused(p, direction); }
+    auto set_io_direction(port p, io_direction direction) -> void
+    {
+        etl::ignore_unused(p, direction);
+    }
 };
 } // namespace etl::experimental::hardware::mcp23017
 

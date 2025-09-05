@@ -33,13 +33,25 @@ struct weekday {
     {
     }
 
-    constexpr auto operator++() noexcept -> weekday& { return *this += etl::chrono::days{1}; }
+    constexpr auto operator++() noexcept -> weekday&
+    {
+        return *this += etl::chrono::days{1};
+    }
 
-    constexpr auto operator++(int) noexcept -> weekday { return *this += etl::chrono::days{1}; }
+    constexpr auto operator++(int) noexcept -> weekday
+    {
+        return *this += etl::chrono::days{1};
+    }
 
-    constexpr auto operator--() noexcept -> weekday& { return *this -= etl::chrono::days{1}; }
+    constexpr auto operator--() noexcept -> weekday&
+    {
+        return *this -= etl::chrono::days{1};
+    }
 
-    constexpr auto operator--(int) noexcept -> weekday { return *this -= etl::chrono::days{1}; }
+    constexpr auto operator--(int) noexcept -> weekday
+    {
+        return *this -= etl::chrono::days{1};
+    }
 
     constexpr auto operator+=(days const& d) noexcept -> weekday&
     {
@@ -55,11 +67,20 @@ struct weekday {
         return *this;
     }
 
-    [[nodiscard]] constexpr auto c_encoding() const noexcept -> unsigned { return _wd; }
+    [[nodiscard]] constexpr auto c_encoding() const noexcept -> unsigned
+    {
+        return _wd;
+    }
 
-    [[nodiscard]] constexpr auto iso_encoding() const noexcept -> unsigned { return _wd == 0U ? 7U : _wd; }
+    [[nodiscard]] constexpr auto iso_encoding() const noexcept -> unsigned
+    {
+        return _wd == 0U ? 7U : _wd;
+    }
 
-    [[nodiscard]] constexpr auto ok() const noexcept -> bool { return _wd < 7U; }
+    [[nodiscard]] constexpr auto ok() const noexcept -> bool
+    {
+        return _wd < 7U;
+    }
 
     // Defined in weekday_indexed
     [[nodiscard]] constexpr auto operator[](unsigned index) const noexcept -> weekday_indexed;
@@ -86,7 +107,10 @@ private:
     return weekday{static_cast<unsigned>((static_cast<int32_t>(lhs.c_encoding()) + rhs.count()) % 7)};
 }
 
-[[nodiscard]] constexpr auto operator+(days const& lhs, weekday const& rhs) noexcept -> weekday { return rhs + lhs; }
+[[nodiscard]] constexpr auto operator+(days const& lhs, weekday const& rhs) noexcept -> weekday
+{
+    return rhs + lhs;
+}
 
 [[nodiscard]] constexpr auto operator-(weekday const& lhs, days const& rhs) noexcept -> weekday
 {

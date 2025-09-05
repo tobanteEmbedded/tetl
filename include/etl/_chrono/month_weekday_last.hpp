@@ -16,10 +16,19 @@ struct month_weekday_last {
     {
     }
 
-    [[nodiscard]] constexpr auto ok() const noexcept -> bool { return month().ok() and weekday_last().ok(); }
+    [[nodiscard]] constexpr auto ok() const noexcept -> bool
+    {
+        return month().ok() and weekday_last().ok();
+    }
 
-    [[nodiscard]] constexpr auto month() const noexcept -> chrono::month { return _m; }
-    [[nodiscard]] constexpr auto weekday_last() const noexcept -> chrono::weekday_last { return _wdl; }
+    [[nodiscard]] constexpr auto month() const noexcept -> chrono::month
+    {
+        return _m;
+    }
+    [[nodiscard]] constexpr auto weekday_last() const noexcept -> chrono::weekday_last
+    {
+        return _wdl;
+    }
 
     friend constexpr auto operator==(month_weekday_last const& lhs, month_weekday_last const& rhs) noexcept -> bool
     {

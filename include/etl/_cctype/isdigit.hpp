@@ -12,7 +12,10 @@ namespace etl {
 /// \returns Non-zero value if the character is a numeric character, zero otherwise.
 /// \param ch Character to classify.
 /// \ingroup cctype
-[[nodiscard]] constexpr auto isdigit(int ch) noexcept -> int { return static_cast<int>(ch >= '0' and ch <= '9'); }
+[[nodiscard]] constexpr auto isdigit(int ch) noexcept -> int
+{
+    return static_cast<int>(ch >= '0' and ch <= '9');
+}
 
 } // namespace etl
 

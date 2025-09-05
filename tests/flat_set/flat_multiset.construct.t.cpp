@@ -115,11 +115,17 @@ template <typename T>
 constexpr auto test_type() -> bool
 {
     struct Less {
-        [[nodiscard]] constexpr auto operator()(T lhs, T rhs) const -> bool { return lhs < rhs; }
+        [[nodiscard]] constexpr auto operator()(T lhs, T rhs) const -> bool
+        {
+            return lhs < rhs;
+        }
     };
 
     struct Greater {
-        [[nodiscard]] constexpr auto operator()(T lhs, T rhs) const -> bool { return lhs > rhs; }
+        [[nodiscard]] constexpr auto operator()(T lhs, T rhs) const -> bool
+        {
+            return lhs > rhs;
+        }
     };
 
     test_less<T, etl::less<T>>();

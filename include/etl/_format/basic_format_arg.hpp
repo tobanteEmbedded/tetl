@@ -45,7 +45,10 @@ public:
 
     basic_format_arg() noexcept = default;
 
-    explicit operator bool() const noexcept { return holds_alternative<monostate>(value); }
+    explicit operator bool() const noexcept
+    {
+        return holds_alternative<monostate>(value);
+    }
 
     template <typename T>
     explicit basic_format_arg(T&& v) noexcept;

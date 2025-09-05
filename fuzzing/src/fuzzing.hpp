@@ -46,7 +46,13 @@ auto to_std(etl::errc ec) -> std::errc
 
     return map.at(ec);
 }
-auto to_std(etl::from_chars_result r) -> std::from_chars_result { return {.ptr = r.ptr, .ec = to_std(r.ec)}; }
-auto to_std(etl::to_chars_result r) -> std::to_chars_result { return {.ptr = r.ptr, .ec = to_std(r.ec)}; }
+auto to_std(etl::from_chars_result r) -> std::from_chars_result
+{
+    return {.ptr = r.ptr, .ec = to_std(r.ec)};
+}
+auto to_std(etl::to_chars_result r) -> std::to_chars_result
+{
+    return {.ptr = r.ptr, .ec = to_std(r.ec)};
+}
 
 } // namespace etl::fuzzing

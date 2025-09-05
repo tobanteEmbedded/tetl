@@ -16,7 +16,10 @@ struct integer_sequence {
 
     using value_type = T;
 
-    [[nodiscard]] static constexpr auto size() noexcept -> size_t { return sizeof...(Ints); }
+    [[nodiscard]] static constexpr auto size() noexcept -> size_t
+    {
+        return sizeof...(Ints);
+    }
 };
 
 template <typename T, T Size>

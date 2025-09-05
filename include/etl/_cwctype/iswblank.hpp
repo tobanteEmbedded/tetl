@@ -17,7 +17,10 @@ namespace etl {
 /// https://en.cppreference.com/w/cpp/string/wide/iswblank
 ///
 /// \ingroup cwctype
-[[nodiscard]] constexpr auto iswblank(wint_t ch) noexcept -> int { return static_cast<int>(ch == L' ' || ch == L'\t'); }
+[[nodiscard]] constexpr auto iswblank(wint_t ch) noexcept -> int
+{
+    return static_cast<int>(ch == L' ' || ch == L'\t');
+}
 } // namespace etl
 
 #endif // TETL_CWCTYPE_ISWBLANK_HPP

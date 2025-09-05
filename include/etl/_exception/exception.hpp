@@ -13,7 +13,10 @@ struct exception {
     {
     }
 
-    [[nodiscard]] constexpr auto what() const noexcept -> char const* { return _what; }
+    [[nodiscard]] constexpr auto what() const noexcept -> char const*
+    {
+        return _what;
+    }
 
 private:
     char const* _what{nullptr};

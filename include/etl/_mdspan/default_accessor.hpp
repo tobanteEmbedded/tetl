@@ -23,7 +23,10 @@ struct default_accessor {
     {
     }
 
-    [[nodiscard]] constexpr auto access(data_handle_type p, size_t i) const noexcept -> reference { return p[i]; }
+    [[nodiscard]] constexpr auto access(data_handle_type p, size_t i) const noexcept -> reference
+    {
+        return p[i];
+    }
 
     [[nodiscard]] constexpr auto offset(data_handle_type p, size_t i) const noexcept -> data_handle_type
     {

@@ -52,25 +52,70 @@ struct flat_multiset {
     {
     }
 
-    [[nodiscard]] constexpr auto begin() noexcept -> iterator { return _container.begin(); }
-    [[nodiscard]] constexpr auto begin() const noexcept -> const_iterator { return _container.begin(); }
-    [[nodiscard]] constexpr auto cbegin() const noexcept -> const_iterator { return _container.begin(); }
+    [[nodiscard]] constexpr auto begin() noexcept -> iterator
+    {
+        return _container.begin();
+    }
+    [[nodiscard]] constexpr auto begin() const noexcept -> const_iterator
+    {
+        return _container.begin();
+    }
+    [[nodiscard]] constexpr auto cbegin() const noexcept -> const_iterator
+    {
+        return _container.begin();
+    }
 
-    [[nodiscard]] constexpr auto end() noexcept -> iterator { return _container.end(); }
-    [[nodiscard]] constexpr auto end() const noexcept -> const_iterator { return _container.end(); }
-    [[nodiscard]] constexpr auto cend() const noexcept -> const_iterator { return _container.end(); }
+    [[nodiscard]] constexpr auto end() noexcept -> iterator
+    {
+        return _container.end();
+    }
+    [[nodiscard]] constexpr auto end() const noexcept -> const_iterator
+    {
+        return _container.end();
+    }
+    [[nodiscard]] constexpr auto cend() const noexcept -> const_iterator
+    {
+        return _container.end();
+    }
 
-    [[nodiscard]] constexpr auto rbegin() noexcept -> reverse_iterator { return _container.rbegin(); }
-    [[nodiscard]] constexpr auto rbegin() const noexcept -> const_reverse_iterator { return _container.rbegin(); }
-    [[nodiscard]] constexpr auto crbegin() const noexcept -> const_reverse_iterator { return _container.crbegin(); }
+    [[nodiscard]] constexpr auto rbegin() noexcept -> reverse_iterator
+    {
+        return _container.rbegin();
+    }
+    [[nodiscard]] constexpr auto rbegin() const noexcept -> const_reverse_iterator
+    {
+        return _container.rbegin();
+    }
+    [[nodiscard]] constexpr auto crbegin() const noexcept -> const_reverse_iterator
+    {
+        return _container.crbegin();
+    }
 
-    [[nodiscard]] constexpr auto rend() noexcept -> reverse_iterator { return _container.rend(); }
-    [[nodiscard]] constexpr auto rend() const noexcept -> const_reverse_iterator { return _container.rend(); }
-    [[nodiscard]] constexpr auto crend() const noexcept -> const_reverse_iterator { return _container.crend(); }
+    [[nodiscard]] constexpr auto rend() noexcept -> reverse_iterator
+    {
+        return _container.rend();
+    }
+    [[nodiscard]] constexpr auto rend() const noexcept -> const_reverse_iterator
+    {
+        return _container.rend();
+    }
+    [[nodiscard]] constexpr auto crend() const noexcept -> const_reverse_iterator
+    {
+        return _container.crend();
+    }
 
-    [[nodiscard]] constexpr auto empty() const noexcept -> bool { return _container.empty(); }
-    [[nodiscard]] constexpr auto size() const noexcept -> size_type { return _container.size(); }
-    [[nodiscard]] constexpr auto max_size() const noexcept -> size_type { return _container.max_size(); }
+    [[nodiscard]] constexpr auto empty() const noexcept -> bool
+    {
+        return _container.empty();
+    }
+    [[nodiscard]] constexpr auto size() const noexcept -> size_type
+    {
+        return _container.size();
+    }
+    [[nodiscard]] constexpr auto max_size() const noexcept -> size_type
+    {
+        return _container.max_size();
+    }
 
 private:
     TETL_NO_UNIQUE_ADDRESS KeyContainer _container;

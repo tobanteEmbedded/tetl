@@ -41,12 +41,30 @@ inline constexpr struct asin {
 
 /// Computes the principal value of the arc sine of arg.
 /// \details https://en.cppreference.com/w/cpp/numeric/math/asin
-[[nodiscard]] constexpr auto asin(float arg) noexcept -> float { return etl::detail::asin(arg); }
-[[nodiscard]] constexpr auto asinf(float arg) noexcept -> float { return etl::detail::asin(arg); }
-[[nodiscard]] constexpr auto asin(double arg) noexcept -> double { return etl::detail::asin(arg); }
-[[nodiscard]] constexpr auto asin(long double arg) noexcept -> long double { return etl::detail::asin(arg); }
-[[nodiscard]] constexpr auto asinl(long double arg) noexcept -> long double { return etl::detail::asin(arg); }
-[[nodiscard]] constexpr auto asin(integral auto arg) noexcept -> double { return etl::detail::asin(double(arg)); }
+[[nodiscard]] constexpr auto asin(float arg) noexcept -> float
+{
+    return etl::detail::asin(arg);
+}
+[[nodiscard]] constexpr auto asinf(float arg) noexcept -> float
+{
+    return etl::detail::asin(arg);
+}
+[[nodiscard]] constexpr auto asin(double arg) noexcept -> double
+{
+    return etl::detail::asin(arg);
+}
+[[nodiscard]] constexpr auto asin(long double arg) noexcept -> long double
+{
+    return etl::detail::asin(arg);
+}
+[[nodiscard]] constexpr auto asinl(long double arg) noexcept -> long double
+{
+    return etl::detail::asin(arg);
+}
+[[nodiscard]] constexpr auto asin(integral auto arg) noexcept -> double
+{
+    return etl::detail::asin(double(arg));
+}
 
 /// @}
 

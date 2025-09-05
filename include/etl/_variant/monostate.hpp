@@ -15,7 +15,10 @@ namespace etl {
 /// \headerfile etl/variant.hpp
 struct monostate {
     /// \brief All instances of etl::monostate compare equal.
-    [[nodiscard]] friend constexpr auto operator==(monostate /*l*/, monostate /*r*/) noexcept -> bool { return true; }
+    [[nodiscard]] friend constexpr auto operator==(monostate /*l*/, monostate /*r*/) noexcept -> bool
+    {
+        return true;
+    }
 
     /// \brief All instances of etl::monostate compare equal.
     [[nodiscard]] friend constexpr auto operator<=>(monostate /*l*/, monostate /*r*/) noexcept -> etl::strong_ordering

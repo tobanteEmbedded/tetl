@@ -26,27 +26,60 @@ template <typename T>
 /// undefined if the result cannot be represented by the return type. If abs
 /// is called with an unsigned integral argument that cannot be converted to int
 /// by integral promotion, the program is ill-formed.
-[[nodiscard]] constexpr auto abs(int n) noexcept -> int { return detail::abs_impl<int>(n); }
+[[nodiscard]] constexpr auto abs(int n) noexcept -> int
+{
+    return detail::abs_impl<int>(n);
+}
 
-[[nodiscard]] constexpr auto abs(long n) noexcept -> long { return detail::abs_impl<long>(n); }
+[[nodiscard]] constexpr auto abs(long n) noexcept -> long
+{
+    return detail::abs_impl<long>(n);
+}
 
-[[nodiscard]] constexpr auto abs(long long n) noexcept -> long long { return detail::abs_impl<long long>(n); }
+[[nodiscard]] constexpr auto abs(long long n) noexcept -> long long
+{
+    return detail::abs_impl<long long>(n);
+}
 
-[[nodiscard]] constexpr auto abs(float n) noexcept -> float { return detail::abs_impl<float>(n); }
+[[nodiscard]] constexpr auto abs(float n) noexcept -> float
+{
+    return detail::abs_impl<float>(n);
+}
 
-[[nodiscard]] constexpr auto abs(double n) noexcept -> double { return detail::abs_impl<double>(n); }
+[[nodiscard]] constexpr auto abs(double n) noexcept -> double
+{
+    return detail::abs_impl<double>(n);
+}
 
-[[nodiscard]] constexpr auto abs(long double n) noexcept -> long double { return detail::abs_impl<long double>(n); }
+[[nodiscard]] constexpr auto abs(long double n) noexcept -> long double
+{
+    return detail::abs_impl<long double>(n);
+}
 
-[[nodiscard]] constexpr auto fabs(float n) noexcept -> float { return detail::abs_impl<float>(n); }
+[[nodiscard]] constexpr auto fabs(float n) noexcept -> float
+{
+    return detail::abs_impl<float>(n);
+}
 
-[[nodiscard]] constexpr auto fabsf(float n) noexcept -> float { return detail::abs_impl<float>(n); }
+[[nodiscard]] constexpr auto fabsf(float n) noexcept -> float
+{
+    return detail::abs_impl<float>(n);
+}
 
-[[nodiscard]] constexpr auto fabs(double n) noexcept -> double { return detail::abs_impl<double>(n); }
+[[nodiscard]] constexpr auto fabs(double n) noexcept -> double
+{
+    return detail::abs_impl<double>(n);
+}
 
-[[nodiscard]] constexpr auto fabs(long double n) noexcept -> long double { return detail::abs_impl<long double>(n); }
+[[nodiscard]] constexpr auto fabs(long double n) noexcept -> long double
+{
+    return detail::abs_impl<long double>(n);
+}
 
-[[nodiscard]] constexpr auto fabsl(long double n) noexcept -> long double { return detail::abs_impl<long double>(n); }
+[[nodiscard]] constexpr auto fabsl(long double n) noexcept -> long double
+{
+    return detail::abs_impl<long double>(n);
+}
 
 } // namespace etl
 

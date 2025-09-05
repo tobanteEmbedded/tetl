@@ -40,7 +40,10 @@ struct function_ref<Noexcept, R(Args...)> {
     template <typename T>
     auto operator=(T /*t*/) -> function_ref& = delete;
 
-    auto operator()(Args... args) const noexcept(Noexcept) -> R { return _callable(_obj, etl::forward<Args>(args)...); }
+    auto operator()(Args... args) const noexcept(Noexcept) -> R
+    {
+        return _callable(_obj, etl::forward<Args>(args)...);
+    }
 
 private:
     using internal_signature_t = R (*)(void*, Args...) noexcept(Noexcept);

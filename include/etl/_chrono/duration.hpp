@@ -94,7 +94,10 @@ struct duration {
     auto operator=(duration const& other) -> duration& = default;
 
     /// Returns the number of ticks for this duration.
-    [[nodiscard]] constexpr auto count() const -> rep { return _rep; }
+    [[nodiscard]] constexpr auto count() const -> rep
+    {
+        return _rep;
+    }
 
     /// Returns a zero-length duration.
     [[nodiscard]] static constexpr auto zero() noexcept -> duration
@@ -136,7 +139,10 @@ struct duration {
 
     /// Increments or decrements the number of ticks for this duration.
     /// Equivalent to return duration(_rep++)
-    constexpr auto operator++(int) -> duration { return duration(_rep++); }
+    constexpr auto operator++(int) -> duration
+    {
+        return duration(_rep++);
+    }
 
     /// Increments or decrements the number of ticks for this duration.
     /// Equivalent to --_rep; return *this;
@@ -148,7 +154,10 @@ struct duration {
 
     /// Increments or decrements the number of ticks for this duration.
     /// Equivalent to return duration(_rep--);
-    constexpr auto operator--(int) -> duration { return duration(_rep--); }
+    constexpr auto operator--(int) -> duration
+    {
+        return duration(_rep--);
+    }
 
     /// Performs compound assignments between two durations with the same
     /// period or between a duration and a tick count value.

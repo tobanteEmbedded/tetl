@@ -20,7 +20,10 @@ struct NullClock {
     using time_point                      = etl::chrono::time_point<NullClock>;
     static constexpr auto const is_steady = false;
 
-    [[nodiscard]] constexpr auto now() noexcept -> time_point { return time_point{}; }
+    [[nodiscard]] constexpr auto now() noexcept -> time_point
+    {
+        return time_point{};
+    }
 };
 
 template <typename T>

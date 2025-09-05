@@ -65,7 +65,10 @@ struct reverse_iterator {
     }
 
     /// Returns the underlying base iterator.
-    [[nodiscard]] constexpr auto base() const -> Iter { return _current; }
+    [[nodiscard]] constexpr auto base() const -> Iter
+    {
+        return _current;
+    }
 
     /// Returns a reference to the element previous to current.
     constexpr auto operator*() const -> reference
@@ -75,7 +78,10 @@ struct reverse_iterator {
     }
 
     /// Returns a pointer to the element previous to current.
-    constexpr auto operator->() const -> pointer { return etl::addressof(operator*()); }
+    constexpr auto operator->() const -> pointer
+    {
+        return etl::addressof(operator*());
+    }
 
     /// Pre-increments by one respectively.
     constexpr auto operator++() -> reverse_iterator&
@@ -108,7 +114,10 @@ struct reverse_iterator {
     }
 
     /// Returns an iterator which is advanced by n positions.
-    constexpr auto operator+(difference_type n) const -> reverse_iterator { return reverse_iterator(_current - n); }
+    constexpr auto operator+(difference_type n) const -> reverse_iterator
+    {
+        return reverse_iterator(_current - n);
+    }
 
     /// Advances the iterator by n or -n positions respectively.
     constexpr auto operator+=(difference_type n) -> reverse_iterator&
@@ -118,7 +127,10 @@ struct reverse_iterator {
     }
 
     /// Returns an iterator which is advanced by -n positions.
-    constexpr auto operator-(difference_type n) const -> reverse_iterator { return reverse_iterator(_current + n); }
+    constexpr auto operator-(difference_type n) const -> reverse_iterator
+    {
+        return reverse_iterator(_current + n);
+    }
 
     /// Advances the iterator by n or -n positions respectively.
     constexpr auto operator-=(difference_type n) -> reverse_iterator&
@@ -128,7 +140,10 @@ struct reverse_iterator {
     }
 
     /// Returns a reference to the element at specified relative location.
-    constexpr auto operator[](difference_type n) const -> reference { return *(*this + n); }
+    constexpr auto operator[](difference_type n) const -> reference
+    {
+        return *(*this + n);
+    }
 
 private:
     Iter _current;

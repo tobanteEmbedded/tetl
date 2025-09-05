@@ -22,9 +22,15 @@ struct Wrapper {
     {
     }
 
-    friend constexpr auto operator<(Wrapper lhs, T rhs) -> bool { return lhs.value < rhs; }
+    friend constexpr auto operator<(Wrapper lhs, T rhs) -> bool
+    {
+        return lhs.value < rhs;
+    }
 
-    friend constexpr auto operator<(T lhs, Wrapper rhs) -> bool { return lhs < rhs.value; }
+    friend constexpr auto operator<(T lhs, Wrapper rhs) -> bool
+    {
+        return lhs < rhs.value;
+    }
 
     T value;
 };

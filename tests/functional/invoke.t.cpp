@@ -18,7 +18,10 @@ struct Class {
     {
     }
 
-    [[nodiscard]] constexpr auto get_num(T i) const -> T { return num + i; }
+    [[nodiscard]] constexpr auto get_num(T i) const -> T
+    {
+        return num + i;
+    }
 
     T num;
 };

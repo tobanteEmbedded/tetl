@@ -41,12 +41,30 @@ inline constexpr struct cos {
 
 /// Computes the cosine of arg (measured in radians).
 /// \details https://en.cppreference.com/w/cpp/numeric/math/cos
-[[nodiscard]] constexpr auto cos(float arg) noexcept -> float { return etl::detail::cos(arg); }
-[[nodiscard]] constexpr auto cosf(float arg) noexcept -> float { return etl::detail::cos(arg); }
-[[nodiscard]] constexpr auto cos(double arg) noexcept -> double { return etl::detail::cos(arg); }
-[[nodiscard]] constexpr auto cos(long double arg) noexcept -> long double { return etl::detail::cos(arg); }
-[[nodiscard]] constexpr auto cosl(long double arg) noexcept -> long double { return etl::detail::cos(arg); }
-[[nodiscard]] constexpr auto cos(integral auto arg) noexcept -> double { return etl::detail::cos(double(arg)); }
+[[nodiscard]] constexpr auto cos(float arg) noexcept -> float
+{
+    return etl::detail::cos(arg);
+}
+[[nodiscard]] constexpr auto cosf(float arg) noexcept -> float
+{
+    return etl::detail::cos(arg);
+}
+[[nodiscard]] constexpr auto cos(double arg) noexcept -> double
+{
+    return etl::detail::cos(arg);
+}
+[[nodiscard]] constexpr auto cos(long double arg) noexcept -> long double
+{
+    return etl::detail::cos(arg);
+}
+[[nodiscard]] constexpr auto cosl(long double arg) noexcept -> long double
+{
+    return etl::detail::cos(arg);
+}
+[[nodiscard]] constexpr auto cos(integral auto arg) noexcept -> double
+{
+    return etl::detail::cos(double(arg));
+}
 
 /// @}
 

@@ -18,7 +18,10 @@ struct basic_format_string {
     {
     }
 
-    [[nodiscard]] constexpr auto get() const noexcept -> basic_string_view<CharT> { return _str; }
+    [[nodiscard]] constexpr auto get() const noexcept -> basic_string_view<CharT>
+    {
+        return _str;
+    }
 
 private:
     basic_string_view<CharT> _str;
