@@ -235,21 +235,16 @@ struct basic_string_view {
         auto const rlen = etl::min(size(), v.size());
         auto const res  = traits_type::compare(data(), v.data(), rlen);
 
-        if (res < 0) {
-            return -1;
-        }
-        if (res > 0) {
-            return 1;
-        }
-
-        if (size() < v.size()) {
-            return -1;
-        }
-        if (size() > v.size()) {
-            return 1;
+        if (res == 0) {
+            if (size() < v.size()) {
+                return -1;
+            }
+            if (size() > v.size()) {
+                return 1;
+            }
         }
 
-        return 0;
+        return res;
     }
 
     /// Compares two character sequences. Equivalent to substr(pos1, count1).compare(v).
@@ -334,6 +329,10 @@ struct basic_string_view {
     /// if no such substring is found.
     [[nodiscard]] constexpr auto find(basic_string_view v, size_type pos = 0) const noexcept -> size_type
     {
+        if (v.empty()) {
+            return 0;
+        }
+
         if (v.size() > size() - pos) {
             return npos;
         }
