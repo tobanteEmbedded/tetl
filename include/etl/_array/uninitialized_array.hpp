@@ -17,7 +17,7 @@ namespace etl {
 namespace detail {
 template <typename T>
 concept sufficiently_trivial = etl::is_trivially_default_constructible_v<T> and etl::is_trivially_destructible_v<T>;
-}
+} // namespace detail
 
 /// \headerfile etl/array.hpp
 /// \ingroup array

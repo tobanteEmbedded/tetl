@@ -19,7 +19,7 @@ struct basic_format_arg;
 namespace detail {
 template <typename Context, typename T>
 [[nodiscard]] constexpr auto make_arg(T&& value) -> basic_format_arg<Context>;
-}
+} // namespace detail
 
 template <typename Context>
 struct basic_format_arg {

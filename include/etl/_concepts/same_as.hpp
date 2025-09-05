@@ -10,7 +10,7 @@ namespace etl {
 namespace detail {
 template <typename T, typename U>
 concept same_helper = etl::is_same_v<T, U>;
-}
+} // namespace detail
 
 /// \brief The concept same_as<T, U> is satisfied if and only if T and U denote
 /// the same type. same_as<T, U> subsumes same_as<U, T> and vice versa.

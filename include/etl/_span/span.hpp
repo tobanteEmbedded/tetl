@@ -374,12 +374,12 @@ span(R&&) -> span<remove_reference_t<ranges::range_reference_t<R>>>;
 namespace ranges {
 template <typename T, etl::size_t Extent>
 inline constexpr bool enable_borrowed_range<etl::span<T, Extent>> = true;
-}
+} // namespace ranges
 
 namespace detail {
 template <typename T, etl::size_t N>
 inline constexpr etl::size_t span_as_bytes_size = N == etl::dynamic_extent ? etl::dynamic_extent : sizeof(T) * N;
-}
+} // namespace detail
 
 /// Obtains a view to the object representation of the elements of the
 /// span s.

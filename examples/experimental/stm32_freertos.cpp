@@ -33,7 +33,7 @@ struct example_task {
 
 namespace {
 example_task<rtos::once> task{};
-}
+} // namespace
 
 auto main() -> int
 {
