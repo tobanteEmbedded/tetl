@@ -1,26 +1,26 @@
 // SPDX-License-Identifier: BSL-1.0
 
-#ifndef TETL_META_PUSH_BACK_HPP
-#define TETL_META_PUSH_BACK_HPP
+#ifndef TETL_MPL_PUSH_BACK_HPP
+#define TETL_MPL_PUSH_BACK_HPP
 
-#include <etl/_meta/list.hpp>
+#include <etl/_mpl/list.hpp>
 
-namespace etl::meta {
+namespace etl::mpl {
 
-/// \ingroup meta
+/// \ingroup mpl
 template <typename T, typename List>
 struct push_back;
 
-/// \ingroup meta
+/// \ingroup mpl
 template <typename T, typename... Ts>
 struct push_back<T, list<Ts...>> {
     using type = list<Ts..., T>;
 };
 
-/// \ingroup meta
+/// \ingroup mpl
 template <typename T, typename List>
 using push_back_t = typename push_back<T, List>::type;
 
-} // namespace etl::meta
+} // namespace etl::mpl
 
-#endif // TETL_META_PUSH_BACK_HPP
+#endif // TETL_MPL_PUSH_BACK_HPP

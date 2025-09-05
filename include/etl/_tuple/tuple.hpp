@@ -5,7 +5,7 @@
 
 #include <etl/_config/all.hpp>
 
-#include <etl/_meta/at.hpp>
+#include <etl/_mpl/at.hpp>
 #include <etl/_tuple/ignore.hpp>
 #include <etl/_tuple/is_tuple_like.hpp>
 #include <etl/_tuple/tuple_element.hpp>
@@ -173,7 +173,7 @@ private:
 template <etl::size_t I, typename... Ts>
 struct tuple_element<I, tuple<Ts...>> {
     static_assert(I < sizeof...(Ts));
-    using type = meta::at_t<I, meta::list<Ts...>>;
+    using type = mpl::at_t<I, mpl::list<Ts...>>;
 };
 
 template <typename... Ts>

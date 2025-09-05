@@ -15,9 +15,9 @@
 #include <etl/_memory/addressof.hpp>
 #include <etl/_memory/construct_at.hpp>
 #include <etl/_memory/destroy_at.hpp>
-#include <etl/_meta/at.hpp>
-#include <etl/_meta/count.hpp>
-#include <etl/_meta/index_of.hpp>
+#include <etl/_mpl/at.hpp>
+#include <etl/_mpl/count.hpp>
+#include <etl/_mpl/index_of.hpp>
 #include <etl/_type_traits/add_pointer.hpp>
 #include <etl/_type_traits/index_constant.hpp>
 #include <etl/_type_traits/is_assignable.hpp>
@@ -101,7 +101,7 @@ private:
     static_assert((is_nothrow_move_constructible_v<Ts> and ...));
 
     using index_type = smallest_size_t<sizeof...(Ts)>;
-    using first_type = meta::at_t<0, meta::list<Ts...>>;
+    using first_type = mpl::at_t<0, mpl::list<Ts...>>;
 
 public:
     constexpr variant() noexcept(is_nothrow_default_constructible_v<first_type>)
@@ -134,9 +134,9 @@ public:
     }
 
     template <typename T, typename... Args>
-        requires(is_constructible_v<T, Args...> and meta::count_v<remove_cvref_t<T>, meta::list<Ts...>> == 1)
+        requires(is_constructible_v<T, Args...> and mpl::count_v<remove_cvref_t<T>, mpl::list<Ts...>> == 1)
     explicit constexpr variant(in_place_type_t<T> /*tag*/, Args&&... args)
-        : variant(in_place_index<meta::index_of_v<T, meta::list<Ts...>>>, etl::forward<Args>(args)...)
+        : variant(in_place_index<mpl::index_of_v<T, mpl::list<Ts...>>>, etl::forward<Args>(args)...)
     {
     }
 
@@ -253,15 +253,15 @@ public:
     }
 
     template <typename T, typename... Args>
-        requires(is_constructible_v<T, Args...> and meta::count_v<T, meta::list<Ts...>> == 1)
+        requires(is_constructible_v<T, Args...> and mpl::count_v<T, mpl::list<Ts...>> == 1)
     constexpr auto emplace(Args&&... args) -> auto&
     {
         destroy();
-        return replace(index_v<meta::index_of_v<T, meta::list<Ts...>>>, etl::forward<Args>(args)...);
+        return replace(index_v<mpl::index_of_v<T, mpl::list<Ts...>>>, etl::forward<Args>(args)...);
     }
 
     template <size_t I, typename... Args>
-        requires is_constructible_v<meta::at_t<I, meta::list<Ts...>>, Args...>
+        requires is_constructible_v<mpl::at_t<I, mpl::list<Ts...>>, Args...>
     constexpr auto emplace(Args&&... args) -> auto&
     {
         destroy();
@@ -397,8 +397,8 @@ private:
 template <typename T, typename... Ts>
 constexpr auto holds_alternative(variant<Ts...> const& v) noexcept -> bool
 {
-    static_assert(meta::count_v<T, meta::list<Ts...>> == 1);
-    return v.index() == meta::index_of_v<T, meta::list<Ts...>>;
+    static_assert(mpl::count_v<T, mpl::list<Ts...>> == 1);
+    return v.index() == mpl::index_of_v<T, mpl::list<Ts...>>;
 }
 
 /// Returns a reference to the object stored in the variant.
@@ -479,7 +479,7 @@ constexpr auto get_if(variant<Ts...> const* pv) noexcept
 template <typename T, typename... Ts>
 constexpr auto get_if(variant<Ts...>* pv) noexcept -> add_pointer_t<T>
 {
-    return etl::get_if<meta::index_of_v<T, meta::list<Ts...>>>(pv);
+    return etl::get_if<mpl::index_of_v<T, mpl::list<Ts...>>>(pv);
 }
 
 /// Type-based non-throwing accessor: The call is ill-formed if T is not a unique element of Ts....
@@ -487,7 +487,7 @@ constexpr auto get_if(variant<Ts...>* pv) noexcept -> add_pointer_t<T>
 template <typename T, typename... Ts>
 constexpr auto get_if(variant<Ts...> const* pv) noexcept -> add_pointer_t<T const>
 {
-    return etl::get_if<meta::index_of_v<T, meta::list<Ts...>>>(pv);
+    return etl::get_if<mpl::index_of_v<T, mpl::list<Ts...>>>(pv);
 }
 
 } // namespace etl

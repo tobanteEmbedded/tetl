@@ -1,11 +1,11 @@
 // SPDX-License-Identifier: BSL-1.0
 
-#ifndef TETL_META_TAIL_HPP
-#define TETL_META_TAIL_HPP
+#ifndef TETL_MPL_TAIL_HPP
+#define TETL_MPL_TAIL_HPP
 
-#include <etl/_meta/list.hpp>
+#include <etl/_mpl/list.hpp>
 
-namespace etl::meta {
+namespace etl::mpl {
 
 template <typename... Ts>
 struct tail;
@@ -18,6 +18,6 @@ struct tail<list<Head, Tail...>> {
 template <typename List>
 using tail_t = typename tail<List>::type;
 
-} // namespace etl::meta
+} // namespace etl::mpl
 
-#endif // TETL_META_TAIL_HPP
+#endif // TETL_MPL_TAIL_HPP

@@ -29,7 +29,7 @@ module;
 #include <etl/mdarray.hpp>
 #include <etl/mdspan.hpp>
 #include <etl/memory.hpp>
-#include <etl/meta.hpp>
+#include <etl/mpl.hpp>
 #include <etl/mutex.hpp>
 #include <etl/numbers.hpp>
 #include <etl/numeric.hpp>
@@ -95,7 +95,7 @@ export module etl;
 #include "inc/mdarray.inc"
 #include "inc/mdspan.inc"
 #include "inc/memory.inc"
-#include "inc/meta.inc"
+#include "inc/mpl.inc"
 #include "inc/mutex.inc"
 #include "inc/numbers.inc"
 #include "inc/numeric.inc"

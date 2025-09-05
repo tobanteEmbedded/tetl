@@ -1,11 +1,11 @@
 // SPDX-License-Identifier: BSL-1.0
 
-#ifndef TETL_META_HEAD_HPP
-#define TETL_META_HEAD_HPP
+#ifndef TETL_MPL_HEAD_HPP
+#define TETL_MPL_HEAD_HPP
 
-#include <etl/_meta/list.hpp>
+#include <etl/_mpl/list.hpp>
 
-namespace etl::meta {
+namespace etl::mpl {
 
 template <typename... Ts>
 struct head;
@@ -18,6 +18,6 @@ struct head<list<Head, Tail...>> {
 template <typename List>
 using head_t = typename head<List>::type;
 
-} // namespace etl::meta
+} // namespace etl::mpl
 
-#endif // TETL_META_HEAD_HPP
+#endif // TETL_MPL_HEAD_HPP

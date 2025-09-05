@@ -3,7 +3,7 @@
 #ifndef TETL_TYPE_TRAITS_IS_FLOATING_POINT_HPP
 #define TETL_TYPE_TRAITS_IS_FLOATING_POINT_HPP
 
-#include <etl/_meta/contains.hpp>
+#include <etl/_mpl/contains.hpp>
 #include <etl/_type_traits/bool_constant.hpp>
 #include <etl/_type_traits/remove_cv.hpp>
 
@@ -17,7 +17,7 @@ namespace etl {
 /// \details The behavior of a program that adds specializations for
 /// is_floating_point or is_floating_point_v is undefined.
 template <typename T>
-struct is_floating_point : bool_constant<meta::contains_v<remove_cv_t<T>, meta::list<float, double, long double>>> { };
+struct is_floating_point : bool_constant<mpl::contains_v<remove_cv_t<T>, mpl::list<float, double, long double>>> { };
 
 template <typename T>
 inline constexpr bool is_floating_point_v = is_floating_point<T>::value;

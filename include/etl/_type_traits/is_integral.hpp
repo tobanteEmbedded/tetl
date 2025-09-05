@@ -19,15 +19,15 @@ inline constexpr bool is_integral_v = __is_integral(T);
 
 #else
 
-    #include <etl/_meta/contains.hpp>
+    #include <etl/_mpl/contains.hpp>
     #include <etl/_type_traits/remove_cv.hpp>
 
 namespace etl {
 
 template <typename T>
-inline constexpr bool is_integral_v = meta::contains_v<
+inline constexpr bool is_integral_v = mpl::contains_v<
     remove_cv_t<T>,
-    meta::list<
+    mpl::list<
         bool,
         char,
         signed char,

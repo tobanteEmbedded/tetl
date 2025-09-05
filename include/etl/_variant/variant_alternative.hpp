@@ -3,7 +3,7 @@
 #ifndef TETL_VARIANT_VARIANT_ALTERNATIVE_HPP
 #define TETL_VARIANT_VARIANT_ALTERNATIVE_HPP
 
-#include <etl/_meta/at.hpp>
+#include <etl/_mpl/at.hpp>
 #include <etl/_type_traits/add_const.hpp>
 #include <etl/_type_traits/add_cv.hpp>
 #include <etl/_type_traits/add_volatile.hpp>
@@ -14,7 +14,7 @@ namespace etl {
 template <size_t Idx, typename... Ts>
 struct variant_alternative<Idx, variant<Ts...>> {
     static_assert(Idx < sizeof...(Ts));
-    using type = meta::at_t<Idx, meta::list<Ts...>>;
+    using type = mpl::at_t<Idx, mpl::list<Ts...>>;
 };
 
 template <size_t I, typename T>

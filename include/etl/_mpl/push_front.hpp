@@ -1,11 +1,11 @@
 // SPDX-License-Identifier: BSL-1.0
 
-#ifndef TETL_META_PUSH_FRONT_HPP
-#define TETL_META_PUSH_FRONT_HPP
+#ifndef TETL_MPL_PUSH_FRONT_HPP
+#define TETL_MPL_PUSH_FRONT_HPP
 
-#include <etl/_meta/list.hpp>
+#include <etl/_mpl/list.hpp>
 
-namespace etl::meta {
+namespace etl::mpl {
 
 template <typename T, typename List>
 struct push_front;
@@ -18,6 +18,6 @@ struct push_front<T, list<Ts...>> {
 template <typename T, typename List>
 using push_front_t = typename push_front<T, List>::type;
 
-} // namespace etl::meta
+} // namespace etl::mpl
 
-#endif // TETL_META_PUSH_FRONT_HPP
+#endif // TETL_MPL_PUSH_FRONT_HPP
