@@ -10,14 +10,18 @@ bin:
 .PHONY: build
 build: bin
 	$(CXX) $(CXXFLAGS) -I ../include -o bin/fuzz_algorithm src/fuzz_algorithm.cpp
+	$(CXX) $(CXXFLAGS) -I ../include -o bin/fuzz_bitset src/fuzz_bitset.cpp
 	$(CXX) $(CXXFLAGS) -I ../include -o bin/fuzz_from_chars src/fuzz_from_chars.cpp
+	$(CXX) $(CXXFLAGS) -I ../include -o bin/fuzz_string_view src/fuzz_string_view.cpp
 	$(CXX) $(CXXFLAGS) -I ../include -o bin/fuzz_to_chars src/fuzz_to_chars.cpp
 
 .PHONY: fuzz
 fuzz: build
 	$(LCOV) -c -i -d . --base-directory . -o bin/base_cov.info --ignore-errors inconsistent
 	LLVM_PROFILE_FILE="bin/%p-%m.profraw" ./bin/fuzz_algorithm -max_total_time=$(MAXTIME)
+	LLVM_PROFILE_FILE="bin/%p-%m.profraw" ./bin/fuzz_bitset -max_total_time=$(MAXTIME)
 	LLVM_PROFILE_FILE="bin/%p-%m.profraw" ./bin/fuzz_from_chars -max_total_time=$(MAXTIME)
+	LLVM_PROFILE_FILE="bin/%p-%m.profraw" ./bin/fuzz_string_view -max_total_time=$(MAXTIME)
 	LLVM_PROFILE_FILE="bin/%p-%m.profraw" ./bin/fuzz_to_chars -max_total_time=$(MAXTIME)
 	$(LCOV) -c -d . --base-directory . -o bin/fuzz_cov.info --ignore-errors inconsistent
 	$(LCOV) -a bin/base_cov.info -a bin/fuzz_cov.info -o bin/cov.info --ignore-errors inconsistent
