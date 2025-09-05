@@ -29,7 +29,8 @@ template <
     unsigned IntBits,
     typename IntType   = unsigned,
     typename PtrTraits = pointer_like_traits<PointerT>,
-    typename Info      = pointer_int_pair_info<PointerT, IntBits, PtrTraits>>
+    typename Info      = pointer_int_pair_info<PointerT, IntBits, PtrTraits>
+>
 struct pointer_int_pair {
     using pointer_type             = PointerT;
     using pointer_traits           = PtrTraits;

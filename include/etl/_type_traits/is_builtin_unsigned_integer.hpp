@@ -14,7 +14,8 @@ template <typename T>
 struct is_builtin_unsigned_integer
     : bool_constant<meta::contains_v<
           remove_cv_t<T>,
-          meta::list<unsigned char, unsigned short, unsigned int, unsigned long, unsigned long long>>> { };
+          meta::list<unsigned char, unsigned short, unsigned int, unsigned long, unsigned long long>
+      >> { };
 
 /// \relates is_builtin_unsigned_integer
 template <typename T>

@@ -15,7 +15,10 @@ using smallest_size_t =
             conditional_t<(N < static_cast<unsigned short>(-1)),    unsigned short,
             conditional_t<(N < static_cast<unsigned int>(-1)),      unsigned int,
             conditional_t<(N < static_cast<unsigned long>(-1)),     unsigned long,
-                                                                    unsigned long long>>>>;
+                                                                    unsigned long long>
+        >
+    >
+>;
 // clang-format on
 
 } // namespace etl

@@ -55,7 +55,8 @@ struct reference_wrapper {
     template <
         typename U,
         typename
-        = decltype(detail::FUN<T>(declval<U>()), enable_if_t<!is_same_v<reference_wrapper, remove_cvref_t<U>>>())>
+        = decltype(detail::FUN<T>(declval<U>()), enable_if_t<!is_same_v<reference_wrapper, remove_cvref_t<U>>>())
+    >
     constexpr reference_wrapper(U&& u) noexcept(noexcept(detail::FUN<T>(etl::forward<U>(u))))
         : _ptr(addressof(detail::FUN<T>(etl::forward<U>(u))))
     {

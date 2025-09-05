@@ -55,7 +55,8 @@ struct submdspan_extents_builder {
                 K - 1,
                 Extents,
                 Extents::static_extent(Extents::rank() - K),
-                NewExtents...>::next(ext, slicesAndExtents..., ext.extent(Extents::rank() - K));
+                NewExtents...
+            >::next(ext, slicesAndExtents..., ext.extent(Extents::rank() - K));
         } else if constexpr (etl::is_convertible_v<Slice, etl::size_t>) {
             return submdspan_extents_builder<K - 1, Extents, NewExtents...>::next(ext, slicesAndExtents...);
         } else if constexpr (is_strided_slice<Slice>) {

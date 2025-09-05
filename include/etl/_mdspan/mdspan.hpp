@@ -34,7 +34,8 @@ template <
     typename ElementType,
     typename Extents,
     typename LayoutPolicy   = layout_right,
-    typename AccessorPolicy = default_accessor<ElementType>>
+    typename AccessorPolicy = default_accessor<ElementType>
+>
 struct mdspan {
     using extents_type     = Extents;
     using layout_type      = LayoutPolicy;
@@ -292,7 +293,8 @@ mdspan(typename AccessorType::data_handle_type const&, MappingType const&, Acces
     typename AccessorType::element_type,
     typename MappingType::extents_type,
     typename MappingType::layout_type,
-    AccessorType>;
+    AccessorType
+>;
 
 template <typename ElementType, typename Extents, typename LayoutPolicy, typename Container>
 struct mdarray;
@@ -302,7 +304,8 @@ mdspan(mdarray<ElementType, Extents, Layout, Container>) -> mdspan<
     typename decltype(declval<mdarray<ElementType, Extents, Layout, Container>>().to_mdspan())::element_type,
     typename decltype(declval<mdarray<ElementType, Extents, Layout, Container>>().to_mdspan())::extens_type,
     typename decltype(declval<mdarray<ElementType, Extents, Layout, Container>>().to_mdspan())::layout_type,
-    typename decltype(declval<mdarray<ElementType, Extents, Layout, Container>>().to_mdspan())::accessor_type>;
+    typename decltype(declval<mdarray<ElementType, Extents, Layout, Container>>().to_mdspan())::accessor_type
+>;
 
 } // namespace etl
 

@@ -385,7 +385,9 @@ using static_vector_storage_type = conditional_t<
     conditional_t<
         is_trivial_v<T>,
         static_vector_trivial_storage<T, Capacity>,
-        static_vector_non_trivial_storage<T, Capacity>>>;
+        static_vector_non_trivial_storage<T, Capacity>
+    >
+>;
 
 } // namespace detail
 

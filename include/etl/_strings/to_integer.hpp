@@ -70,7 +70,8 @@ template <integral Int, bool Check>
 using overflow_checker = conditional_t<
     Check,
     conditional_t<signed_integral<Int>, signed_overflow_checker<Int>, unsigned_overflow_checker<Int>>,
-    nop_overflow_checker<Int>>;
+    nop_overflow_checker<Int>
+>;
 
 } // namespace detail
 

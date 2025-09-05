@@ -302,7 +302,8 @@ template <
     typename U1,
     typename U2,
     template <typename> typename TQual,
-    template <typename> typename UQual>
+    template <typename> typename UQual
+>
     requires requires {
         typename pair<common_reference_t<TQual<T1>, UQual<U1>>, common_reference_t<TQual<T2>, UQual<U2>>>;
     }
