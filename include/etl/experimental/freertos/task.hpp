@@ -36,7 +36,7 @@ struct times {
 
     [[nodiscard]] auto operator()() -> bool
     {
-        return (run_count-- != 0);
+        return run_count-- != 0;
     }
 };
 

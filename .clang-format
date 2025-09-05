@@ -94,7 +94,9 @@ QualifierOrder:
   - "const"
   - "volatile"
 ReferenceAlignment: Left
-ReflowComments: true
+ReflowComments: Always
+RemoveEmptyLinesInUnwrappedLines: true
+RemoveParentheses: ReturnStatement
 RemoveSemicolon: true
 RequiresClausePosition: OwnLine
 RequiresExpressionIndentation: OuterScope

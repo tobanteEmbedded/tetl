@@ -331,7 +331,7 @@ struct optional {
     template <typename U>
     [[nodiscard]] constexpr auto value_or(U&& defaultValue) && -> value_type
     {
-        return has_value() ? etl::move((**this)) : static_cast<value_type>(etl::forward<U>(defaultValue));
+        return has_value() ? etl::move(**this) : static_cast<value_type>(etl::forward<U>(defaultValue));
     }
 
     /// Returns a pointer to the contained value. The pointer is null if

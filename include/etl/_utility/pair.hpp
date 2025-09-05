@@ -109,7 +109,7 @@ struct pair {
     }
 
     constexpr auto operator=(pair&& p) noexcept -> pair&
-        requires((is_move_assignable_v<first_type> and is_move_assignable_v<second_type>))
+        requires(is_move_assignable_v<first_type> and is_move_assignable_v<second_type>)
     {
         first  = etl::move(p.first);
         second = etl::move(p.second);

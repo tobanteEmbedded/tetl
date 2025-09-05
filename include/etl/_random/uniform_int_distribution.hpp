@@ -104,7 +104,7 @@ struct uniform_int_distribution {
     {
         auto const random = g();
         auto const range  = static_cast<decltype(g())>(parm.b() - parm.a());
-        return static_cast<result_type>(parm.a() + static_cast<result_type>((random % range)));
+        return static_cast<result_type>(parm.a() + static_cast<result_type>(random % range));
     }
 
     friend constexpr auto operator==(uniform_int_distribution const& x, uniform_int_distribution const& y) -> bool
