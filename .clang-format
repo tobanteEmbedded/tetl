@@ -79,10 +79,20 @@ KeepEmptyLines:
   AtStartOfFile: false
 Language: Cpp
 LambdaBodyIndentation: OuterScope
+LineEnding: LF
 MaxEmptyLinesToKeep: 1
 NamespaceIndentation: None
 PackConstructorInitializers: Never
 PointerAlignment: Left
+QualifierAlignment: Custom
+QualifierOrder:
+  - "inline"
+  - "friend"
+  - "static"
+  - "constexpr"
+  - "type"
+  - "const"
+  - "volatile"
 ReferenceAlignment: Left
 ReflowComments: true
 RemoveSemicolon: true
@@ -115,5 +125,3 @@ SpacesInParentheses: false
 SpacesInSquareBrackets: false
 Standard: Auto
 UseTab: Never
-QualifierAlignment: Custom
-QualifierOrder: ["inline", "static", "constexpr", "type", "const", "volatile"]
