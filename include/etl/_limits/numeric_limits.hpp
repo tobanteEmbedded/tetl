@@ -53,8 +53,8 @@ struct numeric_limits {
     static constexpr int max_exponent10 = 0;
 
     static constexpr bool has_infinity             = false;
-    static constexpr bool has_quiet_NaN            = false; // NOLINT
-    static constexpr bool has_signaling_NaN        = false; // NOLINT
+    static constexpr bool has_quiet_NaN            = false;
+    static constexpr bool has_signaling_NaN        = false;
     static constexpr bool has_denorm_loss          = false;
     static constexpr float_denorm_style has_denorm = denorm_absent;
 
@@ -65,11 +65,11 @@ struct numeric_limits {
     static constexpr auto quiet_NaN() noexcept -> T
     {
         return T();
-    } // NOLINT
+    }
     static constexpr auto signaling_NaN() noexcept -> T
     {
         return T();
-    } // NOLINT
+    }
     static constexpr auto denorm_min() noexcept -> T
     {
         return T();
@@ -124,8 +124,8 @@ struct numeric_limits<bool> {
     static constexpr int max_exponent10 = 0;
 
     static constexpr bool has_infinity             = false;
-    static constexpr bool has_quiet_NaN            = false; // NOLINT
-    static constexpr bool has_signaling_NaN        = false; // NOLINT
+    static constexpr bool has_quiet_NaN            = false;
+    static constexpr bool has_signaling_NaN        = false;
     static constexpr bool has_denorm_loss          = false;
     static constexpr float_denorm_style has_denorm = denorm_absent;
 
@@ -136,11 +136,11 @@ struct numeric_limits<bool> {
     static constexpr auto quiet_NaN() noexcept -> bool
     {
         return false;
-    } // NOLINT
+    }
     static constexpr auto signaling_NaN() noexcept -> bool
     {
         return false;
-    } // NOLINT
+    }
     static constexpr auto denorm_min() noexcept -> bool
     {
         return false;
@@ -195,8 +195,8 @@ struct numeric_limits<char> {
     static constexpr int max_exponent10 = 0;
 
     static constexpr bool has_infinity             = false;
-    static constexpr bool has_quiet_NaN            = false; // NOLINT
-    static constexpr bool has_signaling_NaN        = false; // NOLINT
+    static constexpr bool has_quiet_NaN            = false;
+    static constexpr bool has_signaling_NaN        = false;
     static constexpr bool has_denorm_loss          = false;
     static constexpr float_denorm_style has_denorm = denorm_absent;
 
@@ -207,11 +207,11 @@ struct numeric_limits<char> {
     static constexpr auto quiet_NaN() noexcept -> char
     {
         return char{};
-    } // NOLINT
+    }
     static constexpr auto signaling_NaN() noexcept -> char
     {
         return char{};
-    } // NOLINT
+    }
     static constexpr auto denorm_min() noexcept -> char
     {
         return char{};
@@ -266,8 +266,8 @@ struct numeric_limits<signed char> {
     static constexpr int max_exponent10 = 0;
 
     static constexpr bool has_infinity             = false;
-    static constexpr bool has_quiet_NaN            = false; // NOLINT
-    static constexpr bool has_signaling_NaN        = false; // NOLINT
+    static constexpr bool has_quiet_NaN            = false;
+    static constexpr bool has_signaling_NaN        = false;
     static constexpr bool has_denorm_loss          = false;
     static constexpr float_denorm_style has_denorm = denorm_absent;
 
@@ -278,11 +278,11 @@ struct numeric_limits<signed char> {
     static constexpr auto quiet_NaN() noexcept -> signed char
     {
         return {};
-    } // NOLINT
+    }
     static constexpr auto signaling_NaN() noexcept -> signed char
     {
         return {};
-    } // NOLINT
+    }
     static constexpr auto denorm_min() noexcept -> signed char
     {
         return {};
@@ -337,8 +337,8 @@ struct numeric_limits<unsigned char> {
     static constexpr int max_exponent10 = 0;
 
     static constexpr bool has_infinity             = false;
-    static constexpr bool has_quiet_NaN            = false; // NOLINT
-    static constexpr bool has_signaling_NaN        = false; // NOLINT
+    static constexpr bool has_quiet_NaN            = false;
+    static constexpr bool has_signaling_NaN        = false;
     static constexpr bool has_denorm_loss          = false;
     static constexpr float_denorm_style has_denorm = denorm_absent;
 
@@ -349,11 +349,11 @@ struct numeric_limits<unsigned char> {
     static constexpr auto quiet_NaN() noexcept -> unsigned char
     {
         return 0;
-    } // NOLINT
+    }
     static constexpr auto signaling_NaN() noexcept -> unsigned char
     {
         return 0;
-    } // NOLINT
+    }
     static constexpr auto denorm_min() noexcept -> unsigned char
     {
         return 0;
@@ -408,8 +408,8 @@ struct numeric_limits<char8_t> {
     static constexpr int max_exponent10 = 0;
 
     static constexpr bool has_infinity             = false;
-    static constexpr bool has_quiet_NaN            = false; // NOLINT
-    static constexpr bool has_signaling_NaN        = false; // NOLINT
+    static constexpr bool has_quiet_NaN            = false;
+    static constexpr bool has_signaling_NaN        = false;
     static constexpr bool has_denorm_loss          = false;
     static constexpr float_denorm_style has_denorm = denorm_absent;
 
@@ -420,11 +420,11 @@ struct numeric_limits<char8_t> {
     static constexpr auto quiet_NaN() noexcept -> char8_t
     {
         return char8_t{};
-    } // NOLINT
+    }
     static constexpr auto signaling_NaN() noexcept -> char8_t
     {
         return char8_t{};
-    } // NOLINT
+    }
     static constexpr auto denorm_min() noexcept -> char8_t
     {
         return char8_t{};
@@ -479,8 +479,8 @@ struct numeric_limits<short> {
     static constexpr int max_exponent10 = 0;
 
     static constexpr bool has_infinity             = false;
-    static constexpr bool has_quiet_NaN            = false; // NOLINT
-    static constexpr bool has_signaling_NaN        = false; // NOLINT
+    static constexpr bool has_quiet_NaN            = false;
+    static constexpr bool has_signaling_NaN        = false;
     static constexpr bool has_denorm_loss          = false;
     static constexpr float_denorm_style has_denorm = denorm_absent;
 
@@ -491,11 +491,11 @@ struct numeric_limits<short> {
     static constexpr auto quiet_NaN() noexcept -> short
     {
         return short{};
-    } // NOLINT
+    }
     static constexpr auto signaling_NaN() noexcept -> short
     {
         return short{};
-    } // NOLINT
+    }
     static constexpr auto denorm_min() noexcept -> short
     {
         return short{};
@@ -551,8 +551,8 @@ struct numeric_limits<unsigned short> {
     static constexpr int max_exponent10 = 0;
 
     static constexpr bool has_infinity             = false;
-    static constexpr bool has_quiet_NaN            = false; // NOLINT
-    static constexpr bool has_signaling_NaN        = false; // NOLINT
+    static constexpr bool has_quiet_NaN            = false;
+    static constexpr bool has_signaling_NaN        = false;
     static constexpr bool has_denorm_loss          = false;
     static constexpr float_denorm_style has_denorm = denorm_absent;
 
@@ -563,11 +563,11 @@ struct numeric_limits<unsigned short> {
     static constexpr auto quiet_NaN() noexcept -> unsigned short
     {
         return 0;
-    } // NOLINT
+    }
     static constexpr auto signaling_NaN() noexcept -> unsigned short
     {
         return 0;
-    } // NOLINT
+    }
     static constexpr auto denorm_min() noexcept -> unsigned short
     {
         return 0;
@@ -622,8 +622,8 @@ struct numeric_limits<int> {
     static constexpr int max_exponent10 = 0;
 
     static constexpr bool has_infinity             = false;
-    static constexpr bool has_quiet_NaN            = false; // NOLINT
-    static constexpr bool has_signaling_NaN        = false; // NOLINT
+    static constexpr bool has_quiet_NaN            = false;
+    static constexpr bool has_signaling_NaN        = false;
     static constexpr bool has_denorm_loss          = false;
     static constexpr float_denorm_style has_denorm = denorm_absent;
 
@@ -634,11 +634,11 @@ struct numeric_limits<int> {
     static constexpr auto quiet_NaN() noexcept -> int
     {
         return int{};
-    } // NOLINT
+    }
     static constexpr auto signaling_NaN() noexcept -> int
     {
         return int{};
-    } // NOLINT
+    }
     static constexpr auto denorm_min() noexcept -> int
     {
         return int{};
@@ -693,8 +693,8 @@ struct numeric_limits<unsigned int> {
     static constexpr int max_exponent10 = 0;
 
     static constexpr bool has_infinity             = false;
-    static constexpr bool has_quiet_NaN            = false; // NOLINT
-    static constexpr bool has_signaling_NaN        = false; // NOLINT
+    static constexpr bool has_quiet_NaN            = false;
+    static constexpr bool has_signaling_NaN        = false;
     static constexpr float_denorm_style has_denorm = denorm_absent;
     static constexpr bool has_denorm_loss          = false;
 
@@ -705,11 +705,11 @@ struct numeric_limits<unsigned int> {
     static constexpr auto quiet_NaN() noexcept -> unsigned int
     {
         return 0;
-    } // NOLINT
+    }
     static constexpr auto signaling_NaN() noexcept -> unsigned int
     {
         return 0;
-    } // NOLINT
+    }
     static constexpr auto denorm_min() noexcept -> unsigned int
     {
         return 0;
@@ -764,8 +764,8 @@ struct numeric_limits<long> {
     static constexpr int max_exponent10 = 0;
 
     static constexpr bool has_infinity             = false;
-    static constexpr bool has_quiet_NaN            = false; // NOLINT
-    static constexpr bool has_signaling_NaN        = false; // NOLINT
+    static constexpr bool has_quiet_NaN            = false;
+    static constexpr bool has_signaling_NaN        = false;
     static constexpr float_denorm_style has_denorm = denorm_absent;
     static constexpr bool has_denorm_loss          = false;
 
@@ -776,11 +776,11 @@ struct numeric_limits<long> {
     static constexpr auto quiet_NaN() noexcept -> long
     {
         return long{};
-    } // NOLINT
+    }
     static constexpr auto signaling_NaN() noexcept -> long
     {
         return long{};
-    } // NOLINT
+    }
     static constexpr auto denorm_min() noexcept -> long
     {
         return long{};
@@ -835,8 +835,8 @@ struct numeric_limits<unsigned long> {
     static constexpr int max_exponent10 = 0;
 
     static constexpr bool has_infinity             = false;
-    static constexpr bool has_quiet_NaN            = false; // NOLINT
-    static constexpr bool has_signaling_NaN        = false; // NOLINT
+    static constexpr bool has_quiet_NaN            = false;
+    static constexpr bool has_signaling_NaN        = false;
     static constexpr float_denorm_style has_denorm = denorm_absent;
     static constexpr bool has_denorm_loss          = false;
 
@@ -847,11 +847,11 @@ struct numeric_limits<unsigned long> {
     static constexpr auto quiet_NaN() noexcept -> unsigned long
     {
         return 0;
-    } // NOLINT
+    }
     static constexpr auto signaling_NaN() noexcept -> unsigned long
     {
         return 0;
-    } // NOLINT
+    }
     static constexpr auto denorm_min() noexcept -> unsigned long
     {
         return 0;
@@ -916,8 +916,8 @@ struct numeric_limits<long long> {
     static constexpr int max_exponent10 = 0;
 
     static constexpr bool has_infinity             = false;
-    static constexpr bool has_quiet_NaN            = false; // NOLINT
-    static constexpr bool has_signaling_NaN        = false; // NOLINT
+    static constexpr bool has_quiet_NaN            = false;
+    static constexpr bool has_signaling_NaN        = false;
     static constexpr float_denorm_style has_denorm = denorm_absent;
     static constexpr bool has_denorm_loss          = false;
 
@@ -928,11 +928,11 @@ struct numeric_limits<long long> {
     static constexpr auto quiet_NaN() noexcept -> long long
     {
         return 0;
-    } // NOLINT
+    }
     static constexpr auto signaling_NaN() noexcept -> long long
     {
         return 0;
-    } // NOLINT
+    }
     static constexpr auto denorm_min() noexcept -> long long
     {
         return 0;
@@ -988,8 +988,8 @@ struct numeric_limits<unsigned long long> {
     static constexpr int max_exponent10 = 0;
 
     static constexpr bool has_infinity             = false;
-    static constexpr bool has_quiet_NaN            = false; // NOLINT
-    static constexpr bool has_signaling_NaN        = false; // NOLINT
+    static constexpr bool has_quiet_NaN            = false;
+    static constexpr bool has_signaling_NaN        = false;
     static constexpr float_denorm_style has_denorm = denorm_absent;
     static constexpr bool has_denorm_loss          = false;
 
@@ -1000,11 +1000,11 @@ struct numeric_limits<unsigned long long> {
     static constexpr auto quiet_NaN() noexcept -> unsigned long long
     {
         return 0;
-    } // NOLINT
+    }
     static constexpr auto signaling_NaN() noexcept -> unsigned long long
     {
         return 0;
-    } // NOLINT
+    }
     static constexpr auto denorm_min() noexcept -> unsigned long long
     {
         return 0;
@@ -1059,8 +1059,8 @@ struct numeric_limits<float> {
     static constexpr int max_exponent10 = FLT_MAX_10_EXP;
 
     static constexpr bool has_infinity             = true;
-    static constexpr bool has_quiet_NaN            = true; // NOLINT
-    static constexpr bool has_signaling_NaN        = true; // NOLINT
+    static constexpr bool has_quiet_NaN            = true;
+    static constexpr bool has_signaling_NaN        = true;
     static constexpr float_denorm_style has_denorm = denorm_present;
     static constexpr bool has_denorm_loss          = false;
 
@@ -1071,11 +1071,11 @@ struct numeric_limits<float> {
     static constexpr auto quiet_NaN() noexcept -> float
     {
         return TETL_BUILTIN_NANF("");
-    } // NOLINT
+    }
     static constexpr auto signaling_NaN() noexcept -> float
     {
         return TETL_BUILTIN_NANSF("");
-    } // NOLINT
+    }
     static constexpr auto denorm_min() noexcept -> float
     {
         return 0.0F;
@@ -1130,8 +1130,8 @@ struct numeric_limits<double> {
     static constexpr int max_exponent10 = DBL_MAX_10_EXP;
 
     static constexpr bool has_infinity             = true;
-    static constexpr bool has_quiet_NaN            = true; // NOLINT
-    static constexpr bool has_signaling_NaN        = true; // NOLINT
+    static constexpr bool has_quiet_NaN            = true;
+    static constexpr bool has_signaling_NaN        = true;
     static constexpr bool has_denorm_loss          = false;
     static constexpr float_denorm_style has_denorm = denorm_present;
 
@@ -1142,11 +1142,11 @@ struct numeric_limits<double> {
     static constexpr auto quiet_NaN() noexcept -> double
     {
         return TETL_BUILTIN_NAN("");
-    } // NOLINT
+    }
     static constexpr auto signaling_NaN() noexcept -> double
     {
         return TETL_BUILTIN_NANS("");
-    } // NOLINT
+    }
     static constexpr auto denorm_min() noexcept -> double
     {
         return 0.0;
@@ -1201,8 +1201,8 @@ struct numeric_limits<long double> {
     static constexpr int max_exponent10 = LDBL_MAX_10_EXP;
 
     static constexpr bool has_infinity             = true;
-    static constexpr bool has_quiet_NaN            = true; // NOLINT
-    static constexpr bool has_signaling_NaN        = true; // NOLINT
+    static constexpr bool has_quiet_NaN            = true;
+    static constexpr bool has_signaling_NaN        = true;
     static constexpr bool has_denorm_loss          = false;
     static constexpr float_denorm_style has_denorm = denorm_present;
 
@@ -1213,11 +1213,11 @@ struct numeric_limits<long double> {
     static constexpr auto quiet_NaN() noexcept -> long double
     {
         return TETL_BUILTIN_NANL("");
-    } // NOLINT
+    }
     static constexpr auto signaling_NaN() noexcept -> long double
     {
         return TETL_BUILTIN_NANSL("");
-    } // NOLINT
+    }
     static constexpr auto denorm_min() noexcept -> long double
     {
         return 0.0L;

@@ -65,7 +65,7 @@ struct array {
             etl::unreachable();
         } else {
             TETL_PRECONDITION_SAFE(pos < Size);
-            return _buf[pos];
+            return _internal_array_do_not_use_directly[pos];
         }
     }
 
@@ -76,7 +76,7 @@ struct array {
             etl::unreachable();
         } else {
             TETL_PRECONDITION_SAFE(pos < Size);
-            return _buf[pos];
+            return _internal_array_do_not_use_directly[pos];
         }
     }
 
@@ -128,7 +128,7 @@ struct array {
         if constexpr (Size == 0) {
             return nullptr;
         } else {
-            return etl::begin(_buf);
+            return etl::begin(_internal_array_do_not_use_directly);
         }
     }
 
@@ -138,7 +138,7 @@ struct array {
         if constexpr (Size == 0) {
             return nullptr;
         } else {
-            return etl::begin(_buf);
+            return etl::begin(_internal_array_do_not_use_directly);
         }
     }
 
@@ -154,7 +154,7 @@ struct array {
         if constexpr (Size == 0) {
             return nullptr;
         } else {
-            return etl::end(_buf);
+            return etl::end(_internal_array_do_not_use_directly);
         }
     }
 
@@ -164,7 +164,7 @@ struct array {
         if constexpr (Size == 0) {
             return nullptr;
         } else {
-            return etl::end(_buf);
+            return etl::end(_internal_array_do_not_use_directly);
         }
     }
 
@@ -299,8 +299,10 @@ struct array {
     }
 
     /// \internal
-    // NOLINTNEXTLINE(readability-identifier-naming)
-    TETL_NO_UNIQUE_ADDRESS conditional_t<Size == 0, empty_c_array, c_array<Type, Size + size_t{Size == 0}>> _buf;
+    using array_t = conditional_t<Size == 0, empty_c_array, c_array<Type, Size + size_t{Size == 0}>>;
+
+    /// \internal
+    TETL_NO_UNIQUE_ADDRESS array_t _internal_array_do_not_use_directly; // NOLINT(readability-identifier-naming)
 };
 
 /// One deduction guide is provided for array to provide an equivalent of

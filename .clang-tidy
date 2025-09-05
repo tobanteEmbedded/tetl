@@ -107,5 +107,7 @@ CheckOptions:
   readability-identifier-naming.PrivateMemberPrefix: _
   readability-identifier-naming.PrivateMemberSuffix: ""
   readability-identifier-naming.PublicMemberCase: lower_case
+  readability-identifier-naming.PublicMemberIgnoredRegexp: ".*_NaN"
   readability-identifier-naming.PublicMethodCase: lower_case
+  readability-identifier-naming.PublicMethodIgnoredRegexp: ".*_NaN"
   readability-identifier-naming.TemplateParameterCase: CamelCase

@@ -123,13 +123,15 @@ private:
     return count >= 0 ? days{count} : days{count + 7};
 }
 
-inline constexpr auto Sunday    = etl::chrono::weekday{0}; // NOLINT(readability-identifier-naming)
-inline constexpr auto Monday    = etl::chrono::weekday{1}; // NOLINT(readability-identifier-naming)
-inline constexpr auto Tuesday   = etl::chrono::weekday{2}; // NOLINT(readability-identifier-naming)
-inline constexpr auto Wednesday = etl::chrono::weekday{3}; // NOLINT(readability-identifier-naming)
-inline constexpr auto Thursday  = etl::chrono::weekday{4}; // NOLINT(readability-identifier-naming)
-inline constexpr auto Friday    = etl::chrono::weekday{5}; // NOLINT(readability-identifier-naming)
-inline constexpr auto Saturday  = etl::chrono::weekday{6}; // NOLINT(readability-identifier-naming)
+// NOLINTBEGIN(readability-identifier-naming)
+inline constexpr auto Sunday    = etl::chrono::weekday{0};
+inline constexpr auto Monday    = etl::chrono::weekday{1};
+inline constexpr auto Tuesday   = etl::chrono::weekday{2};
+inline constexpr auto Wednesday = etl::chrono::weekday{3};
+inline constexpr auto Thursday  = etl::chrono::weekday{4};
+inline constexpr auto Friday    = etl::chrono::weekday{5};
+inline constexpr auto Saturday  = etl::chrono::weekday{6};
+// NOLINTEND(readability-identifier-naming)
 
 } // namespace etl::chrono
 
