@@ -13,12 +13,9 @@ namespace etl {
 
 namespace detail {
 
-// clang-format off
 template <typename F, typename... Args>
-concept negate_invocable = requires(F&& f, Args&&... args) {
-    not etl::invoke(etl::forward<F>(f), etl::forward<Args>(args)...);
-};
-// clang-format on
+concept negate_invocable
+    = requires(F&& f, Args&&... args) { not etl::invoke(etl::forward<F>(f), etl::forward<Args>(args)...); };
 
 template <typename F>
 struct not_fn_t {

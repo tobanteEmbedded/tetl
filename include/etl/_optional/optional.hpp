@@ -118,21 +118,19 @@ struct optional {
     ///
     /// https://en.cppreference.com/w/cpp/utility/optional/optional
     template <typename U>
-    // clang-format off
-        requires (
-                    is_constructible_v<T, U const&>
+        requires(
+            is_constructible_v<T, U const&>
             and not is_same_v<remove_cv_t<U>, bool>
             and not is_constructible_v<T, optional<U>&>
             and not is_constructible_v<T, optional<U> const&>
             and not is_constructible_v<T, optional<U> &&>
-            and not is_constructible_v<T, optional<U> const&&>
+            and not is_constructible_v<T, optional<U> const &&>
             and not is_convertible_v<optional<U>&, T>
             and not is_convertible_v<optional<U> const&, T>
-            and not is_convertible_v<optional<U>&&, T>
-            and not is_convertible_v<optional<U> const&&, T>
+            and not is_convertible_v<optional<U> &&, T>
+            and not is_convertible_v<optional<U> const &&, T>
 
         )
-    // clang-format on
     explicit(not is_convertible_v<U const&, T>) constexpr optional(optional<U> const& other)
     {
         if (other.has_value()) {
@@ -149,20 +147,18 @@ struct optional {
     ///
     /// https://en.cppreference.com/w/cpp/utility/optional/optional
     template <typename U>
-    // clang-format off
-        requires (
-                    is_constructible_v<T, U&&>
+        requires(
+            is_constructible_v<T, U &&>
             and not is_same_v<remove_cv_t<U>, bool>
             and not is_constructible_v<T, optional<U>&>
             and not is_constructible_v<T, optional<U> const&>
             and not is_constructible_v<T, optional<U> &&>
-            and not is_constructible_v<T, optional<U> const&&>
+            and not is_constructible_v<T, optional<U> const &&>
             and not is_convertible_v<optional<U>&, T>
             and not is_convertible_v<optional<U> const&, T>
-            and not is_convertible_v<optional<U>&&, T>
-            and not is_convertible_v<optional<U> const&&, T>
+            and not is_convertible_v<optional<U> &&, T>
+            and not is_convertible_v<optional<U> const &&, T>
         )
-    // clang-format on
     explicit(not is_convertible_v<U&&, T>) constexpr optional(optional<U>&& other)
     {
         if (other.has_value()) {
@@ -186,13 +182,11 @@ struct optional {
     ///
     /// https://en.cppreference.com/w/cpp/utility/optional/optional
     template <typename U = T>
-    // clang-format off
-        requires (
+        requires(
             is_constructible_v<T, U &&>
             and not is_same_v<remove_cvref_t<U>, in_place_t>
             and not is_same_v<remove_cvref_t<U>, optional>
         )
-    // clang-format on
     explicit(not is_convertible_v<U&&, T>) constexpr optional(U&& value)
         : _var(in_place_index<1>, etl::forward<U>(value))
     {
@@ -221,15 +215,13 @@ struct optional {
     ///
     /// https://en.cppreference.com/w/cpp/utility/optional/operator%3D
     template <typename U = T>
-    // clang-format off
-        requires (
-                    is_assignable_v<T&, U>
-            and     is_constructible_v<T, U>
+        requires(
+            is_assignable_v<T&, U>
+            and is_constructible_v<T, U>
             and not is_same_v<optional, decay_t<U>>
             and not is_scalar_v<T>
             and not is_same_v<T, decay_t<U>>
         )
-    // clang-format on
     constexpr auto operator=(U&& value) -> optional&
     {
         emplace(etl::forward<U>(value));
@@ -238,24 +230,22 @@ struct optional {
 
     /// Assigns the state of other.
     template <typename U = T>
-    // clang-format off
-        requires (
-                    is_constructible_v<T, U const&>
-                and is_assignable_v<T&, U const&>
+        requires(
+            is_constructible_v<T, U const&>
+            and is_assignable_v<T&, U const&>
             and not is_constructible_v<T, optional<U>&>
             and not is_constructible_v<T, optional<U> const&>
-            and not is_constructible_v<T, optional<U>&&>
-            and not is_constructible_v<T, optional<U> const&&>
+            and not is_constructible_v<T, optional<U> &&>
+            and not is_constructible_v<T, optional<U> const &&>
             and not is_convertible_v<optional<U>&, T>
             and not is_convertible_v<optional<U> const&, T>
-            and not is_convertible_v<optional<U>&&, T>
-            and not is_convertible_v<optional<U> const&&, T>
+            and not is_convertible_v<optional<U> &&, T>
+            and not is_convertible_v<optional<U> const &&, T>
             and not is_assignable_v<T&, optional<U>&>
             and not is_assignable_v<T&, optional<U> const&>
-            and not is_assignable_v<T&, optional<U>&&>
-            and not is_assignable_v<T&, optional<U> const&&>
+            and not is_assignable_v<T&, optional<U> &&>
+            and not is_assignable_v<T&, optional<U> const &&>
         )
-    // clang-format on
     constexpr auto operator=(optional<U> const& other) -> optional&
     {
         if (other.has_value()) {
@@ -269,24 +259,22 @@ struct optional {
 
     /// Assigns the state of other.
     template <typename U = T>
-    // clang-format off
-        requires (
-                    is_constructible_v<T, U>
-                and is_assignable_v<T&, U>
+        requires(
+            is_constructible_v<T, U>
+            and is_assignable_v<T&, U>
             and not is_constructible_v<T, optional<U>&>
             and not is_constructible_v<T, optional<U> const&>
-            and not is_constructible_v<T, optional<U>&&>
-            and not is_constructible_v<T, optional<U> const&&>
+            and not is_constructible_v<T, optional<U> &&>
+            and not is_constructible_v<T, optional<U> const &&>
             and not is_convertible_v<optional<U>&, T>
             and not is_convertible_v<optional<U> const&, T>
-            and not is_convertible_v<optional<U>&&, T>
-            and not is_convertible_v<optional<U> const&&, T>
+            and not is_convertible_v<optional<U> &&, T>
+            and not is_convertible_v<optional<U> const &&, T>
             and not is_assignable_v<T&, optional<U>&>
             and not is_assignable_v<T&, optional<U> const&>
-            and not is_assignable_v<T&, optional<U>&&>
-            and not is_assignable_v<T&, optional<U> const&&>
+            and not is_assignable_v<T&, optional<U> &&>
+            and not is_assignable_v<T&, optional<U> const &&>
         )
-    // clang-format on
     constexpr auto operator=(optional<U>&& other) -> optional&
     {
         if (other.has_value()) {

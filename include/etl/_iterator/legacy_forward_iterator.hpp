@@ -14,22 +14,21 @@
 
 namespace etl {
 
-// clang-format off
-
 /// \note Non-standard extension
 /// \headerfile etl/iterator.hpp
 /// \ingroup iterator
 template <typename Iter>
 concept legacy_forward_iterator = legacy_input_iterator<Iter>
-    and etl::constructible_from<Iter>
-    and etl::is_reference_v<etl::iter_reference_t<Iter>>
-    and etl::same_as<etl::remove_cvref_t<etl::iter_reference_t<Iter>>, typename etl::indirectly_readable_traits<Iter>::value_type>
-    and requires(Iter it) {
-          { it++ } -> etl::convertible_to<Iter const&>;
-          { *it++ } -> etl::same_as<etl::iter_reference_t<Iter>>;
-    };
-
-// clang-format on
+                              and etl::constructible_from<Iter>
+                              and etl::is_reference_v<etl::iter_reference_t<Iter>>
+                              and etl::same_as<
+                                      etl::remove_cvref_t<etl::iter_reference_t<Iter>>,
+                                      typename etl::indirectly_readable_traits<Iter>::value_type
+                              >
+                              and requires(Iter it) {
+                                      { it++ } -> etl::convertible_to<Iter const&>;
+                                      { *it++ } -> etl::same_as<etl::iter_reference_t<Iter>>;
+                                  };
 
 } // namespace etl
 

@@ -9,18 +9,16 @@
 
 namespace etl::detail {
 
-// clang-format off
-template<typename M>
-concept layout_mapping_alike = requires {                         // exposition only
-  requires detail::is_extents<typename M::extents_type>;
-  { M::is_always_strided() } -> same_as<bool>;
-  { M::is_always_exhaustive() } -> same_as<bool>;
-  { M::is_always_unique() } -> same_as<bool>;
-  etl::bool_constant<M::is_always_strided()>::value;
-  etl::bool_constant<M::is_always_exhaustive()>::value;
-  etl::bool_constant<M::is_always_unique()>::value;
+template <typename M>
+concept layout_mapping_alike = requires {
+    requires detail::is_extents<typename M::extents_type>;
+    { M::is_always_strided() } -> same_as<bool>;
+    { M::is_always_exhaustive() } -> same_as<bool>;
+    { M::is_always_unique() } -> same_as<bool>;
+    etl::bool_constant<M::is_always_strided()>::value;
+    etl::bool_constant<M::is_always_exhaustive()>::value;
+    etl::bool_constant<M::is_always_unique()>::value;
 };
-// clang-format on
 
 } // namespace etl::detail
 

@@ -9,12 +9,10 @@
 
 namespace etl {
 
-// clang-format off
 template <typename Iter>
 concept input_or_output_iterator = weakly_incrementable<Iter> and requires(Iter it) {
     { *it } -> detail::can_reference;
 };
-// clang-format on
 
 } // namespace etl
 

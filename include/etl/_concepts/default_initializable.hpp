@@ -15,13 +15,9 @@ namespace etl {
 /// unrelated to T. Only the validity of the immediate context of the variable
 /// initialization is considered.
 /// \ingroup concepts
-// clang-format off
 template <typename T>
-concept default_initializable =
-  constructible_from<T> &&
-  requires { T {}; } &&
-  requires { ::new (static_cast<void*>(nullptr)) T; };
-// clang-format on
+concept default_initializable
+    = constructible_from<T> and requires { T{}; } and requires { ::new (static_cast<void*>(nullptr)) T; };
 
 } // namespace etl
 

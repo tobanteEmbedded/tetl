@@ -23,9 +23,10 @@ inline constexpr bool is_integral_v = __is_integral(T);
     #include <etl/_type_traits/remove_cv.hpp>
 
 namespace etl {
-// clang-format off
+
 template <typename T>
-inline constexpr bool is_integral_v = meta::contains_v<remove_cv_t<T>,
+inline constexpr bool is_integral_v = meta::contains_v<
+    remove_cv_t<T>,
     meta::list<
         bool,
         char,
@@ -45,7 +46,6 @@ inline constexpr bool is_integral_v = meta::contains_v<remove_cv_t<T>,
         unsigned long long
     >
 >;
-// clang-format on
 
 template <typename T>
 struct is_integral : bool_constant<is_integral_v<T> > { };

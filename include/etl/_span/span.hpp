@@ -140,16 +140,14 @@ struct span {
 
     /// Constructs a span.
     template <typename /*etl::ranges::contiguous_range*/ R>
-    // clang-format off
-        requires (
-                ranges::sized_range<R>
+        requires(
+            ranges::sized_range<R>
             and (ranges::borrowed_range<R> or is_const_v<T>)
             and not is_array_v<remove_cvref_t<R>>
             and not is_etl_array<R>
             and not detail::is_span<R>
             and detail::span_convertible_from<remove_reference_t<ranges::range_reference_t<R>>, T>
         )
-    // clang-format on
     explicit(extent != dynamic_extent) constexpr span(R&& r)
         : _storage{r.data(), ranges::size(r)}
     {
