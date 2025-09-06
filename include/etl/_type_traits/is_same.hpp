@@ -8,17 +8,20 @@
 
 namespace etl {
 
-template <typename T, typename U>
-inline constexpr bool is_same_v = false;
-
-template <typename T>
-inline constexpr bool is_same_v<T, T> = true;
-
 /// \brief If T and U name the same type (taking into account const/volatile
 /// qualifications), provides the member constant value equal to true. Otherwise
 /// value is false.
+/// \ingroup type_traits
 template <typename T, typename U>
-struct is_same : bool_constant<is_same_v<T, U>> { };
+struct is_same : false_type { };
+
+/// \ingroup type_traits
+template <typename T>
+struct is_same<T, T> : true_type { };
+
+/// \ingroup type_traits
+template <typename T, typename U>
+inline constexpr bool is_same_v = is_same<T, U>::value;
 
 } // namespace etl
 
