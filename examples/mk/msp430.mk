@@ -1,3 +1,6 @@
+# SPDX-License-Identifier: BSL-1.0
+# SPDX-FileCopyrightText: Copyright (C) 2021 Tobias Hienzsch
+
 TOOLCHAIN 		 = msp430-elf-
 TOOLCHAIN_ROOT 	?= $(shell which msp430-elf-gcc | sed 's/\/bin\/msp430-elf-gcc//g')
 TOOLCHAIN_BIN 	?= $(TOOLCHAIN_ROOT)/bin

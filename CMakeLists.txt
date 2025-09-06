@@ -1,3 +1,5 @@
+# SPDX-License-Identifier: BSL-1.0
+# SPDX-FileCopyrightText: Copyright (C) 2019 Tobias Hienzsch
 cmake_minimum_required(VERSION 3.28)
 project(tetl-dev LANGUAGES CXX)
 

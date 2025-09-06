@@ -1,3 +1,6 @@
+# SPDX-License-Identifier: BSL-1.0
+# SPDX-FileCopyrightText: Copyright (C) 2020 Tobias Hienzsch
+
 CXX = clang++-21
 CXXFLAGS = -std=c++26 -g3 -O1 -fsanitize=fuzzer,address,undefined -ftest-coverage -fcoverage-mapping -fprofile-arcs -fprofile-instr-generate
 LCOV = lcov --gcov-tool ../scripts/llvm-gcov.sh
