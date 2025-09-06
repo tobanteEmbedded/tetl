@@ -11,8 +11,6 @@ path = [
     ".github/**/*.yml",
     "cmake/**/*.cmake",
     "docs/*.md",
-    "fuzzing/**/*.cpp",
-    "fuzzing/**/*.hpp",
     "src/**/*.inc",
     "tests/**/*.txt",
 ]
