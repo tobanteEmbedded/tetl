@@ -21,9 +21,13 @@ repos:
       - id: requirements-txt-fixer
       - id: trailing-whitespace
 
-
   - repo: https://github.com/pre-commit/mirrors-clang-format
     rev: v21.1.0
     hooks:
       - id: clang-format
         types_or: [c++, c]
+
+  - repo: https://github.com/fsfe/reuse-tool
+    rev: v5.0.2
+    hooks:
+      - id: reuse

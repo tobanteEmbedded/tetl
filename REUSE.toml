@@ -1,0 +1,54 @@
+# SPDX-License-Identifier: BSL-1.0
+# SPDX-FileCopyrightText: Copyright (C) 2025 Tobias Hienzsch
+
+version = 1
+
+[[annotations]]
+path = [
+    ".clang-format",
+    ".clang-tidy",
+    ".gitattributes",
+    ".gitignore",
+    ".pre-commit-config.yaml",
+    "CMakeLists.txt",
+    "CMakePresets.json",
+    "codecov.yml",
+    "CONTRIBUTING.md",
+    "Doxyfile",
+    "README.md",
+
+    ".github/**/*.yml",
+    "cmake/**/*.cmake",
+    "docs/*.md",
+    "examples/**/*.cpp",
+    "examples/**/*.mk",
+    "examples/**/*.txt",
+    "examples/Makefile",
+    "fuzzing/**/*.cpp",
+    "fuzzing/**/*.hpp",
+    "fuzzing/.gitignore",
+    "fuzzing/Makefile",
+    "include/etl/**/*.cpp",
+    "include/etl/**/*.hpp",
+    "include/etl/**/*.md",
+    "include/etl/_3rd_party/gcem/.clang-format",
+    "include/CMakeLists.txt",
+    "scripts/add_modules.py",
+    "scripts/llvm-gcov.sh",
+    "src/**/*.inc",
+    "src/CMakeLists.txt",
+    "src/etl.cpp",
+    "tests/**/*.cpp",
+    "tests/**/*.hpp",
+    "tests/**/*.txt",
+]
+SPDX-FileCopyrightText = "Copyright (C) 2019-2025 Tobias Hienzsch"
+SPDX-License-Identifier = "BSL-1.0"
+
+[[annotations]]
+path = [
+    "include/etl/_3rd_party/gcem/gcem.hpp",
+    "include/etl/_3rd_party/gcem/gcem_incl/**/*.hpp",
+]
+SPDX-FileCopyrightText = "Copyright (C) 2016-2024 Keith O'Hara"
+SPDX-License-Identifier = "Apache-2.0"
