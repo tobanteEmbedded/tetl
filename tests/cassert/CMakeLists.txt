@@ -1,5 +1,5 @@
 # SPDX-License-Identifier: BSL-1.0
-# SPDX-FileCopyrightText: Copyright (C) 2025 Tobias Hienzsch
+# SPDX-FileCopyrightText: Copyright (C) 2024 Tobias Hienzsch
 project(cassert)
 
 tetl_add_test(${PROJECT_NAME} assert WILL_FAIL TRUE)

@@ -1,5 +1,5 @@
 # SPDX-License-Identifier: BSL-1.0
-# SPDX-FileCopyrightText: Copyright (C) 2025 Tobias Hienzsch
+# SPDX-FileCopyrightText: Copyright (C) 2023 Tobias Hienzsch
 project(mdspan)
 
 tetl_add_test(${PROJECT_NAME} default_accessor)
