@@ -1,3 +1,5 @@
+# SPDX-License-Identifier: BSL-1.0
+# SPDX-FileCopyrightText: Copyright (C) 2025 Tobias Hienzsch
 project(etl-tests)
 
 add_library(tetl.etl-test-common INTERFACE)
