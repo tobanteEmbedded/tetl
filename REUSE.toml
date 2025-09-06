@@ -33,8 +33,6 @@ path = [
     "src/**/*.inc",
     "src/CMakeLists.txt",
     "src/etl.cpp",
-    "tests/**/*.cpp",
-    "tests/**/*.hpp",
     "tests/**/*.txt",
 ]
 SPDX-FileCopyrightText = "Copyright (C) 2019-2025 Tobias Hienzsch"
