@@ -8,7 +8,6 @@ path = [
     "CMakePresets.json",
     "Doxyfile",
 
-    ".github/**/*.yml",
     "src/**/*.inc",
     "tests/**/*.txt",
 ]
