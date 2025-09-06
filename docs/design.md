@@ -1,3 +1,6 @@
+<!-- SPDX-License-Identifier: BSL-1.0 -->
+<!-- SPDX-FileCopyrightText: Copyright (C) 2024 Tobias Hienzsch -->
+
 # Design
 
 ## Builtin Types

@@ -10,7 +10,6 @@ path = [
 
     ".github/**/*.yml",
     "cmake/**/*.cmake",
-    "docs/*.md",
     "src/**/*.inc",
     "tests/**/*.txt",
 ]
