@@ -1,4 +1,5 @@
 // SPDX-License-Identifier: BSL-1.0
+// SPDX-FileCopyrightText: Copyright (C) 2020 Tobias Hienzsch
 
 #ifndef TETL_HARDWARE_MCP23017_MCP23017_HPP
 #define TETL_HARDWARE_MCP23017_MCP23017_HPP

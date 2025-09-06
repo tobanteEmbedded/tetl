@@ -1,4 +1,5 @@
 // SPDX-License-Identifier: BSL-1.0
+// SPDX-FileCopyrightText: Copyright (C) 2024 Tobias Hienzsch
 
 #ifndef TETL_TYPE_TRAITS_BASIC_COMMON_REFERENCE_HPP
 #define TETL_TYPE_TRAITS_BASIC_COMMON_REFERENCE_HPP

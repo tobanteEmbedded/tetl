@@ -1,4 +1,5 @@
 // SPDX-License-Identifier: BSL-1.0
+// SPDX-FileCopyrightText: Copyright (C) 2019 Tobias Hienzsch
 
 // This header needs to be included after every include of a standard C
 // header. AVR defines the macros listed below. It doesn't have any include

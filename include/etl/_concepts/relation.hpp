@@ -1,4 +1,5 @@
 // SPDX-License-Identifier: BSL-1.0
+// SPDX-FileCopyrightText: Copyright (C) 2023 Tobias Hienzsch
 
 #ifndef TETL_CONCEPTS_RELATION_HPP
 #define TETL_CONCEPTS_RELATION_HPP

@@ -1,4 +1,5 @@
 // SPDX-License-Identifier: BSL-1.0
+// SPDX-FileCopyrightText: Copyright (C) 2019 Tobias Hienzsch
 
 #ifndef TETL_FUNCTIONAL_IS_TRANSPARENT_HPP
 #define TETL_FUNCTIONAL_IS_TRANSPARENT_HPP

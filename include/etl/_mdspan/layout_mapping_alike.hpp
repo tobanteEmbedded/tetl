@@ -1,4 +1,5 @@
 // SPDX-License-Identifier: BSL-1.0
+// SPDX-FileCopyrightText: Copyright (C) 2023 Tobias Hienzsch
 
 #ifndef TETL_MDSPAN_LAYOUT_MAPPING_ALIKE_HPP
 #define TETL_MDSPAN_LAYOUT_MAPPING_ALIKE_HPP

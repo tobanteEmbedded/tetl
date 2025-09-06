@@ -1,4 +1,5 @@
 // SPDX-License-Identifier: BSL-1.0
+// SPDX-FileCopyrightText: Copyright (C) 2019 Tobias Hienzsch
 
 #ifndef TETL_HARDWARE_STM32_GPIO_HPP
 #define TETL_HARDWARE_STM32_GPIO_HPP

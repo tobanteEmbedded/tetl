@@ -1,3 +1,5 @@
+# SPDX-License-Identifier: BSL-1.0
+# SPDX-FileCopyrightText: Copyright (C) 2022 Tobias Hienzsch
 project(tetl)
 
 add_library(tetl.etl INTERFACE)

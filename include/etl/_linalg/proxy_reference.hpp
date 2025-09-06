@@ -1,4 +1,5 @@
 // SPDX-License-Identifier: BSL-1.0
+// SPDX-FileCopyrightText: Copyright (C) 2023 Tobias Hienzsch
 
 #ifndef TETL_LINALG_PROXY_REFERENCE_HPP
 #define TETL_LINALG_PROXY_REFERENCE_HPP

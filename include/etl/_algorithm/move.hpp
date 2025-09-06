@@ -1,4 +1,5 @@
 // SPDX-License-Identifier: BSL-1.0
+// SPDX-FileCopyrightText: Copyright (C) 2020 Tobias Hienzsch
 
 #ifndef TETL_ALGORITHM_MOVE_HPP
 #define TETL_ALGORITHM_MOVE_HPP

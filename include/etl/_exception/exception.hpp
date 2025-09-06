@@ -1,4 +1,5 @@
 // SPDX-License-Identifier: BSL-1.0
+// SPDX-FileCopyrightText: Copyright (C) 2019 Tobias Hienzsch
 
 #ifndef TETL_EXCEPTION_EXCEPTION_HPP
 #define TETL_EXCEPTION_EXCEPTION_HPP

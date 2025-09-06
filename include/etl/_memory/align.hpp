@@ -1,4 +1,5 @@
 // SPDX-License-Identifier: BSL-1.0
+// SPDX-FileCopyrightText: Copyright (C) 2020 Tobias Hienzsch
 
 #ifndef TETL_MEMORY_ALIGN_HPP
 #define TETL_MEMORY_ALIGN_HPP

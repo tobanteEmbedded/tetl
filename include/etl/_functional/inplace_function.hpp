@@ -1,4 +1,5 @@
 // SPDX-License-Identifier: BSL-1.0
+// SPDX-FileCopyrightText: Copyright (C) 2021 Tobias Hienzsch
 
 #ifndef TETL_FUNCTIONAL_INPLACE_FUNCTION_HPP
 #define TETL_FUNCTIONAL_INPLACE_FUNCTION_HPP

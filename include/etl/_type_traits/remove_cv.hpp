@@ -1,4 +1,5 @@
 // SPDX-License-Identifier: BSL-1.0
+// SPDX-FileCopyrightText: Copyright (C) 2019 Tobias Hienzsch
 
 #ifndef TETL_TYPE_TRAITS_REMOVE_CV_HPP
 #define TETL_TYPE_TRAITS_REMOVE_CV_HPP

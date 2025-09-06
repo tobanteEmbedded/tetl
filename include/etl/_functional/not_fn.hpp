@@ -1,4 +1,5 @@
 // SPDX-License-Identifier: BSL-1.0
+// SPDX-FileCopyrightText: Copyright (C) 2020 Tobias Hienzsch
 
 #ifndef TETL_FUNCTIONAL_NOT_FN_HPP
 #define TETL_FUNCTIONAL_NOT_FN_HPP

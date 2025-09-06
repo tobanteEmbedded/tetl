@@ -1,4 +1,5 @@
 // SPDX-License-Identifier: BSL-1.0
+// SPDX-FileCopyrightText: Copyright (C) 2024 Tobias Hienzsch
 
 #ifndef TETL_MDSPAN_INTEGRAL_CONSTANT_LIKE_HPP
 #define TETL_MDSPAN_INTEGRAL_CONSTANT_LIKE_HPP

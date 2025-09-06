@@ -1,4 +1,5 @@
 // SPDX-License-Identifier: BSL-1.0
+// SPDX-FileCopyrightText: Copyright (C) 2019 Tobias Hienzsch
 
 #ifndef TETL_LIMITS_FLOAT_DENORM_STYLE_HPP
 #define TETL_LIMITS_FLOAT_DENORM_STYLE_HPP

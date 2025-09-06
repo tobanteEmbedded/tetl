@@ -1,4 +1,5 @@
 // SPDX-License-Identifier: BSL-1.0
+// SPDX-FileCopyrightText: Copyright (C) 2021 Tobias Hienzsch
 #ifndef TETL_ITERATOR_BACK_INSERT_ITERATOR_HPP
 #define TETL_ITERATOR_BACK_INSERT_ITERATOR_HPP
 

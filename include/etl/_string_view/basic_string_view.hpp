@@ -1,4 +1,5 @@
 // SPDX-License-Identifier: BSL-1.0
+// SPDX-FileCopyrightText: Copyright (C) 2020 Tobias Hienzsch
 #ifndef TETL_BASIC_STRING_VIEW_STRING_VIEW_HPP
 #define TETL_BASIC_STRING_VIEW_STRING_VIEW_HPP
 

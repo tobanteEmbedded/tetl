@@ -1,4 +1,5 @@
 // SPDX-License-Identifier: BSL-1.0
+// SPDX-FileCopyrightText: Copyright (C) 2021 Tobias Hienzsch
 
 #ifndef TETL_CSTDINT_UINTMAX_T_HPP
 #define TETL_CSTDINT_UINTMAX_T_HPP

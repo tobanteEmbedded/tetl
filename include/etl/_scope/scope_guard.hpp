@@ -1,4 +1,5 @@
 // SPDX-License-Identifier: BSL-1.0
+// SPDX-FileCopyrightText: Copyright (C) 2020 Tobias Hienzsch
 #ifndef TETL_SCOPE_SCOPE_GUARD_HPP
 #define TETL_SCOPE_SCOPE_GUARD_HPP
 

@@ -1,4 +1,5 @@
 // SPDX-License-Identifier: BSL-1.0
+// SPDX-FileCopyrightText: Copyright (C) 2023 Tobias Hienzsch
 
 #ifndef TETL_CHRONO_MONTH_DAY_LAST_HPP
 #define TETL_CHRONO_MONTH_DAY_LAST_HPP

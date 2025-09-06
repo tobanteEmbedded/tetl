@@ -1,4 +1,5 @@
 // SPDX-License-Identifier: BSL-1.0
+// SPDX-FileCopyrightText: Copyright (C) 2019 Tobias Hienzsch
 
 #ifndef TETL_FLAT_SET_SORTED_UNIQUE_HPP
 #define TETL_FLAT_SET_SORTED_UNIQUE_HPP
