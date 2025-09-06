@@ -1,3 +1,6 @@
+# SPDX-License-Identifier: BSL-1.0
+# SPDX-FileCopyrightText: Copyright (C) 2020 Tobias Hienzsch
+
 add_library(tetl.compiler_warnings INTERFACE)
 add_library(tetl::compiler_warnings ALIAS tetl.compiler_warnings)
 

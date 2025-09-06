@@ -1,3 +1,6 @@
+# SPDX-License-Identifier: BSL-1.0
+# SPDX-FileCopyrightText: Copyright (C) 2021 Tobias Hienzsch
+
 set(CMAKE_SYSTEM_PROCESSOR  avr)
 set(CMAKE_SYSTEM_NAME       Generic-ELF)
 

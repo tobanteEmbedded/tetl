@@ -9,7 +9,6 @@ path = [
     "Doxyfile",
 
     ".github/**/*.yml",
-    "cmake/**/*.cmake",
     "src/**/*.inc",
     "tests/**/*.txt",
 ]
