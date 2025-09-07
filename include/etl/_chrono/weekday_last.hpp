@@ -1,4 +1,5 @@
 // SPDX-License-Identifier: BSL-1.0
+// SPDX-FileCopyrightText: Copyright (C) 2023 Tobias Hienzsch
 
 #ifndef TETL_CHRONO_WEEKDAY_LAST_HPP
 #define TETL_CHRONO_WEEKDAY_LAST_HPP
@@ -14,9 +15,15 @@ struct weekday_last {
     {
     }
 
-    [[nodiscard]] constexpr auto weekday() const noexcept -> chrono::weekday { return _wd; }
+    [[nodiscard]] constexpr auto weekday() const noexcept -> chrono::weekday
+    {
+        return _wd;
+    }
 
-    [[nodiscard]] constexpr auto ok() const noexcept -> bool { return _wd.ok(); }
+    [[nodiscard]] constexpr auto ok() const noexcept -> bool
+    {
+        return _wd.ok();
+    }
 
     friend constexpr auto operator==(weekday_last lhs, weekday_last rhs) noexcept -> bool
     {

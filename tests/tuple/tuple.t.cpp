@@ -1,4 +1,5 @@
 // SPDX-License-Identifier: BSL-1.0
+// SPDX-FileCopyrightText: Copyright (C) 2021 Tobias Hienzsch
 
 #include "testing/testing.hpp"
 
@@ -30,7 +31,6 @@ struct Foo {
 template <typename T>
 static constexpr auto test() -> bool
 {
-
     {
         etl::tuple<T, float> t1{T{1}, 2.0F};
         etl::ignore_unused(t1);
@@ -58,7 +58,6 @@ static constexpr auto test() -> bool
     }
 
     {
-
         CHECK(etl::tuple_size_v<etl::tuple<T>> == 1);
         CHECK(etl::tuple_size_v<etl::tuple<T, float>> == 2);
         CHECK(etl::tuple_size_v<etl::tuple<T, float, char>> == 3);
@@ -66,7 +65,6 @@ static constexpr auto test() -> bool
     }
 
     {
-
         auto t1 = etl::make_tuple(T{1}, 'a', true);
         CHECK(etl::get<0>(t1) == T{1});
         CHECK(etl::get<1>(t1) == 'a');

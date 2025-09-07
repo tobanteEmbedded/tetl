@@ -1,4 +1,5 @@
 // SPDX-License-Identifier: BSL-1.0
+// SPDX-FileCopyrightText: Copyright (C) 2019 Tobias Hienzsch
 
 #ifndef TETL_CMATH_ISFINITE_HPP
 #define TETL_CMATH_ISFINITE_HPP
@@ -12,13 +13,22 @@ namespace etl {
 /// i.e. it is normal, subnormal or zero, but not infinite or NaN.
 /// \details https://en.cppreference.com/w/cpp/numeric/math/isfinite
 /// \ingroup cmath
-[[nodiscard]] constexpr auto isfinite(float arg) -> bool { return not etl::isnan(arg) and not etl::isinf(arg); }
+[[nodiscard]] constexpr auto isfinite(float arg) -> bool
+{
+    return not etl::isnan(arg) and not etl::isinf(arg);
+}
 
 /// \ingroup cmath
-[[nodiscard]] constexpr auto isfinite(double arg) -> bool { return not etl::isnan(arg) and not etl::isinf(arg); }
+[[nodiscard]] constexpr auto isfinite(double arg) -> bool
+{
+    return not etl::isnan(arg) and not etl::isinf(arg);
+}
 
 /// \ingroup cmath
-[[nodiscard]] constexpr auto isfinite(long double arg) -> bool { return not etl::isnan(arg) and not etl::isinf(arg); }
+[[nodiscard]] constexpr auto isfinite(long double arg) -> bool
+{
+    return not etl::isnan(arg) and not etl::isinf(arg);
+}
 
 } // namespace etl
 

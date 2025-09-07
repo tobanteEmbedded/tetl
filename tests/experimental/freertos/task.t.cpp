@@ -1,4 +1,5 @@
 // SPDX-License-Identifier: BSL-1.0
+// SPDX-FileCopyrightText: Copyright (C) 2019 Tobias Hienzsch
 
 #include "testing/testing.hpp"
 
@@ -25,7 +26,6 @@ struct SomeTask {
 
 static auto test_all() -> bool
 {
-
     auto task = SomeTask<rtos::once>{};
 
     rtos::create_task(task, "test", 255);

@@ -1,4 +1,5 @@
 // SPDX-License-Identifier: BSL-1.0
+// SPDX-FileCopyrightText: Copyright (C) 2021 Tobias Hienzsch
 #ifndef TETL_CMATH_RINT_HPP
 #define TETL_CMATH_RINT_HPP
 
@@ -49,27 +50,42 @@ template <typename T>
 /// Rounds the floating-point argument arg to an integer value
 /// (in floating-point format), using the current rounding mode.
 /// \ingroup cmath
-[[nodiscard]] constexpr auto rint(float arg) noexcept -> float { return detail::rint_impl(arg); }
+[[nodiscard]] constexpr auto rint(float arg) noexcept -> float
+{
+    return detail::rint_impl(arg);
+}
 
 /// Rounds the floating-point argument arg to an integer value
 /// (in floating-point format), using the current rounding mode.
 /// \ingroup cmath
-[[nodiscard]] constexpr auto rintf(float arg) noexcept -> float { return detail::rint_impl(arg); }
+[[nodiscard]] constexpr auto rintf(float arg) noexcept -> float
+{
+    return detail::rint_impl(arg);
+}
 
 /// Rounds the floating-point argument arg to an integer value
 /// (in floating-point format), using the current rounding mode.
 /// \ingroup cmath
-[[nodiscard]] constexpr auto rint(double arg) noexcept -> double { return detail::rint_impl(arg); }
+[[nodiscard]] constexpr auto rint(double arg) noexcept -> double
+{
+    return detail::rint_impl(arg);
+}
 
 /// Rounds the floating-point argument arg to an integer value
 /// (in floating-point format), using the current rounding mode.
 /// \ingroup cmath
-[[nodiscard]] constexpr auto rint(long double arg) noexcept -> long double { return detail::rint_impl(arg); }
+[[nodiscard]] constexpr auto rint(long double arg) noexcept -> long double
+{
+    return detail::rint_impl(arg);
+}
 
 /// Rounds the floating-point argument arg to an integer value
 /// (in floating-point format), using the current rounding mode.
 /// \ingroup cmath
-[[nodiscard]] constexpr auto rintl(long double arg) noexcept -> long double { return detail::rint_impl(arg); }
+[[nodiscard]] constexpr auto rintl(long double arg) noexcept -> long double
+{
+    return detail::rint_impl(arg);
+}
 
 /// Rounds the floating-point argument arg to an integer value
 /// (in floating-point format), using the current rounding mode.

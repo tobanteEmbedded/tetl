@@ -1,4 +1,5 @@
 // SPDX-License-Identifier: BSL-1.0
+// SPDX-FileCopyrightText: Copyright (C) 2021 Tobias Hienzsch
 
 #ifndef TETL_CMATH_POW_HPP
 #define TETL_CMATH_POW_HPP
@@ -32,7 +33,10 @@ namespace etl {
 /// Computes the value of base raised to the power exp
 /// \details https://en.cppreference.com/w/cpp/numeric/math/pow
 /// \ingroup cmath
-[[nodiscard]] constexpr auto powf(float base, float exp) -> float { return etl::pow(base, exp); }
+[[nodiscard]] constexpr auto powf(float base, float exp) -> float
+{
+    return etl::pow(base, exp);
+}
 
 /// Computes the value of base raised to the power exp
 /// \details https://en.cppreference.com/w/cpp/numeric/math/pow
@@ -64,17 +68,26 @@ namespace etl {
 /// Computes the value of base raised to the power exp
 /// \details https://en.cppreference.com/w/cpp/numeric/math/pow
 /// \ingroup cmath
-[[nodiscard]] constexpr auto powl(long double base, long double exp) -> long double { return etl::pow(base, exp); }
+[[nodiscard]] constexpr auto powl(long double base, long double exp) -> long double
+{
+    return etl::pow(base, exp);
+}
 
 /// Computes the value of base raised to the power exp
 /// \details https://en.cppreference.com/w/cpp/numeric/math/pow
 /// \ingroup cmath
-[[nodiscard]] constexpr auto pow(float base, int iexp) -> float { return etl::pow(base, static_cast<float>(iexp)); }
+[[nodiscard]] constexpr auto pow(float base, int iexp) -> float
+{
+    return etl::pow(base, static_cast<float>(iexp));
+}
 
 /// Computes the value of base raised to the power exp
 /// \details https://en.cppreference.com/w/cpp/numeric/math/pow
 /// \ingroup cmath
-[[nodiscard]] constexpr auto pow(double base, int iexp) -> double { return etl::pow(base, static_cast<double>(iexp)); }
+[[nodiscard]] constexpr auto pow(double base, int iexp) -> double
+{
+    return etl::pow(base, static_cast<double>(iexp));
+}
 
 /// Computes the value of base raised to the power exp
 /// \details https://en.cppreference.com/w/cpp/numeric/math/pow

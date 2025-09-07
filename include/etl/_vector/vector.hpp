@@ -1,4 +1,5 @@
 // SPDX-License-Identifier: BSL-1.0
+// SPDX-FileCopyrightText: Copyright (C) 2024 Tobias Hienzsch
 
 #ifndef TETL_VECTOR_VECTOR_HPP
 #define TETL_VECTOR_VECTOR_HPP
@@ -76,29 +77,65 @@ struct vector {
         }
     }
 
-    [[nodiscard]] constexpr auto data() -> T* { return _ptr; }
+    [[nodiscard]] constexpr auto data() -> T*
+    {
+        return _ptr;
+    }
 
-    [[nodiscard]] constexpr auto data() const -> T const* { return _ptr; }
+    [[nodiscard]] constexpr auto data() const -> T const*
+    {
+        return _ptr;
+    }
 
-    [[nodiscard]] constexpr auto begin() -> T* { return _ptr; }
+    [[nodiscard]] constexpr auto begin() -> T*
+    {
+        return _ptr;
+    }
 
-    [[nodiscard]] constexpr auto begin() const -> T const* { return _ptr; }
+    [[nodiscard]] constexpr auto begin() const -> T const*
+    {
+        return _ptr;
+    }
 
-    [[nodiscard]] constexpr auto end() -> T* { return etl::next(_ptr, etl::ptrdiff_t(size())); }
+    [[nodiscard]] constexpr auto end() -> T*
+    {
+        return etl::next(_ptr, etl::ptrdiff_t(size()));
+    }
 
-    [[nodiscard]] constexpr auto end() const -> T const* { return etl::next(_ptr, etl::ptrdiff_t(size())); }
+    [[nodiscard]] constexpr auto end() const -> T const*
+    {
+        return etl::next(_ptr, etl::ptrdiff_t(size()));
+    }
 
-    [[nodiscard]] constexpr auto empty() -> bool { return size() == 0; }
+    [[nodiscard]] constexpr auto empty() -> bool
+    {
+        return size() == 0;
+    }
 
-    [[nodiscard]] constexpr auto empty() const -> bool { return size() == 0; }
+    [[nodiscard]] constexpr auto empty() const -> bool
+    {
+        return size() == 0;
+    }
 
-    [[nodiscard]] constexpr auto size() -> etl::size_t { return _size; }
+    [[nodiscard]] constexpr auto size() -> etl::size_t
+    {
+        return _size;
+    }
 
-    [[nodiscard]] constexpr auto size() const -> etl::size_t { return _size; }
+    [[nodiscard]] constexpr auto size() const -> etl::size_t
+    {
+        return _size;
+    }
 
-    [[nodiscard]] constexpr auto capacity() -> etl::size_t { return _capacity; }
+    [[nodiscard]] constexpr auto capacity() -> etl::size_t
+    {
+        return _capacity;
+    }
 
-    [[nodiscard]] constexpr auto capacity() const -> etl::size_t { return _capacity; }
+    [[nodiscard]] constexpr auto capacity() const -> etl::size_t
+    {
+        return _capacity;
+    }
 
     constexpr auto clear() noexcept -> void
     {
@@ -123,7 +160,10 @@ private:
         etl::uninitialized_fill(begin(), end(), value);
     }
 
-    constexpr auto deallocate() -> void { etl::allocator_traits<Allocator>::deallocate(_alloc, _ptr, capacity()); }
+    constexpr auto deallocate() -> void
+    {
+        etl::allocator_traits<Allocator>::deallocate(_alloc, _ptr, capacity());
+    }
 
     T* _ptr{nullptr};
     etl::size_t _size{0};

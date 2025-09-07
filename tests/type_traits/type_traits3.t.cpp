@@ -1,4 +1,5 @@
 // SPDX-License-Identifier: BSL-1.0
+// SPDX-FileCopyrightText: Copyright (C) 2021 Tobias Hienzsch
 
 #include "testing/testing.hpp"
 #include "testing/types.hpp"
@@ -12,7 +13,10 @@ import etl;
 #endif
 
 namespace {
-[[nodiscard]] constexpr auto func2(char /*ignore*/) -> int (*)() { return nullptr; }
+[[nodiscard]] constexpr auto func2(char /*ignore*/) -> int (*)()
+{
+    return nullptr;
+}
 
 template <typename T>
 class Foo {
@@ -43,10 +47,9 @@ static constexpr auto test() -> bool
     CHECK_IS_TRAIT_C(is_copy_constructible, CopyAndMovable);
     CHECK_IS_TRAIT_C_FALSE(is_copy_constructible, MovableOnly);
 
-    CHECK_IS_TRAIT_CV(is_trivially_copy_constructible, T);
-    CHECK_IS_TRAIT_CV(is_trivially_copy_constructible, T*);
-    CHECK_IS_TRAIT_CV(is_trivially_copy_constructible, EmptyClass);
-    CHECK_IS_TRAIT_CV_FALSE(is_trivially_copy_constructible, T&);
+    CHECK_IS_TRAIT_C(is_trivially_copy_constructible, T);
+    CHECK_IS_TRAIT_C(is_trivially_copy_constructible, T*);
+    CHECK_IS_TRAIT_C(is_trivially_copy_constructible, EmptyClass);
 
     CHECK_IS_TRAIT_CV(is_scoped_enum, ScopedEnum);
     CHECK_IS_TRAIT_CV(is_scoped_enum, ScopedEnumWithType);
@@ -141,9 +144,15 @@ static constexpr auto test() -> bool
     }
 
     struct S {
-        auto operator()(char /*unused*/, int& /*unused*/) -> T { return T(2); }
+        auto operator()(char /*unused*/, int& /*unused*/) -> T
+        {
+            return T(2);
+        }
 
-        auto operator()(int /*unused*/) -> float { return 1.0F; }
+        auto operator()(int /*unused*/) -> float
+        {
+            return 1.0F;
+        }
     };
 
     CHECK_SAME_TYPE(etl::invoke_result_t<S, char, int&>, T);

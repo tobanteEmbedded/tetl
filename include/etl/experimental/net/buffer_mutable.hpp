@@ -1,4 +1,5 @@
 // SPDX-License-Identifier: BSL-1.0
+// SPDX-FileCopyrightText: Copyright (C) 2019 Tobias Hienzsch
 
 #ifndef TETL_NET_BUFFER_MUTABLE_HPP
 #define TETL_NET_BUFFER_MUTABLE_HPP
@@ -21,10 +22,16 @@ struct mutable_buffer {
     }
 
     /// \brief Get a pointer to the beginning of the memory range.
-    [[nodiscard]] auto data() const noexcept -> void* { return _data; }
+    [[nodiscard]] auto data() const noexcept -> void*
+    {
+        return _data;
+    }
 
     /// \brief Get the size of the memory range.
-    [[nodiscard]] auto size() const noexcept -> etl::size_t { return _size; }
+    [[nodiscard]] auto size() const noexcept -> etl::size_t
+    {
+        return _size;
+    }
 
     /// \brief Move the start of the buffer by the specified number of bytes.
     auto operator+=(etl::size_t n) noexcept -> mutable_buffer&
@@ -54,7 +61,10 @@ inline auto operator+(mutable_buffer const& b, etl::size_t const n) noexcept -> 
 /// \brief Create a new modifiable buffer that is offset from the start of
 /// another.
 /// \relates mutable_buffer
-inline auto operator+(etl::size_t const n, mutable_buffer const& b) noexcept -> mutable_buffer { return b + n; }
+inline auto operator+(etl::size_t const n, mutable_buffer const& b) noexcept -> mutable_buffer
+{
+    return b + n;
+}
 
 } // namespace etl::experimental::net
 

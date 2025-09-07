@@ -1,3 +1,5 @@
+# SPDX-License-Identifier: BSL-1.0
+# SPDX-FileCopyrightText: Copyright (C) 2025 Tobias Hienzsch
 project(tetl-module)
 
 function(tetl_add_module_target _target)

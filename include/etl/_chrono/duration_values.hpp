@@ -1,4 +1,5 @@
 // SPDX-License-Identifier: BSL-1.0
+// SPDX-FileCopyrightText: Copyright (C) 2019 Tobias Hienzsch
 
 #ifndef TETL_CHRONO_DURATION_VALUES_HPP
 #define TETL_CHRONO_DURATION_VALUES_HPP
@@ -19,13 +20,22 @@ template <typename Rep>
 struct duration_values {
 public:
     /// \brief Returns a zero-length representation.
-    [[nodiscard]] static constexpr auto zero() -> Rep { return Rep{}; }
+    [[nodiscard]] static constexpr auto zero() -> Rep
+    {
+        return Rep{};
+    }
 
     /// \brief Returns the smallest possible representation.
-    [[nodiscard]] static constexpr auto min() -> Rep { return etl::numeric_limits<Rep>::lowest(); }
+    [[nodiscard]] static constexpr auto min() -> Rep
+    {
+        return etl::numeric_limits<Rep>::lowest();
+    }
 
     /// \brief Returns the special duration value max.
-    [[nodiscard]] static constexpr auto max() -> Rep { return etl::numeric_limits<Rep>::max(); }
+    [[nodiscard]] static constexpr auto max() -> Rep
+    {
+        return etl::numeric_limits<Rep>::max();
+    }
 };
 
 } // namespace etl::chrono

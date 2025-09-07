@@ -1,4 +1,5 @@
 // SPDX-License-Identifier: BSL-1.0
+// SPDX-FileCopyrightText: Copyright (C) 2019 Tobias Hienzsch
 
 #ifndef TETL_FUNCTIONAL_NEGATE_HPP
 #define TETL_FUNCTIONAL_NEGATE_HPP
@@ -12,7 +13,10 @@ namespace etl {
 /// https://en.cppreference.com/w/cpp/utility/functional/negate
 template <typename T = void>
 struct negate {
-    [[nodiscard]] constexpr auto operator()(T const& arg) const -> T { return static_cast<T>(-arg); }
+    [[nodiscard]] constexpr auto operator()(T const& arg) const -> T
+    {
+        return static_cast<T>(-arg);
+    }
 };
 
 template <>

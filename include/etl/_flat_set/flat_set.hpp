@@ -1,4 +1,5 @@
 // SPDX-License-Identifier: BSL-1.0
+// SPDX-FileCopyrightText: Copyright (C) 2021 Tobias Hienzsch
 
 #ifndef TETL_FLAT_SET_FLAT_SET_HPP
 #define TETL_FLAT_SET_FLAT_SET_HPP
@@ -114,30 +115,75 @@ struct flat_set {
     {
     }
 
-    [[nodiscard]] constexpr auto begin() noexcept -> iterator { return _container.begin(); }
-    [[nodiscard]] constexpr auto begin() const noexcept -> const_iterator { return _container.begin(); }
-    [[nodiscard]] constexpr auto cbegin() const noexcept -> const_iterator { return _container.begin(); }
+    [[nodiscard]] constexpr auto begin() noexcept -> iterator
+    {
+        return _container.begin();
+    }
+    [[nodiscard]] constexpr auto begin() const noexcept -> const_iterator
+    {
+        return _container.begin();
+    }
+    [[nodiscard]] constexpr auto cbegin() const noexcept -> const_iterator
+    {
+        return _container.begin();
+    }
 
-    [[nodiscard]] constexpr auto end() noexcept -> iterator { return _container.end(); }
-    [[nodiscard]] constexpr auto end() const noexcept -> const_iterator { return _container.end(); }
-    [[nodiscard]] constexpr auto cend() const noexcept -> const_iterator { return _container.end(); }
+    [[nodiscard]] constexpr auto end() noexcept -> iterator
+    {
+        return _container.end();
+    }
+    [[nodiscard]] constexpr auto end() const noexcept -> const_iterator
+    {
+        return _container.end();
+    }
+    [[nodiscard]] constexpr auto cend() const noexcept -> const_iterator
+    {
+        return _container.end();
+    }
 
-    [[nodiscard]] constexpr auto rbegin() noexcept -> reverse_iterator { return _container.rbegin(); }
-    [[nodiscard]] constexpr auto rbegin() const noexcept -> const_reverse_iterator { return _container.rbegin(); }
-    [[nodiscard]] constexpr auto crbegin() const noexcept -> const_reverse_iterator { return _container.crbegin(); }
+    [[nodiscard]] constexpr auto rbegin() noexcept -> reverse_iterator
+    {
+        return _container.rbegin();
+    }
+    [[nodiscard]] constexpr auto rbegin() const noexcept -> const_reverse_iterator
+    {
+        return _container.rbegin();
+    }
+    [[nodiscard]] constexpr auto crbegin() const noexcept -> const_reverse_iterator
+    {
+        return _container.crbegin();
+    }
 
-    [[nodiscard]] constexpr auto rend() noexcept -> reverse_iterator { return _container.rend(); }
-    [[nodiscard]] constexpr auto rend() const noexcept -> const_reverse_iterator { return _container.rend(); }
-    [[nodiscard]] constexpr auto crend() const noexcept -> const_reverse_iterator { return _container.crend(); }
+    [[nodiscard]] constexpr auto rend() noexcept -> reverse_iterator
+    {
+        return _container.rend();
+    }
+    [[nodiscard]] constexpr auto rend() const noexcept -> const_reverse_iterator
+    {
+        return _container.rend();
+    }
+    [[nodiscard]] constexpr auto crend() const noexcept -> const_reverse_iterator
+    {
+        return _container.crend();
+    }
 
     /// \brief Returns true if the underlying container is empty.
-    [[nodiscard]] constexpr auto empty() const noexcept -> bool { return _container.empty(); }
+    [[nodiscard]] constexpr auto empty() const noexcept -> bool
+    {
+        return _container.empty();
+    }
 
     /// \brief Returns the size of the underlying container.
-    [[nodiscard]] constexpr auto size() const noexcept -> size_type { return _container.size(); }
+    [[nodiscard]] constexpr auto size() const noexcept -> size_type
+    {
+        return _container.size();
+    }
 
     /// \brief Returns the max_size of the underlying container.
-    [[nodiscard]] constexpr auto max_size() const noexcept -> size_type { return _container.max_size(); }
+    [[nodiscard]] constexpr auto max_size() const noexcept -> size_type
+    {
+        return _container.max_size();
+    }
 
     // 21.6.5.3, modifiers
     template <typename... Args>
@@ -160,9 +206,15 @@ struct flat_set {
         return emplace(etl::forward<Args>(args)...).first;
     }
 
-    constexpr auto insert(value_type const& x) -> etl::pair<iterator, bool> { return emplace(x); }
+    constexpr auto insert(value_type const& x) -> etl::pair<iterator, bool>
+    {
+        return emplace(x);
+    }
 
-    constexpr auto insert(value_type&& x) -> etl::pair<iterator, bool> { return emplace(etl::move(x)); }
+    constexpr auto insert(value_type&& x) -> etl::pair<iterator, bool>
+    {
+        return emplace(etl::move(x));
+    }
 
     constexpr auto insert(const_iterator position, value_type const& x) -> iterator
     {
@@ -193,11 +245,20 @@ struct flat_set {
         return container;
     }
 
-    constexpr auto replace(container_type&& container) -> void { _container = etl::move(container); }
+    constexpr auto replace(container_type&& container) -> void
+    {
+        _container = etl::move(container);
+    }
 
-    constexpr auto erase(iterator position) -> iterator { return _container.erase(position); }
+    constexpr auto erase(iterator position) -> iterator
+    {
+        return _container.erase(position);
+    }
 
-    constexpr auto erase(const_iterator position) -> iterator { return _container.erase(position); }
+    constexpr auto erase(const_iterator position) -> iterator
+    {
+        return _container.erase(position);
+    }
 
     constexpr auto erase(key_type const& key) -> size_type
     {
@@ -221,12 +282,21 @@ struct flat_set {
         swap(_container, other._container);
     }
 
-    constexpr auto clear() noexcept -> void { _container.clear(); }
+    constexpr auto clear() noexcept -> void
+    {
+        _container.clear();
+    }
 
     // observers
-    [[nodiscard]] constexpr auto key_comp() const -> key_compare { return _compare; }
+    [[nodiscard]] constexpr auto key_comp() const -> key_compare
+    {
+        return _compare;
+    }
 
-    [[nodiscard]] constexpr auto value_comp() const -> value_compare { return _compare; }
+    [[nodiscard]] constexpr auto value_comp() const -> value_compare
+    {
+        return _compare;
+    }
 
     // set operations
     [[nodiscard]] constexpr auto find(key_type const& key) -> iterator
@@ -269,7 +339,10 @@ struct flat_set {
         return it;
     }
 
-    [[nodiscard]] constexpr auto count(key_type const& key) const -> size_type { return find(key) == end() ? 0 : 1; }
+    [[nodiscard]] constexpr auto count(key_type const& key) const -> size_type
+    {
+        return find(key) == end() ? 0 : 1;
+    }
 
     template <typename K>
         requires etl::detail::is_transparent_v<Compare>
@@ -278,7 +351,10 @@ struct flat_set {
         return find(key) == end() ? 0 : 1;
     }
 
-    [[nodiscard]] constexpr auto contains(key_type const& key) const -> bool { return count(key) == 1; }
+    [[nodiscard]] constexpr auto contains(key_type const& key) const -> bool
+    {
+        return count(key) == 1;
+    }
 
     template <typename K>
         requires etl::detail::is_transparent_v<Compare>
@@ -369,13 +445,25 @@ struct flat_set {
         return etl::lexicographical_compare(lhs.begin(), lhs.end(), rhs.begin(), rhs.end());
     }
 
-    friend constexpr auto operator>(flat_set const& x, flat_set const& y) -> bool { return y < x; }
+    friend constexpr auto operator>(flat_set const& x, flat_set const& y) -> bool
+    {
+        return y < x;
+    }
 
-    friend constexpr auto operator<=(flat_set const& x, flat_set const& y) -> bool { return !(y < x); }
+    friend constexpr auto operator<=(flat_set const& x, flat_set const& y) -> bool
+    {
+        return !(y < x);
+    }
 
-    friend constexpr auto operator>=(flat_set const& x, flat_set const& y) -> bool { return !(x < y); }
+    friend constexpr auto operator>=(flat_set const& x, flat_set const& y) -> bool
+    {
+        return !(x < y);
+    }
 
-    friend constexpr auto swap(flat_set& x, flat_set& y) noexcept(noexcept(x.swap(y))) -> void { return x.swap(y); }
+    friend constexpr auto swap(flat_set& x, flat_set& y) noexcept(noexcept(x.swap(y))) -> void
+    {
+        return x.swap(y);
+    }
 
 private:
     TETL_NO_UNIQUE_ADDRESS container_type _container;

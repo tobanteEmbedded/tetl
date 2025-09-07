@@ -1,4 +1,5 @@
 // SPDX-License-Identifier: BSL-1.0
+// SPDX-FileCopyrightText: Copyright (C) 2023 Tobias Hienzsch
 
 #ifndef TETL_CHRONO_SYSTEM_CLOCK_HPP
 #define TETL_CHRONO_SYSTEM_CLOCK_HPP
@@ -19,7 +20,10 @@ struct system_clock {
     using time_point                = chrono::time_point<system_clock>;
     static constexpr bool is_steady = false;
 
-    [[nodiscard]] static auto now() noexcept -> time_point { return {}; }
+    [[nodiscard]] static auto now() noexcept -> time_point
+    {
+        return {};
+    }
 
     [[nodiscard]] static auto to_time_t(time_point const& t) noexcept -> time_t
     {

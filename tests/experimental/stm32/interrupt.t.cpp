@@ -1,4 +1,5 @@
 // SPDX-License-Identifier: BSL-1.0
+// SPDX-FileCopyrightText: Copyright (C) 2019 Tobias Hienzsch
 
 #include "testing/testing.hpp"
 
@@ -12,7 +13,10 @@ using namespace etl::experimental::hardware;
 
 static bool dummyHandler01_WasCalled = false;
 
-static void dummy_handler() { dummyHandler01_WasCalled = true; }
+static void dummy_handler()
+{
+    dummyHandler01_WasCalled = true;
+}
 
 static auto test_all() -> bool
 {

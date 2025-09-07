@@ -1,4 +1,5 @@
 // SPDX-License-Identifier: BSL-1.0
+// SPDX-FileCopyrightText: Copyright (C) 2021 Tobias Hienzsch
 
 #ifndef TETL_NEW_HARDWARE_INTERFERENCE_SIZE_HPP
 #define TETL_NEW_HARDWARE_INTERFERENCE_SIZE_HPP

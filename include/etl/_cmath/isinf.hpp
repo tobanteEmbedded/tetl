@@ -1,4 +1,5 @@
 // SPDX-License-Identifier: BSL-1.0
+// SPDX-FileCopyrightText: Copyright (C) 2019 Tobias Hienzsch
 
 #ifndef TETL_CMATH_ISINF_HPP
 #define TETL_CMATH_ISINF_HPP
@@ -30,13 +31,22 @@ inline constexpr struct isinf {
 /// Determines if the given floating point number arg is a positive or negative infinity.
 /// \details https://en.cppreference.com/w/cpp/numeric/math/isinf
 /// \ingroup cmath
-[[nodiscard]] constexpr auto isinf(float arg) -> bool { return etl::detail::isinf(arg); }
+[[nodiscard]] constexpr auto isinf(float arg) -> bool
+{
+    return etl::detail::isinf(arg);
+}
 
 /// \ingroup cmath
-[[nodiscard]] constexpr auto isinf(double arg) -> bool { return etl::detail::isinf(arg); }
+[[nodiscard]] constexpr auto isinf(double arg) -> bool
+{
+    return etl::detail::isinf(arg);
+}
 
 /// \ingroup cmath
-[[nodiscard]] constexpr auto isinf(long double arg) -> bool { return etl::detail::isinf(arg); }
+[[nodiscard]] constexpr auto isinf(long double arg) -> bool
+{
+    return etl::detail::isinf(arg);
+}
 
 /// \ingroup cmath
 template <etl::integral Int>

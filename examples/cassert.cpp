@@ -1,4 +1,5 @@
 // SPDX-License-Identifier: BSL-1.0
+// SPDX-FileCopyrightText: Copyright (C) 2021 Tobias Hienzsch
 
 // If you disabled the next line, the default expetion handler will be called at
 // runtime which will exit the program with code 1. If an assertion is triggered

@@ -1,4 +1,5 @@
 // SPDX-License-Identifier: BSL-1.0
+// SPDX-FileCopyrightText: Copyright (C) 2021 Tobias Hienzsch
 
 #include "testing/testing.hpp"
 
@@ -17,7 +18,6 @@ import etl;
 template <typename T>
 static constexpr auto test_sort() -> bool
 {
-
     // already sorted
     {
         auto src = etl::array<T, 4>{};
@@ -219,7 +219,6 @@ static constexpr auto test_sort() -> bool
 template <typename T>
 static constexpr auto test_bubble_sort() -> bool
 {
-
     // already bubble_sorted
     {
         auto src = etl::array<T, 4>{};
@@ -271,7 +270,6 @@ static constexpr auto test_bubble_sort() -> bool
 template <typename T>
 static constexpr auto test_insertion_sort() -> bool
 {
-
     // already insertion_sorted
     {
         auto src = etl::array<T, 4>{};
@@ -323,7 +321,6 @@ static constexpr auto test_insertion_sort() -> bool
 template <typename T>
 static constexpr auto test_merge_sort() -> bool
 {
-
     // already merge_sorted
     {
         auto src = etl::array<T, 4>{};
@@ -375,7 +372,6 @@ static constexpr auto test_merge_sort() -> bool
 template <typename T>
 static constexpr auto test_gnome_sort() -> bool
 {
-
     // already gnome_sorted
     {
         auto src = etl::array<T, 4>{};
@@ -427,7 +423,6 @@ static constexpr auto test_gnome_sort() -> bool
 template <typename T>
 static constexpr auto test_exchange_sort() -> bool
 {
-
     // already exchange_sorted
     {
         auto src = etl::array<T, 4>{};

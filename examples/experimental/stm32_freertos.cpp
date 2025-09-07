@@ -1,4 +1,5 @@
 // SPDX-License-Identifier: BSL-1.0
+// SPDX-FileCopyrightText: Copyright (C) 2021 Tobias Hienzsch
 
 #include <etl/new.hpp>
 
@@ -33,7 +34,7 @@ struct example_task {
 
 namespace {
 example_task<rtos::once> task{};
-}
+} // namespace
 
 auto main() -> int
 {

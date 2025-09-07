@@ -1,4 +1,5 @@
 // SPDX-License-Identifier: BSL-1.0
+// SPDX-FileCopyrightText: Copyright (C) 2021 Tobias Hienzsch
 
 #include "testing/testing.hpp"
 
@@ -13,7 +14,6 @@ import etl;
 
 static constexpr auto test() -> bool
 {
-
     // default
     {
         struct S {
@@ -313,7 +313,10 @@ static constexpr auto test() -> bool
             *value = 143;
         }
 
-        constexpr ~non_trivial_alternative() noexcept { *value = 42; }
+        constexpr ~non_trivial_alternative() noexcept
+        {
+            *value = 42;
+        }
 
         constexpr non_trivial_alternative(non_trivial_alternative const&) = default;
         constexpr non_trivial_alternative(non_trivial_alternative&&)      = default;

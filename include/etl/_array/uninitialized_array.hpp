@@ -1,4 +1,5 @@
 // SPDX-License-Identifier: BSL-1.0
+// SPDX-FileCopyrightText: Copyright (C) 2024 Tobias Hienzsch
 
 #ifndef TETL_ARRAY_UNINITIALIZED_ARRAY_HPP
 #define TETL_ARRAY_UNINITIALIZED_ARRAY_HPP
@@ -17,7 +18,7 @@ namespace etl {
 namespace detail {
 template <typename T>
 concept sufficiently_trivial = etl::is_trivially_default_constructible_v<T> and etl::is_trivially_destructible_v<T>;
-}
+} // namespace detail
 
 /// \headerfile etl/array.hpp
 /// \ingroup array
@@ -27,11 +28,20 @@ struct uninitialized_array {
 
     constexpr uninitialized_array() = default;
 
-    [[nodiscard]] constexpr auto data() const noexcept -> T const* { return reinterpret_cast<T const*>(_storage); }
+    [[nodiscard]] constexpr auto data() const noexcept -> T const*
+    {
+        return reinterpret_cast<T const*>(_storage);
+    }
 
-    [[nodiscard]] constexpr auto data() noexcept -> T* { return reinterpret_cast<T*>(_storage); }
+    [[nodiscard]] constexpr auto data() noexcept -> T*
+    {
+        return reinterpret_cast<T*>(_storage);
+    }
 
-    [[nodiscard]] static constexpr auto size() noexcept -> etl::size_t { return Size; }
+    [[nodiscard]] static constexpr auto size() noexcept -> etl::size_t
+    {
+        return Size;
+    }
 
 private:
     alignas(T) TETL_NO_UNIQUE_ADDRESS etl::c_array<char, sizeof(T) * Size> _storage;
@@ -44,11 +54,20 @@ struct uninitialized_array<T, Size> {
 
     constexpr uninitialized_array() = default;
 
-    [[nodiscard]] constexpr auto data() const noexcept -> T const* { return static_cast<T const*>(_storage); }
+    [[nodiscard]] constexpr auto data() const noexcept -> T const*
+    {
+        return static_cast<T const*>(_storage);
+    }
 
-    [[nodiscard]] constexpr auto data() noexcept -> T* { return static_cast<T*>(_storage); }
+    [[nodiscard]] constexpr auto data() noexcept -> T*
+    {
+        return static_cast<T*>(_storage);
+    }
 
-    [[nodiscard]] static constexpr auto size() noexcept -> etl::size_t { return Size; }
+    [[nodiscard]] static constexpr auto size() noexcept -> etl::size_t
+    {
+        return Size;
+    }
 
 private:
     TETL_NO_UNIQUE_ADDRESS etl::c_array<T, Size> _storage;
@@ -61,11 +80,20 @@ struct uninitialized_array<T, Size> {
 
     constexpr uninitialized_array() = default;
 
-    [[nodiscard]] constexpr auto data() const noexcept -> T const* { return nullptr; }
+    [[nodiscard]] constexpr auto data() const noexcept -> T const*
+    {
+        return nullptr;
+    }
 
-    [[nodiscard]] constexpr auto data() noexcept -> T* { return nullptr; }
+    [[nodiscard]] constexpr auto data() noexcept -> T*
+    {
+        return nullptr;
+    }
 
-    [[nodiscard]] static constexpr auto size() noexcept -> etl::size_t { return 0; }
+    [[nodiscard]] static constexpr auto size() noexcept -> etl::size_t
+    {
+        return 0;
+    }
 };
 
 } // namespace etl

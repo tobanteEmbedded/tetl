@@ -1,3 +1,6 @@
+# SPDX-License-Identifier: BSL-1.0
+# SPDX-FileCopyrightText: Copyright (C) 2020 Tobias Hienzsch
+
 TOOLCHAIN 	= arm-none-eabi-
 TOOLCHAIN_ROOT ?= $(shell which arm-none-eabi-gcc | sed 's/\/bin\/arm-none-eabi-gcc//g')
 TOOLCHAIN_BIN ?= $(TOOLCHAIN_ROOT)/bin

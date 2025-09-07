@@ -1,4 +1,5 @@
 // SPDX-License-Identifier: BSL-1.0
+// SPDX-FileCopyrightText: Copyright (C) 2019 Tobias Hienzsch
 
 #ifndef TETL_TYPE_TRAITS_DECAY_HPP
 #define TETL_TYPE_TRAITS_DECAY_HPP
@@ -25,7 +26,8 @@ public:
     using type = conditional_t<
         is_array_v<U>,
         remove_extent_t<U>*,
-        conditional_t<is_function_v<U>, add_pointer_t<U>, remove_cv_t<U>>>;
+        conditional_t<is_function_v<U>, add_pointer_t<U>, remove_cv_t<U>>
+    >;
 };
 
 template <typename T>

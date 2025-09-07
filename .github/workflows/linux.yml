@@ -1,3 +1,5 @@
+# SPDX-License-Identifier: BSL-1.0
+# SPDX-FileCopyrightText: Copyright (C) 2023 Tobias Hienzsch
 name: Linux
 
 on:
@@ -25,7 +27,7 @@ jobs:
             { cc: clang-20, cxx: clang++-20 },
             { cc: clang-21, cxx: clang++-21 },
           ]
-        cxx_std: [20, 23]
+        cxx_std: [23]
       fail-fast: false
     runs-on: ubuntu-24.04
     name: ${{ matrix.config.cc }} (C++${{ matrix.cxx_std }})

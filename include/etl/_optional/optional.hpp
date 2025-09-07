@@ -1,4 +1,5 @@
 // SPDX-License-Identifier: BSL-1.0
+// SPDX-FileCopyrightText: Copyright (C) 2020 Tobias Hienzsch
 
 #ifndef TETL_OPTIONAL_OPTIONAL_HPP
 #define TETL_OPTIONAL_OPTIONAL_HPP
@@ -118,21 +119,19 @@ struct optional {
     ///
     /// https://en.cppreference.com/w/cpp/utility/optional/optional
     template <typename U>
-    // clang-format off
-        requires (
-                    is_constructible_v<T, U const&>
+        requires(
+            is_constructible_v<T, U const&>
             and not is_same_v<remove_cv_t<U>, bool>
             and not is_constructible_v<T, optional<U>&>
             and not is_constructible_v<T, optional<U> const&>
             and not is_constructible_v<T, optional<U> &&>
-            and not is_constructible_v<T, optional<U> const&&>
+            and not is_constructible_v<T, optional<U> const &&>
             and not is_convertible_v<optional<U>&, T>
             and not is_convertible_v<optional<U> const&, T>
-            and not is_convertible_v<optional<U>&&, T>
-            and not is_convertible_v<optional<U> const&&, T>
+            and not is_convertible_v<optional<U> &&, T>
+            and not is_convertible_v<optional<U> const &&, T>
 
         )
-    // clang-format on
     explicit(not is_convertible_v<U const&, T>) constexpr optional(optional<U> const& other)
     {
         if (other.has_value()) {
@@ -149,20 +148,18 @@ struct optional {
     ///
     /// https://en.cppreference.com/w/cpp/utility/optional/optional
     template <typename U>
-    // clang-format off
-        requires (
-                    is_constructible_v<T, U&&>
+        requires(
+            is_constructible_v<T, U &&>
             and not is_same_v<remove_cv_t<U>, bool>
             and not is_constructible_v<T, optional<U>&>
             and not is_constructible_v<T, optional<U> const&>
             and not is_constructible_v<T, optional<U> &&>
-            and not is_constructible_v<T, optional<U> const&&>
+            and not is_constructible_v<T, optional<U> const &&>
             and not is_convertible_v<optional<U>&, T>
             and not is_convertible_v<optional<U> const&, T>
-            and not is_convertible_v<optional<U>&&, T>
-            and not is_convertible_v<optional<U> const&&, T>
+            and not is_convertible_v<optional<U> &&, T>
+            and not is_convertible_v<optional<U> const &&, T>
         )
-    // clang-format on
     explicit(not is_convertible_v<U&&, T>) constexpr optional(optional<U>&& other)
     {
         if (other.has_value()) {
@@ -186,13 +183,11 @@ struct optional {
     ///
     /// https://en.cppreference.com/w/cpp/utility/optional/optional
     template <typename U = T>
-    // clang-format off
-        requires (
+        requires(
             is_constructible_v<T, U &&>
             and not is_same_v<remove_cvref_t<U>, in_place_t>
             and not is_same_v<remove_cvref_t<U>, optional>
         )
-    // clang-format on
     explicit(not is_convertible_v<U&&, T>) constexpr optional(U&& value)
         : _var(in_place_index<1>, etl::forward<U>(value))
     {
@@ -221,15 +216,13 @@ struct optional {
     ///
     /// https://en.cppreference.com/w/cpp/utility/optional/operator%3D
     template <typename U = T>
-    // clang-format off
-        requires (
-                    is_assignable_v<T&, U>
-            and     is_constructible_v<T, U>
+        requires(
+            is_assignable_v<T&, U>
+            and is_constructible_v<T, U>
             and not is_same_v<optional, decay_t<U>>
             and not is_scalar_v<T>
             and not is_same_v<T, decay_t<U>>
         )
-    // clang-format on
     constexpr auto operator=(U&& value) -> optional&
     {
         emplace(etl::forward<U>(value));
@@ -238,24 +231,22 @@ struct optional {
 
     /// Assigns the state of other.
     template <typename U = T>
-    // clang-format off
-        requires (
-                    is_constructible_v<T, U const&>
-                and is_assignable_v<T&, U const&>
+        requires(
+            is_constructible_v<T, U const&>
+            and is_assignable_v<T&, U const&>
             and not is_constructible_v<T, optional<U>&>
             and not is_constructible_v<T, optional<U> const&>
-            and not is_constructible_v<T, optional<U>&&>
-            and not is_constructible_v<T, optional<U> const&&>
+            and not is_constructible_v<T, optional<U> &&>
+            and not is_constructible_v<T, optional<U> const &&>
             and not is_convertible_v<optional<U>&, T>
             and not is_convertible_v<optional<U> const&, T>
-            and not is_convertible_v<optional<U>&&, T>
-            and not is_convertible_v<optional<U> const&&, T>
+            and not is_convertible_v<optional<U> &&, T>
+            and not is_convertible_v<optional<U> const &&, T>
             and not is_assignable_v<T&, optional<U>&>
             and not is_assignable_v<T&, optional<U> const&>
-            and not is_assignable_v<T&, optional<U>&&>
-            and not is_assignable_v<T&, optional<U> const&&>
+            and not is_assignable_v<T&, optional<U> &&>
+            and not is_assignable_v<T&, optional<U> const &&>
         )
-    // clang-format on
     constexpr auto operator=(optional<U> const& other) -> optional&
     {
         if (other.has_value()) {
@@ -269,24 +260,22 @@ struct optional {
 
     /// Assigns the state of other.
     template <typename U = T>
-    // clang-format off
-        requires (
-                    is_constructible_v<T, U>
-                and is_assignable_v<T&, U>
+        requires(
+            is_constructible_v<T, U>
+            and is_assignable_v<T&, U>
             and not is_constructible_v<T, optional<U>&>
             and not is_constructible_v<T, optional<U> const&>
-            and not is_constructible_v<T, optional<U>&&>
-            and not is_constructible_v<T, optional<U> const&&>
+            and not is_constructible_v<T, optional<U> &&>
+            and not is_constructible_v<T, optional<U> const &&>
             and not is_convertible_v<optional<U>&, T>
             and not is_convertible_v<optional<U> const&, T>
-            and not is_convertible_v<optional<U>&&, T>
-            and not is_convertible_v<optional<U> const&&, T>
+            and not is_convertible_v<optional<U> &&, T>
+            and not is_convertible_v<optional<U> const &&, T>
             and not is_assignable_v<T&, optional<U>&>
             and not is_assignable_v<T&, optional<U> const&>
-            and not is_assignable_v<T&, optional<U>&&>
-            and not is_assignable_v<T&, optional<U> const&&>
+            and not is_assignable_v<T&, optional<U> &&>
+            and not is_assignable_v<T&, optional<U> const &&>
         )
-    // clang-format on
     constexpr auto operator=(optional<U>&& other) -> optional&
     {
         if (other.has_value()) {
@@ -299,15 +288,24 @@ struct optional {
     }
 
     /// Checks whether *this contains a value.
-    [[nodiscard]] constexpr auto has_value() const noexcept -> bool { return _var.index() == 1; }
+    [[nodiscard]] constexpr auto has_value() const noexcept -> bool
+    {
+        return _var.index() == 1;
+    }
 
     /// Checks whether *this contains a value.
-    [[nodiscard]] constexpr explicit operator bool() const noexcept { return has_value(); }
+    [[nodiscard]] constexpr explicit operator bool() const noexcept
+    {
+        return has_value();
+    }
 
     /// If *this contains a value, destroy that value as if by
     /// value().~value_type(). Otherwise, there are no effects. *this does not
     /// contain a value after this call.
-    constexpr auto reset() noexcept -> void { _var.template emplace<0>(nullopt); }
+    constexpr auto reset() noexcept -> void
+    {
+        _var.template emplace<0>(nullopt);
+    }
 
     /// Returns the contained value if *this has a value, otherwise
     /// returns default_value.
@@ -322,16 +320,22 @@ struct optional {
     template <typename U>
     [[nodiscard]] constexpr auto value_or(U&& defaultValue) && -> value_type
     {
-        return has_value() ? etl::move((**this)) : static_cast<value_type>(etl::forward<U>(defaultValue));
+        return has_value() ? etl::move(**this) : static_cast<value_type>(etl::forward<U>(defaultValue));
     }
 
     /// Returns a pointer to the contained value. The pointer is null if
     /// the optional is empty.
-    [[nodiscard]] constexpr auto operator->() const -> value_type const* { return etl::get_if<1>(&_var); }
+    [[nodiscard]] constexpr auto operator->() const -> value_type const*
+    {
+        return etl::get_if<1>(&_var);
+    }
 
     /// Returns a pointer to the contained value. The pointer is null if
     /// the optional is empty.
-    [[nodiscard]] constexpr auto operator->() -> value_type* { return etl::get_if<1>(&_var); }
+    [[nodiscard]] constexpr auto operator->() -> value_type*
+    {
+        return etl::get_if<1>(&_var);
+    }
 
     /// Returns a reference to the contained value.
     ///
@@ -547,7 +551,10 @@ struct optional<T&> {
         return *this;
     }
 
-    [[nodiscard]] constexpr auto operator->() const noexcept -> T* { return _ptr; }
+    [[nodiscard]] constexpr auto operator->() const noexcept -> T*
+    {
+        return _ptr;
+    }
 
     [[nodiscard]] constexpr auto operator*() const noexcept -> T&
     {
@@ -555,13 +562,25 @@ struct optional<T&> {
         return *_ptr;
     }
 
-    [[nodiscard]] constexpr explicit operator bool() const noexcept { return has_value(); }
+    [[nodiscard]] constexpr explicit operator bool() const noexcept
+    {
+        return has_value();
+    }
 
-    [[nodiscard]] constexpr auto has_value() const noexcept -> bool { return _ptr != nullptr; }
+    [[nodiscard]] constexpr auto has_value() const noexcept -> bool
+    {
+        return _ptr != nullptr;
+    }
 
-    constexpr void reset() noexcept { _ptr = nullptr; }
+    constexpr void reset() noexcept
+    {
+        _ptr = nullptr;
+    }
 
-    constexpr void swap(optional& rhs) noexcept { etl::swap(_ptr, rhs._ptr); }
+    constexpr void swap(optional& rhs) noexcept
+    {
+        etl::swap(_ptr, rhs._ptr);
+    }
 
 private:
     T* _ptr{nullptr};

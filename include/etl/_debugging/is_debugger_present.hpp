@@ -1,4 +1,5 @@
 // SPDX-License-Identifier: BSL-1.0
+// SPDX-FileCopyrightText: Copyright (C) 2024 Tobias Hienzsch
 
 #ifndef TETL_DEBUGGING_IS_DEBUGGER_PRESENT_HPP
 #define TETL_DEBUGGING_IS_DEBUGGER_PRESENT_HPP
@@ -9,7 +10,10 @@ namespace etl {
 
 /// Attempts to determine if the program is being executed with debugger present.
 /// \ingroup debugging
-[[nodiscard]] inline auto is_debugger_present() noexcept -> bool { return false; }
+[[nodiscard]] inline auto is_debugger_present() noexcept -> bool
+{
+    return false;
+}
 
 } // namespace etl
 

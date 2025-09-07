@@ -1,4 +1,5 @@
 // SPDX-License-Identifier: BSL-1.0
+// SPDX-FileCopyrightText: Copyright (C) 2021 Tobias Hienzsch
 
 #ifndef TETL_CHRONO_MONTH_HPP
 #define TETL_CHRONO_MONTH_HPP
@@ -27,9 +28,15 @@ struct month {
         TETL_PRECONDITION(m < etl::numeric_limits<unsigned char>::max());
     }
 
-    [[nodiscard]] constexpr auto ok() const noexcept -> bool { return (_count > 0U) and (_count <= 12U); }
+    [[nodiscard]] constexpr auto ok() const noexcept -> bool
+    {
+        return (_count > 0U) and (_count <= 12U);
+    }
 
-    constexpr explicit operator unsigned() const noexcept { return _count; }
+    constexpr explicit operator unsigned() const noexcept
+    {
+        return _count;
+    }
 
     constexpr auto operator++() noexcept -> month&;
     constexpr auto operator++(int) noexcept -> month;
@@ -75,9 +82,15 @@ private:
     return month{static_cast<unsigned int>(mo - (div * 12) + 1)};
 }
 
-[[nodiscard]] constexpr auto operator+(months const& ms, month const& m) noexcept -> month { return m + ms; }
+[[nodiscard]] constexpr auto operator+(months const& ms, month const& m) noexcept -> month
+{
+    return m + ms;
+}
 
-[[nodiscard]] constexpr auto operator-(month const& m, months const& ms) noexcept -> month { return m + -ms; }
+[[nodiscard]] constexpr auto operator-(month const& m, months const& ms) noexcept -> month
+{
+    return m + -ms;
+}
 
 [[nodiscard]] constexpr auto operator-(month const& m1, month const& m2) noexcept -> months
 {

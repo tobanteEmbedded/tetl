@@ -1,4 +1,5 @@
 // SPDX-License-Identifier: BSL-1.0
+// SPDX-FileCopyrightText: Copyright (C) 2019 Tobias Hienzsch
 
 #ifndef TETL_FUNCTIONAL_BIT_NOT_HPP
 #define TETL_FUNCTIONAL_BIT_NOT_HPP
@@ -14,7 +15,10 @@ namespace etl {
 /// \ingroup functional
 template <typename T = void>
 struct bit_not {
-    [[nodiscard]] constexpr auto operator()(T const& arg) const -> T { return static_cast<T>(~arg); }
+    [[nodiscard]] constexpr auto operator()(T const& arg) const -> T
+    {
+        return static_cast<T>(~arg);
+    }
 };
 
 template <>

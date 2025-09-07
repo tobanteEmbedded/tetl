@@ -1,3 +1,5 @@
+# SPDX-License-Identifier: BSL-1.0
+# SPDX-FileCopyrightText: Copyright (C) 2019 Tobias Hienzsch
 project(examples)
 
 if(TETL_BUILD_CXX_MODULES)

@@ -1,4 +1,5 @@
 // SPDX-License-Identifier: BSL-1.0
+// SPDX-FileCopyrightText: Copyright (C) 2024 Tobias Hienzsch
 
 #include "testing/testing.hpp"
 
@@ -54,7 +55,7 @@ static constexpr auto test() -> bool
     }
 
     {
-        auto memory = etl::array<etl::byte, 64>{};
+        auto memory = etl::array<etl::byte, 128>{};
         auto ones   = Vector{4, T(1), Alloc{memory}};
         CHECK(ones.size() == 4);
         CHECK(etl::as_const(ones).size() == 4);

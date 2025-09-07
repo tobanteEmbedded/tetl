@@ -1,4 +1,5 @@
 // SPDX-License-Identifier: BSL-1.0
+// SPDX-FileCopyrightText: Copyright (C) 2021 Tobias Hienzsch
 
 #include "testing/testing.hpp"
 
@@ -14,7 +15,6 @@ import etl;
 template <typename T>
 static constexpr auto test() -> bool
 {
-
     // exchange
     {
         auto original = T{42};

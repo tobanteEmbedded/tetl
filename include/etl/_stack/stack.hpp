@@ -1,4 +1,5 @@
 // SPDX-License-Identifier: BSL-1.0
+// SPDX-FileCopyrightText: Copyright (C) 2021 Tobias Hienzsch
 
 #ifndef TETL_STACK_STACK_HPP
 #define TETL_STACK_STACK_HPP
@@ -75,7 +76,10 @@ struct stack {
     /// \brief Returns reference to the top element in the stack. This is the
     /// most recently pushed element. This element will be removed on a call to
     /// pop().
-    [[nodiscard]] constexpr auto top() noexcept(noexcept(declval<Container>().back())) -> reference { return c.back(); }
+    [[nodiscard]] constexpr auto top() noexcept(noexcept(declval<Container>().back())) -> reference
+    {
+        return c.back();
+    }
 
     /// \brief Returns reference to the top element in the stack. This is the
     /// most recently pushed element. This element will be removed on a call to
@@ -110,7 +114,10 @@ struct stack {
     }
 
     /// \brief Removes the top element from the stack.
-    constexpr auto pop() noexcept(noexcept(declval<Container>().pop_back())) -> void { c.pop_back(); }
+    constexpr auto pop() noexcept(noexcept(declval<Container>().pop_back())) -> void
+    {
+        c.pop_back();
+    }
 
     /// \brief Exchanges the contents of the container adaptor with those of
     /// other.

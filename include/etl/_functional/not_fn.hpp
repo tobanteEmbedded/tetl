@@ -1,4 +1,5 @@
 // SPDX-License-Identifier: BSL-1.0
+// SPDX-FileCopyrightText: Copyright (C) 2020 Tobias Hienzsch
 
 #ifndef TETL_FUNCTIONAL_NOT_FN_HPP
 #define TETL_FUNCTIONAL_NOT_FN_HPP
@@ -13,12 +14,9 @@ namespace etl {
 
 namespace detail {
 
-// clang-format off
 template <typename F, typename... Args>
-concept negate_invocable = requires(F&& f, Args&&... args) {
-    not etl::invoke(etl::forward<F>(f), etl::forward<Args>(args)...);
-};
-// clang-format on
+concept negate_invocable
+    = requires(F&& f, Args&&... args) { not etl::invoke(etl::forward<F>(f), etl::forward<Args>(args)...); };
 
 template <typename F>
 struct not_fn_t {

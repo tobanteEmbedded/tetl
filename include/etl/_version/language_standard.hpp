@@ -1,4 +1,5 @@
 // SPDX-License-Identifier: BSL-1.0
+// SPDX-FileCopyrightText: Copyright (C) 2019 Tobias Hienzsch
 
 #ifndef TETL_VERSION_LANGUAGE_STANDARD_HPP
 #define TETL_VERSION_LANGUAGE_STANDARD_HPP
@@ -63,12 +64,8 @@ inline constexpr auto current_standard = language_standard::cpp_26;
     #define TETL_CPP_STANDARD 23
 /// The currently configured C++ standard.
 inline constexpr auto current_standard = language_standard::cpp_23;
-#elif TETL_CPP_STANDARD_FULL > 201703L
-    #define TETL_CPP_STANDARD 20
-/// The currently configured C++ standard.
-inline constexpr auto current_standard = language_standard::cpp_20;
 #else
-    #error "Unsupported C++ language standard. TETL requires at least C++20"
+    #error "Unsupported C++ language standard. TETL requires at least C++23"
 #endif
 
 } // namespace etl

@@ -1,4 +1,5 @@
 // SPDX-License-Identifier: BSL-1.0
+// SPDX-FileCopyrightText: Copyright (C) 2023 Tobias Hienzsch
 
 #include "testing/testing.hpp"
 
@@ -18,7 +19,6 @@ import etl;
 template <typename T>
 static constexpr auto test() -> bool
 {
-
     {
         auto data = etl::array{T(1), T(2), T(3), T(4)};
         auto set  = etl::static_set<T, 4>(data.begin(), data.end());
@@ -73,7 +73,6 @@ static constexpr auto test() -> bool
     }
 
     {
-
         auto set  = etl::static_set<T, 4>();
         auto kCmp = set.key_comp();
         auto vCmp = set.value_comp();

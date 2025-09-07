@@ -1,4 +1,5 @@
 // SPDX-License-Identifier: BSL-1.0
+// SPDX-FileCopyrightText: Copyright (C) 2021 Tobias Hienzsch
 
 #ifndef TETL_CMATH_ACOSH_HPP
 #define TETL_CMATH_ACOSH_HPP
@@ -43,12 +44,30 @@ inline constexpr struct acosh {
 
 /// Computes the inverse hyperbolic cosine of arg.
 /// \details https://en.cppreference.com/w/cpp/numeric/math/acosh
-[[nodiscard]] constexpr auto acosh(float arg) noexcept -> float { return etl::detail::acosh(arg); }
-[[nodiscard]] constexpr auto acoshf(float arg) noexcept -> float { return etl::detail::acosh(arg); }
-[[nodiscard]] constexpr auto acosh(double arg) noexcept -> double { return etl::detail::acosh(arg); }
-[[nodiscard]] constexpr auto acosh(long double arg) noexcept -> long double { return etl::detail::acosh(arg); }
-[[nodiscard]] constexpr auto acoshl(long double arg) noexcept -> long double { return etl::detail::acosh(arg); }
-[[nodiscard]] constexpr auto acosh(integral auto arg) noexcept -> double { return etl::detail::acosh(double(arg)); }
+[[nodiscard]] constexpr auto acosh(float arg) noexcept -> float
+{
+    return etl::detail::acosh(arg);
+}
+[[nodiscard]] constexpr auto acoshf(float arg) noexcept -> float
+{
+    return etl::detail::acosh(arg);
+}
+[[nodiscard]] constexpr auto acosh(double arg) noexcept -> double
+{
+    return etl::detail::acosh(arg);
+}
+[[nodiscard]] constexpr auto acosh(long double arg) noexcept -> long double
+{
+    return etl::detail::acosh(arg);
+}
+[[nodiscard]] constexpr auto acoshl(long double arg) noexcept -> long double
+{
+    return etl::detail::acosh(arg);
+}
+[[nodiscard]] constexpr auto acosh(integral auto arg) noexcept -> double
+{
+    return etl::detail::acosh(double(arg));
+}
 
 /// @}
 

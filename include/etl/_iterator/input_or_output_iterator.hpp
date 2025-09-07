@@ -1,4 +1,5 @@
 // SPDX-License-Identifier: BSL-1.0
+// SPDX-FileCopyrightText: Copyright (C) 2023 Tobias Hienzsch
 
 #ifndef TETL_ITERATOR_INPUT_OR_OUTPUT_ITERATOR_HPP
 #define TETL_ITERATOR_INPUT_OR_OUTPUT_ITERATOR_HPP
@@ -9,12 +10,10 @@
 
 namespace etl {
 
-// clang-format off
 template <typename Iter>
 concept input_or_output_iterator = weakly_incrementable<Iter> and requires(Iter it) {
     { *it } -> detail::can_reference;
 };
-// clang-format on
 
 } // namespace etl
 

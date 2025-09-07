@@ -1,4 +1,5 @@
 // SPDX-License-Identifier: BSL-1.0
+// SPDX-FileCopyrightText: Copyright (C) 2023 Tobias Hienzsch
 
 #ifndef TETL_CHRONO_MONTH_WEEKDAY_HPP
 #define TETL_CHRONO_MONTH_WEEKDAY_HPP
@@ -16,11 +17,20 @@ struct month_weekday {
     {
     }
 
-    [[nodiscard]] constexpr auto month() const noexcept -> chrono::month { return _m; }
+    [[nodiscard]] constexpr auto month() const noexcept -> chrono::month
+    {
+        return _m;
+    }
 
-    [[nodiscard]] constexpr auto weekday_indexed() const noexcept -> chrono::weekday_indexed { return _wdi; }
+    [[nodiscard]] constexpr auto weekday_indexed() const noexcept -> chrono::weekday_indexed
+    {
+        return _wdi;
+    }
 
-    [[nodiscard]] constexpr auto ok() const noexcept -> bool { return month().ok() and weekday_indexed().ok(); }
+    [[nodiscard]] constexpr auto ok() const noexcept -> bool
+    {
+        return month().ok() and weekday_indexed().ok();
+    }
 
     friend constexpr auto operator==(month_weekday const& lhs, month_weekday const& rhs) noexcept -> bool
     {

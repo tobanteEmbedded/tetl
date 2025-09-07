@@ -1,4 +1,5 @@
 // SPDX-License-Identifier: BSL-1.0
+// SPDX-FileCopyrightText: Copyright (C) 2021 Tobias Hienzsch
 
 #include "testing/exception.hpp"
 #include "testing/testing.hpp"
@@ -198,7 +199,10 @@ static constexpr auto test() -> bool
             {
             }
 
-            constexpr ~S() { (*counter)++; }
+            constexpr ~S()
+            {
+                (*counter)++;
+            }
 
             constexpr S(S const& /*other*/)                        = default;
             constexpr S(S&& /*other*/) noexcept                    = default;

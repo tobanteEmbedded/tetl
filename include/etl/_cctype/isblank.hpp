@@ -1,4 +1,5 @@
 // SPDX-License-Identifier: BSL-1.0
+// SPDX-FileCopyrightText: Copyright (C) 2020 Tobias Hienzsch
 
 #ifndef TETL_CCTYPE_ISBLANK_HPP
 #define TETL_CCTYPE_ISBLANK_HPP
@@ -17,7 +18,10 @@ namespace etl {
 /// https://en.cppreference.com/w/cpp/string/byte/isblank
 ///
 /// \ingroup cctype
-[[nodiscard]] constexpr auto isblank(int ch) noexcept -> int { return static_cast<int>(ch == ' ' || ch == '\t'); }
+[[nodiscard]] constexpr auto isblank(int ch) noexcept -> int
+{
+    return static_cast<int>(ch == ' ' || ch == '\t');
+}
 } // namespace etl
 
 #endif // TETL_CCTYPE_ISBLANK_HPP

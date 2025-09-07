@@ -1,4 +1,5 @@
 // SPDX-License-Identifier: BSL-1.0
+// SPDX-FileCopyrightText: Copyright (C) 2019 Tobias Hienzsch
 
 #include <etl/cassert.hpp>
 
@@ -26,15 +27,30 @@ struct fixed_audio_buffer {
 
     fixed_audio_buffer() = default;
 
-    [[nodiscard]] auto size_channels() const -> size_type { return Channels; }
+    [[nodiscard]] auto size_channels() const -> size_type
+    {
+        return Channels;
+    }
 
-    [[nodiscard]] auto size_frames() const -> size_type { return Frames; }
+    [[nodiscard]] auto size_frames() const -> size_type
+    {
+        return Frames;
+    }
 
-    [[nodiscard]] auto size_samples() const -> size_type { return size_channels() * size_frames(); }
+    [[nodiscard]] auto size_samples() const -> size_type
+    {
+        return size_channels() * size_frames();
+    }
 
-    [[nodiscard]] auto frame(size_type index) { return make_frame(index); }
+    [[nodiscard]] auto frame(size_type index)
+    {
+        return make_frame(index);
+    }
 
-    [[nodiscard]] auto frame(size_type index) const { return make_frame(index); }
+    [[nodiscard]] auto frame(size_type index) const
+    {
+        return make_frame(index);
+    }
 
     [[nodiscard]] auto channel(size_type ch)
     {
@@ -46,9 +62,15 @@ struct fixed_audio_buffer {
         return const_channel_type(etl::next(data(_buffer), static_cast<etl::ptrdiff_t>(ch * Frames)), Frames);
     }
 
-    [[nodiscard]] auto operator()(size_type ch, size_type s) -> value_type& { return channel(ch)[s]; }
+    [[nodiscard]] auto operator()(size_type ch, size_type s) -> value_type&
+    {
+        return channel(ch)[s];
+    }
 
-    [[nodiscard]] auto operator()(size_type ch, size_type s) const -> value_type const& { return channel(ch)[s]; }
+    [[nodiscard]] auto operator()(size_type ch, size_type s) const -> value_type const&
+    {
+        return channel(ch)[s];
+    }
 
 private:
     [[nodiscard]] auto make_frame(size_type s) const

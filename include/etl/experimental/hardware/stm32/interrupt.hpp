@@ -1,4 +1,5 @@
 // SPDX-License-Identifier: BSL-1.0
+// SPDX-FileCopyrightText: Copyright (C) 2019 Tobias Hienzsch
 
 #ifndef TETL_HARDWARE_STM32_INTERRUPT_HPP
 #define TETL_HARDWARE_STM32_INTERRUPT_HPP
@@ -36,7 +37,10 @@ struct isr {
     using callback_t = void (*)();
     using vector_t   = etl::array<callback_t, static_cast<size_t>(isr_ids::max_id)>;
 
-    static auto call(vector_t const& callbacks, isr_ids id) noexcept -> void { callbacks[static_cast<size_t>(id)](); }
+    static auto call(vector_t const& callbacks, isr_ids id) noexcept -> void
+    {
+        callbacks[static_cast<size_t>(id)]();
+    }
 
     static auto call_checked(vector_t const& callbacks, isr_ids id) noexcept -> void
     {

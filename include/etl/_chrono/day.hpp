@@ -1,4 +1,5 @@
 // SPDX-License-Identifier: BSL-1.0
+// SPDX-FileCopyrightText: Copyright (C) 2021 Tobias Hienzsch
 
 #ifndef TETL_CHRONO_DAY_HPP
 #define TETL_CHRONO_DAY_HPP
@@ -26,7 +27,10 @@ struct day {
         TETL_PRECONDITION(d < etl::numeric_limits<etl::uint8_t>::max());
     }
 
-    constexpr auto operator++() noexcept -> day& { return *this += days{1}; }
+    constexpr auto operator++() noexcept -> day&
+    {
+        return *this += days{1};
+    }
 
     constexpr auto operator++(int) noexcept -> day
     {
@@ -35,7 +39,10 @@ struct day {
         return tmp;
     }
 
-    constexpr auto operator--() noexcept -> day& { return *this -= days{1}; }
+    constexpr auto operator--() noexcept -> day&
+    {
+        return *this -= days{1};
+    }
 
     constexpr auto operator--(int) noexcept -> day
     {
@@ -56,9 +63,15 @@ struct day {
         return *this;
     }
 
-    constexpr explicit operator unsigned() const noexcept { return _count; }
+    constexpr explicit operator unsigned() const noexcept
+    {
+        return _count;
+    }
 
-    [[nodiscard]] constexpr auto ok() const noexcept -> bool { return (_count > 0U) and (_count < 32U); }
+    [[nodiscard]] constexpr auto ok() const noexcept -> bool
+    {
+        return (_count > 0U) and (_count < 32U);
+    }
 
     friend constexpr auto operator==(day lhs, day rhs) noexcept -> bool
     {

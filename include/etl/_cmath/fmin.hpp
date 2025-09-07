@@ -1,4 +1,5 @@
 // SPDX-License-Identifier: BSL-1.0
+// SPDX-FileCopyrightText: Copyright (C) 2021 Tobias Hienzsch
 
 #ifndef TETL_CMATH_FMIN_HPP
 #define TETL_CMATH_FMIN_HPP
@@ -15,11 +16,20 @@ namespace etl {
 /// chosen)
 ///
 /// https://en.cppreference.com/w/cpp/numeric/math/fmin
-[[nodiscard]] constexpr auto fmin(float x, float y) noexcept -> float { return etl::detail::gcem::min(x, y); }
+[[nodiscard]] constexpr auto fmin(float x, float y) noexcept -> float
+{
+    return etl::detail::gcem::min(x, y);
+}
 
-[[nodiscard]] constexpr auto fminf(float x, float y) noexcept -> float { return etl::detail::gcem::min(x, y); }
+[[nodiscard]] constexpr auto fminf(float x, float y) noexcept -> float
+{
+    return etl::detail::gcem::min(x, y);
+}
 
-[[nodiscard]] constexpr auto fmin(double x, double y) noexcept -> double { return etl::detail::gcem::min(x, y); }
+[[nodiscard]] constexpr auto fmin(double x, double y) noexcept -> double
+{
+    return etl::detail::gcem::min(x, y);
+}
 
 [[nodiscard]] constexpr auto fmin(long double x, long double y) noexcept -> long double
 {

@@ -1,4 +1,5 @@
 // SPDX-License-Identifier: BSL-1.0
+// SPDX-FileCopyrightText: Copyright (C) 2021 Tobias Hienzsch
 
 #include "testing/testing.hpp"
 
@@ -24,7 +25,10 @@ struct DummyString {
 
     constexpr explicit DummyString(DummyStringView /*ignore*/) { }
 
-    constexpr operator DummyStringView() const noexcept { return {*this}; }
+    constexpr operator DummyStringView() const noexcept
+    {
+        return {*this};
+    }
 };
 
 constexpr DummyStringView::DummyStringView(DummyString const& /*ignore*/) { }

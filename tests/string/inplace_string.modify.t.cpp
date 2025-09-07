@@ -1,4 +1,5 @@
 // SPDX-License-Identifier: BSL-1.0
+// SPDX-FileCopyrightText: Copyright (C) 2024 Tobias Hienzsch
 
 #include "testing/testing.hpp"
 
@@ -19,7 +20,6 @@ using namespace etl::string_view_literals;
 template <typename String>
 [[nodiscard]] static constexpr auto test() -> bool
 {
-
     // push_back
     {
         String str{""};

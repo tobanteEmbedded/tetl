@@ -1,4 +1,5 @@
 // SPDX-License-Identifier: BSL-1.0
+// SPDX-FileCopyrightText: Copyright (C) 2019 Tobias Hienzsch
 
 #ifndef TETL_MEMORY_DEFAULT_DELETE_HPP
 #define TETL_MEMORY_DEFAULT_DELETE_HPP
@@ -21,7 +22,10 @@ struct default_delete {
     {
     }
 
-    auto operator()(T* ptr) const noexcept -> void { delete ptr; }
+    auto operator()(T* ptr) const noexcept -> void
+    {
+        delete ptr;
+    }
 
 private:
     static_assert(!is_function_v<T>);

@@ -1,4 +1,5 @@
 // SPDX-License-Identifier: BSL-1.0
+// SPDX-FileCopyrightText: Copyright (C) 2021 Tobias Hienzsch
 
 #ifndef TETL_CSTDINT_HPP
 #define TETL_CSTDINT_HPP
@@ -19,5 +20,8 @@
 #include <etl/_cstdint/uint_t.hpp>
 #include <etl/_cstdint/uintmax_t.hpp>
 #include <etl/_cstdint/uintptr_t.hpp>
+
+// Non-standard extensions
+#include <etl/_cstdint/uint128.hpp>
 
 #endif // TETL_CSTDINT_HPP

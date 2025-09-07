@@ -1,4 +1,5 @@
 // SPDX-License-Identifier: BSL-1.0
+// SPDX-FileCopyrightText: Copyright (C) 2021 Tobias Hienzsch
 
 #if defined(TETL_ENABLE_CXX_MODULES)
 import etl;
@@ -42,7 +43,7 @@ import etl;
     #include <etl/mdarray.hpp>
     #include <etl/mdspan.hpp>
     #include <etl/memory.hpp>
-    #include <etl/meta.hpp>
+    #include <etl/mpl.hpp>
     #include <etl/mutex.hpp>
     #include <etl/new.hpp>
     #include <etl/numbers.hpp>

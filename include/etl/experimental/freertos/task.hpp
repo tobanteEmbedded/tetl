@@ -1,4 +1,5 @@
 // SPDX-License-Identifier: BSL-1.0
+// SPDX-FileCopyrightText: Copyright (C) 2019 Tobias Hienzsch
 
 #ifndef TETL_FREERTOS_TASK_HPP
 #define TETL_FREERTOS_TASK_HPP
@@ -15,12 +16,18 @@
 namespace etl::experimental::freertos {
 /// \brief Runs the task loop 0 times.
 struct never {
-    [[nodiscard]] auto operator()() const -> bool { return false; }
+    [[nodiscard]] auto operator()() const -> bool
+    {
+        return false;
+    }
 };
 
 /// \brief Runs the task loop forever.
 struct forever {
-    [[nodiscard]] auto operator()() const -> bool { return true; }
+    [[nodiscard]] auto operator()() const -> bool
+    {
+        return true;
+    }
 };
 
 /// \brief Runs the task loop Count times.
@@ -28,7 +35,10 @@ template <etl::size_t Count>
 struct times {
     etl::size_t run_count = Count;
 
-    [[nodiscard]] auto operator()() -> bool { return (run_count-- != 0); }
+    [[nodiscard]] auto operator()() -> bool
+    {
+        return run_count-- != 0;
+    }
 };
 
 /// \brief Runs the task loop once.
@@ -59,11 +69,17 @@ inline auto create_task(
 
 /// \brief Delete a rtos task. If handle is nullptr, the current task will be
 /// deleted.
-inline auto delete_task(TaskHandle_t task) -> void { vTaskDelete(task); }
+inline auto delete_task(TaskHandle_t task) -> void
+{
+    vTaskDelete(task);
+}
 
 /// \brief Start the RTOS, this function will never return and will schedule the
 /// tasks.
-inline auto start_scheduler() -> void { vTaskStartScheduler(); }
+inline auto start_scheduler() -> void
+{
+    vTaskStartScheduler();
+}
 
 namespace this_task {
 /// \brief Request a context switch to another task.
@@ -116,11 +132,20 @@ auto sleep_for(etl::uint32_t ticks) -> void;
 /// https://www.freertos.org/vtaskdelayuntil.html
 auto sleep_until(etl::uint32_t& prev, etl::uint32_t increment) -> void;
 
-inline auto yield() -> void { taskYIELD(); }
+inline auto yield() -> void
+{
+    taskYIELD();
+}
 
-inline auto sleep_for(etl::uint32_t ticks) -> void { vTaskDelay(ticks); }
+inline auto sleep_for(etl::uint32_t ticks) -> void
+{
+    vTaskDelay(ticks);
+}
 
-inline auto sleep_until(etl::uint32_t& prev, etl::uint32_t increment) -> void { vTaskDelayUntil(&prev, increment); }
+inline auto sleep_until(etl::uint32_t& prev, etl::uint32_t increment) -> void
+{
+    vTaskDelayUntil(&prev, increment);
+}
 } // namespace this_task
 
 } // namespace etl::experimental::freertos

@@ -1,4 +1,5 @@
 // SPDX-License-Identifier: BSL-1.0
+// SPDX-FileCopyrightText: Copyright (C) 2021 Tobias Hienzsch
 
 #ifndef TETL_FUNCTIONAL_HASH_HPP
 #define TETL_FUNCTIONAL_HASH_HPP
@@ -175,7 +176,10 @@ struct hash<etl::nullptr_t> {
 
 template <typename T>
 struct hash<T*> {
-    [[nodiscard]] auto operator()(T* val) const noexcept -> etl::size_t { return etl::bit_cast<etl::size_t>(val); }
+    [[nodiscard]] auto operator()(T* val) const noexcept -> etl::size_t
+    {
+        return etl::bit_cast<etl::size_t>(val);
+    }
 };
 
 } // namespace etl

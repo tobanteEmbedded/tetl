@@ -1,4 +1,5 @@
 // SPDX-License-Identifier: BSL-1.0
+// SPDX-FileCopyrightText: Copyright (C) 2021 Tobias Hienzsch
 
 #ifndef TETL_CMATH_ROUND_HPP
 #define TETL_CMATH_ROUND_HPP
@@ -42,12 +43,30 @@ template <typename T>
 /// mode.
 ///
 /// https://en.cppreference.com/w/cpp/numeric/math/round
-[[nodiscard]] constexpr auto round(float arg) noexcept -> float { return etl::detail::round(arg); }
-[[nodiscard]] constexpr auto roundf(float arg) noexcept -> float { return etl::detail::round(arg); }
-[[nodiscard]] constexpr auto round(double arg) noexcept -> double { return etl::detail::round(arg); }
-[[nodiscard]] constexpr auto round(long double arg) noexcept -> long double { return etl::detail::round(arg); }
-[[nodiscard]] constexpr auto roundl(long double arg) noexcept -> long double { return etl::detail::round(arg); }
-[[nodiscard]] constexpr auto round(integral auto arg) noexcept -> double { return etl::detail::round(double(arg)); }
+[[nodiscard]] constexpr auto round(float arg) noexcept -> float
+{
+    return etl::detail::round(arg);
+}
+[[nodiscard]] constexpr auto roundf(float arg) noexcept -> float
+{
+    return etl::detail::round(arg);
+}
+[[nodiscard]] constexpr auto round(double arg) noexcept -> double
+{
+    return etl::detail::round(arg);
+}
+[[nodiscard]] constexpr auto round(long double arg) noexcept -> long double
+{
+    return etl::detail::round(arg);
+}
+[[nodiscard]] constexpr auto roundl(long double arg) noexcept -> long double
+{
+    return etl::detail::round(arg);
+}
+[[nodiscard]] constexpr auto round(integral auto arg) noexcept -> double
+{
+    return etl::detail::round(double(arg));
+}
 
 /// @}
 

@@ -1,4 +1,5 @@
 // SPDX-License-Identifier: BSL-1.0
+// SPDX-FileCopyrightText: Copyright (C) 2021 Tobias Hienzsch
 
 #if defined(TETL_ENABLE_CXX_MODULES)
 import etl;
@@ -31,6 +32,6 @@ static auto fun(T x) -> void
 auto main(int /*argc*/, char const** /*argv*/) -> int
 {
     log("Hello world!");
-    fun("Hello C++20!");
+    fun("Hello C++23!");
     return 0;
 }

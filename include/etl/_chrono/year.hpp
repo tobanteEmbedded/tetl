@@ -1,4 +1,5 @@
 // SPDX-License-Identifier: BSL-1.0
+// SPDX-FileCopyrightText: Copyright (C) 2021 Tobias Hienzsch
 
 #ifndef TETL_CHRONO_YEAR_HPP
 #define TETL_CHRONO_YEAR_HPP
@@ -24,7 +25,10 @@ struct year {
         return *this;
     }
 
-    constexpr auto operator++(int) noexcept -> year { return year{_count++}; }
+    constexpr auto operator++(int) noexcept -> year
+    {
+        return year{_count++};
+    }
 
     constexpr auto operator--() noexcept -> year&
     {
@@ -32,11 +36,13 @@ struct year {
         return *this;
     }
 
-    constexpr auto operator--(int) noexcept -> year { return year{_count--}; }
+    constexpr auto operator--(int) noexcept -> year
+    {
+        return year{_count--};
+    }
 
     constexpr auto operator+=(years const& countS) noexcept -> year&
     {
-
         _count = static_cast<int16_t>(_count + countS.count());
         return *this;
     }
@@ -47,22 +53,40 @@ struct year {
         return *this;
     }
 
-    [[nodiscard]] constexpr auto operator+() const noexcept -> year { return *this; }
+    [[nodiscard]] constexpr auto operator+() const noexcept -> year
+    {
+        return *this;
+    }
 
-    [[nodiscard]] constexpr auto operator-() const noexcept -> year { return year{-_count}; }
+    [[nodiscard]] constexpr auto operator-() const noexcept -> year
+    {
+        return year{-_count};
+    }
 
     [[nodiscard]] constexpr auto is_leap() const noexcept -> bool
     {
         return (_count % 4 == 0) and (_count % 100 != 0 or _count % 400 == 0);
     }
 
-    [[nodiscard]] constexpr explicit operator int() const noexcept { return _count; }
+    [[nodiscard]] constexpr explicit operator int() const noexcept
+    {
+        return _count;
+    }
 
-    [[nodiscard]] constexpr auto ok() const noexcept -> bool { return _count != numeric_limits<int16_t>::min(); }
+    [[nodiscard]] constexpr auto ok() const noexcept -> bool
+    {
+        return _count != numeric_limits<int16_t>::min();
+    }
 
-    [[nodiscard]] static constexpr auto min() noexcept -> year { return year{-32767}; }
+    [[nodiscard]] static constexpr auto min() noexcept -> year
+    {
+        return year{-32767};
+    }
 
-    [[nodiscard]] static constexpr auto max() noexcept -> year { return year{32767}; }
+    [[nodiscard]] static constexpr auto max() noexcept -> year
+    {
+        return year{32767};
+    }
 
     friend constexpr auto operator==(year lhs, year rhs) noexcept -> bool
     {
@@ -98,9 +122,15 @@ private:
     return year{static_cast<int>(static_cast<int>(lhs) + rhs.count())};
 }
 
-[[nodiscard]] constexpr auto operator+(years const& lhs, year const& rhs) noexcept -> year { return rhs + lhs; }
+[[nodiscard]] constexpr auto operator+(years const& lhs, year const& rhs) noexcept -> year
+{
+    return rhs + lhs;
+}
 
-[[nodiscard]] constexpr auto operator-(year const& lhs, years const& rhs) noexcept -> year { return lhs + -rhs; }
+[[nodiscard]] constexpr auto operator-(year const& lhs, years const& rhs) noexcept -> year
+{
+    return lhs + -rhs;
+}
 
 [[nodiscard]] constexpr auto operator-(year const& lhs, year const& rhs) noexcept -> years
 {

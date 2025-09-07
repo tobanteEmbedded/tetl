@@ -1,9 +1,11 @@
+# SPDX-License-Identifier: BSL-1.0
+# SPDX-FileCopyrightText: Copyright (C) 2019 Tobias Hienzsch
 cmake_minimum_required(VERSION 3.28)
 project(tetl-dev LANGUAGES CXX)
 
-option(TETL_BUILD_CONTRACT_CHECKS      "Build with contract assertions"                  ON)
-option(TETL_BUILD_CONTRACT_CHECKS_SAFE "Build with all/slow contract assertions"         OFF)
-option(TETL_BUILD_CXX_MODULES          "Build with C++20 modules"                        OFF)
+option(TETL_BUILD_CONTRACT_CHECKS "Build with contract assertions" ON)
+option(TETL_BUILD_CONTRACT_CHECKS_SAFE "Build with all/slow contract assertions" OFF)
+option(TETL_BUILD_CXX_MODULES "Build with C++ modules" OFF)
 
 find_program(CCACHE ccache)
 if(CCACHE)
@@ -12,7 +14,7 @@ if(CCACHE)
 endif()
 
 if(NOT CMAKE_CXX_STANDARD)
-  set(CMAKE_CXX_STANDARD 20)
+  set(CMAKE_CXX_STANDARD 23)
 endif()
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_CXX_EXTENSIONS OFF)

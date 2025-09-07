@@ -1,4 +1,5 @@
 // SPDX-License-Identifier: BSL-1.0
+// SPDX-FileCopyrightText: Copyright (C) 2020 Tobias Hienzsch
 
 #ifndef TETL_CCTYPE_ISLOWER_HPP
 #define TETL_CCTYPE_ISLOWER_HPP
@@ -16,7 +17,10 @@ namespace etl {
 /// https://en.cppreference.com/w/cpp/string/byte/islower
 ///
 /// \ingroup cctype
-[[nodiscard]] constexpr auto islower(int ch) noexcept -> int { return static_cast<int>(ch >= 'a' and ch <= 'z'); }
+[[nodiscard]] constexpr auto islower(int ch) noexcept -> int
+{
+    return static_cast<int>(ch >= 'a' and ch <= 'z');
+}
 } // namespace etl
 
 #endif // TETL_CCTYPE_ISLOWER_HPP

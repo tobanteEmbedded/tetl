@@ -1,4 +1,5 @@
 // SPDX-License-Identifier: BSL-1.0
+// SPDX-FileCopyrightText: Copyright (C) 2019 Tobias Hienzsch
 
 #ifndef TETL_FUNCTIONAL_GREATER_EQUAL_HPP
 #define TETL_FUNCTIONAL_GREATER_EQUAL_HPP
@@ -12,7 +13,10 @@ namespace etl {
 /// https://en.cppreference.com/w/cpp/utility/functional/greater_equal
 template <typename T = void>
 struct greater_equal {
-    [[nodiscard]] constexpr auto operator()(T const& lhs, T const& rhs) const -> bool { return lhs >= rhs; }
+    [[nodiscard]] constexpr auto operator()(T const& lhs, T const& rhs) const -> bool
+    {
+        return lhs >= rhs;
+    }
 };
 
 template <>

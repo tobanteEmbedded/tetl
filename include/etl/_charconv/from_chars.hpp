@@ -1,4 +1,5 @@
 // SPDX-License-Identifier: BSL-1.0
+// SPDX-FileCopyrightText: Copyright (C) 2019 Tobias Hienzsch
 
 #ifndef TETL_CHARCONV_FROM_CHARS_HPP
 #define TETL_CHARCONV_FROM_CHARS_HPP
@@ -16,7 +17,10 @@ struct from_chars_result {
     char const* ptr{nullptr};
     etl::errc ec{};
 
-    [[nodiscard]] constexpr explicit operator bool() const noexcept { return ec == etl::errc{}; }
+    [[nodiscard]] constexpr explicit operator bool() const noexcept
+    {
+        return ec == etl::errc{};
+    }
 
     friend auto operator==(from_chars_result const&, from_chars_result const&) -> bool = default;
 };

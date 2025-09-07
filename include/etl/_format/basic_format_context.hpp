@@ -1,4 +1,5 @@
 // SPDX-License-Identifier: BSL-1.0
+// SPDX-FileCopyrightText: Copyright (C) 2021 Tobias Hienzsch
 
 #ifndef TETL_FORMAT_BASIC_FORMAT_CONTEXT_HPP
 #define TETL_FORMAT_BASIC_FORMAT_CONTEXT_HPP
@@ -31,11 +32,17 @@ struct basic_format_context {
     using formatter_type = formatter<T, CharT>;
 
     /// \brief Returns the iterator to the output buffer.
-    [[nodiscard]] constexpr auto out() noexcept -> iterator { return _pos; }
+    [[nodiscard]] constexpr auto out() noexcept -> iterator
+    {
+        return _pos;
+    }
 
     /// \brief Sets the output iterator to it. After a call to advance_to,
     /// subsequent calls to out() will return a copy of it.
-    constexpr auto advance_to(iterator it) noexcept -> void { _pos = it; }
+    constexpr auto advance_to(iterator it) noexcept -> void
+    {
+        _pos = it;
+    }
 
 private:
     OutputIt _pos;

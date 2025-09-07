@@ -1,4 +1,5 @@
 // SPDX-License-Identifier: BSL-1.0
+// SPDX-FileCopyrightText: Copyright (C) 2019 Tobias Hienzsch
 
 #ifndef TETL_FUNCTIONAL_BIT_AND_HPP
 #define TETL_FUNCTIONAL_BIT_AND_HPP
@@ -12,7 +13,10 @@ namespace etl {
 /// \ingroup functional
 template <typename T = void>
 struct bit_and {
-    [[nodiscard]] constexpr auto operator()(T const& lhs, T const& rhs) const -> T { return lhs & rhs; }
+    [[nodiscard]] constexpr auto operator()(T const& lhs, T const& rhs) const -> T
+    {
+        return lhs & rhs;
+    }
 };
 
 /// \ingroup functional

@@ -1,4 +1,5 @@
 // SPDX-License-Identifier: BSL-1.0
+// SPDX-FileCopyrightText: Copyright (C) 2021 Tobias Hienzsch
 
 #ifndef TETL_CMATH_ATAN_HPP
 #define TETL_CMATH_ATAN_HPP
@@ -41,12 +42,30 @@ inline constexpr struct atan {
 
 /// Computes the principal value of the arc tangent of arg.
 /// \details https://en.cppreference.com/w/cpp/numeric/math/atan
-[[nodiscard]] constexpr auto atan(float arg) noexcept -> float { return etl::detail::atan(arg); }
-[[nodiscard]] constexpr auto atanf(float arg) noexcept -> float { return etl::detail::atan(arg); }
-[[nodiscard]] constexpr auto atan(double arg) noexcept -> double { return etl::detail::atan(arg); }
-[[nodiscard]] constexpr auto atan(long double arg) noexcept -> long double { return etl::detail::atan(arg); }
-[[nodiscard]] constexpr auto atanl(long double arg) noexcept -> long double { return etl::detail::atan(arg); }
-[[nodiscard]] constexpr auto atan(integral auto arg) noexcept -> double { return etl::detail::atan(double(arg)); }
+[[nodiscard]] constexpr auto atan(float arg) noexcept -> float
+{
+    return etl::detail::atan(arg);
+}
+[[nodiscard]] constexpr auto atanf(float arg) noexcept -> float
+{
+    return etl::detail::atan(arg);
+}
+[[nodiscard]] constexpr auto atan(double arg) noexcept -> double
+{
+    return etl::detail::atan(arg);
+}
+[[nodiscard]] constexpr auto atan(long double arg) noexcept -> long double
+{
+    return etl::detail::atan(arg);
+}
+[[nodiscard]] constexpr auto atanl(long double arg) noexcept -> long double
+{
+    return etl::detail::atan(arg);
+}
+[[nodiscard]] constexpr auto atan(integral auto arg) noexcept -> double
+{
+    return etl::detail::atan(double(arg));
+}
 
 /// @}
 

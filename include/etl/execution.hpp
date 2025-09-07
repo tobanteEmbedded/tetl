@@ -1,4 +1,5 @@
 // SPDX-License-Identifier: BSL-1.0
+// SPDX-FileCopyrightText: Copyright (C) 2024 Tobias Hienzsch
 
 #ifndef TETL_EXECUTION_HPP
 #define TETL_EXECUTION_HPP

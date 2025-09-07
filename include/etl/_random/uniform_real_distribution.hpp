@@ -1,4 +1,5 @@
 // SPDX-License-Identifier: BSL-1.0
+// SPDX-FileCopyrightText: Copyright (C) 2023 Tobias Hienzsch
 
 #ifndef TETL_RANDOM_UNIFORM_REAL_DISTRIBUTION_HPP
 #define TETL_RANDOM_UNIFORM_REAL_DISTRIBUTION_HPP
@@ -24,9 +25,15 @@ struct uniform_real_distribution {
         {
         }
 
-        [[nodiscard]] constexpr auto a() const noexcept -> result_type { return _min; }
+        [[nodiscard]] constexpr auto a() const noexcept -> result_type
+        {
+            return _min;
+        }
 
-        [[nodiscard]] constexpr auto b() const noexcept -> result_type { return _max; }
+        [[nodiscard]] constexpr auto b() const noexcept -> result_type
+        {
+            return _max;
+        }
 
         [[nodiscard]] friend constexpr auto operator==(param_type const& lhs, param_type const& rhs) noexcept -> bool
         {
@@ -53,19 +60,40 @@ struct uniform_real_distribution {
     {
     }
 
-    constexpr auto param(param_type const& parm) -> void { _param = parm; }
+    constexpr auto param(param_type const& parm) -> void
+    {
+        _param = parm;
+    }
 
-    [[nodiscard]] constexpr auto param() const -> param_type { return _param; }
+    [[nodiscard]] constexpr auto param() const -> param_type
+    {
+        return _param;
+    }
 
-    [[nodiscard]] constexpr auto a() const -> result_type { return _param.a(); }
+    [[nodiscard]] constexpr auto a() const -> result_type
+    {
+        return _param.a();
+    }
 
-    [[nodiscard]] constexpr auto b() const -> result_type { return _param.b(); }
+    [[nodiscard]] constexpr auto b() const -> result_type
+    {
+        return _param.b();
+    }
 
-    [[nodiscard]] constexpr auto min() const -> result_type { return a(); }
+    [[nodiscard]] constexpr auto min() const -> result_type
+    {
+        return a();
+    }
 
-    [[nodiscard]] constexpr auto max() const -> result_type { return b(); }
+    [[nodiscard]] constexpr auto max() const -> result_type
+    {
+        return b();
+    }
 
-    constexpr auto reset() -> void { (void)this; }
+    constexpr auto reset() -> void
+    {
+        (void)this;
+    }
 
     template <typename URBG>
     [[nodiscard]] constexpr auto operator()(URBG& g) noexcept(noexcept(g())) -> result_type

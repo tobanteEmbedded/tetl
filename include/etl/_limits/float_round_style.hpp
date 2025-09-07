@@ -1,4 +1,5 @@
 // SPDX-License-Identifier: BSL-1.0
+// SPDX-FileCopyrightText: Copyright (C) 2021 Tobias Hienzsch
 
 #ifndef TETL_LIMITS_FLOAT_ROUND_STYLE_HPP
 #define TETL_LIMITS_FLOAT_ROUND_STYLE_HPP

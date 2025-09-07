@@ -1,4 +1,5 @@
 // SPDX-License-Identifier: BSL-1.0
+// SPDX-FileCopyrightText: Copyright (C) 2023 Tobias Hienzsch
 
 #ifndef TETL_RANDOM_XORSHIFT128PLUSPLUS_HPP
 #define TETL_RANDOM_XORSHIFT128PLUSPLUS_HPP
@@ -25,11 +26,20 @@ struct xoshiro128plusplus {
     {
     }
 
-    [[nodiscard]] static constexpr auto min() noexcept -> result_type { return numeric_limits<uint32_t>::min(); }
+    [[nodiscard]] static constexpr auto min() noexcept -> result_type
+    {
+        return numeric_limits<uint32_t>::min();
+    }
 
-    [[nodiscard]] static constexpr auto max() noexcept -> result_type { return numeric_limits<uint32_t>::max() - 1; }
+    [[nodiscard]] static constexpr auto max() noexcept -> result_type
+    {
+        return numeric_limits<uint32_t>::max() - 1;
+    }
 
-    constexpr auto seed(result_type value = default_seed) noexcept -> void { _state[0] = value; }
+    constexpr auto seed(result_type value = default_seed) noexcept -> void
+    {
+        _state[0] = value;
+    }
 
     constexpr auto discard(unsigned long long z) noexcept -> void
     {

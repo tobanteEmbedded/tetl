@@ -1,4 +1,5 @@
 // SPDX-License-Identifier: BSL-1.0
+// SPDX-FileCopyrightText: Copyright (C) 2024 Tobias Hienzsch
 
 #ifndef TETL_CONCEPTS_BUILTIN_UNSIGNED_INTEGER_HPP
 #define TETL_CONCEPTS_BUILTIN_UNSIGNED_INTEGER_HPP

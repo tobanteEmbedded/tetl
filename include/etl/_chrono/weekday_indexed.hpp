@@ -1,4 +1,5 @@
 // SPDX-License-Identifier: BSL-1.0
+// SPDX-FileCopyrightText: Copyright (C) 2023 Tobias Hienzsch
 
 #ifndef TETL_CHRONO_WEEKDAY_INDEXED_HPP
 #define TETL_CHRONO_WEEKDAY_INDEXED_HPP
@@ -17,9 +18,15 @@ struct weekday_indexed {
     {
     }
 
-    [[nodiscard]] constexpr auto weekday() const noexcept -> etl::chrono::weekday { return _wd; }
+    [[nodiscard]] constexpr auto weekday() const noexcept -> etl::chrono::weekday
+    {
+        return _wd;
+    }
 
-    [[nodiscard]] constexpr auto index() const noexcept -> unsigned { return _index; }
+    [[nodiscard]] constexpr auto index() const noexcept -> unsigned
+    {
+        return _index;
+    }
 
     [[nodiscard]] constexpr auto ok() const noexcept -> bool
     {
@@ -36,7 +43,10 @@ private:
     etl::uint8_t _index;
 };
 
-constexpr auto weekday::operator[](unsigned index) const noexcept -> weekday_indexed { return {*this, index}; }
+constexpr auto weekday::operator[](unsigned index) const noexcept -> weekday_indexed
+{
+    return {*this, index};
+}
 
 } // namespace etl::chrono
 

@@ -1,10 +1,12 @@
 // SPDX-License-Identifier: BSL-1.0
+// SPDX-FileCopyrightText: Copyright (C) 2019 Tobias Hienzsch
 
 #ifndef TETL_TUPLE_TUPLE_HPP
 #define TETL_TUPLE_TUPLE_HPP
 
 #include <etl/_config/all.hpp>
 
+#include <etl/_mpl/at.hpp>
 #include <etl/_tuple/ignore.hpp>
 #include <etl/_tuple/is_tuple_like.hpp>
 #include <etl/_tuple/tuple_element.hpp>
@@ -32,72 +34,77 @@ namespace detail {
 
 template <etl::size_t I, typename T>
 struct tuple_leaf {
-    auto get_type(index_constant<I> ic) -> T;
-
     template <typename... Args>
     constexpr tuple_leaf(Args&&... args)
-        : _value{etl::forward<Args>(args)...}
+        : _value(etl::forward<Args>(args)...)
     {
     }
 
-    [[nodiscard]] constexpr auto get_impl(index_constant<I> /*ic*/) & noexcept -> T& { return _value; }
+    [[nodiscard]] constexpr auto operator[](index_constant<I> /*idx*/) & noexcept -> T&
+    {
+        return _value;
+    }
 
-    [[nodiscard]] constexpr auto get_impl(index_constant<I> /*ic*/) const& noexcept -> T const& { return _value; }
+    [[nodiscard]] constexpr auto operator[](index_constant<I> /*idx*/) const& noexcept -> T const&
+    {
+        return _value;
+    }
 
-    [[nodiscard]] constexpr auto get_impl(index_constant<I> /*ic*/) && noexcept -> T&& { return etl::move(_value); }
-
-    [[nodiscard]] constexpr auto get_impl(index_constant<I> /*ic*/) const&& noexcept -> T const&&
+    [[nodiscard]] constexpr auto operator[](index_constant<I> /*idx*/) && noexcept -> T&&
     {
         return etl::move(_value);
     }
 
-    constexpr auto swap_impl(index_constant<I> /*ic*/, T& other) noexcept(is_nothrow_swappable_v<T>) -> void
+    [[nodiscard]] constexpr auto operator[](index_constant<I> /*idx*/) const&& noexcept -> T const&&
+    {
+        return etl::move(_value);
+    }
+
+    constexpr auto swap(index_constant<I> /*idx*/, T& other) noexcept(is_nothrow_swappable_v<T>) -> void
     {
         using etl::swap;
         swap(_value, other);
     }
 
 private:
-    TETL_NO_UNIQUE_ADDRESS T _value; // NOLINT(cppcoreguidelines-avoid-const-or-ref-data-members)
+    // NOLINTNEXTLINE(cppcoreguidelines-avoid-const-or-ref-data-members)
+    TETL_NO_UNIQUE_ADDRESS T _value;
 };
 
 template <typename... Ts>
-struct tuple_impl;
+struct tuple_storage;
 
 template <size_t... Idx, typename... Ts>
-struct tuple_impl<etl::index_sequence<Idx...>, Ts...> : tuple_leaf<Idx, Ts>... {
-private:
-public:
-    explicit(not(is_implicit_default_constructible_v<Ts> && ...)) constexpr tuple_impl()
+struct tuple_storage<etl::index_sequence<Idx...>, Ts...> : tuple_leaf<Idx, Ts>... {
+    explicit(not(is_implicit_default_constructible_v<Ts> and ...)) constexpr tuple_storage()
         requires((is_default_constructible_v<Ts> and ...))
         : tuple_leaf<Idx, Ts>{}...
     {
     }
 
     // No. 2
-    explicit(not(is_convertible_v<Ts const&, Ts> && ...)) constexpr tuple_impl(Ts const&... args)
-        requires((is_copy_constructible_v<Ts> && ...) && (sizeof...(Ts) > 0))
+    explicit(not(is_convertible_v<Ts const&, Ts> and ...)) constexpr tuple_storage(Ts const&... args)
+        requires((is_copy_constructible_v<Ts> and ...) && (sizeof...(Ts) > 0))
         : tuple_leaf<Idx, Ts>(args)...
     {
     }
 
     // No. 3
-    template <typename... Args>
-        requires((is_constructible_v<Ts, Args &&> && ...) && (sizeof...(Ts) > 0) && (sizeof...(Ts) == sizeof...(Args)))
-    explicit(!(is_convertible_v<Args&&, Ts> && ...)) constexpr tuple_impl(Args&&... args)
-        : tuple_leaf<Idx, Ts>{etl::forward<Args>(args)}...
+    template <typename... Us>
+        requires((is_constructible_v<Ts, Us &&> and ...) && (sizeof...(Ts) > 0) && (sizeof...(Ts) == sizeof...(Us)))
+    explicit(!(is_convertible_v<Us&&, Ts> and ...)) constexpr tuple_storage(Us&&... args)
+        : tuple_leaf<Idx, Ts>(etl::forward<Us>(args))...
     {
     }
 
-    constexpr tuple_impl(tuple_impl const&)     = default;
-    constexpr tuple_impl(tuple_impl&&) noexcept = default;
+    constexpr tuple_storage(tuple_storage const&)     = default;
+    constexpr tuple_storage(tuple_storage&&) noexcept = default;
 
-    using tuple_leaf<Idx, Ts>::get_type...;
-    using tuple_leaf<Idx, Ts>::get_impl...;
+    using tuple_leaf<Idx, Ts>::operator[]...;
 
-    constexpr auto swap(tuple_impl& other) noexcept((is_nothrow_swappable_v<Ts> && ...)) -> void
+    constexpr auto swap(tuple_storage& other) noexcept((is_nothrow_swappable_v<Ts> && ...)) -> void
     {
-        (tuple_leaf<Idx, Ts>::swap_impl(etl::index_v<Idx>, other.get_impl(etl::index_v<Idx>)), ...);
+        (tuple_leaf<Idx, Ts>::swap(etl::index_v<Idx>, other[etl::index_v<Idx>]), ...);
     }
 };
 
@@ -105,88 +112,69 @@ public:
 
 template <typename... Ts>
 struct tuple {
-private:
-    template <size_t I, typename T>
-    friend struct tuple_element;
-    template <size_t N, typename... Us>
-    friend constexpr auto get(tuple<Us...>& t) -> auto&; // NOLINT
-    template <size_t N, typename... Us>
-    friend constexpr auto get(tuple<Us...> const& t) -> auto const&; // NOLINT
-    template <size_t N, typename... Us>
-    friend constexpr auto get(tuple<Us...>&& t) -> auto&&; // NOLINT
-    template <size_t N, typename... Us>
-    friend constexpr auto get(tuple<Us...> const&& t) -> auto const&&; // NOLINT
-    template <typename T, typename... Us>
-    friend constexpr auto get(tuple<Us...>& t) -> auto&; // NOLINT
-    template <typename T, typename... Us>
-    friend constexpr auto get(tuple<Us...> const& t) -> auto const&; // NOLINT
-    template <typename T, typename... Us>
-    friend constexpr auto get(tuple<Us...>&& t) -> auto&&; // NOLINT
-    template <typename T, typename... Us>
-    friend constexpr auto get(tuple<Us...> const&& t) -> auto const&&; // NOLINT
-
-    using impl_t = detail::tuple_impl<etl::index_sequence_for<Ts...>, Ts...>;
-    TETL_NO_UNIQUE_ADDRESS impl_t _impl; // NOLINT(modernize-use-default-member-init)
-
-    template <etl::size_t I>
-    [[nodiscard]] constexpr auto get_impl(etl::index_constant<I> ic) & noexcept -> auto&
-    {
-        return _impl.get_impl(ic);
-    }
-
-    template <etl::size_t I>
-    [[nodiscard]] constexpr auto get_impl(etl::index_constant<I> ic) const& noexcept -> auto const&
-    {
-        return _impl.get_impl(ic);
-    }
-
-    template <etl::size_t I>
-    [[nodiscard]] constexpr auto get_impl(etl::index_constant<I> ic) && noexcept -> auto&&
-    {
-        return etl::move(_impl).get_impl(ic);
-    }
-
-    template <etl::size_t I>
-    [[nodiscard]] constexpr auto get_impl(etl::index_constant<I> ic) const&& noexcept -> auto const&&
-    {
-        return etl::move(_impl).get_impl(ic);
-    }
-
-    template <etl::size_t I>
-    auto get_type(etl::index_constant<I> ic) -> decltype(_impl.get_type(ic));
-
-public:
     // No. 1
     explicit(not(is_implicit_default_constructible_v<Ts> && ...)) constexpr tuple()
         requires((is_default_constructible_v<Ts> and ...))
-        : _impl()
+        : _storage()
     {
     }
 
+    // No. 2
     explicit(not(is_convertible_v<Ts const&, Ts> && ...)) constexpr tuple(Ts const&... args)
-        requires((is_copy_constructible_v<Ts> && ...) && (sizeof...(Ts) > 0))
-        : _impl(args...)
+        requires((is_copy_constructible_v<Ts> && ...) and (sizeof...(Ts) > 0))
+        : _storage(args...)
     {
     }
 
     // No. 3
-    template <typename... Args>
-        requires((is_constructible_v<Ts, Args &&> && ...) && (sizeof...(Ts) > 0) && (sizeof...(Ts) == sizeof...(Args)))
-    explicit(!(is_convertible_v<Args&&, Ts> && ...)) constexpr tuple(Args&&... args)
-        : _impl{etl::forward<Args>(args)...}
+    template <typename... Us>
+        requires((is_constructible_v<Ts, Us &&> && ...) and (sizeof...(Ts) > 0) and (sizeof...(Ts) == sizeof...(Us)))
+    explicit(!(is_convertible_v<Us&&, Ts> && ...)) constexpr tuple(Us&&... args)
+        : _storage(etl::forward<Us>(args)...)
     {
     }
 
     constexpr tuple(tuple const&)     = default;
     constexpr tuple(tuple&&) noexcept = default;
 
-    constexpr auto swap(tuple& other) noexcept((is_nothrow_swappable_v<Ts> && ...)) -> void { _impl.swap(other._impl); }
+    template <etl::size_t I>
+    [[nodiscard]] constexpr auto operator[](etl::index_constant<I> idx) & noexcept -> auto&
+    {
+        return _storage[idx];
+    }
+
+    template <etl::size_t I>
+    [[nodiscard]] constexpr auto operator[](etl::index_constant<I> idx) const& noexcept -> auto const&
+    {
+        return _storage[idx];
+    }
+
+    template <etl::size_t I>
+    [[nodiscard]] constexpr auto operator[](etl::index_constant<I> idx) && noexcept -> auto&&
+    {
+        return etl::move(_storage)[idx];
+    }
+
+    template <etl::size_t I>
+    [[nodiscard]] constexpr auto operator[](etl::index_constant<I> idx) const&& noexcept -> auto const&&
+    {
+        return etl::move(_storage)[idx];
+    }
+
+    constexpr auto swap(tuple& other) noexcept((is_nothrow_swappable_v<Ts> and ...)) -> void
+    {
+        _storage.swap(other._storage);
+    }
+
+private:
+    using storage_type = detail::tuple_storage<etl::index_sequence_for<Ts...>, Ts...>;
+    TETL_NO_UNIQUE_ADDRESS storage_type _storage; // NOLINT(modernize-use-default-member-init)
 };
 
 template <etl::size_t I, typename... Ts>
 struct tuple_element<I, tuple<Ts...>> {
     static_assert(I < sizeof...(Ts));
-    using type = decltype(declval<tuple<Ts...>>().get_type(etl::index_v<I>));
+    using type = mpl::at_t<I, mpl::list<Ts...>>;
 };
 
 template <typename... Ts>
@@ -199,28 +187,28 @@ template <etl::size_t I, typename... Ts>
 [[nodiscard]] constexpr auto get(tuple<Ts...>& t) -> auto&
 {
     static_assert(I < sizeof...(Ts));
-    return t.template get_impl<I>(etl::index_v<I>);
+    return t[etl::index_v<I>];
 }
 
 template <etl::size_t I, typename... Ts>
 [[nodiscard]] constexpr auto get(tuple<Ts...> const& t) -> auto const&
 {
     static_assert(I < sizeof...(Ts));
-    return t.template get_impl<I>(etl::index_v<I>);
+    return t[etl::index_v<I>];
 }
 
 template <etl::size_t I, typename... Ts>
 [[nodiscard]] constexpr auto get(tuple<Ts...>&& t) -> auto&&
 {
     static_assert(I < sizeof...(Ts));
-    return etl::move(t).template get_impl<I>(etl::index_v<I>);
+    return etl::move(t)[etl::index_v<I>];
 }
 
 template <etl::size_t I, typename... Ts>
 [[nodiscard]] constexpr auto get(tuple<Ts...> const&& t) -> auto const&&
 {
     static_assert(I < sizeof...(Ts));
-    return etl::move(t).template get_impl<I>(etl::index_v<I>);
+    return etl::move(t)[etl::index_v<I>];
 }
 
 template <typename... Ts, typename... Us>

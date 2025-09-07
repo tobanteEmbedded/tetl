@@ -1,4 +1,5 @@
 // SPDX-License-Identifier: BSL-1.0
+// SPDX-FileCopyrightText: Copyright (C) 2021 Tobias Hienzsch
 
 #ifndef TETL_CHRONO_TIME_POINT_HPP
 #define TETL_CHRONO_TIME_POINT_HPP
@@ -58,7 +59,10 @@ struct time_point {
 
     /// Returns a duration representing the amount of time between *this
     /// and the clock's epoch.
-    [[nodiscard]] constexpr auto time_since_epoch() const noexcept -> duration { return _d; }
+    [[nodiscard]] constexpr auto time_since_epoch() const noexcept -> duration
+    {
+        return _d;
+    }
 
     /// \brief Modifies the time point by the given duration. Applies the offset
     /// d to pt. Effectively, d is added to the internally stored duration d_ as
@@ -89,7 +93,10 @@ struct time_point {
 
     /// \brief Modifies the point in time *this represents by one tick of the
     /// duration.
-    constexpr auto operator++(int) noexcept -> time_point { return time_point(_d++); }
+    constexpr auto operator++(int) noexcept -> time_point
+    {
+        return time_point(_d++);
+    }
 
     /// \brief Modifies the point in time *this represents by one tick of the
     /// duration.
@@ -101,13 +108,22 @@ struct time_point {
 
     /// \brief Modifies the point in time *this represents by one tick of the
     /// duration.
-    constexpr auto operator--(int) noexcept -> time_point { return time_point(_d--); }
+    constexpr auto operator--(int) noexcept -> time_point
+    {
+        return time_point(_d--);
+    }
 
     /// \brief Returns a time_point with the smallest possible duration,
-    [[nodiscard]] static constexpr auto min() noexcept -> time_point { return time_point(duration::min()); }
+    [[nodiscard]] static constexpr auto min() noexcept -> time_point
+    {
+        return time_point(duration::min());
+    }
 
     /// \brief Returns a time_point with the largest possible duration,
-    [[nodiscard]] static constexpr auto max() noexcept -> time_point { return time_point(duration::max()); }
+    [[nodiscard]] static constexpr auto max() noexcept -> time_point
+    {
+        return time_point(duration::max());
+    }
 
 private:
     duration _d{};

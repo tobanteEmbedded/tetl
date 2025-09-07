@@ -1,4 +1,5 @@
 // SPDX-License-Identifier: BSL-1.0
+// SPDX-FileCopyrightText: Copyright (C) 2024 Tobias Hienzsch
 
 #ifndef TETL_MEMORY_MONOTONIC_ALLOCATOR_HPP
 #define TETL_MEMORY_MONOTONIC_ALLOCATOR_HPP
@@ -32,7 +33,10 @@ struct monotonic_allocator {
         return nullptr;
     }
 
-    auto deallocate(T* p, etl::size_t n) -> void { etl::ignore_unused(p, n); }
+    auto deallocate(T* p, etl::size_t n) -> void
+    {
+        etl::ignore_unused(p, n);
+    }
 
 private:
     etl::span<etl::byte> _memory;

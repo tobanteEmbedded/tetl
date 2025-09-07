@@ -1,3 +1,6 @@
+// SPDX-License-Identifier: BSL-1.0
+// SPDX-FileCopyrightText: Copyright (C) 2025 Tobias Hienzsch
+
 export namespace etl {
 
 using etl::int16_t;
@@ -14,6 +17,8 @@ using etl::int_least64_t;
 using etl::int_least8_t;
 using etl::intmax_t;
 using etl::intptr_t;
+using etl::uint128;
+using etl::uint128_t;
 using etl::uint16_t;
 using etl::uint32_t;
 using etl::uint64_t;

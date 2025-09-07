@@ -1,4 +1,5 @@
 // SPDX-License-Identifier: BSL-1.0
+// SPDX-FileCopyrightText: Copyright (C) 2024 Tobias Hienzsch
 
 #ifndef TETL_MDSPAN_LAYOUT_STRIDE_HPP
 #define TETL_MDSPAN_LAYOUT_STRIDE_HPP
@@ -58,8 +59,14 @@ public:
     constexpr auto operator=(mapping const&) noexcept -> mapping& = default;
 
     [[nodiscard]] constexpr auto required_span_size() const noexcept -> index_type;
-    [[nodiscard]] constexpr auto extents() const noexcept -> extents_type const& { return _extents; }
-    [[nodiscard]] constexpr auto strides() const noexcept -> array<index_type, rank> { return _strides; }
+    [[nodiscard]] constexpr auto extents() const noexcept -> extents_type const&
+    {
+        return _extents;
+    }
+    [[nodiscard]] constexpr auto strides() const noexcept -> array<index_type, rank>
+    {
+        return _strides;
+    }
     [[nodiscard]] constexpr auto stride(rank_type i) const noexcept -> index_type
     {
         TETL_PRECONDITION(i < extents_type::rank());
@@ -79,12 +86,27 @@ public:
         }(index_sequence_for<Indices...>{});
     }
 
-    [[nodiscard]] static constexpr auto is_always_unique() noexcept -> bool { return true; }
-    [[nodiscard]] static constexpr auto is_always_strided() noexcept -> bool { return true; }
-    [[nodiscard]] static constexpr auto is_always_exhaustive() noexcept -> bool { return false; }
+    [[nodiscard]] static constexpr auto is_always_unique() noexcept -> bool
+    {
+        return true;
+    }
+    [[nodiscard]] static constexpr auto is_always_strided() noexcept -> bool
+    {
+        return true;
+    }
+    [[nodiscard]] static constexpr auto is_always_exhaustive() noexcept -> bool
+    {
+        return false;
+    }
 
-    [[nodiscard]] static constexpr auto is_unique() noexcept -> bool { return true; }
-    [[nodiscard]] static constexpr auto is_strided() noexcept -> bool { return true; }
+    [[nodiscard]] static constexpr auto is_unique() noexcept -> bool
+    {
+        return true;
+    }
+    [[nodiscard]] static constexpr auto is_strided() noexcept -> bool
+    {
+        return true;
+    }
     [[nodiscard]] constexpr auto is_exhaustive() const noexcept -> bool;
 
     template <typename OtherMapping>

@@ -1,4 +1,5 @@
 // SPDX-License-Identifier: BSL-1.0
+// SPDX-FileCopyrightText: Copyright (C) 2021 Tobias Hienzsch
 
 #ifndef TETL_CONCEPTS_COMMON_REFERENCE_WITH_HPP
 #define TETL_CONCEPTS_COMMON_REFERENCE_WITH_HPP
@@ -9,16 +10,11 @@
 
 namespace etl {
 
-// clang-format off
-
 /// \ingroup concepts
 template <typename T, typename U>
-concept common_reference_with =
-        same_as<common_reference_t<T, U>, common_reference_t<U, T>>
-    and convertible_to<T, common_reference_t<T, U>>
-    and convertible_to<U, common_reference_t<T, U>>;
-
-// clang-format on
+concept common_reference_with = same_as<common_reference_t<T, U>, common_reference_t<U, T>>
+                            and convertible_to<T, common_reference_t<T, U>>
+                            and convertible_to<U, common_reference_t<T, U>>;
 
 } // namespace etl
 

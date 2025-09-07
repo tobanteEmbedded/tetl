@@ -1,4 +1,5 @@
 // SPDX-License-Identifier: BSL-1.0
+// SPDX-FileCopyrightText: Copyright (C) 2019 Tobias Hienzsch
 
 #ifndef TETL_CONCEPTS_DEFAULT_INITIALIZABLE_HPP
 #define TETL_CONCEPTS_DEFAULT_INITIALIZABLE_HPP
@@ -15,13 +16,9 @@ namespace etl {
 /// unrelated to T. Only the validity of the immediate context of the variable
 /// initialization is considered.
 /// \ingroup concepts
-// clang-format off
 template <typename T>
-concept default_initializable =
-  constructible_from<T> &&
-  requires { T {}; } &&
-  requires { ::new (static_cast<void*>(nullptr)) T; };
-// clang-format on
+concept default_initializable
+    = constructible_from<T> and requires { T{}; } and requires { ::new (static_cast<void*>(nullptr)) T; };
 
 } // namespace etl
 

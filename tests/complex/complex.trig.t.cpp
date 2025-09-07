@@ -1,4 +1,5 @@
 // SPDX-License-Identifier: BSL-1.0
+// SPDX-FileCopyrightText: Copyright (C) 2024 Tobias Hienzsch
 
 #include "testing/approx.hpp"
 #include "testing/testing.hpp"
@@ -15,7 +16,6 @@ import etl;
 template <typename T>
 static constexpr auto test() -> bool
 {
-
     CHECK_APPROX(etl::abs(etl::complex(T(3), T(2))), etl::sqrt(T(13)));
     CHECK_APPROX(etl::arg(etl::complex(T(3), T(2))), T(0.588003));
 

@@ -1,4 +1,5 @@
 // SPDX-License-Identifier: BSL-1.0
+// SPDX-FileCopyrightText: Copyright (C) 2019 Tobias Hienzsch
 
 #ifndef TETL_SOURCE_LOCATION_SOURCE_LOCATION_HPP
 #define TETL_SOURCE_LOCATION_SOURCE_LOCATION_HPP
@@ -34,13 +35,25 @@ struct source_location {
 
     constexpr source_location() noexcept = default;
 
-    [[nodiscard]] constexpr auto line() const noexcept -> etl::uint_least32_t { return _line; }
+    [[nodiscard]] constexpr auto line() const noexcept -> etl::uint_least32_t
+    {
+        return _line;
+    }
 
-    [[nodiscard]] constexpr auto column() const noexcept -> etl::uint_least32_t { return _column; }
+    [[nodiscard]] constexpr auto column() const noexcept -> etl::uint_least32_t
+    {
+        return _column;
+    }
 
-    [[nodiscard]] constexpr auto file_name() const noexcept -> char const* { return _file; }
+    [[nodiscard]] constexpr auto file_name() const noexcept -> char const*
+    {
+        return _file;
+    }
 
-    [[nodiscard]] constexpr auto function_name() const noexcept -> char const* { return _function; }
+    [[nodiscard]] constexpr auto function_name() const noexcept -> char const*
+    {
+        return _function;
+    }
 
 private:
     etl::uint_least32_t _line{};

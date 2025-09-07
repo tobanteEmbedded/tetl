@@ -1,4 +1,5 @@
 // SPDX-License-Identifier: BSL-1.0
+// SPDX-FileCopyrightText: Copyright (C) 2023 Tobias Hienzsch
 
 #ifndef TETL_LINALG_PROXY_REFERENCE_HPP
 #define TETL_LINALG_PROXY_REFERENCE_HPP
@@ -26,11 +27,14 @@ struct proxy_reference : proxy_reference_base {
         return static_cast<value_type>(static_cast<Derived const&>(*this).to_value(_reference));
     }
 
-    constexpr friend auto operator-(derived_type const& cs) { return -value_type(cs); }
+    friend constexpr auto operator-(derived_type const& cs)
+    {
+        return -value_type(cs);
+    }
 
     template <typename Rhs>
         requires(is_base_of_v<proxy_reference_base, Rhs>)
-    constexpr friend auto operator+(derived_type lhs, Rhs rhs)
+    friend constexpr auto operator+(derived_type lhs, Rhs rhs)
     {
         using rhs_value_type = typename Rhs::value_type;
         return value_type(lhs) + rhs_value_type(rhs);
@@ -38,21 +42,21 @@ struct proxy_reference : proxy_reference_base {
 
     template <typename Rhs>
         requires(not is_base_of_v<proxy_reference_base, Rhs>)
-    constexpr friend auto operator+(derived_type lhs, Rhs rhs)
+    friend constexpr auto operator+(derived_type lhs, Rhs rhs)
     {
         return value_type(lhs) + rhs;
     }
 
     template <typename Lhs>
         requires(not is_base_of_v<proxy_reference_base, Lhs>)
-    constexpr friend auto operator+(Lhs lhs, derived_type rhs)
+    friend constexpr auto operator+(Lhs lhs, derived_type rhs)
     {
         return lhs + value_type(rhs);
     }
 
     template <typename Rhs>
         requires(is_base_of_v<proxy_reference_base, Rhs>)
-    constexpr friend auto operator-(derived_type lhs, Rhs rhs)
+    friend constexpr auto operator-(derived_type lhs, Rhs rhs)
     {
         using rhs_value_type = typename Rhs::value_type;
         return value_type(lhs) - rhs_value_type(rhs);
@@ -60,21 +64,21 @@ struct proxy_reference : proxy_reference_base {
 
     template <typename Rhs>
         requires(not is_base_of_v<proxy_reference_base, Rhs>)
-    constexpr friend auto operator-(derived_type lhs, Rhs rhs)
+    friend constexpr auto operator-(derived_type lhs, Rhs rhs)
     {
         return value_type(lhs) - rhs;
     }
 
     template <typename Lhs>
         requires(not is_base_of_v<proxy_reference_base, Lhs>)
-    constexpr friend auto operator-(Lhs lhs, derived_type rhs)
+    friend constexpr auto operator-(Lhs lhs, derived_type rhs)
     {
         return lhs - value_type(rhs);
     }
 
     template <typename Rhs>
         requires(is_base_of_v<proxy_reference_base, Rhs>)
-    constexpr friend auto operator*(derived_type lhs, Rhs rhs)
+    friend constexpr auto operator*(derived_type lhs, Rhs rhs)
     {
         using rhs_value_type = typename Rhs::value_type;
         return value_type(lhs) * rhs_value_type(rhs);
@@ -82,21 +86,21 @@ struct proxy_reference : proxy_reference_base {
 
     template <typename Rhs>
         requires(not is_base_of_v<proxy_reference_base, Rhs>)
-    constexpr friend auto operator*(derived_type lhs, Rhs rhs)
+    friend constexpr auto operator*(derived_type lhs, Rhs rhs)
     {
         return value_type(lhs) * rhs;
     }
 
     template <typename Lhs>
         requires(not is_base_of_v<proxy_reference_base, Lhs>)
-    constexpr friend auto operator*(Lhs lhs, derived_type rhs)
+    friend constexpr auto operator*(Lhs lhs, derived_type rhs)
     {
         return lhs * value_type(rhs);
     }
 
     template <typename Rhs>
         requires(is_base_of_v<proxy_reference_base, Rhs>)
-    constexpr friend auto operator/(derived_type lhs, Rhs rhs)
+    friend constexpr auto operator/(derived_type lhs, Rhs rhs)
     {
         using rhs_value_type = typename Rhs::value_type;
         return value_type(lhs) / rhs_value_type(rhs);
@@ -104,34 +108,34 @@ struct proxy_reference : proxy_reference_base {
 
     template <typename Rhs>
         requires(not is_base_of_v<proxy_reference_base, Rhs>)
-    constexpr friend auto operator/(derived_type lhs, Rhs rhs)
+    friend constexpr auto operator/(derived_type lhs, Rhs rhs)
     {
         return value_type(lhs) / rhs;
     }
 
     template <typename Lhs>
         requires(not is_base_of_v<proxy_reference_base, Lhs>)
-    constexpr friend auto operator/(Lhs lhs, derived_type rhs)
+    friend constexpr auto operator/(Lhs lhs, derived_type rhs)
     {
         return lhs / value_type(rhs);
     }
 
-    constexpr friend auto abs(derived_type const& x)
+    friend constexpr auto abs(derived_type const& x)
     {
         return abs_if_needed(value_type(static_cast<this_type const&>(x)));
     }
 
-    constexpr friend auto real(derived_type const& x)
+    friend constexpr auto real(derived_type const& x)
     {
         return real_if_needed(value_type(static_cast<this_type const&>(x)));
     }
 
-    constexpr friend auto imag(derived_type const& x)
+    friend constexpr auto imag(derived_type const& x)
     {
         return imag_if_needed(value_type(static_cast<this_type const&>(x)));
     }
 
-    constexpr friend auto conj(derived_type const& x)
+    friend constexpr auto conj(derived_type const& x)
     {
         return conj_if_needed(value_type(static_cast<this_type const&>(x)));
     }

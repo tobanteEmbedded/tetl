@@ -1,4 +1,5 @@
 // SPDX-License-Identifier: BSL-1.0
+// SPDX-FileCopyrightText: Copyright (C) 2021 Tobias Hienzsch
 
 #ifndef TETL_ALGORITHM_MINMAX_ELEMENT_HPP
 #define TETL_ALGORITHM_MINMAX_ELEMENT_HPP

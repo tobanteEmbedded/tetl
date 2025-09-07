@@ -1,4 +1,5 @@
 // SPDX-License-Identifier: BSL-1.0
+// SPDX-FileCopyrightText: Copyright (C) 2023 Tobias Hienzsch
 
 #ifndef TETL_FORMAT_FMT_BUFFER_HPP
 #define TETL_FORMAT_FMT_BUFFER_HPP
@@ -20,7 +21,10 @@ struct fmt_buffer {
     {
     }
 
-    auto push_back(CharType ch) -> void { (_pushBack)(_it, ch); }
+    auto push_back(CharType ch) -> void
+    {
+        (_pushBack)(_it, ch);
+    }
 
 private:
     using push_back_func_t = void (*)(void*, CharType);

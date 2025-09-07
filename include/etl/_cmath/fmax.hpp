@@ -1,4 +1,5 @@
 // SPDX-License-Identifier: BSL-1.0
+// SPDX-FileCopyrightText: Copyright (C) 2021 Tobias Hienzsch
 
 #ifndef TETL_CMATH_FMAX_HPP
 #define TETL_CMATH_FMAX_HPP
@@ -14,11 +15,20 @@ namespace etl {
 /// missing data (between a NaN and a numeric value, the numeric value is chosen)
 ///
 /// https://en.cppreference.com/w/cpp/numeric/math/fmax
-[[nodiscard]] constexpr auto fmax(float x, float y) noexcept -> float { return etl::detail::gcem::max(x, y); }
+[[nodiscard]] constexpr auto fmax(float x, float y) noexcept -> float
+{
+    return etl::detail::gcem::max(x, y);
+}
 
-[[nodiscard]] constexpr auto fmaxf(float x, float y) noexcept -> float { return etl::detail::gcem::max(x, y); }
+[[nodiscard]] constexpr auto fmaxf(float x, float y) noexcept -> float
+{
+    return etl::detail::gcem::max(x, y);
+}
 
-[[nodiscard]] constexpr auto fmax(double x, double y) noexcept -> double { return etl::detail::gcem::max(x, y); }
+[[nodiscard]] constexpr auto fmax(double x, double y) noexcept -> double
+{
+    return etl::detail::gcem::max(x, y);
+}
 
 [[nodiscard]] constexpr auto fmax(long double x, long double y) noexcept -> long double
 {

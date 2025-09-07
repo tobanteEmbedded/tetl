@@ -1,3 +1,5 @@
+# SPDX-License-Identifier: BSL-1.0
+# SPDX-FileCopyrightText: Copyright (C) 2020 Tobias Hienzsch
 Checks:
   - -*
 
@@ -32,6 +34,7 @@ Checks:
   - -cppcoreguidelines-noexcept-move-operations
   - -cppcoreguidelines-owning-memory
   - -cppcoreguidelines-pro-bounds-array-to-pointer-decay
+  - -cppcoreguidelines-pro-bounds-avoid-unchecked-container-access
   - -cppcoreguidelines-pro-bounds-constant-array-index
   - -cppcoreguidelines-pro-bounds-pointer-arithmetic
   - -cppcoreguidelines-pro-type-const-cast
@@ -106,5 +109,7 @@ CheckOptions:
   readability-identifier-naming.PrivateMemberPrefix: _
   readability-identifier-naming.PrivateMemberSuffix: ""
   readability-identifier-naming.PublicMemberCase: lower_case
+  readability-identifier-naming.PublicMemberIgnoredRegexp: ".*_NaN"
   readability-identifier-naming.PublicMethodCase: lower_case
+  readability-identifier-naming.PublicMethodIgnoredRegexp: ".*_NaN"
   readability-identifier-naming.TemplateParameterCase: CamelCase

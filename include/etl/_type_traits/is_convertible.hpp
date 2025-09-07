@@ -1,4 +1,5 @@
 // SPDX-License-Identifier: BSL-1.0
+// SPDX-FileCopyrightText: Copyright (C) 2019 Tobias Hienzsch
 
 #ifndef TETL_TYPE_TRAITS_IS_CONVERTIBLE_HPP
 #define TETL_TYPE_TRAITS_IS_CONVERTIBLE_HPP
@@ -40,7 +41,8 @@ struct is_convertible
     : bool_constant<
           (decltype(detail::test_returnable<To>(0))::value
            && decltype(detail::test_nonvoid_convertible<From, To>(0))::value)
-          || (is_void_v<From> && is_void_v<To>)> { };
+          || (is_void_v<From> && is_void_v<To>)
+      > { };
 
 template <typename From, typename To>
 inline constexpr bool is_convertible_v = is_convertible<From, To>::value;

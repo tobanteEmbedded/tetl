@@ -1,5 +1,7 @@
+# SPDX-License-Identifier: BSL-1.0
+# SPDX-FileCopyrightText: Copyright (C) 2021 Tobias Hienzsch
 ifndef CXXSTD
-	CXXSTD := 20
+	CXXSTD := 23
 endif
 
 ifdef ARM

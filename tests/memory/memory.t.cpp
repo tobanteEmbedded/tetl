@@ -1,4 +1,5 @@
 // SPDX-License-Identifier: BSL-1.0
+// SPDX-FileCopyrightText: Copyright (C) 2021 Tobias Hienzsch
 #include "testing/testing.hpp"
 
 #include <etl/new.hpp>
@@ -23,7 +24,10 @@ struct Counter {
     {
     }
 
-    ~Counter() { value++; }
+    ~Counter()
+    {
+        value++;
+    }
 };
 
 } // namespace
@@ -138,5 +142,8 @@ auto main() -> int
 }
 
 #else
-auto main() -> int { return 0; }
+auto main() -> int
+{
+    return 0;
+}
 #endif

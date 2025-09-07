@@ -1,4 +1,5 @@
 // SPDX-License-Identifier: BSL-1.0
+// SPDX-FileCopyrightText: Copyright (C) 2021 Tobias Hienzsch
 
 #ifndef TETL_VARIANT_MONOSTATE_HPP
 #define TETL_VARIANT_MONOSTATE_HPP
@@ -15,7 +16,10 @@ namespace etl {
 /// \headerfile etl/variant.hpp
 struct monostate {
     /// \brief All instances of etl::monostate compare equal.
-    [[nodiscard]] friend constexpr auto operator==(monostate /*l*/, monostate /*r*/) noexcept -> bool { return true; }
+    [[nodiscard]] friend constexpr auto operator==(monostate /*l*/, monostate /*r*/) noexcept -> bool
+    {
+        return true;
+    }
 
     /// \brief All instances of etl::monostate compare equal.
     [[nodiscard]] friend constexpr auto operator<=>(monostate /*l*/, monostate /*r*/) noexcept -> etl::strong_ordering

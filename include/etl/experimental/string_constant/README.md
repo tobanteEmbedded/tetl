@@ -1,3 +1,6 @@
+<!-- SPDX-License-Identifier: BSL-1.0 -->
+<!-- SPDX-FileCopyrightText: Copyright (C) 2023 Tobias Hienzsch -->
+
 # String Constant
 
 - [Embedded Logging Case Study: From C to Shining C++ - Luke Valenty -CppNow 2022](https://youtu.be/Dt0vx-7e_B0)

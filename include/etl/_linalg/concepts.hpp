@@ -1,4 +1,5 @@
 // SPDX-License-Identifier: BSL-1.0
+// SPDX-FileCopyrightText: Copyright (C) 2023 Tobias Hienzsch
 
 #ifndef TETL_LINALG_CONCEPTS_HPP
 #define TETL_LINALG_CONCEPTS_HPP
@@ -123,15 +124,17 @@ concept in_vector = detail::is_mdspan<T>::value && T::rank() == 1;
 
 /// \ingroup linalg
 template <typename T>
-concept out_vector
-    = detail::is_mdspan<T>::value && T::rank() == 1
-   && same_as<remove_const_t<typename T::element_type>, typename T::element_type> && T::is_always_unique();
+concept out_vector = detail::is_mdspan<T>::value
+                  && T::rank() == 1
+                  && same_as<remove_const_t<typename T::element_type>, typename T::element_type>
+                  && T::is_always_unique();
 
 /// \ingroup linalg
 template <typename T>
-concept inout_vector
-    = detail::is_mdspan<T>::value && T::rank() == 1
-   && same_as<remove_const_t<typename T::element_type>, typename T::element_type> && T::is_always_unique();
+concept inout_vector = detail::is_mdspan<T>::value
+                    && T::rank() == 1
+                    && same_as<remove_const_t<typename T::element_type>, typename T::element_type>
+                    && T::is_always_unique();
 
 /// \ingroup linalg
 template <typename T>
@@ -139,15 +142,17 @@ concept in_matrix = detail::is_mdspan<T>::value && T::rank() == 2;
 
 /// \ingroup linalg
 template <typename T>
-concept out_matrix
-    = detail::is_mdspan<T>::value && T::rank() == 2
-   && is_same_v<remove_const_t<typename T::element_type>, typename T::element_type> && T::is_always_unique();
+concept out_matrix = detail::is_mdspan<T>::value
+                  && T::rank() == 2
+                  && is_same_v<remove_const_t<typename T::element_type>, typename T::element_type>
+                  && T::is_always_unique();
 
 /// \ingroup linalg
 template <typename T>
-concept inout_matrix
-    = detail::is_mdspan<T>::value && T::rank() == 2
-   && is_same_v<remove_const_t<typename T::element_type>, typename T::element_type> && T::is_always_unique();
+concept inout_matrix = detail::is_mdspan<T>::value
+                    && T::rank() == 2
+                    && is_same_v<remove_const_t<typename T::element_type>, typename T::element_type>
+                    && T::is_always_unique();
 
 // template <typename T>
 // concept possibly_packed_inout_matrix =
@@ -163,15 +168,17 @@ concept in_object = detail::is_mdspan<T>::value && (T::rank() == 1 || T::rank() 
 
 /// \ingroup linalg
 template <typename T>
-concept out_object
-    = detail::is_mdspan<T>::value && (T::rank() == 1 || T::rank() == 2)
-   && is_same_v<remove_const_t<typename T::element_type>, typename T::element_type> && T::is_always_unique();
+concept out_object = detail::is_mdspan<T>::value
+                  && (T::rank() == 1 || T::rank() == 2)
+                  && is_same_v<remove_const_t<typename T::element_type>, typename T::element_type>
+                  && T::is_always_unique();
 
 /// \ingroup linalg
 template <typename T>
-concept inout_object
-    = detail::is_mdspan<T>::value && (T::rank() == 1 || T::rank() == 2)
-   && is_same_v<remove_const_t<typename T::element_type>, typename T::element_type> && T::is_always_unique();
+concept inout_object = detail::is_mdspan<T>::value
+                    && (T::rank() == 1 || T::rank() == 2)
+                    && is_same_v<remove_const_t<typename T::element_type>, typename T::element_type>
+                    && T::is_always_unique();
 
 } // namespace etl::linalg
 

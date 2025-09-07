@@ -1,4 +1,5 @@
 // SPDX-License-Identifier: BSL-1.0
+// SPDX-FileCopyrightText: Copyright (C) 2021 Tobias Hienzsch
 
 #include "testing/testing.hpp"
 
@@ -41,7 +42,6 @@ static constexpr auto test() -> bool
 
     // searcher
     {
-
         auto src = etl::array{T(0), T(0), T(0), T(1), T(2), T(3)};
 
         auto t1 = etl::array{T(1), T(2), T(3)};

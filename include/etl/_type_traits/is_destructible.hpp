@@ -1,4 +1,5 @@
 // SPDX-License-Identifier: BSL-1.0
+// SPDX-FileCopyrightText: Copyright (C) 2021 Tobias Hienzsch
 
 #ifndef TETL_TYPE_TRAITS_IS_DESTRUCTIBLE_HPP
 #define TETL_TYPE_TRAITS_IS_DESTRUCTIBLE_HPP
@@ -35,7 +36,8 @@ struct is_destructible_impl : try_is_destructible_impl {
 template <
     typename T,
     bool = etl::disjunction<etl::is_void<T>, etl::is_function<T>, etl::is_unbounded_array<T>>::value,
-    bool = etl::disjunction<etl::is_reference<T>, etl::is_scalar<T>>::value>
+    bool = etl::disjunction<etl::is_reference<T>, etl::is_scalar<T>>::value
+>
 struct is_destructible_safe;
 
 template <typename T>

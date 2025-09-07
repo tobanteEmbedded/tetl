@@ -1,4 +1,5 @@
 // SPDX-License-Identifier: BSL-1.0
+// SPDX-FileCopyrightText: Copyright (C) 2023 Tobias Hienzsch
 
 #ifndef TETL_FORMAT_BASIC_FORMAT_STRING_HPP
 #define TETL_FORMAT_BASIC_FORMAT_STRING_HPP
@@ -18,7 +19,10 @@ struct basic_format_string {
     {
     }
 
-    [[nodiscard]] constexpr auto get() const noexcept -> basic_string_view<CharT> { return _str; }
+    [[nodiscard]] constexpr auto get() const noexcept -> basic_string_view<CharT>
+    {
+        return _str;
+    }
 
 private:
     basic_string_view<CharT> _str;

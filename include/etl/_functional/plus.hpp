@@ -1,4 +1,5 @@
 // SPDX-License-Identifier: BSL-1.0
+// SPDX-FileCopyrightText: Copyright (C) 2019 Tobias Hienzsch
 
 #ifndef TETL_FUNCTIONAL_PLUS_HPP
 #define TETL_FUNCTIONAL_PLUS_HPP
@@ -13,7 +14,10 @@ namespace etl {
 template <typename T = void>
 struct plus {
     /// \brief Returns the sum of lhs and rhs.
-    [[nodiscard]] constexpr auto operator()(T const& lhs, T const& rhs) const -> T { return static_cast<T>(lhs + rhs); }
+    [[nodiscard]] constexpr auto operator()(T const& lhs, T const& rhs) const -> T
+    {
+        return static_cast<T>(lhs + rhs);
+    }
 };
 
 template <>

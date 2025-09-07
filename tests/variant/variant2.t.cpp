@@ -1,4 +1,5 @@
 // SPDX-License-Identifier: BSL-1.0
+// SPDX-FileCopyrightText: Copyright (C) 2024 Tobias Hienzsch
 
 #include "testing/testing.hpp"
 
@@ -105,7 +106,10 @@ constexpr auto test() -> bool
 
         constexpr ~non_trivial() { } // NOLINT
 
-        constexpr operator int() const noexcept { return value; }
+        constexpr operator int() const noexcept
+        {
+            return value;
+        }
 
         int value;
     };

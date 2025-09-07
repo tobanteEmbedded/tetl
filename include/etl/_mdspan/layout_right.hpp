@@ -1,4 +1,5 @@
 // SPDX-License-Identifier: BSL-1.0
+// SPDX-FileCopyrightText: Copyright (C) 2023 Tobias Hienzsch
 
 #ifndef TETL_MDSPAN_LAYOUT_RIGHT_HPP
 #define TETL_MDSPAN_LAYOUT_RIGHT_HPP
@@ -57,7 +58,10 @@ struct layout_right::mapping {
     constexpr auto operator=(mapping const&) noexcept -> mapping& = default;
 
     // observers
-    [[nodiscard]] constexpr auto extents() const noexcept -> extents_type const& { return _extents; }
+    [[nodiscard]] constexpr auto extents() const noexcept -> extents_type const&
+    {
+        return _extents;
+    }
 
     [[nodiscard]] constexpr auto required_span_size() const noexcept -> index_type
     {
@@ -65,7 +69,8 @@ struct layout_right::mapping {
     }
 
     template <typename... Indices>
-        requires(sizeof...(Indices) == extents_type::rank()) and (is_convertible_v<Indices, index_type> and ...)
+        requires(sizeof...(Indices) == extents_type::rank())
+            and (is_convertible_v<Indices, index_type> and ...)
             and (is_nothrow_constructible_v<index_type, Indices> and ...)
     [[nodiscard]] constexpr auto operator()(Indices... indices) const noexcept -> index_type
     {
@@ -81,13 +86,31 @@ struct layout_right::mapping {
         return static_cast<index_type>(_extents.rev_prod_of_extents(r));
     }
 
-    [[nodiscard]] static constexpr auto is_always_unique() noexcept -> bool { return true; }
-    [[nodiscard]] static constexpr auto is_always_exhaustive() noexcept -> bool { return true; }
-    [[nodiscard]] static constexpr auto is_always_strided() noexcept -> bool { return true; }
+    [[nodiscard]] static constexpr auto is_always_unique() noexcept -> bool
+    {
+        return true;
+    }
+    [[nodiscard]] static constexpr auto is_always_exhaustive() noexcept -> bool
+    {
+        return true;
+    }
+    [[nodiscard]] static constexpr auto is_always_strided() noexcept -> bool
+    {
+        return true;
+    }
 
-    [[nodiscard]] static constexpr auto is_unique() noexcept -> bool { return true; }
-    [[nodiscard]] static constexpr auto is_exhaustive() noexcept -> bool { return true; }
-    [[nodiscard]] static constexpr auto is_strided() noexcept -> bool { return true; }
+    [[nodiscard]] static constexpr auto is_unique() noexcept -> bool
+    {
+        return true;
+    }
+    [[nodiscard]] static constexpr auto is_exhaustive() noexcept -> bool
+    {
+        return true;
+    }
+    [[nodiscard]] static constexpr auto is_strided() noexcept -> bool
+    {
+        return true;
+    }
 
     template <typename OtherExtents>
     friend constexpr auto operator==(mapping const& lhs, mapping<OtherExtents> const& rhs) noexcept -> bool

@@ -1,3 +1,5 @@
+# SPDX-License-Identifier: BSL-1.0
+# SPDX-FileCopyrightText: Copyright (C) 2019 Tobias Hienzsch
 project(etl-tests)
 
 add_library(tetl.etl-test-common INTERFACE)
@@ -69,7 +71,7 @@ add_subdirectory("linalg")
 add_subdirectory("mdarray")
 add_subdirectory("mdspan")
 add_subdirectory("memory")
-add_subdirectory("meta")
+add_subdirectory("mpl")
 add_subdirectory("mutex")
 add_subdirectory("numbers")
 add_subdirectory("numeric")

@@ -1,4 +1,5 @@
 // SPDX-License-Identifier: BSL-1.0
+// SPDX-FileCopyrightText: Copyright (C) 2023 Tobias Hienzsch
 
 #ifndef TETL_MDSPAN_DEFAULT_ACCESSOR_HPP
 #define TETL_MDSPAN_DEFAULT_ACCESSOR_HPP
@@ -23,7 +24,10 @@ struct default_accessor {
     {
     }
 
-    [[nodiscard]] constexpr auto access(data_handle_type p, size_t i) const noexcept -> reference { return p[i]; }
+    [[nodiscard]] constexpr auto access(data_handle_type p, size_t i) const noexcept -> reference
+    {
+        return p[i];
+    }
 
     [[nodiscard]] constexpr auto offset(data_handle_type p, size_t i) const noexcept -> data_handle_type
     {

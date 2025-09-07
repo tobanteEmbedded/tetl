@@ -1,3 +1,5 @@
+# SPDX-License-Identifier: BSL-1.0
+# SPDX-FileCopyrightText: Copyright (C) 2023 Tobias Hienzsch
 project(flat_set)
 
 tetl_add_test(${PROJECT_NAME} flat_multiset.construct)

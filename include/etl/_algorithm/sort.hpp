@@ -1,9 +1,10 @@
 // SPDX-License-Identifier: BSL-1.0
+// SPDX-FileCopyrightText: Copyright (C) 2019 Tobias Hienzsch
 
 #ifndef TETL_ALGORITHM_SORT_HPP
 #define TETL_ALGORITHM_SORT_HPP
 
-#include <etl/_algorithm/gnome_sort.hpp>
+#include <etl/_algorithm/insertion_sort.hpp>
 
 namespace etl {
 
@@ -17,7 +18,7 @@ namespace etl {
 template <typename RandomIt, typename Compare>
 constexpr auto sort(RandomIt first, RandomIt last, Compare comp) -> void
 {
-    etl::gnome_sort(first, last, comp);
+    etl::insertion_sort(first, last, comp);
 }
 
 template <typename RandomIt>

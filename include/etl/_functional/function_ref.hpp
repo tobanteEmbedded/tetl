@@ -1,6 +1,5 @@
-
-
 // SPDX-License-Identifier: BSL-1.0
+// SPDX-FileCopyrightText: Copyright (C) 2021 Tobias Hienzsch
 
 #ifndef TETL_FUNCTIONAL_FUNCTION_REF_HPP
 #define TETL_FUNCTIONAL_FUNCTION_REF_HPP
@@ -40,7 +39,10 @@ struct function_ref<Noexcept, R(Args...)> {
     template <typename T>
     auto operator=(T /*t*/) -> function_ref& = delete;
 
-    auto operator()(Args... args) const noexcept(Noexcept) -> R { return _callable(_obj, etl::forward<Args>(args)...); }
+    auto operator()(Args... args) const noexcept(Noexcept) -> R
+    {
+        return _callable(_obj, etl::forward<Args>(args)...);
+    }
 
 private:
     using internal_signature_t = R (*)(void*, Args...) noexcept(Noexcept);

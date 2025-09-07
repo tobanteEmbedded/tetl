@@ -1,4 +1,5 @@
 // SPDX-License-Identifier: BSL-1.0
+// SPDX-FileCopyrightText: Copyright (C) 2024 Tobias Hienzsch
 
 #ifndef TETL_DEBUGGING_BREAKPOINT_HPP
 #define TETL_DEBUGGING_BREAKPOINT_HPP
@@ -10,7 +11,10 @@ namespace etl {
 /// Unconditional breakpoint: attempts to temporarily halt the execution of
 /// the program and transfer control to the debugger.
 /// \ingroup debugging
-inline auto breakpoint() noexcept -> void { TETL_DEBUG_TRAP(); }
+inline auto breakpoint() noexcept -> void
+{
+    TETL_DEBUG_TRAP();
+}
 
 } // namespace etl
 

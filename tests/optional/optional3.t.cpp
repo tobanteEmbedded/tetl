@@ -1,4 +1,5 @@
 // SPDX-License-Identifier: BSL-1.0
+// SPDX-FileCopyrightText: Copyright (C) 2024 Tobias Hienzsch
 
 #include "testing/testing.hpp"
 
@@ -19,13 +20,28 @@ struct Wrapper {
     {
     }
 
-    [[nodiscard]] explicit(false) constexpr operator T() const noexcept { return value; }
+    [[nodiscard]] explicit(false) constexpr operator T() const noexcept
+    {
+        return value;
+    }
 
-    friend constexpr auto operator==(Wrapper lhs, T rhs) noexcept -> bool { return lhs.value == rhs; }
-    friend constexpr auto operator==(T lhs, Wrapper rhs) noexcept -> bool { return lhs == rhs.value; }
+    friend constexpr auto operator==(Wrapper lhs, T rhs) noexcept -> bool
+    {
+        return lhs.value == rhs;
+    }
+    friend constexpr auto operator==(T lhs, Wrapper rhs) noexcept -> bool
+    {
+        return lhs == rhs.value;
+    }
 
-    friend constexpr auto operator<(Wrapper lhs, T rhs) noexcept -> bool { return lhs.value < rhs; }
-    friend constexpr auto operator<(T lhs, Wrapper rhs) noexcept -> bool { return lhs < rhs.value; }
+    friend constexpr auto operator<(Wrapper lhs, T rhs) noexcept -> bool
+    {
+        return lhs.value < rhs;
+    }
+    friend constexpr auto operator<(T lhs, Wrapper rhs) noexcept -> bool
+    {
+        return lhs < rhs.value;
+    }
 
     T value;
 };

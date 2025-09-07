@@ -1,4 +1,5 @@
 // SPDX-License-Identifier: BSL-1.0
+// SPDX-FileCopyrightText: Copyright (C) 2023 Tobias Hienzsch
 
 #ifndef TETL_LINALG_LAYOUT_TRANSPOSE_HPP
 #define TETL_LINALG_LAYOUT_TRANSPOSE_HPP
@@ -75,9 +76,15 @@ struct layout_transpose {
             return _nestedMapping(rest..., j, i);
         }
 
-        [[nodiscard]] constexpr auto nested_mapping() const -> nested_mapping_t { return _nestedMapping; }
+        [[nodiscard]] constexpr auto nested_mapping() const -> nested_mapping_t
+        {
+            return _nestedMapping;
+        }
 
-        [[nodiscard]] static constexpr auto is_always_unique() -> bool { return nested_mapping_t::is_always_unique(); }
+        [[nodiscard]] static constexpr auto is_always_unique() -> bool
+        {
+            return nested_mapping_t::is_always_unique();
+        }
 
         [[nodiscard]] static constexpr auto is_always_contiguous() -> bool
         {

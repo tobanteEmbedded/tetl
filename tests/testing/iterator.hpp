@@ -1,4 +1,5 @@
 // SPDX-License-Identifier: BSL-1.0
+// SPDX-FileCopyrightText: Copyright (C) 2024 Tobias Hienzsch
 
 #ifndef TETL_TESTS_ALGORITHM_ITERATOR_TYPES_HPP
 #define TETL_TESTS_ALGORITHM_ITERATOR_TYPES_HPP
@@ -17,7 +18,10 @@ struct InIter {
     using pointer           = It;
     using reference         = typename etl::iterator_traits<It>::reference;
 
-    [[nodiscard]] constexpr auto base() const -> It { return _base; }
+    [[nodiscard]] constexpr auto base() const -> It
+    {
+        return _base;
+    }
 
     constexpr InIter() = default;
 
@@ -26,9 +30,15 @@ struct InIter {
     {
     }
 
-    constexpr auto operator*() const -> reference { return *_base; }
+    constexpr auto operator*() const -> reference
+    {
+        return *_base;
+    }
 
-    constexpr auto operator->() const -> pointer { return _base; }
+    constexpr auto operator->() const -> pointer
+    {
+        return _base;
+    }
 
     constexpr auto operator++() -> InIter&
     {
@@ -43,7 +53,10 @@ struct InIter {
         return tmp;
     }
 
-    friend constexpr auto operator==(InIter const& x, InIter const& y) -> bool { return x.base() == y.base(); }
+    friend constexpr auto operator==(InIter const& x, InIter const& y) -> bool
+    {
+        return x.base() == y.base();
+    }
 
 private:
     It _base{};
@@ -57,7 +70,10 @@ struct FwdIter {
     using pointer           = Iter;
     using reference         = typename etl::iterator_traits<Iter>::reference;
 
-    [[nodiscard]] constexpr auto base() const -> Iter { return _base; }
+    [[nodiscard]] constexpr auto base() const -> Iter
+    {
+        return _base;
+    }
 
     constexpr FwdIter() = default;
 
@@ -66,9 +82,15 @@ struct FwdIter {
     {
     }
 
-    [[nodiscard]] constexpr auto operator*() const -> reference { return *_base; }
+    [[nodiscard]] constexpr auto operator*() const -> reference
+    {
+        return *_base;
+    }
 
-    [[nodiscard]] constexpr auto operator->() const -> pointer { return _base; }
+    [[nodiscard]] constexpr auto operator->() const -> pointer
+    {
+        return _base;
+    }
 
     constexpr auto operator++() -> FwdIter&
     {
@@ -83,7 +105,10 @@ struct FwdIter {
         return tmp;
     }
 
-    friend constexpr auto operator==(FwdIter const& x, FwdIter const& y) -> bool { return x.base() == y.base(); }
+    friend constexpr auto operator==(FwdIter const& x, FwdIter const& y) -> bool
+    {
+        return x.base() == y.base();
+    }
 
 private:
     Iter _base{};

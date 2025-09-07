@@ -1,4 +1,5 @@
 // SPDX-License-Identifier: BSL-1.0
+// SPDX-FileCopyrightText: Copyright (C) 2019 Tobias Hienzsch
 
 #if defined(TETL_ENABLE_CXX_MODULES)
 import etl;
@@ -16,7 +17,10 @@ auto func(T val) -> int
     return static_cast<int>(val);
 }
 
-auto func(float val) -> float { return val; }
+auto func(float val) -> float
+{
+    return val;
+}
 
 } // namespace
 

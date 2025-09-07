@@ -1,4 +1,5 @@
 // SPDX-License-Identifier: BSL-1.0
+// SPDX-FileCopyrightText: Copyright (C) 2021 Tobias Hienzsch
 
 #ifndef TETL_TYPE_TRAITS_IS_NOTHROW_CONVERTIBLE_HPP
 #define TETL_TYPE_TRAITS_IS_NOTHROW_CONVERTIBLE_HPP

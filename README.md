@@ -1,3 +1,6 @@
+<!-- SPDX-License-Identifier: BSL-1.0 -->
+<!-- SPDX-FileCopyrightText: Copyright (C) 2019 Tobias Hienzsch -->
+
 # Embedded Template Library
 
 Tobante's embedded template library. A STL-like C++ template library designed for embedded devices with limited resources. Supports freestanding and hosted environments.
@@ -30,7 +33,7 @@ auto main() -> int {
 ```
 
 ```sh
-g++ -Wall -Wextra -Wpedantic -std=c++20 -I path/to/tetl/include main.cpp
+g++ -Wall -Wextra -Wpedantic -std=c++23 -I path/to/tetl/include main.cpp
 ```
 
 For examples look at the [examples](./examples) subdirectory or the test files in [tests](./tests). The [API reference](https://tobanteembedded.github.io/tetl-docs/) is currently work in progress.
@@ -45,7 +48,7 @@ For examples look at the [examples](./examples) subdirectory or the test files i
 
 | **Platform** |                                                                                  **Status**                                                                                   |              **Notes**              |
 | :----------: | :---------------------------------------------------------------------------------------------------------------------------------------------------------------------------: | :---------------------------------: |
-|  **Linux**   |        [![Linux](https://github.com/tobanteEmbedded/tetl/actions/workflows/linux.yml/badge.svg)](https://github.com/tobanteEmbedded/tetl/actions/workflows/linux.yml)         |  GCC 12/13/14 & Clang 17/18/19/20   |
+|  **Linux**   |        [![Linux](https://github.com/tobanteEmbedded/tetl/actions/workflows/linux.yml/badge.svg)](https://github.com/tobanteEmbedded/tetl/actions/workflows/linux.yml)         | GCC 12/13/14 & Clang 17/18/19/20/21 |
 |  **macOS**   |        [![macOS](https://github.com/tobanteEmbedded/tetl/actions/workflows/macos.yml/badge.svg)](https://github.com/tobanteEmbedded/tetl/actions/workflows/macos.yml)         |          Xcode x64 & ARM64          |
 | **Windows**  |     [![Windows](https://github.com/tobanteEmbedded/tetl/actions/workflows/windows.yml/badge.svg)](https://github.com/tobanteEmbedded/tetl/actions/workflows/windows.yml)      | Visual Studio 2022, ClangCL & Clang |
 | **JS/WASM**  | [![Emscripten](https://github.com/tobanteEmbedded/tetl/actions/workflows/emscripten.yml/badge.svg)](https://github.com/tobanteEmbedded/tetl/actions/workflows/emscripten.yml) |          Emscripten Latest          |
@@ -63,7 +66,7 @@ For examples look at the [examples](./examples) subdirectory or the test files i
 |    **Type**    |                                                                                  **Status**                                                                                   | **Notes** |
 | :------------: | :---------------------------------------------------------------------------------------------------------------------------------------------------------------------------: | :-------: |
 |  **Coverage**  |               [![codecov](https://codecov.io/gh/tobanteEmbedded/tetl/branch/main/graph/badge.svg?token=f1QAWTtpIo)](https://codecov.io/gh/tobanteEmbedded/tetl)               |  GCC 13   |
-| **Clang-Tidy** | [![Clang-Tidy](https://github.com/tobanteEmbedded/tetl/actions/workflows/clang-tidy.yml/badge.svg)](https://github.com/tobanteEmbedded/tetl/actions/workflows/clang-tidy.yml) | Clang 20  |
+| **Clang-Tidy** | [![Clang-Tidy](https://github.com/tobanteEmbedded/tetl/actions/workflows/clang-tidy.yml/badge.svg)](https://github.com/tobanteEmbedded/tetl/actions/workflows/clang-tidy.yml) | Clang 21  |
 
 > [!NOTE]
 > All test are compiled in debug and release mode with at least `-Wall -Wextra -Wpedantic -Werror` or `/W3 /WX`. The full list of warning flags can be found in the CMake configuration: [cmake/compiler_warnings.cmake](./cmake/compiler_warnings.cmake). Hosted platforms run all tests & examples, while freestanding builds only compile (ARM & AVR) and link (AVR) the example files.
@@ -72,7 +75,7 @@ For examples look at the [examples](./examples) subdirectory or the test files i
 
 - 100% portable (no STL headers required, minimum of C headers)
 - Header only
-- C++20 and beyond (freestanding or hosted)
+- C++23 and beyond (freestanding or hosted)
 - Similar API to the STL
 - No dynamic memory
 - `constexpr` all the things
@@ -118,7 +121,7 @@ git submodule add https://github.com/tobanteEmbedded/tetl.git 3rd_party/tetl
 ### Command Line
 
 ```make
-CXXFLAGS += -std=c++20 -I3rd_party/tetl/include
+CXXFLAGS += -std=c++23 -I3rd_party/tetl/include
 ```
 
 ### CMake
@@ -141,5 +144,5 @@ Add `tetl` as a git submodule, then add these lines to your `platformio.ini`:
 ; Most Arduino code does not compile unless you have GNU extensions enabled.
 [env:yourenv]
 build_unflags = -std=gnu++11
-build_flags = -std=gnu++20 -Wno-register -I 3rd_party/tetl/include
+build_flags = -std=gnu++23 -Wno-register -I 3rd_party/tetl/include
 ```

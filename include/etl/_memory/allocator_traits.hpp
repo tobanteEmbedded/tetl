@@ -1,4 +1,5 @@
 // SPDX-License-Identifier: BSL-1.0
+// SPDX-FileCopyrightText: Copyright (C) 2024 Tobias Hienzsch
 
 #ifndef TETL_MEMORY_ALLOCATOR_TRAITS_HPP
 #define TETL_MEMORY_ALLOCATOR_TRAITS_HPP
@@ -94,9 +95,15 @@ struct allocator_traits {
     using difference_type    = typename detail::allocator_traits_difference_type<Alloc>::type;
     using size_type          = typename detail::allocator_traits_size_type<Alloc>::type;
 
-    [[nodiscard]] static constexpr auto allocate(Alloc& a, size_type n) { return a.allocate(n); }
+    [[nodiscard]] static constexpr auto allocate(Alloc& a, size_type n)
+    {
+        return a.allocate(n);
+    }
 
-    static constexpr void deallocate(Alloc& a, pointer p, size_type n) { a.deallocate(p, n); }
+    static constexpr void deallocate(Alloc& a, pointer p, size_type n)
+    {
+        a.deallocate(p, n);
+    }
 };
 
 } // namespace etl

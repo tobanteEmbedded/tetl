@@ -1,12 +1,13 @@
 // SPDX-License-Identifier: BSL-1.0
+// SPDX-FileCopyrightText: Copyright (C) 2024 Tobias Hienzsch
 
-#ifndef TETL_META_AT_HPP
-#define TETL_META_AT_HPP
+#ifndef TETL_MPL_AT_HPP
+#define TETL_MPL_AT_HPP
 
 #include <etl/_cstddef/size_t.hpp>
-#include <etl/_meta/list.hpp>
+#include <etl/_mpl/list.hpp>
 
-namespace etl::meta {
+namespace etl::mpl {
 
 template <etl::size_t I, typename List>
 struct at;
@@ -24,6 +25,6 @@ struct at<I, list<Head, Tail...>> {
 template <etl::size_t I, typename List>
 using at_t = typename at<I, List>::type;
 
-} // namespace etl::meta
+} // namespace etl::mpl
 
-#endif // TETL_META_AT_HPP
+#endif // TETL_MPL_AT_HPP

@@ -1,4 +1,5 @@
 // SPDX-License-Identifier: BSL-1.0
+// SPDX-FileCopyrightText: Copyright (C) 2021 Tobias Hienzsch
 
 #include "testing/testing.hpp"
 
@@ -23,14 +24,6 @@ static constexpr auto test() -> bool
     CHECK(etl::language_standard::cpp_23 > etl::language_standard::cpp_17);
 
 #if not defined(TETL_ENABLE_CXX_MODULES)
-    #if TETL_CPP_STANDARD == 17
-    CHECK(etl::current_standard == etl::language_standard::cpp_17);
-    #endif
-
-    #if TETL_CPP_STANDARD == 20
-    CHECK(etl::current_standard == etl::language_standard::cpp_20);
-    #endif
-
     #if TETL_CPP_STANDARD == 23
     CHECK(etl::current_standard == etl::language_standard::cpp_23);
     #endif

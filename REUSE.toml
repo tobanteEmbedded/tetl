@@ -1,0 +1,17 @@
+# SPDX-License-Identifier: BSL-1.0
+# SPDX-FileCopyrightText: Copyright (C) 2025 Tobias Hienzsch
+
+version = 1
+
+[[annotations]]
+path = ["CMakePresets.json", "Doxyfile"]
+SPDX-FileCopyrightText = "Copyright (C) 2019-2025 Tobias Hienzsch"
+SPDX-License-Identifier = "BSL-1.0"
+
+[[annotations]]
+path = [
+    "include/etl/_3rd_party/gcem/gcem.hpp",
+    "include/etl/_3rd_party/gcem/gcem_incl/**/*.hpp",
+]
+SPDX-FileCopyrightText = "Copyright (C) 2016-2024 Keith O'Hara"
+SPDX-License-Identifier = "Apache-2.0"

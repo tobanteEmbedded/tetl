@@ -1,4 +1,5 @@
 // SPDX-License-Identifier: BSL-1.0
+// SPDX-FileCopyrightText: Copyright (C) 2021 Tobias Hienzsch
 
 #ifndef TETL_CMATH_NEXTAFTER_HPP
 #define TETL_CMATH_NEXTAFTER_HPP
@@ -34,8 +35,14 @@ template <typename T>
 /// Returns the next representable value of from in the direction of to.
 /// If from equals to, to is returned.
 /// \details ttps://en.cppreference.com/w/cpp/numeric/math/nextafter
-[[nodiscard]] constexpr auto nextafter(float from, float to) noexcept -> float { return detail::nextafter(from, to); }
-[[nodiscard]] constexpr auto nextafterf(float from, float to) noexcept -> float { return detail::nextafter(from, to); }
+[[nodiscard]] constexpr auto nextafter(float from, float to) noexcept -> float
+{
+    return detail::nextafter(from, to);
+}
+[[nodiscard]] constexpr auto nextafterf(float from, float to) noexcept -> float
+{
+    return detail::nextafter(from, to);
+}
 [[nodiscard]] constexpr auto nextafter(double from, double to) noexcept -> double
 {
     return detail::nextafter(from, to);

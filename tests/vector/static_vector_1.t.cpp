@@ -1,4 +1,5 @@
 // SPDX-License-Identifier: BSL-1.0
+// SPDX-FileCopyrightText: Copyright (C) 2021 Tobias Hienzsch
 
 #include "testing/testing.hpp"
 
@@ -140,7 +141,6 @@ static constexpr auto test_cx() -> bool
     }
 
     {
-
         auto vec = etl::static_vector<T, 4>{};
         CHECK(vec.size() == 0);
 

@@ -1,4 +1,5 @@
 // SPDX-License-Identifier: BSL-1.0
+// SPDX-FileCopyrightText: Copyright (C) 2019 Tobias Hienzsch
 
 #ifndef TETL_TYPE_TRAITS_IS_SCALAR_HPP
 #define TETL_TYPE_TRAITS_IS_SCALAR_HPP
@@ -33,7 +34,8 @@ inline constexpr bool is_scalar_v = __is_scalar(T);
 template <typename T>
 struct is_scalar
     : bool_constant<
-          is_arithmetic_v<T> or is_enum_v<T> or is_pointer_v<T> or is_member_pointer_v<T> or is_null_pointer_v<T> > { };
+          is_arithmetic_v<T> or is_enum_v<T> or is_pointer_v<T> or is_member_pointer_v<T> or is_null_pointer_v<T>
+      > { };
 
 template <typename T>
 

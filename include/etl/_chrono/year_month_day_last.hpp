@@ -1,4 +1,5 @@
 // SPDX-License-Identifier: BSL-1.0
+// SPDX-FileCopyrightText: Copyright (C) 2023 Tobias Hienzsch
 
 #ifndef TETL_CHRONO_YEAR_MONTH_DAY_LAST_HPP
 #define TETL_CHRONO_YEAR_MONTH_DAY_LAST_HPP
@@ -50,11 +51,20 @@ struct year_month_day_last {
     constexpr auto operator+=(years const& y) noexcept -> year_month_day_last&;
     constexpr auto operator-=(years const& y) noexcept -> year_month_day_last&;
 
-    [[nodiscard]] constexpr auto year() const noexcept -> chrono::year { return _y; }
+    [[nodiscard]] constexpr auto year() const noexcept -> chrono::year
+    {
+        return _y;
+    }
 
-    [[nodiscard]] constexpr auto month() const noexcept -> chrono::month { return _mdl.month(); }
+    [[nodiscard]] constexpr auto month() const noexcept -> chrono::month
+    {
+        return _mdl.month();
+    }
 
-    [[nodiscard]] constexpr auto month_day_last() const noexcept -> chrono::month_day_last { return _mdl; }
+    [[nodiscard]] constexpr auto month_day_last() const noexcept -> chrono::month_day_last
+    {
+        return _mdl;
+    }
 
     [[nodiscard]] constexpr auto day() const noexcept -> chrono::day
     {
@@ -64,7 +74,10 @@ struct year_month_day_last {
     [[nodiscard]] constexpr operator sys_days() const noexcept;
     [[nodiscard]] constexpr explicit operator local_days() const noexcept;
 
-    [[nodiscard]] constexpr auto ok() const noexcept -> bool { return _y.ok() and _mdl.ok(); }
+    [[nodiscard]] constexpr auto ok() const noexcept -> bool
+    {
+        return _y.ok() and _mdl.ok();
+    }
 
 private:
     chrono::year _y;

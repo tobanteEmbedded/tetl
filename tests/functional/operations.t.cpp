@@ -1,4 +1,5 @@
 // SPDX-License-Identifier: BSL-1.0
+// SPDX-FileCopyrightText: Copyright (C) 2021 Tobias Hienzsch
 
 #include "testing/testing.hpp"
 
@@ -14,7 +15,6 @@ import etl;
 template <typename T>
 static constexpr auto test() -> bool
 {
-
     CHECK(etl::detail::is_transparent<etl::plus<>>::value);
     CHECK(etl::plus<T>{}(T{2}, T{1}) == T{3});
     CHECK(etl::plus<T>{}(T{1}, T{1}) == T{2});

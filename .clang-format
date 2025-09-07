@@ -1,3 +1,5 @@
+# SPDX-License-Identifier: BSL-1.0
+# SPDX-FileCopyrightText: Copyright (C) 2019 Tobias Hienzsch
 ---
 BasedOnStyle: WebKit
 AccessModifierOffset: -4
@@ -17,16 +19,17 @@ AllowShortBlocksOnASingleLine: Empty
 AllowShortCaseLabelsOnASingleLine: true
 AllowShortCompoundRequirementOnASingleLine: true
 AllowShortEnumsOnASingleLine: false
-AllowShortFunctionsOnASingleLine: All
-AllowShortIfStatementsOnASingleLine: false
+AllowShortFunctionsOnASingleLine: Empty
+AllowShortIfStatementsOnASingleLine: Never
 AllowShortLambdasOnASingleLine: All
 AllowShortLoopsOnASingleLine: false
+AllowShortNamespacesOnASingleLine: false
 AlwaysBreakAfterReturnType: None
 AlwaysBreakBeforeMultilineStrings: false
-AlwaysBreakTemplateDeclarations: Yes
 BinPackArguments: false
-BinPackParameters: false
+BinPackParameters: OnePerLine
 BitFieldColonSpacing: After
+BreakBeforeBraces: Custom
 BraceWrapping:
   AfterCaseLabel: false
   AfterClass: false
@@ -44,46 +47,76 @@ BraceWrapping:
   SplitEmptyFunction: true
   SplitEmptyRecord: true
   SplitEmptyNamespace: true
+BracedInitializerIndentWidth: 4
 BreakBeforeBinaryOperators: All
-BreakBeforeBraces: Custom
 BreakBeforeConceptDeclarations: true
+BreakBeforeTemplateCloser: true
 BreakBeforeTernaryOperators: true
+BreakBinaryOperations: RespectPrecedence
 BreakConstructorInitializers: BeforeComma
 BreakInheritanceList: BeforeComma
 BreakStringLiterals: true
+BreakTemplateDeclarations: Yes
 ColumnLimit: 120
 CompactNamespaces: false
 Cpp11BracedListStyle: true
 DisableFormat: false
+EmptyLineAfterAccessModifier: Never
+EmptyLineBeforeAccessModifier: Always
+EnumTrailingComma: Leave
 FixNamespaceComments: true
+IncludeBlocks: Preserve
 IndentCaseLabels: true
+IndentExportBlock: true
+IndentRequiresClause: true
 IndentPPDirectives: BeforeHash
 IndentWidth: 4
 IndentWrappedFunctionNames: false
-KeepEmptyLinesAtTheStartOfBlocks: true
+InsertBraces: true
+InsertNewlineAtEOF: true
+InsertTrailingCommas: Wrapped
+KeepEmptyLines:
+  AtEndOfFile: false
+  AtStartOfBlock: false
+  AtStartOfFile: false
 Language: Cpp
 LambdaBodyIndentation: OuterScope
+LineEnding: LF
 MaxEmptyLinesToKeep: 1
 NamespaceIndentation: None
 PackConstructorInitializers: Never
 PointerAlignment: Left
+QualifierAlignment: Custom
+QualifierOrder:
+  - "inline"
+  - "friend"
+  - "static"
+  - "constexpr"
+  - "type"
+  - "const"
+  - "volatile"
 ReferenceAlignment: Left
-ReflowComments: true
+ReflowComments: Always
+RemoveEmptyLinesInUnwrappedLines: true
+RemoveParentheses: ReturnStatement
 RemoveSemicolon: true
 RequiresClausePosition: OwnLine
 RequiresExpressionIndentation: OuterScope
 SeparateDefinitionBlocks: Leave
+ShortNamespaceLines: 0
 SortIncludes: true
-SortUsingDeclarations: true
+SortUsingDeclarations: Lexicographic
 SpaceAfterCStyleCast: false
 SpaceAfterLogicalNot: false
+SpaceAfterOperatorKeyword: false
 SpaceAfterTemplateKeyword: true
+SpaceAroundPointerQualifiers: Default
 SpaceBeforeAssignmentOperators: true
 SpaceBeforeCaseColon: false
 SpaceBeforeCpp11BracedList: false
 SpaceBeforeCtorInitializerColon: true
 SpaceBeforeInheritanceColon: true
-SpaceBeforeParens: ControlStatements
+SpaceBeforeParens: ControlStatementsExceptControlMacros
 SpaceBeforeRangeBasedForLoopColon: true
 SpaceBeforeSquareBrackets: false
 SpaceInEmptyBlock: true
@@ -99,5 +132,3 @@ SpacesInParentheses: false
 SpacesInSquareBrackets: false
 Standard: Auto
 UseTab: Never
-QualifierAlignment: Custom
-QualifierOrder: ["inline", "static", "constexpr", "type", "const", "volatile"]

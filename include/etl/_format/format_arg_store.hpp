@@ -1,4 +1,5 @@
 // SPDX-License-Identifier: BSL-1.0
+// SPDX-FileCopyrightText: Copyright (C) 2023 Tobias Hienzsch
 
 #ifndef TETL_FORMAT_FORMAT_ARG_STORE_HPP
 #define TETL_FORMAT_FORMAT_ARG_STORE_HPP

@@ -1,4 +1,5 @@
 // SPDX-License-Identifier: BSL-1.0
+// SPDX-FileCopyrightText: Copyright (C) 2019 Tobias Hienzsch
 
 #ifndef TETL_FUNCTIONAL_LOGICAL_NOT_HPP
 #define TETL_FUNCTIONAL_LOGICAL_NOT_HPP
@@ -12,7 +13,10 @@ namespace etl {
 /// https://en.cppreference.com/w/cpp/utility/functional/logical_not
 template <typename T = void>
 struct logical_not {
-    [[nodiscard]] constexpr auto operator()(T const& arg) const -> bool { return !arg; }
+    [[nodiscard]] constexpr auto operator()(T const& arg) const -> bool
+    {
+        return !arg;
+    }
 };
 
 template <>

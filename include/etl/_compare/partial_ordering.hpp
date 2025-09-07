@@ -1,4 +1,5 @@
 // SPDX-License-Identifier: BSL-1.0
+// SPDX-FileCopyrightText: Copyright (C) 2021 Tobias Hienzsch
 
 #ifndef TETL_COMPARE_PARTIAL_ORDERING_HPP
 #define TETL_COMPARE_PARTIAL_ORDERING_HPP
@@ -62,7 +63,10 @@ struct partial_ordering {
         return v._isOrdered and 0 >= v._value;
     }
 
-    friend constexpr auto operator<=>(partial_ordering v, nullptr_t) noexcept -> partial_ordering { return v; }
+    friend constexpr auto operator<=>(partial_ordering v, nullptr_t) noexcept -> partial_ordering
+    {
+        return v;
+    }
 
     friend constexpr auto operator<=>(nullptr_t, partial_ordering v) noexcept -> partial_ordering
     {

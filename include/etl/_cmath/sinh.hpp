@@ -1,4 +1,5 @@
 // SPDX-License-Identifier: BSL-1.0
+// SPDX-FileCopyrightText: Copyright (C) 2021 Tobias Hienzsch
 
 #ifndef TETL_CMATH_SINH_HPP
 #define TETL_CMATH_SINH_HPP
@@ -11,27 +12,42 @@ namespace etl {
 /// Computes the hyperbolic sine of arg
 /// \details https://en.cppreference.com/w/cpp/numeric/math/sinh
 /// \ingroup cmath
-[[nodiscard]] constexpr auto sinh(float arg) noexcept -> float { return etl::detail::gcem::sinh(arg); }
+[[nodiscard]] constexpr auto sinh(float arg) noexcept -> float
+{
+    return etl::detail::gcem::sinh(arg);
+}
 
 /// Computes the hyperbolic sine of arg
 /// \details https://en.cppreference.com/w/cpp/numeric/math/sinh
 /// \ingroup cmath
-[[nodiscard]] constexpr auto sinhf(float arg) noexcept -> float { return etl::detail::gcem::sinh(arg); }
+[[nodiscard]] constexpr auto sinhf(float arg) noexcept -> float
+{
+    return etl::detail::gcem::sinh(arg);
+}
 
 /// Computes the hyperbolic sine of arg
 /// \details https://en.cppreference.com/w/cpp/numeric/math/sinh
 /// \ingroup cmath
-[[nodiscard]] constexpr auto sinh(double arg) noexcept -> double { return etl::detail::gcem::sinh(arg); }
+[[nodiscard]] constexpr auto sinh(double arg) noexcept -> double
+{
+    return etl::detail::gcem::sinh(arg);
+}
 
 /// Computes the hyperbolic sine of arg
 /// \details https://en.cppreference.com/w/cpp/numeric/math/sinh
 /// \ingroup cmath
-[[nodiscard]] constexpr auto sinh(long double arg) noexcept -> long double { return etl::detail::gcem::sinh(arg); }
+[[nodiscard]] constexpr auto sinh(long double arg) noexcept -> long double
+{
+    return etl::detail::gcem::sinh(arg);
+}
 
 /// Computes the hyperbolic sine of arg
 /// \details https://en.cppreference.com/w/cpp/numeric/math/sinh
 /// \ingroup cmath
-[[nodiscard]] constexpr auto sinhl(long double arg) noexcept -> long double { return etl::detail::gcem::sinh(arg); }
+[[nodiscard]] constexpr auto sinhl(long double arg) noexcept -> long double
+{
+    return etl::detail::gcem::sinh(arg);
+}
 
 /// Computes the hyperbolic sine of arg
 /// \details https://en.cppreference.com/w/cpp/numeric/math/sinh

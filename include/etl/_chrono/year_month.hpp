@@ -1,4 +1,5 @@
 // SPDX-License-Identifier: BSL-1.0
+// SPDX-FileCopyrightText: Copyright (C) 2023 Tobias Hienzsch
 
 #ifndef TETL_CHRONO_YEAR_MONTH_HPP
 #define TETL_CHRONO_YEAR_MONTH_HPP
@@ -17,9 +18,18 @@ struct year_month {
     {
     }
 
-    [[nodiscard]] constexpr auto ok() const noexcept -> bool { return year().ok() and month().ok(); }
-    [[nodiscard]] constexpr auto year() const noexcept -> chrono::year { return _y; }
-    [[nodiscard]] constexpr auto month() const noexcept -> chrono::month { return _m; }
+    [[nodiscard]] constexpr auto ok() const noexcept -> bool
+    {
+        return year().ok() and month().ok();
+    }
+    [[nodiscard]] constexpr auto year() const noexcept -> chrono::year
+    {
+        return _y;
+    }
+    [[nodiscard]] constexpr auto month() const noexcept -> chrono::month
+    {
+        return _m;
+    }
 
     constexpr auto operator+=(months const& dm) noexcept -> year_month&;
     constexpr auto operator-=(months const& dm) noexcept -> year_month&;

@@ -1,4 +1,5 @@
 // SPDX-License-Identifier: BSL-1.0
+// SPDX-FileCopyrightText: Copyright (C) 2021 Tobias Hienzsch
 
 #ifndef TETL_COMPARE_WEAK_ORDERING_HPP
 #define TETL_COMPARE_WEAK_ORDERING_HPP
@@ -11,7 +12,6 @@ namespace etl {
 
 /// \ingroup compare
 struct weak_ordering {
-
     static weak_ordering const less;
     static weak_ordering const equivalent;
     static weak_ordering const greater;
@@ -29,35 +29,50 @@ struct weak_ordering {
         return v._value == 0;
     }
 
-    [[nodiscard]] friend constexpr auto operator<(weak_ordering v, nullptr_t) noexcept -> bool { return v._value < 0; }
+    [[nodiscard]] friend constexpr auto operator<(weak_ordering v, nullptr_t) noexcept -> bool
+    {
+        return v._value < 0;
+    }
 
     [[nodiscard]] friend constexpr auto operator<=(weak_ordering v, nullptr_t) noexcept -> bool
     {
         return v._value <= 0;
     }
 
-    [[nodiscard]] friend constexpr auto operator>(weak_ordering v, nullptr_t) noexcept -> bool { return v._value > 0; }
+    [[nodiscard]] friend constexpr auto operator>(weak_ordering v, nullptr_t) noexcept -> bool
+    {
+        return v._value > 0;
+    }
 
     [[nodiscard]] friend constexpr auto operator>=(weak_ordering v, nullptr_t) noexcept -> bool
     {
         return v._value >= 0;
     }
 
-    [[nodiscard]] friend constexpr auto operator<(nullptr_t, weak_ordering v) noexcept -> bool { return 0 < v._value; }
+    [[nodiscard]] friend constexpr auto operator<(nullptr_t, weak_ordering v) noexcept -> bool
+    {
+        return 0 < v._value;
+    }
 
     [[nodiscard]] friend constexpr auto operator<=(nullptr_t, weak_ordering v) noexcept -> bool
     {
         return 0 <= v._value;
     }
 
-    [[nodiscard]] friend constexpr auto operator>(nullptr_t, weak_ordering v) noexcept -> bool { return 0 > v._value; }
+    [[nodiscard]] friend constexpr auto operator>(nullptr_t, weak_ordering v) noexcept -> bool
+    {
+        return 0 > v._value;
+    }
 
     [[nodiscard]] friend constexpr auto operator>=(nullptr_t, weak_ordering v) noexcept -> bool
     {
         return 0 >= v._value;
     }
 
-    [[nodiscard]] friend constexpr auto operator<=>(weak_ordering v, nullptr_t) noexcept -> weak_ordering { return v; }
+    [[nodiscard]] friend constexpr auto operator<=>(weak_ordering v, nullptr_t) noexcept -> weak_ordering
+    {
+        return v;
+    }
 
     [[nodiscard]] friend constexpr auto operator<=>(nullptr_t, weak_ordering v) noexcept -> weak_ordering
     {

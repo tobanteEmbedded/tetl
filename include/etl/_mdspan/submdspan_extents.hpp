@@ -1,4 +1,5 @@
 // SPDX-License-Identifier: BSL-1.0
+// SPDX-FileCopyrightText: Copyright (C) 2024 Tobias Hienzsch
 
 #ifndef TETL_MDSPAN_SUBMDSPAN_EXTENTS_HPP
 #define TETL_MDSPAN_SUBMDSPAN_EXTENTS_HPP
@@ -55,7 +56,8 @@ struct submdspan_extents_builder {
                 K - 1,
                 Extents,
                 Extents::static_extent(Extents::rank() - K),
-                NewExtents...>::next(ext, slicesAndExtents..., ext.extent(Extents::rank() - K));
+                NewExtents...
+            >::next(ext, slicesAndExtents..., ext.extent(Extents::rank() - K));
         } else if constexpr (etl::is_convertible_v<Slice, etl::size_t>) {
             return submdspan_extents_builder<K - 1, Extents, NewExtents...>::next(ext, slicesAndExtents...);
         } else if constexpr (is_strided_slice<Slice>) {
@@ -72,7 +74,6 @@ struct submdspan_extents_builder {
 
 template <typename Extents, size_t... NewStaticExtents>
 struct submdspan_extents_builder<0, Extents, NewStaticExtents...> {
-
     template <typename... NewExtents>
     static constexpr auto next(Extents const& /*unused*/, NewExtents... newExts)
     {

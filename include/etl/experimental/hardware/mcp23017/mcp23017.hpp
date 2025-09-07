@@ -1,4 +1,5 @@
 // SPDX-License-Identifier: BSL-1.0
+// SPDX-FileCopyrightText: Copyright (C) 2020 Tobias Hienzsch
 
 #ifndef TETL_HARDWARE_MCP23017_MCP23017_HPP
 #define TETL_HARDWARE_MCP23017_MCP23017_HPP
@@ -108,9 +109,15 @@ public:
     auto operator=(device&&) -> device&      = delete;
     auto operator=(device const&) -> device& = delete;
 
-    auto init() -> bool { return true; }
+    auto init() -> bool
+    {
+        return true;
+    }
 
-    auto set_io_direction(port p, io_direction direction) -> void { etl::ignore_unused(p, direction); }
+    auto set_io_direction(port p, io_direction direction) -> void
+    {
+        etl::ignore_unused(p, direction);
+    }
 };
 } // namespace etl::experimental::hardware::mcp23017
 

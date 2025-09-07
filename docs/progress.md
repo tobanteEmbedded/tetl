@@ -1,3 +1,6 @@
+<!-- SPDX-License-Identifier: BSL-1.0 -->
+<!-- SPDX-FileCopyrightText: Copyright (C) 2024 Tobias Hienzsch -->
+
 # Progress
 
 Unless stated otherwise, all papers are implemented to work with the minimum C++ standard (currently C++20).

@@ -1,4 +1,5 @@
 // SPDX-License-Identifier: BSL-1.0
+// SPDX-FileCopyrightText: Copyright (C) 2021 Tobias Hienzsch
 
 #include "testing/testing.hpp"
 
@@ -86,5 +87,8 @@ auto main() -> int
     return 0;
 }
 #else
-auto main() -> int { return 0; }
+auto main() -> int
+{
+    return 0;
+}
 #endif

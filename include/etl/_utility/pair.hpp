@@ -1,4 +1,5 @@
 // SPDX-License-Identifier: BSL-1.0
+// SPDX-FileCopyrightText: Copyright (C) 2020 Tobias Hienzsch
 
 #ifndef TETL_UTILITY_PAIR_HPP
 #define TETL_UTILITY_PAIR_HPP
@@ -109,7 +110,7 @@ struct pair {
     }
 
     constexpr auto operator=(pair&& p) noexcept -> pair&
-        requires((is_move_assignable_v<first_type> and is_move_assignable_v<second_type>))
+        requires(is_move_assignable_v<first_type> and is_move_assignable_v<second_type>)
     {
         first  = etl::move(p.first);
         second = etl::move(p.second);
@@ -302,7 +303,8 @@ template <
     typename U1,
     typename U2,
     template <typename> typename TQual,
-    template <typename> typename UQual>
+    template <typename> typename UQual
+>
     requires requires {
         typename pair<common_reference_t<TQual<T1>, UQual<U1>>, common_reference_t<TQual<T2>, UQual<U2>>>;
     }

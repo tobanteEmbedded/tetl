@@ -1,4 +1,5 @@
 // SPDX-License-Identifier: BSL-1.0
+// SPDX-FileCopyrightText: Copyright (C) 2020 Tobias Hienzsch
 
 #ifndef TETL_CMATH_COPYSIGN_HPP
 #define TETL_CMATH_COPYSIGN_HPP
@@ -55,9 +56,18 @@ template <typename T>
 /// of sgn is returned. If sgn is -0, the result is only negative if the
 /// implementation supports the signed zero consistently in arithmetic
 /// operations.
-[[nodiscard]] constexpr auto copysign(float mag, float sgn) -> float { return detail::copysign(mag, sgn); }
-[[nodiscard]] constexpr auto copysignf(float mag, float sgn) -> float { return detail::copysign(mag, sgn); }
-[[nodiscard]] constexpr auto copysign(double mag, double sgn) -> double { return detail::copysign(mag, sgn); }
+[[nodiscard]] constexpr auto copysign(float mag, float sgn) -> float
+{
+    return detail::copysign(mag, sgn);
+}
+[[nodiscard]] constexpr auto copysignf(float mag, float sgn) -> float
+{
+    return detail::copysign(mag, sgn);
+}
+[[nodiscard]] constexpr auto copysign(double mag, double sgn) -> double
+{
+    return detail::copysign(mag, sgn);
+}
 [[nodiscard]] constexpr auto copysign(long double mag, long double sgn) -> long double
 {
     return detail::copysign(mag, sgn);

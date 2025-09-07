@@ -1,5 +1,5 @@
-
 // SPDX-License-Identifier: BSL-1.0
+// SPDX-FileCopyrightText: Copyright (C) 2024 Tobias Hienzsch
 
 #ifndef TETL_STRING_STRINGS_RFIND_HPP
 #define TETL_STRING_STRINGS_RFIND_HPP

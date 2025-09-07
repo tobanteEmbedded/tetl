@@ -1,4 +1,5 @@
 // SPDX-License-Identifier: BSL-1.0
+// SPDX-FileCopyrightText: Copyright (C) 2021 Tobias Hienzsch
 
 #include "testing/testing.hpp"
 
@@ -22,9 +23,15 @@ struct Wrapper {
     {
     }
 
-    friend constexpr auto operator<(Wrapper lhs, T rhs) -> bool { return lhs.value < rhs; }
+    friend constexpr auto operator<(Wrapper lhs, T rhs) -> bool
+    {
+        return lhs.value < rhs;
+    }
 
-    friend constexpr auto operator<(T lhs, Wrapper rhs) -> bool { return lhs < rhs.value; }
+    friend constexpr auto operator<(T lhs, Wrapper rhs) -> bool
+    {
+        return lhs < rhs.value;
+    }
 
     T value;
 };

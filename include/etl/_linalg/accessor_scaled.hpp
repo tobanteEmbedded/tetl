@@ -1,4 +1,5 @@
 // SPDX-License-Identifier: BSL-1.0
+// SPDX-FileCopyrightText: Copyright (C) 2023 Tobias Hienzsch
 
 #ifndef TETL_LINALG_ACCESSOR_SCALED_HPP
 #define TETL_LINALG_ACCESSOR_SCALED_HPP
@@ -36,9 +37,15 @@ struct accessor_scaled {
         return _nestedAccessor.offset(p, i);
     }
 
-    [[nodiscard]] constexpr auto scaling_factor() const -> ScalingFactor { return _scalingFactor; }
+    [[nodiscard]] constexpr auto scaling_factor() const -> ScalingFactor
+    {
+        return _scalingFactor;
+    }
 
-    [[nodiscard]] constexpr auto nested_accessor() const -> Accessor { return _nestedAccessor; }
+    [[nodiscard]] constexpr auto nested_accessor() const -> Accessor
+    {
+        return _nestedAccessor;
+    }
 
 private:
     ScalingFactor _scalingFactor;

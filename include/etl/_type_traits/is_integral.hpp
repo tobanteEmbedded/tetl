@@ -1,4 +1,5 @@
 // SPDX-License-Identifier: BSL-1.0
+// SPDX-FileCopyrightText: Copyright (C) 2021 Tobias Hienzsch
 
 #ifndef TETL_TYPE_TRAITS_IS_INTEGRAL_HPP
 #define TETL_TYPE_TRAITS_IS_INTEGRAL_HPP
@@ -19,14 +20,15 @@ inline constexpr bool is_integral_v = __is_integral(T);
 
 #else
 
-    #include <etl/_meta/contains.hpp>
+    #include <etl/_mpl/contains.hpp>
     #include <etl/_type_traits/remove_cv.hpp>
 
 namespace etl {
-// clang-format off
+
 template <typename T>
-inline constexpr bool is_integral_v = meta::contains_v<remove_cv_t<T>,
-    meta::list<
+inline constexpr bool is_integral_v = mpl::contains_v<
+    remove_cv_t<T>,
+    mpl::list<
         bool,
         char,
         signed char,
@@ -45,7 +47,6 @@ inline constexpr bool is_integral_v = meta::contains_v<remove_cv_t<T>,
         unsigned long long
     >
 >;
-// clang-format on
 
 template <typename T>
 struct is_integral : bool_constant<is_integral_v<T> > { };

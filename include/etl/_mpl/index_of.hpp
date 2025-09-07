@@ -1,13 +1,14 @@
 // SPDX-License-Identifier: BSL-1.0
+// SPDX-FileCopyrightText: Copyright (C) 2024 Tobias Hienzsch
 
-#ifndef TETL_META_INDEX_OF_HPP
-#define TETL_META_INDEX_OF_HPP
+#ifndef TETL_MPL_INDEX_OF_HPP
+#define TETL_MPL_INDEX_OF_HPP
 
 #include <etl/_cstddef/size_t.hpp>
-#include <etl/_meta/list.hpp>
+#include <etl/_mpl/list.hpp>
 #include <etl/_type_traits/integral_constant.hpp>
 
-namespace etl::meta {
+namespace etl::mpl {
 
 template <typename T, typename List>
 struct index_of;
@@ -21,6 +22,6 @@ struct index_of<Head, list<Head, Tail...>> : etl::integral_constant<etl::size_t,
 template <typename T, typename Head, typename... Tail>
 struct index_of<T, list<Head, Tail...>> : etl::integral_constant<etl::size_t, index_of_v<T, list<Tail...>> + 1> { };
 
-} // namespace etl::meta
+} // namespace etl::mpl
 
-#endif // TETL_META_INDEX_OF_HPP
+#endif // TETL_MPL_INDEX_OF_HPP

@@ -1,4 +1,5 @@
 // SPDX-License-Identifier: BSL-1.0
+// SPDX-FileCopyrightText: Copyright (C) 2021 Tobias Hienzsch
 
 #ifndef TETL_CMATH_HYPOT_HPP
 #define TETL_CMATH_HYPOT_HPP
@@ -54,11 +55,20 @@ inline constexpr struct hypot {
 /// - hypot(x,y) is NAN if x or y is NAN.
 ///
 /// https://en.cppreference.com/w/cpp/numeric/math/hypot
-[[nodiscard]] constexpr auto hypot(float x, float y) noexcept -> float { return etl::detail::hypot(x, y); }
+[[nodiscard]] constexpr auto hypot(float x, float y) noexcept -> float
+{
+    return etl::detail::hypot(x, y);
+}
 
-[[nodiscard]] constexpr auto hypotf(float x, float y) noexcept -> float { return etl::detail::hypot(x, y); }
+[[nodiscard]] constexpr auto hypotf(float x, float y) noexcept -> float
+{
+    return etl::detail::hypot(x, y);
+}
 
-[[nodiscard]] constexpr auto hypot(double x, double y) noexcept -> double { return etl::detail::hypot(x, y); }
+[[nodiscard]] constexpr auto hypot(double x, double y) noexcept -> double
+{
+    return etl::detail::hypot(x, y);
+}
 
 [[nodiscard]] constexpr auto hypot(long double x, long double y) noexcept -> long double
 {
@@ -70,7 +80,10 @@ inline constexpr struct hypot {
     return etl::detail::hypot(x, y);
 }
 
-[[nodiscard]] constexpr auto hypot(float x, float y, float z) noexcept -> float { return etl::detail::hypot(x, y, z); }
+[[nodiscard]] constexpr auto hypot(float x, float y, float z) noexcept -> float
+{
+    return etl::detail::hypot(x, y, z);
+}
 
 [[nodiscard]] constexpr auto hypot(double x, double y, double z) noexcept -> double
 {

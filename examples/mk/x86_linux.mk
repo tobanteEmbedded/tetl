@@ -1,3 +1,6 @@
+# SPDX-License-Identifier: BSL-1.0
+# SPDX-FileCopyrightText: Copyright (C) 2021 Tobias Hienzsch
+
 ifdef DEBUG
 DEBUGFLAGS = -Og -g
 else

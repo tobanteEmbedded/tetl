@@ -1,3 +1,6 @@
+<!-- SPDX-License-Identifier: BSL-1.0 -->
+<!-- SPDX-FileCopyrightText: Copyright (C) 2021 Tobias Hienzsch -->
+
 # GCEM
 
 **Copied on September 2nd 2025.** Commit `012ae73`, tag `v1.18.0`.

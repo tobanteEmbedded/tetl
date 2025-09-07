@@ -1,4 +1,5 @@
 // SPDX-License-Identifier: BSL-1.0
+// SPDX-FileCopyrightText: Copyright (C) 2021 Tobias Hienzsch
 
 #ifndef TETL_TEST_MUTEX_TEST_MUTEX_HPP
 #define TETL_TEST_MUTEX_TEST_MUTEX_HPP
@@ -41,7 +42,10 @@ struct Mutex {
         }
     }
 
-    [[nodiscard]] constexpr auto is_locked() const noexcept { return _isLocked; }
+    [[nodiscard]] constexpr auto is_locked() const noexcept
+    {
+        return _isLocked;
+    }
 
 private:
     bool _failOnTryLock{false};

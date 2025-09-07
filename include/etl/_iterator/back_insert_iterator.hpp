@@ -1,4 +1,5 @@
 // SPDX-License-Identifier: BSL-1.0
+// SPDX-FileCopyrightText: Copyright (C) 2021 Tobias Hienzsch
 #ifndef TETL_ITERATOR_BACK_INSERT_ITERATOR_HPP
 #define TETL_ITERATOR_BACK_INSERT_ITERATOR_HPP
 
@@ -51,19 +52,28 @@ struct back_insert_iterator {
     /// requirements of LegacyOutputIterator. It returns the iterator itself,
     /// which makes it possible to use code such as *iter = value to output
     /// (insert) the value into the underlying container.
-    constexpr auto operator*() -> back_insert_iterator& { return *this; }
+    constexpr auto operator*() -> back_insert_iterator&
+    {
+        return *this;
+    }
 
     /// \brief Does nothing. These operator overloads are provided to satisfy
     /// the requirements of LegacyOutputIterator. They make it possible for the
     /// expressions *iter++=value and *++iter=value to be used to output
     /// (insert) a value into the underlying container.
-    constexpr auto operator++() -> back_insert_iterator& { return *this; }
+    constexpr auto operator++() -> back_insert_iterator&
+    {
+        return *this;
+    }
 
     /// \brief Does nothing. These operator overloads are provided to satisfy
     /// the requirements of LegacyOutputIterator. They make it possible for the
     /// expressions *iter++=value and *++iter=value to be used to output
     /// (insert) a value into the underlying container.
-    constexpr auto operator++(int) -> back_insert_iterator { return *this; }
+    constexpr auto operator++(int) -> back_insert_iterator
+    {
+        return *this;
+    }
 
 private:
     Container* _container = nullptr;

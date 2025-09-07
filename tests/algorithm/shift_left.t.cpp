@@ -1,4 +1,5 @@
 // SPDX-License-Identifier: BSL-1.0
+// SPDX-FileCopyrightText: Copyright (C) 2024 Tobias Hienzsch
 
 #include "testing/iterator.hpp"
 #include "testing/testing.hpp"
@@ -15,7 +16,6 @@ import etl;
 template <typename T>
 static constexpr auto test() -> bool
 {
-
     {
         auto data           = etl::array{T(1), T(2), T(3), T(4), T(5), T(6)};
         auto const original = data;

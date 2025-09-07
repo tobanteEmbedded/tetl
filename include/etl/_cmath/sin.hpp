@@ -1,4 +1,5 @@
 // SPDX-License-Identifier: BSL-1.0
+// SPDX-FileCopyrightText: Copyright (C) 2021 Tobias Hienzsch
 
 #ifndef TETL_CMATH_SIN_HPP
 #define TETL_CMATH_SIN_HPP
@@ -41,12 +42,30 @@ inline constexpr struct sin {
 
 /// Computes the sine of arg (measured in radians).
 /// \details https://en.cppreference.com/w/cpp/numeric/math/sin
-[[nodiscard]] constexpr auto sin(float arg) noexcept -> float { return etl::detail::sin(arg); }
-[[nodiscard]] constexpr auto sinf(float arg) noexcept -> float { return etl::detail::sin(arg); }
-[[nodiscard]] constexpr auto sin(double arg) noexcept -> double { return etl::detail::sin(arg); }
-[[nodiscard]] constexpr auto sin(long double arg) noexcept -> long double { return etl::detail::sin(arg); }
-[[nodiscard]] constexpr auto sinl(long double arg) noexcept -> long double { return etl::detail::sin(arg); }
-[[nodiscard]] constexpr auto sin(integral auto arg) noexcept -> double { return etl::detail::sin(double(arg)); }
+[[nodiscard]] constexpr auto sin(float arg) noexcept -> float
+{
+    return etl::detail::sin(arg);
+}
+[[nodiscard]] constexpr auto sinf(float arg) noexcept -> float
+{
+    return etl::detail::sin(arg);
+}
+[[nodiscard]] constexpr auto sin(double arg) noexcept -> double
+{
+    return etl::detail::sin(arg);
+}
+[[nodiscard]] constexpr auto sin(long double arg) noexcept -> long double
+{
+    return etl::detail::sin(arg);
+}
+[[nodiscard]] constexpr auto sinl(long double arg) noexcept -> long double
+{
+    return etl::detail::sin(arg);
+}
+[[nodiscard]] constexpr auto sin(integral auto arg) noexcept -> double
+{
+    return etl::detail::sin(double(arg));
+}
 
 /// @}
 

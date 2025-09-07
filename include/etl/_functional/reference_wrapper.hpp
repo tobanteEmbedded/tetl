@@ -1,4 +1,5 @@
 // SPDX-License-Identifier: BSL-1.0
+// SPDX-FileCopyrightText: Copyright (C) 2021 Tobias Hienzsch
 
 #ifndef TETL_FUNCTIONAL_REFERENCE_WRAPPER_HPP
 #define TETL_FUNCTIONAL_REFERENCE_WRAPPER_HPP
@@ -55,7 +56,8 @@ struct reference_wrapper {
     template <
         typename U,
         typename
-        = decltype(detail::FUN<T>(declval<U>()), enable_if_t<!is_same_v<reference_wrapper, remove_cvref_t<U>>>())>
+        = decltype(detail::FUN<T>(declval<U>()), enable_if_t<!is_same_v<reference_wrapper, remove_cvref_t<U>>>())
+    >
     constexpr reference_wrapper(U&& u) noexcept(noexcept(detail::FUN<T>(etl::forward<U>(u))))
         : _ptr(addressof(detail::FUN<T>(etl::forward<U>(u))))
     {
@@ -70,10 +72,16 @@ struct reference_wrapper {
     constexpr auto operator=(reference_wrapper const& x) noexcept -> reference_wrapper& = default;
 
     /// \brief Returns the stored reference.
-    [[nodiscard]] constexpr operator type&() const noexcept { return *_ptr; }
+    [[nodiscard]] constexpr operator type&() const noexcept
+    {
+        return *_ptr;
+    }
 
     /// \brief Returns the stored reference.
-    [[nodiscard]] constexpr auto get() const noexcept -> type& { return *_ptr; }
+    [[nodiscard]] constexpr auto get() const noexcept -> type&
+    {
+        return *_ptr;
+    }
 
     /// \brief Calls the Callable object, reference to which is stored. This
     /// function is available only if the stored reference points to a Callable

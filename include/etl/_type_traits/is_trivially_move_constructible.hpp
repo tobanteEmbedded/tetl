@@ -1,4 +1,5 @@
 // SPDX-License-Identifier: BSL-1.0
+// SPDX-FileCopyrightText: Copyright (C) 2019 Tobias Hienzsch
 
 #ifndef TETL_TYPE_TRAITS_IS_TRIVIALLY_MOVE_CONSTRUCTIBLE_HPP
 #define TETL_TYPE_TRAITS_IS_TRIVIALLY_MOVE_CONSTRUCTIBLE_HPP
@@ -14,7 +15,8 @@ namespace etl {
 /// member constant value equal to false. Otherwise, provides a member constant
 /// value equal to etl::is_trivially_constructible<T, T&&>::value.
 template <typename T>
-struct is_trivially_move_constructible : is_trivially_constructible<T, add_rvalue_reference_t<T>> { };
+struct is_trivially_move_constructible
+    : bool_constant<__is_trivially_constructible(T, add_rvalue_reference_t<add_const_t<T>>)> { };
 
 template <typename T>
 inline constexpr auto is_trivially_move_constructible_v = is_trivially_move_constructible<T>::value;

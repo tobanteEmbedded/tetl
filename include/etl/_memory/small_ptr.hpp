@@ -1,4 +1,5 @@
 // SPDX-License-Identifier: BSL-1.0
+// SPDX-FileCopyrightText: Copyright (C) 2021 Tobias Hienzsch
 
 #ifndef TETL_MEMORY_SMALL_PTR_HPP
 #define TETL_MEMORY_SMALL_PTR_HPP
@@ -35,7 +36,10 @@ struct small_ptr {
     }
 
     /// \brief Returns a raw pointer to Type.
-    [[nodiscard]] auto get() noexcept -> Type* { return reinterpret_cast<Type*>(BaseAddress + _value); }
+    [[nodiscard]] auto get() noexcept -> Type*
+    {
+        return reinterpret_cast<Type*>(BaseAddress + _value);
+    }
 
     /// \brief Returns a raw pointer to const Type.
     [[nodiscard]] auto get() const noexcept -> Type const*
@@ -44,16 +48,28 @@ struct small_ptr {
     }
 
     /// \brief Returns the compressed underlying integer address.
-    [[nodiscard]] auto compressed_value() const noexcept -> StorageType { return _value; }
+    [[nodiscard]] auto compressed_value() const noexcept -> StorageType
+    {
+        return _value;
+    }
 
     /// \brief Returns a raw pointer to Type.
-    [[nodiscard]] auto operator->() const -> Type* { return get(); }
+    [[nodiscard]] auto operator->() const -> Type*
+    {
+        return get();
+    }
 
     /// \brief Dereference pointer to Type&.
-    [[nodiscard]] auto operator*() -> Type& { return *get(); }
+    [[nodiscard]] auto operator*() -> Type&
+    {
+        return *get();
+    }
 
     /// \brief Dereference pointer to Type const&.
-    [[nodiscard]] auto operator*() const -> Type const& { return *get(); }
+    [[nodiscard]] auto operator*() const -> Type const&
+    {
+        return *get();
+    }
 
     /// \brief Pre increment of pointer.
     [[nodiscard]] auto operator++(int) noexcept -> small_ptr
@@ -94,13 +110,22 @@ struct small_ptr {
     }
 
     /// \brief Returns distance from this to other.
-    [[nodiscard]] auto operator-(small_ptr other) const noexcept -> ptrdiff_t { return get() - other.get(); }
+    [[nodiscard]] auto operator-(small_ptr other) const noexcept -> ptrdiff_t
+    {
+        return get() - other.get();
+    }
 
     /// \brief Implicit conversion to raw pointer to mutable.
-    [[nodiscard]] operator Type*() noexcept { return get(); }
+    [[nodiscard]] operator Type*() noexcept
+    {
+        return get();
+    }
 
     /// \brief Implicit conversion to raw pointer to const.
-    [[nodiscard]] operator Type const*() const noexcept { return get(); }
+    [[nodiscard]] operator Type const*() const noexcept
+    {
+        return get();
+    }
 
 private:
     [[nodiscard]] static auto compress(Type* ptr) -> StorageType

@@ -1,3 +1,6 @@
+# SPDX-License-Identifier: BSL-1.0
+# SPDX-FileCopyrightText: Copyright (C) 2022 Tobias Hienzsch
+
 name: Coverage
 
 on:
@@ -16,7 +19,7 @@ jobs:
     runs-on: ubuntu-24.04
     strategy:
       matrix:
-        cxx: [20, 23]
+        cxx: [23]
       fail-fast: false
     steps:
       - name: Check out code

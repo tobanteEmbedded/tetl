@@ -1,4 +1,5 @@
 // SPDX-License-Identifier: BSL-1.0
+// SPDX-FileCopyrightText: Copyright (C) 2021 Tobias Hienzsch
 
 #ifndef TETL_COROUTINE_COROUTINE_TRAITS_HPP
 #define TETL_COROUTINE_COROUTINE_TRAITS_HPP

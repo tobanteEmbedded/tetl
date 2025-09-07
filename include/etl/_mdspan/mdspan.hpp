@@ -1,4 +1,5 @@
 // SPDX-License-Identifier: BSL-1.0
+// SPDX-FileCopyrightText: Copyright (C) 2019 Tobias Hienzsch
 
 #ifndef TETL_MDSPAN_MDSPAN_HPP
 #define TETL_MDSPAN_MDSPAN_HPP
@@ -34,7 +35,8 @@ template <
     typename ElementType,
     typename Extents,
     typename LayoutPolicy   = layout_right,
-    typename AccessorPolicy = default_accessor<ElementType>>
+    typename AccessorPolicy = default_accessor<ElementType>
+>
 struct mdspan {
     using extents_type     = Extents;
     using layout_type      = LayoutPolicy;
@@ -48,21 +50,32 @@ struct mdspan {
     using data_handle_type = typename accessor_type::data_handle_type;
     using reference        = typename accessor_type::reference;
 
-    [[nodiscard]] static constexpr auto rank() noexcept -> rank_type { return extents_type::rank(); }
+    [[nodiscard]] static constexpr auto rank() noexcept -> rank_type
+    {
+        return extents_type::rank();
+    }
 
-    [[nodiscard]] static constexpr auto rank_dynamic() noexcept -> rank_type { return extents_type::rank_dynamic(); }
+    [[nodiscard]] static constexpr auto rank_dynamic() noexcept -> rank_type
+    {
+        return extents_type::rank_dynamic();
+    }
 
     [[nodiscard]] static constexpr auto static_extent(rank_type r) noexcept -> size_t
     {
         return Extents::static_extent(r);
     }
 
-    [[nodiscard]] constexpr auto extent(rank_type r) const noexcept -> index_type { return extents().extent(r); }
+    [[nodiscard]] constexpr auto extent(rank_type r) const noexcept -> index_type
+    {
+        return extents().extent(r);
+    }
 
     // Constructor (1)
     constexpr mdspan()
-        requires((rank_dynamic() > 0) and is_default_constructible_v<data_handle_type>
-                 and is_default_constructible_v<mapping_type> and is_default_constructible_v<accessor_type>)
+        requires((rank_dynamic() > 0)
+                 and is_default_constructible_v<data_handle_type>
+                 and is_default_constructible_v<mapping_type>
+                 and is_default_constructible_v<accessor_type>)
         : _ptr()
         , _map()
         , _acc()
@@ -74,7 +87,8 @@ struct mdspan {
         requires((is_convertible_v<OtherIndexTypes, index_type> and ...)
                  and (is_nothrow_constructible_v<index_type, OtherIndexTypes> and ...)
                  and ((sizeof...(OtherIndexTypes) == rank()) || (sizeof...(OtherIndexTypes) == rank_dynamic()))
-                 and is_constructible_v<mapping_type, extents_type> and is_default_constructible_v<accessor_type>)
+                 and is_constructible_v<mapping_type, extents_type>
+                 and is_default_constructible_v<accessor_type>)
     explicit constexpr mdspan(data_handle_type ptr, OtherIndexTypes... exts)
         : _ptr(etl::move(ptr))
         , _map(extents_type(static_cast<index_type>(etl::move(exts))...))
@@ -86,7 +100,8 @@ struct mdspan {
         requires(is_convertible_v<OtherIndexType const&, index_type>
                  and is_nothrow_constructible_v<index_type, OtherIndexType const&>
                  and (N == rank() or N == rank_dynamic())
-                 and is_constructible_v<mapping_type, extents_type> and is_default_constructible_v<accessor_type>)
+                 and is_constructible_v<mapping_type, extents_type>
+                 and is_default_constructible_v<accessor_type>)
     explicit(N != rank_dynamic()) constexpr mdspan(data_handle_type p, span<OtherIndexType, N> exts)
         : _ptr(etl::move(p))
         , _map(extents_type(exts))
@@ -99,7 +114,8 @@ struct mdspan {
         requires(is_convertible_v<OtherIndexType const&, index_type>
                  and is_nothrow_constructible_v<index_type, OtherIndexType const&>
                  and (N == rank() or N == rank_dynamic())
-                 and is_constructible_v<mapping_type, extents_type> and is_default_constructible_v<accessor_type>)
+                 and is_constructible_v<mapping_type, extents_type>
+                 and is_default_constructible_v<accessor_type>)
     explicit(N != rank_dynamic()) constexpr mdspan(data_handle_type p, array<OtherIndexType, N> const& exts)
         : _ptr(etl::move(p))
         , _map(extents_type(exts))
@@ -196,25 +212,61 @@ struct mdspan {
         return (*this)[etl::span{indices}];
     }
 
-    [[nodiscard]] constexpr auto data_handle() const noexcept -> data_handle_type const& { return _ptr; }
-    [[nodiscard]] constexpr auto mapping() const noexcept -> mapping_type const& { return _map; }
-    [[nodiscard]] constexpr auto accessor() const noexcept -> accessor_type const& { return _acc; }
+    [[nodiscard]] constexpr auto data_handle() const noexcept -> data_handle_type const&
+    {
+        return _ptr;
+    }
+    [[nodiscard]] constexpr auto mapping() const noexcept -> mapping_type const&
+    {
+        return _map;
+    }
+    [[nodiscard]] constexpr auto accessor() const noexcept -> accessor_type const&
+    {
+        return _acc;
+    }
 
-    [[nodiscard]] constexpr auto extents() const noexcept -> extents_type const& { return _map.extents(); }
-    [[nodiscard]] constexpr auto stride(rank_type r) const -> index_type { return _map.stride(r); }
-    [[nodiscard]] constexpr auto empty() const noexcept -> bool { return size() == size_type{}; }
+    [[nodiscard]] constexpr auto extents() const noexcept -> extents_type const&
+    {
+        return _map.extents();
+    }
+    [[nodiscard]] constexpr auto stride(rank_type r) const -> index_type
+    {
+        return _map.stride(r);
+    }
+    [[nodiscard]] constexpr auto empty() const noexcept -> bool
+    {
+        return size() == size_type{};
+    }
     [[nodiscard]] constexpr auto size() const noexcept -> size_type
     {
         return static_cast<size_type>(extents().fwd_prod_of_extents(rank()));
     }
 
-    [[nodiscard]] constexpr auto is_unique() const -> bool { return _map.is_unique(); }
-    [[nodiscard]] constexpr auto is_exhaustive() const -> bool { return _map.is_exhaustive(); }
-    [[nodiscard]] constexpr auto is_strided() const -> bool { return _map.is_strided(); }
+    [[nodiscard]] constexpr auto is_unique() const -> bool
+    {
+        return _map.is_unique();
+    }
+    [[nodiscard]] constexpr auto is_exhaustive() const -> bool
+    {
+        return _map.is_exhaustive();
+    }
+    [[nodiscard]] constexpr auto is_strided() const -> bool
+    {
+        return _map.is_strided();
+    }
 
-    [[nodiscard]] static constexpr auto is_always_unique() -> bool { return mapping_type::is_always_unique(); }
-    [[nodiscard]] static constexpr auto is_always_exhaustive() -> bool { return mapping_type::is_always_exhaustive(); }
-    [[nodiscard]] static constexpr auto is_always_strided() -> bool { return mapping_type::is_always_strided(); }
+    [[nodiscard]] static constexpr auto is_always_unique() -> bool
+    {
+        return mapping_type::is_always_unique();
+    }
+    [[nodiscard]] static constexpr auto is_always_exhaustive() -> bool
+    {
+        return mapping_type::is_always_exhaustive();
+    }
+    [[nodiscard]] static constexpr auto is_always_strided() -> bool
+    {
+        return mapping_type::is_always_strided();
+    }
 
 private:
     TETL_NO_UNIQUE_ADDRESS data_handle_type _ptr; // NOLINT(modernize-use-default-member-init)
@@ -247,7 +299,8 @@ mdspan(typename AccessorType::data_handle_type const&, MappingType const&, Acces
     typename AccessorType::element_type,
     typename MappingType::extents_type,
     typename MappingType::layout_type,
-    AccessorType>;
+    AccessorType
+>;
 
 template <typename ElementType, typename Extents, typename LayoutPolicy, typename Container>
 struct mdarray;
@@ -257,7 +310,8 @@ mdspan(mdarray<ElementType, Extents, Layout, Container>) -> mdspan<
     typename decltype(declval<mdarray<ElementType, Extents, Layout, Container>>().to_mdspan())::element_type,
     typename decltype(declval<mdarray<ElementType, Extents, Layout, Container>>().to_mdspan())::extens_type,
     typename decltype(declval<mdarray<ElementType, Extents, Layout, Container>>().to_mdspan())::layout_type,
-    typename decltype(declval<mdarray<ElementType, Extents, Layout, Container>>().to_mdspan())::accessor_type>;
+    typename decltype(declval<mdarray<ElementType, Extents, Layout, Container>>().to_mdspan())::accessor_type
+>;
 
 } // namespace etl
 

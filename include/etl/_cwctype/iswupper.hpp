@@ -1,4 +1,5 @@
 // SPDX-License-Identifier: BSL-1.0
+// SPDX-FileCopyrightText: Copyright (C) 2021 Tobias Hienzsch
 
 #ifndef TETL_CWCTYPE_ISWUPPER_HPP
 #define TETL_CWCTYPE_ISWUPPER_HPP
@@ -17,7 +18,10 @@ namespace etl {
 /// https://en.cppreference.com/w/cpp/string/wide/iswupper
 ///
 /// \ingroup cwctype
-[[nodiscard]] constexpr auto iswupper(wint_t ch) noexcept -> int { return static_cast<int>(ch >= L'A' && ch <= L'Z'); }
+[[nodiscard]] constexpr auto iswupper(wint_t ch) noexcept -> int
+{
+    return static_cast<int>(ch >= L'A' && ch <= L'Z');
+}
 
 } // namespace etl
 

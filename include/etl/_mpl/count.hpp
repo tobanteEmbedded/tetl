@@ -1,14 +1,15 @@
 // SPDX-License-Identifier: BSL-1.0
+// SPDX-FileCopyrightText: Copyright (C) 2024 Tobias Hienzsch
 
-#ifndef TETL_META_COUNT_HPP
-#define TETL_META_COUNT_HPP
+#ifndef TETL_MPL_COUNT_HPP
+#define TETL_MPL_COUNT_HPP
 
 #include <etl/_cstddef/size_t.hpp>
-#include <etl/_meta/list.hpp>
+#include <etl/_mpl/list.hpp>
 #include <etl/_type_traits/integral_constant.hpp>
 #include <etl/_type_traits/is_same.hpp>
 
-namespace etl::meta {
+namespace etl::mpl {
 
 template <typename Needle, typename Haystack>
 struct count;
@@ -19,6 +20,6 @@ struct count<Needle, list<Ts...>> : etl::integral_constant<etl::size_t, (etl::is
 template <typename Needle, typename Haystack>
 inline constexpr auto count_v = count<Needle, Haystack>::value;
 
-} // namespace etl::meta
+} // namespace etl::mpl
 
-#endif // TETL_META_COUNT_HPP
+#endif // TETL_MPL_COUNT_HPP

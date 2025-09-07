@@ -1,13 +1,14 @@
 // SPDX-License-Identifier: BSL-1.0
+// SPDX-FileCopyrightText: Copyright (C) 2024 Tobias Hienzsch
 
-#ifndef TETL_META_CONTAINS_HPP
-#define TETL_META_CONTAINS_HPP
+#ifndef TETL_MPL_CONTAINS_HPP
+#define TETL_MPL_CONTAINS_HPP
 
-#include <etl/_meta/list.hpp>
+#include <etl/_mpl/list.hpp>
 #include <etl/_type_traits/bool_constant.hpp>
 #include <etl/_type_traits/is_same.hpp>
 
-namespace etl::meta {
+namespace etl::mpl {
 
 template <typename Needle, typename Haystack>
 struct contains;
@@ -18,6 +19,6 @@ struct contains<Needle, list<Ts...>> : etl::bool_constant<(etl::is_same_v<Needle
 template <typename Needle, typename Haystack>
 inline constexpr auto contains_v = contains<Needle, Haystack>::value;
 
-} // namespace etl::meta
+} // namespace etl::mpl
 
-#endif // TETL_META_CONTAINS_HPP
+#endif // TETL_MPL_CONTAINS_HPP

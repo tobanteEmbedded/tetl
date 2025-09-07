@@ -1,4 +1,5 @@
 // SPDX-License-Identifier: BSL-1.0
+// SPDX-FileCopyrightText: Copyright (C) 2023 Tobias Hienzsch
 
 #ifndef TETL_CHRONO_MONTH_DAY_LAST_HPP
 #define TETL_CHRONO_MONTH_DAY_LAST_HPP
@@ -14,9 +15,15 @@ struct month_day_last {
     {
     }
 
-    [[nodiscard]] constexpr auto month() const noexcept -> chrono::month { return _m; }
+    [[nodiscard]] constexpr auto month() const noexcept -> chrono::month
+    {
+        return _m;
+    }
 
-    [[nodiscard]] constexpr auto ok() const noexcept -> bool { return month().ok(); }
+    [[nodiscard]] constexpr auto ok() const noexcept -> bool
+    {
+        return month().ok();
+    }
 
     friend constexpr auto operator==(month_day_last const& lhs, month_day_last const& rhs) noexcept -> bool
     {

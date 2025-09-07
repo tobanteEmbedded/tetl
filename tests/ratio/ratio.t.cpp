@@ -1,4 +1,5 @@
 // SPDX-License-Identifier: BSL-1.0
+// SPDX-FileCopyrightText: Copyright (C) 2021 Tobias Hienzsch
 
 #include "testing/testing.hpp"
 
@@ -11,7 +12,6 @@ import etl;
 
 static constexpr auto test() -> bool
 {
-
     {
         etl::ratio<1, 1> r{};
         etl::ignore_unused(r);
@@ -168,7 +168,6 @@ static constexpr auto test() -> bool
     }
 
     {
-
         using one_twelfth = etl::ratio<1, 12>;
         using one_half    = etl::ratio<1, 2>;
 
@@ -186,7 +185,6 @@ static constexpr auto test() -> bool
     }
 
     {
-
         using one_twelfth = etl::ratio<1, 12>;
         using one_half    = etl::ratio<1, 2>;
 

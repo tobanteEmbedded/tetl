@@ -1,4 +1,5 @@
 // SPDX-License-Identifier: BSL-1.0
+// SPDX-FileCopyrightText: Copyright (C) 2023 Tobias Hienzsch
 
 #ifndef TETL_MDSPAN_EXTENTS_HPP
 #define TETL_MDSPAN_EXTENTS_HPP
@@ -50,9 +51,15 @@ private:
     }
 
 public:
-    [[nodiscard]] static constexpr auto rank() noexcept -> rank_type { return sizeof...(Extents); }
+    [[nodiscard]] static constexpr auto rank() noexcept -> rank_type
+    {
+        return sizeof...(Extents);
+    }
 
-    [[nodiscard]] static constexpr auto rank_dynamic() noexcept -> rank_type { return _rank_dynamic; }
+    [[nodiscard]] static constexpr auto rank_dynamic() noexcept -> rank_type
+    {
+        return _rank_dynamic;
+    }
 
     [[nodiscard]] static constexpr auto static_extent(rank_type i) noexcept -> etl::size_t
     {
@@ -109,7 +116,8 @@ public:
     template <typename OtherIndexType, etl::size_t N>
         requires(
             is_convertible_v<OtherIndexType const&, IndexType>
-            and is_nothrow_constructible_v<IndexType, OtherIndexType const&> and (N == rank_dynamic() or N == rank())
+            and is_nothrow_constructible_v<IndexType, OtherIndexType const&>
+            and (N == rank_dynamic() or N == rank())
         )
     explicit(N != rank_dynamic()) constexpr extents(span<OtherIndexType, N> ext) noexcept
     {
@@ -121,7 +129,8 @@ public:
     template <typename OtherIndexType, etl::size_t N>
         requires(
             is_convertible_v<OtherIndexType const&, IndexType>
-            and is_nothrow_constructible_v<IndexType, OtherIndexType const&> and (N == rank_dynamic() or N == rank())
+            and is_nothrow_constructible_v<IndexType, OtherIndexType const&>
+            and (N == rank_dynamic() or N == rank())
         )
     explicit(N != rank_dynamic()) constexpr extents(array<OtherIndexType, N> const& e) noexcept
         : extents{span{e}}

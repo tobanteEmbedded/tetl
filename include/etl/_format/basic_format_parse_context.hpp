@@ -1,4 +1,5 @@
 // SPDX-License-Identifier: BSL-1.0
+// SPDX-FileCopyrightText: Copyright (C) 2023 Tobias Hienzsch
 
 #ifndef TETL_FORMAT_BASIC_FORMAT_PARSE_CONTEXT_HPP
 #define TETL_FORMAT_BASIC_FORMAT_PARSE_CONTEXT_HPP
@@ -25,15 +26,30 @@ struct basic_format_parse_context {
     basic_format_parse_context(basic_format_parse_context const& other)                    = delete;
     auto operator=(basic_format_parse_context const& other) -> basic_format_parse_context& = delete;
 
-    [[nodiscard]] constexpr auto begin() const noexcept -> const_iterator { return _begin; }
+    [[nodiscard]] constexpr auto begin() const noexcept -> const_iterator
+    {
+        return _begin;
+    }
 
-    [[nodiscard]] constexpr auto end() const noexcept -> const_iterator { return _end; }
+    [[nodiscard]] constexpr auto end() const noexcept -> const_iterator
+    {
+        return _end;
+    }
 
-    constexpr auto advance_to(const_iterator it) -> void { _begin = it; }
+    constexpr auto advance_to(const_iterator it) -> void
+    {
+        _begin = it;
+    }
 
-    [[nodiscard]] constexpr auto next_arg_id() -> size_t { return static_cast<size_t>(_nextArgId++); }
+    [[nodiscard]] constexpr auto next_arg_id() -> size_t
+    {
+        return static_cast<size_t>(_nextArgId++);
+    }
 
-    constexpr auto check_arg_id(size_t /*id*/) -> void { _nextArgId = -1; }
+    constexpr auto check_arg_id(size_t /*id*/) -> void
+    {
+        _nextArgId = -1;
+    }
 
 private:
     // next_arg_id_  > 0 means automatic

@@ -1,4 +1,5 @@
 // SPDX-License-Identifier: BSL-1.0
+// SPDX-FileCopyrightText: Copyright (C) 2021 Tobias Hienzsch
 
 #include "testing/iterator.hpp"
 #include "testing/testing.hpp"
@@ -22,7 +23,10 @@ static constexpr auto test() -> bool
         {
         }
 
-        constexpr auto operator<(S const& s) const -> bool { return number < s.number; }
+        constexpr auto operator<(S const& s) const -> bool
+        {
+            return number < s.number;
+        }
 
         T number;
         char name;

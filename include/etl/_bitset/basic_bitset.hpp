@@ -1,4 +1,5 @@
 // SPDX-License-Identifier: BSL-1.0
+// SPDX-FileCopyrightText: Copyright (C) 2024 Tobias Hienzsch
 
 #ifndef TETL_BITSET_BASIC_BITSET_HPP
 #define TETL_BITSET_BASIC_BITSET_HPP
@@ -29,9 +30,7 @@ namespace etl {
 /// \ingroup bitset
 template <etl::size_t Bits, etl::unsigned_integral WordType = etl::size_t>
 struct basic_bitset {
-
     struct reference {
-
         constexpr auto operator=(bool x) noexcept -> reference&
         {
             *_word = etl::set_bit(*_word, _offset, x);
@@ -44,9 +43,15 @@ struct basic_bitset {
             return *this;
         }
 
-        [[nodiscard]] constexpr operator bool() const noexcept { return etl::test_bit(*_word, _offset); }
+        [[nodiscard]] constexpr operator bool() const noexcept
+        {
+            return etl::test_bit(*_word, _offset);
+        }
 
-        [[nodiscard]] constexpr auto operator~() const noexcept -> bool { return not static_cast<bool>(*this); }
+        [[nodiscard]] constexpr auto operator~() const noexcept -> bool
+        {
+            return not static_cast<bool>(*this);
+        }
 
         constexpr auto flip() noexcept -> reference&
         {
@@ -82,7 +87,10 @@ struct basic_bitset {
     }
 
     /// Returns the number of bits that the bitset holds.
-    [[nodiscard]] constexpr auto size() const noexcept -> etl::size_t { return Bits; }
+    [[nodiscard]] constexpr auto size() const noexcept -> etl::size_t
+    {
+        return Bits;
+    }
 
     /// Returns true if the bit at position \p pos is set.
     /// \pre `pos < size()`
@@ -115,7 +123,10 @@ struct basic_bitset {
     }
 
     /// Checks if any bits are set to true.
-    [[nodiscard]] constexpr auto any() const noexcept -> bool { return not none(); }
+    [[nodiscard]] constexpr auto any() const noexcept -> bool
+    {
+        return not none();
+    }
 
     /// Checks if none of the bits are set to true.
     [[nodiscard]] constexpr auto none() const noexcept -> bool
@@ -260,7 +271,10 @@ private:
     }();
     static constexpr auto padding_mask_inv = static_cast<WordType>(~padding_mask);
 
-    [[nodiscard]] static constexpr auto word_index(etl::size_t pos) -> etl::size_t { return pos / bits_per_word; }
+    [[nodiscard]] static constexpr auto word_index(etl::size_t pos) -> etl::size_t
+    {
+        return pos / bits_per_word;
+    }
 
     [[nodiscard]] static constexpr auto offset_in_word(etl::size_t pos) -> WordType
     {

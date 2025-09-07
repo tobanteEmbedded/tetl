@@ -1,3 +1,6 @@
+// SPDX-License-Identifier: BSL-1.0
+// SPDX-FileCopyrightText: Copyright (C) 2025 Tobias Hienzsch
+
 export namespace etl {
 
 using etl::add_const;
@@ -222,6 +225,8 @@ using etl::unwrap_reference_t;
 using etl::void_t;
 
 // Non-standard extensions
+using etl::copy_cv;
+using etl::copy_cv_t;
 using etl::index_v;
 using etl::is_builtin_integer;
 using etl::is_builtin_integer_v;

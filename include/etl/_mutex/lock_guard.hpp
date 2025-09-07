@@ -1,4 +1,5 @@
 // SPDX-License-Identifier: BSL-1.0
+// SPDX-FileCopyrightText: Copyright (C) 2019 Tobias Hienzsch
 
 #ifndef TETL_MUTEX_LOCK_GUARD_HPP
 #define TETL_MUTEX_LOCK_GUARD_HPP
@@ -29,7 +30,10 @@ struct lock_guard {
     {
     }
 
-    ~lock_guard() { _mutex.unlock(); }
+    ~lock_guard()
+    {
+        _mutex.unlock();
+    }
 
     lock_guard(lock_guard const&)                    = delete;
     auto operator=(lock_guard const&) -> lock_guard& = delete;

@@ -1,4 +1,5 @@
 // SPDX-License-Identifier: BSL-1.0
+// SPDX-FileCopyrightText: Copyright (C) 2021 Tobias Hienzsch
 
 #ifndef TETL_CWCTYPE_ISWDIGIT_HPP
 #define TETL_CWCTYPE_ISWDIGIT_HPP
@@ -15,7 +16,10 @@ namespace etl {
 /// https://en.cppreference.com/w/cpp/string/wide/iswdigit
 ///
 /// \ingroup cwctype
-[[nodiscard]] constexpr auto iswdigit(wint_t ch) noexcept -> int { return static_cast<int>(ch >= L'0' && ch <= L'9'); }
+[[nodiscard]] constexpr auto iswdigit(wint_t ch) noexcept -> int
+{
+    return static_cast<int>(ch >= L'0' && ch <= L'9');
+}
 } // namespace etl
 
 #endif // TETL_CWCTYPE_ISWDIGIT_HPP

@@ -1,4 +1,5 @@
 // SPDX-License-Identifier: BSL-1.0
+// SPDX-FileCopyrightText: Copyright (C) 2023 Tobias Hienzsch
 
 #ifndef TETL_FORMAT_BASIC_FORMAT_ARG_HPP
 #define TETL_FORMAT_BASIC_FORMAT_ARG_HPP
@@ -19,7 +20,7 @@ struct basic_format_arg;
 namespace detail {
 template <typename Context, typename T>
 [[nodiscard]] constexpr auto make_arg(T&& value) -> basic_format_arg<Context>;
-}
+} // namespace detail
 
 template <typename Context>
 struct basic_format_arg {
@@ -45,7 +46,10 @@ public:
 
     basic_format_arg() noexcept = default;
 
-    explicit operator bool() const noexcept { return holds_alternative<monostate>(value); }
+    explicit operator bool() const noexcept
+    {
+        return holds_alternative<monostate>(value);
+    }
 
     template <typename T>
     explicit basic_format_arg(T&& v) noexcept;

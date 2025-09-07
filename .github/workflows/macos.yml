@@ -1,3 +1,5 @@
+# SPDX-License-Identifier: BSL-1.0
+# SPDX-FileCopyrightText: Copyright (C) 2021 Tobias Hienzsch
 name: macOS
 
 on:
@@ -16,9 +18,7 @@ jobs:
     strategy:
       matrix:
         config: [
-            { image: "macos-13", cxx: 20, arch: "x64", werror: "ON" },
             { image: "macos-13", cxx: 23, arch: "x64", werror: "OFF" }, # -Wpre-c++2b-compat causes issues
-            { image: "macos-15", cxx: 20, arch: "ARM64", werror: "ON" },
             { image: "macos-15", cxx: 23, arch: "ARM64", werror: "OFF" }, # -Wpre-c++2b-compat causes issues
           ]
       fail-fast: false

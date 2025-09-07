@@ -1,4 +1,5 @@
 // SPDX-License-Identifier: BSL-1.0
+// SPDX-FileCopyrightText: Copyright (C) 2021 Tobias Hienzsch
 
 #include "testing/testing.hpp"
 
@@ -18,7 +19,10 @@ struct Class {
     {
     }
 
-    [[nodiscard]] constexpr auto get_num(T i) const -> T { return num + i; }
+    [[nodiscard]] constexpr auto get_num(T i) const -> T
+    {
+        return num + i;
+    }
 
     T num;
 };

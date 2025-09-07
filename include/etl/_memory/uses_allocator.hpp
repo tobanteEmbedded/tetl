@@ -1,4 +1,5 @@
 // SPDX-License-Identifier: BSL-1.0
+// SPDX-FileCopyrightText: Copyright (C) 2019 Tobias Hienzsch
 
 #ifndef TETL_MEMORY_USES_ALLOCATOR_HPP
 #define TETL_MEMORY_USES_ALLOCATOR_HPP

@@ -1,4 +1,5 @@
 // SPDX-License-Identifier: BSL-1.0
+// SPDX-FileCopyrightText: Copyright (C) 2019 Tobias Hienzsch
 
 #ifndef TETL_NET_BUFFER_CONST_HPP
 #define TETL_NET_BUFFER_CONST_HPP
@@ -21,10 +22,16 @@ struct const_buffer {
     }
 
     /// \brief Get a pointer to the beginning of the memory range.
-    [[nodiscard]] auto data() const noexcept -> void const* { return _data; }
+    [[nodiscard]] auto data() const noexcept -> void const*
+    {
+        return _data;
+    }
 
     /// \brief Get the size of the memory range.
-    [[nodiscard]] auto size() const noexcept -> etl::size_t { return _size; }
+    [[nodiscard]] auto size() const noexcept -> etl::size_t
+    {
+        return _size;
+    }
 
     /// \brief Move the start of the buffer by the specified number of bytes.
     auto operator+=(etl::size_t n) noexcept -> const_buffer&
@@ -54,7 +61,10 @@ inline auto operator+(const_buffer const& b, etl::size_t const n) noexcept -> co
 /// \brief Create a new modifiable buffer that is offset from the start of
 /// another.
 /// \relates const_buffer
-inline auto operator+(etl::size_t const n, const_buffer const& b) noexcept -> const_buffer { return b + n; }
+inline auto operator+(etl::size_t const n, const_buffer const& b) noexcept -> const_buffer
+{
+    return b + n;
+}
 
 } // namespace etl::experimental::net
 

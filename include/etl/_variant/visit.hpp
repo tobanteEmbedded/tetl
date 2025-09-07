@@ -1,4 +1,5 @@
 // SPDX-License-Identifier: BSL-1.0
+// SPDX-FileCopyrightText: Copyright (C) 2021 Tobias Hienzsch
 
 #ifndef TETL_VARIANT_VISIT_HPP
 #define TETL_VARIANT_VISIT_HPP
@@ -55,7 +56,10 @@ template <size_t I, size_t... Is>
     return {};
 }
 
-[[nodiscard]] consteval auto next_seq(index_sequence<> /*i*/, index_sequence<> /*j*/) -> index_sequence<> { return {}; }
+[[nodiscard]] consteval auto next_seq(index_sequence<> /*i*/, index_sequence<> /*j*/) -> index_sequence<>
+{
+    return {};
+}
 
 template <size_t I, size_t... Is, size_t J, size_t... Js>
 consteval auto next_seq(index_sequence<I, Is...> /*i*/, index_sequence<J, Js...> /*j*/)
@@ -107,9 +111,15 @@ struct indexed_value {
     {
     }
 
-    [[nodiscard]] constexpr auto value() const& -> auto& { return _value; }
+    [[nodiscard]] constexpr auto value() const& -> auto&
+    {
+        return _value;
+    }
 
-    [[nodiscard]] constexpr auto value() && -> auto&& { return etl::forward<T>(_value); }
+    [[nodiscard]] constexpr auto value() && -> auto&&
+    {
+        return etl::forward<T>(_value);
+    }
 
 private:
     T _value;

@@ -1,4 +1,5 @@
 // SPDX-License-Identifier: BSL-1.0
+// SPDX-FileCopyrightText: Copyright (C) 2024 Tobias Hienzsch
 
 #include "testing/testing.hpp"
 
@@ -21,8 +22,23 @@ struct Error {
 
     int value{0};
 
-    friend constexpr auto operator==(Error ec, int v) { return ec.value == v; }
+    friend constexpr auto operator==(Error ec, int v)
+    {
+        return ec.value == v;
+    }
 };
+struct MoveOnlyType {
+    constexpr MoveOnlyType() = default;
+
+    constexpr MoveOnlyType(MoveOnlyType const& e)                    = delete;
+    constexpr auto operator=(MoveOnlyType const& e) -> MoveOnlyType& = delete;
+
+    constexpr MoveOnlyType(MoveOnlyType&& e)                    = default;
+    constexpr auto operator=(MoveOnlyType&& e) -> MoveOnlyType& = default;
+
+    constexpr ~MoveOnlyType() = default;
+};
+
 } // namespace
 
 template <typename T, typename E>
@@ -30,8 +46,19 @@ static constexpr auto test() -> bool
 {
     using expected_t = etl::expected<T, E>;
 
+    CHECK(etl::is_trivially_copy_constructible_v<T>);
+    CHECK(etl::is_trivially_copy_constructible_v<E>);
+
     CHECK(etl::is_default_constructible_v<expected_t>);
     CHECK(etl::is_nothrow_default_constructible_v<expected_t>);
+    CHECK(etl::is_copy_constructible_v<expected_t>);
+    CHECK(etl::is_trivially_copy_constructible_v<expected_t>);
+    CHECK(etl::is_nothrow_copy_constructible_v<expected_t>);
+    CHECK(etl::is_trivially_move_constructible_v<expected_t>);
+    CHECK(etl::is_nothrow_move_constructible_v<expected_t>);
+
+    CHECK(etl::constructible_from<expected_t, etl::in_place_t, T>);
+    CHECK(etl::constructible_from<expected_t, expected_t const&>);
 
     CHECK_SAME_TYPE(typename expected_t::value_type, T);
     CHECK_SAME_TYPE(typename expected_t::error_type, E);
@@ -108,6 +135,22 @@ static constexpr auto test_all() -> bool
     CHECK(test<unsigned int, Error>());
     CHECK(test<unsigned long, Error>());
     CHECK(test<unsigned long long, Error>());
+
+    CHECK(etl::is_move_constructible_v<MoveOnlyType>);
+    CHECK_FALSE(etl::is_copy_constructible_v<MoveOnlyType>);
+    CHECK_FALSE(etl::is_copy_constructible_v<etl::expected<int, MoveOnlyType>>);
+    CHECK_FALSE(etl::is_copy_constructible_v<etl::expected<MoveOnlyType, int>>);
+    CHECK_FALSE(etl::is_copy_constructible_v<etl::expected<MoveOnlyType, MoveOnlyType>>);
+
+    CHECK(etl::is_copy_constructible_v<etl::expected<int, int>>);
+    CHECK(etl::is_trivially_copy_constructible_v<etl::expected<int, char const*>>);
+
+    CHECK(etl::is_trivially_copy_constructible_v<Error>);
+    CHECK(etl::is_trivially_copy_constructible_v<etl::expected<int, Error>>);
+
+    CHECK(etl::constructible_from<etl::expected<int, MoveOnlyType>, etl::in_place_t, int>);
+    CHECK(etl::constructible_from<etl::expected<int, MoveOnlyType>, etl::expected<int, MoveOnlyType>&&>);
+    CHECK_FALSE(etl::constructible_from<etl::expected<int, MoveOnlyType>, etl::expected<int, MoveOnlyType> const&>);
 
     return true;
 }

@@ -1,4 +1,5 @@
 // SPDX-License-Identifier: BSL-1.0
+// SPDX-FileCopyrightText: Copyright (C) 2021 Tobias Hienzsch
 
 #ifndef TETL_CMATH_ERF_HPP
 #define TETL_CMATH_ERF_HPP
@@ -13,12 +14,30 @@ namespace etl {
 
 /// Computes the error function of arg.
 /// \details https://en.cppreference.com/w/cpp/numeric/math/erf
-[[nodiscard]] constexpr auto erf(float arg) noexcept -> float { return etl::detail::gcem::erf(arg); }
-[[nodiscard]] constexpr auto erff(float arg) noexcept -> float { return etl::detail::gcem::erf(arg); }
-[[nodiscard]] constexpr auto erf(double arg) noexcept -> double { return etl::detail::gcem::erf(arg); }
-[[nodiscard]] constexpr auto erf(long double arg) noexcept -> long double { return etl::detail::gcem::erf(arg); }
-[[nodiscard]] constexpr auto erfl(long double arg) noexcept -> long double { return etl::detail::gcem::erf(arg); }
-[[nodiscard]] constexpr auto erf(integral auto arg) noexcept -> double { return etl::detail::gcem::erf(double(arg)); }
+[[nodiscard]] constexpr auto erf(float arg) noexcept -> float
+{
+    return etl::detail::gcem::erf(arg);
+}
+[[nodiscard]] constexpr auto erff(float arg) noexcept -> float
+{
+    return etl::detail::gcem::erf(arg);
+}
+[[nodiscard]] constexpr auto erf(double arg) noexcept -> double
+{
+    return etl::detail::gcem::erf(arg);
+}
+[[nodiscard]] constexpr auto erf(long double arg) noexcept -> long double
+{
+    return etl::detail::gcem::erf(arg);
+}
+[[nodiscard]] constexpr auto erfl(long double arg) noexcept -> long double
+{
+    return etl::detail::gcem::erf(arg);
+}
+[[nodiscard]] constexpr auto erf(integral auto arg) noexcept -> double
+{
+    return etl::detail::gcem::erf(double(arg));
+}
 
 /// @}
 

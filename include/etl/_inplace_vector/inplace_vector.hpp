@@ -1,4 +1,5 @@
 // SPDX-License-Identifier: BSL-1.0
+// SPDX-FileCopyrightText: Copyright (C) 2024 Tobias Hienzsch
 
 #ifndef TETL_INPLACE_VECTOR_INPLACE_VECTOR_HPP
 #define TETL_INPLACE_VECTOR_INPLACE_VECTOR_HPP
@@ -73,11 +74,20 @@ struct TETL_TRIVIAL_ABI inplace_vector {
         requires etl::is_trivially_destructible_v<T>
     = default;
 
-    constexpr ~inplace_vector() { etl::ranges::destroy(*this); }
+    constexpr ~inplace_vector()
+    {
+        etl::ranges::destroy(*this);
+    }
 
-    [[nodiscard]] constexpr auto begin() const noexcept -> T const* { return data(); }
+    [[nodiscard]] constexpr auto begin() const noexcept -> T const*
+    {
+        return data();
+    }
 
-    [[nodiscard]] constexpr auto begin() noexcept -> T* { return data(); }
+    [[nodiscard]] constexpr auto begin() noexcept -> T*
+    {
+        return data();
+    }
 
     [[nodiscard]] constexpr auto end() const noexcept -> T const*
     {
@@ -89,17 +99,35 @@ struct TETL_TRIVIAL_ABI inplace_vector {
         return etl::next(begin(), static_cast<etl::ptrdiff_t>(size()));
     }
 
-    [[nodiscard]] constexpr auto data() const noexcept -> T const* { return _storage.data(); }
+    [[nodiscard]] constexpr auto data() const noexcept -> T const*
+    {
+        return _storage.data();
+    }
 
-    [[nodiscard]] constexpr auto data() noexcept -> T* { return _storage.data(); }
+    [[nodiscard]] constexpr auto data() noexcept -> T*
+    {
+        return _storage.data();
+    }
 
-    [[nodiscard]] constexpr auto empty() const noexcept -> bool { return size() == 0; }
+    [[nodiscard]] constexpr auto empty() const noexcept -> bool
+    {
+        return size() == 0;
+    }
 
-    [[nodiscard]] constexpr auto size() const noexcept -> etl::size_t { return static_cast<etl::size_t>(_size); }
+    [[nodiscard]] constexpr auto size() const noexcept -> etl::size_t
+    {
+        return static_cast<etl::size_t>(_size);
+    }
 
-    [[nodiscard]] static constexpr auto capacity() noexcept -> etl::size_t { return Capacity; }
+    [[nodiscard]] static constexpr auto capacity() noexcept -> etl::size_t
+    {
+        return Capacity;
+    }
 
-    [[nodiscard]] static constexpr auto max_size() noexcept -> etl::size_t { return Capacity; }
+    [[nodiscard]] static constexpr auto max_size() noexcept -> etl::size_t
+    {
+        return Capacity;
+    }
 
     [[nodiscard]] constexpr auto front() -> reference
     {
@@ -230,41 +258,95 @@ struct inplace_vector<T, 0> {
 
     constexpr inplace_vector() = default;
 
-    [[nodiscard]] constexpr auto begin() const noexcept -> T const* { return data(); }
+    [[nodiscard]] constexpr auto begin() const noexcept -> T const*
+    {
+        return data();
+    }
 
-    [[nodiscard]] constexpr auto begin() noexcept -> T* { return data(); }
+    [[nodiscard]] constexpr auto begin() noexcept -> T*
+    {
+        return data();
+    }
 
-    [[nodiscard]] constexpr auto end() const noexcept -> T const* { return nullptr; }
+    [[nodiscard]] constexpr auto end() const noexcept -> T const*
+    {
+        return nullptr;
+    }
 
-    [[nodiscard]] constexpr auto end() noexcept -> T* { return nullptr; }
+    [[nodiscard]] constexpr auto end() noexcept -> T*
+    {
+        return nullptr;
+    }
 
-    [[nodiscard]] constexpr auto data() const noexcept -> T const* { return nullptr; }
+    [[nodiscard]] constexpr auto data() const noexcept -> T const*
+    {
+        return nullptr;
+    }
 
-    [[nodiscard]] constexpr auto data() noexcept -> T* { return nullptr; }
+    [[nodiscard]] constexpr auto data() noexcept -> T*
+    {
+        return nullptr;
+    }
 
-    [[nodiscard]] constexpr auto empty() const noexcept -> bool { return size() == 0; }
+    [[nodiscard]] constexpr auto empty() const noexcept -> bool
+    {
+        return size() == 0;
+    }
 
-    [[nodiscard]] constexpr auto size() const noexcept -> etl::size_t { return 0; }
+    [[nodiscard]] constexpr auto size() const noexcept -> etl::size_t
+    {
+        return 0;
+    }
 
-    [[nodiscard]] static constexpr auto capacity() noexcept -> etl::size_t { return 0; }
+    [[nodiscard]] static constexpr auto capacity() noexcept -> etl::size_t
+    {
+        return 0;
+    }
 
-    [[nodiscard]] static constexpr auto max_size() noexcept -> etl::size_t { return 0; }
+    [[nodiscard]] static constexpr auto max_size() noexcept -> etl::size_t
+    {
+        return 0;
+    }
 
-    [[nodiscard]] constexpr auto front() -> reference { etl::unreachable(); }
+    [[nodiscard]] constexpr auto front() -> reference
+    {
+        etl::unreachable();
+    }
 
-    [[nodiscard]] constexpr auto front() const -> const_reference { etl::unreachable(); }
+    [[nodiscard]] constexpr auto front() const -> const_reference
+    {
+        etl::unreachable();
+    }
 
-    [[nodiscard]] constexpr auto back() -> reference { etl::unreachable(); }
+    [[nodiscard]] constexpr auto back() -> reference
+    {
+        etl::unreachable();
+    }
 
-    [[nodiscard]] constexpr auto back() const -> const_reference { etl::unreachable(); }
+    [[nodiscard]] constexpr auto back() const -> const_reference
+    {
+        etl::unreachable();
+    }
 
-    [[nodiscard]] constexpr auto operator[](size_type /*n*/) -> reference { etl::unreachable(); }
+    [[nodiscard]] constexpr auto operator[](size_type /*n*/) -> reference
+    {
+        etl::unreachable();
+    }
 
-    [[nodiscard]] constexpr auto operator[](size_type /*n*/) const -> const_reference { etl::unreachable(); }
+    [[nodiscard]] constexpr auto operator[](size_type /*n*/) const -> const_reference
+    {
+        etl::unreachable();
+    }
 
-    constexpr auto try_push_back(T const& /*val*/) -> T* { return nullptr; }
+    constexpr auto try_push_back(T const& /*val*/) -> T*
+    {
+        return nullptr;
+    }
 
-    constexpr auto try_push_back(T&& /*val*/) -> T* { return nullptr; }
+    constexpr auto try_push_back(T&& /*val*/) -> T*
+    {
+        return nullptr;
+    }
 
     template <typename... Args>
     constexpr auto try_emplace_back(Args&&... /*args*/) -> T*
@@ -272,9 +354,15 @@ struct inplace_vector<T, 0> {
         return nullptr;
     }
 
-    constexpr auto unchecked_push_back(T const& /*val*/) -> T& { etl::unreachable(); }
+    constexpr auto unchecked_push_back(T const& /*val*/) -> T&
+    {
+        etl::unreachable();
+    }
 
-    constexpr auto unchecked_push_back(T&& /*val*/) -> T& { etl::unreachable(); }
+    constexpr auto unchecked_push_back(T&& /*val*/) -> T&
+    {
+        etl::unreachable();
+    }
 
     template <typename... Args>
     constexpr auto unchecked_emplace_back(Args&&... /*args*/) -> T&
@@ -282,7 +370,10 @@ struct inplace_vector<T, 0> {
         etl::unreachable();
     }
 
-    constexpr auto pop_back() -> void { etl::unreachable(); }
+    constexpr auto pop_back() -> void
+    {
+        etl::unreachable();
+    }
 
     constexpr auto clear() noexcept -> void { }
 };

@@ -1,4 +1,5 @@
 // SPDX-License-Identifier: BSL-1.0
+// SPDX-FileCopyrightText: Copyright (C) 2021 Tobias Hienzsch
 
 #ifndef TETL_CMATH_LOG_HPP
 #define TETL_CMATH_LOG_HPP
@@ -41,12 +42,30 @@ inline constexpr struct log {
 
 /// Computes the natural (base e) logarithm of arg.
 /// \details https://en.cppreference.com/w/cpp/numeric/math/log
-[[nodiscard]] constexpr auto log(float v) noexcept -> float { return etl::detail::log(v); }
-[[nodiscard]] constexpr auto logf(float v) noexcept -> float { return etl::detail::log(v); }
-[[nodiscard]] constexpr auto log(double v) noexcept -> double { return etl::detail::log(v); }
-[[nodiscard]] constexpr auto log(long double v) noexcept -> long double { return etl::detail::log(v); }
-[[nodiscard]] constexpr auto logl(long double v) noexcept -> long double { return etl::detail::log(v); }
-[[nodiscard]] constexpr auto log(integral auto arg) noexcept -> double { return etl::detail::log(double(arg)); }
+[[nodiscard]] constexpr auto log(float v) noexcept -> float
+{
+    return etl::detail::log(v);
+}
+[[nodiscard]] constexpr auto logf(float v) noexcept -> float
+{
+    return etl::detail::log(v);
+}
+[[nodiscard]] constexpr auto log(double v) noexcept -> double
+{
+    return etl::detail::log(v);
+}
+[[nodiscard]] constexpr auto log(long double v) noexcept -> long double
+{
+    return etl::detail::log(v);
+}
+[[nodiscard]] constexpr auto logl(long double v) noexcept -> long double
+{
+    return etl::detail::log(v);
+}
+[[nodiscard]] constexpr auto log(integral auto arg) noexcept -> double
+{
+    return etl::detail::log(double(arg));
+}
 
 /// @}
 

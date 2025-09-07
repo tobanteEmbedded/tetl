@@ -1,4 +1,5 @@
 // SPDX-License-Identifier: BSL-1.0
+// SPDX-FileCopyrightText: Copyright (C) 2020 Tobias Hienzsch
 #ifndef TETL_SCOPE_SCOPE_GUARD_HPP
 #define TETL_SCOPE_SCOPE_GUARD_HPP
 
@@ -29,7 +30,10 @@ public:
         }
     }
 
-    constexpr auto release() noexcept -> void { _policy.release(); }
+    constexpr auto release() noexcept -> void
+    {
+        _policy.release();
+    }
 
     scope_guard(scope_guard const&)                    = delete;
     auto operator=(scope_guard const&) -> scope_guard& = delete;
@@ -49,9 +53,15 @@ struct scope_exit_impl {
         rhs.release();
     }
 
-    constexpr auto release() noexcept -> void { should_execute = false; }
+    constexpr auto release() noexcept -> void
+    {
+        should_execute = false;
+    }
 
-    explicit constexpr operator bool() const noexcept { return should_execute; }
+    explicit constexpr operator bool() const noexcept
+    {
+        return should_execute;
+    }
 
     bool should_execute = true;
 };

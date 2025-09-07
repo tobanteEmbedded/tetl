@@ -1,4 +1,5 @@
 // SPDX-License-Identifier: BSL-1.0
+// SPDX-FileCopyrightText: Copyright (C) 2021 Tobias Hienzsch
 
 #ifndef TETL_MEMORY_POINTER_INT_PAIR_HPP
 #define TETL_MEMORY_POINTER_INT_PAIR_HPP
@@ -29,7 +30,8 @@ template <
     unsigned IntBits,
     typename IntType   = unsigned,
     typename PtrTraits = pointer_like_traits<PointerT>,
-    typename Info      = pointer_int_pair_info<PointerT, IntBits, PtrTraits>>
+    typename Info      = pointer_int_pair_info<PointerT, IntBits, PtrTraits>
+>
 struct pointer_int_pair {
     using pointer_type             = PointerT;
     using pointer_traits           = PtrTraits;
@@ -39,17 +41,35 @@ struct pointer_int_pair {
 
     constexpr pointer_int_pair() = default;
 
-    pointer_int_pair(pointer_type pointerValue, int_type intValue) { set_ptr_and_int(pointerValue, intValue); }
+    pointer_int_pair(pointer_type pointerValue, int_type intValue)
+    {
+        set_ptr_and_int(pointerValue, intValue);
+    }
 
-    explicit pointer_int_pair(pointer_type pointerValue) { init_with_ptr(pointerValue); }
+    explicit pointer_int_pair(pointer_type pointerValue)
+    {
+        init_with_ptr(pointerValue);
+    }
 
-    void set_pointer(pointer_type pointerValue) { _value = pointer_info::update_ptr(_value, pointerValue); }
+    void set_pointer(pointer_type pointerValue)
+    {
+        _value = pointer_info::update_ptr(_value, pointerValue);
+    }
 
-    void set_int(int_type intValue) { _value = pointer_info::update_int(_value, static_cast<intptr_t>(intValue)); }
+    void set_int(int_type intValue)
+    {
+        _value = pointer_info::update_int(_value, static_cast<intptr_t>(intValue));
+    }
 
-    [[nodiscard]] auto get_pointer() const -> pointer_type { return pointer_info::get_pointer(_value); }
+    [[nodiscard]] auto get_pointer() const -> pointer_type
+    {
+        return pointer_info::get_pointer(_value);
+    }
 
-    [[nodiscard]] auto get_int() const -> int_type { return static_cast<int_type>(pointer_info::get_int(_value)); }
+    [[nodiscard]] auto get_int() const -> int_type
+    {
+        return static_cast<int_type>(pointer_info::get_int(_value));
+    }
 
     void set_ptr_and_int(pointer_type pointerValue, int_type intValue)
     {
@@ -61,11 +81,20 @@ struct pointer_int_pair {
         return const_cast<pointer_int_pair*>(this)->get_addr_of_pointer();
     }
 
-    auto get_addr_of_pointer() -> pointer_type* { return bit_cast<pointer_type*>(&_value); }
+    auto get_addr_of_pointer() -> pointer_type*
+    {
+        return bit_cast<pointer_type*>(&_value);
+    }
 
-    [[nodiscard]] auto get_opaque_value() const -> void* { return bit_cast<void*>(_value); }
+    [[nodiscard]] auto get_opaque_value() const -> void*
+    {
+        return bit_cast<void*>(_value);
+    }
 
-    void set_from_opaque_value(void* val) { _value = bit_cast<intptr_t>(val); }
+    void set_from_opaque_value(void* val)
+    {
+        _value = bit_cast<intptr_t>(val);
+    }
 
     static auto get_from_opaque_value(void* v) -> pointer_int_pair
     {
@@ -113,7 +142,10 @@ struct pointer_int_pair {
     }
 
 private:
-    auto init_with_ptr(pointer_type pointerValue) -> void { _value = pointer_info::update_ptr(0, pointerValue); }
+    auto init_with_ptr(pointer_type pointerValue) -> void
+    {
+        _value = pointer_info::update_ptr(0, pointerValue);
+    }
 
     intptr_t _value = 0;
 };

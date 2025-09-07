@@ -1,4 +1,5 @@
 // SPDX-License-Identifier: BSL-1.0
+// SPDX-FileCopyrightText: Copyright (C) 2019 Tobias Hienzsch
 
 #ifndef TETL_FUNCTIONAL_HPP
 #define TETL_FUNCTIONAL_HPP
@@ -40,6 +41,7 @@
 #include <etl/_type_traits/unwrap_reference.hpp>
 
 // Non-standard extensions
+#include <etl/_functional/fnv1a.hpp>
 #include <etl/_functional/function_ref.hpp>
 #include <etl/_functional/inplace_function.hpp>
 #include <etl/_functional/is_transparent.hpp>

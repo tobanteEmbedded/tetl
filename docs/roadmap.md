@@ -1,3 +1,6 @@
+<!-- SPDX-License-Identifier: BSL-1.0 -->
+<!-- SPDX-FileCopyrightText: Copyright (C) 2024 Tobias Hienzsch -->
+
 # Roadmap
 
 ## Features
@@ -29,5 +32,5 @@ auto v = etl::get<2>(etl::array<int, 2>{}); // expected-note {{in instantiation 
 ```
 
 ```sh
-clang -Xclang -verify -c -std=c++20 -Iinclude test.cpp
+clang -Xclang -verify -c -std=c++23 -Iinclude test.cpp
 ```
