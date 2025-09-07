@@ -34,7 +34,8 @@ struct nop_overflow_checker {
 template <integral Int>
 struct unsigned_overflow_checker {
     explicit constexpr unsigned_overflow_checker(Int base) noexcept
-        : _base{base}
+        : _maxDivBase{static_cast<Int>(numeric_limits<Int>::max() / base)}
+        , _maxModBase{static_cast<Int>(numeric_limits<Int>::max() % base)}
     {
     }
 
@@ -44,15 +45,15 @@ struct unsigned_overflow_checker {
     }
 
 private:
-    Int _base;
-    Int _maxDivBase{static_cast<Int>(numeric_limits<Int>::max() / _base)};
-    Int _maxModBase{static_cast<Int>(numeric_limits<Int>::max() % _base)};
+    Int _maxDivBase;
+    Int _maxModBase;
 };
 
 template <integral Int>
 struct signed_overflow_checker {
     explicit constexpr signed_overflow_checker(Int base) noexcept
-        : _base{base}
+        : _minDivBase{static_cast<Int>(numeric_limits<Int>::min() / base)}
+        , _minModBase{abs(static_cast<Int>(numeric_limits<Int>::min() % base))}
     {
     }
 
@@ -62,9 +63,8 @@ struct signed_overflow_checker {
     }
 
 private:
-    Int _base;
-    Int _minDivBase{static_cast<Int>(numeric_limits<Int>::min() / _base)};
-    Int _minModBase{abs(static_cast<Int>(numeric_limits<Int>::min() % _base))};
+    Int _minDivBase;
+    Int _minModBase;
 };
 
 template <integral Int, bool Check>
