@@ -19,7 +19,7 @@ struct fnv1a {
     auto operator()(void const* data, etl::size_t len) noexcept -> void
     {
         auto const* p = static_cast<etl::uint8_t const*>(data);
-        TETL_NO_UNROLL while (len--)
+        TETL_NO_UNROLL while ((len--) != 0u)
         {
             _h ^= static_cast<UInt>(*p++);
             _h *= Prime;
