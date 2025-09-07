@@ -20,7 +20,7 @@ struct uint128 {
     }
 
     constexpr uint128(uint64_t high, uint64_t low) noexcept
-#if __BYTE_ORDER__ == __ORDER_LITTLE_ENDIAN__
+#if defined(_MSC_VER) || (__BYTE_ORDER__ == __ORDER_LITTLE_ENDIAN__)
         : _low{low}
         , _high{high}
 #else
@@ -113,7 +113,7 @@ private:
         return with_carry{.val = sum, .carry = static_cast<uint64_t>(sum < a)};
     }
 
-#if __BYTE_ORDER__ == __ORDER_LITTLE_ENDIAN__
+#if defined(_MSC_VER) || (__BYTE_ORDER__ == __ORDER_LITTLE_ENDIAN__)
     uint64_t _low{0};
     uint64_t _high{0};
 #else
