@@ -142,6 +142,6 @@ struct numeric_limits<uint128> {
     }
 };
 
-}; // namespace etl
+} // namespace etl
 
 #endif // TETL_CSTDINT_UINT128_HPP
