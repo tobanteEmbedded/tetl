@@ -21,4 +21,7 @@
 #include <etl/_cstdint/uintmax_t.hpp>
 #include <etl/_cstdint/uintptr_t.hpp>
 
+// Non-standard extensions
+#include <etl/_cstdint/uint128.hpp>
+
 #endif // TETL_CSTDINT_HPP
