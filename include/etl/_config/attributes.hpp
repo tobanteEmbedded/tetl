@@ -48,4 +48,14 @@
     #define TETL_TRIVIAL_ABI
 #endif
 
+#if defined(__clang__)
+    #define TETL_NO_UNROLL _Pragma("nounroll")
+#elif defined(__GNUC__)
+    // TODO: _Pragma("GCC unroll 0") should work, but causes 'error: ignoring loop annotation'
+    // when used in class templates
+    #define TETL_NO_UNROLL /*_Pragma("GCC unroll 0")*/
+#else
+    #define TETL_NO_UNROLL
+#endif
+
 #endif // TETL_CONFIG_ATTRIBUTES_HPP

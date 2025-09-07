@@ -73,6 +73,9 @@ using etl::placeholders::_32;
 // clang-format on
 
 // Non-standard extensions
+using etl::fnv1a;
+using etl::fnv1a32;
+using etl::fnv1a64;
 using etl::function_ref;
 using etl::inplace_function;
 
