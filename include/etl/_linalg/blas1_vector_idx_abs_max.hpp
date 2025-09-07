@@ -5,7 +5,7 @@
 #define TETL_LINALG_BLAS1_VECTOR_IDX_ABS_MAX_HPP
 
 #include <etl/_limits/numeric_limits.hpp>
-#include <etl/_linalg/concepts.hpp>
+#include <etl/_linalg/exposition.hpp>
 #include <etl/_type_traits/is_arithmetic.hpp>
 #include <etl/_utility/cmp_less.hpp>
 

@@ -4,7 +4,7 @@
 #ifndef TETL_LINALG_BLAS1_SCALE_HPP
 #define TETL_LINALG_BLAS1_SCALE_HPP
 
-#include <etl/_linalg/concepts.hpp>
+#include <etl/_linalg/exposition.hpp>
 #include <etl/_utility/cmp_less.hpp>
 
 namespace etl::linalg {

@@ -5,7 +5,7 @@
 #define TETL_LINALG_BLAS1_SCALED_HPP
 
 #include <etl/_linalg/accessor_scaled.hpp>
-#include <etl/_linalg/concepts.hpp>
+#include <etl/_linalg/exposition.hpp>
 
 namespace etl::linalg {
 

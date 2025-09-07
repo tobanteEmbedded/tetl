@@ -5,7 +5,7 @@
 #define TETL_LINALG_CONJUGATED_SCALAR_HPP
 
 #include <etl/_concepts/same_as.hpp>
-#include <etl/_linalg/concepts.hpp>
+#include <etl/_linalg/exposition.hpp>
 #include <etl/_linalg/proxy_reference.hpp>
 #include <etl/_type_traits/declval.hpp>
 

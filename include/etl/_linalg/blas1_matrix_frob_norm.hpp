@@ -5,7 +5,7 @@
 #define TETL_LINALG_BLAS1_MATRIX_FROB_NORM_HPP
 
 #include <etl/_cmath/sqrt.hpp>
-#include <etl/_linalg/concepts.hpp>
+#include <etl/_linalg/exposition.hpp>
 #include <etl/_type_traits/declval.hpp>
 #include <etl/_utility/cmp_less.hpp>
 

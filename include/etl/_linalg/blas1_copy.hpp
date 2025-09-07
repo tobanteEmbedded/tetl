@@ -5,7 +5,7 @@
 #define TETL_LINALG_BLAS1_COPY_HPP
 
 #include <etl/_contracts/check.hpp>
-#include <etl/_linalg/concepts.hpp>
+#include <etl/_linalg/exposition.hpp>
 #include <etl/_utility/cmp_less.hpp>
 
 namespace etl::linalg {

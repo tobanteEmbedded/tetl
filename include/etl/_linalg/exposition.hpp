@@ -1,8 +1,8 @@
 // SPDX-License-Identifier: BSL-1.0
 // SPDX-FileCopyrightText: Copyright (C) 2023 Tobias Hienzsch
 
-#ifndef TETL_LINALG_CONCEPTS_HPP
-#define TETL_LINALG_CONCEPTS_HPP
+#ifndef TETL_LINALG_EXPOSITION_HPP
+#define TETL_LINALG_EXPOSITION_HPP
 
 #include <etl/_complex/abs.hpp>
 #include <etl/_complex/complex.hpp>
@@ -182,4 +182,4 @@ concept inout_object = detail::is_mdspan<T>::value
 
 } // namespace etl::linalg
 
-#endif // TETL_LINALG_CONCEPTS_HPP
+#endif // TETL_LINALG_EXPOSITION_HPP
