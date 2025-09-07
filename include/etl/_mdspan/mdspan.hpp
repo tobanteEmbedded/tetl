@@ -12,6 +12,7 @@
 #include <etl/_mdspan/layout_left.hpp>
 #include <etl/_mdspan/layout_right.hpp>
 #include <etl/_span/span.hpp>
+#include <etl/_type_traits/bool_constant.hpp>
 #include <etl/_type_traits/extent.hpp>
 #include <etl/_type_traits/is_array.hpp>
 #include <etl/_type_traits/is_constructible.hpp>
@@ -312,6 +313,15 @@ mdspan(mdarray<ElementType, Extents, Layout, Container>) -> mdspan<
     typename decltype(declval<mdarray<ElementType, Extents, Layout, Container>>().to_mdspan())::layout_type,
     typename decltype(declval<mdarray<ElementType, Extents, Layout, Container>>().to_mdspan())::accessor_type
 >;
+
+template <typename T>
+struct is_mdspan : false_type { };
+
+template <typename T, typename Extents, typename Layout, typename Accessor>
+struct is_mdspan<mdspan<T, Extents, Layout, Accessor>> : true_type { };
+
+template <typename T>
+inline constexpr auto is_mdspan_v = is_mdspan<T>::value;
 
 } // namespace etl
 

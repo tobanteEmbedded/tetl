@@ -27,12 +27,6 @@
 
 namespace etl::linalg::detail {
 
-template <typename T>
-struct is_mdspan : false_type { };
-
-template <typename T, typename Extents, typename Layout, typename Accessor>
-struct is_mdspan<mdspan<T, Extents, Layout, Accessor>> : true_type { };
-
 template <typename... Ts>
 using common_size_type_t = common_type_t<typename Ts::size_type...>;
 
@@ -120,65 +114,144 @@ namespace etl::linalg {
 
 /// \ingroup linalg
 template <typename T>
-concept in_vector = detail::is_mdspan<T>::value && T::rank() == 1;
+concept in_vector = is_mdspan_v<T> and T::rank() == 1;
 
 /// \ingroup linalg
 template <typename T>
-concept out_vector = detail::is_mdspan<T>::value
-                  && T::rank() == 1
-                  && same_as<remove_const_t<typename T::element_type>, typename T::element_type>
-                  && T::is_always_unique();
+concept out_vector = is_mdspan_v<T>
+                 and T::rank() == 1
+                 and same_as<remove_const_t<typename T::element_type>, typename T::element_type>
+                 and T::is_always_unique();
 
 /// \ingroup linalg
 template <typename T>
-concept inout_vector = detail::is_mdspan<T>::value
-                    && T::rank() == 1
-                    && same_as<remove_const_t<typename T::element_type>, typename T::element_type>
-                    && T::is_always_unique();
+concept inout_vector = is_mdspan_v<T>
+                   and T::rank() == 1
+                   and same_as<remove_const_t<typename T::element_type>, typename T::element_type>
+                   and T::is_always_unique();
 
 /// \ingroup linalg
 template <typename T>
-concept in_matrix = detail::is_mdspan<T>::value && T::rank() == 2;
+concept in_matrix = is_mdspan_v<T> and T::rank() == 2;
 
 /// \ingroup linalg
 template <typename T>
-concept out_matrix = detail::is_mdspan<T>::value
-                  && T::rank() == 2
-                  && is_same_v<remove_const_t<typename T::element_type>, typename T::element_type>
-                  && T::is_always_unique();
+concept out_matrix = is_mdspan_v<T>
+                 and T::rank() == 2
+                 and is_same_v<remove_const_t<typename T::element_type>, typename T::element_type>
+                 and T::is_always_unique();
 
 /// \ingroup linalg
 template <typename T>
-concept inout_matrix = detail::is_mdspan<T>::value
-                    && T::rank() == 2
-                    && is_same_v<remove_const_t<typename T::element_type>, typename T::element_type>
-                    && T::is_always_unique();
-
-// template <typename T>
-// concept possibly_packed_inout_matrix =
-//     detail::is_mdspan<T>::value && T::rank() == 2 &&
-//     is_same_v<remove_const_t<typename T::element_type>,
-//                    typename T::element_type> &&
-//     (T::is_always_unique() ||
-//      is_same_v<typename T::layout_type, layout_blas_packed>);
+concept inout_matrix = is_mdspan_v<T>
+                   and T::rank() == 2
+                   and is_same_v<remove_const_t<typename T::element_type>, typename T::element_type>
+                   and T::is_always_unique();
 
 /// \ingroup linalg
 template <typename T>
-concept in_object = detail::is_mdspan<T>::value && (T::rank() == 1 || T::rank() == 2);
+concept in_object = is_mdspan_v<T> and (T::rank() == 1 || T::rank() == 2);
 
 /// \ingroup linalg
 template <typename T>
-concept out_object = detail::is_mdspan<T>::value
-                  && (T::rank() == 1 || T::rank() == 2)
-                  && is_same_v<remove_const_t<typename T::element_type>, typename T::element_type>
-                  && T::is_always_unique();
+concept out_object = is_mdspan_v<T>
+                 and (T::rank() == 1 || T::rank() == 2)
+                 and is_same_v<remove_const_t<typename T::element_type>, typename T::element_type>
+                 and T::is_always_unique();
 
 /// \ingroup linalg
 template <typename T>
-concept inout_object = detail::is_mdspan<T>::value
-                    && (T::rank() == 1 || T::rank() == 2)
-                    && is_same_v<remove_const_t<typename T::element_type>, typename T::element_type>
-                    && T::is_always_unique();
+concept inout_object = is_mdspan_v<T>
+                   and (T::rank() == 1 || T::rank() == 2)
+                   and is_same_v<remove_const_t<typename T::element_type>, typename T::element_type>
+                   and T::is_always_unique();
+
+namespace detail {
+
+template <typename MDS1, typename MDS2>
+    requires(is_mdspan_v<MDS1> and is_mdspan_v<MDS2>)
+[[nodiscard]] constexpr auto compatible_static_extents(etl::size_t r1, etl::size_t r2) -> bool
+{
+    return MDS1::static_extent(r1) == dynamic_extent
+        or MDS2::static_extent(r2) == dynamic_extent
+        or MDS1::static_extent(r1) == MDS2::static_extent(r2);
+}
+
+template <in_vector In1, in_vector In2, in_vector Out>
+[[nodiscard]] constexpr auto possibly_addable() -> bool
+{
+    return compatible_static_extents<Out, In1>(0, 0)
+       and compatible_static_extents<Out, In2>(0, 0)
+       and compatible_static_extents<In1, In2>(0, 0);
+}
+
+template <in_matrix In1, in_matrix In2, in_matrix Out>
+[[nodiscard]] constexpr auto possibly_addable() -> bool
+{
+    return compatible_static_extents<Out, In1>(0, 0)
+       and compatible_static_extents<Out, In1>(1, 1)
+       and compatible_static_extents<Out, In2>(0, 0)
+       and compatible_static_extents<Out, In2>(1, 1)
+       and compatible_static_extents<In1, In2>(0, 0)
+       and compatible_static_extents<In1, In2>(1, 1);
+}
+
+template <in_matrix InMat, in_vector InVec, in_vector OutVec>
+[[nodiscard]] constexpr auto possibly_multipliable() -> bool
+{
+    return compatible_static_extents<OutVec, InMat>(0, 0) and compatible_static_extents<InMat, InVec>(1, 0);
+}
+
+template <in_vector InVec, in_matrix InMat, in_vector OutVec>
+[[nodiscard]] constexpr auto possibly_multipliable() -> bool
+{
+    return compatible_static_extents<OutVec, InMat>(0, 1) and compatible_static_extents<InMat, InVec>(0, 0);
+}
+
+template <in_matrix InMat1, in_matrix InMat2, in_matrix OutMat>
+[[nodiscard]] constexpr auto possibly_multipliable() -> bool
+{
+    return compatible_static_extents<OutMat, InMat1>(0, 0)
+       and compatible_static_extents<OutMat, InMat2>(1, 1)
+       and compatible_static_extents<InMat1, InMat2>(1, 0);
+}
+
+[[nodiscard]] constexpr auto addable(in_vector auto const& in1, in_vector auto const& in2, in_vector auto const& out)
+    -> bool
+{
+    return out.extent(0) == in1.extent(0) and out.extent(0) == in2.extent(0);
+}
+
+[[nodiscard]] constexpr auto addable(in_matrix auto const& in1, in_matrix auto const& in2, in_matrix auto const& out)
+    -> bool
+{
+    return out.extent(0) == in1.extent(0)
+       and out.extent(1) == in1.extent(1)
+       and out.extent(0) == in2.extent(0)
+       and out.extent(1) == in2.extent(1);
+}
+
+[[nodiscard]] constexpr auto
+multipliable(in_matrix auto const& in_mat, in_vector auto const& in_vec, in_vector auto const& out_vec) -> bool
+{
+    return out_vec.extent(0) == in_mat.extent(0) and in_mat.extent(1) == in_vec.extent(0);
+}
+
+[[nodiscard]] constexpr auto
+multipliable(in_vector auto const& in_vec, in_matrix auto const& in_mat, in_vector auto const& out_vec) -> bool
+{
+    return out_vec.extent(0) == in_mat.extent(1) and in_mat.extent(0) == in_vec.extent(0);
+}
+
+[[nodiscard]] constexpr auto
+multipliable(in_matrix auto const& in_mat1, in_matrix auto const& in_mat2, in_matrix auto const& out_mat) -> bool
+{
+    return out_mat.extent(0) == in_mat1.extent(0)
+       and out_mat.extent(1) == in_mat2.extent(1)
+       and in_mat1.extent(1) == in_mat2.extent(0);
+}
+
+} // namespace detail
 
 } // namespace etl::linalg
 
