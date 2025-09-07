@@ -109,8 +109,8 @@ private:
 
     static constexpr auto add_with_carry(uint64_t a, uint64_t b) noexcept -> with_carry
     {
-        auto s = a + b;
-        return with_carry{s, static_cast<uint64_t>(s < a)};
+        auto const sum = a + b;
+        return with_carry{.val = sum, .carry = static_cast<uint64_t>(sum < a)};
     }
 
 #if __BYTE_ORDER__ == __ORDER_LITTLE_ENDIAN__
