@@ -20,6 +20,9 @@ template <typename T>
 
 } // namespace detail
 
+/// \ingroup cmath
+/// @{
+
 /// Determines if the given floating point number arg is negative.
 ///
 /// This function detects the sign bit of zeroes, infinities, and NaNs.
@@ -27,8 +30,6 @@ template <typename T>
 /// to examine the sign of a NaN.
 ///
 /// https://en.cppreference.com/w/cpp/numeric/math/signbit
-///
-/// \ingroup cmath
 [[nodiscard]] constexpr auto signbit(float arg) noexcept -> bool
 {
     if (is_constant_evaluated()) {
@@ -48,8 +49,6 @@ template <typename T>
 /// to examine the sign of a NaN.
 ///
 /// https://en.cppreference.com/w/cpp/numeric/math/signbit
-///
-/// \ingroup cmath
 [[nodiscard]] constexpr auto signbit(double arg) noexcept -> bool
 {
     if (is_constant_evaluated()) {
@@ -69,8 +68,6 @@ template <typename T>
 /// to examine the sign of a NaN.
 ///
 /// https://en.cppreference.com/w/cpp/numeric/math/signbit
-///
-/// \ingroup cmath
 [[nodiscard]] constexpr auto signbit(long double arg) noexcept -> bool
 {
     if (is_constant_evaluated()) {
@@ -82,6 +79,8 @@ template <typename T>
     return detail::signbit_fallback(arg);
 #endif
 }
+
+/// @}
 
 } // namespace etl
 

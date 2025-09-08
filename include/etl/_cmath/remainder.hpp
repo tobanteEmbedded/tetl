@@ -33,9 +33,11 @@ inline constexpr struct remainder {
 
 } // namespace detail
 
+/// \ingroup cmath
+/// @{
+
 /// Computes the remainder of the floating point division operation x/y.
 /// \details https://en.cppreference.com/w/cpp/numeric/math/remainder
-/// \ingroup cmath
 [[nodiscard]] constexpr auto remainder(float x, float y) noexcept -> float
 {
     return etl::detail::remainder(x, y);
@@ -43,7 +45,6 @@ inline constexpr struct remainder {
 
 /// Computes the remainder of the floating point division operation x/y.
 /// \details https://en.cppreference.com/w/cpp/numeric/math/remainder
-/// \ingroup cmath
 [[nodiscard]] constexpr auto remainderf(float x, float y) noexcept -> float
 {
     return etl::detail::remainder(x, y);
@@ -51,7 +52,6 @@ inline constexpr struct remainder {
 
 /// Computes the remainder of the floating point division operation x/y.
 /// \details https://en.cppreference.com/w/cpp/numeric/math/remainder
-/// \ingroup cmath
 [[nodiscard]] constexpr auto remainder(double x, double y) noexcept -> double
 {
     return etl::detail::remainder(x, y);
@@ -59,7 +59,6 @@ inline constexpr struct remainder {
 
 /// Computes the remainder of the floating point division operation x/y.
 /// \details https://en.cppreference.com/w/cpp/numeric/math/remainder
-/// \ingroup cmath
 [[nodiscard]] constexpr auto remainder(long double x, long double y) noexcept -> long double
 {
     return etl::detail::remainder(x, y);
@@ -67,7 +66,6 @@ inline constexpr struct remainder {
 
 /// Computes the remainder of the floating point division operation x/y.
 /// \details https://en.cppreference.com/w/cpp/numeric/math/remainder
-/// \ingroup cmath
 [[nodiscard]] constexpr auto remainderl(long double x, long double y) noexcept -> long double
 {
     return etl::detail::remainder(x, y);
@@ -75,12 +73,13 @@ inline constexpr struct remainder {
 
 /// Computes the remainder of the floating point division operation x/y.
 /// \details https://en.cppreference.com/w/cpp/numeric/math/remainder
-/// \ingroup cmath
 template <integral Int>
 [[nodiscard]] constexpr auto remainder(Int x, Int y) noexcept -> double
 {
     return etl::detail::remainder(static_cast<double>(x), static_cast<double>(y));
 }
+
+/// @}
 
 } // namespace etl
 
