@@ -28,7 +28,7 @@
 namespace etl::linalg::detail {
 
 template <typename... Ts>
-using common_size_type_t = common_type_t<typename Ts::size_type...>;
+using common_index_type_t = common_type_t<typename Ts::index_type...>;
 
 namespace linalg_adl_checks {
 
