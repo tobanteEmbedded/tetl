@@ -8,6 +8,9 @@
 
 namespace etl::mpl {
 
+/// \ingroup mpl
+/// @{
+
 template <typename T, typename List>
 struct push_front;
 
@@ -18,6 +21,8 @@ struct push_front<T, list<Ts...>> {
 
 template <typename T, typename List>
 using push_front_t = typename push_front<T, List>::type;
+
+/// @}
 
 } // namespace etl::mpl
 

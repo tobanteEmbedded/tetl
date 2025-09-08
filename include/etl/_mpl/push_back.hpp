@@ -9,18 +9,20 @@
 namespace etl::mpl {
 
 /// \ingroup mpl
+/// @{
+
 template <typename T, typename List>
 struct push_back;
 
-/// \ingroup mpl
 template <typename T, typename... Ts>
 struct push_back<T, list<Ts...>> {
     using type = list<Ts..., T>;
 };
 
-/// \ingroup mpl
 template <typename T, typename List>
 using push_back_t = typename push_back<T, List>::type;
+
+/// @}
 
 } // namespace etl::mpl
 

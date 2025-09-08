@@ -8,6 +8,9 @@
 
 namespace etl::mpl {
 
+/// \ingroup mpl
+/// @{
+
 template <typename... Ts>
 struct head;
 
@@ -18,6 +21,8 @@ struct head<list<Head, Tail...>> {
 
 template <typename List>
 using head_t = typename head<List>::type;
+
+/// @}
 
 } // namespace etl::mpl
 

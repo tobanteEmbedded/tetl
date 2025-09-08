@@ -9,6 +9,9 @@
 
 namespace etl::mpl {
 
+/// \ingroup mpl
+/// @{
+
 template <etl::size_t I, typename List>
 struct at;
 
@@ -24,6 +27,8 @@ struct at<I, list<Head, Tail...>> {
 
 template <etl::size_t I, typename List>
 using at_t = typename at<I, List>::type;
+
+/// @}
 
 } // namespace etl::mpl
 
