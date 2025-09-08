@@ -13,24 +13,21 @@ namespace etl::linalg {
 /// Computes C = AB
 /// \ingroup linalg
 template <in_matrix InMat1, in_matrix InMat2, out_matrix OutMat>
-    requires(detail::possibly_multipliable<InMat1, InMat2, OutMat>())
-constexpr auto matrix_product(InMat1 A, InMat2 B, OutMat C) -> void
+constexpr auto matrix_product(InMat1 a, InMat2 b, OutMat c) -> void
 {
-    TETL_PRECONDITION(detail::multipliable(A, B, C));
+    static_assert(detail::possibly_multipliable<InMat1, InMat2, OutMat>());
+    TETL_PRECONDITION(detail::multipliable(a, b, c));
 
-    using SumT = typename OutMat::element_type;
+    using index_type = detail::common_index_type_t<InMat1, InMat2, OutMat>;
+    using sum_type   = typename OutMat::element_type;
 
-    auto const M = A.extent(0);
-    auto const K = A.extent(1);
-    auto const N = B.extent(1);
-
-    for (auto i = 0zu; etl::cmp_less(i, M); ++i) {
-        for (auto j = 0zu; etl::cmp_less(j, N); ++j) {
-            auto acc = SumT{};
-            for (auto k = 0zu; etl::cmp_less(k, K); ++k) {
-                acc += A(i, k) * B(k, j);
+    for (auto i = index_type{0}; etl::cmp_less(i, a.extent(0)); ++i) {
+        for (auto j = index_type{0}; etl::cmp_less(j, b.extent(1)); ++j) {
+            auto acc = sum_type{};
+            for (auto k = index_type{0}; etl::cmp_less(k, a.extent(1)); ++k) {
+                acc += a(i, k) * b(k, j);
             }
-            C(i, j) = acc;
+            c(i, j) = acc;
         }
     }
 }

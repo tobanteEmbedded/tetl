@@ -15,8 +15,8 @@ template <in_object InObj1, in_object InObj2, out_object OutObj>
     requires(InObj1::rank() == OutObj::rank() and InObj2::rank() == OutObj::rank())
 constexpr auto add(InObj1 x, InObj2 y, OutObj z) -> void
 {
-    TETL_PRECONDITION(x.extents() == y.extents());
-    TETL_PRECONDITION(x.extents() == z.extents());
+    static_assert(detail::possibly_addable<InObj1, InObj2, OutObj>());
+    TETL_PRECONDITION(detail::addable(x, y, z));
 
     using index_type = detail::common_index_type_t<InObj1, InObj2, OutObj>;
 

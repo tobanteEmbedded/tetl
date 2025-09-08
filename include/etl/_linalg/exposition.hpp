@@ -232,23 +232,23 @@ template <in_matrix InMat1, in_matrix InMat2, in_matrix OutMat>
 }
 
 [[nodiscard]] constexpr auto
-multipliable(in_matrix auto const& in_mat, in_vector auto const& in_vec, in_vector auto const& out_vec) -> bool
+multipliable(in_matrix auto const& inMat, in_vector auto const& inVec, in_vector auto const& outVec) -> bool
 {
-    return out_vec.extent(0) == in_mat.extent(0) and in_mat.extent(1) == in_vec.extent(0);
+    return outVec.extent(0) == inMat.extent(0) and inMat.extent(1) == inVec.extent(0);
 }
 
 [[nodiscard]] constexpr auto
-multipliable(in_vector auto const& in_vec, in_matrix auto const& in_mat, in_vector auto const& out_vec) -> bool
+multipliable(in_vector auto const& inVec, in_matrix auto const& inMat, in_vector auto const& outVec) -> bool
 {
-    return out_vec.extent(0) == in_mat.extent(1) and in_mat.extent(0) == in_vec.extent(0);
+    return outVec.extent(0) == inMat.extent(1) and inMat.extent(0) == inVec.extent(0);
 }
 
 [[nodiscard]] constexpr auto
-multipliable(in_matrix auto const& in_mat1, in_matrix auto const& in_mat2, in_matrix auto const& out_mat) -> bool
+multipliable(in_matrix auto const& inMat1, in_matrix auto const& inMat2, in_matrix auto const& outMat) -> bool
 {
-    return out_mat.extent(0) == in_mat1.extent(0)
-       and out_mat.extent(1) == in_mat2.extent(1)
-       and in_mat1.extent(1) == in_mat2.extent(0);
+    return outMat.extent(0) == inMat1.extent(0)
+       and outMat.extent(1) == inMat2.extent(1)
+       and inMat1.extent(1) == inMat2.extent(0);
 }
 
 } // namespace detail
