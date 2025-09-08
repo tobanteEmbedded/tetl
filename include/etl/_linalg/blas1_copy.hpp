@@ -6,7 +6,6 @@
 
 #include <etl/_contracts/check.hpp>
 #include <etl/_linalg/exposition.hpp>
-#include <etl/_utility/cmp_less.hpp>
 
 namespace etl::linalg {
 
@@ -21,7 +20,7 @@ constexpr auto copy(InObj x, OutObj y) -> void
 
     if constexpr (InObj::rank() == 1) {
         static_assert(detail::compatible_static_extents<InObj, OutObj>(0, 0));
-        for (index_type i{0}; etl::cmp_less(i, x.extent(0)); ++i) {
+        for (index_type i{0}; i < x.extent(0); ++i) {
             y(i) = x(i);
         }
     } else {
@@ -29,8 +28,8 @@ constexpr auto copy(InObj x, OutObj y) -> void
         static_assert(detail::compatible_static_extents<InObj, OutObj>(0, 0));
         static_assert(detail::compatible_static_extents<InObj, OutObj>(1, 1));
 
-        for (index_type i{0}; etl::cmp_less(i, x.extent(0)); ++i) {
-            for (index_type j{0}; etl::cmp_less(j, x.extent(1)); ++j) {
+        for (index_type i{0}; i < x.extent(0); ++i) {
+            for (index_type j{0}; j < x.extent(1); ++j) {
                 y(i, j) = x(i, j);
             }
         }

@@ -6,7 +6,6 @@
 
 #include <etl/_contracts/check.hpp>
 #include <etl/_linalg/exposition.hpp>
-#include <etl/_utility/cmp_less.hpp>
 #include <etl/_utility/swap.hpp>
 
 namespace etl::linalg {
@@ -23,7 +22,7 @@ constexpr auto swap_elements(InOutObj1 x, InOutObj2 y) -> void
     if constexpr (InOutObj1::rank() == 1) {
         static_assert(detail::compatible_static_extents<InOutObj1, InOutObj2>(0, 0));
 
-        for (index_type i{0}; etl::cmp_less(i, x.extent(0)); ++i) {
+        for (index_type i{0}; i < static_cast<index_type>(x.extent(0)); ++i) {
             using etl::swap;
             swap(x(i), y(i));
         }
@@ -32,8 +31,8 @@ constexpr auto swap_elements(InOutObj1 x, InOutObj2 y) -> void
         static_assert(detail::compatible_static_extents<InOutObj1, InOutObj2>(0, 0));
         static_assert(detail::compatible_static_extents<InOutObj1, InOutObj2>(1, 1));
 
-        for (index_type i{0}; etl::cmp_less(i, x.extent(0)); ++i) {
-            for (index_type j{0}; etl::cmp_less(j, x.extent(1)); ++j) {
+        for (index_type i{0}; i < static_cast<index_type>(x.extent(0)); ++i) {
+            for (index_type j{0}; j < static_cast<index_type>(x.extent(1)); ++j) {
                 using etl::swap;
                 swap(x(i, j), y(i, j));
             }

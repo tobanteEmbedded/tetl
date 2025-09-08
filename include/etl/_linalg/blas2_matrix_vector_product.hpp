@@ -6,7 +6,6 @@
 
 #include <etl/_contracts/check.hpp>
 #include <etl/_linalg/exposition.hpp>
-#include <etl/_utility/cmp_less.hpp>
 
 namespace etl::linalg {
 
@@ -19,9 +18,9 @@ constexpr auto matrix_vector_product(InMat a, InVec x, OutVec y) noexcept -> voi
 
     using index_type = detail::common_index_type_t<InMat, InVec, OutVec>;
 
-    for (index_type i(0); etl::cmp_less(i, a.extent(0)); ++i) {
+    for (index_type i{0}; i < static_cast<index_type>(a.extent(0)); ++i) {
         y(i) = typename OutVec::element_type{};
-        for (index_type j(0); etl::cmp_less(j, a.extent(1)); ++j) {
+        for (index_type j{0}; j < static_cast<index_type>(a.extent(1)); ++j) {
             y(i) += a(i, j) * x(j);
         }
     }

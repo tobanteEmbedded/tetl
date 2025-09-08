@@ -6,7 +6,6 @@
 
 #include <etl/_contracts/check.hpp>
 #include <etl/_linalg/exposition.hpp>
-#include <etl/_utility/cmp_less.hpp>
 
 namespace etl::linalg {
 
@@ -21,10 +20,10 @@ constexpr auto matrix_product(InMat1 a, InMat2 b, OutMat c) -> void
     using index_type = detail::common_index_type_t<InMat1, InMat2, OutMat>;
     using sum_type   = typename OutMat::element_type;
 
-    for (auto i = index_type{0}; etl::cmp_less(i, a.extent(0)); ++i) {
-        for (auto j = index_type{0}; etl::cmp_less(j, b.extent(1)); ++j) {
+    for (auto i = index_type{0}; i < static_cast<index_type>(a.extent(0)); ++i) {
+        for (auto j = index_type{0}; j < static_cast<index_type>(b.extent(1)); ++j) {
             auto acc = sum_type{};
-            for (auto k = index_type{0}; etl::cmp_less(k, a.extent(1)); ++k) {
+            for (auto k = index_type{0}; k < static_cast<index_type>(a.extent(1)); ++k) {
                 acc += a(i, k) * b(k, j);
             }
             c(i, j) = acc;
