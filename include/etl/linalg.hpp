@@ -17,6 +17,7 @@
 #include <etl/_linalg/accessor_scaled.hpp>
 #include <etl/_linalg/blas1_add.hpp>
 #include <etl/_linalg/blas1_copy.hpp>
+#include <etl/_linalg/blas1_dot.hpp>
 #include <etl/_linalg/blas1_matrix_frob_norm.hpp>
 #include <etl/_linalg/blas1_scale.hpp>
 #include <etl/_linalg/blas1_scaled.hpp>
