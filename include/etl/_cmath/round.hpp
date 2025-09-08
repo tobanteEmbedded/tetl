@@ -15,23 +15,25 @@ namespace etl {
 
 namespace detail {
 
-template <typename T>
-[[nodiscard]] constexpr auto round(T arg) noexcept -> T
-{
-    if (not is_constant_evaluated()) {
-        if constexpr (is_same_v<T, float>) {
+inline constexpr struct round {
+    template <typename Float>
+    [[nodiscard]] constexpr auto operator()(Float arg) const noexcept -> Float
+    {
+        if (not is_constant_evaluated()) {
 #if __has_builtin(__builtin_roundf)
-            return __builtin_roundf(arg);
+            if constexpr (etl::same_as<Float, float>) {
+                return __builtin_roundf(arg);
+            }
 #endif
-        }
-        if constexpr (is_same_v<T, double>) {
 #if __has_builtin(__builtin_round)
-            return __builtin_round(arg);
+            if constexpr (etl::same_as<Float, double>) {
+                return __builtin_round(arg);
+            }
 #endif
         }
+        return etl::detail::gcem::round(arg);
     }
-    return detail::gcem::round(arg);
-}
+} round;
 
 } // namespace detail
 
@@ -65,7 +67,7 @@ template <typename T>
 }
 [[nodiscard]] constexpr auto round(integral auto arg) noexcept -> double
 {
-    return etl::detail::round(double(arg));
+    return etl::detail::round(static_cast<double>(arg));
 }
 
 /// @}

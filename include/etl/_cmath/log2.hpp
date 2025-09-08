@@ -64,7 +64,7 @@ inline constexpr struct log2 {
 }
 [[nodiscard]] constexpr auto log2(integral auto arg) noexcept -> double
 {
-    return etl::detail::log2(double(arg));
+    return etl::detail::log2(static_cast<double>(arg));
 }
 
 /// @}

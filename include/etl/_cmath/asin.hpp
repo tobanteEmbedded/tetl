@@ -64,7 +64,7 @@ inline constexpr struct asin {
 }
 [[nodiscard]] constexpr auto asin(integral auto arg) noexcept -> double
 {
-    return etl::detail::asin(double(arg));
+    return etl::detail::asin(static_cast<double>(arg));
 }
 
 /// @}

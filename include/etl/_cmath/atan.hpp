@@ -64,7 +64,7 @@ inline constexpr struct atan {
 }
 [[nodiscard]] constexpr auto atan(integral auto arg) noexcept -> double
 {
-    return etl::detail::atan(double(arg));
+    return etl::detail::atan(static_cast<double>(arg));
 }
 
 /// @}

@@ -64,7 +64,7 @@ inline constexpr struct tanh {
 }
 [[nodiscard]] constexpr auto tanh(integral auto arg) noexcept -> double
 {
-    return etl::detail::tanh(double(arg));
+    return etl::detail::tanh(static_cast<double>(arg));
 }
 
 /// @}

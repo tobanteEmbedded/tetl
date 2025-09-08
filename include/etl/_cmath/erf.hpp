@@ -9,6 +9,30 @@
 
 namespace etl {
 
+namespace detail {
+
+inline constexpr struct erf {
+    template <typename Float>
+    [[nodiscard]] constexpr auto operator()(Float arg) const noexcept -> Float
+    {
+        if (not is_constant_evaluated()) {
+#if __has_builtin(__builtin_erff)
+            if constexpr (etl::same_as<Float, float>) {
+                return __builtin_erff(arg);
+            }
+#endif
+#if __has_builtin(__builtin_erf)
+            if constexpr (etl::same_as<Float, double>) {
+                return __builtin_erf(arg);
+            }
+#endif
+        }
+        return etl::detail::gcem::erf(arg);
+    }
+} erf;
+
+} // namespace detail
+
 /// \ingroup cmath
 /// @{
 
@@ -16,27 +40,27 @@ namespace etl {
 /// \details https://en.cppreference.com/w/cpp/numeric/math/erf
 [[nodiscard]] constexpr auto erf(float arg) noexcept -> float
 {
-    return etl::detail::gcem::erf(arg);
+    return etl::detail::erf(arg);
 }
 [[nodiscard]] constexpr auto erff(float arg) noexcept -> float
 {
-    return etl::detail::gcem::erf(arg);
+    return etl::detail::erf(arg);
 }
 [[nodiscard]] constexpr auto erf(double arg) noexcept -> double
 {
-    return etl::detail::gcem::erf(arg);
+    return etl::detail::erf(arg);
 }
 [[nodiscard]] constexpr auto erf(long double arg) noexcept -> long double
 {
-    return etl::detail::gcem::erf(arg);
+    return etl::detail::erf(arg);
 }
 [[nodiscard]] constexpr auto erfl(long double arg) noexcept -> long double
 {
-    return etl::detail::gcem::erf(arg);
+    return etl::detail::erf(arg);
 }
 [[nodiscard]] constexpr auto erf(integral auto arg) noexcept -> double
 {
-    return etl::detail::gcem::erf(double(arg));
+    return etl::detail::erf(static_cast<double>(arg));
 }
 
 /// @}

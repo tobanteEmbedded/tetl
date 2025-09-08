@@ -62,7 +62,7 @@ template <typename T>
 }
 [[nodiscard]] constexpr auto trunc(integral auto arg) noexcept -> double
 {
-    return detail::trunc(double(arg));
+    return detail::trunc(static_cast<double>(arg));
 }
 
 /// @}

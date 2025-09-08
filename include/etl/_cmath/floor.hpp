@@ -64,7 +64,7 @@ inline constexpr struct floor {
 }
 [[nodiscard]] constexpr auto floor(integral auto arg) noexcept -> double
 {
-    return etl::detail::floor(double(arg));
+    return etl::detail::floor(static_cast<double>(arg));
 }
 
 /// @}

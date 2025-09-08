@@ -64,7 +64,7 @@ inline constexpr struct sin {
 }
 [[nodiscard]] constexpr auto sin(integral auto arg) noexcept -> double
 {
-    return etl::detail::sin(double(arg));
+    return etl::detail::sin(static_cast<double>(arg));
 }
 
 /// @}
