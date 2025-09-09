@@ -33,9 +33,7 @@ template <typename Float>
 static constexpr auto test_type() -> bool
 {
     CHECK(test<Float>([](auto x) { return etl::signbit(x); }));
-    if constexpr (not etl::same_as<Float, long double>) {
-        CHECK(test<Float>([](auto x) { return etl::detail::signbit_fallback(x); }));
-    }
+    CHECK(test<Float>([](auto x) { return etl::detail::signbit_fallback(x); }));
     return true;
 }
 
@@ -43,6 +41,6 @@ auto main() -> int
 {
     STATIC_CHECK(test_type<float>());
     STATIC_CHECK(test_type<double>());
-    STATIC_CHECK(test_type<long double>());
+    CHECK(test_type<long double>());
     return 0;
 }

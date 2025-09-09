@@ -6,6 +6,7 @@
 
 #include <etl/_config/all.hpp>
 
+#include <etl/_3rd_party/gcem/gcem.hpp>
 #include <etl/_array/array.hpp>
 #include <etl/_bit/bit_cast.hpp>
 #include <etl/_concepts/integral.hpp>
@@ -26,7 +27,7 @@ template <typename Float>
         auto const bits = etl::bit_cast<etl::int64_t>(arg);
         return bits < 0;
     } else {
-        return arg == Float(-0.0) or arg < Float(0);
+        return etl::detail::gcem::signbit(arg);
     }
 }
 
@@ -34,20 +35,22 @@ inline constexpr struct signbit {
     template <typename Float>
     [[nodiscard]] constexpr auto operator()(Float arg) const noexcept -> bool
     {
-        if constexpr (is_same_v<Float, float>) {
+        if (not is_constant_evaluated()) {
+            if constexpr (is_same_v<Float, float>) {
 #if __has_builtin(__builtin_signbitf)
-            return __builtin_signbitf(arg);
+                return __builtin_signbitf(arg);
 #endif
-        }
-        if constexpr (is_same_v<Float, double>) {
+            }
+            if constexpr (is_same_v<Float, double>) {
 #if __has_builtin(__builtin_signbit)
-            return __builtin_signbit(arg);
+                return __builtin_signbit(arg);
 #endif
-        }
-        if constexpr (is_same_v<Float, long double>) {
+            }
+            if constexpr (is_same_v<Float, long double>) {
 #if __has_builtin(__builtin_signbitl)
-            return __builtin_signbitl(arg);
+                return __builtin_signbitl(arg);
 #endif
+            }
         }
         return signbit_fallback(arg);
     }
