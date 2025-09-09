@@ -6,36 +6,52 @@
 
 #include <etl/_config/all.hpp>
 
+#include <etl/_array/array.hpp>
+#include <etl/_bit/bit_cast.hpp>
 #include <etl/_concepts/integral.hpp>
+#include <etl/_cstdint/int_t.hpp>
 #include <etl/_type_traits/is_constant_evaluated.hpp>
 
 namespace etl {
 
 namespace detail {
 
-template <typename T>
-[[nodiscard]] constexpr auto signbit_fallback(T arg) noexcept -> bool
+template <typename Float>
+[[nodiscard]] constexpr auto signbit_fallback(Float arg) noexcept -> bool
 {
-    return arg == T(-0.0) or arg < T(0);
+    if constexpr (sizeof(Float) == 4) {
+        auto const bits = etl::bit_cast<etl::int32_t>(arg);
+        return bits < 0;
+    } else if constexpr (sizeof(Float) == 8) {
+        auto const bits = etl::bit_cast<etl::int64_t>(arg);
+        return bits < 0;
+    } else {
+        return arg == Float(-0.0) or arg < Float(0);
+    }
 }
 
-template <typename T>
-[[nodiscard]] constexpr auto signbit(T arg) noexcept -> bool
-{
-    if (not is_constant_evaluated()) {
-        if constexpr (is_same_v<T, float>) {
+inline constexpr struct signbit {
+    template <typename Float>
+    [[nodiscard]] constexpr auto operator()(Float arg) const noexcept -> bool
+    {
+        if constexpr (is_same_v<Float, float>) {
 #if __has_builtin(__builtin_signbitf)
             return __builtin_signbitf(arg);
 #endif
         }
-        if constexpr (is_same_v<T, double>) {
+        if constexpr (is_same_v<Float, double>) {
 #if __has_builtin(__builtin_signbit)
             return __builtin_signbit(arg);
 #endif
         }
+        if constexpr (is_same_v<Float, long double>) {
+#if __has_builtin(__builtin_signbitl)
+            return __builtin_signbitl(arg);
+#endif
+        }
+        return signbit_fallback(arg);
     }
-    return signbit_fallback(arg);
-}
+} signbit;
 
 } // namespace detail
 
