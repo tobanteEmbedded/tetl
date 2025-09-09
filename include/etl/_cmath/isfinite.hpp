@@ -9,6 +9,30 @@
 
 namespace etl {
 
+namespace detail {
+
+inline constexpr struct isfinite {
+    template <typename Float>
+    [[nodiscard]] constexpr auto operator()(Float arg) const noexcept -> bool
+    {
+        if (not is_constant_evaluated()) {
+#if __has_builtin(__builtin_isfinitef)
+            if constexpr (etl::same_as<Float, float>) {
+                return __builtin_isfinitef(arg);
+            }
+#endif
+#if __has_builtin(__builtin_isfinite)
+            if constexpr (etl::same_as<Float, double>) {
+                return __builtin_isfinite(arg);
+            }
+#endif
+        }
+        return not etl::isnan(arg) and not etl::isinf(arg);
+    }
+} isfinite;
+
+} // namespace detail
+
 /// \ingroup cmath
 /// @{
 
@@ -17,17 +41,17 @@ namespace etl {
 /// \details https://en.cppreference.com/w/cpp/numeric/math/isfinite
 [[nodiscard]] constexpr auto isfinite(float arg) -> bool
 {
-    return not etl::isnan(arg) and not etl::isinf(arg);
+    return etl::detail::isfinite(arg);
 }
 
 [[nodiscard]] constexpr auto isfinite(double arg) -> bool
 {
-    return not etl::isnan(arg) and not etl::isinf(arg);
+    return etl::detail::isfinite(arg);
 }
 
 [[nodiscard]] constexpr auto isfinite(long double arg) -> bool
 {
-    return not etl::isnan(arg) and not etl::isinf(arg);
+    return etl::detail::isfinite(arg);
 }
 
 /// @}

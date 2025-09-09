@@ -8,6 +8,30 @@
 
 namespace etl {
 
+namespace detail {
+
+inline constexpr struct fdim {
+    template <typename Float>
+    [[nodiscard]] constexpr auto operator()(Float x, Float y) const noexcept -> Float
+    {
+        if (not is_constant_evaluated()) {
+#if __has_builtin(__builtin_fdimf)
+            if constexpr (etl::same_as<Float, float>) {
+                return __builtin_fdimf(x, y);
+            }
+#endif
+#if __has_builtin(__builtin_fdim)
+            if constexpr (etl::same_as<Float, double>) {
+                return __builtin_fdim(x, y);
+            }
+#endif
+        }
+        return etl::fmax(x - y, static_cast<Float>(0));
+    }
+} fdim;
+
+} // namespace detail
+
 /// \ingroup cmath
 /// @{
 
@@ -16,23 +40,23 @@ namespace etl {
 /// \details https://en.cppreference.com/w/cpp/numeric/math/fdim
 [[nodiscard]] constexpr auto fdim(float x, float y) noexcept -> float
 {
-    return etl::fmax(x - y, 0);
+    return etl::detail::fdim(x, y);
 }
 [[nodiscard]] constexpr auto fdimf(float x, float y) noexcept -> float
 {
-    return etl::fmax(x - y, 0);
+    return etl::detail::fdim(x, y);
 }
 [[nodiscard]] constexpr auto fdim(double x, double y) noexcept -> double
 {
-    return etl::fmax(x - y, 0);
+    return etl::detail::fdim(x, y);
 }
 [[nodiscard]] constexpr auto fdim(long double x, long double y) noexcept -> long double
 {
-    return etl::fmax(x - y, 0);
+    return etl::detail::fdim(x, y);
 }
 [[nodiscard]] constexpr auto fdiml(long double x, long double y) noexcept -> long double
 {
-    return etl::fmax(x - y, 0);
+    return etl::detail::fdim(x, y);
 }
 
 /// @}
