@@ -21,7 +21,11 @@
     {
       "name": "desktop",
       "description": "Configure with hosted system toolchain",
-      "inherits": ["_root-config"]
+      "inherits": ["_root-config"],
+      "cacheVariables": {
+        "TETL_BUILD_CONTRACT_CHECKS": true,
+        "TETL_BUILD_CONTRACT_CHECKS_SAFE": true
+      }
     },
     {
       "name": "avr-gcc",
