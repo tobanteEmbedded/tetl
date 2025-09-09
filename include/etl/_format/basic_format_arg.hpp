@@ -69,21 +69,21 @@ public:
     template <typename T>
     explicit basic_format_arg(T* p) noexcept;
 
-    variant<                          // variant<                         //        monostate,                    //
-        bool,                         //
-        char_type,                    //
-        int,                          //
-        unsigned int,                 //
-        long long int,                //
-        unsigned long long int,       //
-        float,                        //
-        double,                       //
-        long double,                  //
-        char_type const*,             //
-        basic_string_view<char_type>, //
-        void const*,                  //
-        handle                        //
-        >
+    variant<
+        bool,
+        char_type,
+        int,
+        unsigned int,
+        long long int,
+        unsigned long long int,
+        float,
+        double,
+        long double,
+        char_type const*,
+        basic_string_view<char_type>,
+        void const*,
+        handle
+    >
         value{monostate{}};
 };
 

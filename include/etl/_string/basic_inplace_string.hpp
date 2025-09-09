@@ -41,9 +41,8 @@ namespace etl {
 template <typename Char, etl::size_t Capacity, typename Traits = etl::char_traits<Char>>
 struct basic_inplace_string {
     template <typename T>
-    static constexpr bool string_view_like =                        //
-        is_convertible_v<T const&, basic_string_view<Char, Traits>> //
-        and not is_convertible_v<T const&, Char const*>;
+    static constexpr bool string_view_like
+        = is_convertible_v<T const&, basic_string_view<Char, Traits>> and not is_convertible_v<T const&, Char const*>;
 
     using internal_size_t = etl::smallest_size_t<Capacity>;
 

@@ -22,8 +22,8 @@ template <typename E>
 struct unexpected {
     template <typename Err = E>
         requires(
-            not etl::is_same_v<etl::remove_cvref_t<Err>, unexpected>          //
-            and not etl::is_same_v<etl::remove_cvref_t<Err>, etl::in_place_t> //
+            not etl::is_same_v<etl::remove_cvref_t<Err>, unexpected>
+            and not etl::is_same_v<etl::remove_cvref_t<Err>, etl::in_place_t>
             and etl::is_constructible_v<E, Err>
         )
     constexpr explicit unexpected(Err&& e) noexcept(etl::is_nothrow_constructible_v<E, Err>)

@@ -45,9 +45,7 @@ auto format_escaped_sequences(etl::string_view str, FormatContext& ctx) -> void
         // Find open sequence {{
         auto const* const openFirst = etl::find(first, end(str), token_begin);
         auto const* const openSec   = etl::next(openFirst);
-        auto const escapeStart      = openFirst != end(str) //
-                              && openSec != end(str)        //
-                              && *openSec == token_begin;
+        auto const escapeStart      = openFirst != end(str) && openSec != end(str) && *openSec == token_begin;
 
         if (escapeStart) {
             // Copy upto {{
@@ -56,9 +54,7 @@ auto format_escaped_sequences(etl::string_view str, FormatContext& ctx) -> void
             // Find sequence }}
             auto const* closeFirst = etl::find(etl::next(openSec), end(str), token_end);
             auto const* closeSec   = etl::next(closeFirst);
-            auto escapeClose       = closeFirst != end(str) //
-                            && closeSec != end(str)         //
-                            && *closeSec == token_end;
+            auto escapeClose       = closeFirst != end(str) && closeSec != end(str) && *closeSec == token_end;
 
             // Copy everything between {{ ... }}, but only one curly each.
             if (escapeClose) {
