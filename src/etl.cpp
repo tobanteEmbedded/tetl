@@ -63,9 +63,6 @@ module;
 #include <etl/experimental/hardware/stm32/gpio.hpp>
 #include <etl/experimental/hardware/stm32/interrupt.hpp>
 
-#include <etl/experimental/net/buffer.hpp>
-#include <etl/experimental/net/byte_order.hpp>
-
 export module etl;
 
 #include "inc/algorithm.inc"
@@ -128,6 +125,3 @@ export module etl;
 
 #include "inc/experimental/hardware/stm32/gpio.inc"
 #include "inc/experimental/hardware/stm32/interrupt.inc"
-
-#include "inc/experimental/net/buffer.inc"
-#include "inc/experimental/net/byte_order.inc"
