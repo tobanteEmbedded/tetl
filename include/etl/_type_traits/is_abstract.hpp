@@ -10,9 +10,11 @@
 
 namespace etl {
 
+/// \ingroup type_traits
 template <typename T>
 struct is_abstract : bool_constant<__is_abstract(T)> { };
 
+/// \ingroup type_traits
 template <typename T>
 inline constexpr bool is_abstract_v = __is_abstract(T);
 

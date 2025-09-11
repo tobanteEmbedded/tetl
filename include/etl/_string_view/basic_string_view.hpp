@@ -552,7 +552,7 @@ struct basic_string_view {
     /// \brief Finds the first character not equal to any of the characters in
     /// the given character sequence.
     ///
-    /// \return Position of the first character not equal to any of the
+    /// \returns Position of the first character not equal to any of the
     /// characters in the given string, or npos if no such character is found.
     [[nodiscard]] constexpr auto find_first_not_of(basic_string_view sv, size_type pos = 0) const noexcept -> size_type
     {
@@ -571,7 +571,7 @@ struct basic_string_view {
     /// \brief Finds the first character not equal to any of the characters in
     /// the given character sequence.
     ///
-    /// \return Position of the first character not equal to any of the
+    /// \returns Position of the first character not equal to any of the
     /// characters in the given string, or npos if no such character is found.
     [[nodiscard]] constexpr auto find_first_not_of(Char c, size_type pos = 0) const noexcept -> size_type
     {
@@ -589,7 +589,7 @@ struct basic_string_view {
     /// \brief Finds the first character not equal to any of the characters in
     /// the given character sequence.
     ///
-    /// \return Position of the first character not equal to any of the
+    /// \returns Position of the first character not equal to any of the
     /// characters in the given string, or npos if no such character is found.
     [[nodiscard]] constexpr auto find_first_not_of(Char const* s, size_type pos, size_type count) const -> size_type
     {
@@ -599,7 +599,7 @@ struct basic_string_view {
     /// \brief Finds the first character not equal to any of the characters in
     /// the given character sequence.
     ///
-    /// \return Position of the first character not equal to any of the
+    /// \returns Position of the first character not equal to any of the
     /// characters in the given string, or npos if no such character is found.
     [[nodiscard]] constexpr auto find_first_not_of(Char const* s, size_type pos = 0) const -> size_type
     {

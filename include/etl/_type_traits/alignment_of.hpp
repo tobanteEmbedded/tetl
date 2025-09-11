@@ -10,9 +10,11 @@
 namespace etl {
 
 /// \brief alignment_of
+/// \ingroup type_traits
 template <typename T>
 struct alignment_of : integral_constant<size_t, alignof(T)> { };
 
+/// \ingroup type_traits
 template <typename T>
 inline constexpr size_t alignment_of_v = alignment_of<T>::value;
 

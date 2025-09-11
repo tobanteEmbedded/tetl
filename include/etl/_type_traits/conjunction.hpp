@@ -11,9 +11,12 @@ namespace etl {
 
 /// \brief Forms the logical conjunction of the type traits B..., effectively
 /// performing a logical AND on the sequence of traits.
+/// \ingroup type_traits
 template <typename... B>
 struct conjunction : bool_constant<(B::value && ...)> { };
 
+/// \ingroup type_traits
+/// \relates conjunction
 template <typename... B>
 inline constexpr bool conjunction_v = conjunction<B...>::value;
 

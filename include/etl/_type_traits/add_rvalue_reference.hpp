@@ -20,10 +20,12 @@ auto try_add_rvalue_reference(...) -> type_identity<T>;
 
 /// \brief Creates a rvalue reference type of T.
 /// \headerfile etl/type_traits.hpp
+/// \ingroup type_traits
 template <typename T>
 struct add_rvalue_reference : decltype(detail::try_add_rvalue_reference<T>(0)) { };
 
 /// \relates add_rvalue_reference
+/// \ingroup type_traits
 template <typename T>
 using add_rvalue_reference_t = typename add_rvalue_reference<T>::type;
 

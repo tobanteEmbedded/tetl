@@ -8,6 +8,7 @@ namespace etl {
 /// Define a member typedef only if a boolean constant is true.
 ///
 /// \include type_traits.cpp
+/// \ingroup type_traits
 template <bool, typename Type = void>
 struct enable_if { };
 
@@ -16,6 +17,7 @@ struct enable_if<true, Type> {
     using type = Type;
 };
 
+/// \ingroup type_traits
 template <bool B, typename T = void>
 using enable_if_t = typename enable_if<B, T>::type;
 

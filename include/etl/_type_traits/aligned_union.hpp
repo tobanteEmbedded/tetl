@@ -24,14 +24,18 @@ template <typename T0, typename T1, typename... Ts>
 
 /// \brief Provides the nested type type, which is a trivial standard-layout
 /// type of a size and alignment suitable for use as uninitialized storage for
-/// an object of any of the types listed in Types. The size of the storage is at
-/// least Len. aligned_union also determines the strictest (largest) alignment
-/// requirement among all Types and makes it available as the constant
-/// alignment_value. If sizeof...(Types) == 0 or if any of the types in Types is
-/// not a complete object type, the behavior is undefined. It is
-/// implementation-defined whether any extended alignment is supported. The
+/// an object of any of the types listed in Types.
+///
+/// The size of the storage is at least Len. aligned_union also determines the
+/// strictest (largest) alignment requirement among all Types and makes it
+/// available as the constant alignment_value. If sizeof...(Types) == 0 or if
+/// any of the types in Types is not a complete object type, the behavior is undefined.
+///
+/// It is implementation-defined whether any extended alignment is supported. The
 /// behavior of a program that adds specializations for aligned_union is
 /// undefined.
+///
+/// \ingroup type_traits
 template <size_t Len, typename... Types>
 struct aligned_union {
     static constexpr size_t alignment_value = detail::vmax(alignof(Types)...);
@@ -41,6 +45,8 @@ struct aligned_union {
     };
 };
 
+/// \relates aligned_union
+/// \ingroup type_traits
 template <size_t Len, typename... Types>
 using aligned_union_t = typename aligned_union<Len, Types...>::type;
 

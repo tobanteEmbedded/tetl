@@ -13,6 +13,7 @@ namespace etl {
 /// the number of elements along the Nth dimension of the array, if N is in [0,
 /// rank_v<T>). For any other type, or if T is an array of unknown bound along
 /// its first dimension and N is 0, value is 0.
+/// \ingroup type_traits
 template <typename T, unsigned N = 0>
 struct extent : integral_constant<size_t, 0> { };
 
@@ -28,6 +29,7 @@ struct extent<T[I], 0> : integral_constant<size_t, I> { };
 template <typename T, size_t I, unsigned N>
 struct extent<T[I], N> : extent<T, N - 1> { };
 
+/// \ingroup type_traits
 template <typename T, unsigned N = 0>
 inline constexpr auto extent_v = static_cast<size_t>(extent<T, N>::value);
 

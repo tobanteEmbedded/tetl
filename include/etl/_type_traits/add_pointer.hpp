@@ -28,10 +28,12 @@ auto try_add_pointer(...) -> type_identity<T>;
 /// specializations for add_pointer is undefined.
 ///
 /// \headerfile etl/type_traits.hpp
+/// \ingroup type_traits
 template <typename T>
 struct add_pointer : decltype(detail::try_add_pointer<T>(0)) { };
 
 /// \relates add_pointer
+/// \ingroup type_traits
 template <typename T>
 using add_pointer_t = typename add_pointer<T>::type;
 

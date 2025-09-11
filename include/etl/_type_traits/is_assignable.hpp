@@ -14,9 +14,11 @@ namespace etl {
 /// well-formed in unevaluated context, provides the member constant value equal
 /// true. Otherwise, value is false. Access checks are performed as if from a
 /// context unrelated to either type.
+/// \ingroup type_traits
 template <typename T, typename U>
 struct is_assignable : bool_constant<__is_assignable(T, U)> { };
 
+/// \ingroup type_traits
 template <typename T, typename U>
 inline constexpr bool is_assignable_v = __is_assignable(T, U);
 

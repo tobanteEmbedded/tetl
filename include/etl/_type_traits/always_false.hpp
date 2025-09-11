@@ -6,6 +6,7 @@
 
 namespace etl {
 
+/// \ingroup type_traits
 template <typename... T>
 constexpr bool always_false = false;
 

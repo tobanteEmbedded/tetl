@@ -30,12 +30,16 @@ auto test_pre_is_base_of(int) -> decltype(test_pre_ptr_convertible<B>(static_cas
 /// type; otherwise the behavior is undefined.
 ///
 /// https://en.cppreference.com/w/cpp/types/is_base_of
+///
+/// \ingroup type_traits
 template <typename Base, typename Derived>
 struct is_base_of
     : bool_constant<
           is_class_v<Base> and is_class_v<Derived>and decltype(detail::test_pre_is_base_of<Base, Derived>(0))::value
       > { };
 
+/// \relates is_base_of
+/// \ingroup type_traits
 template <typename Base, typename Derived>
 inline constexpr bool is_base_of_v = is_base_of<Base, Derived>::value;
 

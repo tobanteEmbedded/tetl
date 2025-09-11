@@ -10,11 +10,13 @@
 
 namespace etl {
 
+/// \ingroup type_traits
 template <typename T>
 struct is_builtin_signed_integer
     : bool_constant<mpl::contains_v<remove_cv_t<T>, mpl::list<signed char, short, int, long, long long>>> { };
 
 /// \relates is_builtin_signed_integer
+/// \ingroup type_traits
 template <typename T>
 inline constexpr auto is_builtin_signed_integer_v = is_builtin_signed_integer<T>::value;
 
