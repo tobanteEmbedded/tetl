@@ -4,6 +4,15 @@
 #ifndef TETL_COMPLEX_COMPLEX_HPP
 #define TETL_COMPLEX_COMPLEX_HPP
 
+#include <etl/_cmath/atan2.hpp>
+#include <etl/_cmath/cos.hpp>
+#include <etl/_cmath/cosh.hpp>
+#include <etl/_cmath/hypot.hpp>
+#include <etl/_cmath/log.hpp>
+#include <etl/_cmath/sin.hpp>
+#include <etl/_cmath/sinh.hpp>
+#include <etl/_concepts/floating_point.hpp>
+#include <etl/_concepts/integral.hpp>
 #include <etl/_cstddef/size_t.hpp>
 #include <etl/_tuple/is_tuple_like.hpp>
 #include <etl/_tuple/tuple_element.hpp>
@@ -13,9 +22,12 @@
 
 namespace etl {
 
+/// \ingroup algorithm
+/// @{
+
 /// \brief A complex number
 /// \headerfile etl/complex.hpp
-/// \ingroup complex
+
 template <typename T>
 struct complex {
     using value_type = T;
@@ -373,6 +385,174 @@ constexpr auto operator""_if(unsigned long long d) -> complex<float>
 
 } // namespace complex_literals
 } // namespace literals
+
+template <typename T>
+[[nodiscard]] constexpr auto abs(complex<T> const& z) -> T
+{
+    return hypot(z.real(), z.imag());
+}
+
+template <typename T>
+[[nodiscard]] constexpr auto arg(complex<T> const& z) noexcept -> T
+{
+    return etl::atan2(z.imag(), z.real());
+}
+
+template <floating_point Float>
+[[nodiscard]] constexpr auto arg(Float f) noexcept -> complex<Float>
+{
+    return etl::arg(etl::complex<Float>(f));
+}
+
+template <integral Integer>
+[[nodiscard]] constexpr auto arg(Integer i) noexcept -> complex<double>
+{
+    return etl::arg(etl::complex<double>(i));
+}
+
+template <typename T>
+[[nodiscard]] constexpr auto conj(complex<T> const& z) noexcept -> complex<T>
+{
+    return complex<T>(z.real(), -z.imag());
+}
+
+template <floating_point Float>
+[[nodiscard]] constexpr auto conj(Float f) noexcept -> complex<Float>
+{
+    return complex<Float>(f);
+}
+
+template <integral Integer>
+[[nodiscard]] constexpr auto conj(Integer i) noexcept -> complex<double>
+{
+    return complex<double>(static_cast<double>(i));
+}
+
+template <typename T>
+[[nodiscard]] constexpr auto cos(complex<T> const& z) -> complex<T>
+{
+    auto const x = z.real();
+    auto const y = z.imag();
+    return {cos(x) * cosh(y), -sin(x) * sinh(y)};
+}
+
+template <typename T>
+[[nodiscard]] constexpr auto cosh(complex<T> const& z) -> complex<T>
+{
+    auto const x = z.real();
+    auto const y = z.imag();
+    return {cosh(x) * cos(y), sinh(x) * sin(y)};
+}
+
+template <typename T>
+[[nodiscard]] constexpr auto imag(complex<T> const& z) noexcept(noexcept(z.imag())) -> T
+{
+    return z.imag();
+}
+
+template <floating_point Float>
+[[nodiscard]] constexpr auto imag(Float /*f*/) noexcept -> Float
+{
+    return Float{};
+}
+
+template <integral Integer>
+[[nodiscard]] constexpr auto imag(Integer /*i*/) noexcept -> double
+{
+    return 0.0;
+}
+
+template <typename T>
+[[nodiscard]] constexpr auto log(complex<T> const& z) noexcept -> complex<T>
+{
+    return {etl::log(etl::abs(z)), etl::arg(z)};
+}
+
+template <typename T>
+[[nodiscard]] constexpr auto log10(complex<T> const& z) noexcept -> complex<T>
+{
+    return etl::log(z) / etl::log(T(10));
+}
+
+template <typename T>
+[[nodiscard]] constexpr auto norm(complex<T> const& z) noexcept -> T
+{
+    auto const x = z.real();
+    auto const y = z.imag();
+    return x * x + y * y;
+}
+
+template <floating_point Float>
+[[nodiscard]] constexpr auto norm(Float f) noexcept -> complex<Float>
+{
+    return etl::norm(etl::complex<Float>(f));
+}
+
+template <integral Integer>
+[[nodiscard]] constexpr auto norm(Integer i) noexcept -> complex<double>
+{
+    return etl::norm(etl::complex<double>(i));
+}
+
+template <typename T>
+[[nodiscard]] constexpr auto polar(T const& r, T const& theta = T()) noexcept -> etl::complex<T>
+{
+    return etl::complex<T>{r * etl::cos(theta), r * etl::sin(theta)};
+}
+
+template <typename T>
+[[nodiscard]] constexpr auto real(complex<T> const& z) noexcept(noexcept(z.real())) -> T
+{
+    return z.real();
+}
+
+template <floating_point Float>
+[[nodiscard]] constexpr auto real(Float f) noexcept -> Float
+{
+    return f;
+}
+
+template <integral Integer>
+[[nodiscard]] constexpr auto real(Integer i) noexcept -> double
+{
+    return static_cast<double>(i);
+}
+
+template <typename T>
+[[nodiscard]] constexpr auto sin(complex<T> const& z) -> complex<T>
+{
+    auto const x = z.real();
+    auto const y = z.imag();
+    return {
+        etl::sin(x) * etl::cosh(y),
+        etl::cos(x) * etl::sinh(y),
+    };
+}
+
+template <typename T>
+[[nodiscard]] constexpr auto sinh(complex<T> const& z) -> complex<T>
+{
+    auto const x = z.real();
+    auto const y = z.imag();
+    return {
+        etl::sinh(x) * etl::cos(y),
+        etl::cosh(x) * etl::sin(y),
+    };
+}
+
+template <typename T>
+[[nodiscard]] constexpr auto tan(complex<T> const& z) -> complex<T>
+{
+    return etl::sin(z) / etl::cos(z);
+}
+
+template <typename T>
+[[nodiscard]] constexpr auto tanh(complex<T> const& z) -> complex<T>
+{
+    return etl::sinh(z) / etl::cosh(z);
+}
+
+/// @}
 
 } // namespace etl
 

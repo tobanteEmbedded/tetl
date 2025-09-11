@@ -4,11 +4,7 @@
 #ifndef TETL_LINALG_EXPOSITION_HPP
 #define TETL_LINALG_EXPOSITION_HPP
 
-#include <etl/_complex/abs.hpp>
 #include <etl/_complex/complex.hpp>
-#include <etl/_complex/conj.hpp>
-#include <etl/_complex/imag.hpp>
-#include <etl/_complex/real.hpp>
 #include <etl/_concepts/same_as.hpp>
 #include <etl/_concepts/unsigned_integral.hpp>
 #include <etl/_math/abs.hpp>
