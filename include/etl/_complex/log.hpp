@@ -5,9 +5,9 @@
 #define TETL_COMPLEX_LOG_HPP
 
 #include <etl/_cmath/log.hpp>
+#include <etl/_complex/abs.hpp>
 #include <etl/_complex/arg.hpp>
 #include <etl/_complex/complex.hpp>
-#include <etl/_math/abs.hpp>
 
 namespace etl {
 

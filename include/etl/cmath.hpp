@@ -27,6 +27,7 @@
 #include <etl/_cmath/cosh.hpp>
 #include <etl/_cmath/erf.hpp>
 #include <etl/_cmath/exp.hpp>
+#include <etl/_cmath/fabs.hpp>
 #include <etl/_cmath/fdim.hpp>
 #include <etl/_cmath/floor.hpp>
 #include <etl/_cmath/fma.hpp>

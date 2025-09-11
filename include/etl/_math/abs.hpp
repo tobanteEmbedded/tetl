@@ -4,22 +4,44 @@
 #ifndef TETL_MATH_ABS_HPP
 #define TETL_MATH_ABS_HPP
 
+#include <etl/_config/all.hpp>
+
+#include <etl/_concepts/same_as.hpp>
+#include <etl/_type_traits/is_constant_evaluated.hpp>
+
 namespace etl {
 namespace detail {
 
-template <typename T>
-[[nodiscard]] constexpr auto abs_impl(T n) noexcept -> T
-{
-    // constexpr auto isInt      = is_same_v<T, int>;
-    // constexpr auto isLong     = is_same_v<T, long>;
-    // constexpr auto isLongLong = is_same_v<T, long long>;
-    // static_assert(isInt || isLong || isLongLong);
-
-    if (n >= T(0)) {
-        return n;
+inline constexpr struct abs {
+    template <typename T>
+    [[nodiscard]] constexpr auto operator()(T arg) const noexcept -> T
+    {
+        if (arg >= T(0)) {
+            return arg;
+        }
+        return arg * T(-1);
     }
-    return n * T(-1);
-}
+} abs;
+
+inline constexpr struct fabs {
+    template <typename Float>
+    [[nodiscard]] constexpr auto operator()(Float arg) const noexcept -> Float
+    {
+        if (not is_constant_evaluated()) {
+#if __has_builtin(__builtin_fabsf)
+            if constexpr (etl::same_as<Float, float>) {
+                return __builtin_fabsf(arg);
+            }
+#endif
+#if __has_builtin(__builtin_fabs)
+            if constexpr (etl::same_as<Float, double>) {
+                return __builtin_fabs(arg);
+            }
+#endif
+        }
+        return etl::detail::abs(arg);
+    }
+} fabs;
 
 } // namespace detail
 
@@ -27,59 +49,34 @@ template <typename T>
 /// undefined if the result cannot be represented by the return type. If abs
 /// is called with an unsigned integral argument that cannot be converted to int
 /// by integral promotion, the program is ill-formed.
-[[nodiscard]] constexpr auto abs(int n) noexcept -> int
+[[nodiscard]] constexpr auto abs(int arg) noexcept -> int
 {
-    return detail::abs_impl<int>(n);
+    return etl::detail::abs(arg);
 }
 
-[[nodiscard]] constexpr auto abs(long n) noexcept -> long
+[[nodiscard]] constexpr auto abs(long arg) noexcept -> long
 {
-    return detail::abs_impl<long>(n);
+    return etl::detail::abs(arg);
 }
 
-[[nodiscard]] constexpr auto abs(long long n) noexcept -> long long
+[[nodiscard]] constexpr auto abs(long long arg) noexcept -> long long
 {
-    return detail::abs_impl<long long>(n);
+    return etl::detail::abs(arg);
 }
 
-[[nodiscard]] constexpr auto abs(float n) noexcept -> float
+[[nodiscard]] constexpr auto abs(float arg) noexcept -> float
 {
-    return detail::abs_impl<float>(n);
+    return etl::detail::abs(arg);
 }
 
-[[nodiscard]] constexpr auto abs(double n) noexcept -> double
+[[nodiscard]] constexpr auto abs(double arg) noexcept -> double
 {
-    return detail::abs_impl<double>(n);
+    return etl::detail::abs(arg);
 }
 
-[[nodiscard]] constexpr auto abs(long double n) noexcept -> long double
+[[nodiscard]] constexpr auto abs(long double arg) noexcept -> long double
 {
-    return detail::abs_impl<long double>(n);
-}
-
-[[nodiscard]] constexpr auto fabs(float n) noexcept -> float
-{
-    return detail::abs_impl<float>(n);
-}
-
-[[nodiscard]] constexpr auto fabsf(float n) noexcept -> float
-{
-    return detail::abs_impl<float>(n);
-}
-
-[[nodiscard]] constexpr auto fabs(double n) noexcept -> double
-{
-    return detail::abs_impl<double>(n);
-}
-
-[[nodiscard]] constexpr auto fabs(long double n) noexcept -> long double
-{
-    return detail::abs_impl<long double>(n);
-}
-
-[[nodiscard]] constexpr auto fabsl(long double n) noexcept -> long double
-{
-    return detail::abs_impl<long double>(n);
+    return etl::detail::abs(arg);
 }
 
 } // namespace etl
