@@ -22,7 +22,7 @@
 
 namespace etl {
 
-/// \ingroup algorithm
+/// \ingroup complex
 /// @{
 
 /// \brief A complex number
