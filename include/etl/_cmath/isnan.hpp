@@ -7,7 +7,6 @@
 #include <etl/_config/all.hpp>
 
 #include <etl/_concepts/integral.hpp>
-#include <etl/_type_traits/is_constant_evaluated.hpp>
 
 namespace etl {
 

@@ -4,7 +4,10 @@
 #ifndef TETL_CMATH_FDIM_HPP
 #define TETL_CMATH_FDIM_HPP
 
+#include <etl/_config/all.hpp>
+
 #include <etl/_cmath/fmax.hpp>
+#include <etl/_type_traits/is_constant_evaluated.hpp>
 
 namespace etl {
 

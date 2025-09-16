@@ -6,6 +6,7 @@
 
 #include <etl/_3rd_party/gcem/gcem.hpp>
 #include <etl/_concepts/integral.hpp>
+#include <etl/_type_traits/is_constant_evaluated.hpp>
 
 namespace etl {
 

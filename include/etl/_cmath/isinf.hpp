@@ -8,7 +8,6 @@
 
 #include <etl/_concepts/integral.hpp>
 #include <etl/_limits/numeric_limits.hpp>
-#include <etl/_type_traits/is_constant_evaluated.hpp>
 
 namespace etl {
 

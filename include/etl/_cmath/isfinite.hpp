@@ -6,6 +6,7 @@
 
 #include <etl/_cmath/isinf.hpp>
 #include <etl/_cmath/isnan.hpp>
+#include <etl/_type_traits/is_constant_evaluated.hpp>
 
 namespace etl {
 
