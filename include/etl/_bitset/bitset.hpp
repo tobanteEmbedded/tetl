@@ -160,7 +160,7 @@ struct bitset {
     [[nodiscard]] constexpr auto operator[](size_t const pos) -> reference
     {
         TETL_PRECONDITION(pos < size());
-        return _bits[pos];
+        return _bits.unchecked_at(pos);
     }
 
     /// Returns the value of the bit at the position pos. Perfoms no
@@ -170,7 +170,7 @@ struct bitset {
     [[nodiscard]] constexpr auto operator[](size_t const pos) const -> bool
     {
         TETL_PRECONDITION(pos < size());
-        return _bits[pos];
+        return _bits.unchecked_at(pos);
     }
 
     /// Returns the value of the bit at the position pos. Perfoms no

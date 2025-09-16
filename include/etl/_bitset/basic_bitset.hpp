@@ -87,14 +87,14 @@ struct basic_bitset {
     }
 
     /// Returns the number of bits that the bitset holds.
-    [[nodiscard]] constexpr auto size() const noexcept -> etl::size_t
+    [[nodiscard]] static constexpr auto size() noexcept -> etl::size_t
     {
         return Bits;
     }
 
     /// Returns true if the bit at position \p pos is set.
     /// \pre `pos < size()`
-    [[nodiscard]] constexpr auto operator[](etl::size_t pos) const -> bool
+    [[nodiscard]] constexpr auto unchecked_at(etl::size_t pos) const -> bool
     {
         TETL_PRECONDITION(pos < size());
         return unchecked_test(pos);
@@ -102,7 +102,7 @@ struct basic_bitset {
 
     /// Returns a reference to the bit at position \p pos
     /// \pre `pos < size()`
-    [[nodiscard]] constexpr auto operator[](etl::size_t pos) -> reference
+    [[nodiscard]] constexpr auto unchecked_at(etl::size_t pos) -> reference
     {
         TETL_PRECONDITION(pos < size());
         return reference{_words[word_index(pos)], offset_in_word(pos)};
