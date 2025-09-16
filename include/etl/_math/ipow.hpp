@@ -19,24 +19,23 @@ template <builtin_integer Int>
     return result;
 }
 
-template <builtin_integer auto Base>
-[[nodiscard]] constexpr auto ipow(decltype(Base) exponent) noexcept -> decltype(Base)
+template <unsigned long long Base, builtin_integer Int>
+[[nodiscard]] constexpr auto ipow(Int exponent) noexcept -> Int
 {
-    using Int  = decltype(Base);
     using UInt = etl::make_unsigned_t<Int>;
 
-    if constexpr (Base == Int(2)) {
+    if constexpr (Base == 2ULL) {
         return static_cast<Int>(UInt(1) << UInt(exponent));
-    } else if constexpr (Base == Int(4)) {
+    } else if constexpr (Base == 4ULL) {
         return static_cast<Int>(UInt(1) << UInt(exponent * Int(2)));
-    } else if constexpr (Base == Int(8)) {
+    } else if constexpr (Base == 8ULL) {
         return static_cast<Int>(UInt(1) << UInt(exponent * Int(3)));
-    } else if constexpr (Base == Int(16)) {
+    } else if constexpr (Base == 16ULL) {
         return static_cast<Int>(UInt(1) << UInt(exponent * Int(4)));
-    } else if constexpr (Base == Int(32)) {
+    } else if constexpr (Base == 32ULL) {
         return static_cast<Int>(UInt(1) << UInt(exponent * Int(5)));
     } else {
-        return ipow(Base, exponent);
+        return etl::ipow(static_cast<Int>(Base), exponent);
     }
 }
 
