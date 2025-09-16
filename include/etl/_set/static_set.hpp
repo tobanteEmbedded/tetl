@@ -210,10 +210,10 @@ public:
     constexpr auto insert(value_type&& value) -> pair<iterator, bool>
         requires(is_move_constructible_v<value_type>)
     {
-        if (!full()) {
+        if (not full()) {
             auto cmp = key_compare{};
             auto* p  = etl::lower_bound(_storage.begin(), _storage.end(), value, cmp);
-            if (p == _storage.end() || *(p) != value) {
+            if (p == _storage.end() or *p != value) {
                 _storage.push_back(etl::move(value));
                 auto* pos = rotate(p, _storage.end() - 1, _storage.end());
                 return make_pair(pos, true);
@@ -514,7 +514,7 @@ template <typename Key, size_t Capacity, typename Comp>
 [[nodiscard]] constexpr auto
 operator==(static_set<Key, Capacity, Comp> const& lhs, static_set<Key, Capacity, Comp> const& rhs) -> bool
 {
-    return lhs.size() == rhs.size() && equal(begin(lhs), end(lhs), begin(rhs));
+    return lhs.size() == rhs.size() and equal(lhs.begin(), lhs.end(), rhs.begin());
 }
 
 /// \brief Compares the contents of two sets.

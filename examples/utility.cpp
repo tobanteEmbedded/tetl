@@ -25,12 +25,12 @@ auto main() -> int
 
     // AS CONST
     auto c = 1;
-    static_assert(!etl::is_const_v<decltype(c)>);
+    static_assert(not etl::is_const_v<decltype(c)>);
     static_assert(etl::is_const_v<etl::remove_reference_t<decltype(etl::as_const(c))>>);
 
     // CMP
     static_assert(etl::cmp_equal(42, 42));
-    static_assert(!etl::cmp_equal(42UL, 100UL));
+    static_assert(not etl::cmp_equal(42UL, 100UL));
     static_assert(etl::cmp_not_equal(42UL, 100UL));
 
     // PAIR construct

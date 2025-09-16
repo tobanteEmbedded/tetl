@@ -28,7 +28,7 @@ static constexpr auto test() -> bool
     CHECK(etl::hash<T>{}(42) == etl::hash<T>{}(42));
 
 #if __has_builtin(__builtin_is_constant_evaluated)
-    if (!etl::is_constant_evaluated()) {
+    if (not etl::is_constant_evaluated()) {
         auto val = T{42};
         CHECK(etl::hash<T*>{}(&val) != 0);
     }

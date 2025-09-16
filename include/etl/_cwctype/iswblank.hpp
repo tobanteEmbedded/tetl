@@ -20,7 +20,7 @@ namespace etl {
 /// \ingroup cwctype
 [[nodiscard]] constexpr auto iswblank(wint_t ch) noexcept -> int
 {
-    return static_cast<int>(ch == L' ' || ch == L'\t');
+    return static_cast<int>(ch == L' ' or ch == L'\t');
 }
 } // namespace etl
 

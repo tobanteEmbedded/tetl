@@ -14,6 +14,10 @@ namespace etl {
 
 template <typename T>
 struct default_delete {
+    static_assert(not is_function_v<T>);
+    static_assert(not is_void_v<T>);
+    static_assert(sizeof(T));
+
     constexpr default_delete() noexcept = default;
 
     template <typename U>
@@ -26,11 +30,6 @@ struct default_delete {
     {
         delete ptr;
     }
-
-private:
-    static_assert(!is_function_v<T>);
-    static_assert(!is_void_v<T>);
-    static_assert(sizeof(T));
 };
 
 template <typename T>

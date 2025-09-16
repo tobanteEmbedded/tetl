@@ -87,7 +87,7 @@ struct mdspan {
     template <typename... OtherIndexTypes>
         requires((is_convertible_v<OtherIndexTypes, index_type> and ...)
                  and (is_nothrow_constructible_v<index_type, OtherIndexTypes> and ...)
-                 and ((sizeof...(OtherIndexTypes) == rank()) || (sizeof...(OtherIndexTypes) == rank_dynamic()))
+                 and ((sizeof...(OtherIndexTypes) == rank()) or (sizeof...(OtherIndexTypes) == rank_dynamic()))
                  and is_constructible_v<mapping_type, extents_type>
                  and is_default_constructible_v<accessor_type>)
     explicit constexpr mdspan(data_handle_type ptr, OtherIndexTypes... exts)
@@ -181,8 +181,8 @@ struct mdspan {
 #if defined(__cpp_multidimensional_subscript)
     template <typename... OtherIndexTypes>
         requires(
-            (is_convertible_v<OtherIndexTypes, index_type> && ...)
-            and (is_nothrow_constructible_v<index_type, OtherIndexTypes> && ...)
+            (is_convertible_v<OtherIndexTypes, index_type> and ...)
+            and (is_nothrow_constructible_v<index_type, OtherIndexTypes> and ...)
             and sizeof...(OtherIndexTypes) == rank()
         )
     [[nodiscard]] constexpr auto operator[](OtherIndexTypes... indices) const -> reference
@@ -276,7 +276,7 @@ private:
 };
 
 template <typename CArray>
-    requires(is_array_v<CArray> && rank_v<CArray> == 1)
+    requires(is_array_v<CArray> and rank_v<CArray> == 1)
 mdspan(CArray&) -> mdspan<remove_all_extents_t<CArray>, extents<size_t, extent_v<CArray, 0>>>;
 
 template <typename Pointer>
@@ -284,7 +284,7 @@ template <typename Pointer>
 mdspan(Pointer&&) -> mdspan<remove_pointer_t<remove_reference_t<Pointer>>, extents<size_t>>;
 
 template <typename ElementType, typename... Integrals>
-    requires((is_convertible_v<Integrals, size_t> && ...) && sizeof...(Integrals) > 0)
+    requires((is_convertible_v<Integrals, size_t> and ...) and sizeof...(Integrals) > 0)
 explicit mdspan(ElementType*, Integrals...) -> mdspan<ElementType, dextents<size_t, sizeof...(Integrals)>>;
 
 template <typename ElementType, typename IndexType, size_t... ExtentsPack>

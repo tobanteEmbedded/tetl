@@ -15,7 +15,7 @@ namespace etl {
 template <floating_point Float>
 [[nodiscard]] constexpr auto lerp(Float a, Float b, Float t) noexcept -> Float
 {
-    if ((a <= 0 && b >= 0) || (a >= 0 && b <= 0)) {
+    if ((a <= 0 and b >= 0) or (a >= 0 and b <= 0)) {
         return t * b + (1 - t) * a;
     }
 

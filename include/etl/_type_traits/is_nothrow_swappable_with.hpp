@@ -14,7 +14,7 @@ namespace etl {
 
 // clang-format off
 template <typename T, typename U>
-struct _swap_no_throw : bool_constant<noexcept(swap(declval<T>(), declval<U>())) && noexcept(swap(declval<U>(), declval<T>()))> { }; // NOLINT
+struct _swap_no_throw : bool_constant<noexcept(swap(declval<T>(), declval<U>())) and noexcept(swap(declval<U>(), declval<T>()))> { }; // NOLINT
 // clang-format on
 
 /// \ingroup type_traits

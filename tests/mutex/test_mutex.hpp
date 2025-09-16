@@ -27,7 +27,7 @@ struct Mutex {
 
     constexpr auto try_lock() noexcept -> bool
     {
-        if (not _isLocked && not _failOnTryLock) {
+        if (not _isLocked and not _failOnTryLock) {
             _isLocked = true;
             return true;
         }

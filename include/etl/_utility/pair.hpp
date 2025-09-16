@@ -40,7 +40,7 @@ struct pair {
 
     /// \brief Default constructor. Value-initializes both elements.
     explicit(
-        not is_implicit_default_constructible_v<T1> || not is_implicit_default_constructible_v<T2>
+        not is_implicit_default_constructible_v<T1> or not is_implicit_default_constructible_v<T2>
     ) constexpr pair()
         requires(is_default_constructible_v<T1> and is_default_constructible_v<T2>)
         : first{}
@@ -61,7 +61,7 @@ struct pair {
     /// \brief Initializes first with forward<U1>(x) and second with forward<U2>(y).
     template <typename U1 = T1, typename U2 = T2>
         requires(is_constructible_v<T1, U1 &&> and is_constructible_v<T2, U2 &&>)
-    explicit(not is_convertible_v<U1&&, T1> || not is_convertible_v<U2&&, T2>) constexpr pair(U1&& x, U2&& y)
+    explicit(not is_convertible_v<U1&&, T1> or not is_convertible_v<U2&&, T2>) constexpr pair(U1&& x, U2&& y)
         : first(etl::forward<U1>(x))
         , second(etl::forward<U2>(y))
     {
@@ -81,7 +81,7 @@ struct pair {
     /// \brief Initializes first with forward<U1>(p.first) and second with forward<U2>(p.second).
     template <typename U1, typename U2>
         requires(is_constructible_v<T1, U1 &&> and is_constructible_v<T2, U2 &&>)
-    explicit(not is_convertible_v<U1&&, T1> || not is_convertible_v<U2&&, T2>) constexpr pair(pair<U1, U2>&& p)
+    explicit(not is_convertible_v<U1&&, T1> or not is_convertible_v<U2&&, T2>) constexpr pair(pair<U1, U2>&& p)
         : first(etl::forward<U1>(p.first))
         , second(etl::forward<U2>(p.second))
     {

@@ -17,7 +17,7 @@ constexpr auto str_replace(CharT* f, CharT* l, CharT ch) -> void
 template <typename CharT>
 constexpr auto str_replace(CharT* f, CharT* l, CharT const* sf, CharT const* sl) -> void
 {
-    for (; (f != l) && (sf != sl); ++f, ++sf) {
+    for (; (f != l) and (sf != sl); ++f, ++sf) {
         *f = *sf;
     }
 }

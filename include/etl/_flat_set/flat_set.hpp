@@ -274,7 +274,7 @@ struct flat_set {
     }
 
     constexpr auto
-    swap(flat_set& other) noexcept(etl::is_nothrow_swappable_v<Container> && etl::is_nothrow_swappable_v<Compare>)
+    swap(flat_set& other) noexcept(etl::is_nothrow_swappable_v<Container> and etl::is_nothrow_swappable_v<Compare>)
         -> void
     {
         using etl::swap;
@@ -452,12 +452,12 @@ struct flat_set {
 
     friend constexpr auto operator<=(flat_set const& x, flat_set const& y) -> bool
     {
-        return !(y < x);
+        return not(y < x);
     }
 
     friend constexpr auto operator>=(flat_set const& x, flat_set const& y) -> bool
     {
-        return !(x < y);
+        return not(x < y);
     }
 
     friend constexpr auto swap(flat_set& x, flat_set& y) noexcept(noexcept(x.swap(y))) -> void

@@ -29,7 +29,7 @@ template <etl::builtin_unsigned_integer UInt>
     }
 
     auto res = 0;
-    while (!(x & (UInt(1) << (static_cast<UInt>(totalBits) - UInt(1))))) {
+    while (not(x & (UInt(1) << (static_cast<UInt>(totalBits) - UInt(1))))) {
         x = static_cast<UInt>(x << UInt(1));
         ++res;
     }

@@ -33,13 +33,13 @@ auto main() -> int
     assert(str == "Hell");
 
     str.push_back('o');
-    assert(!str.empty());
+    assert(not str.empty());
     assert(str.size() == 5);
     assert(str == "Hello");
 
     auto other = etl::string_view{" World"};
     str.append(other, 0);
-    assert(!str.empty());
+    assert(not str.empty());
     assert(str.size() == 11);
     assert(str == "Hello World");
 

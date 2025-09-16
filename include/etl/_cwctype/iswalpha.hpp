@@ -20,9 +20,9 @@ namespace etl {
 /// \ingroup cwctype
 [[nodiscard]] constexpr auto iswalpha(wint_t ch) noexcept -> int
 {
-    auto isLower = ch >= L'a' && ch <= L'z';
-    auto isUpper = ch >= L'A' && ch <= L'Z';
-    return static_cast<int>(isLower || isUpper);
+    auto isLower = ch >= L'a' and ch <= L'z';
+    auto isUpper = ch >= L'A' and ch <= L'Z';
+    return static_cast<int>(isLower or isUpper);
 }
 } // namespace etl
 

@@ -13,7 +13,7 @@ namespace etl {
 /// performing a logical AND on the sequence of traits.
 /// \ingroup type_traits
 template <typename... B>
-struct conjunction : bool_constant<(B::value && ...)> { };
+struct conjunction : bool_constant<(B::value and ...)> { };
 
 /// \ingroup type_traits
 /// \relates conjunction

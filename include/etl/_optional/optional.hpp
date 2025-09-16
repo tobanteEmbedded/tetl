@@ -93,9 +93,9 @@ struct optional {
     using iterator       = T*;
     using const_iterator = T const*;
 
-    static_assert(!is_array_v<T>, "instantiation of optional with an array type is ill-formed");
-    static_assert(!is_same_v<remove_cvref_t<T>, nullopt_t>, "instantiation of optional with nullopt_t is ill-formed");
-    static_assert(!is_same_v<remove_cvref_t<T>, in_place_t>, "instantiation of optional with in_place_t is ill-formed");
+    static_assert(not is_array_v<T>, "optional of an array type is ill-formed");
+    static_assert(not is_same_v<remove_cvref_t<T>, nullopt_t>, "optional of nullopt_t is ill-formed");
+    static_assert(not is_same_v<remove_cvref_t<T>, in_place_t>, "optional of in_place_t is ill-formed");
 
     /// Constructs an object that does not contain a value.
     constexpr optional() noexcept = default;

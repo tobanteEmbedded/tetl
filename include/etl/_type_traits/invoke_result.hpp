@@ -33,7 +33,7 @@ struct invoke_impl<MT B::*> {
     static auto get(T&& t) -> decltype(t.get());
 
     template <typename T, typename Td = decay_t<T>>
-        requires(!is_base_of_v<B, Td> and !is_reference_wrapper<Td>::value)
+        requires(not is_base_of_v<B, Td> and !is_reference_wrapper<Td>::value)
     static auto get(T&& t) -> decltype(*etl::forward<T>(t));
 
     template <typename T, typename... Args, typename MT1>

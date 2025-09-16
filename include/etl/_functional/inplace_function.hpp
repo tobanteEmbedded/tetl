@@ -127,7 +127,7 @@ public:
     }
 
     template <typename T, typename C = decay_t<T>>
-        requires(!detail::is_inplace_function<C>::value && is_invocable_r_v<R, C&, Args...>)
+        requires(not detail::is_inplace_function<C>::value and is_invocable_r_v<R, C&, Args...>)
     inplace_function(T&& closure)
     {
         static_assert(is_copy_constructible_v<C>, "inplace_function cannot be constructed from non-copyable type");
@@ -265,7 +265,7 @@ template <typename R, typename... Args, size_t Capacity, size_t Alignment>
 [[nodiscard]] constexpr auto
 operator==(inplace_function<R(Args...), Capacity, Alignment> const& f, nullptr_t /*ignore*/) noexcept -> bool
 {
-    return !static_cast<bool>(f);
+    return not static_cast<bool>(f);
 }
 
 /// \brief Compares a etl::inplace_function with a null pointer. Empty functions
@@ -285,7 +285,7 @@ template <typename R, typename... Args, size_t Capacity, size_t Alignment>
 [[nodiscard]] constexpr auto
 operator==(nullptr_t /*ignore*/, inplace_function<R(Args...), Capacity, Alignment> const& f) noexcept -> bool
 {
-    return !static_cast<bool>(f);
+    return not static_cast<bool>(f);
 }
 
 /// \brief Compares a etl::inplace_function with a null pointer. Empty functions

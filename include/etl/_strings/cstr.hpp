@@ -52,7 +52,7 @@ template <typename CharT, typename SizeT>
 {
     auto* ptr          = dest + strlen<CharT, SizeT>(dest);
     SizeT localCounter = 0;
-    while (*src != CharT(0) && localCounter != count) {
+    while (*src != CharT(0) and localCounter != count) {
         *ptr++ = *src++;
         ++localCounter;
     }
@@ -147,7 +147,7 @@ template <typename CharT, typename SizeT, bool InclusiveSearch>
     auto const length = strlen<CharT, SizeT>(dest);
     auto const srcLen = strlen<CharT, SizeT>(src);
     for (SizeT i = 0; i < length; ++i) {
-        if (!is_legal_char<CharT, SizeT, InclusiveSearch>(src, srcLen, dest[i])) {
+        if (not is_legal_char<CharT, SizeT, InclusiveSearch>(src, srcLen, dest[i])) {
             break;
         }
         ++result;
@@ -173,7 +173,7 @@ template <typename CharT>
 [[nodiscard]] constexpr auto strstr_impl(CharT* haystack, CharT* needle) noexcept -> CharT*
 {
     while (*haystack != CharT(0)) {
-        if ((*haystack == *needle) && (strcmp(haystack, needle) == 0)) {
+        if ((*haystack == *needle) and (strcmp(haystack, needle) == 0)) {
             return haystack;
         }
         haystack++;

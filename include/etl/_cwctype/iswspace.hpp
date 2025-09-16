@@ -33,7 +33,7 @@ namespace etl {
     auto const carriage = ch == L'\r';
     auto const hTab     = ch == L'\t';
     auto const vTab     = ch == L'\v';
-    return static_cast<int>(sp || form || line || carriage || hTab || vTab);
+    return static_cast<int>(sp or form or line or carriage or hTab or vTab);
 }
 } // namespace etl
 

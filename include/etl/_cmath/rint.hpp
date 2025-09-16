@@ -25,7 +25,7 @@ template <typename T>
 template <typename T>
 [[nodiscard]] constexpr auto rint_impl(T arg) noexcept -> T
 {
-    if (!is_constant_evaluated()) {
+    if (not is_constant_evaluated()) {
         if constexpr (is_same_v<T, float>) {
 #if __has_builtin(__builtin_rintf)
             return __builtin_rintf(arg);

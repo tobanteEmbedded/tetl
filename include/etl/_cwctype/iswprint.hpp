@@ -22,7 +22,7 @@ namespace etl {
 /// \ingroup cwctype
 [[nodiscard]] constexpr auto iswprint(wint_t ch) noexcept -> int
 {
-    return static_cast<int>(etl::iswgraph(ch) != 0 || ch == ' ');
+    return static_cast<int>(etl::iswgraph(ch) != 0 or ch == ' ');
 }
 
 } // namespace etl

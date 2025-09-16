@@ -24,7 +24,7 @@ constexpr auto copysign_fallback(T x, T y) noexcept -> T
 template <typename T>
 [[nodiscard]] constexpr auto copysign(T x, T y) noexcept -> T
 {
-    if (!is_constant_evaluated()) {
+    if (not is_constant_evaluated()) {
         if constexpr (is_same_v<T, float>) {
 #if __has_builtin(__builtin_copysignf)
             return __builtin_copysignf(x, y);

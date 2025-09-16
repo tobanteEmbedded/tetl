@@ -15,7 +15,7 @@ template <typename T = void>
 struct logical_and {
     [[nodiscard]] constexpr auto operator()(T const& lhs, T const& rhs) const -> bool
     {
-        return lhs && rhs;
+        return lhs and rhs;
     }
 };
 
@@ -25,10 +25,10 @@ struct logical_and<void> {
 
     template <typename T, typename U>
     [[nodiscard]] constexpr auto
-    operator()(T&& lhs, U&& rhs) const noexcept(noexcept(etl::forward<T>(lhs) && etl::forward<U>(rhs)))
-        -> decltype(etl::forward<T>(lhs) && etl::forward<U>(rhs))
+    operator()(T&& lhs, U&& rhs) const noexcept(noexcept(etl::forward<T>(lhs) and etl::forward<U>(rhs)))
+        -> decltype(etl::forward<T>(lhs) and etl::forward<U>(rhs))
     {
-        return etl::forward<T>(lhs) && etl::forward<U>(rhs);
+        return etl::forward<T>(lhs) and etl::forward<U>(rhs);
     }
 };
 

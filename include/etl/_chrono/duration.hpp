@@ -317,7 +317,7 @@ template <typename Rep1, typename Period1, typename Rep2, typename Period2>
 template <typename Rep1, typename Period1, typename Rep2, typename Period2>
 [[nodiscard]] constexpr auto operator!=(duration<Rep1, Period1> const& lhs, duration<Rep2, Period2> const& rhs) -> bool
 {
-    return !(lhs == rhs);
+    return not(lhs == rhs);
 }
 
 /// Compares two durations. Compares lhs to rhs, i.e. compares the number
@@ -334,7 +334,7 @@ template <typename Rep1, typename Period1, typename Rep2, typename Period2>
 template <typename Rep1, typename Period1, typename Rep2, typename Period2>
 [[nodiscard]] constexpr auto operator<=(duration<Rep1, Period1> const& lhs, duration<Rep2, Period2> const& rhs) -> bool
 {
-    return !(rhs < lhs);
+    return not(rhs < lhs);
 }
 
 /// Compares two durations. Compares lhs to rhs, i.e. compares the number
@@ -350,7 +350,7 @@ template <typename Rep1, typename Period1, typename Rep2, typename Period2>
 template <typename Rep1, typename Period1, typename Rep2, typename Period2>
 [[nodiscard]] constexpr auto operator>=(duration<Rep1, Period1> const& lhs, duration<Rep2, Period2> const& rhs) -> bool
 {
-    return !(lhs < rhs);
+    return not(lhs < rhs);
 }
 
 /// Signed integer type of at least 64 bits.

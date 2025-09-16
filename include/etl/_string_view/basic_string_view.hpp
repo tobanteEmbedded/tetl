@@ -322,10 +322,10 @@ struct basic_string_view {
 
     /// Checks if the string view begins with the given prefix, where the prefix is a single character.
     ///
-    /// \details Effectively returns !empty() && Traits::eq(front(), c)
+    /// \details Effectively returns not empty() and Traits::eq(front(), c)
     [[nodiscard]] constexpr auto starts_with(Char c) const noexcept -> bool
     {
-        return !empty() && traits_type::eq(front(), c);
+        return not empty() and traits_type::eq(front(), c);
     }
 
     /// \brief Checks if the string view begins with the given prefix, where the
@@ -340,20 +340,20 @@ struct basic_string_view {
     /// \brief Checks if the string view ends with the given suffix, where the
     /// prefix is a string view.
     ///
-    /// \details Effectively returns size() >= sv.size() && compare(size() -
+    /// \details Effectively returns size() >= sv.size() and compare(size() -
     /// sv.size(), npos, sv) == 0
     [[nodiscard]] constexpr auto ends_with(basic_string_view sv) const noexcept -> bool
     {
-        return size() >= sv.size() && compare(size() - sv.size(), npos, sv) == 0;
+        return size() >= sv.size() and compare(size() - sv.size(), npos, sv) == 0;
     }
 
     /// \brief Checks if the string view ends with the given suffix, where the
     /// prefix is a single character.
     ///
-    /// \details Effectively returns !empty() && Traits::eq(back(), c)
+    /// \details Effectively returns not empty() and Traits::eq(back(), c)
     [[nodiscard]] constexpr auto ends_with(Char c) const noexcept -> bool
     {
-        return !empty() && Traits::eq(back(), c);
+        return not empty() and Traits::eq(back(), c);
     }
 
     /// \brief Checks if the string view ends with the given suffix, where the
@@ -447,7 +447,7 @@ struct basic_string_view {
         }
 
         auto const* r = etl::find_end(data(), data() + pos, sv.begin(), sv.end(), Traits::eq);
-        if (sv.size() > 0 && r == data() + pos) {
+        if (sv.size() > 0 and r == data() + pos) {
             return npos;
         }
         return static_cast<size_type>(r - data());
@@ -578,7 +578,7 @@ struct basic_string_view {
         if (pos < size()) {
             auto const* last = data() + size();
             for (auto const* s = data() + pos; s != last; ++s) {
-                if (!Traits::eq(*s, c)) {
+                if (not Traits::eq(*s, c)) {
                     return static_cast<size_type>(s - data());
                 }
             }

@@ -21,7 +21,7 @@ template <typename T, typename U>
 template <typename T>
 [[nodiscard]] constexpr auto lrint_impl(T arg) noexcept -> long
 {
-    if (!is_constant_evaluated()) {
+    if (not is_constant_evaluated()) {
         if constexpr (is_same_v<T, float>) {
 #if __has_builtin(__builtin_lrintf)
             return __builtin_lrintf(arg);
@@ -44,7 +44,7 @@ template <typename T>
 template <typename T>
 [[nodiscard]] constexpr auto llrint_impl(T arg) noexcept -> long long
 {
-    if (!is_constant_evaluated()) {
+    if (not is_constant_evaluated()) {
         if constexpr (is_same_v<T, float>) {
 #if __has_builtin(__builtin_llrintf)
             return __builtin_llrintf(arg);

@@ -28,7 +28,7 @@ template <typename IntType>
     }
 
     etl::sort(begin(vec), end(vec));
-    if (!etl::is_sorted(begin(vec), end(vec))) {
+    if (not etl::is_sorted(begin(vec), end(vec))) {
         return 1;
     }
 
@@ -49,7 +49,7 @@ template <typename FloatType>
     }
 
     etl::sort(begin(vec), end(vec));
-    if (!etl::is_sorted(begin(vec), end(vec))) {
+    if (not etl::is_sorted(begin(vec), end(vec))) {
         return 1;
     }
 
@@ -87,7 +87,7 @@ template <typename IntType>
 
     auto e = etl::mismatch(begin(src), end(src), begin(objs), end(objs));
     auto s = std::mismatch(begin(src), end(src), begin(objs), end(objs));
-    if ((e.first != s.first) || (e.second != s.second)) {
+    if ((e.first != s.first) or (e.second != s.second)) {
         return 1;
     }
 

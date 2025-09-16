@@ -18,7 +18,7 @@ namespace etl {
 ///
 /// \ingroup concepts
 template <typename T>
-concept move_constructible = constructible_from<T, T> && convertible_to<T, T>;
+concept move_constructible = constructible_from<T, T> and convertible_to<T, T>;
 
 } // namespace etl
 

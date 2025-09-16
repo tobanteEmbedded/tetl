@@ -146,19 +146,19 @@ concept inout_matrix = is_mdspan_v<T>
 
 /// \ingroup linalg
 template <typename T>
-concept in_object = is_mdspan_v<T> and (T::rank() == 1 || T::rank() == 2);
+concept in_object = is_mdspan_v<T> and (T::rank() == 1 or T::rank() == 2);
 
 /// \ingroup linalg
 template <typename T>
 concept out_object = is_mdspan_v<T>
-                 and (T::rank() == 1 || T::rank() == 2)
+                 and (T::rank() == 1 or T::rank() == 2)
                  and is_same_v<remove_const_t<typename T::element_type>, typename T::element_type>
                  and T::is_always_unique();
 
 /// \ingroup linalg
 template <typename T>
 concept inout_object = is_mdspan_v<T>
-                   and (T::rank() == 1 || T::rank() == 2)
+                   and (T::rank() == 1 or T::rank() == 2)
                    and is_same_v<remove_const_t<typename T::element_type>, typename T::element_type>
                    and T::is_always_unique();
 

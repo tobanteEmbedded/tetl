@@ -34,13 +34,13 @@ template <typename Float>
 
     auto const* ptr = str.data();
     for (; *ptr != '\0'; ++ptr) {
-        if (etl::isspace(*ptr) && leadingSpaces) {
+        if (etl::isspace(*ptr) and leadingSpaces) {
             continue;
         }
         leadingSpaces = false;
 
         if (etl::isdigit(*ptr)) {
-            if (!afterDecimalPoint) {
+            if (not afterDecimalPoint) {
                 res *= 10;         // Shift the previous digits to the left
                 res += *ptr - '0'; // Add the new one
             } else {
