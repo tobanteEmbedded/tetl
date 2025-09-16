@@ -4,6 +4,8 @@
 #ifndef TETL_CSTRING_MEMCHR_HPP
 #define TETL_CSTRING_MEMCHR_HPP
 
+#include <etl/_config/all.hpp>
+
 #include <etl/_cstddef/size_t.hpp>
 #include <etl/_strings/cstr.hpp>
 
@@ -28,7 +30,7 @@ namespace etl {
 /// \ingroup cstring
 [[nodiscard]] inline auto memchr(void* ptr, int ch, etl::size_t n) -> void*
 {
-#if defined(__clang__)
+#if __has_builtin(__builtin_memchr)
     return __builtin_memchr(ptr, ch, n);
 #else
     auto* p = static_cast<unsigned char*>(ptr);
@@ -38,7 +40,7 @@ namespace etl {
 
 [[nodiscard]] inline auto memchr(void const* ptr, int ch, etl::size_t n) -> void const*
 {
-#if defined(__clang__)
+#if __has_builtin(__builtin_memchr)
     return __builtin_memchr(ptr, ch, n);
 #else
     auto const* const p = static_cast<unsigned char const*>(ptr);

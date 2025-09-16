@@ -4,6 +4,8 @@
 #ifndef TETL_CWCHAR_WMEMMOVE_HPP
 #define TETL_CWCHAR_WMEMMOVE_HPP
 
+#include <etl/_config/all.hpp>
+
 #include <etl/_cstddef/size_t.hpp>
 #include <etl/_strings/cstr.hpp>
 
@@ -23,7 +25,7 @@ namespace etl {
 /// https://en.cppreference.com/w/cpp/string/wide/wmemmove
 constexpr auto wmemmove(wchar_t* dest, wchar_t const* src, etl::size_t count) noexcept -> wchar_t*
 {
-#if defined(__clang__)
+#if __has_builtin(__builtin_wmemmove)
     return __builtin_wmemmove(dest, src, count);
 #else
     return etl::detail::memmove<wchar_t, etl::size_t>(dest, src, count);

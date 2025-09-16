@@ -4,6 +4,8 @@
 #ifndef TETL_CWCHAR_WMEMCPY_HPP
 #define TETL_CWCHAR_WMEMCPY_HPP
 
+#include <etl/_config/all.hpp>
+
 #include <etl/_cstddef/size_t.hpp>
 #include <etl/_strings/cstr.hpp>
 
@@ -17,7 +19,7 @@ namespace etl {
 /// https://en.cppreference.com/w/cpp/string/wide/wmemcpy
 constexpr auto wmemcpy(wchar_t* dest, wchar_t const* src, etl::size_t count) noexcept -> wchar_t*
 {
-#if defined(__clang__)
+#if __has_builtin(__builtin_wmemcpy)
     return __builtin_wmemcpy(dest, src, count);
 #else
     if (count == 0) {

@@ -4,9 +4,12 @@
 #ifndef TETL_CSTRING_STRCHR_HPP
 #define TETL_CSTRING_STRCHR_HPP
 
+#include <etl/_config/all.hpp>
+
 #include <etl/_contracts/check.hpp>
 #include <etl/_cstddef/size_t.hpp>
 #include <etl/_strings/cstr.hpp>
+#include <etl/_type_traits/is_constant_evaluated.hpp>
 
 namespace etl {
 
@@ -25,21 +28,23 @@ namespace etl {
 [[nodiscard]] constexpr auto strchr(char const* str, int ch) -> char const*
 {
     TETL_PRECONDITION(str != nullptr);
-#if defined(__clang__)
-    return __builtin_strchr(str, ch);
-#else
-    return etl::detail::strchr<char const>(str, ch);
+    if (not is_constant_evaluated()) {
+#if __has_builtin(__builtin_strchr)
+        return __builtin_strchr(str, ch);
 #endif
+    }
+    return etl::detail::strchr<char const>(str, ch);
 }
 
 [[nodiscard]] constexpr auto strchr(char* str, int ch) -> char*
 {
     TETL_PRECONDITION(str != nullptr);
-#if defined(__clang__)
-    return __builtin_strchr(str, ch);
-#else
-    return etl::detail::strchr<char>(str, ch);
+    if (not is_constant_evaluated()) {
+#if __has_builtin(__builtin_strchr)
+        return __builtin_strchr(str, ch);
 #endif
+    }
+    return etl::detail::strchr<char>(str, ch);
 }
 
 /// @}
