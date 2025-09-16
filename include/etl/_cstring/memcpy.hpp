@@ -4,6 +4,8 @@
 #ifndef TETL_CSTRING_MEMCPY_HPP
 #define TETL_CSTRING_MEMCPY_HPP
 
+#include <etl/_config/all.hpp>
+
 #include <etl/_cstddef/size_t.hpp>
 #include <etl/_strings/cstr.hpp>
 
@@ -15,7 +17,7 @@ namespace etl {
 /// \ingroup cstring
 inline auto memcpy(void* dest, void const* src, etl::size_t n) -> void*
 {
-#if defined(__clang__)
+#if __has_builtin(__builtin_memcpy)
     return __builtin_memcpy(dest, src, n);
 #else
     return etl::detail::memcpy<unsigned char, etl::size_t>(dest, src, n);
