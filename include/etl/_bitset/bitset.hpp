@@ -5,6 +5,9 @@
 #define TETL_BITSET_BITSET_HPP
 
 #include <etl/_algorithm/min.hpp>
+#include <etl/_bit/bit_cast.hpp>
+#include <etl/_bit/byteswap.hpp>
+#include <etl/_bit/endian.hpp>
 #include <etl/_bit/set_bit.hpp>
 #include <etl/_bitset/basic_bitset.hpp>
 #include <etl/_contracts/check.hpp>
@@ -59,17 +62,20 @@ struct bitset {
         CharT zero                                               = CharT('0'),
         CharT one                                                = CharT('1')
     )
-        : bitset(0ULL)
+        : bitset()
     {
-        auto const len = etl::min<decltype(pos)>(n, str.size() - pos);
+        using size_type = decltype(pos);
+
+        auto const len    = etl::min<size_type>(n, str.size() - pos);
+        auto const substr = str.substr(pos, len);
         TETL_PRECONDITION(len >= 0);
         TETL_PRECONDITION(len <= size());
 
-        for (decltype(pos) i = 0; i < len; ++i) {
-            if (Traits::eq(str[i + pos], one)) {
+        for (size_type i{0}; i < len; ++i) {
+            if (Traits::eq(substr[len - i - 1], one)) {
                 set(i, true);
             }
-            if (Traits::eq(str[i + pos], zero)) {
+            if (Traits::eq(substr[len - i - 1], zero)) {
                 set(i, false);
             }
         }
@@ -308,15 +314,23 @@ private:
     template <typename UInt>
     [[nodiscard]] constexpr auto to_unsigned_type() const noexcept -> UInt
     {
-        constexpr auto digits = static_cast<UInt>(etl::numeric_limits<UInt>::digits);
-        auto const idx        = etl::min<UInt>(static_cast<UInt>(size()), digits);
-        UInt result{};
-        for (UInt i{0}; i != idx; ++i) {
-            if (test(static_cast<etl::size_t>(i))) {
-                result = etl::set_bit(result, i);
+        if constexpr (sizeof(UInt) * CHAR_BIT == Bits) {
+            if constexpr (etl::endian::native == etl::endian::little) {
+                return etl::bit_cast<UInt>(_bits);
+            } else {
+                return etl::byteswap(etl::bit_cast<UInt>(_bits));
             }
+        } else {
+            constexpr auto digits = static_cast<UInt>(etl::numeric_limits<UInt>::digits);
+            auto const idx        = etl::min<UInt>(static_cast<UInt>(size()), digits);
+            UInt result{};
+            for (UInt i{0}; i != idx; ++i) {
+                if (test(static_cast<etl::size_t>(i))) {
+                    result = etl::set_bit(result, i);
+                }
+            }
+            return result;
         }
-        return result;
     }
 
     basic_bitset<Bits, etl::size_t> _bits;

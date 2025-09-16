@@ -4,18 +4,22 @@
 #include "fuzzing.hpp"
 
 #include <etl/bitset.hpp>
+#include <etl/cstddef.hpp>
 
 #include <bitset>
 #include <cstdio>
 
+template <etl::size_t Size>
 auto fuzz_bitset(FuzzedDataProvider& p) -> int
 {
-    auto const val = p.ConsumeIntegral<etl::uint32_t>();
+    using UInt = etl::conditional_t<(Size > 32), etl::uint64_t, etl::uint32_t>;
 
-    auto const eset = etl::bitset<32>{val};
-    auto const sset = std::bitset<32>{val};
+    auto const val = p.ConsumeIntegral<UInt>();
 
-    auto const estr = eset.to_string<32>();
+    auto const eset = etl::bitset<Size>{val};
+    auto const sset = std::bitset<Size>{val};
+
+    auto const estr = eset.template to_string<Size>();
     auto const sstr = sset.to_string();
 
     auto const eview = etl::string_view{estr.data(), estr.size()};
@@ -26,9 +30,17 @@ auto fuzz_bitset(FuzzedDataProvider& p) -> int
 
     if ((eview != sview) or (elong != slong)) {
         std::printf("etl::bitset::to_ullong\n");
-        std::printf("val: '%u'\n", val);
+        std::printf("val: '%llu'\n", static_cast<unsigned long long>(val));
         std::printf("estr: '%s'\nsstr: '%s'\n", estr.c_str(), sstr.c_str());
         std::printf("elong: '%llu' slong: '%llu'\n", elong, slong);
+        return 1;
+    }
+
+    auto const efromstr = etl::bitset<Size>{estr.c_str()};
+
+    if (eset != efromstr) {
+        std::printf("etl::bitset(string_view)\n");
+        std::printf("estr: '%s'\nefromstr: '%s'\n", estr.c_str(), efromstr.template to_string<Size>().c_str());
         return 1;
     }
 
@@ -41,6 +53,8 @@ extern "C" auto LLVMFuzzerTestOneInput(std::uint8_t const* data, std::size_t siz
         return 0;
     }
     auto p = FuzzedDataProvider{data, size};
-    RUN(fuzz_bitset(p));
+    RUN(fuzz_bitset<24>(p));
+    RUN(fuzz_bitset<32>(p));
+    RUN(fuzz_bitset<64>(p));
     return 0;
 }
