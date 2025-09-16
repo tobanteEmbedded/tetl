@@ -314,7 +314,7 @@ private:
     template <typename UInt>
     [[nodiscard]] constexpr auto to_unsigned_type() const noexcept -> UInt
     {
-        if constexpr (sizeof(UInt) * CHAR_BIT == Bits) {
+        if constexpr (sizeof(UInt) == sizeof(_bits)) {
             if constexpr (etl::endian::native == etl::endian::little) {
                 return etl::bit_cast<UInt>(_bits);
             } else {
