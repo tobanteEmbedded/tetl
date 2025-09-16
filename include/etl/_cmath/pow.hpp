@@ -28,11 +28,6 @@ inline constexpr struct pow {
                 return __builtin_pow(base, exponent);
             }
 #endif
-#if __has_constexpr_builtin(__builtin_powl)
-            if constexpr (etl::same_as<Float, long double>) {
-                return __builtin_powl(base, exponent);
-            }
-#endif
         } else {
 #if __has_builtin(__builtin_powf)
             if constexpr (etl::same_as<Float, float>) {
@@ -42,11 +37,6 @@ inline constexpr struct pow {
 #if __has_builtin(__builtin_pow)
             if constexpr (etl::same_as<Float, double>) {
                 return __builtin_pow(base, exponent);
-            }
-#endif
-#if __has_builtin(__builtin_powl)
-            if constexpr (etl::same_as<Float, long double>) {
-                return __builtin_powl(base, exponent);
             }
 #endif
         }
