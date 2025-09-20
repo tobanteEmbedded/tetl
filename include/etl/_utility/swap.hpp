@@ -17,7 +17,7 @@ namespace etl {
 
 /// \brief Exchanges the given values. Swaps the values a and b. This overload
 /// does not participate in overload resolution unless
-/// etl::is_move_constructible_v<T> && etl::is_move_assignable_v<T> is true.
+/// etl::is_move_constructible_v<T> and etl::is_move_assignable_v<T> is true.
 ///
 /// \details https://en.cppreference.com/w/cpp/algorithm/swap
 template <typename T>

@@ -8,7 +8,6 @@
 
 #include <etl/_concepts/integral.hpp>
 #include <etl/_limits/numeric_limits.hpp>
-#include <etl/_type_traits/is_constant_evaluated.hpp>
 
 namespace etl {
 
@@ -28,32 +27,33 @@ inline constexpr struct isinf {
 
 } // namespace detail
 
+/// \ingroup cmath
+/// @{
+
 /// Determines if the given floating point number arg is a positive or negative infinity.
 /// \details https://en.cppreference.com/w/cpp/numeric/math/isinf
-/// \ingroup cmath
 [[nodiscard]] constexpr auto isinf(float arg) -> bool
 {
     return etl::detail::isinf(arg);
 }
 
-/// \ingroup cmath
 [[nodiscard]] constexpr auto isinf(double arg) -> bool
 {
     return etl::detail::isinf(arg);
 }
 
-/// \ingroup cmath
 [[nodiscard]] constexpr auto isinf(long double arg) -> bool
 {
     return etl::detail::isinf(arg);
 }
 
-/// \ingroup cmath
 template <etl::integral Int>
 [[nodiscard]] constexpr auto isinf(Int arg) -> bool
 {
     return etl::detail::isinf(static_cast<double>(arg));
 }
+
+/// @}
 
 } // namespace etl
 

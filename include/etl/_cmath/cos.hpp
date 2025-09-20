@@ -64,7 +64,7 @@ inline constexpr struct cos {
 }
 [[nodiscard]] constexpr auto cos(integral auto arg) noexcept -> double
 {
-    return etl::detail::cos(double(arg));
+    return etl::detail::cos(static_cast<double>(arg));
 }
 
 /// @}

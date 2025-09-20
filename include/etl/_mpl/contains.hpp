@@ -10,6 +10,9 @@
 
 namespace etl::mpl {
 
+/// \ingroup mpl
+/// @{
+
 template <typename Needle, typename Haystack>
 struct contains;
 
@@ -18,6 +21,8 @@ struct contains<Needle, list<Ts...>> : etl::bool_constant<(etl::is_same_v<Needle
 
 template <typename Needle, typename Haystack>
 inline constexpr auto contains_v = contains<Needle, Haystack>::value;
+
+/// @}
 
 } // namespace etl::mpl
 

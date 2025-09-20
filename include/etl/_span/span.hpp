@@ -101,7 +101,7 @@ struct span {
     /// data() == nullptr and size() == 0.
     ///
     /// \details This overload only participates in overload resolution
-    /// if extent == 0 || extent == etl::dynamic_extent.
+    /// if extent == 0 or extent == etl::dynamic_extent.
     constexpr span() noexcept
         requires(extent == 0 or extent == dynamic_extent)
     = default;

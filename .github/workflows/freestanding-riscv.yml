@@ -1,0 +1,55 @@
+# SPDX-License-Identifier: BSL-1.0
+# SPDX-FileCopyrightText: Copyright (C) 2025 Tobias Hienzsch
+name: Freestanding RISCV
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+concurrency:
+  group: ${{ github.ref }}-${{ github.workflow }}
+  cancel-in-progress: true
+
+jobs:
+  build:
+    runs-on: ubuntu-24.04
+    container:
+      image: alpine:edge
+    strategy:
+      matrix:
+        cxx: [23, 26]
+      fail-fast: false
+    name: C++${{ matrix.cxx }}
+    steps:
+      - name: Check out code
+        uses: actions/checkout@v5
+
+      - name: Install dependencies
+        run: >
+          apk add
+          cmake
+          ninja
+          g++-riscv-none-elf
+          gcc-riscv-none-elf
+          newlib-riscv-none-elf
+          binutils-riscv-none-elf
+          --no-cache
+
+      - name: Configure CMake
+        run: >
+          cmake
+          -S .
+          -B build
+          -G "Ninja Multi-Config"
+          -D CMAKE_TOOLCHAIN_FILE=cmake/toolchain/gcc-riscv-none-elf.cmake
+          -D CMAKE_CXX_STANDARD=${{ matrix.cxx }}
+          -D CMAKE_COMPILE_WARNING_AS_ERROR=ON
+          -D TETL_BUILD_CONTRACT_CHECKS=OFF
+
+      - name: Build -- Debug
+        run: cmake --build build --config Debug
+
+      - name: Build -- Release
+        run: cmake --build build --config Release

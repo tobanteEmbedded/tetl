@@ -9,6 +9,8 @@ namespace etl {
 /// \brief The class template basic_common_reference is a customization point
 /// that allows users to influence the result of common_reference for user-defined
 /// types (typically proxy references). The primary template is empty.
+///
+/// \ingroup type_traits
 template <typename T, typename U, template <typename> typename TQ, template <typename> typename UQ>
 struct basic_common_reference { };
 

@@ -17,6 +17,8 @@ namespace etl {
 /// Applies lvalue-to-rvalue, array-to-pointer, and function-to-pointer implicit
 /// conversions to the type T, removes cv-qualifiers, and defines the resulting
 /// type as the member typedef type.
+///
+/// \ingroup type_traits
 template <typename T>
 struct decay {
 private:
@@ -30,6 +32,7 @@ public:
     >;
 };
 
+/// \ingroup type_traits
 template <typename T>
 using decay_t = typename etl::decay<T>::type;
 

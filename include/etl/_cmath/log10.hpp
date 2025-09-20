@@ -48,7 +48,7 @@ inline constexpr struct log10 {
 }
 [[nodiscard]] constexpr auto log10f(float arg) noexcept -> float
 {
-    return etl::log10(arg);
+    return etl::detail::log10(arg);
 }
 [[nodiscard]] constexpr auto log10(double arg) noexcept -> double
 {
@@ -64,7 +64,7 @@ inline constexpr struct log10 {
 }
 [[nodiscard]] constexpr auto log10(integral auto arg) noexcept -> double
 {
-    return etl::detail::log10(double(arg));
+    return etl::detail::log10(static_cast<double>(arg));
 }
 
 /// @}

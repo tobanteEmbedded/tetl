@@ -18,10 +18,10 @@ namespace etl {
 /// \ingroup cwctype
 [[nodiscard]] constexpr auto iswxdigit(wint_t ch) noexcept -> int
 {
-    auto const isDigit    = ch >= '0' && ch <= '9';
-    auto const isHexLower = ch >= 'a' && ch <= 'f';
-    auto const isHexUpper = ch >= 'A' && ch <= 'F';
-    return static_cast<int>(isDigit || isHexLower || isHexUpper);
+    auto const isDigit    = ch >= '0' and ch <= '9';
+    auto const isHexLower = ch >= 'a' and ch <= 'f';
+    auto const isHexUpper = ch >= 'A' and ch <= 'F';
+    return static_cast<int>(isDigit or isHexLower or isHexUpper);
 }
 } // namespace etl
 

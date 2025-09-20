@@ -47,6 +47,8 @@ union aligned_storage_impl {
 /// alignment requirement for any object whose size is at most Len. If the
 /// default value is not used, Align must be the value of alignof(T) for some
 /// type T, or the behavior is undefined.
+///
+/// \ingroup type_traits
 template <size_t Len, size_t Align = alignof(detail::aligned_storage_impl<Len>)>
 struct aligned_storage {
     struct type {
@@ -54,6 +56,8 @@ struct aligned_storage {
     };
 };
 
+/// \relates aligned_storage
+/// \ingroup type_traits
 template <size_t Len, size_t Align = alignof(detail::aligned_storage_impl<Len>)>
 using aligned_storage_t = typename aligned_storage<Len, Align>::type;
 

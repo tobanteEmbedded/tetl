@@ -12,12 +12,15 @@ namespace etl {
 /// \brief Checks whether T is an array type of known bound. Provides the member
 /// constant value which is equal to true, if T is an array type of known bound.
 /// Otherwise, value is equal to false.
+///
+/// \ingroup type_traits
 template <typename T>
 struct is_bounded_array : false_type { };
 
 template <typename T, size_t N>
 struct is_bounded_array<T[N]> : true_type { };
 
+/// \ingroup type_traits
 template <typename T>
 inline constexpr bool is_bounded_array_v = is_bounded_array<T>::value;
 

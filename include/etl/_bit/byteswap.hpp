@@ -8,7 +8,6 @@
 #include <etl/_config/all.hpp>
 #include <etl/_cstdint/uint_t.hpp>
 #include <etl/_type_traits/always_false.hpp>
-#include <etl/_type_traits/is_constant_evaluated.hpp>
 
 namespace etl {
 

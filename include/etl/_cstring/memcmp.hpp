@@ -4,6 +4,8 @@
 #ifndef TETL_CSTRING_MEMCMP_HPP
 #define TETL_CSTRING_MEMCMP_HPP
 
+#include <etl/_config/all.hpp>
+
 #include <etl/_cstddef/size_t.hpp>
 #include <etl/_strings/cstr.hpp>
 
@@ -18,7 +20,7 @@ namespace etl {
 /// \ingroup cstring
 [[nodiscard]] inline auto memcmp(void const* lhs, void const* rhs, etl::size_t count) noexcept -> int
 {
-#if defined(__clang__)
+#if __has_builtin(__builtin_memcmp)
     return __builtin_memcmp(lhs, rhs, count);
 #else
     auto const* l = static_cast<unsigned char const*>(lhs);

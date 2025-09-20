@@ -4,11 +4,12 @@
 #ifndef TETL_MATH_IPOW_HPP
 #define TETL_MATH_IPOW_HPP
 
-#include <etl/_concepts/integral.hpp>
+#include <etl/_concepts/builtin_integer.hpp>
+#include <etl/_type_traits/make_unsigned.hpp>
 
 namespace etl {
 
-template <integral Int>
+template <builtin_integer Int>
 [[nodiscard]] constexpr auto ipow(Int base, Int exponent) noexcept -> Int
 {
     auto result = Int(1);
@@ -18,15 +19,23 @@ template <integral Int>
     return result;
 }
 
-template <auto Base>
-[[nodiscard]] constexpr auto ipow(decltype(Base) exponent) noexcept -> decltype(Base)
+template <unsigned long long Base, builtin_integer Int>
+[[nodiscard]] constexpr auto ipow(Int exponent) noexcept -> Int
 {
-    using Int = decltype(Base);
+    using UInt = etl::make_unsigned_t<Int>;
 
-    if constexpr (Base == Int(2)) {
-        return static_cast<Int>(Int(1) << exponent);
+    if constexpr (Base == 2ULL) {
+        return static_cast<Int>(UInt(1) << UInt(exponent));
+    } else if constexpr (Base == 4ULL) {
+        return static_cast<Int>(UInt(1) << UInt(exponent * Int(2)));
+    } else if constexpr (Base == 8ULL) {
+        return static_cast<Int>(UInt(1) << UInt(exponent * Int(3)));
+    } else if constexpr (Base == 16ULL) {
+        return static_cast<Int>(UInt(1) << UInt(exponent * Int(4)));
+    } else if constexpr (Base == 32ULL) {
+        return static_cast<Int>(UInt(1) << UInt(exponent * Int(5)));
     } else {
-        return ipow(Base, exponent);
+        return etl::ipow(static_cast<Int>(Base), exponent);
     }
 }
 

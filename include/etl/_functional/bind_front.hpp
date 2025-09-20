@@ -34,7 +34,7 @@ template <typename Func, typename... BoundArgs>
 class bind_front_t {
 public:
     template <typename F, typename... BA>
-        requires(!(sizeof...(BA) == 0 && is_base_of_v<bind_front_t, decay_t<F>>))
+        requires(not(sizeof...(BA) == 0 and is_base_of_v<bind_front_t, decay_t<F>>))
     explicit bind_front_t(F&& f, BA&&... ba)
         : _func(etl::forward<F>(f))
         , _boundArgs(etl::forward<BA>(ba)...)

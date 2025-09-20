@@ -201,7 +201,7 @@ struct static_vector_trivial_storage {
         requires(is_constructible_v<T, Args...> and is_assignable_v<value_type&, T>)
     constexpr auto emplace_back(Args&&... args) noexcept -> void
     {
-        TETL_PRECONDITION(!full());
+        TETL_PRECONDITION(not full());
         index(_data, size()) = T(etl::forward<Args>(args)...);
         unsafe_set_size(static_cast<size_type>(size()) + 1U);
     }
@@ -209,7 +209,7 @@ struct static_vector_trivial_storage {
     /// \brief Remove the last element from the container.
     constexpr auto pop_back() noexcept -> void
     {
-        TETL_PRECONDITION(!empty());
+        TETL_PRECONDITION(not empty());
         unsafe_set_size(static_cast<size_type>(size() - 1));
     }
 
@@ -248,7 +248,7 @@ private:
 /// \brief Storage for non-trivial elements.
 template <typename T, size_t Capacity>
 struct static_vector_non_trivial_storage {
-    static_assert(!is_trivial_v<T>);
+    static_assert(not is_trivial_v<T>);
     static_assert(Capacity != size_t{0});
 
     using size_type       = etl::smallest_size_t<Capacity>;
@@ -324,7 +324,7 @@ struct static_vector_non_trivial_storage {
     template <typename... Args>
     auto emplace_back(Args&&... args) noexcept(noexcept(new (end()) T(etl::forward<Args>(args)...))) -> void
     {
-        TETL_PRECONDITION(!full());
+        TETL_PRECONDITION(not full());
         new (end()) T(etl::forward<Args>(args)...);
         unsafe_set_size(static_cast<size_type>(size() + 1));
     }
@@ -332,7 +332,7 @@ struct static_vector_non_trivial_storage {
     /// \brief Remove the last element from the container.
     auto pop_back() noexcept(is_nothrow_destructible_v<T>) -> void
     {
-        TETL_PRECONDITION(!empty());
+        TETL_PRECONDITION(not empty());
         auto* ptr = end() - 1;
         ptr->~T();
         unsafe_set_size(static_cast<size_type>(size() - 1));
@@ -435,7 +435,7 @@ public:
 private:
     constexpr auto emplace_n(size_type n) noexcept(
         (is_move_constructible_v<T> and is_nothrow_move_constructible_v<T>)
-        || (is_copy_constructible_v<T> and is_nothrow_copy_constructible_v<T>)
+        or (is_copy_constructible_v<T> and is_nothrow_copy_constructible_v<T>)
     ) -> void
     {
         TETL_PRECONDITION(n <= capacity());
@@ -524,7 +524,7 @@ public:
         requires(is_constructible_v<T, U> and is_assignable_v<reference, U &&>)
     constexpr auto push_back(U&& value) noexcept(noexcept(emplace_back(etl::forward<U>(value)))) -> void
     {
-        TETL_PRECONDITION(!full());
+        TETL_PRECONDITION(not full());
         emplace_back(etl::forward<U>(value));
     }
 
@@ -556,7 +556,7 @@ public:
         noexcept(move_insert(position, declval<value_type*>(), declval<value_type*>()))
     ) -> iterator
     {
-        TETL_PRECONDITION(!full());
+        TETL_PRECONDITION(not full());
         assert_iterator_in_range(position);
         value_type a(etl::forward<Args>(args)...);
         return move_insert(position, &a, &a + 1);
@@ -569,7 +569,7 @@ public:
         -> iterator
         requires(is_move_constructible_v<T>)
     {
-        TETL_PRECONDITION(!full());
+        TETL_PRECONDITION(not full());
         assert_iterator_in_range(position);
         return move_insert(position, &x, &x + 1);
     }
@@ -594,7 +594,7 @@ public:
     insert(const_iterator position, const_reference x) noexcept(noexcept(insert(position, size_type(1), x))) -> iterator
         requires(is_copy_constructible_v<T>)
     {
-        TETL_PRECONDITION(!full());
+        TETL_PRECONDITION(not full());
         assert_iterator_in_range(position);
         return insert(position, size_type(1), x);
     }
@@ -603,7 +603,7 @@ public:
     constexpr auto insert(const_iterator position, InputIt first, InputIt last) noexcept(noexcept(emplace_back(*first)))
         -> iterator
         requires(
-            detail::InputIterator<InputIt> && is_constructible_v<value_type, detail::iterator_reference_t<InputIt>>
+            detail::InputIterator<InputIt> and is_constructible_v<value_type, detail::iterator_reference_t<InputIt>>
         )
     {
         assert_iterator_in_range(position);
@@ -662,7 +662,7 @@ public:
 
     /// \brief Copy assignment.
     constexpr auto operator=(static_vector const& other) noexcept(
-        noexcept(clear()) && noexcept(insert(begin(), other.begin(), other.end()))
+        noexcept(clear()) and noexcept(insert(begin(), other.begin(), other.end()))
     ) -> static_vector&
         requires(is_assignable_v<reference, const_reference>)
     {
@@ -688,7 +688,7 @@ public:
 
     /// \brief Initializes vector with n default-constructed elements.
     explicit constexpr static_vector(size_type n) noexcept(noexcept(emplace_n(n)))
-        requires(is_copy_constructible_v<T> || is_move_constructible_v<T>)
+        requires(is_copy_constructible_v<T> or is_move_constructible_v<T>)
     {
         TETL_PRECONDITION(n <= capacity());
         emplace_n(n);
@@ -785,13 +785,13 @@ public:
     /// \brief back
     [[nodiscard]] constexpr auto back() noexcept -> reference
     {
-        TETL_PRECONDITION(!empty());
+        TETL_PRECONDITION(not empty());
         return detail::index(*this, static_cast<size_type>(size() - 1));
     }
 
     [[nodiscard]] constexpr auto back() const noexcept -> const_reference
     {
-        TETL_PRECONDITION(!empty());
+        TETL_PRECONDITION(not empty());
         return detail::index(*this, static_cast<size_type>(size() - 1));
     }
 
@@ -828,8 +828,8 @@ public:
     /// \brief Resizes the container to contain sz elements. If elements need to
     /// be appended, these are move-constructed from `T{}` (or copy-constructed
     constexpr auto resize(size_type sz) noexcept(
-        (is_move_constructible_v<T> && is_nothrow_move_constructible_v<T>)
-        || (is_copy_constructible_v<T> && is_nothrow_copy_constructible_v<T>)
+        (is_move_constructible_v<T> and is_nothrow_move_constructible_v<T>)
+        or (is_copy_constructible_v<T> and is_nothrow_copy_constructible_v<T>)
     ) -> void
         requires(detail::is_movable_v<value_type>)
     {
@@ -911,7 +911,7 @@ constexpr auto operator==(static_vector<T, Capacity> const& lhs, static_vector<T
 template <typename T, size_t Capacity>
 constexpr auto operator!=(static_vector<T, Capacity> const& lhs, static_vector<T, Capacity> const& rhs) noexcept -> bool
 {
-    return !(lhs == rhs);
+    return not(lhs == rhs);
 }
 
 /// \brief Compares the contents of two vectors.
@@ -928,7 +928,7 @@ constexpr auto operator<(static_vector<T, Capacity> const& lhs, static_vector<T,
 template <typename T, size_t Capacity>
 constexpr auto operator<=(static_vector<T, Capacity> const& lhs, static_vector<T, Capacity> const& rhs) noexcept -> bool
 {
-    return !(rhs < lhs);
+    return not(rhs < lhs);
 }
 
 template <typename T, size_t Capacity>
@@ -940,7 +940,7 @@ constexpr auto operator>(static_vector<T, Capacity> const& lhs, static_vector<T,
 template <typename T, size_t Capacity>
 constexpr auto operator>=(static_vector<T, Capacity> const& lhs, static_vector<T, Capacity> const& rhs) noexcept -> bool
 {
-    return !(lhs < rhs);
+    return not(lhs < rhs);
 }
 
 /// \brief Erases all elements that satisfy the predicate pred from the

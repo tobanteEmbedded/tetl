@@ -64,7 +64,7 @@ inline constexpr struct acos {
 }
 [[nodiscard]] constexpr auto acos(integral auto arg) noexcept -> double
 {
-    return etl::detail::acos(double(arg));
+    return etl::detail::acos(static_cast<double>(arg));
 }
 
 /// @}

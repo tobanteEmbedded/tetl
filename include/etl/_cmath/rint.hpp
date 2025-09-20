@@ -25,7 +25,7 @@ template <typename T>
 template <typename T>
 [[nodiscard]] constexpr auto rint_impl(T arg) noexcept -> T
 {
-    if (!is_constant_evaluated()) {
+    if (not is_constant_evaluated()) {
         if constexpr (is_same_v<T, float>) {
 #if __has_builtin(__builtin_rintf)
             return __builtin_rintf(arg);
@@ -47,9 +47,11 @@ template <typename T>
 
 } // namespace detail
 
+/// \ingroup cmath
+/// @{
+
 /// Rounds the floating-point argument arg to an integer value
 /// (in floating-point format), using the current rounding mode.
-/// \ingroup cmath
 [[nodiscard]] constexpr auto rint(float arg) noexcept -> float
 {
     return detail::rint_impl(arg);
@@ -57,7 +59,6 @@ template <typename T>
 
 /// Rounds the floating-point argument arg to an integer value
 /// (in floating-point format), using the current rounding mode.
-/// \ingroup cmath
 [[nodiscard]] constexpr auto rintf(float arg) noexcept -> float
 {
     return detail::rint_impl(arg);
@@ -65,7 +66,6 @@ template <typename T>
 
 /// Rounds the floating-point argument arg to an integer value
 /// (in floating-point format), using the current rounding mode.
-/// \ingroup cmath
 [[nodiscard]] constexpr auto rint(double arg) noexcept -> double
 {
     return detail::rint_impl(arg);
@@ -73,7 +73,6 @@ template <typename T>
 
 /// Rounds the floating-point argument arg to an integer value
 /// (in floating-point format), using the current rounding mode.
-/// \ingroup cmath
 [[nodiscard]] constexpr auto rint(long double arg) noexcept -> long double
 {
     return detail::rint_impl(arg);
@@ -81,7 +80,6 @@ template <typename T>
 
 /// Rounds the floating-point argument arg to an integer value
 /// (in floating-point format), using the current rounding mode.
-/// \ingroup cmath
 [[nodiscard]] constexpr auto rintl(long double arg) noexcept -> long double
 {
     return detail::rint_impl(arg);
@@ -89,12 +87,13 @@ template <typename T>
 
 /// Rounds the floating-point argument arg to an integer value
 /// (in floating-point format), using the current rounding mode.
-/// \ingroup cmath
 template <integral T>
 [[nodiscard]] constexpr auto rint(T arg) noexcept -> double
 {
     return rint(static_cast<double>(arg));
 }
+
+/// @}
 
 } // namespace etl
 

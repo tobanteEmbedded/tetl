@@ -10,9 +10,11 @@
 
 namespace etl {
 
+/// \ingroup type_traits
 template <typename T>
 struct is_class : bool_constant<__is_class(T)> { };
 
+/// \ingroup type_traits
 template <typename T>
 inline constexpr bool is_class_v = __is_class(T);
 

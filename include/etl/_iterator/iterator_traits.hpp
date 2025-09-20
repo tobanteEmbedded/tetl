@@ -18,14 +18,14 @@ struct iterator_traits_impl { };
 template <typename Iter>
 struct iterator_traits_impl<
     Iter,
-    etl::void_t<                          //
-        typename Iter::iterator_category, //
-        typename Iter::value_type,        //
-        typename Iter::difference_type,   //
-        typename Iter::pointer,           //
-        typename Iter::reference          //
-        >                                 //
-    > {
+    etl::void_t<
+        typename Iter::iterator_category,
+        typename Iter::value_type,
+        typename Iter::difference_type,
+        typename Iter::pointer,
+        typename Iter::reference
+    >
+> {
     using iterator_category = typename Iter::iterator_category;
     using value_type        = typename Iter::value_type;
     using difference_type   = typename Iter::difference_type;

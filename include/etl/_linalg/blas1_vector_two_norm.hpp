@@ -5,9 +5,8 @@
 #define TETL_LINALG_BLAS1_VECTOR_TWO_NORM_HPP
 
 #include <etl/_cmath/sqrt.hpp>
-#include <etl/_linalg/concepts.hpp>
+#include <etl/_linalg/exposition.hpp>
 #include <etl/_type_traits/declval.hpp>
-#include <etl/_utility/cmp_less.hpp>
 
 namespace etl::linalg {
 
@@ -16,7 +15,7 @@ template <in_vector InVec, typename Scalar>
 constexpr auto vector_two_norm(InVec v, Scalar init) noexcept -> Scalar
 {
     auto sum = init;
-    for (typename InVec::size_type i{0}; etl::cmp_less(i, v.extent(0)); ++i) {
+    for (typename InVec::index_type i{0}; i < v.extent(0); ++i) {
         auto const val    = detail::abs_if_needed(v(i));
         auto const square = val * val;
         sum += square;

@@ -42,7 +42,7 @@ struct layout_left::mapping {
     }
 
     template <typename OtherExtents>
-        requires(extents_type::rank() <= 1) && is_constructible_v<extents_type, OtherExtents>
+        requires(extents_type::rank() <= 1) and is_constructible_v<extents_type, OtherExtents>
     constexpr explicit(not is_convertible_v<OtherExtents, extents_type>) mapping(
         layout_right::mapping<OtherExtents> const& other
     ) noexcept
@@ -67,8 +67,8 @@ struct layout_left::mapping {
 
     template <typename... Indices>
         requires(sizeof...(Indices) == extents_type::rank())
-             && (is_convertible_v<Indices, index_type> && ...)
-             && (is_nothrow_constructible_v<index_type, Indices> && ...)
+            and (is_convertible_v<Indices, index_type> and ...)
+            and (is_nothrow_constructible_v<index_type, Indices> and ...)
     [[nodiscard]] constexpr auto operator()(Indices... indices) const noexcept -> index_type
     {
         return [&]<size_t... Is>(index_sequence<Is...> /*seq*/) {

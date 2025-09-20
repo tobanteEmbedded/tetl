@@ -4,6 +4,7 @@
 export namespace etl {
 
 namespace linalg {
+
 using etl::linalg::accessor_conjugate;
 using etl::linalg::accessor_scaled;
 using etl::linalg::add;
@@ -11,6 +12,7 @@ using etl::linalg::column_major;
 using etl::linalg::column_major_t;
 using etl::linalg::conjugated;
 using etl::linalg::copy;
+using etl::linalg::dot;
 using etl::linalg::explicit_diagonal;
 using etl::linalg::explicit_diagonal_t;
 using etl::linalg::idx_abs_max;
@@ -20,6 +22,7 @@ using etl::linalg::layout_transpose;
 using etl::linalg::lower_triangle;
 using etl::linalg::lower_triangle_t;
 using etl::linalg::matrix_frob_norm;
+using etl::linalg::matrix_product;
 using etl::linalg::matrix_vector_product;
 using etl::linalg::row_major;
 using etl::linalg::row_major_t;

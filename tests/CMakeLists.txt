@@ -7,6 +7,14 @@ target_include_directories(tetl.etl-test-common INTERFACE "${CMAKE_SOURCE_DIR}/t
 target_compile_definitions(tetl.etl-test-common INTERFACE TETL_ENABLE_USER_CONFIG_HEADER_INCLUDE=1)
 target_link_libraries(tetl.etl-test-common INTERFACE tetl::compiler_warnings)
 
+if(TETL_BUILD_CONTRACT_CHECKS)
+    target_compile_definitions(tetl.etl-test-common INTERFACE TETL_ENABLE_CONTRACT_CHECKS=1)
+endif()
+
+if(TETL_BUILD_CONTRACT_CHECKS_SAFE)
+    target_compile_definitions(tetl.etl-test-common INTERFACE TETL_ENABLE_CONTRACT_CHECKS_SAFE=1)
+endif()
+
 if(TETL_BUILD_CXX_MODULES)
     tetl_add_module_target(tetl.etl-module-for-tests)
     target_link_libraries(tetl.etl-module-for-tests PUBLIC tetl.etl-test-common)
@@ -20,14 +28,6 @@ function(tetl_add_test _header _target)
 
     add_executable("${target_name}" "${_target}.t.cpp")
     target_link_libraries("${target_name}" PRIVATE tetl.etl-test-common)
-
-    if(TETL_BUILD_CONTRACT_CHECKS)
-        target_compile_definitions("${target_name}" PRIVATE TETL_ENABLE_CONTRACT_CHECKS=1)
-    endif()
-
-    if(TETL_BUILD_CONTRACT_CHECKS_SAFE)
-        target_compile_definitions("${target_name}" PRIVATE TETL_ENABLE_CONTRACT_CHECKS_SAFE=1)
-    endif()
 
     if(TETL_BUILD_CXX_MODULES)
         target_link_libraries("${target_name}" PRIVATE tetl.etl-module-for-tests)
@@ -62,7 +62,6 @@ add_subdirectory("exception")
 add_subdirectory("execution")
 add_subdirectory("expected")
 add_subdirectory("flat_set")
-add_subdirectory("format")
 add_subdirectory("functional")
 add_subdirectory("inplace_vector")
 add_subdirectory("iterator")
@@ -96,5 +95,4 @@ add_subdirectory("vector")
 add_subdirectory("version")
 
 add_subdirectory("experimental/freertos")
-add_subdirectory("experimental/net")
 add_subdirectory("experimental/stm32")

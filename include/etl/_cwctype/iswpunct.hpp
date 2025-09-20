@@ -24,7 +24,7 @@ namespace etl {
     auto const sec2 = ch >= L':' and ch <= L'@';
     auto const sec3 = ch >= L'[' and ch <= L'`';
     auto const sec4 = ch >= L'{' and ch <= L'~';
-    return static_cast<int>(sec1 || sec2 || sec3 || sec4);
+    return static_cast<int>(sec1 or sec2 or sec3 or sec4);
 }
 } // namespace etl
 

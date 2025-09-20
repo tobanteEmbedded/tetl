@@ -11,6 +11,9 @@
 
 namespace etl::mpl {
 
+/// \ingroup mpl
+/// @{
+
 template <typename Needle, typename Haystack>
 struct count;
 
@@ -19,6 +22,8 @@ struct count<Needle, list<Ts...>> : etl::integral_constant<etl::size_t, (etl::is
 
 template <typename Needle, typename Haystack>
 inline constexpr auto count_v = count<Needle, Haystack>::value;
+
+/// @}
 
 } // namespace etl::mpl
 

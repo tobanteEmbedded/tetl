@@ -11,12 +11,14 @@ namespace etl {
 /// has this cv-qualifier). Adds both const and volatile.
 ///
 /// \headerfile etl/type_traits.hpp
+/// \ingroup type_traits
 template <typename T>
 struct add_cv {
     using type = T const volatile;
 };
 
 /// \relates add_cv
+/// \ingroup type_traits
 template <typename T>
 using add_cv_t = typename add_cv<T>::type;
 

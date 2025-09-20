@@ -10,6 +10,9 @@
 
 namespace etl::mpl {
 
+/// \ingroup mpl
+/// @{
+
 template <typename T, typename List>
 struct index_of;
 
@@ -21,6 +24,8 @@ struct index_of<Head, list<Head, Tail...>> : etl::integral_constant<etl::size_t,
 
 template <typename T, typename Head, typename... Tail>
 struct index_of<T, list<Head, Tail...>> : etl::integral_constant<etl::size_t, index_of_v<T, list<Tail...>> + 1> { };
+
+/// @}
 
 } // namespace etl::mpl
 

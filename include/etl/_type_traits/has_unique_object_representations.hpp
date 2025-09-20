@@ -27,10 +27,13 @@ namespace etl {
 /// or array of unknown bound. The behavior of a program that adds
 /// specializations for has_unique_object_representations or
 /// has_unique_object_representations_v is undefined.
+///
+/// \ingroup type_traits
 template <typename T>
 struct has_unique_object_representations
     : bool_constant<__has_unique_object_representations(remove_cv_t<remove_all_extents_t<T>>)> { };
 
+/// \ingroup type_traits
 template <typename T>
 inline constexpr bool has_unique_object_representations_v = has_unique_object_representations<T>::value;
 

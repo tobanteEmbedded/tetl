@@ -29,7 +29,7 @@ namespace etl {
     auto const isLower = etl::islower(ch) != 0;
     auto const isPunct = etl::ispunct(ch) != 0;
 
-    return static_cast<int>(isDigit || isLower || isUpper || isPunct);
+    return static_cast<int>(isDigit or isLower or isUpper or isPunct);
 }
 } // namespace etl
 

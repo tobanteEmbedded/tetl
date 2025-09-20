@@ -16,7 +16,7 @@ namespace detail {
 
 [[nodiscard]] constexpr auto generate_canonical_iterations(int bits, uint64_t gMin, uint64_t gMax) -> int
 {
-    if (bits == 0 || (gMax == numeric_limits<uint64_t>::max() && gMin == 0)) {
+    if (bits == 0 or (gMax == numeric_limits<uint64_t>::max() and gMin == 0)) {
         return 1;
     }
 

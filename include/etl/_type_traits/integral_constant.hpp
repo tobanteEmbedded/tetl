@@ -6,6 +6,7 @@
 
 namespace etl {
 
+/// \ingroup type_traits
 template <typename Type, Type Val>
 struct integral_constant {
     static constexpr Type value = Val;
@@ -23,6 +24,8 @@ struct integral_constant {
     }
 };
 
+/// \relates integral_constant
+/// \ingroup type_traits
 template <typename Rhs, Rhs R, typename Lhs, Lhs L>
 [[nodiscard]] constexpr auto operator+(integral_constant<Rhs, R> /*l*/, integral_constant<Lhs, L> /*r*/)
     -> integral_constant<decltype(L + R), L + R>
@@ -30,6 +33,8 @@ template <typename Rhs, Rhs R, typename Lhs, Lhs L>
     return {};
 }
 
+/// \relates integral_constant
+/// \ingroup type_traits
 template <typename Rhs, Rhs R, typename Lhs, Lhs L>
 [[nodiscard]] constexpr auto operator==(integral_constant<Rhs, R> /*l*/, integral_constant<Lhs, L> /*r*/)
     -> integral_constant<bool, L == R>
@@ -37,6 +42,8 @@ template <typename Rhs, Rhs R, typename Lhs, Lhs L>
     return {};
 }
 
+/// \relates integral_constant
+/// \ingroup type_traits
 template <typename Rhs, Rhs R, typename Lhs, Lhs L>
 [[nodiscard]] constexpr auto operator!=(integral_constant<Rhs, R> /*l*/, integral_constant<Lhs, L> /*r*/)
     -> integral_constant<bool, L != R>

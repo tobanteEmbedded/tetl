@@ -20,7 +20,7 @@ namespace etl {
 /// \ingroup cctype
 [[nodiscard]] constexpr auto isprint(int ch) noexcept -> int
 {
-    return static_cast<int>(etl::isgraph(ch) != 0 || ch == ' ');
+    return static_cast<int>(etl::isgraph(ch) != 0 or ch == ' ');
 }
 } // namespace etl
 

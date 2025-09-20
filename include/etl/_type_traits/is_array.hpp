@@ -12,8 +12,11 @@ namespace etl {
 /// \brief Checks whether T is an array type. Provides the member constant value
 /// which is equal to true, if T is an array type. Otherwise, value is equal to
 /// false.
+///
 /// \details The behavior of a program that adds specializations for is_array or
 /// is_array_v is undefined.
+///
+/// \ingroup type_traits
 template <typename T>
 struct is_array : false_type { };
 
@@ -23,6 +26,7 @@ struct is_array<T[]> : true_type { };
 template <typename T, size_t N>
 struct is_array<T[N]> : true_type { };
 
+/// \ingroup type_traits
 template <typename T>
 inline constexpr bool is_array_v = is_array<T>::value;
 

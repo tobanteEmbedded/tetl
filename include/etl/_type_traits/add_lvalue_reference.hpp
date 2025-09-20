@@ -20,10 +20,12 @@ auto try_add_lvalue_reference(...) -> type_identity<T>;
 
 /// \brief Creates a lvalue reference type of T.
 /// \headerfile etl/type_traits.hpp
+/// \ingroup type_traits
 template <typename T>
 struct add_lvalue_reference : decltype(detail::try_add_lvalue_reference<T>(0)) { };
 
 /// \relates add_lvalue_reference
+/// \ingroup type_traits
 template <typename T>
 using add_lvalue_reference_t = typename add_lvalue_reference<T>::type;
 

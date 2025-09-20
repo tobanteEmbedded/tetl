@@ -34,7 +34,7 @@ struct nothrow_constructible_impl<true, T[Size], Arg> : nothrow_constructible_im
 
 template <typename T, size_t Size, typename... Args>
 struct nothrow_constructible_impl<true, T[Size], Args...>
-    : bool_constant<(nothrow_constructible_impl<true, T, Args>::value && ...)> { };
+    : bool_constant<(nothrow_constructible_impl<true, T, Args>::value and ...)> { };
 #endif
 
 template <typename T, typename... Args>

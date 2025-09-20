@@ -5,7 +5,7 @@
 #define TETL_LINALG_CONJUGATED_HPP
 
 #include <etl/_linalg/accessor_conjugate.hpp>
-#include <etl/_linalg/concepts.hpp>
+#include <etl/_linalg/exposition.hpp>
 #include <etl/_type_traits/is_arithmetic.hpp>
 #include <etl/_type_traits/remove_cv.hpp>
 

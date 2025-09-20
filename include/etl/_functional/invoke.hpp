@@ -28,7 +28,7 @@ constexpr auto invoke_memptr(Pointed Class::* f, T1&& t1, Args&&... args) -> dec
             return ((*etl::forward<T1>(t1)).*f)(etl::forward<Args>(args)...);
         }
     } else {
-        static_assert(is_object_v<Pointed> && sizeof...(args) == 0);
+        static_assert(is_object_v<Pointed> and sizeof...(args) == 0);
         if constexpr (is_base_of_v<Class, decay_t<T1>>) {
             return etl::forward<T1>(t1).*f;
         } else if constexpr (is_reference_wrapper_v<decay_t<T1>>) {

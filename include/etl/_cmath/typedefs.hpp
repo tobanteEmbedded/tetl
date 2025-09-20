@@ -6,6 +6,9 @@
 
 #include <etl/_config/all.hpp>
 
+/// \ingroup cmath
+/// @{
+
 #if defined(TETL_COMPILER_MSVC)
     #include <math.h>
 #else
@@ -29,6 +32,8 @@
         #define HUGE_VALL TETL_BUILTIN_HUGE_VALL
     #endif
 #endif
+
+/// @}
 
 namespace etl {
 

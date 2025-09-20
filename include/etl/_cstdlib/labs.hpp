@@ -14,7 +14,7 @@ namespace etl {
 /// by integral promotion, the program is ill-formed.
 [[nodiscard]] constexpr auto labs(long n) noexcept -> long
 {
-    return detail::abs_impl<long>(n);
+    return etl::detail::abs(n);
 }
 
 } // namespace etl

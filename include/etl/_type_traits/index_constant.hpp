@@ -9,9 +9,11 @@
 
 namespace etl {
 
+/// \ingroup type_traits
 template <size_t I>
 using index_constant = integral_constant<size_t, I>;
 
+/// \ingroup type_traits
 template <size_t I>
 inline constexpr auto index_v = index_constant<I>{};
 

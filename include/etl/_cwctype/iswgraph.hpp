@@ -30,7 +30,7 @@ namespace etl {
     auto const isUpper = iswupper(ch) != 0;
     auto const isLower = iswlower(ch) != 0;
     auto const isPunct = iswpunct(ch) != 0;
-    return static_cast<int>(isDigit || isLower || isUpper || isPunct);
+    return static_cast<int>(isDigit or isLower or isUpper or isPunct);
 }
 } // namespace etl
 

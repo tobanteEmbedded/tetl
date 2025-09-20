@@ -19,21 +19,17 @@ template <typename T>
 concept pair_like = true;
 
 template <typename T, typename IndexType>
-concept index_pair_like =                                          //
-    pair_like<T>                                                   //
-    and etl::convertible_to<etl::tuple_element_t<0, T>, IndexType> //
-    and etl::convertible_to<etl::tuple_element_t<1, T>, IndexType> //
-    ;
+concept index_pair_like = pair_like<T>
+                      and etl::convertible_to<etl::tuple_element_t<0, T>, IndexType>
+                      and etl::convertible_to<etl::tuple_element_t<1, T>, IndexType>;
 
 template <typename T>
-concept integral_constant_like =                                                    //
-    etl::is_integral_v<decltype(T::value)>                                          //
-    and not etl::is_same_v<bool, etl::remove_const_t<decltype(T::value)>>           //
-    and etl::convertible_to<T, decltype(T::value)>                                  //
-    /* and etl::equality_comparable_with<T, decltype(T::value)>   */                //
-    and etl::bool_constant<T() == T::value>::value                                  //
-    and etl::bool_constant<static_cast<decltype(T::value)>(T()) == T::value>::value //
-    ;
+concept integral_constant_like = etl::is_integral_v<decltype(T::value)>
+                             and not etl::is_same_v<bool, etl::remove_const_t<decltype(T::value)>>
+                             and etl::convertible_to<T, decltype(T::value)>
+                             /* and etl::equality_comparable_with<T, decltype(T::value)>   */
+                             and etl::bool_constant<T() == T::value>::value
+                             and etl::bool_constant<static_cast<decltype(T::value)>(T()) == T::value>::value;
 
 template <typename T>
 [[nodiscard]] constexpr auto de_ice(T val) -> T

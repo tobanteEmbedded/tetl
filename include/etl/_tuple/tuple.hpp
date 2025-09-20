@@ -84,15 +84,15 @@ struct tuple_storage<etl::index_sequence<Idx...>, Ts...> : tuple_leaf<Idx, Ts>..
 
     // No. 2
     explicit(not(is_convertible_v<Ts const&, Ts> and ...)) constexpr tuple_storage(Ts const&... args)
-        requires((is_copy_constructible_v<Ts> and ...) && (sizeof...(Ts) > 0))
+        requires((is_copy_constructible_v<Ts> and ...) and (sizeof...(Ts) > 0))
         : tuple_leaf<Idx, Ts>(args)...
     {
     }
 
     // No. 3
     template <typename... Us>
-        requires((is_constructible_v<Ts, Us &&> and ...) && (sizeof...(Ts) > 0) && (sizeof...(Ts) == sizeof...(Us)))
-    explicit(!(is_convertible_v<Us&&, Ts> and ...)) constexpr tuple_storage(Us&&... args)
+        requires((is_constructible_v<Ts, Us &&> and ...) and (sizeof...(Ts) > 0) and (sizeof...(Ts) == sizeof...(Us)))
+    explicit(not(is_convertible_v<Us&&, Ts> and ...)) constexpr tuple_storage(Us&&... args)
         : tuple_leaf<Idx, Ts>(etl::forward<Us>(args))...
     {
     }
@@ -102,7 +102,7 @@ struct tuple_storage<etl::index_sequence<Idx...>, Ts...> : tuple_leaf<Idx, Ts>..
 
     using tuple_leaf<Idx, Ts>::operator[]...;
 
-    constexpr auto swap(tuple_storage& other) noexcept((is_nothrow_swappable_v<Ts> && ...)) -> void
+    constexpr auto swap(tuple_storage& other) noexcept((is_nothrow_swappable_v<Ts> and ...)) -> void
     {
         (tuple_leaf<Idx, Ts>::swap(etl::index_v<Idx>, other[etl::index_v<Idx>]), ...);
     }
@@ -113,23 +113,23 @@ struct tuple_storage<etl::index_sequence<Idx...>, Ts...> : tuple_leaf<Idx, Ts>..
 template <typename... Ts>
 struct tuple {
     // No. 1
-    explicit(not(is_implicit_default_constructible_v<Ts> && ...)) constexpr tuple()
+    explicit(not(is_implicit_default_constructible_v<Ts> and ...)) constexpr tuple()
         requires((is_default_constructible_v<Ts> and ...))
         : _storage()
     {
     }
 
     // No. 2
-    explicit(not(is_convertible_v<Ts const&, Ts> && ...)) constexpr tuple(Ts const&... args)
-        requires((is_copy_constructible_v<Ts> && ...) and (sizeof...(Ts) > 0))
+    explicit(not(is_convertible_v<Ts const&, Ts> and ...)) constexpr tuple(Ts const&... args)
+        requires((is_copy_constructible_v<Ts> and ...) and (sizeof...(Ts) > 0))
         : _storage(args...)
     {
     }
 
     // No. 3
     template <typename... Us>
-        requires((is_constructible_v<Ts, Us &&> && ...) and (sizeof...(Ts) > 0) and (sizeof...(Ts) == sizeof...(Us)))
-    explicit(!(is_convertible_v<Us&&, Ts> && ...)) constexpr tuple(Us&&... args)
+        requires((is_constructible_v<Ts, Us &&> and ...) and (sizeof...(Ts) > 0) and (sizeof...(Ts) == sizeof...(Us)))
+    explicit(not(is_convertible_v<Us&&, Ts> and ...)) constexpr tuple(Us&&... args)
         : _storage(etl::forward<Us>(args)...)
     {
     }

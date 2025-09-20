@@ -14,7 +14,7 @@ namespace etl {
 /// Otherwise, value is false.
 /// \ingroup ratio
 template <typename R1, typename R2>
-struct ratio_equal : bool_constant<R1::num == R2::num && R1::den == R2::den> { };
+struct ratio_equal : bool_constant<R1::num == R2::num and R1::den == R2::den> { };
 
 /// \relates ratio_equal
 /// \ingroup ratio

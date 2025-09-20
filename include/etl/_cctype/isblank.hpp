@@ -20,7 +20,7 @@ namespace etl {
 /// \ingroup cctype
 [[nodiscard]] constexpr auto isblank(int ch) noexcept -> int
 {
-    return static_cast<int>(ch == ' ' || ch == '\t');
+    return static_cast<int>(ch == ' ' or ch == '\t');
 }
 } // namespace etl
 

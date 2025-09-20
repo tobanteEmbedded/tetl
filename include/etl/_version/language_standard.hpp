@@ -27,7 +27,7 @@ enum struct language_standard : unsigned char {
 
 [[nodiscard]] constexpr auto operator!=(language_standard lhs, language_standard rhs) noexcept -> bool
 {
-    return !(lhs == rhs);
+    return not(lhs == rhs);
 }
 
 [[nodiscard]] constexpr auto operator<(language_standard lhs, language_standard rhs) noexcept -> bool

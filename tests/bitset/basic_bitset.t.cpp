@@ -26,15 +26,15 @@ static constexpr auto test() -> bool
         CHECK_FALSE(set.any());
 
         set.unchecked_flip(0);
-        CHECK(etl::as_const(set)[0]);
-        CHECK(set[0]);
+        CHECK(etl::as_const(set).unchecked_at(0));
+        CHECK(set.unchecked_at(0));
         CHECK(set.count() == 1);
         CHECK(set.any());
         CHECK_FALSE(set.none());
 
         set.unchecked_set(0, false);
         CHECK(set.count() == 0);
-        CHECK_FALSE(set[0]);
+        CHECK_FALSE(set.unchecked_at(0));
     }
 
     {
@@ -49,23 +49,23 @@ static constexpr auto test() -> bool
         auto set = bitset(0b1111).unchecked_reset(0).unchecked_flip(1);
         CHECK(set.count() == 2);
 
-        auto ref = set[0];
+        auto ref = set.unchecked_at(0);
         ref      = true;
         CHECK(ref);
         CHECK_FALSE(~ref);
 
         ref = false;
         CHECK(~ref);
-        CHECK_FALSE(etl::as_const(set)[0]);
+        CHECK_FALSE(etl::as_const(set).unchecked_at(0));
         CHECK_FALSE(ref);
 
         ref.flip();
         CHECK(ref);
-        CHECK(etl::as_const(set)[0]);
+        CHECK(etl::as_const(set).unchecked_at(0));
 
-        ref = set[2];
+        ref = set.unchecked_at(2);
         CHECK(ref);
-        CHECK(etl::as_const(set)[2]);
+        CHECK(etl::as_const(set).unchecked_at(2));
 
         CHECK((bitset(0b111) & bitset(0b101)) == bitset(0b101));
         CHECK((bitset(0b111) | bitset(0b101)) == bitset(0b111));

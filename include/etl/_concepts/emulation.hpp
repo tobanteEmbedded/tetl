@@ -44,7 +44,7 @@ struct IteratorConcept<T, Category, void_t<iterator_category_t<T>>>
 // clang-format off
 template <typename T> inline constexpr bool InputIterator           = IteratorConcept<T, input_iterator_tag> {};
 template <typename T> inline constexpr bool ForwardIterator         = IteratorConcept<T, forward_iterator_tag> {};
-template <typename T> inline constexpr bool OutputIterator          = IteratorConcept<T, output_iterator_tag> {} || ForwardIterator<T>;
+template <typename T> inline constexpr bool OutputIterator          = IteratorConcept<T, output_iterator_tag> {} or ForwardIterator<T>;
 template <typename T> inline constexpr bool BidirectionalIterator   = IteratorConcept<T, bidirectional_iterator_tag> {};
 template <typename T> inline constexpr bool RandomAccessIterator    = IteratorConcept<T, random_access_iterator_tag> {};
 template <typename T> inline constexpr bool RandomAccessRange       = RandomAccessIterator<range_iterator_t<T>>;

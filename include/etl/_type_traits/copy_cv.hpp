@@ -10,6 +10,7 @@
 
 namespace etl {
 
+/// \ingroup type_traits
 template <typename From, typename T0>
 struct copy_cv {
     using type = T0;
@@ -30,8 +31,10 @@ struct copy_cv<From const volatile, T0> {
     using type = add_cv_t<T0>;
 };
 
-template <typename A, typename B>
-using copy_cv_t = typename copy_cv<A, B>::type;
+/// \ingroup type_traits
+/// \relates copy_cv
+template <typename From, typename To>
+using copy_cv_t = typename copy_cv<From, To>::type;
 
 } // namespace etl
 

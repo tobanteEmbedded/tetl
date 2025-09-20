@@ -22,7 +22,7 @@ namespace etl {
     auto const isLower = ch >= 'a' and ch <= 'z';
     auto const isUpper = ch >= 'A' and ch <= 'Z';
 
-    return static_cast<int>(isDigit || isLower || isUpper);
+    return static_cast<int>(isDigit or isLower or isUpper);
 }
 
 } // namespace etl

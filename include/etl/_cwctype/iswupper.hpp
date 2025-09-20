@@ -20,7 +20,7 @@ namespace etl {
 /// \ingroup cwctype
 [[nodiscard]] constexpr auto iswupper(wint_t ch) noexcept -> int
 {
-    return static_cast<int>(ch >= L'A' && ch <= L'Z');
+    return static_cast<int>(ch >= L'A' and ch <= L'Z');
 }
 
 } // namespace etl

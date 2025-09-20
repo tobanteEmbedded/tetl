@@ -56,7 +56,7 @@ inline constexpr struct floor {
 }
 [[nodiscard]] constexpr auto floor(long double arg) noexcept -> long double
 {
-    return etl::detail::gcem::floor(arg);
+    return etl::detail::floor(arg);
 }
 [[nodiscard]] constexpr auto floorl(long double arg) noexcept -> long double
 {
@@ -64,7 +64,7 @@ inline constexpr struct floor {
 }
 [[nodiscard]] constexpr auto floor(integral auto arg) noexcept -> double
 {
-    return etl::detail::floor(double(arg));
+    return etl::detail::floor(static_cast<double>(arg));
 }
 
 /// @}

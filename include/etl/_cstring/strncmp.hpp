@@ -4,6 +4,8 @@
 #ifndef TETL_CSTRING_STRNCMP_HPP
 #define TETL_CSTRING_STRNCMP_HPP
 
+#include <etl/_config/all.hpp>
+
 #include <etl/_cstddef/size_t.hpp>
 #include <etl/_strings/cstr.hpp>
 
@@ -20,7 +22,7 @@ namespace etl {
 /// \ingroup cstring
 [[nodiscard]] constexpr auto strncmp(char const* lhs, char const* rhs, etl::size_t count) -> int
 {
-#if defined(__clang__)
+#if __has_builtin(__builtin_strncmp)
     return __builtin_strncmp(lhs, rhs, count);
 #else
     return etl::detail::strncmp<char, etl::size_t>(lhs, rhs, count);

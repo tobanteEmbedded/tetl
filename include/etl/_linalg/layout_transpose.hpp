@@ -4,7 +4,7 @@
 #ifndef TETL_LINALG_LAYOUT_TRANSPOSE_HPP
 #define TETL_LINALG_LAYOUT_TRANSPOSE_HPP
 
-#include <etl/_linalg/concepts.hpp>
+#include <etl/_linalg/exposition.hpp>
 #include <etl/_span/dynamic_extent.hpp>
 
 namespace etl::linalg {

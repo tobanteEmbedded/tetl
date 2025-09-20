@@ -41,9 +41,8 @@ namespace etl {
 template <typename Char, etl::size_t Capacity, typename Traits = etl::char_traits<Char>>
 struct basic_inplace_string {
     template <typename T>
-    static constexpr bool string_view_like =                        //
-        is_convertible_v<T const&, basic_string_view<Char, Traits>> //
-        and not is_convertible_v<T const&, Char const*>;
+    static constexpr bool string_view_like
+        = is_convertible_v<T const&, basic_string_view<Char, Traits>> and not is_convertible_v<T const&, Char const*>;
 
     using internal_size_t = etl::smallest_size_t<Capacity>;
 
@@ -1200,7 +1199,7 @@ public:
     /// \brief Finds the first character not equal to any of the characters in
     /// the given character sequence.
     ///
-    /// \return Position of the first character not equal to any of the
+    /// \returns Position of the first character not equal to any of the
     /// characters in the given string, or npos if no such character is found.
     [[nodiscard]] constexpr auto find_first_not_of(basic_inplace_string const& str, size_type pos = 0) const noexcept
         -> size_type
@@ -1211,7 +1210,7 @@ public:
     /// \brief Finds the first character not equal to any of the characters in
     /// the given character sequence.
     ///
-    /// \return Position of the first character not equal to any of the
+    /// \returns Position of the first character not equal to any of the
     /// characters in the given string, or npos if no such character is found.
     [[nodiscard]] constexpr auto find_first_not_of(Char ch, size_type pos = 0) const noexcept -> size_type
     {
@@ -1221,7 +1220,7 @@ public:
     /// \brief Finds the first character not equal to any of the characters in
     /// the given character sequence.
     ///
-    /// \return Position of the first character not equal to any of the
+    /// \returns Position of the first character not equal to any of the
     /// characters in the given string, or npos if no such character is found.
     [[nodiscard]] constexpr auto find_first_not_of(Char const* s, size_type pos) const -> size_type
     {
@@ -1231,7 +1230,7 @@ public:
     /// \brief Finds the first character not equal to any of the characters in
     /// the given character sequence.
     ///
-    /// \return Position of the first character not equal to any of the
+    /// \returns Position of the first character not equal to any of the
     /// characters in the given string, or npos if no such character is found.
     [[nodiscard]] constexpr auto find_first_not_of(Char const* s, size_type pos, size_type count) const -> size_type
     {

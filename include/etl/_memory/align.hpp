@@ -27,7 +27,7 @@ namespace etl {
     if (off != 0) {
         off = alignment - off;
     }
-    if (space < off || space - off < size) {
+    if (space < off or space - off < size) {
         return nullptr;
     }
 

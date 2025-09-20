@@ -33,7 +33,6 @@ import etl;
     #include <etl/execution.hpp>
     #include <etl/expected.hpp>
     #include <etl/flat_set.hpp>
-    #include <etl/format.hpp>
     #include <etl/functional.hpp>
     #include <etl/inplace_vector.hpp>
     #include <etl/ios.hpp>

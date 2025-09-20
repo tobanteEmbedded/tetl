@@ -15,9 +15,11 @@ namespace etl {
 /// constant value equal true. For any other type, value is false. The behavior
 /// of a program that adds specializations for is_arithmetic or is_arithmetic_v
 /// (since C++17) is undefined.
+/// \ingroup type_traits
 template <typename T>
 struct is_arithmetic : bool_constant<is_integral_v<T> or is_floating_point_v<T>> { };
 
+/// \ingroup type_traits
 template <typename T>
 inline constexpr bool is_arithmetic_v = is_integral_v<T> or is_floating_point_v<T>;
 

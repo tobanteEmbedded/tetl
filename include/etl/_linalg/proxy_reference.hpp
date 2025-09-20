@@ -4,7 +4,7 @@
 #ifndef TETL_LINALG_PROXY_REFERENCE_HPP
 #define TETL_LINALG_PROXY_REFERENCE_HPP
 
-#include <etl/_linalg/concepts.hpp>
+#include <etl/_linalg/exposition.hpp>
 #include <etl/_type_traits/is_base_of.hpp>
 
 namespace etl::linalg::detail {

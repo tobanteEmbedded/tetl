@@ -66,7 +66,7 @@ inline constexpr struct acosh {
 }
 [[nodiscard]] constexpr auto acosh(integral auto arg) noexcept -> double
 {
-    return etl::detail::acosh(double(arg));
+    return etl::detail::acosh(static_cast<double>(arg));
 }
 
 /// @}

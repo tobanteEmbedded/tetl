@@ -10,10 +10,12 @@
 
 namespace etl {
 
+/// \ingroup type_traits
 template <typename T>
 struct is_builtin_integer : bool_constant<is_builtin_unsigned_integer_v<T> or is_builtin_signed_integer_v<T>> { };
 
 /// \relates is_builtin_integer
+/// \ingroup type_traits
 template <typename T>
 inline constexpr auto is_builtin_integer_v = is_builtin_integer<T>::value;
 

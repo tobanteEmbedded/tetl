@@ -18,7 +18,7 @@ namespace etl {
 /// \ingroup cwctype
 [[nodiscard]] constexpr auto iswdigit(wint_t ch) noexcept -> int
 {
-    return static_cast<int>(ch >= L'0' && ch <= L'9');
+    return static_cast<int>(ch >= L'0' and ch <= L'9');
 }
 } // namespace etl
 

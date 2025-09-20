@@ -286,7 +286,7 @@ struct array {
 
     friend constexpr auto operator<=(array const& lhs, array const& rhs) -> bool
     {
-        return !(rhs < lhs);
+        return not(rhs < lhs);
     }
 
     friend constexpr auto operator>(array const& lhs, array const& rhs) -> bool
@@ -296,7 +296,7 @@ struct array {
 
     friend constexpr auto operator>=(array const& lhs, array const& rhs) -> bool
     {
-        return !(lhs < rhs);
+        return not(lhs < rhs);
     }
 
     /// \internal

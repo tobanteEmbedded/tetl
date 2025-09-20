@@ -115,7 +115,7 @@ public:
     /// mutex and has acquired ownership of it, the mutex is unlocked.
     constexpr auto operator=(unique_lock&& u) noexcept -> unique_lock&
     {
-        if (_mutex != nullptr && _owns) {
+        if (_mutex != nullptr and _owns) {
             unlock();
         }
         _mutex = exchange(u._mutex, nullptr);
@@ -143,7 +143,7 @@ public:
     /// successfully, false otherwise.
     constexpr auto try_lock() noexcept(noexcept(_mutex->try_lock())) -> bool
     {
-        if ((_mutex != nullptr) && !_owns) {
+        if ((_mutex != nullptr) and not _owns) {
             if (auto success = _mutex->try_lock(); success) {
                 _owns = true;
                 return true;
@@ -164,7 +164,7 @@ public:
     constexpr auto try_lock_for(chrono::duration<Rep, Period> const& dur) noexcept(noexcept(_mutex->try_lock_for(dur)))
         -> bool
     {
-        if ((_mutex != nullptr) && !_owns) {
+        if ((_mutex != nullptr) and not _owns) {
             if (auto success = _mutex->try_lock_for(dur); success) {
                 _owns = true;
                 return true;
@@ -179,7 +179,7 @@ public:
     constexpr auto
     try_lock_until(chrono::time_point<Clock, Duration> const& tp) noexcept(noexcept(_mutex->try_lock_until(tp))) -> bool
     {
-        if ((_mutex != nullptr) && !_owns) {
+        if ((_mutex != nullptr) and not _owns) {
             if (auto success = _mutex->try_lock_until(tp); success) {
                 _owns = true;
                 return true;

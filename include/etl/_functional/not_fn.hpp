@@ -73,10 +73,10 @@ template <auto ConstFn>
 struct stateless_not_fn {
     template <typename... Args>
     constexpr auto
-    operator()(Args&&... args) const noexcept(noexcept(!etl::invoke(ConstFn, etl::forward<Args>(args)...)))
-        -> decltype(!etl::invoke(ConstFn, etl::forward<Args>(args)...))
+    operator()(Args&&... args) const noexcept(noexcept(not etl::invoke(ConstFn, etl::forward<Args>(args)...)))
+        -> decltype(not etl::invoke(ConstFn, etl::forward<Args>(args)...))
     {
-        return !etl::invoke(ConstFn, etl::forward<Args>(args)...);
+        return not etl::invoke(ConstFn, etl::forward<Args>(args)...);
     }
 };
 

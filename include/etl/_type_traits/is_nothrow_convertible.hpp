@@ -14,7 +14,7 @@
 namespace etl {
 
 template <typename From, typename To>
-struct is_nothrow_convertible : bool_constant<is_void_v<From> && is_void_v<To>> { };
+struct is_nothrow_convertible : bool_constant<is_void_v<From> and is_void_v<To>> { };
 
 template <typename From, typename To>
     requires requires {
