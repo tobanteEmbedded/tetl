@@ -899,21 +899,21 @@ template <typename Char, typename Traits>
 [[nodiscard]] constexpr auto
 operator>(basic_string_view<Char, Traits> lhs, basic_string_view<Char, Traits> rhs) noexcept -> bool
 {
-    return !(lhs < rhs) and !(lhs == rhs);
+    return not(lhs < rhs) and not(lhs == rhs);
 }
 
 template <typename Char, typename Traits, int = 1>
 [[nodiscard]] constexpr auto
 operator>(type_identity_t<basic_string_view<Char, Traits>> lhs, basic_string_view<Char, Traits> rhs) noexcept -> bool
 {
-    return !(lhs < rhs) and !(lhs == rhs);
+    return not(lhs < rhs) and not(lhs == rhs);
 }
 
 template <typename Char, typename Traits, int = 2>
 [[nodiscard]] constexpr auto
 operator>(basic_string_view<Char, Traits> lhs, type_identity_t<basic_string_view<Char, Traits>> rhs) noexcept -> bool
 {
-    return !(lhs < rhs) and !(lhs == rhs);
+    return not(lhs < rhs) and not(lhs == rhs);
 }
 
 /// \brief Compares two views. All comparisons are done via the compare() member

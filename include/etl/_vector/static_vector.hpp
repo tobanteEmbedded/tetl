@@ -911,7 +911,7 @@ constexpr auto operator==(static_vector<T, Capacity> const& lhs, static_vector<T
 template <typename T, size_t Capacity>
 constexpr auto operator!=(static_vector<T, Capacity> const& lhs, static_vector<T, Capacity> const& rhs) noexcept -> bool
 {
-    return !(lhs == rhs);
+    return not(lhs == rhs);
 }
 
 /// \brief Compares the contents of two vectors.
@@ -928,7 +928,7 @@ constexpr auto operator<(static_vector<T, Capacity> const& lhs, static_vector<T,
 template <typename T, size_t Capacity>
 constexpr auto operator<=(static_vector<T, Capacity> const& lhs, static_vector<T, Capacity> const& rhs) noexcept -> bool
 {
-    return !(rhs < lhs);
+    return not(rhs < lhs);
 }
 
 template <typename T, size_t Capacity>
@@ -940,7 +940,7 @@ constexpr auto operator>(static_vector<T, Capacity> const& lhs, static_vector<T,
 template <typename T, size_t Capacity>
 constexpr auto operator>=(static_vector<T, Capacity> const& lhs, static_vector<T, Capacity> const& rhs) noexcept -> bool
 {
-    return !(lhs < rhs);
+    return not(lhs < rhs);
 }
 
 /// \brief Erases all elements that satisfy the predicate pred from the

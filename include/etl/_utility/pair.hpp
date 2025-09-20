@@ -201,7 +201,7 @@ constexpr auto operator<(pair<T1, T2> const& lhs, pair<T1, T2> const& rhs) -> bo
 template <typename T1, typename T2>
 constexpr auto operator<=(pair<T1, T2> const& lhs, pair<T1, T2> const& rhs) -> bool
 {
-    return !(rhs < lhs);
+    return not(rhs < lhs);
 }
 
 /// \brief Compares lhs and rhs lexicographically by operator<, that is,
@@ -219,7 +219,7 @@ constexpr auto operator>(pair<T1, T2> const& lhs, pair<T1, T2> const& rhs) -> bo
 template <typename T1, typename T2>
 constexpr auto operator>=(pair<T1, T2> const& lhs, pair<T1, T2> const& rhs) -> bool
 {
-    return !(lhs < rhs);
+    return not(lhs < rhs);
 }
 
 /// \brief The partial specialization of tuple_size for pairs provides a

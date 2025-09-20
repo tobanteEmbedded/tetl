@@ -526,7 +526,7 @@ template <typename Key, size_t Capacity, typename Comp>
 [[nodiscard]] constexpr auto
 operator!=(static_set<Key, Capacity, Comp> const& lhs, static_set<Key, Capacity, Comp> const& rhs) -> bool
 {
-    return !(lhs == rhs);
+    return not(lhs == rhs);
 }
 
 /// \brief Compares the contents of two sets.
@@ -552,7 +552,7 @@ template <typename Key, size_t Capacity, typename Comp>
 [[nodiscard]] constexpr auto
 operator<=(static_set<Key, Capacity, Comp> const& lhs, static_set<Key, Capacity, Comp> const& rhs) -> bool
 {
-    return !(rhs < lhs);
+    return not(rhs < lhs);
 }
 
 /// \brief Compares the contents of two sets.
@@ -578,7 +578,7 @@ template <typename Key, size_t Capacity, typename Comp>
 [[nodiscard]] constexpr auto
 operator>=(static_set<Key, Capacity, Comp> const& lhs, static_set<Key, Capacity, Comp> const& rhs) -> bool
 {
-    return !(lhs < rhs);
+    return not(lhs < rhs);
 }
 
 /// \brief Specializes the swap algorithm for set. Swaps the contents

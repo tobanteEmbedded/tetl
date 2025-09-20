@@ -74,7 +74,7 @@ struct xoshiro128starstar {
     [[nodiscard]] friend constexpr auto
     operator!=(xoshiro128starstar const& lhs, xoshiro128starstar const& rhs) noexcept -> bool
     {
-        return !(lhs == rhs);
+        return not(lhs == rhs);
     }
 
 private:

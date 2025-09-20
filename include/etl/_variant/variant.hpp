@@ -111,16 +111,14 @@ public:
     {
     }
 
-    // clang-format off
     template <typename T>
-        requires (
-                (sizeof...(Ts) > 0)
+        requires(
+            (sizeof...(Ts) > 0)
             and not is_same_v<remove_cvref_t<T>, variant>
             and not detail::is_in_place_index<remove_cvref_t<T>>
             and not detail::is_in_place_type<remove_cvref_t<T>>
             and is_constructible_v<detail::variant_alternative_selector_t<T, Ts...>, T>
         )
-    // clang-format on
     constexpr variant(T&& t) noexcept(is_nothrow_constructible_v<detail::variant_alternative_selector_t<T, Ts...>, T>)
         : variant(in_place_type<detail::variant_alternative_selector_t<T, Ts...>>, etl::forward<T>(t))
     {
@@ -144,7 +142,7 @@ public:
     constexpr variant(variant const&) = default;
 
     constexpr variant(variant const& other) noexcept((... and etl::is_nothrow_copy_constructible_v<Ts>))
-        requires((... and etl::is_copy_constructible_v<Ts>) and !(... and etl::is_trivially_copy_constructible_v<Ts>))
+        requires((... and etl::is_copy_constructible_v<Ts>) and not(... and etl::is_trivially_copy_constructible_v<Ts>))
         : variant(other, copy_move_tag{})
     {
     }
@@ -176,7 +174,7 @@ public:
         (... and is_nothrow_move_assignable_v<Ts>) and (... and is_nothrow_move_constructible_v<Ts>)
     ) -> variant&
         requires(
-            (... and detail::variant_move_assignable<Ts>) and !(... and detail::variant_trivially_move_assignable<Ts>)
+            (... and detail::variant_move_assignable<Ts>) and not(... and detail::variant_trivially_move_assignable<Ts>)
         )
     {
         assign(etl::move(other));
