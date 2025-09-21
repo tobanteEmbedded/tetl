@@ -46,7 +46,7 @@ jobs:
           -S .
           -B cmake-build-gcc
           -G "Ninja Multi-Config"
-          -D CMAKE_TOOLCHAIN_FILE=cmake/toolchain/gcc-arm-none-eabi.cmake
+          -D CMAKE_TOOLCHAIN_FILE=cmake/toolchain/arm-none-eabi-gcc.cmake
           -D CMAKE_CXX_STANDARD=${{ matrix.cxx }}
           -D CMAKE_COMPILE_WARNING_AS_ERROR=ON
           -D TETL_BUILD_CONTRACT_CHECKS=OFF
@@ -63,7 +63,7 @@ jobs:
           -S .
           -B cmake-build-clang
           -G "Ninja Multi-Config"
-          -D CMAKE_TOOLCHAIN_FILE=cmake/toolchain/clang-arm-none-eabi.cmake
+          -D CMAKE_TOOLCHAIN_FILE=cmake/toolchain/arm-none-eabi-clang.cmake
           -D CMAKE_CXX_STANDARD=${{ matrix.cxx }}
           -D CMAKE_COMPILE_WARNING_AS_ERROR=ON
           -D TETL_BUILD_CONTRACT_CHECKS=OFF

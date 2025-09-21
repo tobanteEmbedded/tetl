@@ -43,7 +43,7 @@ jobs:
           -S .
           -B build
           -G "Ninja Multi-Config"
-          -D CMAKE_TOOLCHAIN_FILE=cmake/toolchain/gcc-riscv-none-elf.cmake
+          -D CMAKE_TOOLCHAIN_FILE=cmake/toolchain/riscv-none-elf-gcc.cmake
           -D CMAKE_CXX_STANDARD=${{ matrix.cxx }}
           -D CMAKE_COMPILE_WARNING_AS_ERROR=ON
           -D TETL_BUILD_CONTRACT_CHECKS=OFF
