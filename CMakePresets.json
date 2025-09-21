@@ -30,7 +30,7 @@
     {
       "name": "avr-gcc",
       "description": "Configure with avr-gcc toolchain",
-      "toolchainFile": "${sourceDir}/cmake/toolchain/atmega2560.cmake",
+      "toolchainFile": "${sourceDir}/cmake/toolchain/avr-gcc.cmake",
       "inherits": ["_root-config"],
       "cacheVariables": {
         "TETL_BUILD_CONTRACT_CHECKS": false
