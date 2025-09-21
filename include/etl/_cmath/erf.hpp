@@ -16,18 +16,20 @@ inline constexpr struct erf {
     template <typename Float>
     [[nodiscard]] constexpr auto operator()(Float arg) const noexcept -> Float
     {
+#if not(defined(__AVR__) and defined(__clang__))
         if (not is_constant_evaluated()) {
-#if __has_builtin(__builtin_erff)
+    #if __has_builtin(__builtin_erff)
             if constexpr (etl::same_as<Float, float>) {
                 return __builtin_erff(arg);
             }
-#endif
-#if __has_builtin(__builtin_erf)
+    #endif
+    #if __has_builtin(__builtin_erf)
             if constexpr (etl::same_as<Float, double>) {
                 return __builtin_erf(arg);
             }
-#endif
+    #endif
         }
+#endif
         return etl::detail::gcem::erf(arg);
     }
 } erf;
