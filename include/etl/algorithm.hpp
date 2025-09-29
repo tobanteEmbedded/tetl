@@ -97,5 +97,6 @@
 #include <etl/_algorithm/gnome_sort.hpp>
 #include <etl/_algorithm/insertion_sort.hpp>
 #include <etl/_algorithm/merge_sort.hpp>
+#include <etl/_algorithm/quick_sort.hpp>
 
 #endif // TETL_ALGORITHM_HPP

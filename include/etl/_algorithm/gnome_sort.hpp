@@ -14,8 +14,8 @@ namespace etl {
 /// \details https://en.wikipedia.org/wiki/Gnome_sort
 /// \note Non-standard extension
 /// \ingroup algorithm
-template <typename BidirIt, typename Compare>
-constexpr auto gnome_sort(BidirIt first, BidirIt last, Compare comp) -> void
+template <typename RandomIt, typename Compare>
+constexpr auto gnome_sort(RandomIt first, RandomIt last, Compare comp) -> void
 {
     auto i = first;
     while (i != last) {
@@ -32,8 +32,8 @@ constexpr auto gnome_sort(BidirIt first, BidirIt last, Compare comp) -> void
 /// \details https://en.wikipedia.org/wiki/Gnome_sort
 /// \note Non-standard extension
 /// \ingroup algorithm
-template <typename BidirIt>
-constexpr auto gnome_sort(BidirIt first, BidirIt last) -> void
+template <typename RandomIt>
+constexpr auto gnome_sort(RandomIt first, RandomIt last) -> void
 {
     etl::gnome_sort(first, last, less());
 }
