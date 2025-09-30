@@ -34,9 +34,6 @@
 #define SORT_FUZZ_MAIN(sorter)                                                                                         \
     extern "C" auto LLVMFuzzerTestOneInput(std::uint8_t const* data, std::size_t size) -> int                          \
     {                                                                                                                  \
-        if (size == 0) {                                                                                               \
-            return 0;                                                                                                  \
-        }                                                                                                              \
         auto p = FuzzedDataProvider{data, size};                                                                       \
         RUN(test_sort(p, [](auto f, auto l, auto cmp) { sorter(f, l, cmp); }));                                        \
         return 0;                                                                                                      \

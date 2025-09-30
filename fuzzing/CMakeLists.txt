@@ -24,16 +24,33 @@ function(tetl_add_fuzz_test _target)
 
     add_executable(${target_name} "src/${target_name}.cpp")
     target_include_directories(${target_name} PRIVATE "./include" "../include")
+    target_compile_options(${target_name} PRIVATE
+        "-Werror"
+        "-Weverything"
+        "-Wno-c++98-compat-pedantic"
+        "-Wno-c++98-compat"
+        "-Wno-ctad-maybe-unsupported"
+        "-Wno-exit-time-destructors"
+        "-Wno-float-equal"
+        "-Wno-implicit-int-conversion"
+        "-Wno-missing-prototypes"
+        "-Wno-padded"
+        "-Wno-unsafe-buffer-usage"
+    )
 
     add_test(NAME "${target_name}" COMMAND ${target_name} -max_total_time=10)
     set_tests_properties("${target_name}" PROPERTIES ENVIRONMENT "LLVM_PROFILE_FILE=raw/%p-%m.profraw")
 endfunction()
 
+tetl_add_fuzz_test("algorithm.adjacent_find")
 tetl_add_fuzz_test("algorithm.bubble_sort")
+tetl_add_fuzz_test("algorithm.binary_search")
 tetl_add_fuzz_test("algorithm.equal")
 tetl_add_fuzz_test("algorithm.exchange_sort")
 tetl_add_fuzz_test("algorithm.gnome_sort")
 tetl_add_fuzz_test("algorithm.insertion_sort")
+tetl_add_fuzz_test("algorithm.is_permutation")
+tetl_add_fuzz_test("algorithm.lexicographical_compare")
 tetl_add_fuzz_test("algorithm.max_element")
 tetl_add_fuzz_test("algorithm.merge_sort")
 tetl_add_fuzz_test("algorithm.mismatch")
@@ -52,6 +69,7 @@ tetl_add_fuzz_test("bit.popcount")
 tetl_add_fuzz_test("bitset")
 tetl_add_fuzz_test("charconv.from_chars")
 tetl_add_fuzz_test("charconv.to_chars")
+tetl_add_fuzz_test("cmath.lerp")
 tetl_add_fuzz_test("random.uniform_int_distribution")
 tetl_add_fuzz_test("random.uniform_real_distribution")
 tetl_add_fuzz_test("string_view")
