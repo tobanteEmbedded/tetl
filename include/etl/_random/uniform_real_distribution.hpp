@@ -4,6 +4,7 @@
 #ifndef TETL_RANDOM_UNIFORM_REAL_DISTRIBUTION_HPP
 #define TETL_RANDOM_UNIFORM_REAL_DISTRIBUTION_HPP
 
+#include <etl/_cmath/lerp.hpp>
 #include <etl/_limits/numeric_limits.hpp>
 #include <etl/_random/generate_canonical.hpp>
 
@@ -110,10 +111,7 @@ struct uniform_real_distribution {
         static_assert(minBits <= 64);
 
         // x = a + u * (b - a)
-        auto const a = parm.a();
-        auto const b = parm.b();
-        auto const u = etl::generate_canonical<RealType, minBits>(g);
-        return a + u * (b - a);
+        return etl::lerp(parm.a(), parm.b(), etl::generate_canonical<RealType, minBits>(g));
     }
 
     friend constexpr auto operator==(uniform_real_distribution const& x, uniform_real_distribution const& y) -> bool
