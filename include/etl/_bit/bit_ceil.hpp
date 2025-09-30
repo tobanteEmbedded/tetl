@@ -29,11 +29,11 @@ template <etl::builtin_unsigned_integer UInt>
         return UInt{1};
     }
     if constexpr (is_same_v<UInt, decltype(+x)>) {
-        return UInt{1U} << bit_width(UInt{x - 1U});
+        return UInt{1U} << bit_width(x - UInt{1U});
     } else {
         // for types subject to integral promotion
         auto o = etl::numeric_limits<unsigned>::digits - etl::numeric_limits<UInt>::digits;
-        return UInt{1U << (bit_width(UInt{x - 1U}) + o) >> o};
+        return static_cast<UInt>(1U << (bit_width(static_cast<UInt>(x - 1U)) + o) >> o);
     }
 }
 
