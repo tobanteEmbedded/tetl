@@ -8,13 +8,13 @@
 
 #include <algorithm>
 
-[[nodiscard]] auto fuzz_max_element(FuzzedDataProvider& p) -> int
+[[nodiscard]] auto fuzz_min_element(FuzzedDataProvider& p) -> int
 {
     auto const bytes = p.ConsumeRemainingBytes<unsigned char>();
     auto const view  = etl::span<unsigned char const>{bytes.data(), bytes.size()};
 
-    auto const e = etl::max_element(view.begin(), view.end());
-    auto const s = std::max_element(view.begin(), view.end());
+    auto const e = etl::min_element(view.begin(), view.end());
+    auto const s = std::min_element(view.begin(), view.end());
     if (e != s) {
         return 1;
     }
@@ -25,6 +25,6 @@
 extern "C" auto LLVMFuzzerTestOneInput(etl::uint8_t const* data, etl::size_t size) -> int
 {
     auto p = FuzzedDataProvider{data, size};
-    RUN(fuzz_max_element(p));
+    RUN(fuzz_min_element(p));
     return 0;
 }

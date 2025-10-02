@@ -18,10 +18,6 @@ template <typename UInt>
 
 extern "C" auto LLVMFuzzerTestOneInput(etl::uint8_t const* data, etl::size_t size) -> int
 {
-    if (size == 0) {
-        return 0;
-    }
-
     auto p = FuzzedDataProvider{data, size};
     RUN(fuzz_bit_ceil<unsigned char>(p));
     RUN(fuzz_bit_ceil<unsigned short>(p));

@@ -1,0 +1,35 @@
+// SPDX-License-Identifier: BSL-1.0
+// SPDX-FileCopyrightText: Copyright (C) 2025 Tobias Hienzsch
+
+#include "fuzzing.hpp"
+
+#include <etl/string_view.hpp>
+
+#include <print>
+#include <string_view>
+
+auto fuzz_string_view_starts_with(FuzzedDataProvider& p) -> int
+{
+    auto const haystack = p.ConsumeRandomLengthString(64);
+    auto const needle   = p.ConsumeRandomLengthString(64);
+
+    auto const eview = etl::string_view{haystack.data(), haystack.size()};
+    auto const sview = std::string_view{haystack.data(), haystack.size()};
+
+    auto const epos = eview.starts_with(needle.c_str());
+    auto const spos = sview.starts_with(needle.c_str());
+    if (epos != spos) {
+        std::println("etl::string_view::starts_with");
+        std::println("haystack: '{}' needle: '{}'", haystack, needle);
+        std::println("epos: '{}' spos: '{}'", epos, spos);
+        return 1;
+    }
+    return 0;
+}
+
+extern "C" auto LLVMFuzzerTestOneInput(std::uint8_t const* data, std::size_t size) -> int
+{
+    auto p = FuzzedDataProvider{data, size};
+    RUN(fuzz_string_view_starts_with(p));
+    return 0;
+}

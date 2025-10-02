@@ -33,7 +33,11 @@ constexpr auto shift_right(BidiIt first, BidiIt last, typename etl::iterator_tra
 {
     // The standard only checks for n == 0. n < 0 would be undefined behavior.
     // This implementation does nothing if n < 0.
-    if (n <= 0 or n >= etl::distance(first, last)) {
+    if (n <= 0) {
+        return first;
+    }
+
+    if (n >= etl::distance(first, last)) {
         return last;
     }
 
@@ -43,14 +47,14 @@ constexpr auto shift_right(BidiIt first, BidiIt last, typename etl::iterator_tra
         *dest = etl::move(*src);
     }
 
-    // Elements outside the new range should be left in a valid but unspecified state.
-    // If the value type has a default constructor we do a little cleanup.
-    using value_type = typename etl::iterator_traits<BidiIt>::value_type;
-    if constexpr (is_default_constructible_v<value_type>) {
-        for (; dest != first; --dest) {
-            *dest = value_type{};
-        }
-    }
+    // // Elements outside the new range should be left in a valid but unspecified state.
+    // // If the value type has a default constructor we do a little cleanup.
+    // using value_type = typename etl::iterator_traits<BidiIt>::value_type;
+    // if constexpr (is_default_constructible_v<value_type>) {
+    //     for (; dest != first; --dest) {
+    //         *dest = value_type{};
+    //     }
+    // }
 
     return etl::next(first, n);
 }

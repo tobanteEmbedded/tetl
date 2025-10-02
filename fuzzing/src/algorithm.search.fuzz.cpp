@@ -4,6 +4,7 @@
 #include "fuzzing.hpp"
 
 #include <etl/algorithm.hpp>
+#include <etl/functional.hpp>
 #include <etl/iterator.hpp>
 #include <etl/vector.hpp>
 
@@ -17,9 +18,10 @@ template <typename IntType>
     auto objs = etl::static_vector<IntType, 4>{};
     etl::generate_n(etl::back_inserter(objs), objs.capacity(), generator);
 
-    auto e = etl::search(src.begin(), src.end(), objs.begin(), objs.end());
-    auto s = std::search(src.begin(), src.end(), objs.begin(), objs.end());
-    if (e != s) {
+    auto const s = std::search(src.begin(), src.end(), objs.begin(), objs.end());
+    auto const e = etl::search(src.begin(), src.end(), objs.begin(), objs.end());
+    auto const d = etl::search(src.begin(), src.end(), etl::default_searcher(objs.begin(), objs.end()));
+    if (e != s or d != s) {
         return 1;
     }
 
@@ -28,11 +30,7 @@ template <typename IntType>
 
 extern "C" auto LLVMFuzzerTestOneInput(etl::uint8_t const* data, etl::size_t size) -> int
 {
-    if (size == 0) {
-        return 0;
-    }
     auto p = FuzzedDataProvider{data, size};
     RUN(fuzz_search<int>(p));
-
     return 0;
 }

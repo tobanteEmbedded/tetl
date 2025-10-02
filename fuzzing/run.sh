@@ -12,7 +12,7 @@ export CMAKE_BUILD_TYPE="RelWithDebInfo"
 export CMAKE_GENERATOR="Ninja"
 
 BUILD_DIR="cmake-build-fuzzing"
-BRANCH_COVERAGE=1
+BRANCH_COVERAGE=0
 
 rm -rf "$BUILD_DIR"
 
