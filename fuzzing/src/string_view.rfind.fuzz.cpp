@@ -16,10 +16,21 @@ auto fuzz_string_view_rfind(FuzzedDataProvider& p) -> int
     auto const eview = etl::string_view{haystack.data(), haystack.size()};
     auto const sview = std::string_view{haystack.data(), haystack.size()};
 
+    if (not needle.empty()) {
+        auto const epos = eview.rfind(needle[0]);
+        auto const spos = sview.rfind(needle[0]);
+        if (epos != spos) {
+            std::println("etl::string_view::rfind(char)");
+            std::println("haystack: '{}' needle: '{}'", haystack, needle);
+            std::println("epos: '{}' spos: '{}'", epos, spos);
+            return 1;
+        }
+    }
+
     auto const epos = eview.rfind(needle.c_str());
     auto const spos = sview.rfind(needle.c_str());
     if (epos != spos) {
-        std::println("etl::string_view::rfind");
+        std::println("etl::string_view::rfind(char const*)");
         std::println("haystack: '{}' needle: '{}'", haystack, needle);
         std::println("epos: '{}' spos: '{}'", epos, spos);
         return 1;
