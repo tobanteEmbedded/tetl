@@ -8,7 +8,7 @@
 #include <print>
 #include <string_view>
 
-auto fuzz_string_view_starts_with(FuzzedDataProvider& p) -> int
+auto fuzz_string_view_ends_with(FuzzedDataProvider& p) -> int
 {
     auto const haystack = p.ConsumeRandomLengthString(64);
     auto const needle   = p.ConsumeRandomLengthString(64);
@@ -16,10 +16,10 @@ auto fuzz_string_view_starts_with(FuzzedDataProvider& p) -> int
     auto const eview = etl::string_view{haystack.data(), haystack.size()};
     auto const sview = std::string_view{haystack.data(), haystack.size()};
 
-    auto const epos = eview.starts_with(needle.c_str());
-    auto const spos = sview.starts_with(needle.c_str());
+    auto const epos = eview.ends_with(needle.c_str());
+    auto const spos = sview.ends_with(needle.c_str());
     if (epos != spos) {
-        std::println("etl::string_view::starts_with");
+        std::println("etl::string_view::ends_with");
         std::println("haystack: '{}' needle: '{}'", haystack, needle);
         std::println("epos: '{}' spos: '{}'", epos, spos);
         return 1;
@@ -30,6 +30,6 @@ auto fuzz_string_view_starts_with(FuzzedDataProvider& p) -> int
 extern "C" auto LLVMFuzzerTestOneInput(std::uint8_t const* data, std::size_t size) -> int
 {
     auto p = FuzzedDataProvider{data, size};
-    RUN(fuzz_string_view_starts_with(p));
+    RUN(fuzz_string_view_ends_with(p));
     return 0;
 }
