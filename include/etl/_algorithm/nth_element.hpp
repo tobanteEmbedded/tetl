@@ -69,9 +69,9 @@ constexpr auto unguarded_partition(RandomIt first, RandomIt last, RandomIt pivot
 template <typename RandomIt, typename Compare>
 constexpr auto nth_element(RandomIt first, RandomIt nth, RandomIt last, Compare comp) -> void
 {
-    constexpr auto small_threshold = 16;
+    constexpr auto threshold = 16;
 
-    while (last - first > small_threshold) {
+    while (last - first > threshold) {
         auto const middle = etl::next(first, (last - first) / 2);
         auto const pivot  = etl::detail::median_of_three(first, middle, etl::prev(last), comp);
         auto const cut    = etl::detail::unguarded_partition(first, last, pivot, comp);
