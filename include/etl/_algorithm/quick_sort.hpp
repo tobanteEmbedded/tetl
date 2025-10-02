@@ -16,18 +16,17 @@ namespace detail {
 template <typename RandomIt, typename Compare>
 constexpr auto lomuto_partition(RandomIt first, RandomIt last, Compare comp) -> RandomIt
 {
-    // pivot = last - 1
-    auto pivot_it = etl::prev(last);
-    auto i        = first;
+    auto pivot = etl::prev(last);
+    auto i     = first;
 
-    for (auto j = first; j != pivot_it; ++j) {
-        if (comp(*j, *pivot_it)) {
+    for (auto j = first; j != pivot; ++j) {
+        if (comp(*j, *pivot)) {
             etl::iter_swap(i, j);
             ++i;
         }
     }
 
-    etl::iter_swap(i, pivot_it);
+    etl::iter_swap(i, pivot);
     return i; // final pivot position
 }
 
