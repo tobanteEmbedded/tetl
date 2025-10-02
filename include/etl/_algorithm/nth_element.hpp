@@ -4,8 +4,8 @@
 #ifndef TETL_ALGORITHM_NTH_ELEMENT_HPP
 #define TETL_ALGORITHM_NTH_ELEMENT_HPP
 
+#include <etl/_algorithm/insertion_sort.hpp>
 #include <etl/_algorithm/iter_swap.hpp>
-#include <etl/_algorithm/sort.hpp>
 #include <etl/_functional/less.hpp>
 #include <etl/_iterator/next.hpp>
 #include <etl/_iterator/prev.hpp>
@@ -71,21 +71,21 @@ constexpr auto unguarded_partition(RandomIt first, RandomIt last, RandomIt pivot
 template <typename RandomIt, typename Compare>
 constexpr auto nth_element(RandomIt first, RandomIt nth, RandomIt last, Compare comp) -> void
 {
-    constexpr auto threshold = 16;
+    constexpr auto threshold = 3;
 
     while (last - first > threshold) {
         auto const middle = etl::next(first, (last - first) / 2);
         auto const pivot  = etl::detail::median_of_three(first, middle, etl::prev(last), comp);
         auto const cut    = etl::detail::unguarded_partition(first, last, pivot, comp);
 
-        if (nth < cut) {
-            last = cut; // recurse left
+        if (cut <= nth) {
+            first = cut;
         } else {
-            first = cut; // recurse right
+            last = cut;
         }
     }
 
-    etl::sort(first, last, comp);
+    etl::insertion_sort(first, last, comp);
 }
 
 template <typename RandomIt>
