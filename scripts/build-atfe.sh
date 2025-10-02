@@ -13,5 +13,5 @@ cmake -S . -B cmake-build-atfe \
     -D CMAKE_CXX_SCAN_FOR_MODULES=OFF \
     -D TETL_BUILD_CONTRACT_CHECKS=OFF
 
-cmake --build cmake-build-atfe --target help
+cmake --build cmake-build-atfe --target all
 ctest --test-dir cmake-build-atfe --output-on-failure -j 16
