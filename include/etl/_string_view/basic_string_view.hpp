@@ -616,6 +616,9 @@ struct basic_string_view {
     /// substring, or npos if no such character is found.
     [[nodiscard]] constexpr auto find_last_of(basic_string_view v, size_type pos = npos) const noexcept -> size_type
     {
+        if (empty()) {
+            return npos;
+        }
         auto offset = etl::clamp<size_type>(pos, 0, size() - 1);
         do { // NOLINT(cppcoreguidelines-avoid-do-while)
             auto const current = unsafe_at(offset);
