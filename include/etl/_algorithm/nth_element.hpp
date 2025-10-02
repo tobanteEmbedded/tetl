@@ -20,7 +20,8 @@ constexpr auto median_of_three(Iter a, Iter b, Iter c, Compare comp) -> Iter
     if (comp(*a, *b)) {
         if (comp(*b, *c)) {
             return b; // a < b < c
-        } else if (comp(*a, *c)) {
+        }
+        if (comp(*a, *c)) {
             return c; // a < c <= b
         }
         return a; // c <= a < b
@@ -29,7 +30,8 @@ constexpr auto median_of_three(Iter a, Iter b, Iter c, Compare comp) -> Iter
     // !(a < b)
     if (comp(*a, *c)) {
         return a; // b <= a < c
-    } else if (comp(*b, *c)) {
+    }
+    if (comp(*b, *c)) {
         return c; // b < c <= a
     }
     return b; // c <= b <= a
