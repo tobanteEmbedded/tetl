@@ -4,24 +4,27 @@
 #include "fuzzing.hpp"
 
 #include <etl/algorithm.hpp>
-#include <etl/iterator.hpp>
-#include <etl/vector.hpp>
+#include <etl/string_view.hpp>
 
 #include <algorithm>
+#include <print>
 
 template <typename IntType>
 [[nodiscard]] auto fuzz_equal(FuzzedDataProvider& p) -> int
 {
-    auto generator = [&p] { return p.ConsumeIntegral<IntType>(); };
-    auto lhs       = etl::static_vector<IntType, 16>{};
-    etl::generate_n(etl::back_inserter(lhs), lhs.capacity(), generator);
+    auto const a = p.ConsumeRandomLengthString(64);
+    auto const b = p.ConsumeRandomLengthString(64);
 
-    auto rhs = etl::static_vector<IntType, 16>{};
-    etl::generate_n(etl::back_inserter(rhs), rhs.capacity(), generator);
+    auto const av = etl::string_view{a.data(), a.size()};
+    auto const bv = etl::string_view{b.data(), b.size()};
 
-    auto e = etl::equal(begin(lhs), end(lhs), begin(rhs), end(rhs));
-    auto s = std::equal(begin(lhs), end(lhs), begin(rhs), end(rhs));
+    auto const e = etl::equal(av.begin(), av.end(), bv.begin(), bv.end());
+    auto const s = std::equal(av.begin(), av.end(), bv.begin(), bv.end());
+
     if (e != s) {
+        std::println(stderr, "equal: '{}' vs. '{}'", a, b);
+        std::println(stderr, "etl: {}", e);
+        std::println(stderr, "std: {}", s);
         return 1;
     }
 
@@ -30,9 +33,6 @@ template <typename IntType>
 
 extern "C" auto LLVMFuzzerTestOneInput(etl::uint8_t const* data, etl::size_t size) -> int
 {
-    if (size == 0) {
-        return 0;
-    }
     auto p = FuzzedDataProvider{data, size};
     RUN(fuzz_equal<int>(p));
     return 0;

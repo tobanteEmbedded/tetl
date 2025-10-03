@@ -14,21 +14,39 @@ template <typename Float>
     auto const b = p.ConsumeFloatingPoint<Float>();
     auto const t = p.ConsumeFloatingPoint<Float>();
 
-    auto const s = std::lerp(a, b, t);
-    auto const e = etl::lerp(a, b, t);
+    {
+        auto const s = std::lerp(a, b, Float(1));
+        auto const e = etl::lerp(a, b, Float(1));
 
-    if (std::isfinite(s) != std::isfinite(e)) {
-        return 1;
+        if (std::isfinite(s) != std::isfinite(e)) {
+            return 1;
+        }
+
+        if (std::isnan(s) or std::isinf(s)) {
+            return 0;
+        }
+
+        if (s != e) {
+            return 1;
+        }
     }
 
-    if (std::isnan(s) or std::isinf(s)) {
-        return 0;
-    }
+    {
+        auto const s = std::lerp(a, b, t);
+        auto const e = etl::lerp(a, b, t);
 
-    if (s != e) {
-        return 1;
-    }
+        if (std::isfinite(s) != std::isfinite(e)) {
+            return 1;
+        }
 
+        if (std::isnan(s) or std::isinf(s)) {
+            return 0;
+        }
+
+        if (s != e) {
+            return 1;
+        }
+    }
     return 0;
 }
 
