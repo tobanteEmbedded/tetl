@@ -50,7 +50,7 @@ template <typename Float>
     return 0;
 }
 
-extern "C" auto LLVMFuzzerTestOneInput(etl::uint8_t const* data, etl::size_t size) -> int
+extern "C" auto LLVMFuzzerTestOneInput(std::uint8_t const* data, std::size_t size) -> int
 {
     if (size == 0) {
         return 0;

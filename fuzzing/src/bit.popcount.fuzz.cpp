@@ -18,7 +18,7 @@ template <typename UInt>
     return (e != s or f != s) ? 1 : 0;
 }
 
-extern "C" auto LLVMFuzzerTestOneInput(etl::uint8_t const* data, etl::size_t size) -> int
+extern "C" auto LLVMFuzzerTestOneInput(std::uint8_t const* data, std::size_t size) -> int
 {
     auto p = FuzzedDataProvider{data, size};
     RUN(fuzz_popcount<unsigned char>(p));
