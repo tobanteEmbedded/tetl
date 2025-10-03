@@ -25,7 +25,7 @@ namespace etl {
 #if __has_builtin(__builtin_strncmp)
     return __builtin_strncmp(lhs, rhs, count);
 #else
-    return etl::detail::strncmp<char, etl::size_t>(lhs, rhs, count);
+    return etl::detail::strncmp<char, etl::size_t, unsigned char>(lhs, rhs, count);
 #endif
 }
 

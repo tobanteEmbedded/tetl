@@ -61,32 +61,25 @@ template <typename CharT, typename SizeT>
     return dest;
 }
 
-template <typename CharT>
+template <typename CharT, typename ImplCharT = CharT>
 [[nodiscard]] constexpr auto strcmp(CharT const* lhs, CharT const* rhs) -> int
 {
-    for (; *lhs != CharT(0); ++lhs, ++rhs) {
-        if (*lhs != *rhs) {
-            break;
-        }
+    while (*lhs and (*lhs == *rhs)) {
+        lhs++;
+        rhs++;
     }
-    return static_cast<int>(*lhs) - static_cast<int>(*rhs);
+    return static_cast<int>(static_cast<ImplCharT>(*lhs) - static_cast<ImplCharT>(*rhs));
 }
 
-template <typename CharT, typename SizeT>
+template <typename CharT, typename SizeT, typename ImplCharT = CharT>
 [[nodiscard]] constexpr auto strncmp(CharT const* lhs, CharT const* rhs, SizeT const count) -> int
 {
-    CharT u1{};
-    CharT u2{};
-
-    auto localCount = count;
-    while (localCount-- > 0) {
-        u1 = static_cast<CharT>(*lhs++);
-        u2 = static_cast<CharT>(*rhs++);
-        if (u1 != u2) {
-            return static_cast<int>(u1 - u2);
-        }
-        if (u1 == CharT(0)) {
-            return 0;
+    for (auto i = SizeT(0); i < count; ++i) {
+        auto const l    = static_cast<ImplCharT>(*lhs++);
+        auto const r    = static_cast<ImplCharT>(*rhs++);
+        auto const diff = static_cast<int>(l - r);
+        if (l == CharT(0) or diff != 0) {
+            return diff;
         }
     }
 
@@ -170,14 +163,26 @@ template <typename CharT, typename SizeT>
 }
 
 template <typename CharT>
-[[nodiscard]] constexpr auto strstr_impl(CharT* haystack, CharT* needle) noexcept -> CharT*
+[[nodiscard]] constexpr auto strstr(CharT* haystack, CharT* needle) noexcept -> CharT*
 {
-    while (*haystack != CharT(0)) {
-        if ((*haystack == *needle) and (strcmp(haystack, needle) == 0)) {
-            return haystack;
-        }
-        haystack++;
+    if (not *needle) {
+        return haystack;
     }
+
+    for (auto const* h = haystack; *h; h++) {
+        auto const* hIt = h;
+        auto const* nIt = needle;
+
+        while (*hIt and *nIt and *hIt == *nIt) {
+            hIt++;
+            nIt++;
+        }
+
+        if (not *nIt) { // reached end of needle, found match
+            return haystack + (h - haystack);
+        }
+    }
+
     return nullptr;
 }
 

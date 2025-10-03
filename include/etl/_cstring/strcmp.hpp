@@ -23,7 +23,7 @@ namespace etl {
 #if __has_builtin(__builtin_strcmp)
     return __builtin_strcmp(lhs, rhs);
 #else
-    return etl::detail::strcmp<char>(lhs, rhs);
+    return etl::detail::strcmp<char, unsigned char>(lhs, rhs);
 #endif
 }
 
