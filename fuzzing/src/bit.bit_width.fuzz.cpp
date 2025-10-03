@@ -8,7 +8,7 @@
 #include <bit>
 
 template <typename UInt>
-[[nodiscard]] auto fuzz_bit_width(FuzzedDataProvider& p) -> int
+[[nodiscard]] static auto fuzz_bit_width(FuzzedDataProvider& p) -> int
 {
     auto const num = p.ConsumeIntegral<UInt>();
     auto const s   = std::bit_width(num);

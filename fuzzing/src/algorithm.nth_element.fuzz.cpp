@@ -10,7 +10,7 @@
 #include <algorithm>
 #include <print>
 
-[[nodiscard]] auto fuzz_nth_element(FuzzedDataProvider& p) -> int
+[[nodiscard]] static auto fuzz_nth_element(FuzzedDataProvider& p) -> int
 {
     auto const original = p.ConsumeRandomLengthString(8);
     auto const pos      = p.ConsumeIntegralInRange<unsigned>(0, original.empty() ? 0 : original.size() - 1);

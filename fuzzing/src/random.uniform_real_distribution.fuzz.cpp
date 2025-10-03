@@ -9,21 +9,21 @@
 #include <print>
 
 template <typename Float>
-[[nodiscard]] auto fuzz_uniform_real_distribution(FuzzedDataProvider& p) -> int
+[[nodiscard]] static auto fuzz_uniform_real_distribution(FuzzedDataProvider& p) -> int
 {
     static constexpr auto min = etl::numeric_limits<Float>::lowest();
     static constexpr auto max = etl::numeric_limits<Float>::max();
 
-    auto const dist_min = p.ConsumeFloatingPointInRange<Float>(min, max);
-    auto const dist_max = p.ConsumeFloatingPointInRange<Float>(min, max);
-    if (dist_max <= dist_min) {
+    auto const distMin = p.ConsumeFloatingPointInRange<Float>(min, max);
+    auto const distMax = p.ConsumeFloatingPointInRange<Float>(min, max);
+    if (distMax <= distMin) {
         return 0;
     }
 
     auto urng = etl::xoshiro128starstar{p.ConsumeIntegral<etl::uint32_t>()};
-    auto dist = etl::uniform_real_distribution<Float>{dist_min, dist_max};
-    if (auto const val = dist(urng); val < dist_min or val > dist_max) {
-        std::println("dist_min: {}, dist_max: {}, val: {}", dist_min, dist_max, val);
+    auto dist = etl::uniform_real_distribution<Float>{distMin, distMax};
+    if (auto const val = dist(urng); val < distMin or val > distMax) {
+        std::println("dist_min: {}, dist_max: {}, val: {}", distMin, distMax, val);
         return 1;
     }
     return 0;

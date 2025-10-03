@@ -8,7 +8,7 @@
 #include <bit>
 
 template <typename UInt>
-[[nodiscard]] auto fuzz_countl_zero(FuzzedDataProvider& p) -> int
+[[nodiscard]] static auto fuzz_countl_zero(FuzzedDataProvider& p) -> int
 {
     auto const num = p.ConsumeIntegral<UInt>();
     auto const s   = std::countl_zero(num);

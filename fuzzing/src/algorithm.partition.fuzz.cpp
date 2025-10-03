@@ -8,7 +8,7 @@
 
 #include <algorithm>
 
-[[nodiscard]] auto fuzz_partition(FuzzedDataProvider& p) -> int
+[[nodiscard]] static auto fuzz_partition(FuzzedDataProvider& p) -> int
 {
     auto ebytes = p.ConsumeRemainingBytes<unsigned char>();
     auto sbytes = ebytes;

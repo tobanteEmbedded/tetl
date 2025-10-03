@@ -10,7 +10,7 @@
 #include <print>
 
 template <etl::size_t Size>
-auto fuzz_bitset(FuzzedDataProvider& p) -> int
+static auto fuzz_bitset(FuzzedDataProvider& p) -> int
 {
     using UInt = etl::conditional_t<(Size > 32), etl::uint64_t, etl::uint32_t>;
 

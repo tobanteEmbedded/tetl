@@ -11,7 +11,7 @@
 #include <algorithm>
 #include <print>
 
-[[nodiscard]] auto fuzz_set_intersection(FuzzedDataProvider& p) -> int
+[[nodiscard]] static auto fuzz_set_intersection(FuzzedDataProvider& p) -> int
 {
     auto const a     = p.ConsumeRandomLengthString(16);
     auto const b     = p.ConsumeRandomLengthString(16);

@@ -11,7 +11,7 @@
 #include <algorithm>
 #include <print>
 
-[[nodiscard]] auto fuzz_shift_left(FuzzedDataProvider& p) -> int
+[[nodiscard]] static auto fuzz_shift_left(FuzzedDataProvider& p) -> int
 {
     auto shift  = p.ConsumeIntegralInRange<etl::ptrdiff_t>(0, etl::numeric_limits<etl::ptrdiff_t>::max());
     auto ebytes = p.ConsumeRemainingBytes<unsigned char>();

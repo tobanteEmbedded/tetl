@@ -8,7 +8,7 @@
 #include <print>
 #include <string_view>
 
-auto fuzz_string_view_starts_with(FuzzedDataProvider& p) -> int
+static auto fuzz_string_view_starts_with(FuzzedDataProvider& p) -> int
 {
     auto const haystack = p.ConsumeRandomLengthString(64);
     auto const needle   = p.ConsumeRandomLengthString(64);

@@ -8,7 +8,7 @@
 
 #include <algorithm>
 
-[[nodiscard]] auto fuzz_min_element(FuzzedDataProvider& p) -> int
+[[nodiscard]] static auto fuzz_min_element(FuzzedDataProvider& p) -> int
 {
     auto const bytes = p.ConsumeRemainingBytes<unsigned char>();
     auto const view  = etl::span<unsigned char const>{bytes.data(), bytes.size()};

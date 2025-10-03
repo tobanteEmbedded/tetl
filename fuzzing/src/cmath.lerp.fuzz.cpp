@@ -8,7 +8,7 @@
 #include <cmath>
 
 template <typename Float>
-[[nodiscard]] auto fuzz_lerp(FuzzedDataProvider& p) -> int
+[[nodiscard]] static auto fuzz_lerp(FuzzedDataProvider& p) -> int
 {
     auto const a = p.ConsumeFloatingPoint<Float>();
     auto const b = p.ConsumeFloatingPoint<Float>();

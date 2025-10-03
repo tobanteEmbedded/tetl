@@ -14,7 +14,7 @@
 #include <system_error>
 
 template <typename IntType>
-[[nodiscard]] auto test_from_chars(FuzzedDataProvider& p) -> int
+[[nodiscard]] static auto test_from_chars(FuzzedDataProvider& p) -> int
 {
     using namespace etl::fuzzing;
 

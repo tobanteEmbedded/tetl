@@ -8,7 +8,7 @@
 #include <bit>
 
 template <typename UInt>
-[[nodiscard]] auto fuzz_has_single_bit(FuzzedDataProvider& p) -> int
+[[nodiscard]] static auto fuzz_has_single_bit(FuzzedDataProvider& p) -> int
 {
     auto const num = p.ConsumeIntegral<UInt>();
     auto const s   = std::has_single_bit(num);

@@ -8,7 +8,7 @@
 #include <cctype>
 #include <print>
 
-[[nodiscard]] auto fuzz_isalpha(FuzzedDataProvider& p) -> int
+[[nodiscard]] static auto fuzz_isalpha(FuzzedDataProvider& p) -> int
 {
     auto const c = p.ConsumeIntegral<char>();
 

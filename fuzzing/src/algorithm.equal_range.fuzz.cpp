@@ -8,7 +8,7 @@
 
 #include <algorithm>
 
-[[nodiscard]] auto fuzz_equal_range(FuzzedDataProvider& p) -> int
+[[nodiscard]] static auto fuzz_equal_range(FuzzedDataProvider& p) -> int
 {
     auto const needle = p.ConsumeIntegral<unsigned char>();
     auto const bytes  = p.ConsumeRemainingBytes<unsigned char>();

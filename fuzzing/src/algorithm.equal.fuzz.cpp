@@ -10,7 +10,7 @@
 #include <print>
 
 template <typename IntType>
-[[nodiscard]] auto fuzz_equal(FuzzedDataProvider& p) -> int
+[[nodiscard]] static auto fuzz_equal(FuzzedDataProvider& p) -> int
 {
     auto const a = p.ConsumeRandomLengthString(64);
     auto const b = p.ConsumeRandomLengthString(64);

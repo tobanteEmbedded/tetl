@@ -9,26 +9,26 @@
 #include <random>
 
 template <typename Int>
-[[nodiscard]] auto fuzz_uniform_int_distribution(FuzzedDataProvider& p) -> int
+[[nodiscard]] static auto fuzz_uniform_int_distribution(FuzzedDataProvider& p) -> int
 {
     static constexpr auto min = etl::numeric_limits<Int>::lowest();
     static constexpr auto max = etl::numeric_limits<Int>::max();
 
-    auto const dist_min = p.ConsumeIntegralInRange<Int>(min, max);
-    if (dist_min == max) {
+    auto const distMin = p.ConsumeIntegralInRange<Int>(min, max);
+    if (distMin == max) {
         return 0;
     }
 
-    auto const dist_max = p.ConsumeIntegralInRange<Int>(dist_min, max);
-    if (dist_min == dist_max) {
+    auto const distMax = p.ConsumeIntegralInRange<Int>(distMin, max);
+    if (distMin == distMax) {
         return 0;
     }
 
     auto urng = etl::xoshiro128plusplus{p.ConsumeIntegral<etl::uint32_t>()};
-    auto dist = etl::uniform_int_distribution<Int>{dist_min, dist_max};
+    auto dist = etl::uniform_int_distribution<Int>{distMin, distMax};
 
     auto const val = dist(urng);
-    return (val < dist_min or val > dist_max) ? 1 : 0;
+    return (val < distMin or val > distMax) ? 1 : 0;
 }
 
 extern "C" auto LLVMFuzzerTestOneInput(etl::uint8_t const* data, etl::size_t size) -> int

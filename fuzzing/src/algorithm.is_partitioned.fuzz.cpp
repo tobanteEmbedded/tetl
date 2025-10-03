@@ -11,7 +11,7 @@
 #include <algorithm>
 #include <print>
 
-[[nodiscard]] auto fuzz_reverse(FuzzedDataProvider& p) -> int
+[[nodiscard]] static auto fuzz_reverse(FuzzedDataProvider& p) -> int
 {
     auto const str  = p.ConsumeRandomLengthString(32);
     auto const view = etl::string_view{str.data(), str.size()};

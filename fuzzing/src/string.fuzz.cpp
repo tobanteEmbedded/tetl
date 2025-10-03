@@ -10,7 +10,7 @@
 
 #include <string>
 
-[[nodiscard]] auto test_string(FuzzedDataProvider& p) -> int
+[[nodiscard]] static auto test_string(FuzzedDataProvider& p) -> int
 {
     auto const chars = p.ConsumeBytesWithTerminator<char>(127, 0);
 

@@ -9,7 +9,7 @@
 #include <etl/vector.hpp>
 
 template <typename IntType>
-[[nodiscard]] auto fuzz_search(FuzzedDataProvider& p) -> int
+[[nodiscard]] static auto fuzz_search(FuzzedDataProvider& p) -> int
 {
     auto generator = [&p] { return p.ConsumeIntegral<IntType>(); };
     auto src       = etl::static_vector<IntType, 128>{};

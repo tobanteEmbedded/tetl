@@ -10,7 +10,7 @@
 #include <utility>
 
 template <typename Number>
-[[nodiscard]] auto fuzz_midpoint(FuzzedDataProvider& p) -> int
+[[nodiscard]] static auto fuzz_midpoint(FuzzedDataProvider& p) -> int
 {
     auto const [a, b] = [&p] {
         if constexpr (etl::integral<Number>) {
