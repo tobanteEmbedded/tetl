@@ -34,6 +34,7 @@ function(tetl_add_fuzz_test _target)
         "-Wno-float-equal"
         "-Wno-implicit-int-conversion"
         "-Wno-missing-prototypes"
+        "-Wno-nrvo"
         "-Wno-padded"
         "-Wno-unsafe-buffer-usage"
     )
@@ -84,6 +85,9 @@ tetl_add_fuzz_test("bitset")
 tetl_add_fuzz_test("cctype")
 tetl_add_fuzz_test("charconv.from_chars")
 tetl_add_fuzz_test("charconv.to_chars")
+tetl_add_fuzz_test("chrono.duration")
+tetl_add_fuzz_test("chrono.rounding")
+tetl_add_fuzz_test("chrono.year_month_day")
 tetl_add_fuzz_test("cmath.lerp")
 tetl_add_fuzz_test("numeric.midpoint")
 tetl_add_fuzz_test("random.uniform_int_distribution")
