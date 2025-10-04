@@ -22,8 +22,8 @@
 
 [[nodiscard]] static auto fuzz_strcmp(FuzzedDataProvider& p) -> int
 {
-    auto const lhs = p.ConsumeRandomLengthString(64);
-    auto const rhs = p.ConsumeRandomLengthString(64);
+    auto const lhs = p.ConsumeRandomLengthString();
+    auto const rhs = p.ConsumeRandomLengthString();
 
     auto const s  = std::strcmp(lhs.c_str(), rhs.c_str());
     auto const e  = etl::strcmp(lhs.c_str(), rhs.c_str());

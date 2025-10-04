@@ -12,8 +12,8 @@
 template <typename IntType>
 [[nodiscard]] static auto fuzz_equal(FuzzedDataProvider& p) -> int
 {
-    auto const a = p.ConsumeRandomLengthString(64);
-    auto const b = p.ConsumeRandomLengthString(64);
+    auto const a = p.ConsumeRandomLengthString();
+    auto const b = p.ConsumeRandomLengthString();
 
     auto const av = etl::string_view{a.data(), a.size()};
     auto const bv = etl::string_view{b.data(), b.size()};

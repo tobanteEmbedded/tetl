@@ -10,7 +10,7 @@
 
 [[nodiscard]] static auto fuzz_strlen(FuzzedDataProvider& p) -> int
 {
-    auto const str = p.ConsumeRandomLengthString(64);
+    auto const str = p.ConsumeRandomLengthString();
 
     auto const s  = std::strlen(str.c_str());
     auto const e  = etl::strlen(str.c_str());

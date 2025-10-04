@@ -13,7 +13,7 @@
 
 [[nodiscard]] static auto fuzz_reverse(FuzzedDataProvider& p) -> int
 {
-    auto const str  = p.ConsumeRandomLengthString(32);
+    auto const str  = p.ConsumeRandomLengthString();
     auto const view = etl::string_view{str.data(), str.size()};
 
     auto const e = etl::is_partitioned(view.begin(), view.end(), [](char c) { return c < 'a'; });

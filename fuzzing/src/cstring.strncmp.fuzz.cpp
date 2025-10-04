@@ -22,8 +22,8 @@
 
 [[nodiscard]] static auto fuzz_strncmp(FuzzedDataProvider& p) -> int
 {
-    auto const lhs   = p.ConsumeRandomLengthString(64);
-    auto const rhs   = p.ConsumeRandomLengthString(64);
+    auto const lhs   = p.ConsumeRandomLengthString();
+    auto const rhs   = p.ConsumeRandomLengthString();
     auto const count = std::min(lhs.size(), rhs.size());
 
     auto const s  = std::strncmp(lhs.c_str(), rhs.c_str(), count);

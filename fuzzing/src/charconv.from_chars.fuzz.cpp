@@ -19,7 +19,7 @@ template <typename IntType>
     using namespace etl::fuzzing;
 
     auto const base  = p.ConsumeIntegralInRange<int>(2, 36);
-    auto const input = p.ConsumeRandomLengthString(11);
+    auto const input = p.ConsumeRandomLengthString();
 
     auto [stdVal, stdPtr, stdEc] = [base, &input] {
         auto val       = IntType{};

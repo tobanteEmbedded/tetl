@@ -5,22 +5,20 @@
 
 #include <etl/algorithm.hpp>
 #include <etl/functional.hpp>
-#include <etl/iterator.hpp>
-#include <etl/vector.hpp>
+#include <etl/span.hpp>
 
 template <typename IntType>
 [[nodiscard]] static auto fuzz_search(FuzzedDataProvider& p) -> int
 {
-    auto generator = [&p] { return p.ConsumeIntegral<IntType>(); };
-    auto src       = etl::static_vector<IntType, 128>{};
-    etl::generate_n(etl::back_inserter(src), src.capacity(), generator);
+    auto const haystack = p.ConsumeRandomLengthString();
+    auto const needle   = p.ConsumeRandomLengthString();
 
-    auto objs = etl::static_vector<IntType, 4>{};
-    etl::generate_n(etl::back_inserter(objs), objs.capacity(), generator);
+    auto const h = etl::span<char const>{haystack.data(), haystack.size()};
+    auto const n = etl::span<char const>{needle.data(), needle.size()};
 
-    auto const s = std::search(src.begin(), src.end(), objs.begin(), objs.end());
-    auto const e = etl::search(src.begin(), src.end(), objs.begin(), objs.end());
-    auto const d = etl::search(src.begin(), src.end(), etl::default_searcher(objs.begin(), objs.end()));
+    auto const s = std::search(h.begin(), h.end(), n.begin(), n.end());
+    auto const e = etl::search(h.begin(), h.end(), n.begin(), n.end());
+    auto const d = etl::search(h.begin(), h.end(), etl::default_searcher(n.begin(), n.end()));
     if (e != s or d != s) {
         return 1;
     }

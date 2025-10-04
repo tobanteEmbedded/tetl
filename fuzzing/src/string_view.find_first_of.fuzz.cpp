@@ -10,8 +10,8 @@
 
 static auto fuzz_string_view_find_first_of(FuzzedDataProvider& p) -> int
 {
-    auto const haystack = p.ConsumeRandomLengthString(64);
-    auto const needle   = p.ConsumeRandomLengthString(64);
+    auto const haystack = p.ConsumeRandomLengthString();
+    auto const needle   = p.ConsumeRandomLengthString();
 
     auto const eview = etl::string_view{haystack.data(), haystack.size()};
     auto const sview = std::string_view{haystack.data(), haystack.size()};

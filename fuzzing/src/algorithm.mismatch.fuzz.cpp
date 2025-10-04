@@ -10,15 +10,11 @@
 template <typename IntType>
 [[nodiscard]] static auto fuzz_mismatch(FuzzedDataProvider& p) -> int
 {
-    auto generator = [&p] { return p.ConsumeIntegral<IntType>(); };
-    auto src       = etl::static_vector<IntType, 128>{};
-    etl::generate_n(etl::back_inserter(src), src.capacity(), generator);
+    auto const a = p.ConsumeRandomLengthString();
+    auto const b = p.ConsumeRandomLengthString();
 
-    auto objs = etl::static_vector<IntType, 4>{};
-    etl::generate_n(etl::back_inserter(objs), objs.capacity(), generator);
-
-    auto e = etl::mismatch(src.begin(), src.end(), objs.begin(), objs.end());
-    auto s = std::mismatch(src.begin(), src.end(), objs.begin(), objs.end());
+    auto const e = etl::mismatch(a.begin(), a.end(), b.begin(), b.end());
+    auto const s = std::mismatch(a.begin(), a.end(), b.begin(), b.end());
     if ((e.first != s.first) or (e.second != s.second)) {
         return 1;
     }

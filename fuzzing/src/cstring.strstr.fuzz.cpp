@@ -11,8 +11,8 @@
 
 [[nodiscard]] static auto fuzz_strstr(FuzzedDataProvider& p) -> int
 {
-    auto const haystack = p.ConsumeRandomLengthString(64);
-    auto const needle   = p.ConsumeRandomLengthString(64);
+    auto const haystack = p.ConsumeRandomLengthString();
+    auto const needle   = p.ConsumeRandomLengthString();
 
     auto const s  = std::strstr(haystack.c_str(), needle.c_str());
     auto const e  = etl::strstr(haystack.c_str(), needle.c_str());

@@ -13,7 +13,7 @@
 
 [[nodiscard]] static auto fuzz_reverse(FuzzedDataProvider& p) -> int
 {
-    auto const str = p.ConsumeRandomLengthString(16);
+    auto const str = p.ConsumeRandomLengthString();
 
     auto estr = str;
     auto sstr = str;

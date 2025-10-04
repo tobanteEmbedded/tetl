@@ -13,8 +13,8 @@
 
 [[nodiscard]] static auto fuzz_set_union(FuzzedDataProvider& p) -> int
 {
-    auto const a     = p.ConsumeRandomLengthString(16);
-    auto const b     = p.ConsumeRandomLengthString(16);
+    auto const a     = p.ConsumeRandomLengthString();
+    auto const b     = p.ConsumeRandomLengthString();
     auto const aview = etl::span<char const>{a.c_str(), a.size()};
     auto const bview = etl::span<char const>{b.c_str(), b.size()};
 
