@@ -103,6 +103,7 @@ void run_case(char const* label, SortFn sorter, size_t n)
     std::mt19937 rng(123456789);
     for (size_t i = 0; i < n; ++i) {
         a.emplace_back(int(rng()));
+        // a.emplace_back(int(i));
     }
 
     SortCounters::reset();
@@ -111,8 +112,9 @@ void run_case(char const* label, SortFn sorter, size_t n)
 
     double const lb    = log2_factorial(n);        // ~ n log2 n - 1.44 n
     double const nlogn = n * std::log2((double)n); // rough model
+
     std::println(
-        "{} n={} comps={} comps/(n^2)={:.3f} comps/(nlog2n)={:.3f} comps/log2(n!)={:.3f} swaps={} copies={} moves={}",
+        "{:20}|{:^10}|{:^15}|{:^15.3f}|{:^15.3f}|{:^15.3f}|{:^10}|{:^10}|{:^10}",
         label,
         n,
         SortCounters::comps,
@@ -128,24 +130,34 @@ void run_case(char const* label, SortFn sorter, size_t n)
 int main()
 {
     for (size_t n : {1u << 2, 1u << 4, 1u << 8, 1u << 12, 1u << 14}) {
-        std::puts("--------------------------------------------------------------");
-        run_case("std::sort          ", [](auto f, auto l) { std::sort(f, l); }, n);
-        run_case("etl::sort          ", [](auto f, auto l) { etl::sort(f, l); }, n);
+        std::println(
+            "{:^20}|{:^10}|{:^15}|{:^15}|{:^15}|{:^15}|{:^10}|{:^10}|{:^10}",
+            "Algorithm",
+            "Size",
+            "Comps",
+            "Comps/(n^2)",
+            "Comps/(nlogn)",
+            "Comps/(n!)",
+            "Swap",
+            "Copy",
+            "Move"
+        );
 
-        std::puts("---------");
-        run_case("std::stable_sort   ", [](auto f, auto l) { std::stable_sort(f, l); }, n);
-        run_case("etl::stable_sort   ", [](auto f, auto l) { etl::stable_sort(f, l); }, n);
+        run_case("std::sort", [](auto f, auto l) { std::sort(f, l); }, n);
+        run_case("etl::sort", [](auto f, auto l) { etl::sort(f, l); }, n);
 
-        std::puts("---------");
-        run_case("etl::merge_sort    ", [](auto f, auto l) { etl::merge_sort(f, l); }, n);
-        run_case("etl::quick_sort    ", [](auto f, auto l) { etl::quick_sort(f, l); }, n);
+        run_case("std::stable_sort", [](auto f, auto l) { std::stable_sort(f, l); }, n);
+        run_case("etl::stable_sort", [](auto f, auto l) { etl::stable_sort(f, l); }, n);
+
+        run_case("etl::merge_sort", [](auto f, auto l) { etl::merge_sort(f, l); }, n);
+        run_case("etl::quick_sort", [](auto f, auto l) { etl::quick_sort(f, l); }, n);
         run_case("etl::insertion_sort", [](auto f, auto l) { etl::insertion_sort(f, l); }, n);
-        run_case("etl::bubble_sort   ", [](auto f, auto l) { etl::bubble_sort(f, l); }, n);
-        run_case("etl::exchange_sort ", [](auto f, auto l) { etl::exchange_sort(f, l); }, n);
-        run_case("etl::gnome_sort    ", [](auto f, auto l) { etl::gnome_sort(f, l); }, n);
+        run_case("etl::bubble_sort", [](auto f, auto l) { etl::bubble_sort(f, l); }, n);
+        run_case("etl::exchange_sort", [](auto f, auto l) { etl::exchange_sort(f, l); }, n);
+        run_case("etl::gnome_sort", [](auto f, auto l) { etl::gnome_sort(f, l); }, n);
 
-        std::puts("---------");
-        run_case("std::nth_element   ", [](auto f, auto l) { std::nth_element(f, etl::midpoint(f, l), l); }, n);
-        run_case("etl::nth_element   ", [](auto f, auto l) { etl::nth_element(f, etl::midpoint(f, l), l); }, n);
+        run_case("std::nth_element", [](auto f, auto l) { std::nth_element(f, etl::midpoint(f, l), l); }, n);
+        run_case("etl::nth_element", [](auto f, auto l) { etl::nth_element(f, etl::midpoint(f, l), l); }, n);
+        std::puts("");
     }
 }

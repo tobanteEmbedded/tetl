@@ -23,7 +23,7 @@ template <typename Float>
     auto urng = etl::xoshiro128starstar{p.ConsumeIntegral<etl::uint32_t>()};
     auto dist = etl::uniform_real_distribution<Float>{distMin, distMax};
     if (auto const val = dist(urng); val < distMin or val > distMax) {
-        std::println("dist_min: {}, dist_max: {}, val: {}", distMin, distMax, val);
+        std::println(stderr, "dist_min: {}, dist_max: {}, val: {}", distMin, distMax, val);
         return 1;
     }
     return 0;

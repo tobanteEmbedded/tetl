@@ -29,18 +29,18 @@ static auto fuzz_bitset(FuzzedDataProvider& p) -> int
     auto const slong = sset.to_ullong();
 
     if ((eview != sview) or (elong != slong)) {
-        std::println("etl::bitset::to_ullong");
-        std::println("val: '{}'", static_cast<unsigned long long>(val));
-        std::println("estr: '{}'\nsstr: '{}'", estr.c_str(), sstr);
-        std::println("elong: '{}' slong: '{}'", elong, slong);
+        std::println(stderr, "etl::bitset::to_ullong");
+        std::println(stderr, "val: '{}'", static_cast<unsigned long long>(val));
+        std::println(stderr, "estr: '{}'\nsstr: '{}'", estr.c_str(), sstr);
+        std::println(stderr, "elong: '{}' slong: '{}'", elong, slong);
         return 1;
     }
 
     auto const efromstr = etl::bitset<Size>{estr.c_str()};
 
     if (eset != efromstr) {
-        std::println("etl::bitset(string_view)");
-        std::println("estr: '{}'\nefromstr: '{}'", estr.c_str(), efromstr.template to_string<Size>().c_str());
+        std::println(stderr, "etl::bitset(string_view)");
+        std::println(stderr, "estr: '{}'\nefromstr: '{}'", estr.c_str(), efromstr.template to_string<Size>().c_str());
         return 1;
     }
 

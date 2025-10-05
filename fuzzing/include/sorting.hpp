@@ -18,13 +18,13 @@
 
     sorter(view.begin(), view.end(), etl::less());
     if (not std::is_sorted(view.begin(), view.end(), etl::less())) {
-        std::println("Data is not sorted via etl::less. Size = {}", view.size());
+        std::println(stderr, "Data is not sorted via etl::less. Size = {}", view.size());
         return 1;
     }
 
     sorter(view.begin(), view.end(), etl::greater());
     if (not std::is_sorted(view.begin(), view.end(), etl::greater())) {
-        std::println("Data is not sorted via etl::greater. Size = {}", view.size());
+        std::println(stderr, "Data is not sorted via etl::greater. Size = {}", view.size());
         return 1;
     }
 

@@ -34,12 +34,13 @@ template <typename IntType>
     }();
 
     if (etlVal != stdVal) {
-        std::println("Str: '{}' Base: {} Value mismatch: etl={} - std={}", input, base, etlVal, stdVal);
+        std::println(stderr, "Str: '{}' Base: {} Value mismatch: etl={} - std={}", input, base, etlVal, stdVal);
         return 1;
     }
 
     if (etlEc != stdEc) {
         std::println(
+            stderr,
             "Str: '{}' Base: {} Error mismatch: etl={} - std={}",
             input,
             base,
@@ -51,6 +52,7 @@ template <typename IntType>
 
     if (etlPtr != stdPtr) {
         std::println(
+            stderr,
             "Str: '{}' Base: {} Value: etl={} - std={} Error: etl={} - std={} Pointer mismatch: etl={} - std={}",
             input,
             base,
