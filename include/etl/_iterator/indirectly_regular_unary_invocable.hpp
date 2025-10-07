@@ -15,16 +15,16 @@
 
 namespace etl {
 
-// clang-format off
-template<typename F,typename Iter>
-concept indirectly_regular_unary_invocable =
-        etl::indirectly_readable<Iter>
-    and etl::copy_constructible<F>
-    and etl::regular_invocable<F&, etl::iter_value_t<Iter>&>
-    and etl::regular_invocable<F&, etl::iter_reference_t<Iter>>
-    and etl::regular_invocable<F&, etl::iter_common_reference_t<Iter>>
-    and etl::common_reference_with<etl::invoke_result_t<F&, etl::iter_value_t<Iter>&>, etl::invoke_result_t<F&, etl::iter_reference_t<Iter>>>;
-// clang-format on
+template <typename F, typename Iter>
+concept indirectly_regular_unary_invocable = etl::indirectly_readable<Iter>
+                                         and etl::copy_constructible<F>
+                                         and etl::regular_invocable<F&, etl::iter_value_t<Iter>&>
+                                         and etl::regular_invocable<F&, etl::iter_reference_t<Iter>>
+                                         and etl::regular_invocable<F&, etl::iter_common_reference_t<Iter>>
+                                         and etl::common_reference_with<
+                                                 etl::invoke_result_t<F&, etl::iter_value_t<Iter>&>,
+                                                 etl::invoke_result_t<F&, etl::iter_reference_t<Iter>>
+                                         >;
 
 } // namespace etl
 

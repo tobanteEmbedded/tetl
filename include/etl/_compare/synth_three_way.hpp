@@ -10,7 +10,6 @@
 
 namespace etl {
 
-// // clang-format off
 // inline constexpr auto synth_three_way =
 //   []<typename T, typename U>(T const& t, U const& u)
 //     requires requires {
@@ -26,7 +25,6 @@ namespace etl {
 //       return weak_ordering::equivalent;
 //     }
 //   };
-// // clang-format on
 
 // template <typename T, typename U = T>
 // using synth_three_way_result

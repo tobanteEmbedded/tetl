@@ -11,7 +11,6 @@
 
 namespace etl {
 
-// clang-format off
 /// \ingroup iterator
 template <typename Iter>
 concept weakly_incrementable = etl::movable<Iter> and requires(Iter i) {
@@ -20,7 +19,6 @@ concept weakly_incrementable = etl::movable<Iter> and requires(Iter i) {
     { ++i } -> etl::same_as<Iter&>;
     i++;
 };
-// clang-format on
 
 } // namespace etl
 
