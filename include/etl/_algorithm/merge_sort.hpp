@@ -15,19 +15,19 @@ namespace etl {
 /// \brief Sorts the elements in the range `[first, last)` in non-descending order.
 /// \details https://en.wikipedia.org/wiki/Merge_sort
 /// \note Non-standard extension
-template <typename BidirIt, typename Compare>
-constexpr auto merge_sort(BidirIt first, BidirIt last, Compare comp) -> void
+template <typename RandomIt, typename Compare>
+constexpr auto merge_sort(RandomIt first, RandomIt last, Compare comp) -> void
 {
     if (last - first > 1) {
-        BidirIt mid = first + (last - first) / 2;
+        RandomIt mid = first + (last - first) / 2;
         etl::merge_sort(first, mid, comp);
         etl::merge_sort(mid, last, comp);
         etl::inplace_merge(first, mid, last, comp);
     }
 }
 
-template <typename BidirIt>
-constexpr auto merge_sort(BidirIt first, BidirIt last) -> void
+template <typename RandomIt>
+constexpr auto merge_sort(RandomIt first, RandomIt last) -> void
 {
     etl::merge_sort(first, last, etl::less());
 }

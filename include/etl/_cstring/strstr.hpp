@@ -17,12 +17,12 @@ namespace etl {
 /// \ingroup cstring
 [[nodiscard]] constexpr auto strstr(char* haystack, char* needle) noexcept -> char*
 {
-    return etl::detail::strstr_impl<char>(haystack, needle);
+    return etl::detail::strstr(haystack, needle);
 }
 
 [[nodiscard]] constexpr auto strstr(char const* haystack, char const* needle) noexcept -> char const*
 {
-    return etl::detail::strstr_impl<char const>(haystack, needle);
+    return etl::detail::strstr(haystack, needle);
 }
 
 /// @}

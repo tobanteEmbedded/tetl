@@ -9,6 +9,7 @@
 #include <etl/system_error.hpp>
 
 #include <charconv>
+#include <format>
 #include <map>
 #include <print>
 #include <stdexcept>
@@ -18,13 +19,13 @@
 #define RUN(func)                                                                                                      \
     do {                                                                                                               \
         if (auto rc = func; rc != 0) {                                                                                 \
-            throw rc;                                                                                                  \
+            throw std::runtime_error{std::format("fuzz failure: {}", rc)};                                             \
         }                                                                                                              \
     } while (false)
 
 namespace etl::fuzzing {
 
-auto to_string(std::errc ec) -> std::string
+inline auto to_string(std::errc ec) -> std::string
 {
     static auto map = std::map<std::errc, std::string>{
         {                   std::errc{},              "errc{}"},
@@ -36,7 +37,7 @@ auto to_string(std::errc ec) -> std::string
     return map.at(ec);
 }
 
-auto to_std(etl::errc ec) -> std::errc
+inline auto to_std(etl::errc ec) -> std::errc
 {
     static auto map = std::map<etl::errc, std::errc>{
         {                   etl::errc{},                    std::errc{}},
@@ -47,11 +48,11 @@ auto to_std(etl::errc ec) -> std::errc
 
     return map.at(ec);
 }
-auto to_std(etl::from_chars_result r) -> std::from_chars_result
+inline auto to_std(etl::from_chars_result r) -> std::from_chars_result
 {
     return {.ptr = r.ptr, .ec = to_std(r.ec)};
 }
-auto to_std(etl::to_chars_result r) -> std::to_chars_result
+inline auto to_std(etl::to_chars_result r) -> std::to_chars_result
 {
     return {.ptr = r.ptr, .ec = to_std(r.ec)};
 }

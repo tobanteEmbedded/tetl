@@ -55,12 +55,12 @@ For examples look at the [examples](./examples) subdirectory or the test files i
 
 ### Freestanding
 
-| **Platform** |                                                                                         **Status**                                                                                          | **Notes** |
-| :----------: | :-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------: | :-------: |
-|   **ARM**    |     [![ARM](https://github.com/tobanteEmbedded/tetl/actions/workflows/freestanding-arm.yml/badge.svg)](https://github.com/tobanteEmbedded/tetl/actions/workflows/freestanding-arm.yml)      |  GCC 15   |
-|   **AVR**    |     [![AVR](https://github.com/tobanteEmbedded/tetl/actions/workflows/freestanding-avr.yml/badge.svg)](https://github.com/tobanteEmbedded/tetl/actions/workflows/freestanding-avr.yml)      |  GCC 15   |
-|  **MSP430**  | [![MSP430](https://github.com/tobanteEmbedded/tetl/actions/workflows/freestanding-msp430.yml/badge.svg)](https://github.com/tobanteEmbedded/tetl/actions/workflows/freestanding-msp430.yml) |  GCC 14   |
-|  **RISCV**   |  [![RISCV](https://github.com/tobanteEmbedded/tetl/actions/workflows/freestanding-riscv.yml/badge.svg)](https://github.com/tobanteEmbedded/tetl/actions/workflows/freestanding-riscv.yml)   |  GCC 15   |
+| **Platform** |                                                                                         **Status**                                                                                          |     **Notes**     |
+| :----------: | :-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------: | :---------------: |
+|   **ARM**    |     [![ARM](https://github.com/tobanteEmbedded/tetl/actions/workflows/freestanding-arm.yml/badge.svg)](https://github.com/tobanteEmbedded/tetl/actions/workflows/freestanding-arm.yml)      | GCC 15 & Clang 20 |
+|   **AVR**    |     [![AVR](https://github.com/tobanteEmbedded/tetl/actions/workflows/freestanding-avr.yml/badge.svg)](https://github.com/tobanteEmbedded/tetl/actions/workflows/freestanding-avr.yml)      |      GCC 15       |
+|  **MSP430**  | [![MSP430](https://github.com/tobanteEmbedded/tetl/actions/workflows/freestanding-msp430.yml/badge.svg)](https://github.com/tobanteEmbedded/tetl/actions/workflows/freestanding-msp430.yml) |      GCC 14       |
+|  **RISCV**   |  [![RISCV](https://github.com/tobanteEmbedded/tetl/actions/workflows/freestanding-riscv.yml/badge.svg)](https://github.com/tobanteEmbedded/tetl/actions/workflows/freestanding-riscv.yml)   |      GCC 15       |
 
 ### Analysis
 

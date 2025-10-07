@@ -30,7 +30,7 @@
     {
       "name": "avr-gcc",
       "description": "Configure with avr-gcc toolchain",
-      "toolchainFile": "${sourceDir}/cmake/toolchain/atmega2560.cmake",
+      "toolchainFile": "${sourceDir}/cmake/toolchain/avr-gcc.cmake",
       "inherits": ["_root-config"],
       "cacheVariables": {
         "TETL_BUILD_CONTRACT_CHECKS": false
@@ -39,7 +39,7 @@
     {
       "name": "arm-gcc",
       "description": "Configure with arm-gcc toolchain",
-      "toolchainFile": "${sourceDir}/cmake/toolchain/gcc-arm-none-eabi.cmake",
+      "toolchainFile": "${sourceDir}/cmake/toolchain/arm-none-eabi-gcc.cmake",
       "inherits": ["_root-config"],
       "cacheVariables": {
         "TETL_BUILD_CONTRACT_CHECKS": false
@@ -48,7 +48,7 @@
     {
       "name": "arm-clang",
       "description": "Configure with arm-clang toolchain",
-      "toolchainFile": "${sourceDir}/cmake/toolchain/clang-arm-none-eabi.cmake",
+      "toolchainFile": "${sourceDir}/cmake/toolchain/arm-none-eabi-clang.cmake",
       "inherits": ["_root-config"],
       "cacheVariables": {
         "TETL_BUILD_CONTRACT_CHECKS": false

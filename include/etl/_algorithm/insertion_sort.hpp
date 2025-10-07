@@ -6,6 +6,7 @@
 
 #include <etl/_algorithm/iter_swap.hpp>
 #include <etl/_functional/less.hpp>
+#include <etl/_utility/move.hpp>
 
 namespace etl {
 
@@ -20,13 +21,13 @@ template <typename RandomIt, typename Compare>
 constexpr auto insertion_sort(RandomIt first, RandomIt last, Compare comp) -> void
 {
     for (auto i = first; i != last; ++i) {
-        auto key = *i;
+        auto key = etl::move(*i);
         auto j   = i;
         while (j != first and comp(key, *(j - 1))) {
-            *j = *(j - 1);
+            *j = etl::move(*(j - 1));
             --j;
         }
-        *j = key;
+        *j = etl::move(key);
     }
 }
 

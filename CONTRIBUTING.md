@@ -21,7 +21,7 @@ ctest --test-dir cmake-build-emscripten -C Debug --output-on-failure
 
 ```sh
 # AVR
-cmake -S . -B cmake-build-avr-gcc -G "Ninja Multi-Config" -D CMAKE_TOOLCHAIN_FILE="cmake/toolchain/atmega2560.cmake"
+cmake -S . -B cmake-build-avr-gcc -G "Ninja Multi-Config" -D CMAKE_TOOLCHAIN_FILE="cmake/toolchain/avr-gcc.cmake"
 cmake --build cmake-build-avr-gcc --config Debug
 ```
 

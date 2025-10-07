@@ -4,7 +4,7 @@
 #ifndef TETL_ALGORITHM_STABLE_SORT_HPP
 #define TETL_ALGORITHM_STABLE_SORT_HPP
 
-#include <etl/_algorithm/insertion_sort.hpp>
+#include <etl/_algorithm/merge_sort.hpp>
 #include <etl/_functional/less.hpp>
 
 namespace etl {
@@ -20,7 +20,7 @@ namespace etl {
 template <typename RandomIt, typename Compare>
 constexpr auto stable_sort(RandomIt first, RandomIt last, Compare comp) -> void
 {
-    etl::insertion_sort(first, last, comp);
+    etl::merge_sort(first, last, comp);
 }
 
 template <typename RandomIt>

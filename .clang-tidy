@@ -63,6 +63,7 @@ Checks:
 
   - modernize-*
   - -modernize-deprecated-headers
+  - -modernize-use-ranges
   - -modernize-use-std-numbers
   - -modernize-use-std-print
 

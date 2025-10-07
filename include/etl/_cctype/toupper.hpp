@@ -27,9 +27,9 @@ namespace etl {
 [[nodiscard]] constexpr auto toupper(int ch) noexcept -> int
 {
     if (etl::islower(ch) != 0) {
-        return static_cast<int>(ch - 32);
+        return ch - 32;
     }
-    return static_cast<int>(ch);
+    return ch;
 }
 } // namespace etl
 

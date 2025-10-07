@@ -7,6 +7,7 @@
 #include <etl/_config/all.hpp>
 
 #include <etl/_3rd_party/gcem/gcem.hpp>
+#include <etl/_cmath/log.hpp>
 #include <etl/_concepts/integral.hpp>
 #include <etl/_concepts/same_as.hpp>
 #include <etl/_type_traits/is_constant_evaluated.hpp>
@@ -31,7 +32,7 @@ inline constexpr struct log10 {
             }
 #endif
         }
-        return etl::detail::gcem::log(arg) / static_cast<Float>(GCEM_LOG_10);
+        return etl::log(arg) / static_cast<Float>(GCEM_LOG_10);
     }
 } log10;
 

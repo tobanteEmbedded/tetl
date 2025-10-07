@@ -33,7 +33,11 @@ constexpr auto shift_right(BidiIt first, BidiIt last, typename etl::iterator_tra
 {
     // The standard only checks for n == 0. n < 0 would be undefined behavior.
     // This implementation does nothing if n < 0.
-    if (n <= 0 or n >= etl::distance(first, last)) {
+    if (n <= 0) {
+        return first;
+    }
+
+    if (n >= etl::distance(first, last)) {
         return last;
     }
 

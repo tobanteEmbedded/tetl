@@ -14,12 +14,12 @@
 #include <system_error>
 
 template <typename IntType>
-[[nodiscard]] auto test_from_chars(FuzzedDataProvider& p) -> int
+[[nodiscard]] static auto test_from_chars(FuzzedDataProvider& p) -> int
 {
     using namespace etl::fuzzing;
 
     auto const base  = p.ConsumeIntegralInRange<int>(2, 36);
-    auto const input = p.ConsumeRandomLengthString(11);
+    auto const input = p.ConsumeRandomLengthString();
 
     auto [stdVal, stdPtr, stdEc] = [base, &input] {
         auto val       = IntType{};
@@ -34,12 +34,13 @@ template <typename IntType>
     }();
 
     if (etlVal != stdVal) {
-        std::println("Str: '{}' Base: {} Value mismatch: etl={} - std={}", input, base, etlVal, stdVal);
+        std::println(stderr, "Str: '{}' Base: {} Value mismatch: etl={} - std={}", input, base, etlVal, stdVal);
         return 1;
     }
 
     if (etlEc != stdEc) {
         std::println(
+            stderr,
             "Str: '{}' Base: {} Error mismatch: etl={} - std={}",
             input,
             base,
@@ -51,6 +52,7 @@ template <typename IntType>
 
     if (etlPtr != stdPtr) {
         std::println(
+            stderr,
             "Str: '{}' Base: {} Value: etl={} - std={} Error: etl={} - std={} Pointer mismatch: etl={} - std={}",
             input,
             base,
