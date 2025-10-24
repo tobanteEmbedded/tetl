@@ -191,7 +191,7 @@ namespace chrono = etl::chrono;
 {
     // traits
     CHECK(etl::is_trivially_default_constructible_v<chrono::weekday_indexed>);
-    CHECK(etl::is_nothrow_constructible_v<chrono::weekday_indexed, chrono::weekday, etl::uint32_t>);
+    CHECK(etl::is_nothrow_constructible_v<chrono::weekday_indexed, chrono::weekday, unsigned>);
 
     {
         auto const wdi = chrono::weekday_indexed{};

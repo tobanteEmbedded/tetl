@@ -5,7 +5,9 @@
 
 Requires scc tool in $PATH, then run:
 
-python scripts/for_each_commit.py https://github.com/tobanteEmbedded/tetl --branch linalg --dest some-scratch-dir/tetl --cmd "scc -f json2 --exclude-dir arm_make -o ../out/{date}-{commit}.json ."
+mkdir -p some-scratch-dir/out
+python scripts/for_each_commit.py https://github.com/tobanteEmbedded/tetl --branch main --dest some-scratch-dir/tetl --cmd "scc -f json2 --exclude-dir arm_make -o ../out/{date}-{commit}.json ."
+python scripts/loc_history.py some-scratch-dir/out
 """
 
 import glob
@@ -28,27 +30,40 @@ def main():
         with open(json_dir/json_file, 'r') as f:
             content = json.load(f)
 
-        file_sum = 0
+        total_lines = 0
+        code_lines = 0
+        comment_lines = 0
+        blank_lines = 0
         for lang in content['languageSummary']:
-            file_sum += lang['Lines']
+            total_lines += lang['Lines']
+            code_lines += lang['Code']
+            comment_lines += lang['Comment']
+            blank_lines += lang['Blank']
 
         date_and_commit = json_file.stem.rsplit('-', 1)
         results.append({
             'date': date_and_commit[0],
             'commit': date_and_commit[1],
-            'lines': file_sum,
+            'total': total_lines,
+            'code': code_lines,
+            'comment': comment_lines,
+            'blank': blank_lines,
         })
 
     df = pd.DataFrame.from_records(results)
     df['date'] = pd.to_datetime(df['date'], utc=True)
-    df.to_csv("loc.csv", encoding='utf-8', sep=';', index=False)
+    df['delta'] = df['total'].diff()
     print(df)
     print(df.dtypes)
 
-    plt.plot(df['date'], df['lines'])
+    plt.plot(df['date'], df['total'], label='Total')
+    plt.plot(df['date'], df['code'], label='Code')
+    plt.plot(df['date'], df['comment'], label='Comment')
+    plt.plot(df['date'], df['blank'], label='Blank')
     plt.xlabel('Date')
     plt.ylabel('LOC')
     plt.grid(which='both')
+    plt.legend()
     plt.show()
 
 

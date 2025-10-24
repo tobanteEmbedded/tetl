@@ -20,7 +20,7 @@ namespace chrono = etl::chrono;
 
     // traits
     CHECK(etl::is_trivially_default_constructible_v<chrono::year>);
-    CHECK(etl::is_nothrow_constructible_v<chrono::year, etl::int32_t>);
+    CHECK(etl::is_nothrow_constructible_v<chrono::year, int>);
     CHECK(static_cast<int>(chrono::year::min()) == -32767);
     CHECK(static_cast<int>(chrono::year::max()) == +32767);
 

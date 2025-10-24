@@ -18,6 +18,10 @@ namespace etl {
 template <typename RandomIt, typename Compare>
 constexpr auto exchange_sort(RandomIt first, RandomIt last, Compare comp) -> void
 {
+    if (first == last) {
+        return;
+    }
+
     for (auto i = first; i < etl::prev(last); ++i) {
         for (auto j = etl::next(i); j < last; ++j) {
             if (comp(*j, *i)) {

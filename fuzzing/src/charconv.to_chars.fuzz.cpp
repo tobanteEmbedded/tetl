@@ -14,7 +14,7 @@
 #include <system_error>
 
 template <typename IntType>
-[[nodiscard]] auto fuzz_to_chars(FuzzedDataProvider& p) -> int
+[[nodiscard]] static auto fuzz_to_chars(FuzzedDataProvider& p) -> int
 {
     using namespace etl::fuzzing;
 
@@ -35,15 +35,16 @@ template <typename IntType>
     auto const etlDist = std::distance(etlBuf.data(), etlPtr);
 
     if ((etlDist != stdDist) or (etlEc != stdEc) or ((etlBuf != stdBuf) and stdEc != std::errc::value_too_large)) {
-        std::println("Func: {}", __PRETTY_FUNCTION__);
-        std::println("Value: {} Base: {}", value, base);
+        std::println(stderr, "Func: {}", __PRETTY_FUNCTION__);
+        std::println(stderr, "Value: {} Base: {}", value, base);
         std::println(
+            stderr,
             "Buffer: etl='{}' - std='{}'",
             std::string_view{etlBuf.data(), etlBuf.size()},
             std::string_view{stdBuf.data(), stdBuf.size()}
         );
-        std::println("Distance: etl={} - std={}", etlDist, stdDist);
-        std::println("Error: etl='{}' - std='{}'", to_string(etlEc), to_string(stdEc));
+        std::println(stderr, "Distance: etl={} - std={}", etlDist, stdDist);
+        std::println(stderr, "Error: etl='{}' - std='{}'", to_string(etlEc), to_string(stdEc));
         return 1;
     }
 

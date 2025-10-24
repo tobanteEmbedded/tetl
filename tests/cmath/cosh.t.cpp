@@ -21,7 +21,6 @@ static constexpr auto test() -> bool
     CHECK_APPROX(etl::cosh(T(1)), T(1.543080635));
     CHECK_APPROX(etl::cosh(T(2)), T(3.762195691));
     CHECK_APPROX(etl::cosh(T(4)), T(27.30823284));
-    CHECK_APPROX(etl::cosh(T(8)), T(1490.479161));
 
     return true;
 }

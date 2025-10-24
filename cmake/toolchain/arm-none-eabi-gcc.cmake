@@ -4,7 +4,7 @@
 include_guard(GLOBAL)
 
 list(INSERT CMAKE_MODULE_PATH 0 "${CMAKE_CURRENT_LIST_DIR}")
-include(stm32)
+include(arm-none-eabi)
 
 set(CMAKE_SYSTEM_PROCESSOR arm)
 set(CMAKE_SYSTEM_NAME Generic-ELF)

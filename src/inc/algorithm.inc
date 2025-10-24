@@ -52,6 +52,7 @@ using etl::partial_sort;
 using etl::partition;
 using etl::partition_copy;
 using etl::partition_point;
+using etl::ranges::in_fun_result;
 using etl::remove;
 using etl::remove_copy;
 using etl::remove_copy_if;
@@ -78,7 +79,6 @@ using etl::transform;
 using etl::unique;
 using etl::unique_copy;
 using etl::upper_bound;
-using etl::ranges::in_fun_result;
 
 // Non-standard extensions
 using etl::bubble_sort;
@@ -86,5 +86,6 @@ using etl::exchange_sort;
 using etl::gnome_sort;
 using etl::insertion_sort;
 using etl::merge_sort;
+using etl::quick_sort;
 
 } // namespace etl

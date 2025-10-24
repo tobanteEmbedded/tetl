@@ -35,7 +35,6 @@ struct incrementable_traits<T> {
     using difference_type = typename T::difference_type;
 };
 
-// clang-format off
 template <typename T>
     requires(not detail::has_difference_type<T>) and requires(T const& a, T const& b) {
         { a - b } -> etl::integral;
@@ -43,8 +42,6 @@ template <typename T>
 struct incrementable_traits<T> {
     using difference_type = etl::make_signed_t<decltype(etl::declval<T>() - etl::declval<T>())>;
 };
-
-// clang-format on
 
 } // namespace etl
 

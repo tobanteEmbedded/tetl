@@ -12,19 +12,14 @@
 
 namespace etl {
 
-// clang-format off
-
 /// \headerfile etl/concepts.hpp
 /// \ingroup concepts
-template<typename LHS, typename RHS>
-concept assignable_from =
-        is_lvalue_reference_v<LHS>
-    // and common_reference_with<remove_reference_t<LHS> const&, remove_reference_t<RHS> const&>
-    and requires(LHS lhs, RHS&& rhs) {
-        { lhs = etl::forward<RHS>(rhs) } -> same_as<LHS>;
-    };
-
-// clang-format on
+template <typename LHS, typename RHS>
+concept assignable_from = is_lvalue_reference_v<LHS>
+                      // and common_reference_with<remove_reference_t<LHS> const&, remove_reference_t<RHS> const&>
+                      and requires(LHS lhs, RHS&& rhs) {
+                              { lhs = etl::forward<RHS>(rhs) } -> same_as<LHS>;
+                          };
 
 } // namespace etl
 

@@ -26,10 +26,10 @@ namespace etl {
 /// \ingroup cctype
 [[nodiscard]] constexpr auto tolower(int ch) noexcept -> int
 {
-    if (isupper(ch) != 0) {
-        return static_cast<int>(ch + 32);
+    if (etl::isupper(ch) != 0) {
+        return ch + 32;
     }
-    return static_cast<int>(ch);
+    return ch;
 }
 } // namespace etl
 
